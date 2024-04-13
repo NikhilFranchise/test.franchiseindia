@@ -1,0 +1,15 @@
+[16-Jul-2017 12:20:45 Asia/Calcutta] PHP Warning:  include(include/configure.php): failed to open stream: No such file or directory in /home/franchis/public_html/images/magazine/index.php on line 2645
+[16-Jul-2017 12:20:45 Asia/Calcutta] PHP Warning:  include(): Failed opening 'include/configure.php' for inclusion (include_path='.:/opt/cpanel/ea-php56/root/usr/share/pear') in /home/franchis/public_html/images/magazine/index.php on line 2645
+[16-Jul-2017 12:20:45 Asia/Calcutta] PHP Deprecated:  mysql_query(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/franchis/public_html/images/magazine/index.php on line 2649
+[16-Jul-2017 12:20:45 Asia/Calcutta] PHP Warning:  mysql_query(): Access denied for user ''@'localhost' (using password: NO) in /home/franchis/public_html/images/magazine/index.php on line 2649
+[16-Jul-2017 12:20:45 Asia/Calcutta] PHP Warning:  mysql_query(): A link to the server could not be established in /home/franchis/public_html/images/magazine/index.php on line 2649
+[05-Aug-2017 18:36:00 Asia/Calcutta] PHP Warning:  include(include/configure.php): failed to open stream: No such file or directory in /home/franchis/public_html/images/magazine/index.php on line 2645
+[05-Aug-2017 18:36:00 Asia/Calcutta] PHP Warning:  include(): Failed opening 'include/configure.php' for inclusion (include_path='.:/opt/cpanel/ea-php56/root/usr/share/pear') in /home/franchis/public_html/images/magazine/index.php on line 2645
+[05-Aug-2017 18:36:00 Asia/Calcutta] PHP Deprecated:  mysql_query(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/franchis/public_html/images/magazine/index.php on line 2649
+[05-Aug-2017 18:36:00 Asia/Calcutta] PHP Warning:  mysql_query(): Access denied for user ''@'localhost' (using password: NO) in /home/franchis/public_html/images/magazine/index.php on line 2649
+[05-Aug-2017 18:36:00 Asia/Calcutta] PHP Warning:  mysql_query(): A link to the server could not be established in /home/franchis/public_html/images/magazine/index.php on line 2649
+[05-Aug-2017 18:36:45 Asia/Calcutta] PHP Warning:  include(include/configure.php): failed to open stream: No such file or directory in /home/franchis/public_html/images/magazine/index.php on line 2645
+[05-Aug-2017 18:36:45 Asia/Calcutta] PHP Warning:  include(): Failed opening 'include/configure.php' for inclusion (include_path='.:/opt/cpanel/ea-php56/root/usr/share/pear') in /home/franchis/public_html/images/magazine/index.php on line 2645
+[05-Aug-2017 18:36:45 Asia/Calcutta] PHP Deprecated:  mysql_query(): The mysql extension is deprecated and will be removed in the future: use mysqli or PDO instead in /home/franchis/public_html/images/magazine/index.php on line 2649
+[05-Aug-2017 18:36:45 Asia/Calcutta] PHP Warning:  mysql_query(): Access denied for user ''@'localhost' (using password: NO) in /home/franchis/public_html/images/magazine/index.php on line 2649
+[05-Aug-2017 18:36:45 Asia/Calcutta] PHP Warning:  mysql_query(): A link to the server could not be established in /home/franchis/public_html/images/magazine/index.php on line 2649

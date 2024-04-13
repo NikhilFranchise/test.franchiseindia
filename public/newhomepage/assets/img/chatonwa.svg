@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="137" height="58" viewBox="0 0 137 58">
+  <defs>
+    <filter id="Rectangle_3463" x="0" y="0" width="137" height="58" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Chaton-whatsapp" transform="translate(-1130 -555)">
+    <g transform="matrix(1, 0, 0, 1, 1130, 555)" filter="url(#Rectangle_3463)">
+      <g id="Rectangle_3463-2" data-name="Rectangle 3463" transform="translate(9 6)" fill="#fff" stroke="#4caf50" stroke-width="1">
+        <rect width="119" height="40" rx="20" stroke="none"/>
+        <rect x="0.5" y="0.5" width="118" height="39" rx="19.5" fill="none"/>
+      </g>
+    </g>
+    <g id="Group_774" data-name="Group 774" transform="translate(977.201 322.201)">
+      <path id="Path_868" data-name="Path 868" d="M259.113,245.69h-.008a13.411,13.411,0,0,0-10.861,21.285l-1.673,4.985,5.158-1.649a13.417,13.417,0,1,0,7.383-24.621Z" fill="#4caf50"/>
+      <path id="Path_869" data-name="Path 869" d="M265.619,263.218a3.789,3.789,0,0,1-2.634,1.894c-.7.15-1.617.268-4.7-1.01-3.944-1.633-6.483-5.641-6.681-5.9a7.666,7.666,0,0,1-1.593-4.047,4.287,4.287,0,0,1,1.372-3.267,1.955,1.955,0,0,1,1.372-.48c.167,0,.316.008.45.014.394.017.592.04.851.662.324.781,1.113,2.706,1.207,2.9a.8.8,0,0,1,.057.726,2.331,2.331,0,0,1-.435.616c-.2.228-.385.4-.583.647-.182.213-.387.441-.159.836a11.923,11.923,0,0,0,2.178,2.706,9.846,9.846,0,0,0,3.147,1.941.847.847,0,0,0,.946-.15,16.279,16.279,0,0,0,1.048-1.389.75.75,0,0,1,.963-.292c.362.126,2.279,1.074,2.673,1.27s.655.292.75.457A3.353,3.353,0,0,1,265.619,263.218Z" transform="translate(1.303 1.422)" fill="#fafafa"/>
+    </g>
+    <text id="Chat_On" data-name="Chat On" transform="translate(1180 587)" fill="#4caf50" font-size="18" font-family="Roboto-Regular, Roboto"><tspan x="-32.032" y="0">Chat On</tspan></text>
+  </g>
+</svg>

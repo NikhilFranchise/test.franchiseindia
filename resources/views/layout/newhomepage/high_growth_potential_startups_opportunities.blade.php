@@ -1,0 +1,228 @@
+<!-- High Growth Potential Startups -->
+<section class="bg-sectionwize
+                     high-growth-potential-startups section-30 startup"
+    id="high-growth-potential-startups">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="modified-col col-md-12">
+                <div class="section-ptb">
+                    <h2> {{ Request::segment(1) == 'hi' ? 'तेज विकास संभावनाओं वाले स्टार्टअप' : 'High Growth Potential Startups' }}
+                    </h2>
+                    <a href="https://www.businessex.com/startupslisting"
+                        target="_blank">{{ Request::segment(1) == 'hi' ? 'सभी देखें' : 'View All' }}</a>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <div class="section-ptb section-ptb-new">
+
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <ul class="new-brand">
+                <li class="modified-col">
+                    <div class="overlay-card"></div>
+                    <div class="card-sale">
+                        <div class="card card-m card-p-10">
+                            <div class="brand-image-section">
+                                <div class="brand-main-section">
+                                    <a href="https://www.businessex.com/startup/seeking-investment-for-adventure-and-tourism-market-place/lrgkm2"
+                                        target="_blank"><img
+                                            src="https://media.businessex.com/business/pics/0415/574844992.jpg"
+                                            class="img-responsive" alt=""></a>
+                                </div>
+                            </div>
+                            <div class="card-body-section">
+                                <p>
+                                    <a href="https://www.businessex.com/startupslisting/travel-tourism-startups-in-India/9/s0/st0"
+                                        target="_blank">Travel & tourism</a>
+                                </p>
+                                <h2> <a href="https://www.businessex.com/startup/seeking-investment-for-adventure-and-tourism-market-place/lrgkm2"
+                                        target="_blank">Seeking Investment For Adventure And Tourism Market Place</a>
+                                </h2>
+
+                            </div>
+                        </div>
+                        <div class="d-flex sale-bg">
+                            <div class="card-info-sale">
+                                {{ Request::segment(1) == 'hi' ? 'कीमत' : 'Asking Price' }}
+                            </div>
+                            <div class="card-info-amt-sale">
+                                2.5 Crores
+                            </div>
+                        </div>
+
+                        <div class="d-flex sale-bg-info">
+                            <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif">
+                                Phone</div>
+                            <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif">
+                                Email</div>
+                            <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif"> Delhi
+                            </div>
+                        </div>
+
+                        <div class="link-section-sale">
+                            <a href="https://www.businessex.com/startup/seeking-investment-for-adventure-and-tourism-market-place/lrgkm2"
+                                target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                        </div>
+
+                    </div>
+
+                </li>
+
+
+
+                <li class="modified-col">
+                    <div class="overlay-card"></div>
+                    <div class="card-sale">
+                        <div class="card card-m card-p-10">
+                            <div class="brand-image-section">
+                                <div class="brand-main-section">
+                                    <a href="https://www.businessex.com/startup/seeking-investor-for-high-class-sports-and-education-training-center/b0chev"
+                                        target="_blank"><img
+                                            src="https://media.businessex.com/subCatImages/37/640_x_360/shutterstock_213333985.jpg"
+                                            class="img-responsive" alt=""></a>
+                                </div>
+                            </div>
+                            <div class="card-body-section">
+                                <p>
+                                    <a href="https://www.businessex.com/startupslisting/education-startups-in-India/3/s0/st0"
+                                        target="_blank">Education</a>
+                                </p>
+                                <h2><a href="https://www.businessex.com/startup/seeking-investor-for-high-class-sports-and-education-training-center/b0chev"
+                                        target="_blank">Seeking Investor For High Class Sports And Education Training
+                                        Center</a></h2>
+
+                            </div>
+                        </div>
+                        <div class="d-flex sale-bg">
+                            <div class="card-info-sale">
+                                {{ Request::segment(1) == 'hi' ? 'कीमत' : 'Asking Price' }}
+                            </div>
+                            <div class="card-info-amt-sale">
+                                200 Crores
+                            </div>
+                        </div>
+
+                        <div class="d-flex sale-bg-info">
+                            <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif">
+                                Phone</div>
+                            <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif">
+                                Email</div>
+                            <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif"> Kanpur
+                            </div>
+                        </div>
+
+                        <div class="link-section-sale">
+                            <a href="https://www.businessex.com/startup/seeking-investor-for-high-class-sports-and-education-training-center/b0chev"
+                                target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                        </div>
+
+                    </div>
+
+                </li>
+
+                <li class="modified-col">
+                    <div class="overlay-card"></div>
+                    <div class="card-sale">
+                        <div class="card card-m card-p-10">
+                            <div class="brand-image-section">
+                                <div class="brand-main-section">
+                                    <a href="https://www.businessex.com/startup/seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system/f3asef"
+                                        target="_blank"> <img
+                                            src="https://media.businessex.com/business/pics/0818/928479563.jpg"
+                                            class="img-responsive" alt=""></a>
+                                </div>
+                            </div>
+                            <div class="card-body-section">
+                                <p>
+                                    <a href="https://www.businessex.com/startupslisting/energy-environment-startups-in-India/12/s0/st0"
+                                        target="_blank">Energy & Environment</a>
+                                </p>
+                                <h2> <a href="https://www.businessex.com/startup/seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system/f3asef"
+                                        target="_blank">Seeking Investment for Company Revolutionizing Solar Power
+                                        Generation</a></h2>
+
+                            </div>
+                        </div>
+                        <div class="d-flex sale-bg">
+                            <div class="card-info-sale">
+                                {{ Request::segment(1) == 'hi' ? 'कीमत' : 'Asking Price' }}
+                            </div>
+                            <div class="card-info-amt-sale">
+                                3 Crores
+                            </div>
+                        </div>
+
+                        <div class="d-flex sale-bg-info">
+                            <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif">
+                                Phone</div>
+                            <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif">
+                                Email</div>
+                            <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif">
+                                Faridabad</div>
+                        </div>
+
+                        <div class="link-section-sale">
+                            <a href="https://www.businessex.com/startup/seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system/f3asef"
+                                target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                        </div>
+
+                    </div>
+
+                </li>
+
+                <li class="modified-col">
+                    <div class="overlay-card"></div>
+                    <div class="card-sale">
+                        <div class="card card-m card-p-10">
+                            <div class="brand-image-section">
+                                <div class="brand-main-section">
+                                    <a href="https://www.businessex.com/startup/looking-for-an-investor-for-health-care-industry/sibsjr"
+                                        target="_blank"><img
+                                            src="https://media.businessex.com/subCatImages/29/640_x_360/shutterstock_56187514.jpg"
+                                            class="img-responsive" alt=""></a>
+                                </div>
+                            </div>
+                            <div class="card-body-section">
+                                <p>
+                                    <a href="https://www.businessex.com/startupslisting/fmcg-startups-in-India/2/s0/st0"
+                                        target="_bkank">FMCG</a>
+                                </p>
+                                <h2><a href="https://www.businessex.com/startup/looking-for-an-investor-for-health-care-industry/sibsjr"
+                                        target="_blank">Looking For An Investor For Health Care Industry</a></h2>
+
+                            </div>
+                        </div>
+                        <div class="d-flex sale-bg">
+                            <div class="card-info-sale">
+                                {{ Request::segment(1) == 'hi' ? 'कीमत' : 'Asking Price' }}
+                            </div>
+                            <div class="card-info-amt-sale">
+                                20 Lakhs
+                            </div>
+                        </div>
+
+                        <div class="d-flex sale-bg-info">
+                            <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif">
+                                Phone</div>
+                            <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif">
+                                Email</div>
+                            <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif">
+                                Hyderabad</div>
+                        </div>
+
+                        <div class="link-section-sale">
+                            <a href="https://www.businessex.com/startup/looking-for-an-investor-for-health-care-industry/sibsjr"
+                                target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                        </div>
+
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- High Growth Potential Startups -->

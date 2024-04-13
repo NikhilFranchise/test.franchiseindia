@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="25" height="14" viewBox="0 0 25 14">
+  <g id="_3_Bar" data-name="3 Bar" transform="translate(11.5 10.975)" opacity="0.75">
+    <path id="Path_9" data-name="Path 9" d="M0,0H12.462" transform="translate(1.462 2.525) rotate(180)" fill="none" stroke="#101010" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="Path_10" data-name="Path 10" d="M0,.346H20" transform="translate(-11 -4.567)" fill="none" stroke="#101010" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="Path_11" data-name="Path 11" d="M0,0H24" transform="translate(13 -10.475) rotate(180)" fill="none" stroke="#101010" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+  </g>
+</svg>

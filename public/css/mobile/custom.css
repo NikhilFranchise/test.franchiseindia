@@ -1,0 +1,76 @@
+.franchise-thanks { padding: 20px; word-break: break-word; }
+.franchise-thanks p{ margin-bottom: 5px; }
+/* popup code strat here  */
+.popblk  a { text-decoration:none;}
+#registerlogin  .modal-dialog { max-width:420px;}
+.popblk  a:hover{ text-decoration:none;}
+.poppadding { padding:30px 30px 0;}
+.popblk { width:auto; margin:0 auto; background:#fcfcfc; padding:0px;  }
+#registerlogin .modal-body { padding:0px;}
+#registerlogin button.close { position:absolute; z-index:2; border-radius:50%; width:40px; height:40px; top:-10px; right:-15px; z-index:2; background:#f7f7f7; opacity:1; color:#d0021b;     box-shadow: 0 0 15px 0 rgba(0,0,0,.35); font-size:16px; font-weight:100px;}
+.innerpopblk {  margin:0 auto;}
+.popblk .form-control  { border-radius:50px; padding-left:50px;}
+.popblk .btn.btn-primary {font-family: "AvenirNext"; font-weight:600; border-radius:50px; font-size:14px; padding:7px 30px; display:inline-block; margin:0; background:transparent; color:#d0021b;  }
+.popblk .btnblk { clear:both; padding-bottom:0px; margin-bottom:20px; float:none;}
+.popblk .btn.btn-primary:first-child{  float:left;}
+.popblk .btn.btn-primary:last-child{  float:right;}
+.popblk .btn.btn-primary:hover{background:#d0021b; color:#fff;
+    outline: none;
+    border-color: transparent;
+    transition: none;}
+.popblk .fi-pophead { font-size:22px;   font-family: "AvenirNext"; font-weight:700; text-align:center;}
+.popblk  label { color:#6B6C6F; font-size:14px;  font-family: "AvenirNext"; font-weight:700; text-align:center;}
+
+.popblk div.fitxt { overflow:hidden; clear:both; margin-top:25px; font-size:13px; font-family: "AvenirNext"; text-align:center; line-height:22px;   font-family: "AvenirNext"; background:#f1f1f1; width:100%; border-top:1px solid #dfdfdf; padding:20px; }
+.popblk div.fitxt span{ display:block; color:#d0021b; margin-top:5px; margin-bottom:5px; font-weight:600;}
+.pop-full { clear:both;  padding-top:20px;}
+.linttop .fleft { float:left; width:51%;  font-family: "AvenirNext"; font-weight:600;    padding-top:12px; padding-bottom:10px; padding-right:20px; font-size:15px; border-right:1px solid #dfdfdf; }
+ul.fi-sl { width:49%; float:right; list-style:none; text-align:center; padding:0px;}
+ul.fi-sl li{ padding-top:13px; width:50px; height:50px; border-radius:50%; border:1px solid #d0021b; list-style:none; display:inline-block; text-align:center; margin-left:15px;}
+
+.txtftleft { clear:both; text-align:right; font-size:15px; color:#666; padding-top:8px; }
+.fblk{ position:relative;}
+
+i.fa-envelope, i.fa-user-lock { position:absolute; top:10px; left:12px;  font-size:20px;    opacity: 0.4;}
+i.fa-eye-slash { position:absolute; top:10px; right:10px;opacity: 0.4; }
+
+ul.plinks { text-align:center; padding:0px;}
+ul.plinks li{ font-size: 14px; display:block; width:250px; padding:10px; border-radius:25px; color:#333; border:1px solid #dfdfdf; margin:0 auto 20px;  }
+ul.plinks li a { }
+
+.linttop {  text-align:center; margin:30px auto 0; font-family: "AvenirNext";  font-size:14px; padding-top:20px; border-top:1px solid #dfdfdf; }
+.linttop a{ color:#d0021b; font-weight:600; }
+
+ul.nav.poptab { text-align:center;}
+ul.poptab li{ display:inline-block; width:50%; }
+.popblk .nav-pills .nav-link { border:1px solid #d0021b;     border-radius: 0;  font-size: 13px;}
+/*.popblk .nav-pills .nav-link:first-child{     border-top-left-radius: 0px; border-bottom-left-radius:0px;}*/
+.popblk .nav-pills .nav-link.active, .popblk .nav-pills .show>.nav-link {font-family: "AvenirNext"; font-weight:600; background:#d0021b; color:#fff; }
+
+.popblk ul.poptab li:first-child a {    border-left: 1px solid #d0021b;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;}
+
+.popblk ul.poptab  li:last-child a {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.popblk .tab-content { margin-top:20px;}
+.txtbl { display:inline-block; margin-top:4px; padding-left:5px; font-size: 14px;}
+.nav-pills .nav-link.active { background:#d0021b;}
+
+.popblk ul.poptab li a:hover { color:#333;	}
+.popblk a:hover { color:#333;	}
+
+.forblk { margin-top:5px; margin-bottom:40px;}
+.forhead { font-family: "AvenirNext"; font-size:25px;}
+
+
+
+@media only screen and (max-width : 479px) {
+    #registerlogin  .modal-dialog { max-width:90%; margin:0 auto; }
+    .poppadding { padding:30px 20px 0;}
+    #registerlogin { top:30px;}
+}
+
+#existsMsg, #instaMsg { padding: 10px; text-align: center; }

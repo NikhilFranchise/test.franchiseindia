@@ -1,0 +1,186 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\MobileVerification;
+use Illuminate\Support\Facades\Log;
+
+class MobileVerificationController extends Controller
+{
+   /**
+     * @return \Illuminate\Http\JsonResponse|string
+     */
+    public function verifyMobile()
+    {
+        $mobileNo = request()->mobile;
+        
+        if (strlen($mobileNo) == 12 && substr($mobileNo, 0, 2) == "91")
+            $mobileNo = substr($mobileNo, 2, 10);
+            
+        if(strlen($mobileNo) > 10 || strlen($mobileNo) < 10 || !is_numeric($mobileNo) || !in_array(substr($mobileNo, 0, 1), [9,8,7,6])) {
+            Log::getFacadeRoot()->alert('Insert failed in mobile verification  : ' . request()->mobile);
+            return response()->json('Temporary problem in OTP system. Please try after some time', 404);
+        }
+
+        // Check for mobile number in the records
+        $chkMobileNo = MobileVerification::query()->select('mobile_no', 'is_verified')
+            ->where('mobile_no', request()->mobile)
+            ->first();
+            
+            if ($chkMobileNo !== null && $chkMobileNo->count() > 0 && $chkMobileNo->is_verified == 1) {
+                return response()->json('numexists');
+            }
+            
+
+        $otpCode = $this->generateMobileOtp();
+
+        if ($chkMobileNo !== null && $chkMobileNo->count() > 0 && $chkMobileNo->is_verified != 1) {
+            MobileVerification::query()->where('mobile_no', request()->mobile)->update([
+                'otp_code' => $otpCode
+            ]);
+            $this->sendSmsToMobile(request()->mobile, $otpCode);
+            return response()->json('Success! OTP sent to customers mobile number');
+        }
+
+        // Send SMS
+        $this->sendSmsToMobile(request()->mobile, $otpCode);
+
+        //Insert into mobile_verification table
+        $mobVerify = new MobileVerification();
+        $mobVerify->mobile_no = request()->mobile;
+        $mobVerify->otp_code = $otpCode;
+        $mobVerify->smspg_response = "Success";
+
+        if (!$mobVerify->save()) {
+            Log::getFacadeRoot()->alert('Insert failed in mobile verification  : ' . request()->mobile);
+            return response()->json('Temporary problem in OTP system. Please try after some time', 404);
+        }
+
+        return response()->json('Success! OTP sent to customers mobile number');
+    }
+
+    /**
+     * @return \Illuminate\Http\JsonResponse|string
+     */
+    public function verifySmsOTP()
+    {
+        $mobileNo = request()->mobileNo;
+        $otpNo    = request()->otpNo;
+
+        // Check for the OTP number and Mobile number in DB
+        $chkMobVerify = MobileVerification::query()->select('mob_verify_id', 'mobile_no')
+            ->where('otp_code', $otpNo)
+            ->where('mobile_no', $mobileNo)
+            ->first();
+
+        if (empty($chkMobVerify))
+            return 'notexists';
+
+        MobileVerification::query()->where('mob_verify_id', '=', $chkMobVerify->mob_verify_id)
+            ->update(['is_verified' => config('constants.ProfileStatus.Active'), 'verified_at' => date('Y-m-d H:i:s')]);
+
+        return 'Mobile number verified successfully';
+    }
+
+    /**
+     * @return int|string
+     */
+    public function generateMobileOtp()
+    {
+        // Number of digits for OTP
+        $otpLength    = config('constants.mobile.OtpLength');
+
+        // To avoid zero in the beginning, start with 1
+        $returnString = mt_rand(1, 9);
+
+        // Iterate to generate required length of digits
+        while (strlen($returnString) < $otpLength) {
+            $returnString .= mt_rand(0, 9);
+        }
+
+        return $returnString;
+    }
+
+    /**
+     * @param $mobileNo
+     * @param $otpCode
+     */
+    public function sendSmsToMobile($mobileNo, $otpCode)
+    {
+        $smsMsg = sprintf(config('txtlocal.SmsOtpMsg'), 'User', $otpCode);
+        CommonController::sendTxtSms($mobileNo, $smsMsg);
+    }
+
+    /**
+     * @return int
+     */
+    public function mobCheck()
+    {
+        // Check for mobile number in the records
+        $chkMobileNo = MobileVerification::query()
+            ->where('mobile_no', request()->mobile)
+            ->where('is_verified', 1)
+            ->count();
+
+        return (($chkMobileNo > 0) ? 1 : 0);
+    }
+
+    /**
+     * @return int
+     */
+    public function verifyInfoMobile(){
+        $data = MobileVerification::query()->where('mobile_no', request()->mobile)
+            ->where('is_verified', 1)
+            ->count();
+
+        return $data;
+    }
+
+    public function investerverifyMobile()
+    {
+        $mobileNo = request()->mobile;
+
+        if (strlen($mobileNo) == 12 && substr($mobileNo, 0, 2) == "91")
+            $mobileNo = substr($mobileNo, 2, 10);
+
+        if(strlen($mobileNo) > 10 || strlen($mobileNo) < 10 || !is_numeric($mobileNo) || !in_array(substr($mobileNo, 0, 1), [9,8,7,6])) {
+            Log::getFacadeRoot()->alert('Insert failed in mobile verification  : ' . request()->mobile);
+            return 'Temporary problem in OTP system. Please try after some time';
+        }
+
+        // Check for mobile number in the records
+        $chkMobileNo = MobileVerification::query()->select('mobile_no', 'is_verified')
+            ->where('mobile_no', request()->mobile)
+            ->first();
+
+        if ($chkMobileNo != null && $chkMobileNo->count() > 0 && $chkMobileNo->is_verified == 1)
+            return 'numexists';
+
+        $otpCode = $this->generateMobileOtp();
+
+        if ($chkMobileNo != null && $chkMobileNo->count() > 0  && $chkMobileNo->is_verified != 1) {
+            MobileVerification::query()->where('mobile_no', request()->mobile)->update([
+                'otp_code' => $otpCode
+            ]);
+            $this->sendSmsToMobile(request()->mobile, $otpCode);
+            return 'Success! OTP sent to customers mobile number';
+        }
+
+        // Send SMS
+        $this->sendSmsToMobile(request()->mobile, $otpCode);
+
+        //Insert into mobile_verification table
+        $mobVerify = new MobileVerification();
+        $mobVerify->mobile_no = request()->mobile;
+        $mobVerify->otp_code = $otpCode;
+        $mobVerify->smspg_response = "Success";
+
+        if (!$mobVerify->save()) {
+            Log::getFacadeRoot()->alert('Insert failed in mobile verification  : ' . request()->mobile);
+            return 'Temporary problem in OTP system. Please try after some time';
+        }
+
+        return 'Success! OTP sent to customers mobile number';
+    }
+}

@@ -1,0 +1,117 @@
+.galleybg { background:#fff; /*min-height:400px; height:auto;*/}
+.galleybg .col-md-9.mdf { width:900px; position:relative;}
+.galleybg .col-md-9.mdf .mortxt { position:absolute; height:100px; background-color: rgba(0, 0, 0, 0.7); width:100%; display:table; text-align:left; bottom:0px;}
+.galleybg .col-md-9.mdf .mortxt .txtshow{ vertical-align:middle;   display: table-cell; font-size:25px; color:#fff;font-family: 'Open Sans Bold'; padding-left:30px;  line-height:20px;}
+.galleybg .col-md-9.mdf .mortxt .txtshow span{ font-size:13px;font-family: 'Open Sans Regular'; display:block;margin-bottom: 10px;}
+.galleybg .col-md-9.mdf .mortxt .txtshow a{color:#fff;}
+
+.galleybg .col-md-3.mdf { width:300px;}
+.galleybg .col-md-3.mdf ul {width:299px; margin:0 0 0 1px;!important;padding:0px; }
+
+.galleybg .col-md-3.mdf ul li { height:158px;  margin:0 0 1px 0; padding:0px; }
+.galleybg .col-md-3.mdf ul li img{ width:100%;}
+.galleybg .col-md-3.mdf ul li.ts { position:relative; margin-bottom:0px;height:157px; overflow:hidden;}
+.galleybg .col-md-3.mdf ul li .mortxt { position:absolute; height:100%; background-color: rgba(0, 0, 0, 0.7); width:100%; display:table; text-align:center;}
+.galleybg .col-md-3.mdf ul li .mortxt .txtshow{ vertical-align:middle;   display: table-cell; font-size:18px; color:#fff;font-family: 'Open Sans Regular'; }
+.galleybg .col-md-3.mdf ul li .mortxt .txtshow span{ font-size:40px; line-height:20px;}
+.infobrand {
+color: #333;    padding: 10px 0px;    overflow: hidden;    margin-top: 10px; margin-bottom:10px;    background: #fff;     }
+.infobrand ul{list-style:none;}
+.infobrand ul li{float:left;width:25%;border-right:1px solid #dfdfdf;text-align:center;font-family:'Open Sans Regular';font-size:14px; color:#999999;line-height:30px;}
+.infobrand ul li:last-child{border-right:none;}
+.infobrand ul li div{font-family:'Open Sans Regular';font-size:25px; color:#333333; }
+.galleybg .col-md-3.mdf ul li .mortxt .txtshow a{ color:#fff; } 
+.landing.glysec .normal { margin-top:10px; }
+.landing.glysec .brand-logo{ border:none;  border-radius:0px; }
+.landing.glysec .brand-logo img { max-width:100%; padding:0px;}
+.landing.glysec .tab-panel { background:none; padding:0px; border:none; float:right;}
+.landing.glysec .tab-panel ul li a { border:1px solid #fff; color: #333;}
+.landing.glysec .tab-panel ul li a:hover, .landing.glysec .tab-panel ul li a.active {     color: #333;
+    border:1px solid #333; background:#fff; border-radius:4px;} 
+.landing.glysec .tab-panel ul li { margin-left:5px;}
+.landing.glysec .tab-panel .rht-pnl ul li:first-child a {color: #333;
+    border:1px solid #333; background:#fff; border-radius:4px;font-family:'Open Sans Regular';}
+.centblknew {width: 1200px; margin: 0px auto;}
+.centblkgdgdnew {width: 1200px; margin: 0px auto;}
+.brdtop { border-top:1px solid #dfdfdf;}
+
+/*.stickylandgallry{background-color:#fff;box-shadow:0px 2px 10px rgba(0, 0, 0, .7);position:fixed;margin:0 auto;z-index:3;
+    width:100%;padding:0px 0 0px 0;top:0; height:auto;}*/
+
+.stickylandgallry{background-color:#fff;position:fixed;margin:0 auto;z-index:3;
+    width:100%;padding:0px 0 0px 0;top:0; height:auto;} 
+
+.stickylandgallry .landing { width:1200px; margin: 0px auto 0; }
+.galleymar { margin-top:25px;    padding-right: 0px;}
+/*#myGallery { min-height:800px!important;}*/
+
+#myGallery .modal-dialog{ width:840px; height:100%; }
+#myGallery  .modal-header { border-bottom:0px; padding:0px;}
+
+@media only screen and (min-width:1px) and (max-width:767px){
+.galleybg .col-md-3.mdf ul li.ts { display:none; }
+.gallery__description-block { padding:0px;}
+.centblknew {width: 100%; margin: 0px auto;}
+.centblkgdgdnew {width: 100%; margin: 0px auto;}
+.stickylandgallry .landing {width: 100%}
+.stickylandgallry .landing.glysec .normal { width:768px;}
+
+.galleybg .col-md-9.mdf { width:100%;padding: 0px;}
+.galleybg .col-md-9.mdf img{ width:100%;}
+.galleybg .col-md-3.mdf {width:100%;padding: 0px;}
+.galleybg .col-md-3.mdf ul { width:100%; margin: 1px 0 0 0;}
+.galleybg .col-md-3.mdf ul li:first-child { display:none;}
+.galleybg .col-md-3.mdf ul li:nth-child(2) { display:none;}
+.galleybg .col-md-3.mdf ul li { height:auto;float: left;width: 100%;}
+.galleybg .col-md-3.mdf ul li.ts {height: 157px;}
+.infobrand {background: #fbfbfb; margin-bottom:0; margin-top:0px;}
+.infobrand ul li  { float:none; width:100%; border-right:none; border-bottom:1px solid #dfdfdf; padding-bottom:10px; padding-top:10px;line-height: 25px;}
+.infobrand ul li:last-child  { border-bottom:0px solid #dfdfdf;}
+.brdtop { border:0px;}
+
+#landfixoptiongalley .bg-white.landing { padding-top:0px;}
+#landfixoptiongalley .landing.glysec .normal { border-bottom:1px solid #dfdfdf; margin-top:0px;}
+.landing .normal .col-md-10.mdy-width { margin-bottom:20px;}
+#myGallery .modal-dialog {width: 90%;}
+.galleybg .col-md-9.mdf .mortxt {height: 80px; min-height: auto; padding:10px 0;}
+.galleybg .col-md-9.mdf .mortxt .txtshow {font-size: 20px;}
+}
+
+
+@media only screen and (min-width:320px) and (max-width:359px){ 
+#myGallery .modal-dialog {width: 94%;}
+}
+
+@media only screen and (min-width:480px) and (max-width:767px){ 
+.galleymar .landing .tab-panel .rht-pnl {float: none;text-align: center;width: 130px;margin: 0 auto;}
+#myGallery .modal-dialog {width: 94%;}
+}
+
+@media only screen and (min-width:768px) and (max-width:1023px){ 
+.centblknew {width: 100%; margin: 0px auto;}
+.centblkgdgdnew {width: 100%; margin: 0px auto;}
+.stickylandgallry .landing {width: 100%}
+.stickylandgallry .landing.glysec .normal { width:768px;}
+.glysec{margin-left: -5px;
+margin-right: 0px;}
+.galleybg .col-md-9.mdf { width:100%;padding: 0px;}
+.galleybg .col-md-9.mdf img{ width:100%;}
+.galleybg .col-md-3.mdf {width:100%;padding: 0px;}
+.galleybg .col-md-3.mdf ul { width:100%;}
+.galleybg .col-md-3.mdf ul li { height:97px;float: left;width: 33.3%;}
+.galleybg .col-md-3.mdf ul li.ts {height: 131px;}
+#myGallery .modal-dialog {width: 730px;}    
+}
+
+@media only screen and (min-width:1024px) and (max-width:1199px){ 
+
+.centblknew {width: 100%; margin: 0px auto;}
+.centblkgdgdnew {width: 1000px; margin: 0px auto;}
+.glysec{margin-left: 10px;margin-right:13px;}
+.stickylandgallry .landing {width: 100%;}
+.stickylandgallry .landing.glysec .normal { width:1000px;}
+.galleybg .col-md-9.mdf { width:69.5%;padding: 0px;}
+.galleybg .col-md-9.mdf img{ width:100%;}
+.galleybg .col-md-3.mdf {width:29%;padding: 0px;}
+.galleybg .col-md-3.mdf ul li { height:99px;}
+}

@@ -1,0 +1,114 @@
+* {margin:0; padding:0; border:0; outline:0; font-size:100%; vertical-align:baseline; background:transparent;}
+body{font-size:14px;font-family:Open Sans Regular, Helvetica, Arial, sans-serif;font-style:normal;font-weight:400;background:#fff;overflow-x:hidden;color:#333;}
+* {
+box-sizing: border-box;
+}
+a { text-decoration:none;}
+.maindiv { width:1000px; min-height:1000px; margin:0 auto;background-color:#fbfbfb; padding-bottom:0px;}
+.logo { padding:10px 0; clear:both; float:none;}
+.lintt { border-top:1px solid #dfdfdf; border-bottom:1px solid #dfdfdf; padding:30px 0; min-height:100px; overflow:hidden; height:auto; }
+.blogo {    border: 1px solid #dfdfdf;    padding:20px 15px;    border-radius: 4px;    background: #fff;	width:26%; float:left;}
+.maininnerdiv { width:800px; margin:0 auto;}
+
+.blogo img { width:100%;}
+.bgcolorgg { background:#f3f3f3;}
+.blogoinfo1  { width:54%; float:left; padding-left:20px;}
+.blogoinfo2  { width:18%; float:left; border-left:1px solid #dfdfdf; padding-left:10px; margin-left:10px;}
+.textblk { font-size:12px; color:#999999; text-transform:uppercase;}
+.textblk span.bigtxt{font-family:Open Sans Bold; display:block; text-transform:capitalize; color:#333; font-size:20px; line-height:22px;  }
+.textblk span.smalltxt{font-family:Open Sans Regular; display:block; text-transform:capitalize; color:#333; font-size:20px; line-height:22px;  }
+.mart20 { margin-top:20px;}
+.custtextblk { text-align:center; margin-bottom:40px;}
+p.custtext { font-size:16px; line-height:22px; color:#666;}
+p.custtext a { color:#ed3036;}
+p.custtext strong { color:#333;} 
+.custtexthead { font-size:22px; color:#333; line-height:22px; margin-top:40px; margin-bottom:20px;}
+a:hover { text-decoration:none;}
+.hxt {}
+
+.fdkblk { width:100%; margin:0px auto; background:#fff; padding:40px 10px; text-align:center;    border-radius: 10px;
+border: 1px solid #dfdfdf; min-height:400px;}
+.hdkblk { font-size:19px;font-family:'Open Sans Semibold'; line-height:20px; text-transform:uppercase; margin-bottom:20px; color:#000;}
+.hdkblk  span{ display:block; font-size:16px;  font-family:'Open Sans Regular'; margin-top:2px; text-transform:capitalize;}  	
+.bdrline  { height:1px; background:#dbdbdb; margin-top:15px; margin-bottom:20px;}
+.sbkblk { margin-top:0px; margin-bottom:35px;}
+.hdk {font-family:'Open Sans Semibold'; line-height:22px; font-size:18px; margin-bottom:10px;}
+.rating {unicode-bidi: bidi-override;    direction: rtl;    width: 100%;}
+.rating input {    position: absolute;    left: -999999px;}
+.rating label {    display: inline-block;    font-size: 0;}
+.rating > label:before {    position: relative;    font: 30px/1 FontAwesome;    display: block;    content: "\f005";    color: #ccc;    background: -webkit-linear-gradient(-45deg, #d9d9d9 0%, #b3b3b3 100%);    -webkit-background-clip: text;    -webkit-text-fill-color: transparent;
+}
+.rating > label:hover:before,
+.rating > label:hover ~ label:before,
+.rating > label.selected:before,
+.rating > label.selected ~ label:before {
+color: #f22406;    background: -webkit-linear-gradient(-45deg, #f22406 0%, #f22406 100%);
+-webkit-background-clip: text;    -webkit-text-fill-color: transparent;}
+
+.ratingleads {unicode-bidi: bidi-override;    direction: rtl;    width: 100%;}
+.ratingleads input {    position: absolute;    left: -999999px;}
+.ratingleads label {    display: inline-block;    font-size: 0;}
+.ratingleads > label:before {    position: relative;    font: 30px/1 FontAwesome;    display: block;    content: "\f005";    color: #ccc;    background: -webkit-linear-gradient(-45deg, #d9d9d9 0%, #b3b3b3 100%);    -webkit-background-clip: text;    -webkit-text-fill-color: transparent;
+}
+.ratingleads > label:hover:before,
+.ratingleads > label:hover ~ label:before,
+.ratingleads > label.selected:before,
+.ratingleads > label.selected ~ label:before {
+color: #f22406;    background: -webkit-linear-gradient(-45deg, #f22406 0%, #f22406 100%);
+-webkit-background-clip: text;    -webkit-text-fill-color: transparent;}
+
+.ratingleadsquality {unicode-bidi: bidi-override;    direction: rtl;    width: 100%;}
+.ratingleadsquality input {    position: absolute;    left: -999999px;}
+.ratingleadsquality label {    display: inline-block;    font-size: 0;}
+.ratingleadsquality > label:before {    position: relative;    font: 30px/1 FontAwesome;    display: block;    content: "\f005";    color: #ccc;    background: -webkit-linear-gradient(-45deg, #d9d9d9 0%, #b3b3b3 100%);    -webkit-background-clip: text;    -webkit-text-fill-color: transparent;
+}
+.ratingleadsquality > label:hover:before,
+.ratingleadsquality > label:hover ~ label:before,
+.ratingleadsquality > label.selected:before,
+.ratingleadsquality > label.selected ~ label:before {
+color: #f22406;    background: -webkit-linear-gradient(-45deg, #f22406 0%, #f22406 100%);
+-webkit-background-clip: text;    -webkit-text-fill-color: transparent;}
+
+.ratingservice {unicode-bidi: bidi-override;    direction: rtl;    width: 100%;}
+.ratingservice input {    position: absolute;    left: -999999px;}
+.ratingservice label {    display: inline-block;    font-size: 0;}
+.ratingservice > label:before {    position: relative;    font: 30px/1 FontAwesome;    display: block;    content: "\f005";    color: #ccc;    background: -webkit-linear-gradient(-45deg, #d9d9d9 0%, #b3b3b3 100%);    -webkit-background-clip: text;    -webkit-text-fill-color: transparent;
+}
+.ratingservice > label:hover:before,
+.ratingservice > label:hover ~ label:before,
+.ratingservice > label.selected:before,
+.ratingservice > label.selected ~ label:before {
+color: #f22406;    background: -webkit-linear-gradient(-45deg, #f22406 0%, #f22406 100%);
+-webkit-background-clip: text;    -webkit-text-fill-color: transparent;}
+
+.sbt { color:#dc3322!important; padding:10px 20px!important; text-transform:uppercase; border:1px solid #dc3322!important; font-size:14px; font-family:'Open Sans Bold';     background: transparent; border-radius:4px; clear:both; display: block;width: 180px; margin: 20px auto; text-decoration: none;}
+.sbt:hover {background: #dc3322; color:#fff!important;}
+ul.webrating { margin-bottom:25px;}
+ul.webrating li { display:inline-block; width:23%;}
+ul.webrating li input[type=checkbox], ul.webrating li input[type=radio] { position:relative; top:2px; right:4px;}
+
+.txtarea textarea { margin-top:5px; width: 80%; height: 140px; background: #f3f3f3; border-radius: 5px;  border: 1px solid #dfdfdf; padding:10px; font-size:14px; color:#999; -webkit-box-shadow:inset 0px 5px 5px 0px rgba(0,0,0,0.05);-moz-box-shadow:inset inset 0px 5px 5px 0px rgba(0,0,0,0.05);box-shadow:inset inset 0px 5px 5px 0px rgba(0,0,0,0.05);}
+
+.footbg { background:#f3f3f3; padding:35px 0 70px; text-align:center; border-top:1px solid #dfdfdf; margin-top:40px; font-size:13px; line-height:22px; }
+.thkff{ display:table;    width: 82%;    margin: 0 auto; height:400px;}
+.thkff p { display: table-cell;
+    vertical-align: middle;
+    text-align: center; font-size:16px; clear:both; padding-bottom:30px; vertical-align:middle; text-align:center;}
+	.thkff .sbt {width: 260px;}
+	
+@media only screen and (min-width:1px) and (max-width:767px){
+.maindiv { width:100%;}
+.maininnerdiv { width:90%; margin:0 auto;}
+.logo { text-align:center;}
+.blogo { width:220px; margin:0 auto; text-align:center; float:none;}
+.blogoinfo1 { float:none; text-align:center; width:100%; border:0px; margin:20px 0;}
+.blogoinfo2 { float:none; text-align:center; width:100%; border-top: 1px solid #dfdfdf;
+padding-top: 20px; border-left:0px; padding-left:0px; margin-left:auto;}
+.hdkblk {    font-size: 18px;}
+ul.webrating li { font-size:12px;}
+}
+
+@media only screen and (min-width:768px) and (max-width:999px){
+.maindiv { width:100%;}
+.maininnerdiv { width:94%; margin:0 auto;}
+}
