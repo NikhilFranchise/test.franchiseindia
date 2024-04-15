@@ -12,6 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+        $middleware->alias([
+            'invAuth' => \App\Http\Middleware\InvAuth::class,
+            'franAuth' => \App\Http\Middleware\franAuth::class,
+        ]);
+       
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
