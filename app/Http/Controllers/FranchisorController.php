@@ -791,8 +791,8 @@ class FranchisorController extends Controller
         if ($request->hasFile('company_logo')) {
             $companyLogo = $request->file('company_logo');
             $extension = $request->file('company_logo')->getClientOriginalExtension();
-            $companyLogoPath = 'images/' . date('md') . '/' . rand() . '.' . $extension; // Path within the public folder
-            $companyLogo->move(public_path($companyLogoPath)); // Move the uploaded file to the specified path
+            $companyLogoPath = 'images/' . rand() . '.' . $extension; // Path within the public folder
+            $companyLogo->move(public_path('images'),$companyLogoPath); // Move the uploaded file to the specified path
             $url = asset($companyLogoPath); // Generate a URL to access the uploaded file
         }
         
