@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'invAuth' => \App\Http\Middleware\InvAuth::class,
             'franAuth' => \App\Http\Middleware\franAuth::class,
+            'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class
         ]);
        
     })
