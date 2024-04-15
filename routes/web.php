@@ -238,12 +238,13 @@ Route::get('{searchTerm}/{categoryIds}',                [BusinessListingControll
 Route::get('{searchTerm}/{categoryIds}/{locationIds}',   [BusinessListingController::class, 'searchBusinessListing']);
 Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}',   [BusinessListingController::class, 'searchBusinessListing']);
 Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}',   [BusinessListingController::class, 'searchBusinessListing']);
+//Pankaj start
 Route::get('/lowcost', [BusinessListingController::class, 'searchBusinessListing'])
 ->defaults('lowcost', 'lowcost');
 Route::get('{catUrl}.{category_param}',        [BusinessListingController::class, 'getBusinessListingnormalization']);    
 Route::get('{lowcost}',                        [BusinessListingController::class, 'searchBusinessListingnormalization']);
     
-
+//Pankaj end
 
 // Route::get('{catUrl}.{category_param}',        [BusinessListingController::class, 'getBusinessListing']);    
 
