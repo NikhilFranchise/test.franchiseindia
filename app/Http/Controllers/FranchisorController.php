@@ -2789,7 +2789,7 @@ class FranchisorController extends Controller
      */
     private function sendMailNotification($email, $data)
     {
-        // Mail::getFacadeRoot()->to($email)->send($data);
+        Mail::getFacadeRoot()->to($email)->send($data);
     }
 
     /**
