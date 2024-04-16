@@ -1535,8 +1535,9 @@ class InvestorController extends Controller
             ];
 
             //Mail sending to investor for confirmation
-            if(!empty($invData['email']))
-                Mail::getFacadeRoot()->to($invData['email'])->send(new autoInvestorRegistration($data));
+            // if(!empty($invData['email'])){
+            //     Mail::getFacadeRoot()->to($invData['email'])->send(new autoInvestorRegistration($data));
+            // }
         }
 
         return ;

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewHomePageController;
 use App\Http\Controllers\StaticPageController;
 use App\Http\Controllers\ContactUsController;
@@ -17,11 +18,7 @@ use App\Http\Controllers\BrandCompareController;
 use App\Http\Controllers\BusinessListingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FeedbackController;
-use App\Http\Controllers\PankajController;
-use Illuminate\Support\Facades\Route;
-
-Auth::routes();
-
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +33,6 @@ Auth::routes();
 
     Route::get('/',                                 [NewHomePageController::class, 'homeNew']);
     Route::get('home',                                   function() { return redirect('/', 301);});
-    Route::get('pagenotfound',function(){return view('static.404');}); //404 ERROR PAGE
     Route::get('/hi',                               [NewHomePageController::class, 'hindiHomePage']);
     Route::get('about',                             [StaticPageController::class, 'aboutus']);
     Route::get('contact',                           [ContactUsController::class, 'contactUsForm']);
@@ -47,7 +43,6 @@ Auth::routes();
     Route::get('invester-verifyformmobilenumber',   [MobileVerificationController::class, 'investerverifyMobile']);
     Route::get('/user/check-mobile-status',         [CommonController::class, 'verifyMobile']);
     Route::get('verifyformmobilenumber',            [MobileVerificationController::class, 'verifyMobile']);
-    Route::get('verify',                            [MobileVerificationController::class,'verifyMobile']);
     Route::get('/user/investor-mobile-verify',      [CommonController::class, 'investormobileverify']);
     Route::get('validate-email',                    [CommonController::class, 'emailValidation']);
     Route::get('thanks-advice-form', function () { return view('thanks.advice-form'); });
@@ -250,19 +245,152 @@ Route::group( [ 'prefix' => 'business-opportunities' ], function()
     Route::get('{searchTerm}/{categoryIds}/{locationIds}',   [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}',   [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}',   [BusinessListingController::class, 'searchBusinessListing']);
-    
-    Route::get('{catUrl}.{category_param}',        [BusinessListingController::class, 'getBusinessListingnormalization']);    
-    Route::get('{lowcost}',                        [BusinessListingController::class, 'searchBusinessListingnormalization']);
-        
-    
-    
-    // Route::get('{catUrl}.{category_param}',        [BusinessListingController::class, 'getBusinessListing']);    
-    Route::get('/lowcost', [BusinessListingController::class, 'searchBusinessListing'])
-    ->defaults('lowcost', 'lowcost');
+//     Route::get('{catUrl}.{category_param}', function(Request $request,$catUrl, $category_param) {
+//         preg_match_all('/\d+/', $category_param, $matches);
+//         $allIntegers = implode('', $matches[0]);
 
+//         // dd($catUrl,$category_param,$allIntegers);
+//         $seoCategoriesm = Config('category.SeoCategoryArr'); // Corrected variable name
+//         $seoCategoriessc = Config('category.SeoSubCategoryArr'); // Corrected variable name
+//         $seoCategoriesssc = Config('category.SeoSubSubCategoryArr'); // Corrected variable name
+//         // dd($catUrl, $category_param,$allIntegers,$seoCategoriesssc);
+
+// // Check if $allIntegers exists in $seoCategoriesm configuration array
+//         if (array_key_exists($allIntegers, $seoCategoriesm)) {
+//             // If $allIntegers exists in $seoCategoriesm, add "m" to $allIntegers
+//             $allIntegers = 'm' . $allIntegers;
+//             if(strpos($allIntegers, "m") !== false){    
+//             // dd($allIntegers);
+//                 $category = substr($allIntegers, 1, 3);
+//                 // dd($allIntegers,$category);
+//                 $configCatUrl = Config('category.SeoCategoryArr.'.$category);
+//                 // dd($configCatUrl);
+//                 $newCatUrl = '/business-opportunities/'.$configCatUrl . '.' . $allIntegers;
+//                 // dd($newCatUrl);
+//                 $oldCaturl='/business-opportunities/'.$catUrl . '.' . $category_param;
+//                 // dd($oldCaturl);
+//                 // dd($category,$configCatUrl,$newCatUrl, $oldCaturl);
+//                 if ($configCatUrl !== false) {
+//                     $newCatUrl = '/business-opportunities/'.$configCatUrl . '.' . $allIntegers;
+//                     if ($newCatUrl != $oldCaturl ) {
+//                         // dd($newCatUrl);
+//                         return redirect($newCatUrl);
+//                     }
+//                 }
+//             }        
+//         }
+//         else if (array_key_exists($allIntegers, $seoCategoriessc)) {
+//             // If $allIntegers exists in $seoCategoriesm, add "m" to $allIntegers
+//             $allIntegers = 'sc' . $allIntegers;
+//             // dd($allIntegers);
+
+//             if(strpos($allIntegers, "sc") !== false){    
+//             // dd($allIntegers);
+//                 $category = substr($allIntegers, 2, 3);
+//                 // dd($allIntegers,$category);
+//                 $configCatUrl = Config('category.SeoSubCategoryArr.'.$category);
+//                 // dd($configCatUrl);
+//                 $newCatUrl = '/business-opportunities/'.$configCatUrl . '.' . $allIntegers;
+//                 // dd($newCatUrl);
+//                 $oldCaturl='/business-opportunities/'.$catUrl . '.' . $category_param;
+//                 // dd($oldCaturl);
+//                 // dd($category,$configCatUrl,$newCatUrl, $oldCaturl);
+//                 if ($configCatUrl !== false) {
+//                     $newCatUrl = '/business-opportunities/'.$configCatUrl . '.' . $allIntegers;
+//                     if ($newCatUrl != $oldCaturl ) {
+//                         // dd($newCatUrl);
+//                         return redirect($newCatUrl);
+//                     }
+//                 }
+//             }        
+//         }
+
+//         else if (array_key_exists($allIntegers, $seoCategoriesssc)) {
+//             // If $allIntegers exists in $seoCategoriesm, add "m" to $allIntegers
+//             $allIntegers = 'ssc' . $allIntegers;
+//             // dd($allIntegers);
+
+//             if(strpos($allIntegers, "ssc") !== false){    
+//             // dd($allIntegers);
+//                 $category = substr($allIntegers, 3, 4);
+//                 // dd($allIntegers,$category);
+//                 $configCatUrl = Config('category.SeoSubSubCategoryArr.'.$category);
+//                 // dd($configCatUrl);
+//                 $newCatUrl = '/business-opportunities/'.$configCatUrl . '.' . $allIntegers;
+//                 // dd($newCatUrl);
+//                 $oldCaturl='/business-opportunities/'.$catUrl . '.' . $category_param;
+//                 // dd($oldCaturl);
+//                 // dd($category,$configCatUrl,$newCatUrl, $oldCaturl);
+//                 if ($configCatUrl !== false) {
+//                     $newCatUrl = '/business-opportunities/'.$configCatUrl . '.' . $allIntegers;
+//                     if ($newCatUrl != $oldCaturl ) {
+//                         // dd($newCatUrl);
+//                         return redirect($newCatUrl);
+//                     }
+//                 }
+//             }        
+//         }
+//         else{
+//             $defaultUrl = 'business-opportunities/all/all';
+//             return redirect($defaultUrl);
+//         }
+//             // Call the controller function if no redirection needed
+//             return app()->call([app(BusinessListingController::class), 'getBusinessListing']);
+//         });
+
+    
+    
+    Route::get('{catUrl}.{category_param}',        [BusinessListingController::class, 'getBusinessListing']);    
+    Route::get('{lowcost}',                        [BusinessListingController::class, 'searchBusinessListing']);
+    // Route::get('{lowcost}',function(Request $request,$lowcost){
+    //     $url = $request->url();
+    //     // dd($url,$lowcost);
+
+    //     preg_match_all('/\d+$/', $lowcost, $matches); // Match all integers at the end of $lowcost
+    //      $lastIntegers = end($matches[0]); // Get the last set of integers
+    //      $seoCategoriesm = Config('category.SeoCategoryArr'); // Corrected variable name
+    //      $seoCategoriessc = Config('category.SeoSubCategoryArr'); // Corrected variable name
+    //      $seoCategoriesssc = Config('category.SeoSubSubCategoryArr'); // Corrected variable name
+
+    //      //  dd($lastIntegers,$seoCategories);
+    //      if (array_key_exists($lastIntegers, $seoCategoriesm)) {
+            
+    //         $category = $seoCategoriesm[$lastIntegers];
+    //         // dd($category);
+    //         $newUrl = '/business-opportunities/' . $category . '.'.'m' . $lastIntegers;
+    //         return redirect($newUrl);
+         
+    //     }
+    //     else if (array_key_exists($lastIntegers, $seoCategoriessc)) {
+    //         $category = $seoCategoriessc[$lastIntegers];
+    //         $newUrl = '/business-opportunities/' . $category . '.'.'sc' . $lastIntegers;
+    //         return redirect($newUrl);
+    //     }
+    //     else if (array_key_exists($lastIntegers, $seoCategoriesssc)) {
+    //         $category = $seoCategoriesssc[$lastIntegers];
+    //         // dd($category);
+    //         $newUrl = '/business-opportunities/' . $category . '.'.'ssc' . $lastIntegers;
+    //         return redirect($newUrl);
+    //     }
+    //     else{
+    //         $defaultUrl = 'business-opportunities/all/all';
+    //         return redirect($defaultUrl);
+    //     }
+       
+    
+    //     //  dd($url, $lastIntegers,$configCatUrl);
+         
         
-    Route::get('{code}/all/all',             function(){return redirect('business-opportunities/all/all', 301);});
-    Route::get('all/{code}/all/',            function(){return redirect('business-opportunities/all/all', 301);});
+    //      return app()->call([app(BusinessListingController::class), 'searchBusinessListing']);
+    // });
+
+    // Route::get('{lowcost}',function($lowcost){
+    //     return redirect()->route('businessListing','all/all');
+    // })->where('lowcost','.*')->name('businessListing');
+    
+    
+    // Route::get('{code}/all/all',             function(){return redirect('business-opportunities/all/all', 301);});
+    // Route::get('all/{code}/all/',            function(){return redirect('business-opportunities/all/all', 301);});
 });
 
 // /Category Page Routes
@@ -273,4 +401,3 @@ Route::group( [ 'prefix' => 'category' ], function()
     Route::get('searchby',     [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('index',        function(){return redirect('business-opportunities/all/all', 301);});
 });
-Route::get('sitemapgenerate',                [SitemapController::class,'sitemap']); // Sitemap Generator route

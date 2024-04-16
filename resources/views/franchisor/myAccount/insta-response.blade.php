@@ -39,39 +39,79 @@
 										<td data-th="Name" class="widthper16">
 											<div class="fra-title" id="data">{{$instaResult->name}}<span>{{date('d-m-Y', strtotime($instaResult->create_date))}}</span></div>
 										</td>
-										<!--<td data-th="Email" class="widthper24">
-											<div class="fra-title" id="data">
-                                                {{ (request()->user()->membership_type == 1 && $instaResult->visibility == 1) ? $instaResult->email : "xxxxxxxx@gmail.com"}}
-											</div>
-										</td>
-										<td data-th="Address" class="widthper30">
-											<div class="fra-title" id="data">
-                                                {{ (request()->user()->membership_type == 1 && $instaResult->visibility == 1) ? $instaResult->address.','.$instaResult->city.','.$instaResult->state.',Pincode:'.$instaResult->pincode.','.$instaResult->country : "xxxxxx,pincode:-xxxxxx,xxxxxx"}}
-											</div>
-										</td>
-										<td data-th="Phone" class="widthper12">
-											<div class="fra-title" id="data">
-                                                {{ (request()->user()->membership_type == 1 && $instaResult->visibility == 1) ? $instaResult->phone : "xxxxxxxxxx"}}
-											</div>
-										</td>-->
+										
 										
 								<td data-th="Email" class="widthper24">
 								<div class="fra-title" id="data">
-									{{ ($instaResult->visibility == 1) ? $instaResult->email : "xxxxxxxx@gmail.com"}}
+									{{ ($instaResult->visibility == 1 || $franData->fleads_status == 1) ? $instaResult->email : "xxxxxxxx@gmail.com"}}
 								</div>
 								</td>
 								<td data-th="Address" class="widthper30">
 								<div class="fra-title" id="data">
-									{{ ($instaResult->visibility == 1) ? $instaResult->address.','.$instaResult->city.','.$instaResult->state.',Pincode:'.$instaResult->pincode.','.$instaResult->country : "xxxxxx,pincode:-xxxxxx,xxxxxx"}}
+									{{ ($instaResult->visibility == 1 || $franData->fleads_status == 1) ? $instaResult->address.','.$instaResult->city.','.$instaResult->state.',Pincode:'.$instaResult->pincode.','.$instaResult->country : "xxxxxx,pincode:-xxxxxx,xxxxxx"}}
 								</div>
 								</td>
 								<td data-th="Phone" class="widthper12">
 								<div class="fra-title" id="data">
-									{{ ($instaResult->visibility == 1) ? $instaResult->phone : "xxxxxxxxxx"}}
+									{{ ($instaResult->visibility == 1 || $franData->fleads_status == 1) ? $instaResult->phone : "xxxxxxxxxx"}}
 								</div>
 								</td>										
 									</tr>
 								@endforeach
+
+								{{-- @php
+    $counter = 0;
+@endphp
+
+@foreach($insta as $instaResult)
+    @if($franData->fleads_status == 1 || $instaResult->visibility == 1)
+        <tr class="extrl">
+            <td data-th="Name" class="widthper16">
+                <div class="fra-title" id="data">{{$instaResult->name}}<span>{{date('d-m-Y', strtotime($instaResult->create_date))}}</span></div>
+            </td>
+            <td data-th="Email" class="widthper24">
+                <div class="fra-title" id="data">
+                    {{  $instaResult->email  }}
+                </div>
+            </td>
+            <td data-th="Address" class="widthper30">
+                <div class="fra-title" id="data">
+                    {{  $instaResult->address.','.$instaResult->city.','.$instaResult->state.',Pincode:'.$instaResult->pincode.','.$instaResult->country  }}
+                </div>
+            </td>
+            <td data-th="Phone" class="widthper12">
+                <div class="fra-title" id="data">
+                    {{  $instaResult->phone  }}
+                </div>
+            </td>
+        </tr>
+        @php
+            $counter++;
+        @endphp
+    @elseif($franData->fleads_status != 1 || $instaResult->visibility != 1)
+        <tr class="extrl">
+            <td data-th="Name" class="widthper16">
+                <div class="fra-title" id="data">{{$instaResult->name}}<span>{{date('d-m-Y', strtotime($instaResult->create_date))}}</span></div>
+            </td>
+            <td data-th="Email" class="widthper24">
+                <div class="fra-title" id="data">
+                    "xxxxxxxx@gmail.com"
+                </div>
+            </td>
+            <td data-th="Address" class="widthper30">
+                <div class="fra-title" id="data">
+                    xxxxxxx,pincode:-xxxxxx,xxxxxx
+                </div>
+            </td>
+            <td data-th="Phone" class="widthper12">
+                <div class="fra-title" id="data">
+                    xxxxxxxxxx
+                </div>
+            </td>
+        </tr>
+    @endif
+@endforeach --}}
+
 								</tbody>
 							</table>
 						</div>

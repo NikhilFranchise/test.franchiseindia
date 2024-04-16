@@ -367,8 +367,16 @@
                         @endif
                     <!-- Insta Apply section end here -->
                         <div class="clr"></div>
+<<<<<<< HEAD
                         @if ($agent->isDesktop())
+
                         {{-- @desktop --}}
+=======
+                        {{-- @desktop --}}
+                        @if ($agent->isDesktop())
+                            
+                        
+>>>>>>> 5943da1e7c65864c1b2ba6d7583993ab334049bd
                         <div class="catleftbanner300 detailpage">
                             {{--@include("includes.banners.dfp_300X600")--}}
                             <!-- /1057625/FIHL/Desktop_ROS_300x250_ATF-->
@@ -382,8 +390,13 @@
                         {{--<div class="catleftbanneryahoo300">--}}
                             {{--@include("includes.banners.yahoo_300X600")--}}
                         {{--</div>--}}
+<<<<<<< HEAD
                         @endif
                         {{-- @enddesktop --}}
+=======
+                        {{-- @enddesktop --}}
+                        @endif
+>>>>>>> 5943da1e7c65864c1b2ba6d7583993ab334049bd
                     </div>
                     <!-- Insta Apply section end here -->
                 </div>

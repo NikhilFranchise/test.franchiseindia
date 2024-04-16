@@ -1,4 +1,4 @@
-jQuery.validator.addMethod("accept", function (value, element, param) { return value.match(new RegExp("." + param + "$")) });
+$.validator.addMethod("accept", function (value, element, param) { return value.match(new RegExp("." + param + "$")) });
 $(document).ready(function () {
     $('input[title!=""]').hint();
     $('textarea[title!=""]').hint();

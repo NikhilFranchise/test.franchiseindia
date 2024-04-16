@@ -29,15 +29,19 @@
                                 </thead>
                                 <tbody>
                                 @foreach($insta as $instaApply)
+                                @if ($franData->fleads_status == 1 )
+                                <tr class="extrl">
+                                    <td><div class="fra-title">{{ $instaApply->name.''.$instaApply->lname }}</div></td>
+                                    <td><div class="fra-title">{{ ($instaApply->visibility == 1) ? $instaApply->email : "Not visible"}}</div></td>
+										<td><div class="fra-title">{{ ($instaApply->visibility == 1) ? $instaApply->phone : "Not visible"}}</div></td>										
+                                 </tr> 
+                                @else
                                     <tr class="extrl">
-                                       <!-- <td><div class="fra-title">{{ $instaApply->name.''.$instaApply->lname }}</div></td>
-                                        <td><div class="fra-title">{{ (request()->user()->membership_type == 1 && $instaApply->visibility == 1) ? $instaApply->email : "Not visible"}}</div></td>
-                                        <td><div class="fra-title">{{ (request()->user()->membership_type == 1 && $instaApply->visibility == 1) ? $instaApply->phone : "Not visible"}}</div></td>-->
-										<td><div class="fra-title">{{ $instaApply->name.''.$instaApply->lname }}</div></td>
+                                       <td><div class="fra-title">{{ $instaApply->name.''.$instaApply->lname }}</div></td>
 										<td><div class="fra-title">{{ ($instaApply->visibility == 1) ? $instaApply->email : "Not visible"}}</div></td>
 										<td><div class="fra-title">{{ ($instaApply->visibility == 1) ? $instaApply->phone : "Not visible"}}</div></td>										
                                     </tr>
-							
+                                @endif    
                                 @endforeach
                                 </tbody>
                             </table>

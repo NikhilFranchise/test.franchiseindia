@@ -121,7 +121,6 @@ $title = str_replace("- Franchise India",$title1,$seoTitle);
 <script src="{{asset('article/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('article/assets/js/swiper.min.js')}}"></script>
 <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
-{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 
 <!-- END NEW ARTICLE HYPERLINKS  -->
 <script>

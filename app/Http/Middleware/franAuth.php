@@ -18,23 +18,19 @@ class franAuth
     public function handle(Request $request, Closure $next): Response
     {
         if (empty($request->user()))
-        return redirect('loginform');
+            return redirect('loginform');
 
-    if (!empty($request->user())) {
-        if( $request->user()->profile_type == 2 )
-            return redirect('investor/myaccount/dashboard');
-    }
+        if (!empty($request->user())) {
+            if( $request->user()->profile_type == 2 )
+                return redirect('investor/myaccount/dashboard');
+        }
 
-    UserRecord::query()->updateOrCreate([
-        'profile_str'   => request()->user()->profile_str,
-    ],[
-        'last_activity_user' => date('Y-m-d H:i:s')
-    ]);
+        UserRecord::query()->updateOrCreate([
+            'profile_str'   => request()->user()->profile_str,
+        ],[
+            'last_activity_user' => date('Y-m-d H:i:s')
+        ]);
 
-    return $next($request);
-
-        // return $next($request);
+        return $next($request);
     }
 }
-
-
