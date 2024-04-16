@@ -299,8 +299,9 @@ class FranchisorController extends Controller
         if ($request->input('looking_franchise') == config('constants.LookingFor.Franchisor')) {
 
             $lookingFranchise = 1;
+            // dd($request->get('franchise_partner_type'));
             $franchisePartner = $request->get('franchise_partner_type');
-            $franchisePartnerCount = count($franchisePartner);
+            $franchisePartnerCount = $franchisePartner != null ;
             $franchisorPartnerType = $franchisePartnerCount == 2 ? 3 : ($franchisePartner[0] == "lookingFrUnit" ? 1 : 2);
 
             if ($franchisorPartnerType == 3 || $franchisorPartnerType == 1) {
@@ -2789,7 +2790,7 @@ class FranchisorController extends Controller
      */
     private function sendMailNotification($email, $data)
     {
-        // Mail::getFacadeRoot()->to($email)->send($data);
+        //  Mail::getFacadeRoot()->to($email)->send($data);
     }
 
     /**

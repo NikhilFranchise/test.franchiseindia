@@ -14,9 +14,11 @@
 @php
     $pageType = (request()->segment(1) == 'premiumbrand' || request()->segment(2) == 'premiumbrand') ? 2 : 1;
 @endphp
-@mobile
+{{-- @mobile --}}
+@if ($agent->isMobile())
 @include('layout.newhomepage.mobile.topsearch')
-@endmobile
+@endif
+{{-- @endmobile --}}
 @include('layout.newhomepage.topsearch');
 <!-- Login/ Registration Model -->
 @include('layout.newhomepage.loginregistration')
@@ -29,7 +31,10 @@
 
 <!-- Sidebar End -->
     <!-- Desktop Section Start-->
-@desktop
+{{-- @desktop --}}
+@if ($agent->isDesktop())
+    
+{{-- @endif --}}
 
 <!-- Page Content  -->
     <div id="content">
@@ -122,22 +127,7 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="franchisorId" value="{{ $franchisorId }}">
                                 <div class="ftyblk">
-                                    <!--<div class="rinr">
-                                        <div class="radio-item">
-                                            <input type="radio" id="ritema" name="memberplan" id="price1" value="116">
-                                            <label for="ritema"></label>
-                                        </div>
-                                        <i class="fas fa-rupee-sign"></i>
-                                        <span class="pf1">19,999</span><span class="pf2">/mo</span>
-                                    </div>
-                                    <div class="rinr otherp">
-                                        <div class="radio-item">
-                                            <input type="radio" id="ritema2" name="memberplan"  value="117" >
-                                            <label for="ritema2"></label>
-                                        </div>
-                                        <i class="fas fa-rupee-sign"></i>
-                                        <span class="pf1">59,997</span><span class="pf2"> <del class="dll">97,500</del> /Qrt</span>
-                                    </div>-->
+                                   
                                     <div class="rinr otherp">
                                         <div class="radio-item">
                                             <input type="radio" id="ritema21" name="memberplan"  value="123" >
@@ -169,22 +159,15 @@
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input type="hidden" name="franchisorId" value="{{ $franchisorId }}">
                                 <div class="ftyblk">
-                                    <!--<div class="rinr">
-                                        <div class="radio-item">
-                                            <input type="radio" id="ritema4" name="memberplan" value="119">
-                                            <label for="ritema4"></label>
-                                        </div>
-                                        <i class="fas fa-rupee-sign"></i>
-                                        <span class="pf1">39,999</span><span class="pf2">/mo</span>
-                                    </div>-->
+                                   
                                     <div class="rinr otherp">
                                         <div class="radio-item">
                                             <input type="radio" id="ritema5" name="memberplan" value="120" >
                                             <label for="ritema5"></label>
                                         </div>
                                         <i class="fas fa-rupee-sign"></i>
-                                        <span class="pf1">1,43,000</span><span class="pf2"> <!--<del class="dll">
-					1,31,997</del>-->/Qrt</span>
+                                        <span class="pf1">1,43,000</span><span class="pf2"> 
+                                            /Qrt</span>
                                     </div>
                                     <div class="rinr otherp">
                                         <div class="radio-item">
@@ -250,19 +233,7 @@
                                 <div class="iconblk htset">  </div>
 
                             </li>
-                           <!--  <li>
-                                <div class="reghead">Sub -Sub Category</div>
-                                <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                <div class="iconblk htset"> <div class="pvalue">40%</div></div>
-                            </li> -->
+                           
                             <li>
                                 <div class="reghead">Sub Category</div>
                                 <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
@@ -308,11 +279,13 @@
 
     </div>
 </div>
-@enddesktop
+{{-- @enddesktop --}}
+{{-- @endif --}}
 <!-- Desktop Section End-->
 
 <!-- Tablet Section Start-->
-@tablet
+{{-- @tablet --}}
+@elseif ($agent->isTablet())
 <!-- Page Content  -->
 <div id="content">
     @include('layout.newhomepage.header')
@@ -395,22 +368,7 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="franchisorId" value="{{ $franchisorId }}">
                             <div class="ftyblk">
-                               <!--  <div class="rinr">
-                                    <div class="radio-item">
-                                        <input type="radio" id="ritema" name="memberplan" id="price1" value="116">
-                                        <label for="ritema"></label>
-                                    </div>
-                                    <i class="fas fa-rupee-sign"></i>
-                                    <span class="pf1">19,999</span><span class="pf2">/mo</span>
-                                </div> -->
-                                <!-- <div class="rinr otherp">
-                                    <div class="radio-item">
-                                        <input type="radio" id="ritema2" name="memberplan"  value="117" >
-                                        <label for="ritema2"></label>
-                                    </div>
-                                    <i class="fas fa-rupee-sign"></i>
-                                    <span class="pf1">59,997</span><span class="pf2"> <del class="dll">97,500</del> /Qrt</span>
-                                </div> -->
+                               
                                 <div class="rinr otherp">
                                     <div class="radio-item">
                                         <input type="radio" id="ritema21" name="memberplan"  value="123" >
@@ -442,14 +400,7 @@
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="franchisorId" value="{{ $franchisorId }}">
                             <div class="ftyblk">
-                               <!--  <div class="rinr">
-                                    <div class="radio-item">
-                                        <input type="radio" id="ritema4" name="memberplan" value="119">
-                                        <label for="ritema4"></label>
-                                    </div>
-                                    <i class="fas fa-rupee-sign"></i>
-                                    <span class="pf1">39,999</span><span class="pf2">/mo</span>
-                                </div> -->
+                               
                                 <div class="rinr otherp">
                                     <div class="radio-item">
                                         <input type="radio" id="ritema5" name="memberplan" value="120" >
@@ -523,19 +474,7 @@
                             <div class="iconblk htset">  </div>
 
                         </li>
-                        <!-- <li>
-                            <div class="reghead">Sub -Sub Category</div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"> <div class="pvalue">40%</div></div>
-                        </li> -->
+                        
                         <li>
                             <div class="reghead">Sub Category</div>
                             <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
@@ -581,10 +520,14 @@
 
 </div>
 </div>
-@endtablet
+{{-- @endtablet --}}
+@endif
 <!-- Tablet Section End -->
 <!-- mobile section start -->
-@mobile
+{{-- @mobile --}}
+@if ($agent->isMobile())
+    
+{{-- @endif --}}
 <!-- Page Content  -->
 <div id="content">
     @include('layout.newhomepage.mobile.header')
@@ -610,73 +553,14 @@
                                 </strong></li>
                         </ul>
                     </div>
-                    <!-- <div class="priclistinner">
-                        <div class="pritxtn">Super Saver</div>
-                        <form class="form-horizontal" id="fran-form" name="form_franchisor" action="{{ url('advertise-with-us-payment')}}" method="POST" role="form" enctype="multipart/form-data">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <div class="ftyblk">
-                                <div class="rinr">
-                                    <div class="radio-item">
-                                        <input type="radio" id="ritema7" name="memberplan" id="price1" value="113" checked>
-                                        <label for="ritema7"></label>
-                                    </div>
-                                    <i class="fas fa-rupee-sign"></i>
-                                    <span class="pf1">9,999</span><span class="pf2">/mo</span>
-                                </div>
-                                <div class="rinr otherp">
-                                    <div class="radio-item">
-                                        <input type="radio" id="ritema8" name="memberplan" id="price2" value="114" >
-                                        <label for="ritema8"></label>
-                                    </div>
-                                    <i class="fas fa-rupee-sign"></i>
-                                    <span class="pf1">29,997 </span><span class="pf2"><del class="dll"> 58,500</del> /Qrt</span>
-                                </div>
-                                <div class="rinr otherp">
-                                    <div class="radio-item">
-                                        <input type="radio" id="ritema81" name="memberplan" id="price2" value="122" >
-                                        <label for="ritema81"></label>
-                                    </div>
-                                    <i class="fas fa-rupee-sign"></i>
-                                    <span class="pf1">59,994 </span><span class="pf2"><del class="dll"> 1,17,000</del> /Half</span>
-                                </div>
-                                <div class="rinr otherp">
-                                    <div class="radio-item">
-                                        <input type="radio" id="ritema9" name="memberplan"  value="115">
-                                        <label for="ritema9"></label>
-                                    </div>
-                                    <i class="fas fa-rupee-sign"></i>
-                                    <span class="pf1">1,19,988</span><span class="pf2"><del class="dll"> 2,34,000</del> /Yr</span>
-                                </div>
-                            </div>
-                            <input class="btncir active" type="submit" value="Buy Now">
-                        </form>
-                        <ul class="listp">
-                            <li>Get Priority over other business listings under - <strong>Sub - Sub Category</strong></li>
-                            <li>Visibility & Reach - 40%</li>
-                        </ul>
-                    </div> -->
+                  
 
                     <div class="priclistinner">
                         <div class="pritxtn">Sub Category</div>
                         <form class="form-horizontal" id="fran-form" name="form_franchisor" action="{{ url('advertise-with-us-payment')}}" method="POST" role="form" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="ftyblk">
-                              <!--   <div class="rinr">
-                                    <div class="radio-item">
-                                        <input type="radio" id="ritema" name="memberplan" id="price1" value="116">
-                                        <label for="ritema"></label>
-                                    </div>
-                                    <i class="fas fa-rupee-sign"></i>
-                                    <span class="pf1">19,999</span><span class="pf2">/mo</span>
-                                </div> -->
-                               <!--  <div class="rinr otherp">
-                                    <div class="radio-item">
-                                        <input type="radio" id="ritema2" name="memberplan" id="price2" value="117" >
-                                        <label for="ritema2"></label>
-                                    </div>
-                                    <i class="fas fa-rupee-sign"></i>
-                                    <span class="pf1">59,997</span><span class="pf2"> <del class="dll">97,500</del> /Qrt</span>
-                                </div> -->
+                             
                                 <div class="rinr otherp">
                                     <div class="radio-item">
                                         <input type="radio" id="ritema31" name="memberplan"  value="123" checked>
@@ -707,14 +591,7 @@
                         <form class="form-horizontal" id="fran-form" name="form_franchisor" action="{{ url('advertise-with-us-payment')}}" method="POST" role="form" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="ftyblk">
-                                <!-- <div class="rinr">
-                                    <div class="radio-item">
-                                        <input type="radio" id="ritema4" name="memberplan" id="price1" value="119">
-                                        <label for="ritema4"></label>
-                                    </div>
-                                    <i class="fas fa-rupee-sign"></i>
-                                    <span class="pf1">39,999</span><span class="pf2">/mo</span>
-                                </div> -->
+                               
                                 <div class="rinr otherp">
                                     <div class="radio-item">
                                         <input type="radio" id="ritema5" name="memberplan" id="price2" value="120" >
@@ -794,30 +671,7 @@
 
                         </li>
 
-<!-- 
-
-
-
-
-                        <li>
-                            <div class="reghead">Sub -Sub Category</div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                            <div class="iconblk htset"> <div class="pvalue">40%</div></div>
-                        </li>
-
-
- -->
-
-
-                        <li>
+                         <li>
                             <div class="reghead">Sub Category</div>
                             <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
                             <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
@@ -862,7 +716,8 @@
 
 </div>
 </div>
-@endmobile
+{{-- @endmobile --}}
+@endif
 
 <!-- mobile section end -->
 <div class="overlay"></div>
@@ -992,7 +847,8 @@
 <!-- Custom JS -->
 <script type="text/javascript" src="{{url('newhomepage/assets/js/custom.js')}}"></script>
 @if( !(!empty(request()->segment(2)) && request()->segment(1) == "brands" && isset(explode('.', request()->segment(2))[1]) && in_array(explode('.', request()->segment(2))[1], Config('constants.popupBrands')) ))
-    @notmobile
+    {{-- @notmobile --}}
+    @if ($agent->isDesktop() || $agent->isTablet)
     @php
         $expoPopup = 0;
         if (empty(Cookie::get('expoppoup17'))) {
@@ -1063,13 +919,9 @@
     @endif
 
     <!-- popupmag Start of franchiseindia Zendesk Widget script  popupmag -->
-    @endnotmobile
+    {{-- @endnotmobile --}}
+    @endif
 @endif
-{{--
-		<script id="ze-snippet" src="https://static.zdassets.com/ekr/snippet.js?key=a76a1630-c68b-4165-b6f1-ef96b178c0c3"></script>--}}
-
-<!-- End of franchiseindia Zendesk Widget script -->
-{{--@include('includes.exit-popup')--}}
 
 <!-- Facebook Pixel Code -->
 <script>
