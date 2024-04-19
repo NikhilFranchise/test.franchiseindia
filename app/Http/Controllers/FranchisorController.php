@@ -1544,11 +1544,16 @@ class FranchisorController extends Controller
         $franchisorId = request()->user()->profile_str;
 
         $franData = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
-
-        $insta    = ExpressInstaApply::query()->where('franchisor_id', $franchisorId)
-                                                ->orderBy('id', 'desc')
-                                                ->take(5)
-                                                ->get();
+        $leadcount = ExpressInstaApply::query()
+            ->where('franchisor_id', $franchisorId)
+            ->orderBy('id', 'desc')
+            // ->take(5)
+            ->count();
+        $insta = ExpressInstaApply::query()
+            ->where('franchisor_id', $franchisorId)
+            ->orderBy('id', 'desc')
+            // ->take(5)
+            ->get();
 
         $investorData = "";
         $franchisorId = request()->user()->profile_str;
@@ -1569,7 +1574,7 @@ class FranchisorController extends Controller
 
         $applyCount = (ExpressInstaApply::query()->where('franchisor_id', $franchisorId)->count()) + ($expressInterestCount);
 
-        return view('franchisor/myAccount/dashboard',compact('investorData', 'insta', 'franData' , 'applyCount', 'expressedInterests'));
+        return view('franchisor/myAccount/dashboard', compact('investorData', 'insta', 'franData', 'applyCount', 'expressedInterests', 'leadcount'));
     }
 
     /**
@@ -2258,10 +2263,35 @@ class FranchisorController extends Controller
      * Insta Responses
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
+    // public function instaResponse()
+    // {
+    //     $insta = ExpressInstaApply::query()->where('franchisor_id', request()->user()->profile_str)->orderBy('id', 'DESC')->paginate(15);
+    //     return view('franchisor/myAccount/insta-response', compact('insta'));
+    // }
+
     public function instaResponse()
     {
-        $insta = ExpressInstaApply::query()->where('franchisor_id', request()->user()->profile_str)->orderBy('id', 'DESC')->paginate(15);
-        return view('franchisor/myAccount/insta-response', compact('insta'));
+        $franchisorId = request()->user()->profile_str;
+        $franData = FranchisorBusinessDetail::query()->select('franchisor_id', 'fleads_status')->where('franchisor_id', $franchisorId)->first();
+        $insta = ExpressInstaApply::query()
+            ->where('franchisor_id', request()->user()->profile_str)
+            ->orderBy('id', 'DESC')
+            ->paginate(15);
+
+        $instafirst = ExpressInstaApply::query()
+            ->where('franchisor_id', request()->user()->profile_str)
+            ->orderBy('id', 'ASC')
+            ->take(5)
+            ->get();
+
+        $fiveids = $instafirst->pluck('id')->toArray();
+        $fiveids = collect($fiveids)->map(function ($item) {
+            return ['id' => $item];
+        })->toArray();
+
+        $count = count($insta);
+
+        return view('franchisor/myAccount/insta-response', compact('insta', 'fiveids', 'franData'));
     }
 
     /**
