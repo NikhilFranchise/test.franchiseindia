@@ -36,13 +36,13 @@ use Illuminate\Support\Str;
 
 class FranchisorController extends Controller
 {
-    
+
     /**
      * FranchisorController constructor.
      */
     public function __construct()
     {
-        $this->middleware('franAuth')->except('advertisewithussubmit', 'advertisewithuspayment','viewFranchisorRegistrationForm', 'getFranchisorDetails', 'uniqueRandomNumber', 'postFranchisor', 'firstStepSubmit', 'secondStepSubmit', 'thirdStepSubmit', 'fourthStepSubmit', 'fifthStepSubmit', 'finalStepSubmit', 'planSubmit');
+        $this->middleware('franAuth')->except('advertisewithussubmit', 'advertisewithuspayment', 'viewFranchisorRegistrationForm', 'getFranchisorDetails', 'uniqueRandomNumber', 'postFranchisor', 'firstStepSubmit', 'secondStepSubmit', 'thirdStepSubmit', 'fourthStepSubmit', 'fifthStepSubmit', 'finalStepSubmit', 'planSubmit');
     }
 
     /**
@@ -59,29 +59,29 @@ class FranchisorController extends Controller
                 return redirect('investor/myaccount/dashboard');
         }
 
-        if(!empty(request()->source) && request()->source == 'dealer')
+        if (!empty(request()->source) && request()->source == 'dealer')
             session(['dealerForm' => 'yes']);
 
-        if(!empty(request()->step) && request()->step == 1 && empty(request()->source))
+        if (!empty(request()->step) && request()->step == 1 && empty(request()->source))
             request()->session()->forget('dealerForm');
 
         $step = request()->step;
 
-        if(!is_numeric($step) && ($step < 6 || $step > 6))
+        if (!is_numeric($step) && ($step < 6 || $step > 6))
             abort(403);
 
-        $franchisorId = !empty(request()->franchisorId) ? request()->franchisorId :  "";
+        $franchisorId = !empty(request()->franchisorId) ? request()->franchisorId : "";
 
-        $checkRecord  = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
+        $checkRecord = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
 
-        if($step != 1 && empty($checkRecord))
+        if ($step != 1 && empty($checkRecord))
             abort(403);
 
-        if(!empty($checkRecord) && $checkRecord->step_completed == 6)
+        if (!empty($checkRecord) && $checkRecord->step_completed == 6)
             return redirect('login');
 
-        if(!empty($checkRecord) && $checkRecord->step_completed+1 < $step)
-            return redirect('franchisor/registration/step/'.($checkRecord->step_completed+1).'?franchisorId='.$franchisorId);
+        if (!empty($checkRecord) && $checkRecord->step_completed + 1 < $step)
+            return redirect('franchisor/registration/step/' . ($checkRecord->step_completed + 1) . '?franchisorId=' . $franchisorId);
 
         switch ($step) {
             case 2:
@@ -94,10 +94,10 @@ class FranchisorController extends Controller
                 return $this->getFifthStepForm($franchisorId);
         }
 
-        if($step == 'final')
+        if ($step == 'final')
             $step = 6;
 
-        return view('franchisor/register/franchisor-registration-step-'.$step, compact('franchisorId'));
+        return view('franchisor/register/franchisor-registration-step-' . $step, compact('franchisorId'));
     }
 
     /**
@@ -106,12 +106,12 @@ class FranchisorController extends Controller
      */
     private function getSecondStepForm($franchisorId)
     {
-        $userData      = UserAccount::query()->where('profile_str', $franchisorId)->first();
-        $franData      = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
-        $tradeData     = FranchisorTradePartner::query()->where('franchisor_id', $franchisorId)->get();
+        $userData = UserAccount::query()->where('profile_str', $franchisorId)->first();
+        $franData = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
+        $tradeData = FranchisorTradePartner::query()->where('franchisor_id', $franchisorId)->get();
         $multiUnitData = FranchisorMultiUnit::query()->where('franchisor_id', $franchisorId)->first();
 
-        return view('franchisor/register/franchisor-registration-step-2', compact('userData', 'franchisorId', 'franData', 'multiUnitData', 'tradeData') );
+        return view('franchisor/register/franchisor-registration-step-2', compact('userData', 'franchisorId', 'franData', 'multiUnitData', 'tradeData'));
     }
 
     /**
@@ -170,37 +170,37 @@ class FranchisorController extends Controller
      */
     public function firstStepSubmit(Request $request)
     {
-       
+
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
 
-        $regSourceValue  = !empty(Cookie::get('campaignSource')) ? Cookie::get('campaignSource') : "";
+        $regSourceValue = !empty(Cookie::get('campaignSource')) ? Cookie::get('campaignSource') : "";
 
         $checkUser = UserAccount::query()->where('email', $request->input('email'))->first();
-        
-        if( !empty($checkUser) && $checkUser->email != 'fiblbrands@franchiseindia.in' && $checkUser->email != 'info@opportunityindia.com' && $checkUser->email != 'info@franglobal.com' && $checkUser->profile_status == 4 ) {
-            $franchisorId   = $checkUser->profile_str;
+
+        if (!empty($checkUser) && $checkUser->email != 'fiblbrands@franchiseindia.in' && $checkUser->email != 'info@opportunityindia.com' && $checkUser->email != 'info@franglobal.com' && $checkUser->profile_status == 4) {
+            $franchisorId = $checkUser->profile_str;
             UserAccount::query()->where('profile_str', $checkUser->email)->update(['profile_type' => 1, 'password' => Hash::getFacadeRoot()->make(request()->password), 'mobile' => request()->mobile]);
             $checkFranchisor = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
-          
-            if(empty($checkFranchisor)) {
+
+            if (empty($checkFranchisor)) {
                 FranchisorBusinessDetail::query()->insert([
-                    'franchisor_id'  => $franchisorId,
+                    'franchisor_id' => $franchisorId,
                     'step_completed' => 1,
                     'profile_status' => 4
                 ]);
 
-                if(!empty(Cookie::get('campaignSource')))
+                if (!empty(Cookie::get('campaignSource')))
                     CampaignsFranRegister::query()->create(['franchisor_id' => $franchisorId, 'utm_campaign' => Cookie::get('campaignVersion'), 'utm_source' => Cookie::get('campaignSource')]);
 
                 return $this->getSecondStepForm($franchisorId);
             }
 
-            if($checkFranchisor->step_completed > 0 && $checkFranchisor->step_completed < 6) {
+            if ($checkFranchisor->step_completed > 0 && $checkFranchisor->step_completed < 6) {
 
-                switch ($checkFranchisor->step_completed+1) {
+                switch ($checkFranchisor->step_completed + 1) {
                     case 2:
                         return $this->getSecondStepForm($franchisorId);
                     case 3:
@@ -221,25 +221,25 @@ class FranchisorController extends Controller
             ]);
         }
 
-        $franchisorId   = CommonController::profileUniqStr();
-        
+        $franchisorId = CommonController::profileUniqStr();
+
         UserAccount::query()->insert([
-            'email'          => request()->email,
-            'mobile'         => request()->mobile,
-            'password'       => Hash::getFacadeRoot()->make(request()->password),
-            'profile_str'    => $franchisorId,
-            'reg_source'     => $regSourceValue,
-            'profile_type'   => config('constants.ProfileType.Franchisor'),
+            'email' => request()->email,
+            'mobile' => request()->mobile,
+            'password' => Hash::getFacadeRoot()->make(request()->password),
+            'profile_str' => $franchisorId,
+            'reg_source' => $regSourceValue,
+            'profile_type' => config('constants.ProfileType.Franchisor'),
             'profile_status' => 4,
         ]);
 
         FranchisorBusinessDetail::query()->insert([
-            'franchisor_id'  => $franchisorId,
+            'franchisor_id' => $franchisorId,
             'step_completed' => 1,
             'profile_status' => 4
         ]);
 
-        if(!empty(Cookie::get('franCampaignSource')))
+        if (!empty(Cookie::get('franCampaignSource')))
             CampaignsFranRegister::query()->create(['franchisor_id' => $franchisorId, 'utm_campaign' => Cookie::get('franCampaign'), 'utm_source' => Cookie::get('franCampaignSource')]);
 
         return $this->getSecondStepForm($franchisorId);
@@ -254,41 +254,41 @@ class FranchisorController extends Controller
 
         //  Validation rules, in case of error
         $this->validate($request, [
-            'city'                  => 'required|min:3',
-            'country'               => 'required',
-            'ind_cat'               => 'required',
-            'ceo_name'              => 'required|min:3',
-            'ceo_email'             => 'required|min:3',
-            'ceo_mobile'            => 'required|min:10',
-            'ind_sub_cat'           => 'required',
-            'brand_name'            => 'required',
-            'company_name'          => 'required|min:3',
-            'fran_manager'          => 'required|min:3',
-            'ind_main_cat'          => 'required',
-            'business_desc'         => 'required|min:20',
+            'city' => 'required|min:3',
+            'country' => 'required',
+            'ind_cat' => 'required',
+            'ceo_name' => 'required|min:3',
+            'ceo_email' => 'required|min:3',
+            'ceo_mobile' => 'required|min:10',
+            'ind_sub_cat' => 'required',
+            'brand_name' => 'required',
+            'company_name' => 'required|min:3',
+            'fran_manager' => 'required|min:3',
+            'ind_main_cat' => 'required',
+            'business_desc' => 'required|min:20',
             'operations_start_year' => 'required',
-            'franchise_start_year'  => 'required'
+            'franchise_start_year' => 'required'
         ]);
 
-        $franchisorId           = $request->franchisorId;
-        $profile_name           = Str::slug($request->input('brand_name'));
-        $pin_code                = $request->pincode;
-        $state                  = $request->state;
-        $error                  = config('customErrors.errorType.critical');
-        $unitInvMin             = 10000;
-        $unitInvMax             = 50000;
-        $lookingTradePartner    = 0;
-        $lookingFranchise       = 0;
-        $lookingDealer          = 0;
-        $franchisorPartnerType  = 0;
-        $unitInvestment         = 0;
-        $unitInvBrandFee        = "";
-        $unitInvRoyalty         = "";
+        $franchisorId = $request->franchisorId;
+        $profile_name = Str::slug($request->input('brand_name'));
+        $pin_code = $request->pincode;
+        $state = $request->state;
+        $error = config('customErrors.errorType.critical');
+        $unitInvMin = 10000;
+        $unitInvMax = 50000;
+        $lookingTradePartner = 0;
+        $lookingFranchise = 0;
+        $lookingDealer = 0;
+        $franchisorPartnerType = 0;
+        $unitInvestment = 0;
+        $unitInvBrandFee = "";
+        $unitInvRoyalty = "";
 
-        FranchisorMultiUnit::query()->where( 'franchisor_id', $franchisorId)->delete();
-        FranchisorTradePartner::query()->where( 'franchisor_id', $franchisorId)->delete();
+        FranchisorMultiUnit::query()->where('franchisor_id', $franchisorId)->delete();
+        FranchisorTradePartner::query()->where('franchisor_id', $franchisorId)->delete();
 
-        $outletLocations   = @implode(',', $_POST['outlet_locations']);
+        $outletLocations = @implode(',', $_POST['outlet_locations']);
         $marketingMaterial = $request->input('marketting_material');
         if ($request->input('marketting_material') == "Yes") {
             $marketingMaterial = @implode(',', $_POST['marketting_materials']);
@@ -301,24 +301,24 @@ class FranchisorController extends Controller
             $lookingFranchise = 1;
             // dd($request->get('franchise_partner_type'));
             $franchisePartner = $request->get('franchise_partner_type');
-            $franchisePartnerCount = $franchisePartner != null ;
+            $franchisePartnerCount = $franchisePartner != null;
             $franchisorPartnerType = $franchisePartnerCount == 2 ? 3 : ($franchisePartner[0] == "lookingFrUnit" ? 1 : 2);
 
             if ($franchisorPartnerType == 3 || $franchisorPartnerType == 1) {
-                $unitInvMin      = Config('constants.InvestRange.' . $request->input('unit_investment') . '.min');
-                $unitInvMax      = Config('constants.InvestRange.' . $request->input('unit_investment') . '.max');
-                $unitInvestment  = $request->input('unit_investment');
+                $unitInvMin = Config('constants.InvestRange.' . $request->input('unit_investment') . '.min');
+                $unitInvMax = Config('constants.InvestRange.' . $request->input('unit_investment') . '.max');
+                $unitInvestment = $request->input('unit_investment');
                 $unitInvBrandFee = $request->input('unitinv_brand_fee');
-                $unitInvRoyalty  = $request->input('unitinv_royalty');
+                $unitInvRoyalty = $request->input('unitinv_royalty');
             }
 
             if ($franchisorPartnerType != 1) {
-                $minArr          = [];
-                $maxArr          = [];
-                $countryWise     = $request->input('countrywise') == "CountryWise" ? 1 : 0;
-                $regionWise      = $request->input('regionwise') == "RegionWise" ? 1 : 0;
-                $stateWise       = $request->input('statewise') == "StateWise" ? 1 : 0;
-                $cityWise        = $request->input('citywise') == "CityWise" ? 1 : 0;
+                $minArr = [];
+                $maxArr = [];
+                $countryWise = $request->input('countrywise') == "CountryWise" ? 1 : 0;
+                $regionWise = $request->input('regionwise') == "RegionWise" ? 1 : 0;
+                $stateWise = $request->input('statewise') == "StateWise" ? 1 : 0;
+                $cityWise = $request->input('citywise') == "CityWise" ? 1 : 0;
                 if ($countryWise == 1) {
                     $countryMin = Config('constants.InvestRange.' . $request->input('country_investment') . '.min');
                     $countryMax = Config('constants.InvestRange.' . $request->input('country_investment') . '.max');
@@ -351,27 +351,27 @@ class FranchisorController extends Controller
 
                 //Inserting data into franchisor multi unit
                 $insFranchisorMultiUnit = FranchisorMultiUnit::query()->insert([
-                    'franchisor_id'      => $franchisorId,
-                    'countrywise'        => $countryWise,
+                    'franchisor_id' => $franchisorId,
+                    'countrywise' => $countryWise,
                     'country_investment' => $request->input('country_investment'),
-                    'country_unitfee'    => $request->input('country_unitfee'),
-                    'country_masterfee'  => $request->input('country_masterfee'),
-                    'country_royalty'    => $request->input('country_royalty'),
-                    'regionwise'         => $regionWise,
-                    'region_investment'  => $request->input('region_investment'),
-                    'region_unitfee'     => $request->input('region_unitfee'),
-                    'region_masterfee'   => $request->input('region_masterfee'),
-                    'region_royalty'     => $request->input('region_royalty'),
-                    'statewise'          => $stateWise,
-                    'state_investment'   => $request->input('state_investment'),
-                    'state_unitfee'      => $request->input('state_unitfee'),
-                    'state_masterfee'    => $request->input('state_masterfee'),
-                    'state_royalty'      => $request->input('state_royalty'),
-                    'citywise'           => $cityWise,
-                    'city_investment'    => $request->input('city_investment'),
-                    'city_unitfee'       => $request->input('city_unitfee'),
-                    'city_masterfee'     => $request->input('city_masterfee'),
-                    'city_royalty'       => $request->input('city_royalty')
+                    'country_unitfee' => $request->input('country_unitfee'),
+                    'country_masterfee' => $request->input('country_masterfee'),
+                    'country_royalty' => $request->input('country_royalty'),
+                    'regionwise' => $regionWise,
+                    'region_investment' => $request->input('region_investment'),
+                    'region_unitfee' => $request->input('region_unitfee'),
+                    'region_masterfee' => $request->input('region_masterfee'),
+                    'region_royalty' => $request->input('region_royalty'),
+                    'statewise' => $stateWise,
+                    'state_investment' => $request->input('state_investment'),
+                    'state_unitfee' => $request->input('state_unitfee'),
+                    'state_masterfee' => $request->input('state_masterfee'),
+                    'state_royalty' => $request->input('state_royalty'),
+                    'citywise' => $cityWise,
+                    'city_investment' => $request->input('city_investment'),
+                    'city_unitfee' => $request->input('city_unitfee'),
+                    'city_masterfee' => $request->input('city_masterfee'),
+                    'city_royalty' => $request->input('city_royalty')
                 ]);
 
                 // If saving the record in FranchisorMultiUnit Model failed
@@ -391,16 +391,16 @@ class FranchisorController extends Controller
         if ($request->input('looking_franchise') == config('constants.LookingFor.TradePartner') || $request->input('looking_franchise') == config('constants.LookingFor.DealerDistributor')) {
             $lookingDealer = 1;
             $lookingTradePartner = 0;
-            if($request->input('looking_franchise') == config('constants.LookingFor.TradePartner')) {
+            if ($request->input('looking_franchise') == config('constants.LookingFor.TradePartner')) {
                 $lookingTradePartner = 1;
                 $lookingDealer = 0;
             }
 
-            $channelType         = $request->get('channel_type');
-            $tradeInvestment     = $request->get('trade_investment');
-            $tradeMargin         = $request->get('trade_margin');
-            $channelTypeCount    = count($channelType);
-            $tradePartnerCount   = 0;
+            $channelType = $request->get('channel_type');
+            $tradeInvestment = $request->get('trade_investment');
+            $tradeMargin = $request->get('trade_margin');
+            $channelTypeCount = count($channelType);
+            $tradePartnerCount = 0;
 
             if (isset($tradeInvestment[0]) && !empty($tradeInvestment[0])) {
                 $unitInvMin = Config('constants.InvestRange.' . $tradeInvestment[0] . '.min');
@@ -409,10 +409,10 @@ class FranchisorController extends Controller
 
             while ($tradePartnerCount < $channelTypeCount) {
                 $insertFranTradePartner = FranchisorTradePartner::query()->insert([
-                    'franchisor_id'    => $franchisorId,
-                    'channel_type'     => $channelType[$tradePartnerCount],
+                    'franchisor_id' => $franchisorId,
+                    'channel_type' => $channelType[$tradePartnerCount],
                     'trade_investment' => $tradeInvestment[$tradePartnerCount],
-                    'trade_margin'     => $tradeMargin[$tradePartnerCount],
+                    'trade_margin' => $tradeMargin[$tradePartnerCount],
                 ]);
 
                 // If saving the record in FranchisorTradePartner Model failed
@@ -433,42 +433,42 @@ class FranchisorController extends Controller
         $stepCompleted = $currentSteps > 2 ? $currentSteps : 2;
 
         FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->update([
-            'brand_name'                => $request->input('brand_name'),
-            'company_name'              => $request->input('company_name'),
-            'ceo_name'                  => $request->input('ceo_name'),
-            'ceo_email'                 => $request->input('ceo_email'),
-            'ceo_mobile'                => $request->input('ceo_mobile'),
-            'profile_name'              => $profile_name,
-            'fran_manager'              => $request->input('fran_manager'),
-            'fran_address'              => $request->input('fran_address'),
-            'country'                   => config('location.countryName.' . $request->input('country')),
-            'pincode'                   => $pin_code,
-            'state'                     => $state,
-            'city'                      => $request->input('city'),
-            'telephone'                 => $request->input('telephone'),
-            'website'                   => $request->input('website'),
-            'secondary_email'           => $request->input('secondary_email'),
-            'ind_main_cat'              => $request->input('ind_main_cat'),
-            'ind_cat'                   => $request->input('ind_cat'),
-            'ind_sub_cat'               => $request->input('ind_sub_cat'),
-            'operations_start_year'     => $request->input('operations_start_year'),
-            'franchise_start_year'      => $request->input('franchise_start_year'),
-            'no_fran_outlets'           => $request->input('no_fran_outlets'),
-            'no_retail_outlets'         => $request->input('no_retail_outlets'),
-            'no_company_outlets'        => $request->input('no_company_outlets'),
-            'outlet_locations'          => $outletLocations,
-            'marketting_materials'      => $marketingMaterial,
-            'business_desc'             => $request->input('business_desc'),
-            'franchise_partner_type'    => $franchisorPartnerType,
-            'looking_tradepartner'      => $lookingTradePartner,
-            'looking_franchise'         => $lookingFranchise,
-            'is_dealer_distributor'     => $lookingDealer,
-            'unit_investment'           => $unitInvestment,
-            'unit_inv_min'              => $unitInvMin,
-            'unit_inv_max'              => $unitInvMax,
-            'unitinv_brand_fee'         => $unitInvBrandFee,
-            'unitinv_royalty'           => $unitInvRoyalty,
-            'step_completed'            => $stepCompleted
+            'brand_name' => $request->input('brand_name'),
+            'company_name' => $request->input('company_name'),
+            'ceo_name' => $request->input('ceo_name'),
+            'ceo_email' => $request->input('ceo_email'),
+            'ceo_mobile' => $request->input('ceo_mobile'),
+            'profile_name' => $profile_name,
+            'fran_manager' => $request->input('fran_manager'),
+            'fran_address' => $request->input('fran_address'),
+            'country' => config('location.countryName.' . $request->input('country')),
+            'pincode' => $pin_code,
+            'state' => $state,
+            'city' => $request->input('city'),
+            'telephone' => $request->input('telephone'),
+            'website' => $request->input('website'),
+            'secondary_email' => $request->input('secondary_email'),
+            'ind_main_cat' => $request->input('ind_main_cat'),
+            'ind_cat' => $request->input('ind_cat'),
+            'ind_sub_cat' => $request->input('ind_sub_cat'),
+            'operations_start_year' => $request->input('operations_start_year'),
+            'franchise_start_year' => $request->input('franchise_start_year'),
+            'no_fran_outlets' => $request->input('no_fran_outlets'),
+            'no_retail_outlets' => $request->input('no_retail_outlets'),
+            'no_company_outlets' => $request->input('no_company_outlets'),
+            'outlet_locations' => $outletLocations,
+            'marketting_materials' => $marketingMaterial,
+            'business_desc' => $request->input('business_desc'),
+            'franchise_partner_type' => $franchisorPartnerType,
+            'looking_tradepartner' => $lookingTradePartner,
+            'looking_franchise' => $lookingFranchise,
+            'is_dealer_distributor' => $lookingDealer,
+            'unit_investment' => $unitInvestment,
+            'unit_inv_min' => $unitInvMin,
+            'unit_inv_max' => $unitInvMax,
+            'unitinv_brand_fee' => $unitInvBrandFee,
+            'unitinv_royalty' => $unitInvRoyalty,
+            'step_completed' => $stepCompleted
         ]);
 
         return $this->getThirdStepForm($franchisorId);
@@ -480,13 +480,13 @@ class FranchisorController extends Controller
      */
     public function thirdStepSubmit(Request $request)
     {
-        $franchisorId           = $request->franchisorId;
-        $error                  = config('customErrors.errorType.critical');
+        $franchisorId = $request->franchisorId;
+        $error = config('customErrors.errorType.critical');
         $isLookingInternational = 0;
-        $expansionLocType       = 1;
+        $expansionLocType = 1;
 
-        FranchisorLocState::query()->where( 'franchisor_id', $franchisorId)->delete();
-        FranchisorLocCountry::query()->where( 'franchisor_id', $franchisorId)->delete();
+        FranchisorLocState::query()->where('franchisor_id', $franchisorId)->delete();
+        FranchisorLocCountry::query()->where('franchisor_id', $franchisorId)->delete();
 
         //Inserting data into franchisor_loc_countries from step 3
         if ($request->input('is_looking_intl_franchise') == config('constants.InternationalFranchise.yes')) {
@@ -494,9 +494,9 @@ class FranchisorController extends Controller
                 $isLookingInternational = 1;
                 $internationalFranchise = $request->get('international_franchise');
 
-                foreach ($internationalFranchise as $country){
+                foreach ($internationalFranchise as $country) {
                     $franchisorLocCountries = new FranchisorLocCountry;
-                    $franchisorLocCountries->franchisor_id    = $franchisorId;
+                    $franchisorLocCountries->franchisor_id = $franchisorId;
                     $franchisorLocCountries->country_longname = $country;
                     if (!$franchisorLocCountries->save()) {
                         DB::getFacadeRoot()->rollback();
@@ -520,41 +520,47 @@ class FranchisorController extends Controller
                 $franchiseNorthStates = $request->get('state');
                 $franchiseNorthStatesCount = count($franchiseNorthStates);
                 $statesCount = 0;
-                $region      = "";
+                $region = "";
 
                 while ($statesCount < $franchiseNorthStatesCount) {
 
-                    $state                = $franchiseNorthStates[$statesCount];
-                    $northStates          = config('location.northStates');
-                    $westStates           = config('location.westStates');
-                    $eastStates           = config('location.eastStates');
-                    $southStates          = config('location.southStates');
-                    $centralStates        = config('location.centralStates');
+                    $state = $franchiseNorthStates[$statesCount];
+                    $northStates = config('location.northStates');
+                    $westStates = config('location.westStates');
+                    $eastStates = config('location.eastStates');
+                    $southStates = config('location.southStates');
+                    $centralStates = config('location.centralStates');
                     $unionTerritoryStates = config('location.unionTerriotoryStates');
 
                     foreach ($northStates as $north)
-                        if ($state == $north) $region = 'North';
+                        if ($state == $north)
+                            $region = 'North';
 
                     foreach ($westStates as $west)
-                        if ($state == $west) $region = 'West';
+                        if ($state == $west)
+                            $region = 'West';
 
                     foreach ($eastStates as $east)
-                        if ($state == $east) $region = 'East';
+                        if ($state == $east)
+                            $region = 'East';
 
                     foreach ($southStates as $south)
-                        if ($state == $south) $region = 'South';
+                        if ($state == $south)
+                            $region = 'South';
 
                     foreach ($centralStates as $central)
-                        if ($state == $central) $region = 'Center';
+                        if ($state == $central)
+                            $region = 'Center';
 
                     foreach ($unionTerritoryStates as $unionTerritory)
-                        if ($state == $unionTerritory) $region = 'UT';
+                        if ($state == $unionTerritory)
+                            $region = 'UT';
 
 
                     $insert = FranchisorLocState::query()->insert([
                         'franchisor_id' => $franchisorId,
-                        'region'        => $region,
-                        'state'         => $franchiseNorthStates[$statesCount]
+                        'region' => $region,
+                        'state' => $franchiseNorthStates[$statesCount]
                     ]);
 
                     // If saving the record in FranchisorLocState Model failed
@@ -590,40 +596,48 @@ class FranchisorController extends Controller
                     $i = 1;
                     // Iterate the config constants city array
                     while ($i <= count($citySubArr)) {
-                        $region               = '';
-                        $stateKey             = array_search($value, $citySubArr[$i]);
-                        $state                = config("location.stateArr.$i");
-                        $northStates          = config('location.northStates');
-                        $westStates           = config('location.westStates');
-                        $eastStates           = config('location.eastStates');
-                        $southStates          = config('location.southStates');
-                        $centralStates        = config('location.centralStates');
+                        $region = '';
+                        $stateKey = array_search($value, $citySubArr[$i]);
+                        $state = config("location.stateArr.$i");
+                        $northStates = config('location.northStates');
+                        $westStates = config('location.westStates');
+                        $eastStates = config('location.eastStates');
+                        $southStates = config('location.southStates');
+                        $centralStates = config('location.centralStates');
                         $unionTerritoryStates = config('location.unionTerriotoryStates');
 
                         foreach ($northStates as $north)
-                            if ($state == $north) $region = 'North';
+                            if ($state == $north)
+                                $region = 'North';
 
                         foreach ($westStates as $west)
-                            if ($state == $west) $region = 'West';
+                            if ($state == $west)
+                                $region = 'West';
 
                         foreach ($eastStates as $east)
-                            if ($state == $east) $region = 'East';
+                            if ($state == $east)
+                                $region = 'East';
 
                         foreach ($southStates as $south)
-                            if ($state == $south) $region = 'South';
+                            if ($state == $south)
+                                $region = 'South';
 
                         foreach ($centralStates as $central)
-                            if ($state == $central) $region = 'Center';
+                            if ($state == $central)
+                                $region = 'Center';
 
                         foreach ($unionTerritoryStates as $unionTerritory)
-                            if ($state == $unionTerritory) $region = 'UT';
+                            if ($state == $unionTerritory)
+                                $region = 'UT';
 
                         // For key value 0 validation, use is_numeric
                         if (is_numeric($stateKey)) {
-                            $insert = FranchisorLocState::query()->insert(['franchisor_id' => $franchisorId,
+                            $insert = FranchisorLocState::query()->insert([
+                                'franchisor_id' => $franchisorId,
                                 'city' => $value,
                                 'region' => $region,
-                                'state' => $state]);
+                                'state' => $state
+                            ]);
 
                             // If saving the record in FranchisorLocState Model failed
                             if (!$insert) {
@@ -649,10 +663,10 @@ class FranchisorController extends Controller
 
         //Updating Franchisor Business Details
         FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->update([
-                'is_looking_intl_franchise' => $isLookingInternational,
-                'expansion_loc_type'        => $expansionLocType,
-                'step_completed'            => $stepCompleted
-            ]);
+            'is_looking_intl_franchise' => $isLookingInternational,
+            'expansion_loc_type' => $expansionLocType,
+            'step_completed' => $stepCompleted
+        ]);
 
         $mailData = UserAccount::query()->where('profile_str', $franchisorId)->first();
         $franData = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
@@ -661,12 +675,12 @@ class FranchisorController extends Controller
         if ($request->input('is_looking_intl_franchise') == config('constants.InternationalFranchise.yes')) {
             $companyData = [
                 'companyName' => $franData->company_name,
-                'fid'         => $franchisorId,
-                'email'       => $mailData->email,
-                'address'     => $franData->fran_address . ',' . config('location.countryName.' . $franData->country) . ',' . $franData->pincode . ',' . $franData->state . ',' . $franData->city,
-                'ceoName'     => $request->input('ceo_name'),
-                'mobile'      => $mailData->mobile,
-                'manager'     => $request->input('fran_manager'),
+                'fid' => $franchisorId,
+                'email' => $mailData->email,
+                'address' => $franData->fran_address . ',' . config('location.countryName.' . $franData->country) . ',' . $franData->pincode . ',' . $franData->state . ',' . $franData->city,
+                'ceoName' => $request->input('ceo_name'),
+                'mobile' => $mailData->mobile,
+                'manager' => $request->input('fran_manager'),
             ];
             $this->sendMailNotification('sachin@franchiseindia.com', new international($companyData));
         }
@@ -680,29 +694,29 @@ class FranchisorController extends Controller
      */
     public function fourthStepSubmit(Request $request)
     {
-        $franchisorId   = $request->franchisorId;
+        $franchisorId = $request->franchisorId;
         $payback_period = $request->input('payback_period_min') . '-' . $request->input('payback_period_max') . ' ' . $request->input('payback_period_type');
 
         $currentSteps = FranchisorController::franchisorData($franchisorId)->step_completed;
         $stepCompleted = $currentSteps > 4 ? $currentSteps : 4;
 
-        FranchisorBusinessDetail::query()->where('franchisor_id',  $franchisorId)
+        FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)
             ->update([
-            'is_territorial_rights'      => $request->input('is_territorial_rights'),
-            'is_perform_guarranty'       => $request->input('is_perform_guarranty'),
-            'is_marketting_levies'       => $request->input('is_marketting_levies'),
-            'anticipated_roi'            => $request->input('anticipated_roi'),
-            'payback_period'             => $payback_period,
-            'other_investment_req'       => $request->input('other_investment_req'),
-            'is_finance_aid'             => $request->input('is_finance_aid'),
-            'property_type'              => config('constants.propertyType.' . $request->input('property_type')),
-            'prop_area_min'              => $request->input('prop_area_min'),
-            'prop_area_max'              => $request->input('prop_area_max'),
-            'pref_prop_location'         => $request->input('pref_prop_location'),
-            'premise_outfit_arrangement' => $request->input('premise_outfit_arrangement'),
-            'site_selection_assistance'  => $request->input('site_selection_assistance'),
-            'step_completed'             => $stepCompleted
-        ]);
+                'is_territorial_rights' => $request->input('is_territorial_rights'),
+                'is_perform_guarranty' => $request->input('is_perform_guarranty'),
+                'is_marketting_levies' => $request->input('is_marketting_levies'),
+                'anticipated_roi' => $request->input('anticipated_roi'),
+                'payback_period' => $payback_period,
+                'other_investment_req' => $request->input('other_investment_req'),
+                'is_finance_aid' => $request->input('is_finance_aid'),
+                'property_type' => config('constants.propertyType.' . $request->input('property_type')),
+                'prop_area_min' => $request->input('prop_area_min'),
+                'prop_area_max' => $request->input('prop_area_max'),
+                'pref_prop_location' => $request->input('pref_prop_location'),
+                'premise_outfit_arrangement' => $request->input('premise_outfit_arrangement'),
+                'site_selection_assistance' => $request->input('site_selection_assistance'),
+                'step_completed' => $stepCompleted
+            ]);
 
         return $this->getFifthStepForm($franchisorId);
     }
@@ -714,7 +728,7 @@ class FranchisorController extends Controller
 
     public function advertisewithuspayment(Request $request)
     {
-        
+
         return view('franchisor.register.advertisewithuspayment', compact('franchisorId'));
     }
 
@@ -739,8 +753,8 @@ class FranchisorController extends Controller
     public function fifthStepSubmit(Request $request)
     {
 
-        $franchisorId              = $request->franchisorId;
-        $franchiseTimeDuration     = $request->input('franchise_term_duration');
+        $franchisorId = $request->franchisorId;
+        $franchiseTimeDuration = $request->input('franchise_term_duration');
 
         if ($request->input('franchise_term_duration') == config('constants.FranchiseTermDuration.2'))
             $franchiseTimeDuration = $request->input('franchise_term_year');
@@ -748,25 +762,25 @@ class FranchisorController extends Controller
         $currentSteps = FranchisorController::franchisorData($franchisorId)->step_completed;
         $stepCompleted = $currentSteps > 5 ? $currentSteps : 5;
 
-        FranchisorBusinessDetail::query()->where('franchisor_id',  $franchisorId)
+        FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)
             ->update([
-                'is_detailed_manuals'     => $request->input('is_detailed_manuals'),
-                'franchise_training_loc'  => $request->input('franchise_training_loc'),
-                'is_field_assistance'     => $request->input('is_field_assistance'),
-                'ho_assistance'           => $request->input('ho_assistance'),
-                'is_it_support'           => $request->input('is_it_support'),
-                'std_fran_aggreement'     => $request->input('std_fran_aggreement'),
+                'is_detailed_manuals' => $request->input('is_detailed_manuals'),
+                'franchise_training_loc' => $request->input('franchise_training_loc'),
+                'is_field_assistance' => $request->input('is_field_assistance'),
+                'ho_assistance' => $request->input('ho_assistance'),
+                'is_it_support' => $request->input('is_it_support'),
+                'std_fran_aggreement' => $request->input('std_fran_aggreement'),
                 'franchise_term_duration' => $franchiseTimeDuration,
-                'term_renewable'          => $request->input('term_renewable'),
-                'step_completed'          => $stepCompleted
-        ]);
-		if($request->session()->has('advertise-plan')){
+                'term_renewable' => $request->input('term_renewable'),
+                'step_completed' => $stepCompleted
+            ]);
+        if ($request->session()->has('advertise-plan')) {
             // dd('hello');
-			return view('franchisor/register/franchisor-registration-step-6-new', compact('franchisorId'));
-		} else{
+            return view('franchisor/register/franchisor-registration-step-6-new', compact('franchisorId'));
+        } else {
             // dd('hello1');
-			return view('franchisor/register/franchisor-registration-step-payment', compact('franchisorId'));
-		}
+            return view('franchisor/register/franchisor-registration-step-payment', compact('franchisorId'));
+        }
     }
 
     /**
@@ -776,10 +790,10 @@ class FranchisorController extends Controller
     public function finalStepSubmit(Request $request)
     {
         //dd($request);
-        $url           = ''; //"no url";
+        $url = ''; //"no url";
 //        dd($request->memberplan);
-        $franchisorId  = $request->franchisorId;
-        $layout        = $request->layout_type;
+        $franchisorId = $request->franchisorId;
+        $layout = $request->layout_type;
 
         //Logo uploading
         // if ($request->hasFile('company_logo')) {
@@ -796,31 +810,31 @@ class FranchisorController extends Controller
             $companyLogo->move(public_path($companyLogoPath)); // Move the uploaded file to the specified path
             $url = asset($companyLogoPath); // Generate a URL to access the uploaded file
         }
-        
 
-        FranchisorBusinessDetail::query()->where('franchisor_id',  $franchisorId)
+
+        FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)
             ->update([
                 'pre_approved_logo' => $url,
-                'page_layout_type'  => $layout,
-                'video_link'        => $request->input('video_link'),
-                'activation_date'   => date('Y-m-d'),
-                'step_completed'    => 6,
-                'profile_status'     => config('constants.ProfileStatus.Pending')
-        ]);
+                'page_layout_type' => $layout,
+                'video_link' => $request->input('video_link'),
+                'activation_date' => date('Y-m-d'),
+                'step_completed' => 6,
+                'profile_status' => config('constants.ProfileStatus.Pending')
+            ]);
         //dd($franchisorId);
         $code = Str::random(16);
 
         //Updating email verification code
-        UserAccount::query()->where('profile_str', $franchisorId)->update(['email_verification_code' => $code, 'profile_status'     => config('constants.ProfileStatus.Pending')]);
+        UserAccount::query()->where('profile_str', $franchisorId)->update(['email_verification_code' => $code, 'profile_status' => config('constants.ProfileStatus.Pending')]);
         $data = [
             'companyName' => $request->input('company_name'),
-            'code'        => $code,
+            'code' => $code,
         ];
 
-        $franData = FranchisorBusinessDetail::query()->where('franchisor_id',  $franchisorId)->first();
-        $userData = UserAccount::query()->where('profile_str',  $franchisorId)->first();
+        $franData = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
+        $userData = UserAccount::query()->where('profile_str', $franchisorId)->first();
         //dd($franData);
-        if ($userData->email != 'fiblbrands@franchiseindia.in' && $userData->email != 'info@franglobal.com'){
+        if ($userData->email != 'fiblbrands@franchiseindia.in' && $userData->email != 'info@franglobal.com') {
             $this->sendMailNotification($userData->email, new confirmed($data));
         } else {
             //Updating User Details
@@ -834,42 +848,42 @@ class FranchisorController extends Controller
 
         //payment
         if (!empty($request->memberplan) && $request->memberplan != 1) {
-            $tranId  = FranchisorController::uniqueRandomNumber();
+            $tranId = FranchisorController::uniqueRandomNumber();
 
-            $mopt  = $request->mop;
+            $mopt = $request->mop;
             $plan = $request->memberplan;
 
-            $amt = Config('constants.membershipPlanFranchisor.' .$plan);
-            if(!array_key_exists($mopt, config('constants.Charges'))){
+            $amt = Config('constants.membershipPlanFranchisor.' . $plan);
+            if (!array_key_exists($mopt, config('constants.Charges'))) {
                 $mopt = "OPTNBK";
             }
-            $mop  = config('constants.Charges.' . $mopt);
-            $amount = round($amt + $amt *($mop)/100);
-            $amount = $amount + (($amount*18)/100);
+            $mop = config('constants.Charges.' . $mopt);
+            $amount = round($amt + $amt * ($mop) / 100);
+            $amount = $amount + (($amount * 18) / 100);
 
-            $name    = $franData->ceo_name;
-            $email   = $userData->email;
-            $phone   = $userData->mobile;
+            $name = $franData->ceo_name;
+            $email = $userData->email;
+            $phone = $userData->mobile;
             $country = $franData->country;
             $address = $franData->city . ',' . $franData->country;
-            $detail  = $franchisorId;
+            $detail = $franchisorId;
 
             //Creating entry into online payments table
             OnlinePayment::query()->insert([
-                'order_no'        => $tranId,
-                'profile_type'    => 1,
-                'profile_id'      => $franchisorId,
-                'name'            => $franData->ceo_name,
-                'email'           => $userData->email,
-                'phone'           => $phone,
-                'city'            => $franData->city,
-                'country'         => $franData->country,
+                'order_no' => $tranId,
+                'profile_type' => 1,
+                'profile_id' => $franchisorId,
+                'name' => $franData->ceo_name,
+                'email' => $userData->email,
+                'phone' => $phone,
+                'city' => $franData->city,
+                'country' => $franData->country,
                 'product_details' => Config('constants.membershipPlanFranchisorDetail.' . $plan),
                 'membership_plan' => $plan,
-                'amount'          => $amount,
-                'mopt'          => $mopt,				
-                'gst_no'          => $request->gst_no,
-                'payment_status'  => 0
+                'amount' => $amount,
+                'mopt' => $mopt,
+                'gst_no' => $request->gst_no,
+                'payment_status' => 0
             ]);
 
             return view('site/franpayment', compact('name', 'email', 'phone', 'country', 'address', 'detail', 'tranId', 'amount', 'mopt'));
@@ -966,10 +980,10 @@ class FranchisorController extends Controller
         if (!empty($request->reg_source)) {
             $regSource = base64_decode($request->reg_source);
 
-            if($regSource == "google2019")
+            if ($regSource == "google2019")
                 $regSourceValue = "google";
 
-            if($regSource == "facebook2019")
+            if ($regSource == "facebook2019")
                 $regSourceValue = "facebook";
 
         }
@@ -1178,7 +1192,8 @@ class FranchisorController extends Controller
                     'city_investment' => $request->input('city_investment'),
                     'city_unitfee' => $request->input('city_unitfee'),
                     'city_masterfee' => $request->input('city_masterfee'),
-                    'city_royalty' => $request->input('city_royalty')]);
+                    'city_royalty' => $request->input('city_royalty')
+                ]);
 
                 // If saving the record in FranchisorMultiUnit Model failed
                 if (!$insFranchisorMultiUnit) {
@@ -1246,9 +1261,9 @@ class FranchisorController extends Controller
             if (!empty($request->get('international_franchise'))) {
                 $isLookingInternational = 1;
                 $internationalFranchise = $request->get('international_franchise');
-                foreach ($internationalFranchise as $country){
+                foreach ($internationalFranchise as $country) {
                     $franchisorLocCountries = new FranchisorLocCountry;
-                    $franchisorLocCountries->franchisor_id    = $franchisorId;
+                    $franchisorLocCountries->franchisor_id = $franchisorId;
                     $franchisorLocCountries->country_longname = $country;
                     if (!$franchisorLocCountries->save()) {
                         DB::getFacadeRoot()->rollback();
@@ -1272,41 +1287,47 @@ class FranchisorController extends Controller
                 $franchiseNorthStates = $request->get('state');
                 $franchiseNorthStatesCount = count($franchiseNorthStates);
                 $statesCount = 0;
-                $region      = "";
+                $region = "";
 
                 while ($statesCount < $franchiseNorthStatesCount) {
 
-                    $state                = $franchiseNorthStates[$statesCount];
-                    $northStates          = config('location.northStates');
-                    $westStates           = config('location.westStates');
-                    $eastStates           = config('location.eastStates');
-                    $southStates          = config('location.southStates');
-                    $centralStates        = config('location.centralStates');
+                    $state = $franchiseNorthStates[$statesCount];
+                    $northStates = config('location.northStates');
+                    $westStates = config('location.westStates');
+                    $eastStates = config('location.eastStates');
+                    $southStates = config('location.southStates');
+                    $centralStates = config('location.centralStates');
                     $unionTerritoryStates = config('location.unionTerriotoryStates');
 
                     foreach ($northStates as $north)
-                        if ($state == $north) $region = 'North';
+                        if ($state == $north)
+                            $region = 'North';
 
                     foreach ($westStates as $west)
-                        if ($state == $west) $region = 'West';
+                        if ($state == $west)
+                            $region = 'West';
 
                     foreach ($eastStates as $east)
-                        if ($state == $east) $region = 'East';
+                        if ($state == $east)
+                            $region = 'East';
 
                     foreach ($southStates as $south)
-                        if ($state == $south) $region = 'South';
+                        if ($state == $south)
+                            $region = 'South';
 
                     foreach ($centralStates as $central)
-                        if ($state == $central) $region = 'Center';
+                        if ($state == $central)
+                            $region = 'Center';
 
                     foreach ($unionTerritoryStates as $unionTerritory)
-                        if ($state == $unionTerritory) $region = 'UT';
+                        if ($state == $unionTerritory)
+                            $region = 'UT';
 
 
                     $insert = FranchisorLocState::query()->insert([
                         'franchisor_id' => $franchisorId,
-                        'region'        => $region,
-                        'state'         => $franchiseNorthStates[$statesCount]
+                        'region' => $region,
+                        'state' => $franchiseNorthStates[$statesCount]
                     ]);
 
                     // If saving the record in FranchisorLocState Model failed
@@ -1353,29 +1374,37 @@ class FranchisorController extends Controller
                         $unionTerritoryStates = config('location.unionTerriotoryStates');
 
                         foreach ($northStates as $north)
-                            if ($state == $north) $region = 'North';
+                            if ($state == $north)
+                                $region = 'North';
 
                         foreach ($westStates as $west)
-                            if ($state == $west) $region = 'West';
+                            if ($state == $west)
+                                $region = 'West';
 
                         foreach ($eastStates as $east)
-                            if ($state == $east) $region = 'East';
+                            if ($state == $east)
+                                $region = 'East';
 
                         foreach ($southStates as $south)
-                            if ($state == $south) $region = 'South';
+                            if ($state == $south)
+                                $region = 'South';
 
                         foreach ($centralStates as $central)
-                            if ($state == $central) $region = 'Center';
+                            if ($state == $central)
+                                $region = 'Center';
 
                         foreach ($unionTerritoryStates as $unionTerritory)
-                            if ($state == $unionTerritory) $region = 'UT';
+                            if ($state == $unionTerritory)
+                                $region = 'UT';
 
                         // For key value 0 validation, use is_numeric
                         if (is_numeric($stateKey)) {
-                            $insert = FranchisorLocState::query()->insert(['franchisor_id' => $franchisorId,
+                            $insert = FranchisorLocState::query()->insert([
+                                'franchisor_id' => $franchisorId,
                                 'city' => $value,
                                 'region' => $region,
-                                'state' => $state]);
+                                'state' => $state
+                            ]);
 
                             // If saving the record in FranchisorLocState Model failed
                             if (!$insert) {
@@ -1396,7 +1425,7 @@ class FranchisorController extends Controller
             }
         }
 
-        if(!empty(request()->unit_investment_min) && !empty(request()->unit_investment_max)) {
+        if (!empty(request()->unit_investment_min) && !empty(request()->unit_investment_max)) {
             $unitInvMin = request()->unit_investment_min;
             $unitInvMax = request()->unit_investment_max;
         }
@@ -1404,18 +1433,18 @@ class FranchisorController extends Controller
         //Updating Franchisor Business Details
         FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)
             ->update([
-                'franchise_partner_type'    => $franchisorPartnerType,
+                'franchise_partner_type' => $franchisorPartnerType,
                 'is_looking_intl_franchise' => $isLookingInternational,
-                'looking_tradepartner'      => $lookingTradePartner,
-                'is_dealer_distributor'     => $lookingDealer,
-                'looking_franchise'         => $lookingFranchise,
-                'expansion_loc_type'        => $expansionLocType,
-                'unit_investment'           => $unitInvestment,
-                'unit_inv_min'              => $unitInvMin,
-                'unit_inv_max'              => $unitInvMax,
-                'unitinv_brand_fee'         => $unitInvBrandFee,
-                'unitinv_royalty'           => $unitInvRoyalty,
-                'is_international_client'   => $is_international_client
+                'looking_tradepartner' => $lookingTradePartner,
+                'is_dealer_distributor' => $lookingDealer,
+                'looking_franchise' => $lookingFranchise,
+                'expansion_loc_type' => $expansionLocType,
+                'unit_investment' => $unitInvestment,
+                'unit_inv_min' => $unitInvMin,
+                'unit_inv_max' => $unitInvMax,
+                'unitinv_brand_fee' => $unitInvBrandFee,
+                'unitinv_royalty' => $unitInvRoyalty,
+                'is_international_client' => $is_international_client
             ]);
 
         //closing the database transaction
@@ -1448,16 +1477,16 @@ class FranchisorController extends Controller
             'code' => $code,
         ];
 
-        if(!empty(Cookie::get('franCampaignSource'))) {
-           CampaignsFranRegister::query()->create(['franchisor_id' => $franchisorId, 'utm_campaign' => Cookie::get('franCampaign'), 'utm_source' => Cookie::get('franCampaignSource')]);
+        if (!empty(Cookie::get('franCampaignSource'))) {
+            CampaignsFranRegister::query()->create(['franchisor_id' => $franchisorId, 'utm_campaign' => Cookie::get('franCampaign'), 'utm_source' => Cookie::get('franCampaignSource')]);
         }
 
         //payment
         if (!empty($request->membership_plan) && $request->membership_plan != 1) {
             $tranId = FranchisorController::uniqueRandomNumber();
             $plan = $request->amount_to_pay;
-            $amount = Config('constants.membershipPlanFranchisor.' .$plan);
-            $amount = $amount + (($amount*18)/100);
+            $amount = Config('constants.membershipPlanFranchisor.' . $plan);
+            $amount = $amount + (($amount * 18) / 100);
             $name = $request->ceo_name;
             $email = $request->email;
             $phone = $mobile;
@@ -1544,11 +1573,16 @@ class FranchisorController extends Controller
         $franchisorId = request()->user()->profile_str;
 
         $franData = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
-
-        $insta    = ExpressInstaApply::query()->where('franchisor_id', $franchisorId)
-                                                ->orderBy('id', 'desc')
-                                                ->take(5)
-                                                ->get();
+        $leadcount = ExpressInstaApply::query()
+            ->where('franchisor_id', $franchisorId)
+            ->orderBy('id', 'desc')
+            // ->take(5)
+            ->count();
+        $insta = ExpressInstaApply::query()
+            ->where('franchisor_id', $franchisorId)
+            ->orderBy('id', 'desc')
+            // ->take(5)
+            ->get();
 
         $investorData = "";
         $franchisorId = request()->user()->profile_str;
@@ -1569,7 +1603,7 @@ class FranchisorController extends Controller
 
         $applyCount = (ExpressInstaApply::query()->where('franchisor_id', $franchisorId)->count()) + ($expressInterestCount);
 
-        return view('franchisor/myAccount/dashboard',compact('investorData', 'insta', 'franData' , 'applyCount', 'expressedInterests'));
+        return view('franchisor/myAccount/dashboard', compact('investorData', 'insta', 'franData', 'applyCount', 'expressedInterests', 'leadcount'));
     }
 
     /**
@@ -1578,12 +1612,12 @@ class FranchisorController extends Controller
      */
     public function viewBusinessDetails()
     {
-        $franchisorId  = request()->user()->profile_str;
-        $franData      = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
-        $tradeData     = FranchisorTradePartner::query()->where('franchisor_id', $franchisorId)->get();
+        $franchisorId = request()->user()->profile_str;
+        $franData = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
+        $tradeData = FranchisorTradePartner::query()->where('franchisor_id', $franchisorId)->get();
         $multiUnitData = FranchisorMultiUnit::query()->where('franchisor_id', $franchisorId)->first();
 
-        return view('franchisor/myAccount/business-details', compact('franData', 'multiUnitData', 'tradeData') );
+        return view('franchisor/myAccount/business-details', compact('franData', 'multiUnitData', 'tradeData'));
     }
 
     /**
@@ -1612,18 +1646,18 @@ class FranchisorController extends Controller
             'business_desc' => 'required'
         ]);
 
-        $franchisorId          = request()->user()->profile_str;
-        $outletLocations       = @implode(',', $_POST['outlet_locations']);
-        $marketingMaterial     = $request->input('marketting_material');
-        $lookingTradePartner   = 0;
-        $lookingFranchise      = 0;
+        $franchisorId = request()->user()->profile_str;
+        $outletLocations = @implode(',', $_POST['outlet_locations']);
+        $marketingMaterial = $request->input('marketting_material');
+        $lookingTradePartner = 0;
+        $lookingFranchise = 0;
         $franchisorPartnerType = 0;
-        $unitInvMin            = 10000;
-        $unitInvMax            = 50000;
-        $unitInvestment        = 0;
-        $unitInvBrandFee       = "";
-        $unitInvRoyalty        = "";
-        $lookingDealer         = 0;
+        $unitInvMin = 10000;
+        $unitInvMax = 50000;
+        $unitInvestment = 0;
+        $unitInvBrandFee = "";
+        $unitInvRoyalty = "";
+        $lookingDealer = 0;
 
         if ($request->input('marketting_material') == "Yes")
             $marketingMaterial = @implode(',', $_POST['marketting_materials']);
@@ -1740,7 +1774,7 @@ class FranchisorController extends Controller
                         // Log the error
                         $msg = 'franchisor Registration Failed: FranchisorMultiUnit Model' . $franchisorId;
                         $this->generateLog($msg, 'Update Failed');
-						BrandUpdateRequest::query()->where('br_brand_id', $franchisorId)->update(['br_status' => 0, 'updated_at' => date('Y-m-d h:i:s')]);
+                        BrandUpdateRequest::query()->where('br_brand_id', $franchisorId)->update(['br_status' => 0, 'updated_at' => date('Y-m-d h:i:s')]);
                         return redirect()->back();
                     }
                 }
@@ -1752,7 +1786,7 @@ class FranchisorController extends Controller
 
             $lookingDealer = 1;
             $lookingTradePartner = 0;
-            if($request->input('looking_franchise') == config('constants.LookingFor.TradePartner')) {
+            if ($request->input('looking_franchise') == config('constants.LookingFor.TradePartner')) {
                 $lookingTradePartner = 1;
                 $lookingDealer = 0;
             }
@@ -1840,7 +1874,7 @@ class FranchisorController extends Controller
         $this->franPercentage();
         //redirecting to the same page with successful flash data
         session()->flash('Success', 'successfully Updated');
-        
+
         return redirect()->back();
     }
 
@@ -1893,7 +1927,8 @@ class FranchisorController extends Controller
             'prop_area_max' => $request->input('prop_area_max'),
             'pref_prop_location' => $request->input('pref_prop_location'),
             'premise_outfit_arrangement' => $request->input('premise_outfit_arrangement'),
-            'site_selection_assistance' => $request->input('site_selection_assistance'),]);
+            'site_selection_assistance' => $request->input('site_selection_assistance'),
+        ]);
 
         $this->recordUpdateTime();
 
@@ -1961,38 +1996,45 @@ class FranchisorController extends Controller
                 $statesCount = 0;
 
                 while ($statesCount < $franchiseNorthStatesCount) {
-                    $region               = "";
-                    $state                = $franchiseNorthStates[$statesCount];
-                    $northStates          = config('location.northStates');
-                    $westStates           = config('location.westStates');
-                    $eastStates           = config('location.eastStates');
-                    $southStates          = config('location.southStates');
-                    $centralStates        = config('location.centralStates');
+                    $region = "";
+                    $state = $franchiseNorthStates[$statesCount];
+                    $northStates = config('location.northStates');
+                    $westStates = config('location.westStates');
+                    $eastStates = config('location.eastStates');
+                    $southStates = config('location.southStates');
+                    $centralStates = config('location.centralStates');
                     $unionTerritoryStates = config('location.unionTerriotoryStates');
 
                     foreach ($northStates as $north)
-                        if ($state == $north) $region = 'North';
+                        if ($state == $north)
+                            $region = 'North';
 
                     foreach ($westStates as $west)
-                        if ($state == $west) $region = 'West';
+                        if ($state == $west)
+                            $region = 'West';
 
                     foreach ($eastStates as $east)
-                        if ($state == $east) $region = 'East';
+                        if ($state == $east)
+                            $region = 'East';
 
                     foreach ($southStates as $south)
-                        if ($state == $south) $region = 'South';
+                        if ($state == $south)
+                            $region = 'South';
 
                     foreach ($centralStates as $central)
-                        if ($state == $central) $region = 'Center';
+                        if ($state == $central)
+                            $region = 'Center';
 
                     foreach ($unionTerritoryStates as $unionTerritory)
-                        if ($state == $unionTerritory) $region = 'UT';
+                        if ($state == $unionTerritory)
+                            $region = 'UT';
 
 
                     $insert = FranchisorLocState::query()->insert([
                         'franchisor_id' => $franchisorId,
-                        'region'        => $region,
-                        'state'         => $franchiseNorthStates[$statesCount]]);
+                        'region' => $region,
+                        'state' => $franchiseNorthStates[$statesCount]
+                    ]);
 
                     // If saving the record in FranchisorLocState Model failed
                     if (!$insert) {
@@ -2027,40 +2069,48 @@ class FranchisorController extends Controller
                     $i = 1;
                     // Iterate the config constants city array
                     while ($i <= count($citySubArr)) {
-                        $region               = '';
-                        $stateKey             = array_search($value, $citySubArr[$i]);
-                        $state                = config("location.stateArr.$i");
-                        $northStates          = config('location.northStates');
-                        $westStates           = config('location.westStates');
-                        $eastStates           = config('location.eastStates');
-                        $southStates          = config('location.southStates');
-                        $centralStates        = config('location.centralStates');
+                        $region = '';
+                        $stateKey = array_search($value, $citySubArr[$i]);
+                        $state = config("location.stateArr.$i");
+                        $northStates = config('location.northStates');
+                        $westStates = config('location.westStates');
+                        $eastStates = config('location.eastStates');
+                        $southStates = config('location.southStates');
+                        $centralStates = config('location.centralStates');
                         $unionTerritoryStates = config('location.unionTerriotoryStates');
 
                         foreach ($northStates as $north)
-                            if ($state == $north) $region = 'North';
+                            if ($state == $north)
+                                $region = 'North';
 
                         foreach ($westStates as $west)
-                            if ($state == $west) $region = 'West';
+                            if ($state == $west)
+                                $region = 'West';
 
                         foreach ($eastStates as $east)
-                            if ($state == $east) $region = 'East';
+                            if ($state == $east)
+                                $region = 'East';
 
                         foreach ($southStates as $south)
-                            if ($state == $south) $region = 'South';
+                            if ($state == $south)
+                                $region = 'South';
 
                         foreach ($centralStates as $central)
-                            if ($state == $central) $region = 'Center';
+                            if ($state == $central)
+                                $region = 'Center';
 
                         foreach ($unionTerritoryStates as $unionTerritory)
-                            if ($state == $unionTerritory) $region = 'UT';
+                            if ($state == $unionTerritory)
+                                $region = 'UT';
 
                         // For key value 0 validation, use is_numeric
                         if (is_numeric($stateKey)) {
-                            $insert = FranchisorLocState::query()->insert(['franchisor_id' => $franchisorId,
+                            $insert = FranchisorLocState::query()->insert([
+                                'franchisor_id' => $franchisorId,
                                 'city' => $value,
                                 'region' => $region,
-                                'state' => $state]);
+                                'state' => $state
+                            ]);
 
                             // If saving the record in FranchisorLocState Model failed
                             if (!$insert) {
@@ -2109,7 +2159,7 @@ class FranchisorController extends Controller
         }
 
         //Updating Franchisor Business Details
-        FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->update(['expansion_loc_type' => $expansionLocType,'is_looking_intl_franchise' => $isLookingInternational]);
+        FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->update(['expansion_loc_type' => $expansionLocType, 'is_looking_intl_franchise' => $isLookingInternational]);
 
         // Send mail if franchisor is international
         if ($request->input('is_looking_intl_franchise') == config('constants.InternationalFranchise.yes')) {
@@ -2168,7 +2218,8 @@ class FranchisorController extends Controller
             'is_it_support' => $request->input('is_it_support'),
             'std_fran_aggreement' => $request->input('std_fran_aggreement'),
             'franchise_term_duration' => $franchiseTimeDuration,
-            'term_renewable' => $request->input('term_renewable')]);
+            'term_renewable' => $request->input('term_renewable')
+        ]);
 
         $this->recordUpdateTime();
 
@@ -2260,8 +2311,27 @@ class FranchisorController extends Controller
      */
     public function instaResponse()
     {
-        $insta = ExpressInstaApply::query()->where('franchisor_id', request()->user()->profile_str)->orderBy('id', 'DESC')->paginate(15);
-        return view('franchisor/myAccount/insta-response', compact('insta'));
+        $franchisorId = request()->user()->profile_str;
+        $franData = FranchisorBusinessDetail::query()->select('franchisor_id', 'fleads_status')->where('franchisor_id', $franchisorId)->first();
+        $insta = ExpressInstaApply::query()
+            ->where('franchisor_id', request()->user()->profile_str)
+            ->orderBy('id', 'DESC')
+            ->paginate(15);
+
+        $instafirst = ExpressInstaApply::query()
+            ->where('franchisor_id', request()->user()->profile_str)
+            ->orderBy('id', 'ASC')
+            ->take(5)
+            ->get();
+
+        $fiveids = $instafirst->pluck('id')->toArray();
+        $fiveids = collect($fiveids)->map(function ($item) {
+            return ['id' => $item];
+        })->toArray();
+
+        $count = count($insta);
+
+        return view('franchisor/myAccount/insta-response', compact('insta', 'fiveids', 'franData'));
     }
 
     /**
@@ -2298,13 +2368,13 @@ class FranchisorController extends Controller
         fputcsv($handle, array('Name', 'Email', 'Phone', 'Address', 'City', 'State', 'Pincode', 'Investment', 'Date'));
         foreach ($table as $row) {
             $address = $row->address . ',' . $row->city . ',' . $row->state;
-            if(request()->user()->membership_type == 1 && $row->visibility == 1){
-				
-				$invAmt  = is_numeric($row->investment) ? Config('constants.investRangeInWords.'.$row->investment) : 'Not Visible';
+            if (request()->user()->membership_type == 1 && $row->visibility == 1) {
+
+                $invAmt = is_numeric($row->investment) ? Config('constants.investRangeInWords.' . $row->investment) : 'Not Visible';
                 fputcsv($handle, array($row->name, $row->email, $row->phone, $address, $row->city, $row->state, $row->pincode, $invAmt, $row->create_date));
-           }else{
+            } else {
                 fputcsv($handle, array($row->name, "anonymous@xyz.com", "Not Visible", "Not Visible", "Not Visible", "Not Visible", "Not Visible", "Not Visible", $row->create_date));
-			}
+            }
         }
         fclose($handle);
 
@@ -2323,7 +2393,7 @@ class FranchisorController extends Controller
      */
     public function allInterestToCsv()
     {
-        if(empty(request()->user()) || request()->user()->membership_type != 1)
+        if (empty(request()->user()) || request()->user()->membership_type != 1)
             return "";
 
         $franchisorId = request()->user()->profile_str;
@@ -2337,34 +2407,34 @@ class FranchisorController extends Controller
         $handle = fopen($filename, 'w+');
         fputcsv($handle, array('Name', 'Email', 'Available Capital', 'Phone', 'Address', 'State', 'City', 'application date'));
 
-        foreach ($expressedInterests as $expData){
+        foreach ($expressedInterests as $expData) {
             $address = "Not Visible";
-            $invAmt  = Config('constants.investRangeInWords.'.$expData->investor->inv_amt);
-            $name    = $expData->investor->userDetail->name;
-            $email   = "Not Visible";
-            $mobile  = "Not Visible";
+            $invAmt = Config('constants.investRangeInWords.' . $expData->investor->inv_amt);
+            $name = $expData->investor->userDetail->name;
+            $email = "Not Visible";
+            $mobile = "Not Visible";
 
             $state = "Not Visible";
             $city = "Not Visible";
 
-            if(request()->user()->membership_type == 1 && $expData->franchisor_visibility == 1 ) {
+            if (request()->user()->membership_type == 1 && $expData->franchisor_visibility == 1) {
                 $address = "";
-                if(!empty($expData->investor->inv_address))
-                    $address .= $expData->investor->inv_address.", ";
-                if(!empty($expData->investor->inv_city))
-                    $address .= $expData->investor->inv_city.", ";
-                if(!empty($expData->investor->inv_state))
-                    $address .= $expData->investor->inv_state.", ";
-                if(!empty($expData->investor->inv_pincode))
-                    $address .= "Pin-code:-".$expData->investor->inv_pincode.", ";
-                if(!empty($expData->investor->inv_country))
+                if (!empty($expData->investor->inv_address))
+                    $address .= $expData->investor->inv_address . ", ";
+                if (!empty($expData->investor->inv_city))
+                    $address .= $expData->investor->inv_city . ", ";
+                if (!empty($expData->investor->inv_state))
+                    $address .= $expData->investor->inv_state . ", ";
+                if (!empty($expData->investor->inv_pincode))
+                    $address .= "Pin-code:-" . $expData->investor->inv_pincode . ", ";
+                if (!empty($expData->investor->inv_country))
                     $address .= $expData->investor->inv_country;
 
-                $email  = $expData->investor->userDetail->email;
+                $email = $expData->investor->userDetail->email;
                 $mobile = $expData->investor->userDetail->mobile;
 
                 $state = $expData->investor->inv_state;
-                $city =  $expData->investor->inv_city;
+                $city = $expData->investor->inv_city;
             }
 
             fputcsv($handle, array($name, $email, $invAmt, $mobile, $address, $state, $city, $expData->visit_date));
@@ -2497,8 +2567,8 @@ class FranchisorController extends Controller
 
         $franDetail = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
         $amount = Config('constants.membershipPlanFranchisor.' . $plan);
-        $amount = $amount + (($amount*18)/100);
-		$mopt 	= $request->mopt;
+        $amount = $amount + (($amount * 18) / 100);
+        $mopt = $request->mopt;
         OnlinePayment::query()->insert([
             'order_no' => $tranId,
             'profile_type' => 1,
@@ -2546,8 +2616,8 @@ class FranchisorController extends Controller
         $url = "";
         if (!empty($request->pre_approved_logo))
             Storage::getFacadeRoot()->disk('s3')->delete(parse_url($request->pre_approved_logo)['path']);
-        
-            // only for testing comment
+
+        // only for testing comment
 
         // if (!empty($request->file('company_logo'))) {
         //     $companyLogo = $request->file('company_logo');
@@ -2561,7 +2631,7 @@ class FranchisorController extends Controller
         //     $this->recordUpdateTime();
         // }
 
-         // only for testing comment
+        // only for testing comment
 
         if (!empty($request->file('company_logo'))) {
             $companyLogo = $request->file('company_logo');
@@ -2569,12 +2639,12 @@ class FranchisorController extends Controller
             $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.' . $extension;
             $companyLogo->move(public_path('uploads'), $companyLogoPath);
             $url = asset('uploads/' . $companyLogoPath);
-        
+
             FranchisorBusinessDetail::where('franchisor_id', request()->user()->profile_str)
                 ->update(['pre_approved_logo' => $url]);
             $this->recordUpdateTime();
         }
-        
+
 
         $franData = FranchisorBusinessDetail::query()->select('company_name', 'company_logo', 'pre_approved_logo')->where('franchisor_id', request()->user()->profile_str)->first();
 
@@ -2728,7 +2798,7 @@ class FranchisorController extends Controller
             if (!empty($lastDate)) {
                 $endDateTime = date_create($lastDate->end_date);
                 $todayDateTime = date_create(date('Y-m-d h:i:s'));
-                $interval  = date_diff($endDateTime, $todayDateTime);
+                $interval = date_diff($endDateTime, $todayDateTime);
 
                 if ($interval->format('%R%a') > -5) {
                     $time = date('Y-m-d', strtotime('-5 days'));
@@ -2799,7 +2869,7 @@ class FranchisorController extends Controller
      */
     public function recordLeadDownload($franchisorId, $type)
     {
-        LeadDownload::query()->insert([ 'franchisor_id' => $franchisorId, 'lead_type' => $type]);
+        LeadDownload::query()->insert(['franchisor_id' => $franchisorId, 'lead_type' => $type]);
     }
 
     /**
@@ -2808,8 +2878,8 @@ class FranchisorController extends Controller
     public function recordUpdateTime()
     {
         UserRecord::query()->updateOrCreate([
-            'profile_str'   => request()->user()->profile_str,
-        ],[
+            'profile_str' => request()->user()->profile_str,
+        ], [
             'last_updated_by_user' => date('Y-m-d H:i:s')
         ]);
     }

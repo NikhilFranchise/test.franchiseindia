@@ -75,7 +75,9 @@
                     @include('layout.newhomepage.ffc')
                     <!-- Featured Franchise Companies ends -->
                     <!-- News section starts -->
-                    @include('layout.newhomepage.newssection')
+                    @if (!empty($articles))
+                        @include('layout.newhomepage.newssection')
+                    @endif
                     <!-- News section ends -->
                     <!-- Testimonial section starts -->
                     @include('layout.newhomepage.testimonialsection')
@@ -211,24 +213,22 @@
     <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
     @include('layout.newhomepage.jslink')
     <script>
-    
-    function selectMax(selectmaxheaderval) {
-        let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
-        let maxAmount = $('#maxAmount');
-        let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
-        maxAmount.html("");
-        selectmaxheaderval = parseInt(selectmaxheaderval);
-        $.each(amountConfigArr, function(key, value) {
-            if (key > selectmaxheaderval)
-                maxAmount.append($("<option></option>").attr({
-                    "value": key,
-                    "slug": getSlugAmount[key]['min']
-                }).text(value));
-        });
-        if (selectmaxheaderval === 21)
-            maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
-    }
-
+        function selectMax(selectmaxheaderval) {
+            let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
+            let maxAmount = $('#maxAmount');
+            let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
+            maxAmount.html("");
+            selectmaxheaderval = parseInt(selectmaxheaderval);
+            $.each(amountConfigArr, function(key, value) {
+                if (key > selectmaxheaderval)
+                    maxAmount.append($("<option></option>").attr({
+                        "value": key,
+                        "slug": getSlugAmount[key]['min']
+                    }).text(value));
+            });
+            if (selectmaxheaderval === 21)
+                maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
+        }
     </script>
     <script>
         function setCookie() {
