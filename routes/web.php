@@ -168,6 +168,9 @@ Route::group( [ 'prefix' => 'franchisor' ], function() {
 
     });
 });
+
+Route::get('location/{city}',   [BusinessListingController::class,'listingLocation']);
+
 Route::group( [ 'prefix' => 'business-opportunities' ], function()
 {
     // Route::get('dealers-and-distributors.m5',   function() { return redirect('https://dealer.franchiseindia.com/', 301);});	
@@ -237,7 +240,7 @@ Route::group( [ 'prefix' => 'business-opportunities' ], function()
     Route::get('meghalaya.{state_code}',           [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('mizoram.{state_code}',             [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('nagaland.{state_code}',            [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('odisha.{state_code}',              [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get('odisha.{state_code}',              [BusinessListingController::class, 'searchBusinessListing']); 
     Route::get('pondicherry.{state_code}',         [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('sikkim.{state_code}',              [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('tripura.{state_code}',             [BusinessListingController::class, 'searchBusinessListing']);
@@ -265,10 +268,13 @@ Route::group( [ 'prefix' => 'business-opportunities' ], function()
     Route::get('all/{code}/all/',            function(){return redirect('business-opportunities/all/all', 301);});
 });
 
-// /Category Page Routes
+
+// Category Page Routes
+
+
 Route::group( [ 'prefix' => 'category' ], function()
-{
-    Route::get('atoz',         [BusinessListingController::class, 'searchBusinessListing'] );
+{ 
+    Route::get('atoz',         [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('search',       [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('searchby',     [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('index',        function(){return redirect('business-opportunities/all/all', 301);});
