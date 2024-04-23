@@ -17,7 +17,10 @@ use App\Http\Controllers\BrandCompareController;
 use App\Http\Controllers\BusinessListingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FeedbackController;
-use App\Http\Controllers\PankajController;
+use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\InvPaymentController;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -34,143 +37,171 @@ Auth::routes();
 |
 */
 
-    Route::get('/',                                 [NewHomePageController::class, 'homeNew']);
-    Route::get('home',                                   function() { return redirect('/', 301);});
-    Route::get('pagenotfound',function(){return view('static.404');}); //404 ERROR PAGE
-    Route::get('/hi',                               [NewHomePageController::class, 'hindiHomePage']);
-    Route::get('about',                             [StaticPageController::class, 'aboutus']);
-    Route::get('contact',                           [ContactUsController::class, 'contactUsForm']);
-    Route::get('feedback',                          [SiteFeedbackController::class, 'feedbackForm']);
-    Route::get('testimonials',                      [StaticPageController::class, 'getTestimonials']);
-    Route::get('terms',                             [StaticPageController::class, 'mainTerm']);
-    Route::get('getcitylistBystatename',            [CommonController::class, 'getCityListBystateName']);
-    Route::get('invester-verifyformmobilenumber',   [MobileVerificationController::class, 'investerverifyMobile']);
-    Route::get('/user/check-mobile-status',         [CommonController::class, 'verifyMobile']);
-    Route::get('verifyformmobilenumber',            [MobileVerificationController::class, 'verifyMobile']);
-    Route::get('verify',                            [MobileVerificationController::class,'verifyMobile']);
-    Route::get('/user/investor-mobile-verify',      [CommonController::class, 'investormobileverify']);
-    Route::get('validate-email',                    [CommonController::class, 'emailValidation']);
-    Route::get('thanks-advice-form', function () { return view('thanks.advice-form'); });
-    Route::get('property-loan',                     [StaticPageController::class, 'getPropertyLoanForm']);
-    Route::get('getpincode',                        [CommonController::class, 'getPincodeDetails']);
-    Route::get('get-city-list-landing-page',        [CommonController::class, 'getCityListLandingPage']);
-    Route::get('getsubcategory',                    [CommonController::class, 'getSubCategory']);
-    Route::get('getsubcatcategory',                 [CommonController::class, 'getSubCatCategory']);
-    Route::get('getcitylist',                       [CommonController::class, 'getCityList']);
-    Route::get('most-visitedbrands',                [BrandFilterController::class, 'topbrands']);
-    Route::get('brands/{profileName}',              [BrandController::class, 'brandDetails']);
-    Route::get('check-existing-registration',        [InvestorController::class, 'checkInvestorExistence']);
-    Route::get('mobcheck',                          [MobileVerificationController::class, 'mobCheck']);
-    Route::get('get-city-list-landing-page',        [CommonController::class, 'getCityListLandingPage']);
-    Route::get('compare-brands',                    [BrandCompareController::class, 'compareBrands']);
-    Route::get('get-brands',                        [BrandCompareController::class, 'getComparableBrands']);
-    Route::get('/get-brand-compare',                [BrandCompareController::class, 'getSingleBrand']);
-    // post routes
-    Route::post('property-loan-submit',             [StaticPageController::class, 'postPropertyLoanForm']);
-    Route::post('contact-submit',                   [ContactUsController::class, 'contact']);
-    Route::post('feedback',                         [FeedbackController::class, 'feedback']);
-    Route::post('freeadvice',                       [AdviceController::class, 'freeadvice']);
-    Route::post('brandlikes',                       [BrandController::class, 'likes']);
-    Route::post('brandratings',                     [BrandController::class, 'ratings']);
-    Route::post('brandcontactinfo',                 [ExpressInstaController::class, 'brandInfo']);     //guest
-    Route::post('compare-brands',                   [BrandCompareController::class, 'compareBrands']);
-    Route::get('login',                             [LoginController::class, 'showLoginForm']);
-    Route::get('loginform',                         [LoginController::class, 'showLoginForm'])->name('franchise.login');
-    Route::post('loginform',                        [LoginController::class, 'login'])->name('franchise.login.submit');
-    Route::get('logoutprofile',                     [LoginController::class, 'logoutProfile']);
-    Route::get('fibl/login',                        [LoginController::class, 'fiblLogin']);  // FIBL brand routes
-    Route::post('fibl/login',                        [LoginController::class, 'fiblLoginCheck']);
-    Route::post('getfreeinfo',                      [ExpressInstaController::class, 'freeInfo']);      //guest
+Route::get('/', [NewHomePageController::class, 'homeNew']);
+Route::get('/home', function () {
+    return redirect('/', 301);
+});
+Route::get('pagenotfound', function () {
+    return view('static.404');
+}); //404 ERROR PAGE
+Route::get('/hi', [NewHomePageController::class, 'hindiHomePage']);
+Route::get('about', [StaticPageController::class, 'aboutus']);
+Route::get('contact', [ContactUsController::class, 'contactUsForm']);
+Route::get('feedback', [SiteFeedbackController::class, 'feedbackForm']);
+Route::get('testimonials', [StaticPageController::class, 'getTestimonials']);
+Route::get('terms', [StaticPageController::class, 'mainTerm']);
+Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBystateName']);
+Route::get('invester-verifyformmobilenumber', [MobileVerificationController::class, 'investerverifyMobile']);
+Route::get('/user/check-mobile-status', [CommonController::class, 'verifyMobile']);
+Route::get('verifyformmobilenumber', [MobileVerificationController::class, 'verifyMobile']);
+Route::get('verify', [MobileVerificationController::class, 'verifyMobile']);
+Route::get('/user/investor-mobile-verify', [CommonController::class, 'investormobileverify']);
+Route::get('validate-email', [CommonController::class, 'emailValidation']);
+Route::get('thanks-advice-form', function () {
+    return view('thanks.advice-form');
+});
+Route::get('property-loan', [StaticPageController::class, 'getPropertyLoanForm']);
+Route::get('getpincode', [CommonController::class, 'getPincodeDetails']);
+Route::get('get-city-list-landing-page', [CommonController::class, 'getCityListLandingPage']);
+Route::get('getsubcategory', [CommonController::class, 'getSubCategory']);
+Route::get('getsubcatcategory', [CommonController::class, 'getSubCatCategory']);
+Route::get('getcitylist', [CommonController::class, 'getCityList']);
+Route::get('most-visitedbrands', [BrandFilterController::class, 'topbrands']);
+Route::get('brands/{profileName}', [BrandController::class, 'brandDetails']);
+Route::get('check-existing-registration', [InvestorController::class, 'checkInvestorExistence']);
+Route::get('mobcheck', [MobileVerificationController::class, 'mobCheck']);
+Route::get('get-city-list-landing-page', [CommonController::class, 'getCityListLandingPage']);
+Route::get('compare-brands', [BrandCompareController::class, 'compareBrands']);
+Route::get('get-brands', [BrandCompareController::class, 'getComparableBrands']);
+Route::get('/get-brand-compare', [BrandCompareController::class, 'getSingleBrand']);
+// post routes
+Route::post('property-loan-submit', [StaticPageController::class, 'postPropertyLoanForm']);
+Route::post('contact-submit', [ContactUsController::class, 'contact']);
+Route::post('feedback', [FeedbackController::class, 'feedback']);
+Route::post('freeadvice', [AdviceController::class, 'freeadvice']);
+Route::post('brandlikes', [BrandController::class, 'likes']);
+Route::post('brandratings', [BrandController::class, 'ratings']);
+Route::post('brandcontactinfo', [ExpressInstaController::class, 'brandInfo']);     //guest
+Route::post('compare-brands', [BrandCompareController::class, 'compareBrands']);
+Route::get('login', [LoginController::class, 'showLoginForm']);
+Route::get('loginform', [LoginController::class, 'showLoginForm'])->name('franchise.login');
+Route::post('loginform', [LoginController::class, 'login'])->name('franchise.login.submit');
+Route::get('logoutprofile', [LoginController::class, 'logoutProfile']);
+Route::get('fibl/login', [LoginController::class, 'fiblLogin']);  // FIBL brand routes
+Route::post('fibl/login', [LoginController::class, 'fiblLoginCheck']);
+Route::post('getfreeinfo', [ExpressInstaController::class, 'freeInfo']);      //guest
 
-Route::group(['prefix' => 'investor'], function() {
-    Route::get('plan',                          [InvestorController::class, 'campaignPlan']);
-    Route::get('create-new',                    [InvestorController::class, 'campaignNewRegistration']);
-    Route::get('verifyotp',                     [CommonController::class, 'vrifyOtp']);
-    Route::get('verify-otp',                    [CommonController::class, 'investervrifyOtp']);	
-    Route::get('checkmobilestatus',             [CommonController::class, 'verifyMobile']);
-    Route::get('create', function() { return view('investor/register/investor-quick-registration');
+Route::group(['prefix' => 'investor'], function () {
+    Route::get('plan', [InvestorController::class, 'campaignPlan']);
+    Route::get('create-new', [InvestorController::class, 'campaignNewRegistration']);
+    Route::get('verifyotp', [CommonController::class, 'vrifyOtp']);
+    Route::get('verify-otp', [CommonController::class, 'investervrifyOtp']);
+    Route::get('checkmobilestatus', [CommonController::class, 'verifyMobile']);
+    // Route::get('registration', [InvestorController::class, 'viewInvestorRegistrationForm']); not working on live site
+    Route::get('campaign/create', [InvestorController::class, 'rviewInvQuickRegForm']);
+    Route::get('create', function () {
+        return view('investor/register/investor-quick-registration');
+    });
+    Route::get('quickregistration', function () {
+        return view('investor/register/investor-quick-registration');
     });
 
     // post routes of investor
-    Route::post('inv-plan',                     [InvestorController::class, 'upgradeInvestor']);
-    Route::post('register',                     [InvestorController::class, 'createInvestor']);
+    Route::post('inv-plan', [InvestorController::class, 'upgradeInvestor']);
+    Route::post('register', [InvestorController::class, 'createInvestor']);
+    Route::post('plan-submit', [InvestorController::class, 'setcampaignPlan']);
+    Route::post('makepayment', [PaymentController::class, 'upgradeInvestorMembership']);
+    // Route::post('campaign/plan', [InvestorController::class, 'campaignPlanCheck']);
+    // Route::post('campaign/login', 'Auth\LoginController@loginInvCampaign');
+    // Route::post('campaign/update', [InvestorController::class, 'updateCampaignInfo']);
     //myaccount routes for investor
-    Route::group( [ 'prefix' => 'myaccount' ], function() {
-     //Get routes
-     Route::get('dashboard',          [InvestorController::class,'viewDashboard']);
-     Route::get('expressed-interest', [InvestorController::class,'expressInterest']);
-     Route::get('responsemanager',    [InvestorController::class,'responseManager']);
-     Route::get('payment',            [InvestorController::class,'paymentPlan']);
-     Route::get('viewprofile',        [InvestorController::class,'viewprofile']);
-     Route::get('recommendations',    [InvestorController::class,'getRecommendations']);
-     Route::get('personaldetails',    [InvestorController::class,'showPersonalDetails']);
-     Route::get('propertydetails',    [InvestorController::class,'showPropertyDetails']);
-     Route::get('jobdetails',         [InvestorController::class,'showJobDetails']);
-     Route::get('businessdetails',    [InvestorController::class,'showBusinessDetails']);
-     Route::get('investmentdetails',  [InvestorController::class,'showinvestmentdetails']);
-     Route::get('matchalert',         [InvestorController::class,'showMatchAlert']);
-     Route::get('changepassword',     [InvestorController::class,'showPassword']);
-     Route::get('feedback',           [InvestorController::class,'showFeedback']);
-     Route::get('advertisewithus',           function() {return view('investor/myAccount/advertisewithus');});
+    Route::group(['prefix' => 'myaccount'], function () {
+        //Get routes
+        Route::get('dashboard', [InvestorController::class, 'viewDashboard']);
+        Route::get('expressed-interest', [InvestorController::class, 'expressInterest']);
+        Route::get('responsemanager', [InvestorController::class, 'responseManager']);
+        Route::get('payment', [InvestorController::class, 'paymentPlan']);
+        Route::get('viewprofile', [InvestorController::class, 'viewprofile']);
+        Route::get('recommendations', [InvestorController::class, 'getRecommendations']);
+        Route::get('personaldetails', [InvestorController::class, 'showPersonalDetails']);
+        Route::get('propertydetails', [InvestorController::class, 'showPropertyDetails']);
+        Route::get('jobdetails', [InvestorController::class, 'showJobDetails']);
+        Route::get('businessdetails', [InvestorController::class, 'showBusinessDetails']);
+        Route::get('investmentdetails', [InvestorController::class, 'showinvestmentdetails']);
+        Route::get('matchalert', [InvestorController::class, 'showMatchAlert']);
+        Route::get('changepassword', [InvestorController::class, 'showPassword']);
+        Route::get('feedback', [InvestorController::class, 'showFeedback']);
+        Route::get('advertisewithus', function () {
+            return view('investor/myAccount/advertisewithus');
+        });
 
-     //Post routes
-     Route::post('updatepersonaldetails',   [InvestorController::class,'updatePersonalDetails']);
-     Route::post('updatepropertydetails',   [InvestorController::class,'updatePropertyDetails']);
-     Route::post('updatebusinessdetails',   [InvestorController::class,'updateBusinessDetails']);
-     Route::post('updatejobdetails',        [InvestorController::class,'updateJobDetails']);
-     Route::post('updateinvestmentdetails', [InvestorController::class,'updateinvestmentdetails']);
-     Route::post('updatepassword',          [InvestorController::class,'updatePassword']);
-     Route::post('updatematchalert',        [InvestorController::class,'updateMatchAlert']);
-     Route::post('feedback',                [FeedbackController::class,'feedback']);
- });
+        //Post routes
+        Route::post('updatepersonaldetails', [InvestorController::class, 'updatePersonalDetails']);
+        Route::post('updatepropertydetails', [InvestorController::class, 'updatePropertyDetails']);
+        Route::post('updatebusinessdetails', [InvestorController::class, 'updateBusinessDetails']);
+        Route::post('updatejobdetails', [InvestorController::class, 'updateJobDetails']);
+        Route::post('updateinvestmentdetails', [InvestorController::class, 'updateinvestmentdetails']);
+        Route::post('updatepassword', [InvestorController::class, 'updatePassword']);
+        Route::post('updatematchalert', [InvestorController::class, 'updateMatchAlert']);
+        Route::post('feedback', [FeedbackController::class, 'feedback']);
+    });
 });
-
+// Investor payment route
+Route::post('invpaymentsubmit', [InvPaymentController::class, 'paymentHdfcPayuPg']);
+Route::post('invfailed', [InvPaymentController::class, 'paymentFailure']);
+Route::post('invcancelled', [InvPaymentController::class, 'paymentFailure']);
 // Franchisor routes
-    Route::get('franchisorregistration',                function () {
-    return redirect('franchisor/registration/step/1'); });
-    Route::get('franchisor/registration/step/{step}',   [FranchisorController::class, 'viewFranchisorRegistrationForm']);
-    Route::post('franchisor/registration/step/2',       [FranchisorController::class, 'firstStepSubmit']);
-    Route::post('franchisor/registration/step/3',       [FranchisorController::class, 'secondStepSubmit']);
-    Route::post('franchisor/registration/step/4',       [FranchisorController::class, 'thirdStepSubmit']);
-    Route::post('franchisor/registration/step/5',       [FranchisorController::class, 'fourthStepSubmit']);
-    Route::post('franchisor/registration/step/6',       [FranchisorController::class, 'planSubmit']);
-    Route::post('franchisor/registration/plan',         [FranchisorController::class, 'fifthStepSubmit']);
-    Route::post('franchisor/registration/step/final',   [FranchisorController::class, 'finalStepSubmit']);
-    Route::get('advertise-with-us-payment',             [FranchisorController::class, 'advertisewithuspayment']);
-    Route::post('advertise-with-us-payment',            [FranchisorController::class, 'advertisewithussubmit']);
+Route::get('franchisorregistration', function () {
+    return redirect('franchisor/registration/step/1');
+});
+Route::get('franchisor/registration/step/{step}', [FranchisorController::class, 'viewFranchisorRegistrationForm']);
+Route::post('franchisor/registration/step/2', [FranchisorController::class, 'firstStepSubmit']);
+Route::post('franchisor/registration/step/3', [FranchisorController::class, 'secondStepSubmit']);
+Route::post('franchisor/registration/step/4', [FranchisorController::class, 'thirdStepSubmit']);
+Route::post('franchisor/registration/step/5', [FranchisorController::class, 'fourthStepSubmit']);
+Route::post('franchisor/registration/step/6', [FranchisorController::class, 'planSubmit']);
+Route::post('franchisor/registration/plan', [FranchisorController::class, 'fifthStepSubmit']);
+Route::post('franchisor/registration/step/final', [FranchisorController::class, 'finalStepSubmit']);
+Route::get('advertise-with-us-payment', [FranchisorController::class, 'advertisewithuspayment']);
+Route::post('advertise-with-us-payment', [FranchisorController::class, 'advertisewithussubmit']);
 // franchisor routes
-Route::group( [ 'prefix' => 'franchisor' ], function() {
-    Route::get('verifyotp',               [CommonController::class, 'vrifyOtp']);
-    Route::get('checkmobilestatus',       [CommonController::class, 'verifyMobile']);
 
-    Route::group( [ 'prefix' => 'myaccount' ], function(){
-    Route::get('dashboard',         [FranchisorController::class, 'viewDashboard']);
-    Route::get('view-profile',      [FranchisorController::class, 'viewProfile']);
-    Route::get('insta-response',    [FranchisorController::class, 'instaResponse']);
-    Route::get('expressed-interest', [FranchisorController::class, 'expressInterest']);
-    Route::get('businessdetails',    [FranchisorController::class, 'viewBusinessDetails']);
-    Route::get('professionaldetails', [FranchisorController::class, 'viewProfessionalDetails']);
-    Route::get('propertydetails',     [FranchisorController::class, 'viewPropertyDetails']);
-    Route::get('training-aggrement-details', [FranchisorController::class, 'viewTrainingAgreement']);
-    Route::get('payment-plan',             [FranchisorController::class, 'paymentPlan']);
-    Route::get('appearance',               [FranchisorController::class, 'appearance']);
-    Route::get('logo',                     [FranchisorController::class, 'franPhotoChange']);
-    Route::get('responsemanager',          [FranchisorController::class, 'viewResponseManager']);
-    Route::get('advertisewithus',          function() {return view('franchisor/myAccount/advertisewithus');});
-    Route::get('changepassword',           function() {return view('franchisor/myAccount/changepassword');} );
+Route::get('location/{city}', [BusinessListingController::class,'listingLocation']);
 
-    Route::post('updatepassword',           [FranchisorController::class, 'updatePassword']);
-    Route::post('fran-photochange',         [FranchisorController::class, 'franPhotoUpload'])->name('fran.photochange');
-    Route::post('updatebusinessdetails',    [FranchisorController::class, 'updateBusinessDetails']);
-    Route::post('updateprofessionaldetails', [FranchisorController::class, 'updateProfessionalDetails']);
-    Route::post('updatepropertydetails',      [FranchisorController::class, 'updatePropertyDetails']);
-    Route::post('updatetrainingaggrementdetails', [FranchisorController::class, 'updateTrainingAgreement']);
+
+Route::group(['prefix' => 'franchisor'], function () {
+    Route::get('verifyotp', [CommonController::class, 'vrifyOtp']);
+    Route::get('checkmobilestatus', [CommonController::class, 'verifyMobile']);
+
+    Route::group(['prefix' => 'myaccount'], function () {
+        Route::get('dashboard', [FranchisorController::class, 'viewDashboard']);
+        Route::get('view-profile', [FranchisorController::class, 'viewProfile']);
+        Route::get('insta-response', [FranchisorController::class, 'instaResponse']);
+        Route::get('expressed-interest', [FranchisorController::class, 'expressInterest']);
+        Route::get('businessdetails', [FranchisorController::class, 'viewBusinessDetails']);
+        Route::get('professionaldetails', [FranchisorController::class, 'viewProfessionalDetails']);
+        Route::get('propertydetails', [FranchisorController::class, 'viewPropertyDetails']);
+        Route::get('training-aggrement-details', [FranchisorController::class, 'viewTrainingAgreement']);
+        Route::get('payment-plan', [FranchisorController::class, 'paymentPlan']);
+        Route::get('appearance', [FranchisorController::class, 'appearance']);
+        Route::get('logo', [FranchisorController::class, 'franPhotoChange']);
+        Route::get('responsemanager', [FranchisorController::class, 'viewResponseManager']);
+        Route::get('advertisewithus', function () {
+            return view('franchisor/myAccount/advertisewithus');
+        });
+        Route::get('changepassword', function () {
+            return view('franchisor/myAccount/changepassword');
+        });
+
+        Route::post('updatepassword', [FranchisorController::class, 'updatePassword']);
+        Route::post('fran-photochange', [FranchisorController::class, 'franPhotoUpload'])->name('fran.photochange');
+        Route::post('updatebusinessdetails', [FranchisorController::class, 'updateBusinessDetails']);
+        Route::post('updateprofessionaldetails', [FranchisorController::class, 'updateProfessionalDetails']);
+        Route::post('updatepropertydetails', [FranchisorController::class, 'updatePropertyDetails']);
+        Route::post('updatetrainingaggrementdetails', [FranchisorController::class, 'updateTrainingAgreement']);
 
     });
 });
-
-Route::get('location/{city}',   [BusinessListingController::class,'listingLocation']);
-
 Route::group( [ 'prefix' => 'business-opportunities' ], function()
 {
     // Route::get('dealers-and-distributors.m5',   function() { return redirect('https://dealer.franchiseindia.com/', 301);});	
@@ -240,7 +271,7 @@ Route::group( [ 'prefix' => 'business-opportunities' ], function()
     Route::get('meghalaya.{state_code}',           [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('mizoram.{state_code}',             [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('nagaland.{state_code}',            [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('odisha.{state_code}',              [BusinessListingController::class, 'searchBusinessListing']); 
+    Route::get('odisha.{state_code}',              [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('pondicherry.{state_code}',         [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('sikkim.{state_code}',              [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('tripura.{state_code}',             [BusinessListingController::class, 'searchBusinessListing']);
@@ -248,33 +279,30 @@ Route::group( [ 'prefix' => 'business-opportunities' ], function()
     Route::get('himachal-pradesh.{state_code}',    [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('jammu-and-kashmir.{state_code}',   [BusinessListingController::class, 'searchBusinessListing']);
 
-    Route::get('{searchTerm}.FT{ftype}',                    [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('{searchTerm}/{categoryIds}',                [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('{searchTerm}/{categoryIds}/{locationIds}',   [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}',   [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}',   [BusinessListingController::class, 'searchBusinessListing']);
-    
-    Route::get('{catUrl}.{category_param}',        [BusinessListingController::class, 'getBusinessListingnormalization']);    
-    Route::get('{lowcost}',                        [BusinessListingController::class, 'searchBusinessListingnormalization']);
-        
-    
-    
-    // Route::get('{catUrl}.{category_param}',        [BusinessListingController::class, 'getBusinessListing']);    
-    Route::get('/lowcost', [BusinessListingController::class, 'searchBusinessListing'])
-    ->defaults('lowcost', 'lowcost');
+    Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
 
-        
-    Route::get('{code}/all/all',             function(){return redirect('business-opportunities/all/all', 301);});
-    Route::get('all/{code}/all/',            function(){return redirect('business-opportunities/all/all', 301);});
+    Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListingnormalization']);
+    Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
+    Route::get('/lowcost', [BusinessListingController::class, 'searchBusinessListing'])
+        ->defaults('lowcost', 'lowcost');
+
+
+    Route::get('{code}/all/all', function () {
+        return redirect('business-opportunities/all/all', 301);
+    });
+    Route::get('all/{code}/all/', function () {
+        return redirect('business-opportunities/all/all', 301);
+    });
 });
 
-
-// Category Page Routes
-
-
+// /Category Page Routes
 Route::group( [ 'prefix' => 'category' ], function()
-{ 
-    Route::get('atoz',         [BusinessListingController::class, 'searchBusinessListing']);
+{
+    Route::get('atoz',         [BusinessListingController::class, 'searchBusinessListing'] );
     Route::get('search',       [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('searchby',     [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('index',        function(){return redirect('business-opportunities/all/all', 301);});

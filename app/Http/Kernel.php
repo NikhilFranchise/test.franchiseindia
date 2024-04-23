@@ -66,6 +66,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'invAuth' => \App\Http\Middleware\InvAuth::class,
         'franAuth' => \App\Http\Middleware\franAuth::class,
+        'ContentAdmin' => \App\Http\Middleware\ContentAdmin::class,
+
 
     ];
 }

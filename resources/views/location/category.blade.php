@@ -258,7 +258,7 @@
                                                 </div>
                                             </div>
                                             {{-- @enddesktop --}}
-                                            @elseif (isMobile())
+                                            @elseif ($agent-> isMobile())
                                             {{-- @mobile --}}
                                             <div class="yahoo_cat_468X60">
                                             {{--<div id='div-gpt-ad-1563348795825-2' style='width: 300px; height: 250px;'></div>--}}

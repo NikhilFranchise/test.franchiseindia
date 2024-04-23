@@ -27,42 +27,7 @@
                                 <div class="investhead"><span>Free</span> registration </div>
                                 <div class="priceshownew">View and enquire about all brands</div>
                             </div>
-                            <!--1-->
-
-                            <!--2 Copper Plan start -->
-                            {{--<div class="col-xs-12 col-sm-3 col-md-3  bor-radius row-no-padding boxheightinvestor boxwidth orangeb" id="402">--}}
-                                {{--<div class="padspc orange">--}}
-                                    {{--<input type="radio" id="test2" name="invPlan" value="402"/>--}}
-                                    {{--<label for="test2">Copper</label>--}}
-                                {{--</div>--}}
-                                {{--<div class="investheadprice">--}}
-                                    {{--<i class="fa fa-inr" aria-hidden="true"></i> {{ number_format(Config('constants.invPlanAmount.402')) }}--}}
-                                    {{--<span>12 Months</span>--}}
-                                {{--</div>--}}
-                                {{--<div class="priceshownew">View and enquire about all brands</div>--}}
-                                {{--<div class="priceshownew">View contact details of 5 brands</div>--}}
-                                {{--<div class="priceshownew">Newsletter subscription</div>--}}
-                                {{--<div class="priceshownew">A monthly recommendation of brands will be visible on your dashboard</div>--}}
-                            {{--</div>--}}
-                            <!--2 Copper Plan end-->
-
-                            <!--3 Silver Plan-->
-                          <!--   <div class="col-xs-12 col-sm-3 col-md-3  bor-radius row-no-padding boxheightinvestor boxwidth silverb" id="403">
-                                <div class="padspc silver">
-                                    <input type="radio" id="test3" name="invPlan" value="403"/>
-                                    <label for="test3">Silver</label>
-                                </div>
-                                <div class="investheadprice">
-                                    <i class="fa fa-inr" aria-hidden="true"></i>{{ number_format(Config('constants.invPlanAmount.403')) }}
-                                    <div class="txtgst">+18% GST</div>
-                                    <span>3 Months</span>
-                                </div>
-                                <div class="priceshownew">View and enquire about all brands</div>
-                                <div class="priceshownew">View contact details of 20 brands</div>
-                                <div class="priceshownew">Newsletter subscription</div>
-                                <div class="priceshownew">A monthly recommendation of brands will be visible on your dashboard</div>
-                            </div> -->
-                            <!--3-->
+                            
 
                             <!--4 Gold plan Start -->
                             <div class="col-xs-12 col-sm-3 col-md-3 bor-radius row-no-padding boxheightinvestor boxwidth goldb" id="404">
