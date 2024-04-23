@@ -32,6 +32,7 @@ use App\ArticleInterviewCommentReply;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Hashing\BcryptHasher;
+
 class AdminController extends Controller
 {
     public function __construct()
@@ -83,13 +84,9 @@ class AdminController extends Controller
         if (empty($admUser))
             return redirect('admin/login');
 
-            if (Hash::needsRehash($admUser->admin_password)) {
-                $admUser->admin_password = Hash::make($admUser->admin_password);
-                $admUser->save();
-            }
-        
-            if (Hash::check($password, $admUser->admin_password)) {
-                dd($password, $admUser->admin_password);
+
+        if (Hash::check($password, $admUser->admin_password)) {
+            dd($password, $admUser->admin_password);
             session()->flush();
             $adm_name = $admUser->admin_name;
             $request->session()->put('admin_name', $adm_name);
@@ -97,7 +94,7 @@ class AdminController extends Controller
             $request->session()->put('role', $admUser->admin_dept);
             $request->session()->put('author_creation_capability', $admUser->can_create_author);
             return redirect('admin/dashboard');
-        }else{
+        } else {
             dd($password, $admUser->admin_password);
             return redirect('admin/login');
         }

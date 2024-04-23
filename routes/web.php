@@ -280,14 +280,14 @@ Route::get('articleinterviewcommentsearch', [AdminController::class, 'searchArti
 Route::get('newscommentsearch', [AdminController::class, 'searchNewsComment']);
 Route::get('admin-logout', [AdminController::class, 'logout']);
 //Admin Panel Post Routes
-Route::post('invsuccess', 'PaymentController@investorPaymentSuccess');        // Investor Payment success routes
-Route::post('bookpaymentsubmit', 'PaymentController@bookPayment');                   // Books & Reports Payment section routes
-Route::post('payment/booksuccess', 'PaymentController@bookPaymentSuccess');            // Books & Reports Payment section routes
-Route::post('GetHandleRES', 'PaymentController@getHdfcPgResponse');
-Route::post('paymentsubmit', 'PaymentController@paymentHdfcPayuPg');
-Route::post('payment/success', 'PaymentController@paymentSuccess');
-Route::post('payment/failure', 'PaymentController@getHdfcPgResponseFailed');
-Route::post('payment/cancelled', 'PaymentController@getHdfcPgResponseFailed');
+Route::post('invsuccess', [PaymentController::class, 'investorPaymentSuccess']);        // Investor Payment success routes
+Route::post('bookpaymentsubmit', [PaymentController::class, 'bookPayment']);                   // Books & Reports Payment section routes
+Route::post('payment/booksuccess', [PaymentController::class, 'bookPaymentSuccess']);            // Books & Reports Payment section routes
+Route::post('GetHandleRES', [PaymentController::class, 'getHdfcPgResponse']);
+Route::post('paymentsubmit', [PaymentController::class, 'paymentHdfcPayuPg']);
+Route::post('payment/success', [PaymentController::class, 'paymentSuccess']);
+Route::post('payment/failure', [PaymentController::class, 'getHdfcPgResponseFailed']);
+Route::post('payment/cancelled', [PaymentController::class, 'getHdfcPgResponseFailed']);
 
 //Admin Panel Post Routes
 Route::post('updateauthorstatus', [AdminController::class, 'updateAuthorStatus']);
