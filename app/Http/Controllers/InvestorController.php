@@ -12,8 +12,8 @@ use App\Models\InsertLead;
 use App\Models\InvestorDetails;
 use App\Models\InvestorIndustry;
 use App\Models\InvestorIndustryBusiness;
-use App\Mail\autoInvestorRegistration;
-use App\Mail\confirmed;
+// use App\Mail\autoInvestorRegistration;
+// use App\Mail\confirmed;
 use App\Models\OnlinePayment;
 use App\Models\PgInvestorPayment;
 use App\Models\UserAccount;
@@ -28,14 +28,15 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
+// use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
-use App\Mail\RawMail;
+// use App\Mail\RawMail;
 use App\Http\Controllers\PaymentController;
+
 class InvestorController extends Controller
 {
-     /**
+    /**
      * Create a new controller instance.
      */
     public function __construct()
@@ -48,13 +49,13 @@ class InvestorController extends Controller
      */
     public function campaignPlan()
     {
-        if(!empty(request()->user()) && request()->user()->profile_type == 1)
+        if (!empty(request()->user()) && request()->user()->profile_type == 1)
             return redirect('/');
 
-        if(!empty(request()->user()) && request()->user()->membership_plan == 405 && request()->user()->membership_type == 1) {
+        if (!empty(request()->user()) && request()->user()->membership_plan == 405 && request()->user()->membership_type == 1) {
             $endDate = PgInvestorPayment::query()->select('expiry_date')->where('investor_id', request()->user()->profile_str)->orderBy('investor_pay_id', 'DESC')->first();
-            if(!empty($endDate) && !empty($endDate->expiry_date))
-                session()->flash('changePlan', 'You are already a paid partner with FranchiseIndia.com. Your Subscription for '.Config('constants.invPlanDetails.'.request()->user()->membership_plan).' plan ends on '. date_format(date_create($endDate->expiry_date),"d, M Y"));
+            if (!empty($endDate) && !empty($endDate->expiry_date))
+                session()->flash('changePlan', 'You are already a paid partner with FranchiseIndia.com. Your Subscription for ' . Config('constants.invPlanDetails.' . request()->user()->membership_plan) . ' plan ends on ' . date_format(date_create($endDate->expiry_date), "d, M Y"));
             return redirect('investor/myaccount/dashboard');
         }
 
@@ -67,20 +68,20 @@ class InvestorController extends Controller
      */
     public function setcampaignPlan(Request $request)
     {
-        if(!empty(request()->user()) && request()->user()->profile_type == 1)
+        if (!empty(request()->user()) && request()->user()->profile_type == 1)
             return redirect('franchisor/myaccount/dashboard');
 
-        if(!empty(request()->user()) && request()->user()->membership_plan >= $request->input('invPlan') && request()->user()->membership_type == 1) {
+        if (!empty(request()->user()) && request()->user()->membership_plan >= $request->input('invPlan') && request()->user()->membership_type == 1) {
             $endDate = PgInvestorPayment::query()->select('expiry_date')->where('investor_id', request()->user()->profile_str)->orderBy('investor_pay_id', 'DESC')->first();
-            if(!empty($endDate) && !empty($endDate->expiry_date))
-                session()->flash('changePlan', 'You are already a paid partner with FranchiseIndia.com. Your Subscription for '.Config('constants.invPlanDetails.'.request()->user()->membership_plan).' plan ends on '. date_format(date_create($endDate->expiry_date),"d, M Y"));
+            if (!empty($endDate) && !empty($endDate->expiry_date))
+                session()->flash('changePlan', 'You are already a paid partner with FranchiseIndia.com. Your Subscription for ' . Config('constants.invPlanDetails.' . request()->user()->membership_plan) . ' plan ends on ' . date_format(date_create($endDate->expiry_date), "d, M Y"));
             return redirect('investor/myaccount/dashboard');
         }
 
         $gst = $request->gst_no;
 
 
-        if(!empty(request()->user()) && request()->user()->membership_plan != 405) {
+        if (!empty(request()->user()) && request()->user()->membership_plan != 405) {
 
             $investorId = $request->user()->profile_str;
             $amount = Config('constants.invPlanAmount.' . $request->input('invPlan'));
@@ -89,14 +90,14 @@ class InvestorController extends Controller
             $detail = config('constants.invPlanDetails.' . $request->input('invPlan'));
 
             //$mopt  = $request->input('mop');
-            $amount     = Config('constants.invPlanAmount.' . $request->input('invPlan'));
-           // $chmop = array('OPTCRDC', 'OPTDBCRD', 'OPTEMI', 'OPTNBK');
-			//if(!array_key_exists($mopt, $chmop)){
-				//$pmode = "OPTNBK";	
-			//}
-			$amount = round($amount + (($amount*18)/100));
-           // $mop  = config('constants.Charges.' . $pmode);
-           // $amount = round($amount + $amount *($mop)/100);
+            $amount = Config('constants.invPlanAmount.' . $request->input('invPlan'));
+            // $chmop = array('OPTCRDC', 'OPTDBCRD', 'OPTEMI', 'OPTNBK');
+            //if(!array_key_exists($mopt, $chmop)){
+            //$pmode = "OPTNBK";	
+            //}
+            $amount = round($amount + (($amount * 18) / 100));
+            // $mop  = config('constants.Charges.' . $pmode);
+            // $amount = round($amount + $amount *($mop)/100);
 
 
             return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, '');
@@ -115,12 +116,12 @@ class InvestorController extends Controller
     {
 
         $userdata = UserAccount::query()->where('email', $request->input('email'))->first();
-        $gst      = $request->gst_no;
+        $gst = $request->gst_no;
 
-        if(count($userdata) > 0){
+        if (count($userdata) > 0) {
 
-            if($userdata->profile_type == 1) {
-                session()->flash('loginFailed' , 'Dear User, this login is only for Investor');
+            if ($userdata->profile_type == 1) {
+                session()->flash('loginFailed', 'Dear User, this login is only for Investor');
 
                 $plan = $request->input('invPlan');
                 return view('inv-campaign.investlogin_new', compact('plan', 'gst'));
@@ -128,39 +129,39 @@ class InvestorController extends Controller
 
 
             if ($userdata->profile_status == 2) {
-                session()->flash('loginFailed' , 'Dear User, Your Email verification is pending, kindly check your mail inbox for verification mail');
+                session()->flash('loginFailed', 'Dear User, Your Email verification is pending, kindly check your mail inbox for verification mail');
 
                 $plan = $request->input('invPlan');
                 return view('inv-campaign.investlogin_new', compact('plan', 'gst'));
             }
 
-            if(Auth::guard()->attempt(['email'    => $request->input('email'), 'password' => $request->input('password'), 'profile_status' => 1] )) {
+            if (Auth::guard()->attempt(['email' => $request->input('email'), 'password' => $request->input('password'), 'profile_status' => 1])) {
                 InvestorController::setPercentage();
 
-                if($request->input('invPlan') == 401) {
+                if ($request->input('invPlan') == 401) {
 
                     $endDate = PgInvestorPayment::query()->select('expiry_date')->where('investor_id', request()->user()->profile_str)->orderBy('investor_pay_id', 'DESC')->first();
-                    if(!empty($endDate)  && !empty($endDate->expiry_date))
-                        session()->flash('changePlan', 'You are already a paid partner with FranchiseIndia.com. Your Subscription for '.Config('constants.invPlanDetails.'.request()->user()->membership_plan).' plan ends on '. date_format(date_create($endDate->expiry_date),"d, M Y"));
+                    if (!empty($endDate) && !empty($endDate->expiry_date))
+                        session()->flash('changePlan', 'You are already a paid partner with FranchiseIndia.com. Your Subscription for ' . Config('constants.invPlanDetails.' . request()->user()->membership_plan) . ' plan ends on ' . date_format(date_create($endDate->expiry_date), "d, M Y"));
                     return redirect('investor/myaccount/dashboard');
                 }
 
-                if($request->input('invPlan') <= $userdata->membership_plan) {
+                if ($request->input('invPlan') <= $userdata->membership_plan) {
                     $endDate = PgInvestorPayment::query()->select('expiry_date')->where('investor_id', $userdata->profile_str)->orderBy('investor_pay_id', 'DESC')->first();
 
-                    if(!empty($endDate)  && !empty($endDate->expiry_date))
-                        session()->flash('changePlan', 'You are already a paid partner with FranchiseIndia.com. Your Subscription for '.Config('constants.invPlanDetails.'.$userdata->membership_plan).' plan ends on '. date_format(date_create($endDate->expiry_date),"d, M Y"));
+                    if (!empty($endDate) && !empty($endDate->expiry_date))
+                        session()->flash('changePlan', 'You are already a paid partner with FranchiseIndia.com. Your Subscription for ' . Config('constants.invPlanDetails.' . $userdata->membership_plan) . ' plan ends on ' . date_format(date_create($endDate->expiry_date), "d, M Y"));
 
 
                     return redirect('investor/myaccount/dashboard');
                 }
 
                 $investorId = $userdata->profile_str;
-                $amount     = Config('constants.invPlanAmount.' . $request->input('invPlan'));
+                $amount = Config('constants.invPlanAmount.' . $request->input('invPlan'));
                 $membership = config('constants.invPlanDetails.' . $request->input('invPlan'));
-                $planId     = $request->input('invPlan');
-                $detail     = config('constants.invPlanDetails.' . $request->input('invPlan'));
-                $gst        = $request->gst_no;
+                $planId = $request->input('invPlan');
+                $detail = config('constants.invPlanDetails.' . $request->input('invPlan'));
+                $gst = $request->gst_no;
 
                 $membership = [$membership, 1];
 
@@ -193,10 +194,10 @@ class InvestorController extends Controller
      *  Function for Investor registration process
      * @return Factory|RedirectResponse|Redirector|View
      */
-    // public function viewInvestorRegistrationForm()
-    // {
-    //     return view('investor/register/investor-registration');
-    // }
+    public function viewInvestorRegistrationForm()
+    {
+        return view('investor/register/investor-registration');
+    }
 
     /**
      *  Function for Investor registration create
@@ -205,15 +206,15 @@ class InvestorController extends Controller
      */
     public function createInvestor(Request $request)
     {
-       
+
 
         $checkUser = UserAccount::query()->where('email', $request->input('email'))->first();
-        
-        if( !empty($checkUser) && $checkUser->email != 'fiblbrands@franchiseindia.in' && $checkUser->email != 'info@franglobal.com' && $checkUser->profile_status == 4 && $checkUser->profile_type == 1) {
-            $franchisorId    = $checkUser->profile_str;
+
+        if (!empty($checkUser) && $checkUser->email != 'fiblbrands@franchiseindia.in' && $checkUser->email != 'info@franglobal.com' && $checkUser->profile_status == 4 && $checkUser->profile_type == 1) {
+            $franchisorId = $checkUser->profile_str;
             $checkFranchisor = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
-           
-            if($checkFranchisor->step_completed > 0 && $checkFranchisor->step_completed < 6) {
+
+            if ($checkFranchisor->step_completed > 0 && $checkFranchisor->step_completed < 6) {
                 FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->delete();
                 FranchisorLocState::query()->where('franchisor_id', $franchisorId)->delete();
                 FranchisorLocCountry::query()->where('franchisor_id', $franchisorId)->delete();
@@ -253,15 +254,15 @@ class InvestorController extends Controller
         // Error message to be flashed to client in case of DB insert error
         $error = "Our systems seems to be currently busy. Please try after some time!";
 
-        $isPropOwn            = request()->is_property_own;
-        $businessCityLooking  = request()->business_city_looking;
-        $lookingFor           = request()->looking_for;
-        $serviceType          = request()->company_service;
+        $isPropOwn = request()->is_property_own;
+        $businessCityLooking = request()->business_city_looking;
+        $lookingFor = request()->looking_for;
+        $serviceType = request()->company_service;
         $businessStateLooking = request()->business_state_looking;
-        $franchiseBrandName   = request()->franchise_brand_name;
-        $companyBusinessName  = request()->company_business_name;
+        $franchiseBrandName = request()->franchise_brand_name;
+        $companyBusinessName = request()->company_business_name;
         $industryTypeBusiness = request()->industry_type_business;
-       
+
         // Fetch values from the request
         $name = $request->input('invName');
         $email = $request->input('email');
@@ -273,7 +274,7 @@ class InvestorController extends Controller
         $city = $request->input('city');
         $mobile = $request->input('mobile');
         $occupation = $request->input('occupation');
-       // $dob = $request->input('dob');
+        // $dob = $request->input('dob');
         $qualification = $request->input('qualification');
 
         //step2 data
@@ -302,7 +303,7 @@ class InvestorController extends Controller
         $businessIndustryType = $request->input('business_industry_type');
         $businessNumberOfYears = $request->input('business_number_of_years');
         $numberOfemployees = $request->input('number_of_employees');
-       // $experienceInfranchise = $request->input('experience_in_franchise');
+        // $experienceInfranchise = $request->input('experience_in_franchise');
         $businessType = $request->input('business_type');
 
         //step4 data
@@ -312,14 +313,14 @@ class InvestorController extends Controller
         $anyOtherIndustry = $request->input('any_other_industry');
 
         // Laon Form Submit
-        if($loanRequired == 1){
+        if ($loanRequired == 1) {
             $message = "Your details have been submitted successfully";
 
             $source = "DOTCOM";
-            if(!empty(Cookie::get('campaignSource')))
+            if (!empty(Cookie::get('campaignSource')))
                 $source = Cookie::get('campaignSource');
 
-            try{
+            try {
                 PropertyLoan::query()->insert([
                     'name' => $request->input('invName'),
                     'email' => $request->input('email'),
@@ -331,12 +332,12 @@ class InvestorController extends Controller
                     'country' => $country,
                     'property_size' => $request->input('property_size'),
                     'property_value' => $request->input('property_value'),
-                   // 'income_range' => $request->input('income_range'),
+                    // 'income_range' => $request->input('income_range'),
                     'details' => $request->input('details'),
                     'source' => $source
                 ]);
             } catch (\Exception $e) {
-                $message = "Oops there is an error please try again...". $e->getMessage();
+                $message = "Oops there is an error please try again..." . $e->getMessage();
             }
         }
         // Begin the transaction
@@ -344,16 +345,16 @@ class InvestorController extends Controller
 
         // Insert into UserAccount Model
         $insertUser = UserAccount::query()->insert([
-							'name' => $name,
-							'email' => $email,
-							'password' => $password,
-							'mobile' => $mobile,
-							'profile_str' => $investorId,
-							'profile_type' => $profileType,
-							'profile_status' => $profileStatus,
-							'title'          => request()->title,
-							'reg_source'     => !empty(Cookie::get('campaignSource')) ? Cookie::get('campaignSource') : ""
-							]);
+            'name' => $name,
+            'email' => $email,
+            'password' => $password,
+            'mobile' => $mobile,
+            'profile_str' => $investorId,
+            'profile_type' => $profileType,
+            'profile_status' => $profileStatus,
+            'title' => request()->title,
+            'reg_source' => !empty(Cookie::get('campaignSource')) ? Cookie::get('campaignSource') : ""
+        ]);
 
         // If saving the record in User Model failed
         if (!$insertUser) {
@@ -372,54 +373,54 @@ class InvestorController extends Controller
 
         // Insert values in InvestorDetail Model
         $insertInvestor = InvestorDetails::query()
-                                         ->insert([
-                                                    'investor_id'             => $investorId,
-                                                   // 'secondary_email'         => $secondaryEmail,
-                                                   // 'secondary_phone_no'      => $secondaryMobileNo,
-                                                    'inv_address'             => $address,
-                                                    'inv_country'             => $country,
-                                                    'inv_pincode'             => $pincode,
-                                                    'inv_state'               => $state,
-                                                   // 'landmark'                => $landmark,
-                                                    'inv_city'                => $city,
-                                                    'occupation'              => $occupation,
-                                                   // 'dob'                     => $dob,
-                                                    'edu_qualification'       => $qualification,
-                                                    'inv_amt'                 => $investmentRange,
-                                                   // 'income_range'            => request()->income_range,
-                                                    'avail_capital'           => request()->available_capital,
-                                                    'avlcap_min'              => $availablecapitalMin,
-                                                    'avlcap_max'              => $availablecapitalMax,
-                                                    'investment_min'          => $investmentRangeMin,
-                                                    'investment_max'          => $investmentRangeMax,
-                                                    'investment_time'         => $investmentTime,
-                                                    'loan_required'           => $loanRequired,
-                                                    'is_prop_commercial'      => $isPropCommercial,
-                                                    'prop_address'            => $propAddress,
-                                                    'area_req_min'            => $floorMinArea,
-                                                    'area_req_max'            => $floorMaxArea,
-                                                    'property_type'           => (($isPropOwn == 1) ? $propertyUse : 0),
-                                                    'is_parking_available'    => $parkingSpace,
-                                                    'is_current_business'     => $businessDetailInvestor,
-                                                    'industry_business'       => $businessIndustryType,
-                                                    'no_of_years_business'    => $businessNumberOfYears,
-                                                    'no_of_employees'         => $numberOfemployees,
-                                                   // 'franchise_experience'    => $experienceInfranchise,
-                                                    'business_desc'           => $businessType,
-                                                    'service_type'            => $serviceType,
-                                                    'service_company_name'    => $request->company_service_name,
-                                                    'is_job_experience'       => $jobDetailInvestor,
-                                                    'industry_job'            => $jobIndustryType,
-                                                    'no_of_years_exp'         => $jobNumberOfYears,
-                                                    'other_industry'          => $anyOtherIndustry,
-                                                    'master_franchise_invest' => $interestMasterFranchise,
-                                                    'business_company_name'   => $companyBusinessName,
-                                                    'franchising_brand_name'  => $franchiseBrandName,
-                                                    'city_looking_business'   => $businessCityLooking,
-                                                    'state_looking_business'  => $businessStateLooking,
-                                                    'looking_for'             => implode(',', $lookingFor),
-                                                    'area_type'               => $request->input('area_type')
-                                                ]);
+            ->insert([
+                'investor_id' => $investorId,
+                // 'secondary_email'         => $secondaryEmail,
+                // 'secondary_phone_no'      => $secondaryMobileNo,
+                'inv_address' => $address,
+                'inv_country' => $country,
+                'inv_pincode' => $pincode,
+                'inv_state' => $state,
+                // 'landmark'                => $landmark,
+                'inv_city' => $city,
+                'occupation' => $occupation,
+                // 'dob'                     => $dob,
+                'edu_qualification' => $qualification,
+                'inv_amt' => $investmentRange,
+                // 'income_range'            => request()->income_range,
+                'avail_capital' => request()->available_capital,
+                'avlcap_min' => $availablecapitalMin,
+                'avlcap_max' => $availablecapitalMax,
+                'investment_min' => $investmentRangeMin,
+                'investment_max' => $investmentRangeMax,
+                'investment_time' => $investmentTime,
+                'loan_required' => $loanRequired,
+                'is_prop_commercial' => $isPropCommercial,
+                'prop_address' => $propAddress,
+                'area_req_min' => $floorMinArea,
+                'area_req_max' => $floorMaxArea,
+                'property_type' => (($isPropOwn == 1) ? $propertyUse : 0),
+                'is_parking_available' => $parkingSpace,
+                'is_current_business' => $businessDetailInvestor,
+                'industry_business' => $businessIndustryType,
+                'no_of_years_business' => $businessNumberOfYears,
+                'no_of_employees' => $numberOfemployees,
+                // 'franchise_experience'    => $experienceInfranchise,
+                'business_desc' => $businessType,
+                'service_type' => $serviceType,
+                'service_company_name' => $request->company_service_name,
+                'is_job_experience' => $jobDetailInvestor,
+                'industry_job' => $jobIndustryType,
+                'no_of_years_exp' => $jobNumberOfYears,
+                'other_industry' => $anyOtherIndustry,
+                'master_franchise_invest' => $interestMasterFranchise,
+                'business_company_name' => $companyBusinessName,
+                'franchising_brand_name' => $franchiseBrandName,
+                'city_looking_business' => $businessCityLooking,
+                'state_looking_business' => $businessStateLooking,
+                'looking_for' => implode(',', $lookingFor),
+                'area_type' => $request->input('area_type')
+            ]);
 
         // If saving the record in InvestorDetail Model failed
         if (!$insertInvestor) {
@@ -453,7 +454,7 @@ class InvestorController extends Controller
             }
         }
 
-        if(!empty($industryTypeBusiness)) {
+        if (!empty($industryTypeBusiness)) {
             foreach ($industryTypeBusiness as $val) {
                 $insertInvestorIndustryDetails = InvestorIndustryBusiness::query()->insert(['investor_id' => $investorId, 'ind_cat' => $val]);
 
@@ -501,7 +502,8 @@ class InvestorController extends Controller
                 $amount = Config('constants.invPlanAmount.' . $request->input('inv_plan'));
                 $membership = config('constants.invPlanDetails.' . $request->input('inv_plan'));
                 $planId = $request->input('inv_plan');
-                $detail = config('constants.invPlanDetails.' . $request->input('inv_plan'));;
+                $detail = config('constants.invPlanDetails.' . $request->input('inv_plan'));
+                ;
             }
 
             if ($request->input('inv_plan') == 401)
@@ -510,15 +512,15 @@ class InvestorController extends Controller
             NewsLetterController::createNewsLetter($email, "fi");
 
             $membership = [$membership, 1];
-            $gst        = request()->gst_no;
+            $gst = request()->gst_no;
 
             return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, '');
         }
 
         //Return to plan page
         return view('investor.register.investor-plan', compact('investorId'));
-    
-	}
+
+    }
 
     /**
      * @param Request $request
@@ -527,25 +529,29 @@ class InvestorController extends Controller
      */
     public function upgradeInvestor(Request $request)
     {
+       
         if ($request->input('invPlan') == 401) {
             return view('includes/investor-thanks');
         } else {
-            $pmode  = $request->input('mop');
-			if(!array_key_exists($pmode, config('constants.Charges'))){
-				$pmode = "OPTNBK";
-			}
-            $amount     = Config('constants.invPlanAmount.' . $request->input('invPlan'));
-			$amount = $amount + (($amount*18)/100);
-            $mop  = config('constants.Charges.' . $pmode);
-            $amount = round($amount + $amount *($mop)/100);
-
+            $pmode = $request->input('mop');
+            
+            if (!array_key_exists($pmode, config('constants.Charges'))) {
+                $pmode = "OPTNBK";
+            }
+            $amount = Config('constants.invPlanAmount.' . $request->input('invPlan'));
+            $amount = $amount + (($amount * 18) / 100);
+            $mop = config('constants.Charges.' . $pmode);
+            $amount = round($amount + $amount * ($mop) / 100);
+            
 
             $investorId = $request->input('investorId');
             $membership = config('constants.invPlanDetails.' . $request->input('invPlan'));
-            $planId     = $request->input('invPlan');
-            $detail     = config('constants.invPlanDetails.' . $request->input('invPlan'));;
-            $gst        = $request->gst_no;
-
+            $planId = $request->input('invPlan');
+            $detail = config('constants.invPlanDetails.' . $request->input('invPlan'));
+            
+            ;
+            $gst = $request->gst_no;
+            
             return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, $pmode);
 
         }
@@ -612,17 +618,17 @@ class InvestorController extends Controller
         $state = $request->input('state');
         $city = $request->input('city');
         $dob = $request->input('dob');
-        if($request->input('chkmobile') == '' && ($request->input('reg_source') == 'google' || $request->input('reg_source') == 'facebook') && $request->input('mobile')!= ''){
-            if($otpstatus == 1){
+        if ($request->input('chkmobile') == '' && ($request->input('reg_source') == 'google' || $request->input('reg_source') == 'facebook') && $request->input('mobile') != '') {
+            if ($otpstatus == 1) {
                 $finalmobile = $request->input('mobile');
                 $userChk = UserAccount::query()->where('mobile', $finalmobile)->first();
-                if(count($userChk) == 0){
+                if (count($userChk) == 0) {
                     $finalmobile = $request->input('mobile');
-                } else{
+                } else {
                     session()->flash('errorMessage', 'Error! Mobile number already used');
                     return redirect('/investor/myaccount/personaldetails');
                 }
-            } else{
+            } else {
                 session()->flash('errorMessage', 'Error! Otp Mismatched');
                 return redirect('/investor/myaccount/personaldetails');
             }
@@ -646,18 +652,18 @@ class InvestorController extends Controller
         }
 
         //updating records
-        $updatePersonalDetails = InvestorDetails::query()->where('investor_id',  $investorId)
+        $updatePersonalDetails = InvestorDetails::query()->where('investor_id', $investorId)
             ->update([
-                        'inv_address'        => $address,
-                        'secondary_email'    => $request->secondary_email,
-                        'secondary_phone_no' => $request->secondary_mobile,
-                        'inv_country'        => $country,
-                        'inv_pincode'        => $pincode,
-                        'inv_state'          => $state,
-                        'inv_city'           => $city,
-                        'dob'                => $dob,
-                        'landmark'           => $request->landmark,
-                    ]);
+                'inv_address' => $address,
+                'secondary_email' => $request->secondary_email,
+                'secondary_phone_no' => $request->secondary_mobile,
+                'inv_country' => $country,
+                'inv_pincode' => $pincode,
+                'inv_state' => $state,
+                'inv_city' => $city,
+                'dob' => $dob,
+                'landmark' => $request->landmark,
+            ]);
 
         if (!$updatePersonalDetails) {
             // Log the error
@@ -693,18 +699,18 @@ class InvestorController extends Controller
      */
     public function updateBusinessDetails(Request $request)
     {
-        $investorId           = $request->user()->profile_str;
+        $investorId = $request->user()->profile_str;
         $industryTypeBusiness = $request->input('industry_type_business');
 
         //updating records
-        $update = InvestorDetails::query()->where('investor_id',  $investorId)->update([
-            'edu_qualification'       => $request->input('qualification'),
-            'franchise_experience'    => $request->input('experience_in_franchise'),
-            'franchising_brand_name'  => $request->input('franchise_brand_name'),
-            'occupation'              => $request->input('occupation'),
-            'service_type'            => $request->input('company_service'),
-            'service_company_name'    => $request->input('company_service_name'),
-            'business_company_name'    => $request->input('company_business_name')
+        $update = InvestorDetails::query()->where('investor_id', $investorId)->update([
+            'edu_qualification' => $request->input('qualification'),
+            'franchise_experience' => $request->input('experience_in_franchise'),
+            'franchising_brand_name' => $request->input('franchise_brand_name'),
+            'occupation' => $request->input('occupation'),
+            'service_type' => $request->input('company_service'),
+            'service_company_name' => $request->input('company_service_name'),
+            'business_company_name' => $request->input('company_business_name')
         ]);
 
 
@@ -723,7 +729,7 @@ class InvestorController extends Controller
         InvestorIndustryBusiness::query()->where('investor_id', $investorId)->delete();
 
 
-        if(!empty($industryTypeBusiness)) {
+        if (!empty($industryTypeBusiness)) {
             foreach ($industryTypeBusiness as $val) {
 
 
@@ -778,10 +784,12 @@ class InvestorController extends Controller
 
         //updating records
         $update = InvestorDetails::query()->where('investor_id', '=', $investorId)
-            ->update(['is_job_experience' => $jobDetailInvestor,
+            ->update([
+                'is_job_experience' => $jobDetailInvestor,
                 'industry_job' => $jobIndustryType,
                 'no_of_years_exp' => $jobNumberOfYears,
-                'other_industry' => $anyOtherIndustry]);
+                'other_industry' => $anyOtherIndustry
+            ]);
         if (!$update) {
             // Log the error
             $errorMsg = "updation of investor Job details : InvestorDetail Model . $investorId";
@@ -807,8 +815,8 @@ class InvestorController extends Controller
      */
     public function showinvestmentdetails(Request $request)
     {
-        $investorId               = $request->user()->profile_str;
-        $data                     = InvestorDetails::query()->where('investor_id', $investorId)->first();
+        $investorId = $request->user()->profile_str;
+        $data = InvestorDetails::query()->where('investor_id', $investorId)->first();
         $industryDataInterestedIn = InvestorIndustry::query()->where('investor_id', $investorId)->get()->pluck('ind_main_cat')->toArray();
         return view('investor/myAccount/investment-details', compact('data', 'industryDataInterestedIn'));
     }
@@ -827,21 +835,21 @@ class InvestorController extends Controller
             'investment_date' => 'required'
         ]);
 
-        $investorId              = $request->user()->profile_str;
-        $industryType            = $request->input('industry_type');
-        $investmentRange         = $request->input('investment_range');
+        $investorId = $request->user()->profile_str;
+        $industryType = $request->input('industry_type');
+        $investmentRange = $request->input('investment_range');
 
-        $update = InvestorDetails::query()->where('investor_id',  $investorId)->update([
-            'income_range'            => request()->income_range,
-            'inv_amt'                 => $investmentRange,
-            'investment_min'          => config('constants.InvestRangeUpdate.' . $investmentRange . '.min'),
-            'investment_max'          => config('constants.InvestRangeUpdate.' . $investmentRange . '.max'),
-            'investment_time'         => $request->input('investment_date'),
+        $update = InvestorDetails::query()->where('investor_id', $investorId)->update([
+            'income_range' => request()->income_range,
+            'inv_amt' => $investmentRange,
+            'investment_min' => config('constants.InvestRangeUpdate.' . $investmentRange . '.min'),
+            'investment_max' => config('constants.InvestRangeUpdate.' . $investmentRange . '.max'),
+            'investment_time' => $request->input('investment_date'),
             'master_franchise_invest' => $request->input('interest_master_franchise'),
-            'loan_required'           => $request->input('loan_interest'),
-            'state_looking_business'  => $request->input('business_state_looking'),
-            'city_looking_business'   => $request->input('business_city_looking'),
-            'looking_for'             => implode(',', $request->input('looking_for')),
+            'loan_required' => $request->input('loan_interest'),
+            'state_looking_business' => $request->input('business_state_looking'),
+            'city_looking_business' => $request->input('business_city_looking'),
+            'looking_for' => implode(',', $request->input('looking_for')),
         ]);
 
         if (!$update) {
@@ -884,7 +892,7 @@ class InvestorController extends Controller
      */
     public function showPropertyDetails(Request $request)
     {
-        $data       = InvestorDetails::query()->where('investor_id',  $request->user()->profile_str)->first();
+        $data = InvestorDetails::query()->where('investor_id', $request->user()->profile_str)->first();
         return view('investor/myAccount/property-details', compact('data'));
     }
 
@@ -896,14 +904,14 @@ class InvestorController extends Controller
     public function updatePropertyDetails(Request $request)
     {
         $investorId = $request->user()->profile_str;
-        $update = InvestorDetails::query()->where('investor_id',  $investorId)
+        $update = InvestorDetails::query()->where('investor_id', $investorId)
             ->update([
-                        'prop_address'  => ($request->input('property_use') != 0 ? $request->input('prop_address') : ""),
-                        'area_req_min'  => ($request->input('property_use') != 0 ? $request->input('min_area') : 0),
-                        'area_req_max'  => ($request->input('property_use') != 0 ? $request->input('max_area') : 0),
-                        'area_type'     => $request->input('area_type'),
-                        'property_type' => $request->input('property_use'),
-                    ]);
+                'prop_address' => ($request->input('property_use') != 0 ? $request->input('prop_address') : ""),
+                'area_req_min' => ($request->input('property_use') != 0 ? $request->input('min_area') : 0),
+                'area_req_max' => ($request->input('property_use') != 0 ? $request->input('max_area') : 0),
+                'area_type' => $request->input('area_type'),
+                'property_type' => $request->input('property_use'),
+            ]);
 
         if (!$update) {
             // Log the error
@@ -1019,8 +1027,14 @@ class InvestorController extends Controller
         if (count($expIntBrands) > 0) {
             $expIntFranIdArr = array_column($expIntBrands->toArray(), 'franchisor_id');
             // Fetch Brand details for Viewed by brand
-            $expIntFranData = FranchisorBusinessDetail::query()->select('company_logo', 'membership_type', 'company_name',
-                'franchisor_id', 'fran_detail_id', 'profile_name')
+            $expIntFranData = FranchisorBusinessDetail::query()->select(
+                'company_logo',
+                'membership_type',
+                'company_name',
+                'franchisor_id',
+                'fran_detail_id',
+                'profile_name'
+            )
                 ->whereIn('franchisor_id', $expIntFranIdArr)
                 ->get();
         }
@@ -1040,8 +1054,14 @@ class InvestorController extends Controller
             $viewedFranIdArr = array_column($viewedBrands->toArray(), 'franchisor_id');
 
             // Fetch Brand details for Viewed by brand
-            $viewedFranData = FranchisorBusinessDetail::query()->select('company_logo', 'membership_type', 'company_name',
-                'franchisor_id', 'fran_detail_id', 'profile_name')
+            $viewedFranData = FranchisorBusinessDetail::query()->select(
+                'company_logo',
+                'membership_type',
+                'company_name',
+                'franchisor_id',
+                'fran_detail_id',
+                'profile_name'
+            )
                 ->whereIn('franchisor_id', $viewedFranIdArr)
                 ->get();
         }
@@ -1070,7 +1090,7 @@ class InvestorController extends Controller
         $membershipDays = PgInvestorPayment::query()->where('investor_id', $investorId)->where('order_status', 1)->first();
         //Pass data to view
         //return view('investor/myAccount/expressed-interest', compact('count', 'franchisorData', 'membershipDate', 'membershipType', 'eiData', 'credits', 'membershipDays'));
-        return view('investor/myAccount/expressed-interest', compact('count', 'franchisorData',  'eiData', 'credits', 'membershipDays'));
+        return view('investor/myAccount/expressed-interest', compact('count', 'franchisorData', 'eiData', 'credits', 'membershipDays'));
     }
 
     /**
@@ -1215,7 +1235,7 @@ class InvestorController extends Controller
         $detail = 'Investor Campaign 1899 Membership + 1 Year Magazine Subscription';
         $membership = config('constants.invPlanDetails.405');
         $planId = 405;
-        $gst        = $request->gst_no;
+        $gst = $request->gst_no;
 
         return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, '');
 
@@ -1226,7 +1246,7 @@ class InvestorController extends Controller
      */
     public function viewInvQuickRegForm()
     {
-        if(!empty(request()->user()) && request()->user()->profile_type == 1)
+        if (!empty(request()->user()) && request()->user()->profile_type == 1)
             return redirect('franchisor/myaccount/dashboard');
 
         $flag = 1;
@@ -1263,12 +1283,15 @@ class InvestorController extends Controller
 
         // Insert into UserAccount Model
         UserAccount::query()->where('profile_str', $investorId)
-            ->update(['name' => $name,
-                'mobile' => $mobile]);
+            ->update([
+                'name' => $name,
+                'mobile' => $mobile
+            ]);
 
         // Insert values in InvestorDetail Model
         InvestorDetails::query()->where('investor_id', $investorId)
-            ->update(['inv_address' => $address,
+            ->update([
+                'inv_address' => $address,
                 'inv_country' => $country,
                 'inv_pincode' => $pincode,
                 'inv_state' => $state,
@@ -1298,14 +1321,16 @@ class InvestorController extends Controller
     private function paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, $pmode)
     {
         $checkCampaign = 0;
-
-        if(is_array($membership)) {
+        
+        if (is_array($membership)) {
             $membership = $membership[0];
             $checkCampaign = 1;
+           
         }
 
         $invData = InvestorDetails::query()->select('investor_id', 'inv_city', 'inv_state', 'inv_country', 'inv_address')->where('investor_id', $investorId)->first();
         $userData = UserAccount::query()->select('name', 'email', 'mobile')->where('profile_str', $investorId)->first();
+       
         $country = 'India';
         $name = $userData->name;
         $email = $userData->email;
@@ -1323,24 +1348,27 @@ class InvestorController extends Controller
         $txnData->phone = $phone;
         $txnData->address = $address;
         $txnData->email = $email;
-
+        
         // Send Email to Investor Acquisition team for Paid Membership pitching
 
-        $data = "<table> <tr> <td>Name : </td><td>".$name."</td></tr><tr> <td>Email : </td><td>".$email."</td></tr><tr> <td>Mobile No. : </td><td>".$phone."</td></tr><tr> <td>Investor Id : </td><td>".$investorId."</td></tr><tr> <td>Address : </td><td>".$address.", City: ".$city.", State: ".$invData->inv_state.", Country: ".$country."</td></tr><tr> <td>Time Of Payment : </td><td>".date('Y-m-d H:i:s')."</td></tr></table>";
-        Mail::getFacadeRoot()->to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
+        $data = "<table> <tr> <td>Name : </td><td>" . $name . "</td></tr><tr> <td>Email : </td><td>" . $email . "</td></tr><tr> <td>Mobile No. : </td><td>" . $phone . "</td></tr><tr> <td>Investor Id : </td><td>" . $investorId . "</td></tr><tr> <td>Address : </td><td>" . $address . ", City: " . $city . ", State: " . $invData->inv_state . ", Country: " . $country . "</td></tr><tr> <td>Time Of Payment : </td><td>" . date('Y-m-d H:i:s') . "</td></tr></table>";
+       
+        // *******commented for testing**********
+        // Mail::getFacadeRoot()->to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
 
         // End of Email to Investor Acquisition team
 
-
-        if($checkCampaign == 1)
+        
+        if ($checkCampaign == 1)
             $txnData->is_campaign = $checkCampaign;
-
+       
         $txnData->country = $country;
         $txnData->membership_type = $membership;
         $txnData->client_ip = request()->ip();
+        
         $txnData->payment_status = config('hdfcpg.paymentStatus.Initiated');
         $txnData->order_status = config('hdfcpg.paymentStatus.Initiated');
-
+        
         if ($txnData->save()) {
             $tranId = $txnData->investor_pay_id;
         } else {
@@ -1362,35 +1390,37 @@ class InvestorController extends Controller
             'mopt' => $pmode,
             'amount' => $amount,
             'gst_no' => $gst,
-            'payment_status' => 0]);
-
-        if(!empty(request()->user()))
+            'payment_status' => 0
+        ]);
+       
+        if (!empty(request()->user()))
             $this->recordUpdateTime();
-
+            
         $paymentController = new PaymentController();
+       
         $track_id = $tranId;
-        $order_id = "order_id=".urlencode("InvRegopenPayment_".$tranId);
-        $tid = "tid=".urlencode(rand().$track_id);
-        $merchant_id = "merchant_id=".urlencode(Config('hdfcpgnew.merchantKey'));
-        $amount = "amount=".urlencode($amount);
-        $currency = "currency=".urlencode("INR");
-        $redirect_url = "redirect_url=".urlencode(Config('constants.MainDomain')."/invsuccess");  //Return URL
-        $cancel_url = "cancel_url=".urlencode(Config('constants.MainDomain')."/invcancelled");  //Return URL
-        $language = "language=".urlencode("EN");
-        $billing_name = "billing_name=".urlencode($name);
-        $billing_address = "billing_address=".urlencode($address);
-        $billing_city = "billing_city=".urlencode("");
-        $billing_state = "billing_state=".urlencode("");
-        $billing_zip = "billing_zip=".urlencode($invData->inv_pincode);
-        $billing_country = "billing_country=".urlencode($invData->inv_country);
-        $billing_tel = "billing_tel=".urlencode($phone);
-        $billing_email = "billing_email=".urlencode($email);
-        $payment_option = "payment_option=".urlencode($pmode);
-        $card_type = "card_type=".urlencode(str_replace("OPT","",$pmode));
-        $merchant_data = $tid."&".$merchant_id."&".$order_id."&".$amount."&".$currency."&".$redirect_url."&".$cancel_url."&".$language."&".$billing_name."&".$billing_address."&".$billing_city."&".$billing_state."&".$billing_zip."&".$billing_country."&".$billing_tel."&".$billing_email."&".$payment_option."&".$card_type;
+        $order_id = "order_id=" . urlencode("InvRegopenPayment_" . $tranId);
+        $tid = "tid=" . urlencode(rand() . $track_id);
+        $merchant_id = "merchant_id=" . urlencode(Config('hdfcpgnew.merchantKey'));
+        $amount = "amount=" . urlencode($amount);
+        $currency = "currency=" . urlencode("INR");
+        $redirect_url = "redirect_url=" . urlencode(Config('constants.MainDomain') . "/invsuccess");  //Return URL
+        $cancel_url = "cancel_url=" . urlencode(Config('constants.MainDomain') . "/invcancelled");  //Return URL
+        $language = "language=" . urlencode("EN");
+        $billing_name = "billing_name=" . urlencode($name);
+        $billing_address = "billing_address=" . urlencode($address);
+        $billing_city = "billing_city=" . urlencode("");
+        $billing_state = "billing_state=" . urlencode("");
+        $billing_zip = "billing_zip=" . urlencode($invData->inv_pincode);
+        $billing_country = "billing_country=" . urlencode($invData->inv_country);
+        $billing_tel = "billing_tel=" . urlencode($phone);
+        $billing_email = "billing_email=" . urlencode($email);
+        $payment_option = "payment_option=" . urlencode($pmode);
+        $card_type = "card_type=" . urlencode(str_replace("OPT", "", $pmode));
+        $merchant_data = $tid . "&" . $merchant_id . "&" . $order_id . "&" . $amount . "&" . $currency . "&" . $redirect_url . "&" . $cancel_url . "&" . $language . "&" . $billing_name . "&" . $billing_address . "&" . $billing_city . "&" . $billing_state . "&" . $billing_zip . "&" . $billing_country . "&" . $billing_tel . "&" . $billing_email . "&" . $payment_option . "&" . $card_type;
         $encrypted_data = $paymentController->encrypt($merchant_data, Config('hdfcpgnew.workingKey')); // Method for encrypting the data.
         $access_code_new = Config('hdfcpgnew.accessCode');
-
+        // dd($access_code_new);
         return view('payment.payment-request')->with(compact('encrypted_data', 'access_code_new'));
 
     }
@@ -1409,7 +1439,7 @@ class InvestorController extends Controller
      */
     public function getRecommendations()
     {
-        if(request()->user()->membership_plan == 401)
+        if (request()->user()->membership_plan == 401)
             return redirect('investor/myaccount/dashboard');
 
         $investorId = request()->user()->profile_str;
@@ -1431,7 +1461,7 @@ class InvestorController extends Controller
 
         //Fetching franchisors from business detail table
         $franchisors = FranchisorBusinessDetail::query()->whereIn('franchisor_id', $recommendations)
-                                                        ->where('membership_type', 1)->take(15)->get();
+            ->where('membership_type', 1)->take(15)->get();
 
         //Fetching franchisors from business detail table if not have the required franchisors
         if (count($franchisors) < 15) {
@@ -1458,7 +1488,7 @@ class InvestorController extends Controller
 
         //fetching states for the franchisors
         if (is_array($franchisors)) {
-            $franchisorStates = FranchisorLocState::query()->select('franchisor_id','state')->whereIn('franchisor_id', array_column($franchisors, 'franchisor_id'))->get();
+            $franchisorStates = FranchisorLocState::query()->select('franchisor_id', 'state')->whereIn('franchisor_id', array_column($franchisors, 'franchisor_id'))->get();
             $likeRate = FranchisorLike::query()->whereIn('franchisor_id', array_column($franchisors, 'franchisor_id'))->get();
         } else {
             $franchisorStates = FranchisorLocState::query()->select('franchisor_id', 'state')->whereIn('franchisor_id', $franchisors->pluck('franchisor_id'))->get();
@@ -1473,10 +1503,11 @@ class InvestorController extends Controller
      * @param $source
      * @internal param $data
      */
-    public function convertLeadsToInvestor($invData, $source) {
+    public function convertLeadsToInvestor($invData, $source)
+    {
         $checkExistingData = UserAccount::query()->where('email', $invData['email'])->count();
 
-        if($checkExistingData == 0) {
+        if ($checkExistingData == 0) {
 
             $code = Str::random(16);
             $investorId = CommonController::profileUniqStr();
@@ -1492,7 +1523,7 @@ class InvestorController extends Controller
                 'profile_status' => 2,
                 'reg_source' => $source,
                 'email_verification_code' => $code,
-                'profile_str'     => $investorId,
+                'profile_str' => $investorId,
                 'membership_plan' => 401,
                 'membership_type' => 0
             ]);
@@ -1500,9 +1531,9 @@ class InvestorController extends Controller
             $investmentMin = 0;
             $investmentMax = 0;
 
-            if(!empty($invData['investment_range']) && is_numeric($invData['investment_range'])) {
-                $range = Config('constants.InvestRange.'.$invData['investment_range']);
-                if(is_array($range)) {
+            if (!empty($invData['investment_range']) && is_numeric($invData['investment_range'])) {
+                $range = Config('constants.InvestRange.' . $invData['investment_range']);
+                if (is_array($range)) {
                     $investmentMin = $range['min'];
                     $investmentMax = $range['max'];
                 }
@@ -1517,10 +1548,10 @@ class InvestorController extends Controller
                 'inv_amt' => $invData['investment_range'],
                 'investment_min' => $investmentMin,
                 'investment_max' => $investmentMax,
-                'source_type' => 'Insta'				
+                'source_type' => 'Insta'
             ]);
 
-            if(!empty($invData['category_id'])) {
+            if (!empty($invData['category_id'])) {
                 InvestorIndustry::query()->insert([
                     'investor_id' => $investorId,
                     'ind_main_cat' => $invData['category_id'],
@@ -1530,8 +1561,8 @@ class InvestorController extends Controller
             //updating user account table for confirmation code
             $data = [
                 'companyName' => $invData['name'],
-                'password'    => $randomPassword,
-                'code'        => $code,
+                'password' => $randomPassword,
+                'code' => $code,
             ];
 
             //Mail sending to investor for confirmation
@@ -1540,7 +1571,7 @@ class InvestorController extends Controller
             // }
         }
 
-        return ;
+        return;
     }
 
     /**
@@ -1549,7 +1580,7 @@ class InvestorController extends Controller
     public function checkInvestorExistence()
     {
         $checkExistance = 0;
-        if(request()->email != 'fiblbrands@franchiseindia.in')
+        if (request()->email != 'fiblbrands@franchiseindia.in')
             $checkExistance = UserAccount::query()->where('email', request()->email)->count();
         return $checkExistance;
     }
@@ -1559,10 +1590,10 @@ class InvestorController extends Controller
      */
     public function recordUpdateTime()
     {
-        if(!empty(request()->user())) {
+        if (!empty(request()->user())) {
             UserRecord::query()->updateOrCreate([
-                'profile_str'   => request()->user()->profile_str,
-            ],[
+                'profile_str' => request()->user()->profile_str,
+            ], [
                 'last_updated_by_user' => date('Y-m-d H:i:s')
             ]);
         }
