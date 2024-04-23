@@ -20,6 +20,7 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\InvPaymentController;
+use App\Http\Controllers\FranPaymentController;
 use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -90,6 +91,20 @@ Route::get('logoutprofile', [LoginController::class, 'logoutProfile']);
 Route::get('fibl/login', [LoginController::class, 'fiblLogin']);  // FIBL brand routes
 Route::post('fibl/login', [LoginController::class, 'fiblLoginCheck']);
 Route::post('getfreeinfo', [ExpressInstaController::class, 'freeInfo']);      //guest
+
+
+//Payment Routes
+Route::get('payment',                         [PaymentController::class,'payment']);
+
+// FranchisorPayment Routes
+Route::post('franpaymentsubmit',              [FranPaymentController::class,'paymentHdfcPayuPg']);
+Route::post('franfailed',                     [FranPaymentController::class,'paymentFailure']);
+Route::post('fransuccess',                    [FranPaymentController::class,'paymentSuccess']);
+Route::post('francancelled',                  [FranPaymentController::class,'paymentCancelled']);
+Route::post('franfailedmyaccount',            [FranPaymentController::class,'paymentFailureMyAccount']);
+Route::post('fransuccessmysccount',           [FranPaymentController::class,'paymentSuccessMyAccount']);
+Route::post('francancelledmyaccount',         [FranPaymentController::class,'paymentCancelledMyAccount']);
+
 
 Route::group(['prefix' => 'investor'], function () {
     Route::get('plan', [InvestorController::class, 'campaignPlan']);
@@ -182,6 +197,7 @@ Route::group(['prefix' => 'franchisor'], function () {
         Route::get('appearance', [FranchisorController::class, 'appearance']);
         Route::get('logo', [FranchisorController::class, 'franPhotoChange']);
         Route::get('responsemanager', [FranchisorController::class, 'viewResponseManager']);
+        Route::post('upgrade-account',                [FranchisorController::class,'upgradeAccount']);
         Route::get('advertisewithus', function () {
             return view('franchisor/myAccount/advertisewithus');
         });

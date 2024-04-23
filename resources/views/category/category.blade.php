@@ -392,7 +392,7 @@
             <form method="post" action="{{ URL('compare-brands') }}">
                 You selected <span class="count">0</span>Brands for Comparison (Max @if ($agent->isMobile())
                     2
-                    @endif @if ($agent->isDesktop() || $agent->isDesktop())
+                    @endif @if ($agent->isDesktop() || $agent->isTablet())
                         3
                     @endif)
                     <input type="hidden" name="franchisors" id="franchisorsForComparison">
