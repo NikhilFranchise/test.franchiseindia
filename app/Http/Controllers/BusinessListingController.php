@@ -13,6 +13,8 @@ use App\Models\FranchisorSliderTenure;
 use App\Models\FranchisorBusinessDetail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+
 class BusinessListingController extends Controller
 {
     public function getSubCatUrl()
@@ -135,15 +137,16 @@ public function listingLocation()
                 ->where('status', 1)
                 ->where('end_date', '>=', date('Y-m-d H:i:s'))
                 ->get()->pluck('franchisor_id');
-            $franImageData   = FranchisorSliderImage::query()->select('franchisor_id', 'image_type_slider2', DB::raw('COUNT(franchisor_id) as count'))
+                $franImageData = FranchisorSliderImage::query()
+                ->select('franchisor_id', 'image_type_slider2', DB::raw('COUNT(franchisor_id) as count'))
                 ->where('image_type_slider2', '!=', '')
                 ->whereIn('franchisor_id', $imageFranchisor)
                 ->whereIn('franchisor_id', $sliderCheck)
                 ->where('status', 1)
-                ->groupBy('franchisor_id')
+                ->groupBy('franchisor_id', 'image_type_slider2') // Include image_type_slider2 in GROUP BY
                 ->havingRaw('count > 3')
                 ->get();
-        }
+        }            
 
         $view = 'location.category';
         if(request()->segment(1) == 'amp')
@@ -152,9 +155,12 @@ public function listingLocation()
         if(request()->segment(1) == 'hi')
             //dd($shuffledResults);
             $view = 'location.hindi-category.hindi-category';
-        $seoTitle = "Business Opportunities in ".$city." - Franchise India";
-        $seoDesc = "Looking for a franchise opportunities in ".$city."?  Its Easy If You Do It Smartly, your dream company is waiting for you. Visit Franchise India today and get your franchisee.";
-        return view($view, compact(
+
+            $currentDate = Carbon::now()->format('Y');
+            $seoTitle = $brandResults->total() . '+ Business Opportunities in '.$city.' for ' . $currentDate . ' (High Profit Making)';
+            $seoDesc = $brandResults->total() . '+ Profitable Business Opportunities in '. $city .'. Explore Franchise Opportunities in '. $city .' & Start your own business in '. $city .' with FranchiseIndia today!';
+            $seoKeywords   = 'Best Business in '. $city .', Business Opportunities in  '. $city .', New Business Opportunities in  '. $city .', Small Business Opportunities in '. $city .', Franchise Opportunities in '. $city .',  Profitable Business Ideas in '. $city;
+         return view($view, compact(
             'brandResults',
             'shuffledResults',
             'breadCrumb',
@@ -542,11 +548,18 @@ public function listingLocation()
 
         // Fetch the request parameters
         if (!empty(request()->state_code)) {
+             $currentDate = Carbon::now()->format('Y');
+       
             $locId       = preg_split('#(?<=[a-z])(?=\d)#i', request()->state_code);
             $locArrKey   = explode(',', $locId[1]);
-            $seoTitle    = 'Business Opportunities in ' . Config('location.stateArr.' . $locArrKey[0]) . ' - Franchise India';
-            $seoKeywords = 'business opportunities, business opportunities in ' . Config('location.stateArr.' . $locArrKey[0]);
-            $seoDesc     = "Find business opportunities in " . Config('location.stateArr.' . $locArrKey[0]);
+            // $seoTitle    = 'Business Opportunities in ' . Config('location.stateArr.' . $locArrKey[0]) . ' -  Franchise India';
+            $seoTitle    = 'Business Opportunities in ' . Config('location.stateArr.' . $locArrKey[0]) . ' for ' .  $currentDate . ' (High Profit Making)';
+
+            // $seoKeywords = 'business opportunities, business opportunities in ' . Config('location.stateArr.' . $locArrKey[0]);
+            $seoKeywords = 'Best Business in ' . Config('location.stateArr.' . $locArrKey[0]) . ' , Business Opportunities in ' .  Config('location.stateArr.' . $locArrKey[0]) . ', New Business Opportunities in  '.  Config('location.stateArr.' . $locArrKey[0]) . ', Small Business Opportunities in ' .  Config('location.stateArr.' . $locArrKey[0]) .' , Franchise Opportunities in ' . Config('location.stateArr.' . $locArrKey[0]) . ' ,  Profitable Business Ideas in ' . Config('location.stateArr.' . $locArrKey[0]) ;
+
+            $seoDesc     = "Profitable Business Opportunities in " . Config('location.stateArr.' . $locArrKey[0]) . " Explore Franchise Opportunities in " . Config('location.stateArr.' . $locArrKey[0]) . " & Start your own business in " . Config('location.stateArr.' . $locArrKey[0]) . " with FranchiseIndia today!";
+           
             $loc         = $locArrKey;
 
             if(request()->segment(1) == 'hi') {
@@ -751,6 +764,7 @@ public function listingLocation()
         //  dd($mc,$sc,$ssc,$ftype,$seoTitle,$seoDesc);
         //  dd($loc,$seoKeywords,$orderby,$minRangeValue,$maxRangevalue,$text,$searchq);
         //  dd($catTabResult,$locTabResult,$invTabResult,$minCost,$maxCost,$franImageData,$city,$view);
+
         return view($view, compact(
             'brandResults',
             'shuffledResults',
@@ -913,14 +927,25 @@ public function listingLocation()
 
 
         if (!empty($catArr->description))
-            $seoDesc     = $catArr->description;
+            // $seoDesc     = $catArr->description;
 
-        if (!empty($catArr->keywords))
+            if ($cid[0] != 'ssc') {  
+                $currentDate = Carbon::now();
+                $formattedDate = $currentDate->format('j F Y');
+            
+                $seoDesc     = $brandResults->total().'+ '. $catArr->catname.  ' Business, Franchise Opportunities' .' | ' .$formattedDate  .  ' | ' .$catArr->description;
+                // dd($seoDesc);
+            }
+            
+            
+        if (!empty($catArr->keywords)) 
             $seoKeywords = $catArr->keywords;
 
         if ($cid[0] == 'ssc') {
+            $currentDate = Carbon::now();
+            $formattedDate = $currentDate->format('j F Y');
             $seoTitle = sprintf('%s Business Opportunity in India – Franchise India', $catArr->catname);
-            $seoDesc  = sprintf('Franchise India offers wide variety of %1$s franchise opportunities to run a successful %1$s franchise business. You can explore some of the established and well known %1$s franchises here.', $catArr->catname);
+            $seoDesc  = sprintf( $brandResults->total(). '+ '. $catArr->catname .  ' Business, Franchise Opportunities | ' .$formattedDate . ' | Franchise India offers wide variety of %1$s franchise opportunities to run a successful %1$s franchise business. You can explore some of the established and well known %1$s franchises here.', $catArr->catname);
             if(request()->segment(1) == 'hi') {
                 $seoTitle = sprintf('%s भारत में व्यावसायिक अवसर - फ्रेंचाइज इंडिया', $catArr->catname);
                 $seoDesc  = sprintf('फ्रैंचाइज़ इंडिया विभिन्न प्रकार की पेशकश करता है %1$s फ्रेंचाइजी एक सफल चलाने के अवसर %1$s फ्रेंचाइजी का व्यवसाय। आप कुछ स्थापित और प्रसिद्ध का पता लगा सकते हैं %1$s यहां फ्रेंचाइजी मिली.', $catArr->catname);

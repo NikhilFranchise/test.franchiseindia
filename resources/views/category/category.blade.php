@@ -1,8 +1,8 @@
 @extends('layout.master')
 @if ($mc == 2)
     @section('seoTitle', 'Food and Beverage - Business Ideas and Franchise Opportunities')
-@elseif(!empty($seoTitle))
-    @section('seoTitle', $seoTitle)
+@elseif(!empty($seoTitle)) 
+    @section('seoTitle', $brandResults->total() . '+ ' . $seoTitle)
 @endif
 @if (!empty($seoDesc))
     @section('seoDesc', $seoDesc)
