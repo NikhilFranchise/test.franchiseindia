@@ -23,23 +23,12 @@
                                           col-lg-6 col-xl-6">
                                 <div class="card-news-info">
                                     <div class="news-overlay">
-                                        {{-- <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][0]['title'], $articles['article'][0]['id']) }}"
+                                        <p>oan kan</p>
+                                        <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][0]['title'], $articles['article'][0]['id']) }}"
                                             target="_blank">
                                             <img src="{{ \App\Http\Controllers\NewHomePageController::getImageUrl($articles['article'][0]['image_path']) }}"
                                                 class="img-b" alt="{{ $articles['article'][0]['title'] }}">
-                                        </a> --}}
-                                        @if(!empty($articles['article']) && !empty($articles['article'][0]))
-    @php
-        $article = $articles['article'][0];
-        $slug = \App\Http\Controllers\NewHomePageController::getSlug($article['title'], $article['id']);
-        $imageUrl = \App\Http\Controllers\NewHomePageController::getImageUrl($article['image_path']);
-    @endphp
-
-    <a href="{{ 'https://www.opportunityindia.com/' . $slug }}" target="_blank">
-        <img src="{{ $imageUrl }}" class="img-b" alt="{{ $article['title'] }}">
-    </a>
-@endif
-
+                                        </a>
                                     </div>
                                     <div class="card-news-summry">
                                         <h3><a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][0]['title'], $articles['article'][0]['id']) }}"
