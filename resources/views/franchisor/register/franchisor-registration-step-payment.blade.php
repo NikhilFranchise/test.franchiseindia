@@ -49,7 +49,7 @@
 
 
 
-<div class="" style="text-align:center;margin-top: 45px; margin-bottom:30px; color: #000;font-size: 17px;font-weight: 400;clear: both;">Chat on <a href="https://api.whatsapp.com/send?phone=919312650021&amp;text=Hello,%20I%20am%20interested%20in%20knowing%20more%20about ?%20https://www.franchiseindia.com/" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/whatappsicon.svg" class="sts"></a></div>
+<div class="" style="text-align:center;margin-top: 45px; margin-bottom:30px; color: #000;font-size: 17px;font-weight: 400;clear: both;">Chat on <a href="https://api.whatsapp.com/send?phone=919312650021&amp;text=Hello,%20I%20am%20interested%20in%20knowing%20more%20about ?%20https://www.franchiseindia.com/" target="_blank"><img style="width:2%" src="https://www.franchiseindia.com/newhomepage/assets/img/whatappsicon.svg" class="sts"></a></div>
 <!--  -->
 
 
