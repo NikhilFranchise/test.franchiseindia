@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class FranPaymentHistory extends Model
 {
     use HasFactory;
+    protected $table="franchisor_payment_history";
+
 }

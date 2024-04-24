@@ -25,7 +25,7 @@ class NewsLetterController extends Controller
             // if(!empty($email))
             //     Mail::getFacadeRoot()->to($email)->send(new NewsLetterSubscribe($randCode));
 
-        } else if (count($checkEmail) != 0 && $checkEmail->status != 'S') {
+        } else if ($checkEmail->count() != 0 && $checkEmail->status != 'S') {
             FiNewsLetter::query()->where('email', $email)->where('site_type', $siteType)->update(['verify_code' => $randCode]);
             // if(!empty($email))
             //     Mail::getFacadeRoot()->to($email)->send(new NewsLetterSubscribe($randCode));
