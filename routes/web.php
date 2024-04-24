@@ -24,7 +24,7 @@ use App\Http\Controllers\FranPaymentController;
 use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
-Auth::routes();
+
 
 
 /*
@@ -37,11 +37,10 @@ Auth::routes();
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Auth::routes();
+Route::get('/home', function () { return redirect('/', 301); });
 Route::get('/', [NewHomePageController::class, 'homeNew']);
-Route::get('/home', function () {
-    return redirect('/', 301);
-});
+
 Route::get('pagenotfound', function () {
     return view('static.404');
 }); //404 ERROR PAGE
