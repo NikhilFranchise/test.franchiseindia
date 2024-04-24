@@ -20,10 +20,8 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\InvPaymentController;
-use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
-Auth::routes();
 
 
 /*
@@ -36,6 +34,8 @@ Auth::routes();
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Auth::routes();
+
 
 Route::get('/', [NewHomePageController::class, 'homeNew']);
 Route::get('/home', function () {
@@ -268,18 +268,6 @@ Route::group(['prefix' => 'category'], function () {
 });
 Route::get('sitemapgenerate', [SitemapController::class, 'sitemap']); // Sitemap Generator route
 
-//Admin Panel Routes
-Route::get('relatedbrands', [AdminController::class, 'relatedBrands']);
-Route::get('associatedtags', [AdminController::class, 'associatedTags']);
-Route::get('publisher', [AdminController::class, 'publisher']);
-Route::get('find', [AdminController::class, 'find']);
-Route::get('searcharticleinterview', [AdminController::class, 'searchArticleInterview']);
-Route::get('searchnews', [AdminController::class, 'searchNews']);
-Route::get('searchmagazine', [AdminController::class, 'searchMagazine']);
-Route::get('articleinterviewcommentsearch', [AdminController::class, 'searchArticleInterviewComment']);
-Route::get('newscommentsearch', [AdminController::class, 'searchNewsComment']);
-Route::get('admin-logout', [AdminController::class, 'logout']);
-//Admin Panel Post Routes
 Route::post('invsuccess', [PaymentController::class, 'investorPaymentSuccess']);        // Investor Payment success routes
 Route::post('bookpaymentsubmit', [PaymentController::class, 'bookPayment']);                   // Books & Reports Payment section routes
 Route::post('payment/booksuccess', [PaymentController::class, 'bookPaymentSuccess']);            // Books & Reports Payment section routes
@@ -289,101 +277,4 @@ Route::post('payment/success', [PaymentController::class, 'paymentSuccess']);
 Route::post('payment/failure', [PaymentController::class, 'getHdfcPgResponseFailed']);
 Route::post('payment/cancelled', [PaymentController::class, 'getHdfcPgResponseFailed']);
 
-//Admin Panel Post Routes
-Route::post('updateauthorstatus', [AdminController::class, 'updateAuthorStatus']);
-Route::post('updatearticalinterviewstatus', [AdminController::class, 'updateArticalInterviewStatus']);
-Route::post('updatenewsstatus', [AdminController::class, 'updateNewsStatus']);
-Route::post('updateaicommentstatus', [AdminController::class, 'updateAICommentStatus']);
-Route::post('updatenewscommentstatus', [AdminController::class, 'updateNewsCommentStatus']);
-Route::post('updatemagazinestatus', [AdminController::class, 'updateMagazineStatus']);
-Route::post('deletemagazine', [AdminController::class, 'deleteMagazine']);
-Route::post('updatemagazinearticlestatus', [AdminController::class, 'updateMagazineArticleStatus']);
-Route::post('deletemagazinearticle', [AdminController::class, 'deleteMagazineArticle']);
-Route::post('deletearticle', [AdminController::class, 'deleteArticle']);
-Route::post('deletenews', [AdminController::class, 'deleteNews']);
-//admin panel routes
-Route::group(['prefix' => 'admin'], function () {
-    //Get routes
-    Route::get('login', [AdminController::class, 'loginView']);
-    Route::get('list-news', [AdminController::class, 'listNews']);
-    Route::get('edit-news-view/{id}', [AdminController::class, 'editNewsView']);
-    Route::get('dashboard', [AdminController::class, 'viewDashboard']);
-    Route::get('create-author', [AdminController::class, 'createAuthor']);
-    Route::get('edit-author/{id}', [AdminController::class, 'viewAuthor']);
-    Route::get('list-magazine-articles/{id}', [AdminController::class, 'listMagazineArticles']);
-    Route::get('create-magazine-article/{id}', [AdminController::class, 'createMagazineArticleView']);
-    Route::get('list-author', [AdminController::class, 'listAuthor']);
-    Route::get('create-article-interview', [AdminController::class, 'createArticleView']);
-    Route::get('list-article-interview', [AdminController::class, 'listArticleInterview']);
-    Route::get('edit-article-interview/{id}', [AdminController::class, 'editViewArticleInterview']);
-    Route::get('create-news', [AdminController::class, 'createNewsView']);
-    Route::get('create-magazine', [AdminController::class, 'createMagazineView']);
-    Route::get('edit-magazine-view/{id}', [AdminController::class, 'editMagazineView']);
-    Route::get('list-magazine', [AdminController::class, 'listMagazine']);
-    Route::get('edit-magazine-article/{id}', [AdminController::class, 'editMagazineArticleView']);
-    Route::get('list-article-interview-comments', [AdminController::class, 'listArticleInterviewComments']);
-    Route::get('list-news-comments', [AdminController::class, 'listNewsComments']);
-    Route::get('edit-article-interview-comment/{id}', [AdminController::class, 'editArticleInterviewComment']);
-    Route::get('edit-news-comment/{id}', [AdminController::class, 'editNewsComment']);
-    Route::get('article-interview-comment-reply/{id}', [AdminController::class, 'articleCommentReply']);
-    Route::get('magazine-comment-list', [AdminController::class, 'getMagazineComments']);
-    Route::get('magzine-comment-search', [AdminController::class, 'searchMagazineComment']);
-    Route::get('edit-mag-comment/{id}', [AdminController::class, 'editMagazineComment']);
-    Route::get('kicker/create/{type}', [AdminController::class, 'getCreateKickerView']);
-    Route::get('get-kickers', [AdminController::class, 'getHindiKickers']);
-    Route::get('kickers/list/{type}', [AdminController::class, 'getKickersList']);
-    Route::get('{type}/hindi/{contentId}', [AdminController::class, 'getCreateHindiArticleNewsForm']);
 
-    //Post routes
-    Route::post('update-magazine-comment', [AdminController::class, 'updateMagazineComment']);
-    Route::post('update-mag-comment-status', [AdminController::class, 'setMagazineCommentStatus']);
-    Route::post('article-comment-reply', [AdminController::class, 'createArticleCommentReply']);
-    Route::post('edit-comment-reply/{replyId}', [AdminController::class, 'updateArticleCommentReply']);
-    Route::post('article-register', [AdminController::class, 'createArticle']);
-    Route::post('create-news', [AdminController::class, 'createNews']);
-    Route::post('create-magazine', [AdminController::class, 'createMagazine']);
-    Route::post('edit-magazine', [AdminController::class, 'updateMagazine']);
-    Route::post('article-interview-edit', [AdminController::class, 'editArticleInterview']);
-    Route::post('create-magazine-article', [AdminController::class, 'createMagazineArticle']);
-    Route::post('update-magazine-article', [AdminController::class, 'updateMagazineArticle']);
-    Route::post('author-edit', [AdminController::class, 'updateAuthor']);
-    Route::post('author-register', [AdminController::class, 'registerAuthor']);
-    Route::post('login-check', [AdminController::class, 'loginCheck']);
-    Route::post('update-news', [AdminController::class, 'updateNews']);
-    Route::post('edit-article-interview-comment', [AdminController::class, 'updateArticleInterviewComment']);
-    Route::post('edit-news-comment', [AdminController::class, 'updateNewsComment']);
-    Route::post('delete-article-slider-image', [AdminController::class, 'deleteArticleSliderImage']);
-    Route::post('create/kicker/{type}', [AdminController::class, 'insertUpdateKicker']);
-    Route::post('delete-kicker', [AdminController::class, 'deleteKicker']);
-    Route::post('hindi/create', [AdminController::class, 'createUpdateHindiArticle']);
-    // insights get routes code by gp
-    Route::get('create-insights', [AdminController::class, 'createinsightsView']);
-    Route::get('list-insights', [AdminController::class, 'listinsights']);
-    Route::get('edit-insights-view/{id}', [AdminController::class, 'editInsightsView']);
-    // insights post routes
-    Route::post('/create-insights', [AdminController::class, 'createInsights']);
-    Route::post('update-insights', [AdminController::class, 'updateInsights']);
-    Route::post('updateinsightstatus', [AdminController::class, 'updateInsightStatus']);
-    Route::post('deleteinsights', [AdminController::class, 'deleteInsights']);
-    // insights post routes end here
-    // category and sub category get routes code by gp
-    Route::get('cat/create', [AdminController::class, 'categoryform']);
-    Route::get('subcat/create', [AdminController::class, 'subcatform']);
-    Route::get('cat/list', [AdminController::class, 'catlist']);
-    Route::get('subcat/list', [AdminController::class, 'subcatlist']);
-    Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
-    // routes/web.php
-    // insights post routes
-    Route::post('create/cat', [AdminController::class, 'storecat']);
-    Route::post('create/subcat', [AdminController::class, 'storesubcat']);
-    Route::post('delete-category', [AdminController::class, 'deleteCat']);
-    Route::post('delete-subcategory', [AdminController::class, 'deletesubCat']);
-});
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
