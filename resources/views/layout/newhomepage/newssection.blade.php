@@ -28,7 +28,7 @@
                                             <img src="{{ \App\Http\Controllers\NewHomePageController::getImageUrl($articles['article'][0]['image_path']) }}"
                                                 class="img-b" alt="{{ $articles['article'][0]['title'] }}">
                                         </a> --}}
-                                        @if(!empty($articles['article'][0]))
+                                        @if(!empty($articles['article']) && !empty($articles['article'][0]))
     @php
         $article = $articles['article'][0];
         $slug = \App\Http\Controllers\NewHomePageController::getSlug($article['title'], $article['id']);
