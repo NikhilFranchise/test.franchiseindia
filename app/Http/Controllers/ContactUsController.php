@@ -44,7 +44,7 @@ class ContactUsController extends Controller
             'mobile' => $request->mobile,
             'user_ip' => $request->ip(),
             'pincode' => $request->pincode,
-            'source' => Cookie::get('campaignSource', 'DOTCOM'),
+            // 'source' => Cookie::get('campaignSource', 'DOTCOM'),
         ]);
 
         if ($contactData) {
@@ -57,7 +57,7 @@ class ContactUsController extends Controller
             ];
 
             $mailTo = '';
-            $mailBcc = ['techsupport@franchiseindia.com'];
+            $mailBcc = ['pkumar@franchiseindia.net'];
             switch ($request->contreason) {
                 case "Advertise with www.franchiseindia.com":
                 case "Advertise in Magazine":
@@ -70,7 +70,7 @@ class ContactUsController extends Controller
                 case "Buy a Franchise (Business)":
                 case "Sell my Existing Business":
                 case "Subscribe to the Magazine":
-                    $mailTo = 'dharmendra@franchiseindia.net';
+                    $mailTo = 'cnikhil@franchiseindia.net';
                     break;
                 case "Feedback":
                     $mailTo = 'techsupport@franchiseindia.com';
