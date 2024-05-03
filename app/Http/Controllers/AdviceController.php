@@ -9,23 +9,25 @@ use App\Mail\FreeAdviceForm;
 use App\Models\Pincode;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
-
+use SparkPost\SparkPost;
+use GuzzleHttp\Client;
+use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
 class AdviceController extends Controller
 {
-      /**
+    /**
      * Function to insert free advice data
      * @param Request $request
      * @return bool
      */
     public function freeadvice(Request $request)
     {
-        // dd($request->all());
-		$this->validate($request, [
+        
+        $request->validate([
             'email' => 'required|email',
             'name' => 'required|min:2',
             'mobile' => 'required|min:10',
         ]);
-		
+
         $user = $request->optionsRadios;
         $name = $request->name;
         $pincode = $request->pincode;
@@ -36,17 +38,19 @@ class AdviceController extends Controller
         $city = "";
         $state = "";
         $ip = $request->ip();
-        $table = ($user == 'franchisor') ? AskFranchisor::query() : AskInvestor::query();
         
-        $pincodeDetails = Pincode::query()->select('city', 'state')->where('pincode', $pincode)->first();
+        $table = ($user == 'franchisor') ? AskFranchisor::class : AskInvestor::class;
+
+        $pincodeDetails = Pincode::select('city', 'state')->where('pincode', $pincode)->first();
         if (!empty($pincodeDetails)) {
-            $city  = ucfirst(strtolower($pincodeDetails->city));
+            $city = ucfirst(strtolower($pincodeDetails->city));
             $state = ucfirst(strtolower($pincodeDetails->state));
         }
-
+        // dd($name);
         // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
+        $mailTo = ($user != 'franchisor') ? "pganesh@franchiseindia.net" : "cnikhil@franchiseindia.net";
 
-        $users = $table->insert([
+        $users = $table::create([
             'name' => $name,
             'city' => $city,
             'state' => $state,
@@ -58,20 +62,26 @@ class AdviceController extends Controller
             'reg_source' => !empty(Cookie::get('campaignSource')) ? Cookie::get('campaignSource') : ""
         ]);
 
-        //If insertion fails
+        // If insertion fails
         if (!$users)
             return response()->json('Insertion failed..!');
 
-		// Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
+        Mail::to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
 
         if ($newsLetter == 1)
             NewsLetterController::createNewsLetter($request->input('email'), "fi");
 
+            // dd('hello1');
         return 'true';
     }
 
     public function freeadviceHome(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email',
+            'name' => 'required|min:2',
+            'mobile' => 'required|min:10',
+        ]);
 
         $user = $request->optionsRadios;
         $name = $request->name;
@@ -83,17 +93,17 @@ class AdviceController extends Controller
         $city = "";
         $state = "";
         $ip = $request->ip();
-        $table = ($user == 'franchisor') ? AskFranchisor::query() : AskInvestor::query();
+        $table = ($user == 'franchisor') ? AskFranchisor::class : AskInvestor::class;
 
-        $pincodeDetails = Pincode::query()->select('city', 'state')->where('pincode', $pincode)->first();
+        $pincodeDetails = Pincode::select('city', 'state')->where('pincode', $pincode)->first();
         if (!empty($pincodeDetails)) {
-            $city  = ucfirst(strtolower($pincodeDetails->city));
+            $city = ucfirst(strtolower($pincodeDetails->city));
             $state = ucfirst(strtolower($pincodeDetails->state));
         }
 
         $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
 
-        $users = $table->insert([
+        $users = $table::create([
             'name' => $name,
             'city' => $city,
             'state' => $state,
@@ -104,12 +114,12 @@ class AdviceController extends Controller
             'ip' => $ip,
             'reg_source' => !empty(Cookie::get('campaignSource')) ? Cookie::get('campaignSource') : ""
         ]);
-        return response()->json($users);
-        //If insertion fails
+
+        // If insertion fails
         if (!$users)
             return response()->json('Insertion failed..!');
 
-        Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
+        Mail::to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
 
         if ($newsLetter == 1)
             NewsLetterController::createNewsLetter($request->input('email'), "fi");
