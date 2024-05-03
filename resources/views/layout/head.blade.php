@@ -1,5 +1,6 @@
 <meta charset="UTF-8">
 <meta content="{{ request()->segment(1) == 'hi' ? 'hi-in' : 'en-in' }}" name="language" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <title>
     @if (strpos(collect(request()->segments())->last(), 'range-') !== false)
         @php
