@@ -14,7 +14,7 @@ use App\Models\FeedbackMembers;
 use App\Models\ExpressInstaApply;
 use App\Models\FranchisorFeedback;
 use App\Mail\UserFeedbackMail;
-use App\FranchisorBusinessDetail;
+use App\Models\FranchisorBusinessDetail;
 use Illuminate\Support\Facades\LOG;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RawMail;

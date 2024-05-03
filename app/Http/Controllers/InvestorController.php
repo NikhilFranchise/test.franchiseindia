@@ -12,8 +12,8 @@ use App\Models\InsertLead;
 use App\Models\InvestorDetails;
 use App\Models\InvestorIndustry;
 use App\Models\InvestorIndustryBusiness;
-// use App\Mail\autoInvestorRegistration;
-// use App\Mail\confirmed;
+use App\Mail\autoInvestorRegistration;
+use App\Mail\confirmed;
 use App\Models\OnlinePayment;
 use App\Models\PgInvestorPayment;
 use App\Models\UserAccount;
@@ -28,10 +28,10 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-// use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
-// use App\Mail\RawMail;
+use App\Mail\RawMail;
 use App\Http\Controllers\PaymentController;
 
 class InvestorController extends Controller
@@ -487,7 +487,7 @@ class InvestorController extends Controller
         ];
 
         //Mail sending to investor for confirmation
-        // Mail::getFacadeRoot()->to($email)->send(new confirmed($data));
+        Mail::getFacadeRoot()->to($email)->send(new confirmed($data));
 
         if (!empty($request->input('flag'))) {
 
@@ -529,12 +529,12 @@ class InvestorController extends Controller
      */
     public function upgradeInvestor(Request $request)
     {
-       
+
         if ($request->input('invPlan') == 401) {
             return view('includes/investor-thanks');
         } else {
             $pmode = $request->input('mop');
-            
+
             if (!array_key_exists($pmode, config('constants.Charges'))) {
                 $pmode = "OPTNBK";
             }
@@ -542,16 +542,16 @@ class InvestorController extends Controller
             $amount = $amount + (($amount * 18) / 100);
             $mop = config('constants.Charges.' . $pmode);
             $amount = round($amount + $amount * ($mop) / 100);
-            
+
 
             $investorId = $request->input('investorId');
             $membership = config('constants.invPlanDetails.' . $request->input('invPlan'));
             $planId = $request->input('invPlan');
             $detail = config('constants.invPlanDetails.' . $request->input('invPlan'));
-            
+
             ;
             $gst = $request->gst_no;
-            
+
             return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, $pmode);
 
         }
@@ -1321,22 +1321,22 @@ class InvestorController extends Controller
     private function paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, $pmode)
     {
         $checkCampaign = 0;
-        
+
         if (is_array($membership)) {
             $membership = $membership[0];
             $checkCampaign = 1;
-           
+
         }
 
         $invData = InvestorDetails::query()->select('investor_id', 'inv_city', 'inv_state', 'inv_country', 'inv_address')->where('investor_id', $investorId)->first();
         $userData = UserAccount::query()->select('name', 'email', 'mobile')->where('profile_str', $investorId)->first();
-       
+
         $country = 'India';
         $name = $userData->name;
         $email = $userData->email;
         $phone = $userData->mobile;
         $city = $invData->inv_city;
-        $amount = $amount;
+        // $amount = $amount;
         $address = $invData->inv_address . ',' . $invData->inv_city . ',' . $invData->inv_state . ', ' . $country;
 
         //payment
@@ -1348,27 +1348,27 @@ class InvestorController extends Controller
         $txnData->phone = $phone;
         $txnData->address = $address;
         $txnData->email = $email;
-        
+
         // Send Email to Investor Acquisition team for Paid Membership pitching
 
         $data = "<table> <tr> <td>Name : </td><td>" . $name . "</td></tr><tr> <td>Email : </td><td>" . $email . "</td></tr><tr> <td>Mobile No. : </td><td>" . $phone . "</td></tr><tr> <td>Investor Id : </td><td>" . $investorId . "</td></tr><tr> <td>Address : </td><td>" . $address . ", City: " . $city . ", State: " . $invData->inv_state . ", Country: " . $country . "</td></tr><tr> <td>Time Of Payment : </td><td>" . date('Y-m-d H:i:s') . "</td></tr></table>";
-       
+
         // *******commented for testing**********
-        // Mail::getFacadeRoot()->to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
+        Mail::getFacadeRoot()->to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
 
         // End of Email to Investor Acquisition team
 
-        
+
         if ($checkCampaign == 1)
             $txnData->is_campaign = $checkCampaign;
-       
+
         $txnData->country = $country;
         $txnData->membership_type = $membership;
         $txnData->client_ip = request()->ip();
-        
+
         $txnData->payment_status = config('hdfcpg.paymentStatus.Initiated');
         $txnData->order_status = config('hdfcpg.paymentStatus.Initiated');
-        
+
         if ($txnData->save()) {
             $tranId = $txnData->investor_pay_id;
         } else {
@@ -1392,12 +1392,12 @@ class InvestorController extends Controller
             'gst_no' => $gst,
             'payment_status' => 0
         ]);
-       
+
         if (!empty(request()->user()))
             $this->recordUpdateTime();
-            
+
         $paymentController = new PaymentController();
-       
+
         $track_id = $tranId;
         $order_id = "order_id=" . urlencode("InvRegopenPayment_" . $tranId);
         $tid = "tid=" . urlencode(rand() . $track_id);
@@ -1566,9 +1566,9 @@ class InvestorController extends Controller
             ];
 
             //Mail sending to investor for confirmation
-            // if(!empty($invData['email'])){
-            //     Mail::getFacadeRoot()->to($invData['email'])->send(new autoInvestorRegistration($data));
-            // }
+            if (!empty($invData['email'])) {
+                Mail::getFacadeRoot()->to($invData['email'])->send(new autoInvestorRegistration($data));
+            }
         }
 
         return;

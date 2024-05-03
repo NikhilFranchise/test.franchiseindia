@@ -5,10 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AskInvestor extends Model
+class PopupLead extends Model
 {
     use HasFactory;
-    protected $table = 'ask_investor';
-    protected $fillable = ['name'];
-
+    protected $table = 'popup_leads';
 }
+

@@ -8,7 +8,7 @@ return [
     |--------------------------------------------------------------------------
     */
     // 'MainDomain' => env( 'APP_URL' ,'https://www.franchiseindia.com'),
-    'MainDomain' => 'https://127.0.0.1',
+    'MainDomain' => 'http://127.0.0.1:8000',
 
     'brandPagePattern' => '%s/brands/%s.%s',
     'catListUrl' => '%s/%s/%s.%s',
