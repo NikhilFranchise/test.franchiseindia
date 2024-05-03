@@ -17,6 +17,7 @@
                 </div>
             @endif
             <form class="form-horizontal" id="paymentForm" method="post" action="{{ url('paymentsubmit') }}">
+              
                 <div class="form-group">
                     <label class="col-xs-12 col-sm-4 col-md-4 com4mod control-label mandatory">Name</label>
                     <div class="col-sm-1 com1mod padtop20 hidden-xs">:</div>
