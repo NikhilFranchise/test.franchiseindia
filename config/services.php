@@ -24,13 +24,13 @@ return [
         'secret' => env('SES_SECRET'),
         'region' => 'us-east-1',
 
-
+    ],
     'sparkpost' => [
         'secret' => env('SPARKPOST_SECRET'),
     ],
 
     'stripe' => [
-        'model' => App\User::class,
+        'model' => App\Models\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
