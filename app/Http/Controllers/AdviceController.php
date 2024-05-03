@@ -48,7 +48,7 @@ class AdviceController extends Controller
         }
         // dd($name);
         // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
-        $mailTo = ($user != 'franchisor') ? "pganesh@franchiseindia.net" : "pganesh@franchiseindia.net";
+        $mailTo = ($user != 'franchisor') ? "pganesh@franchiseindia.net" : "ss@franchiseindia.net";
 
         $users = $table::create([
             'name' => $name,
