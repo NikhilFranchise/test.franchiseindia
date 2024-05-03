@@ -373,7 +373,9 @@
                                 {{-- {!! $brandResults
                      ->appends($params)
                      ->render() !!} --}}
+                     <p>Page {{ $brandResults->currentPage() }} of {{ $brandResults->lastPage() }}</p>
                                 {!! $brandResults->links() !!}
+                                
 
                             </div>
                         </div>

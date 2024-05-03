@@ -16,6 +16,7 @@
         </div>
         <div class="col-xs-12 col-sm-12 row-no-padding">
             <form class="form-horizontal" id="contactForm" action="{{ url('contact-submit') }}" method="post">
+                @csrf
                 <div class="form-group">
                     <label class="col-xs-12 col-sm-4 col-md-4 com4mod control-label mandatory">Name</label>
                     <div class="col-sm-1 com1mod padtop20 hidden-xs">:</div>
