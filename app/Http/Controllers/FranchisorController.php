@@ -2533,17 +2533,19 @@ class FranchisorController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
     public function paymentPlan()
-    {  
-        
+    {
+
         $data = UserAccount::query()->where('profile_str', request()->user()->profile_str)->first();
         $franData = FranchisorBusinessDetail::query()->where('franchisor_id', request()->user()->profile_str)->first();
         // dd($data);
         if ($data->membership_type == 1) {
             $planDetail = OnlinePayment::query()->where('profile_id', request()->user()->profile_str)->orderBy('payment_id', 'DESC')->first();
             $membershipPlan = ProfileMembership::query()->where('profile_id', request()->user()->profile_str)->orderBy('membership_id', 'DESC')->first();
-        }
+            return view('franchisor/myAccount/payment-plan', compact('planDetail', 'franData', 'data', 'membershipPlan'));
+        } else {
 
-        return view('franchisor/myAccount/payment-plan', compact('planDetail', 'franData', 'data', 'membershipPlan'));
+            return view('franchisor/myAccount/payment-plan', compact('franData', 'data'));
+        }
     }
 
     /**
