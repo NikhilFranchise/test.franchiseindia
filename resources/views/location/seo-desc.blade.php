@@ -96,6 +96,7 @@ if (strpos($gcodeurl, '.LOC10') || strpos($gcodeurl, '.LOC14')){
        }
 
 }
+
 @endphp
 
 @if(!empty($h2))

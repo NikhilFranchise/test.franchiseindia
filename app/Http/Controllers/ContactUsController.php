@@ -44,7 +44,7 @@ class ContactUsController extends Controller
             'mobile' => $request->mobile,
             'user_ip' => $request->ip(),
             'pincode' => $request->pincode,
-            'source' => Cookie::get('campaignSource', 'DOTCOM'),
+            // 'source' => Cookie::get('campaignSource', 'DOTCOM'),
         ]);
 
         if ($contactData) {
@@ -56,33 +56,33 @@ class ContactUsController extends Controller
                 'address' => $request->address . ', ' . $request->city . ', ' . $request->state . ', ' . $request->country . ', Pincode:- ' . $request->pincode,
             ];
 
-            // $mailTo = '';
-            // $mailBcc = ['techsupport@franchiseindia.com'];
-            // switch ($request->contreason) {
-            //     case "Advertise with www.franchiseindia.com":
-            //     case "Advertise in Magazine":
-            //     case "Exhibit in Shows":
-            //         $mailTo = 'advertise@franchiseindia.com';
-            //         break;
-            //     case "Expand my Company through Franchising":
-            //         $mailTo = 'ashita@franchiseindia.com';
-            //         break;
-            //     case "Buy a Franchise (Business)":
-            //     case "Sell my Existing Business":
-            //     case "Subscribe to the Magazine":
-            //         $mailTo = 'dharmendra@franchiseindia.net';
-            //         break;
-            //     case "Feedback":
-            //         $mailTo = 'techsupport@franchiseindia.com';
-            //         break;
-            //     case "Others":
-            //         $mailTo = 'ashita@franchiseindia.com';
-            //         break;
-            // }
+            $mailTo = '';
+            $mailBcc = ['pkumar@franchiseindia.net'];
+            switch ($request->contreason) {
+                case "Advertise with www.franchiseindia.com":
+                case "Advertise in Magazine":
+                case "Exhibit in Shows":
+                    $mailTo = 'advertise@franchiseindia.com';
+                    break;
+                case "Expand my Company through Franchising":
+                    $mailTo = 'ashita@franchiseindia.com';
+                    break;
+                case "Buy a Franchise (Business)":
+                case "Sell my Existing Business":
+                case "Subscribe to the Magazine":
+                    $mailTo = 'cnikhil@franchiseindia.net';
+                    break;
+                case "Feedback":
+                    $mailTo = 'techsupport@franchiseindia.com';
+                    break;
+                case "Others":
+                    $mailTo = 'ashita@franchiseindia.com';
+                    break;
+            }
 
-            // if ($mailTo) {
-            //     Mail::to($mailTo)->bcc($mailBcc)->send(new ContactUsMail($details));
-            // }
+            if ($mailTo) {
+                Mail::to($mailTo)->bcc($mailBcc)->send(new ContactUsMail($details));
+            }
         }
 
         // $ch = curl_init();
@@ -96,8 +96,8 @@ class ContactUsController extends Controller
 
         // curl_close($ch);
 
-        // $message = $contactData ? "Contact form submitted successfully..." : "Contact form submission failed...";
+        $message = $contactData ? "Contact form submitted successfully..." : "Contact form submission failed...";
 
-        return view('thanks.thanks', compact('message'));
+        return view('thanks.thanks', compact('message')); 
     }
 }

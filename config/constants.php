@@ -7,7 +7,9 @@ return [
     | Application specific config array values
     |--------------------------------------------------------------------------
     */
-    'MainDomain' => env( 'APP_URL' ,'https://www.franchiseindia.com'),
+    // 'MainDomain' => env( 'APP_URL' ,'https://www.franchiseindia.com'),
+    'MainDomain' => 'https://127.0.0.1',
+
     'brandPagePattern' => '%s/brands/%s.%s',
     'catListUrl' => '%s/%s/%s.%s',
     'catPage' => 'business-opportunities',
@@ -1799,7 +1801,9 @@ return [
         118 => 162500,
         119 => 39999,
        // 120 => 119997,
-        120 => 143000,
+        // 120 => 143000,
+        120 => 1,
+
        // 121 => 479988,
         121 => 292500,
         122 => 59994,
@@ -2878,28 +2882,260 @@ return [
             'description' => "Planning to have freedom of work and start your own business? Or looking for Low investment business opportunities? Franchiseindia.com is the perfect platform for you to find such franchise opportunity for your start-up plan.<br><br>Low cost franchise business is among the most searched business model in today's time as no one has that big investment required to start his own business or a franchise of a big player in the market. Also, looking to the ups & downs in the market, these business opportunities serve the purpose of having your own business like a wishing well.<br><br><div id='show-full-txt' style='display: none;'>This approach of many individuals becoming an entrepreneur with a low cost has opened many doors for renowned companies looking for expansion through local market penetration.<br><br>There are lots of low cost business options available for people who don't have that big money to invest into an expensive concept but have desires to emerge as a successful business owner. Looking to the current market scenario, there is no doubt that Low-cost franchise is the only ideal entry point for new entrepreneurs aiming to become their own boss with freedom of working.<br><br>Surpass your barriers in opening your own business is also a great headache for the new comers in business sector but a franchise model can help you deal with those. A Low cost business also has some more advantages beyond the lower cost of entry. Buying a franchise of an already established brand is undoubtedly, one of the best things you can get to become a successful business owner in much shorter time as compared to a start-up from scratch.<br><br>So, start a low-cost franchise for less than you ever imagined with the opportunities available with us and all you need to do is just switch the low cost franchise section at franchiseindia.com and apply to the business model that serves your purpose.We are there to cater all your needs of starting a new business with an already established name with a lower setup cost that fulfils your dream.</div>"
         ),
         'loc1' => array(
-            'title' => 'Andhra Pradesh - Your Growth Platform',
-            'description' => "Andhra Pradesh is the state that comes to mind if we think about business sectors like Pharma, Automobile and Textiles. Due to its strategic location in south-central India the state has a strong employment base making it easier for any emerging individual to grow with the skilled set of employees.<br><br>Franchise in Hyderabad can be planned in Information technology and Biotechnology sector as these two sectors are widely explored in the location and have great potential in future as well.<br><br>Starting a new business is everyone's desire these day as it gives much more financial independence to the individual if worked out in the right direction.  The state is rich in culture and has various locations which attract visitors from the country as well as outside the country. Thus, travel and hospitality sectors are also gaining popularity if one thinks about starting a franchise in Hyderabad or in any location in the state.<br /><br><div id='show-full-txt' style='display: none;'>Among the top location in the state for franchise opportunity, Hyderabad - the de jure capital of Andhra Pradesh is the most preferred. It was earlier known as pearl and diamond trading centre.<br /><br>In past, the service industry has also emerged as a major contributor in the growth of the state. One can opt for a service sector business in the location. Choosing franchise opportunities in Andhra Pradesh could be easier with Franchiseindia.com as we are the leading source for starting a new business. And getting deeper to a prior location in the state then Hyderabad is definitely a fruitful choice.<br /><br></div>"
+            'title' => 'Business & franchise opportinities in Andhra Pradesh',
+            'description' => "Andhra Pradesh, with its mix of rich cultural heritage and rapid economic growth, presents an attractive landscape for entrepreneurs and business investors. Known for its agricultural prowess, burgeoning IT sector, and vibrant textile industry, this southeastern state of India is ripe with opportunities for those looking to venture into the world of business.
+            For aspiring business owners, Andhra Pradesh offers a treasure trove of franchise opportunities across diverse sectors such as Agriculture, Information Technology, Textiles, Food and Beverage, Education, and Healthcare. This variety ensures that regardless of your interest or investment capacity, you'll find a fitting venture in Andhra Pradesh.<br><br>
+            Small to medium scale business ventures and innovative ideas with minimal investment have found a welcoming environment in Andhra Pradesh. The state is a beacon for entrepreneurs looking to carve out their niche in both traditional and emerging industries.<br>
+            Explore some of the exciting franchise opportunities in Andhra Pradesh:<br><br>
+            ●	Agro-based Business Franchise<br>
+            ●	IT and Software Solutions Franchise<br>
+            ●	Textile Industry Franchise<br>
+            ●	Food & Beverage Franchise<br>
+            ●	Educational Institute Franchise<br>
+            ●	Healthcare and Wellness Franchise<br><br>
+            Investment levels can vary, starting from as low as Rs 2 Lakhs to upwards of Rs 1 Crore, depending on the brand and the specific business model.
+            If the journey to discovering the perfect franchise opportunity in Andhra Pradesh seems daunting, FranchiseIndia is your ideal partner. We're here to streamline your search, connecting you with the best franchise opportunities that match your budget and business goals.
+            Don’t let the opportunity to become a part of Andhra Pradesh's thriving business community pass you by. Register with FranchiseIndia today, and take the first step towards realizing your entrepreneurial dreams with the top franchise opportunities in Andhra Pradesh.
+            "
+        ),
+        'loc5' => array(
+            'title' => 'Business & franchise opportinities in Chandigarh',
+            'description' => "Chandigarh, the meticulously planned city that serves as the capital of both Punjab and Haryana, is not just an architectural marvel but also a budding ground for entrepreneurs and investors. Known for its clean streets, green spaces, and vibrant cultural life, Chandigarh offers a unique blend of modernity and tradition, making it an attractive destination for business ventures.<br><br>
+            With its high per capita income and quality of life, the city is ripe for investments in various sectors such as retail, food and beverage, education, healthcare, and IT services. Whether you're considering a cozy café in Sector 17, a boutique in Elante Mall, or a tech startup in the Rajiv Gandhi IT Park, Chandigarh presents a wide array of opportunities to thrive in a competitive yet supportive business environment.<br><br>
+            Explore Chandigarh’s Diverse Franchise Opportunities:<br><br>
+            ●	<b>Food & Beverage Ventures Franchise</b>: Delight the city’s food enthusiasts with unique dining experiences.<br>
+            ●	<b>Retail Outlets Franchise</b>: Tap into the fashion-forward and affluent consumer base of Chandigarh.<br>
+            ●	<b>Education Services Franchise</b>: Contribute to the city's focus on quality education and training.<br>
+            ●	<b>Healthcare Clinics Franchise</b>: Meet the healthcare needs of a health-conscious population.<br>
+            ●	<b>IT & Software Solutions Franchise</b>: Leverage Chandigarh’s growing reputation as an IT hub.<br>
+            Investment options in Chandigarh cater to a wide range of entrepreneurs, from those looking for low-entry barriers to others aiming for larger, more ambitious projects. The city’s business-friendly climate ensures that both small scale ventures and larger investments can find their footing and flourish.<br><br>
+            Finding the right business opportunity in Chandigarh's vibrant market can be a daunting task, but FranchiseIndia simplifies this process. Our platform connects entrepreneurs with the ideal franchise opportunities that align with their investment capabilities, interests, and the unique dynamics of Chandigarh’s economy.<br><br>
+            Step into the entrepreneurial landscape of Chandigarh with FranchiseIndia. We offer a portal to a world of opportunities, providing the necessary tools, insights, and support to navigate the business ecosystem of this dynamic city.<br><br>
+            Embrace the potential of starting or expanding your business in Chandigarh with FranchiseIndia, and tap into our resources to embark on a successful entrepreneurial journey in the city known for its planning, beauty, and vibrancy.<br><br>
+            "
+        ),
+        'loc14' => array(
+            'title' => 'Business & franchise opportinities in Karnataka',
+            'description' => "Karnataka, a state that epitomizes the fusion of ancient heritage with the pulse of modern innovation, stands out as a vibrant landscape for entrepreneurs. Home to the silicon city of India, Bangalore, along with a plethora of historical sites, serene coastlines, and lush landscapes, Karnataka offers a broad spectrum of business opportunities that cater to technology enthusiasts, cultural entrepreneurs, and everything in between.<br><br>
+            Whether you're inclined towards the bustling IT and startup ecosystem, the burgeoning sectors of biotechnology and engineering, or the traditional realms of tourism, handicrafts, and agriculture, Karnataka's diverse economy provides a fertile ground for a variety of business ventures.<br><br>
+            Spotlight on Karnataka’s Business Opportunities:<br><br>
+            ●	<b>Tech Startups & IT Franchises</b>: Immerse yourself in the innovation-driven ecosystem of Bangalore and beyond.<br>
+            ●	<b>Biotech Ventures Franchise</b>: Explore opportunities in one of India’s leading biotechnology hubs.<br>
+            ●	<b>Tourism & Hospitality Franchise</b>: Leverage the state's rich cultural and natural heritage to attract tourists.<br>
+            ●	<b>Agriculture & Organic Farming Franchise</b>: Tap into the growing demand for organic produce and sustainable farming practices.<br>
+            ●	<b>Handicrafts & Artisan Products Franchise</b>: Promote Karnataka’s rich tradition of craftsmanship in markets both domestic and international.<br>
+            ●	<b>Food & Beverage Ventures Franchise</b>: Cater to the cosmopolitan tastes of Karnataka’s urban population and the traditional preferences of its rural communities.<br>
+            Investment avenues in Karnataka are as varied as its landscape, with options ranging from modest ventures requiring minimal capital to more substantial investments in high-tech industries. This ensures that entrepreneurs of all investment levels can find their niche in Karnataka’s vibrant economy.<br><br>
+            Venturing into the dynamic market of Karnataka might seem challenging, but FranchiseIndia is here to pave the way. Our platform offers a curated selection of franchise and business opportunities tailored to meet your investment profile, business goals, and Karnataka’s unique market needs.<br><br>
+            Join the ranks of successful entrepreneurs in Karnataka with FranchiseIndia as your guide. Our platform not only connects you with promising business opportunities but also provides the support and insights necessary for navigating the state’s diverse economic landscape.<br><br>
+            Embark on your entrepreneurial journey in Karnataka with FranchiseIndia, and leverage our expertise to find a business venture that aligns with your vision for success in this dynamic state.<br>
+            "
         ),
         'loc23' => array(
-            'title' => 'Delhi - The Capital Territory with Capital Profits!',
-            'description' => "Delhi is the capital territory of India and offers host of opportunities to start a franchise. The city is the largest commercial centre in northern India to offer great franchise opportunities in Delhi. Taking about the industries that are available in the location, Information Technology, Telecommunications, Hotels, Banking, Media and Tourism are all that offers a wide scope for profits to any individual looking to become an entrepreneur.<br><br><div id='show-full-txt' style='display: none;'>Delhi is also known as a hub of retail Franchise model as it has fastest growing retail industries offering assured growth. World class connectivity and infrastructure is also a great advantage one gets by starting a business in Delhi. Logistics and rapid transit systems are available with such an ease that makes a new comer comfortable at a very early stage to go for business opportunities in Delhi as compared to other location in the country.<br><br>Delhi franchise opportunity is considered as a best model one can get to begin as an owner for achieving his dreams in life. Being centre of many big players in the country it is one of the most happening places in the country growing with a rapid pace in terms of developing a new business.<br><br>The business opportunities in Delhi are nearly countless for the one aspiring to grow as a business leader in future, all one needs to do is just tap franchiseindia.com and explore various franchise models available to start with.</div>"
+            'title' => 'Business & franchise opportinities in Delhi',
+            'description' => "Delhi, the capital city of India, is not just the political heart of the country but also a thriving center for businesses and startups. This vibrant metropolis is a melting pot of cultures, traditions, and modernity, offering a dynamic environment for entrepreneurs looking to make their mark. With its diverse population, strategic location, and robust infrastructure, Delhi presents a wealth of opportunities across various industries.<br><br>
+            Whether you're inclined towards the bustling food scene, interested in the rapidly growing tech and IT sector, or see potential in the educational and healthcare services, Delhi's market is ripe for exploration. The city's economic diversity allows for a broad spectrum of business ventures, from luxury retail outlets to innovative service-based startups.<br><br>
+            Dive into Delhi's Business Ecosystem:<br><br>
+            ●	<b>Culinary Ventures Franchise</b>: Immerse yourself in Delhi’s love for food with a restaurant, café, or food truck.<br>
+            ●	<b>Tech Startups Franchise</b>: Leverage the city’s status as a budding tech hub with an IT or software franchise.<br>
+            ●	<b>Fashion and Retail Franchise</b>: Capitalize on Delhi’s reputation as a fashion capital with a boutique or retail franchise.<br>
+            ●	<b>Education and Training Centers Franchise</b>: Fill the growing demand for quality education and skill development.<br>
+            ●	<b>Healthcare Services Franchise</b>: Provide essential health and wellness services in a city that values quality healthcare.<br>
+            ●	<b>Eco-friendly Businesses Franchise</b>: Tap into the growing trend towards sustainability with green businesses.<br><br>
+            The investment spectrum in Delhi is as varied as its opportunities, ranging from modest ventures starting at Rs 2 Lakhs to large-scale operations requiring investments of Rs 2 Crores and beyond. This flexibility ensures that Delhi has something for every type of entrepreneur, regardless of their financial capabilities.<br><br>
+            In the bustling city of Delhi, finding the right business opportunity can seem like searching for a needle in a haystack. That's where FranchiseIndia comes in. We offer a curated list of franchise opportunities tailored to match your budget, aspirations, and the market demand in Delhi.<br><br>
+            Let FranchiseIndia be your guide in navigating the exciting business landscape of Delhi. Our platform not only connects you with a vast array of franchise opportunities but also provides the insights and support needed to embark on a successful entrepreneurial journey.<br><br>
+            With FranchiseIndia, stepping into Delhi’s business world is an informed and strategic decision. Explore the multitude of opportunities in this bustling capital with us, and find the perfect match for your business dreams and objectives.<br><br>
+            "
+        ),
+        'loc26' => array(
+            'title' => 'Business & franchise opportinities in Punjab',
+            'description' => "Punjab, the land of five rivers, is not only celebrated for its agricultural abundance but also stands as a beacon of entrepreneurial opportunity in India. With its robust economy, strategic location, and enterprising spirit, Punjab offers a fertile ground for business investors and entrepreneurs aiming to cultivate success in various sectors.<br><br>
+            Whether it's embracing the vibrant food culture, tapping into the textile and apparel industry, exploring the technological advancements, or contributing to the healthcare and education sectors, Punjab presents a wealth of franchise opportunities that cater to a wide array of interests and investment capabilities.<br><br>
+            Vibrant Opportunities Await in Punjab:<br><br>
+            ●	<b>Food & Beverage Franchise</b>: Dive into Punjab's rich culinary heritage with a food venture.<br>
+            ●	<b>Agriculture and Agro-based Franchise</b>: Capitalize on the state's agricultural strengths.<br>
+            ●	<b>Textile Franchise</b>: Join the thriving textile and apparel market.<br>
+            ●	<b>Tech & IT Franchise</b>: Be part of Punjab's growing tech scene.<br>
+            ●	<b>Education Franchise</b>: Contribute to the state's focus on educational excellence.<br>
+            ●	<b>Healthcare Franchise</b>: Meet the increasing demand for quality healthcare services.<br>
+            The investment needed to start a franchise in Punjab can vary significantly, starting from as low as Rs 3 Lakhs and extending to Rs 2 Crores and beyond, depending on the specific franchise, its location, and the services offered.<br><br>
+            If you're navigating the vast landscape of business opportunities in Punjab and seeking the right fit, FranchiseIndia is your ideal partner. We're here to guide you through the selection process, connecting you with opportunities that align with your budget, interests, and the dynamic business environment of Punjab.<br><br>
+            Step into the vibrant business community of Punjab with FranchiseIndia. Here, you'll find not just a platform, but a partner committed to helping you find the ideal franchise opportunity that resonates with your entrepreneurial dreams and investment profile.<br><br>
+            Discover the full potential of Punjab’s business landscape with FranchiseIndia and embark on a journey to business success in one of India's most spirited and prosperous states.<br>
+             "
+        ),
+
+        'loc27' => array(
+            'title' => 'Business & franchise opportinities in Rajasthan',
+            'description' => "Rajasthan, a state that conjures images of majestic forts, vibrant culture, and bustling bazaars, is also a fertile ground for entrepreneurs and business investors. With its unique blend of tradition and modernity, Rajasthan offers a diverse array of business opportunities in sectors that reflect both its rich heritage and its emerging market trends.<br><br>
+            For those with a vision to start their own business, Rajasthan extends a warm welcome with its myriad of franchise opportunities. This state, famous for its tourism, handicrafts, and textiles, also hosts a growing demand in sectors like Food and Beverage, Education, Healthcare, and Renewable Energy, making it a vibrant ecosystem for prospective business owners.<br><br>
+            Whether you are looking to invest in a traditional business that mirrors the state's rich cultural fabric or a modern enterprise tapping into Rajasthan's growing market, the opportunities are vast and varied.<br><br>
+            Spotlight on Rajasthan’s Franchise Opportunities:<br><br>
+            ●	<b>Tourism and Hospitality Franchise</b>: Leverage Rajasthan's status as a global tourist hotspot.<br>
+            ●	<b>Handicraft and Textile Franchise</b>: Immerse in the tradition of Rajasthani arts and crafts.<br>
+            ●	<b>Food & Beverage Franchise</b>: Cater to the diverse culinary tastes of locals and tourists alike.<br>
+            ●	<b>Education Franchise</b>: Be part of a growing sector with a focus on quality learning.<br>
+            ●	<b>Healthcare Franchise</b>: Address the growing demand for healthcare services.<br>
+            ●	<b>Renewable Energy Franchise</b>: Invest in the future with Rajasthan's push towards sustainable energy.<br>
+            Investment ranges can differ widely, starting from as low as Rs 3 Lakhs to over Rs 2 Crore, influenced by the brand, scope, and location of the franchise.<br><br>
+            Feeling overwhelmed by the wealth of options? FranchiseIndia is here to simplify your journey. We match you with the franchise opportunities that best fit your aspirations, budget, and the unique business landscape of Rajasthan.<br><br>
+            Join the vibrant business community of Rajasthan and turn your entrepreneurial dreams into reality. With FranchiseIndia, discovering and investing in the perfect franchise becomes a seamless and rewarding journey.<br><br>
+            Dive into Rajasthan's booming business scene with FranchiseIndia, and take the first step towards building a successful venture in one of India's most iconic states.<br><br>
+            "
+        ),
+        'loc32' => array(
+            'title' => 'Business & franchise opportinities in Uttar Pradesh',
+            'description' => "Uttar Pradesh, a state that blends historical grandeur with modern entrepreneurial spirit, offers a landscape teeming with business possibilities. As one of India's most populous states, it boasts a vast consumer market and a strategic location that serves as a gateway to the northern regions of the country. This unique combination makes Uttar Pradesh a hotbed for entrepreneurs looking to tap into a variety of sectors.<br><br>
+            From the bustling streets of Lucknow and Varanasi to the industrial hubs of Noida and Ghaziabad, Uttar Pradesh presents a plethora of franchise opportunities across the Food and Beverage, Retail, Education, Healthcare, and Technology sectors. The state's rich cultural heritage also paves the way for ventures in Tourism and Hospitality, Handicrafts, and Cultural Enterprises, making it a vibrant ecosystem for business growth.<br><br>
+            Your Business Journey in Uttar Pradesh Starts Here:<br><br>
+            ●	<b>Food & Beverage Franchise</b>: Capitalize on the state's diverse culinary traditions.<br>
+            ●	<b>Retail Franchise</b>: Meet the consumer demands in one of India's largest markets.<br>
+            ●	<b>Education Franchise</b>: Tap into the growing demand for quality education and training.<br>
+            ●	<b>Healthcare Franchise</b>: Contribute to improving the state's healthcare infrastructure.<br>
+            ●	<b>Technology Franchise</b>: Be at the forefront of Uttar Pradesh's digital transformation.<br>
+            ●	<b>Tourism & Hospitality Franchise</b>: Explore the state's rich history and culture through business.<br>
+            Investments in these opportunities can range from as little as Rs 3 Lakhs to Rs 2 Crores or more, depending on the franchise model, location, and the scale of operations envisioned.<br><br>
+            Feeling overwhelmed by the possibilities? FranchiseIndia is here to streamline your search for the perfect franchise opportunity in Uttar Pradesh. We provide a platform where you can explore a curated selection of franchises that align with your investment capacity, interests, and the dynamic market needs of Uttar Pradesh.<br><br>
+            Embark on a rewarding business venture in Uttar Pradesh with FranchiseIndia by your side. Our platform is designed to connect you with the ideal franchise opportunities that not only match your entrepreneurial vision but also blend seamlessly with the state's diverse economic landscape.<br><br>
+            Take the first step towards business success in Uttar Pradesh with FranchiseIndia, and leverage our expertise to navigate the vibrant and diverse market of this dynamic state.<br><br>
+            "
+        ),
+        'loc33' => array(
+            'title' => 'Business & franchise opportinities in West Bengal',
+            'description' => "West Bengal, a state that marries cultural richness with economic vibrancy, stands as a compelling destination for entrepreneurs and business investors. From the historic streets of Kolkata, a city that echoes the remnants of colonial India, to the lush tea gardens of Darjeeling, West Bengal offers diverse avenues for business ventures. The state's economy, driven by agriculture, manufacturing, and services, alongside a burgeoning IT and education sector, creates a fertile ground for a variety of franchise opportunities.<br><br>
+            For those looking to venture into the business world of West Bengal, the state presents an array of possibilities in Food and Beverage, Retail, Education, Healthcare, and Technology sectors. Additionally, West Bengal's reputation as a major cultural and tourist hub opens up unique opportunities in the Tourism and Hospitality industry, as well as in the Arts and Crafts sector, tapping into the rich artisan traditions of the state.<br><br>
+            Key Franchise Opportunities in West Bengal:<br><br>
+            ●	<b>Food & Beverage Franchise</b>: Engage with West Bengal’s love for cuisine with a culinary venture.<br>
+            ●	<b>Retail Franchise</b>: Tap into the consumer market with a retail business in bustling markets or modern malls.<br>
+            ●	<b>Education Franchise</b>: Join the state's focus on education with a school or training center.<br>
+            ●	<b>Healthcare Franchise</b>: Cater to the healthcare needs of a populous state.<br>
+            ●	<b>Technology Franchise</b>: Be part of the growing IT and software services sector.<br>
+            ●	<b>Tourism & Hospitality Franchise</b>: Leverage the state’s rich heritage and tourist attractions.<br>
+            Investment levels for starting a franchise in West Bengal can vary, beginning from as low as Rs 3 Lakhs to upwards of Rs 2 Crores, dependent on the type of franchise, the brand, and the specific business model.<br><br>
+            Navigating through the myriad of business opportunities in West Bengal can be overwhelming, but FranchiseIndia is here to guide you to your ideal match. Our platform connects you with the franchise opportunities that best fit your investment range, interests, and the unique market dynamics of West Bengal.<br><br>
+            Embrace the opportunity to be a part of West Bengal's thriving business community with FranchiseIndia. Our expertise and extensive listing of franchise opportunities provide you with the resources to make informed decisions, ensuring your venture in West Bengal starts on solid ground.<br><br>
+            Dive into the vibrant economy of West Bengal with FranchiseIndia, and embark on a journey to business success in a state known for its cultural heritage, economic resilience, and entrepreneurial spirit.<br><br>
+            "
+        ),
+        'loc30' => array(
+            'title' => 'Business & franchise opportinities in Tripura',
+            'description' => "Tripura, a gem nestled in the lush landscapes of Northeast India, may be one of the country's smaller states, but it boasts a vibrant economy with untapped potential. With its rich cultural heritage, strategic geographic location bordering Bangladesh, and growing emphasis on sectors like agriculture, handicrafts, and tourism, Tripura presents unique business opportunities for enterprising individuals.<br><br>
+            The state’s economy is diversifying, moving beyond traditional sectors to embrace opportunities in retail, hospitality, healthcare, and education, spurred by its developing infrastructure and government initiatives to promote entrepreneurship and investment.<br><br>
+            Unlocking Tripura’s Business Potential:<br><br>
+            ●	<b>Agricultural and Agro-based Franchise</b>: Capitalize on Tripura's agricultural richness with ventures that support or enhance its primary sector.<br>
+            ●	<b>Handicrafts and Traditional Arts Franchise</b>: Bring Tripura's exquisite handicrafts and artisan products to broader markets.<br>
+            ●	<b>Tourism and Hospitality Businesses Franchise</b>: Leverage the state's natural beauty and cultural attractions to cater to a growing number of visitors.<br>
+            ●	<b>Retail Opportunities & Franchise</b>: Tap into the expanding urban consumer base with modern retail outlets.<br>
+            ●	<b>Education and Training Institutes Franchise</b>: Address the educational needs of a young population eager for quality education.<br>
+            ●	<b>Healthcare Services Franchise</b>: Contribute to improving the health infrastructure in both urban and rural areas.<br><br>
+            Investment opportunities in Tripura are diverse, catering to a wide range of financial capacities and interests. From low-cost startups in the handicrafts sector to more significant investments in healthcare and education, the state offers a supportive environment for various business ventures.<br><br>
+            Navigating the business landscape of Tripura might seem daunting given its unique challenges and opportunities. However, FranchiseIndia is here to guide you through the process, connecting you with franchise opportunities that align with your investment level, business goals, and the market dynamics of Tripura.<br><br>
+            With FranchiseIndia, embarking on a business venture in Tripura becomes an informed and strategic decision. Our platform provides access to a wide array of franchise opportunities, along with the insights and support needed to navigate Tripura’s burgeoning market.<br><br>
+            Dive into the economic opportunities of Tripura with FranchiseIndia, and explore the potential of starting or expanding your business in this promising state, where tradition and progress go hand in hand.<br><br>
+            "
+        ),
+        'loc17' => array(
+            'title' => 'Business & franchise opportinities in Madhya Pradesh',
+            'description' => "Madhya Pradesh, the heart of India, offers a unique blend of historical significance and economic growth, making it an attractive destination for entrepreneurs and investors. With its vast agricultural lands, emerging IT sector, and rich mineral resources, Madhya Pradesh provides a diverse canvas for a wide range of business ventures. The state's commitment to sustainable development and investment in infrastructure presents fertile ground for franchises across various sectors.<br><br>
+            Whether you're drawn to the burgeoning tourism industry, keen on tapping into the agricultural and food processing sectors, or looking to make an impact in education and healthcare, Madhya Pradesh offers ample opportunities to turn your entrepreneurial dreams into reality.<br><br>
+            Explore Diverse Franchise Opportunities in Madhya Pradesh:<br><br>
+            ●	Agriculture & Food Processing Franchise: Leverage Madhya Pradesh's agricultural heritage with a venture in food processing or agribusiness.<br>
+            ●	Tourism & Hospitality Franchise: Capitalize on the state's rich history and natural beauty with a business in tourism and hospitality.<br>
+            ●	Education Franchise: Address the growing demand for quality education in both urban and rural areas.<br>
+            ●	Healthcare Franchise: Contribute to improving health services across the state.<br>
+            ●	Retail Franchise: Meet the varied needs of a large consumer base with a retail outlet.<br>
+            ●	IT & Technology Franchise: Join the digital transformation in Madhya Pradesh’s evolving IT landscape.<br><br>
+            The investment required to embark on a franchise journey in Madhya Pradesh can vary widely, starting from as low as Rs 2 Lakhs to over Rs 1 Crore, depending on the brand, location, and scope of the business model. This range ensures that investors with diverse financial capabilities can find suitable opportunities in the state.<br><br>
+            With the vast array of options available, finding the right franchise opportunity in Madhya Pradesh might seem overwhelming. However, FranchiseIndia is here to streamline your search. Our platform connects you with franchises that match your investment capacity, business goals, and the market dynamics of Madhya Pradesh.<br><br>
+            Dive into the entrepreneurial spirit of Madhya Pradesh with FranchiseIndia. Our platform is your gateway to a curated selection of franchise opportunities, designed to thrive in the state's dynamic economic environment. With FranchiseIndia, you gain access to the tools, insights, and support needed to navigate the business landscape of Madhya Pradesh successfully.<br><br>
+            Embark on your business journey in Madhya Pradesh with FranchiseIndia and leverage our expertise to find a franchise that aligns with your vision and investment profile, setting you on the path to success in the heart of India.
+            "
         ),
         'loc9' => array(
-            'title' => 'Gujarat - Corporate World for emerging entrepreneurs!',
-            'description' => "Counted among the top 10 fastest growing states in World offering plethora of franchise opportunities, Gujarat can be considered fulfil your dreams of being a successful person in future. Private sector investment has got great encouragement in the state and this being the reason of its fast growth making it one of the best places in the country to start a new business. With franchiseindia.com you can choose among various high cash flow franchise model that can help you emerge as a leading business owner in a smaller duration of time. The state will definitely serve as a platform helping you reach the heights of success you have planned.<br><br><div id='show-full-txt' style='display: none;'>Another reason for choosing a state for a franchise model to go with is that it excels in skilled manpower which will lay the root of a successful entrepreneur. Investing in a Franchise opportunity at Gujarat is beneficial as the state has great potential for development because it stands as a preferred investment destination globally. For a location to be business friendly certain facilities like power management, transportation, townships and more injects great feasibility of operation of a business.<br><br>So, go with business opportunities in Gujarat and start your growth engine within a state equipped with various reputed business resources to grow. Choose the filter, set the investment and Get Started Today!</div>"
+            'title' => 'Business & franchise opportinities in Gujarat',
+            'description' => "Gujarat, renowned for its entrepreneurial ethos and as the birthplace of numerous business legends, stands as a beacon of opportunity in India's commercial landscape. This industrious state, with its strategic geographic location and robust infrastructure, is a powerhouse of economic activity, particularly in sectors like manufacturing, textiles, and diamonds, as well as emerging fields like IT and renewable energy.
+                The state's conducive business environment, supported by proactive government policies, has made Gujarat a favored destination for entrepreneurs looking to start or expand their ventures. From the vibrant streets of Ahmedabad and Surat to the serene landscapes of Kutch, Gujarat offers a diverse array of business possibilities.
+                Seize Gujarat's Business Opportunities:<br><br>
+                ●   <b>Manufacturing Ventures Franchise</b>: Dive into the world of manufacturing in a state known for its industrial prowess.<br>
+                ●	<b>Textile Franchises</b>: Join the legacy of Gujarat's centuries-old textile industry.<br>
+                ●	<b>Diamond & Jewelry Businesses Franchise</b>: Tap into the global diamond trade centered in Surat.<br>
+                ●	<b>Renewable Energy Projects Franchise</b>: Be part of Gujarat's ambitious green energy initiatives.<br>
+                ●	<b>IT & Technology Startups Franchise</b>: Explore the growing tech scene in Gujarat’s smart cities.<br>
+                ●	<b>Culinary Ventures  Franchise</b>: Cater to the diverse palate of Gujarat with a food and beverage business.<br><br>
+                Investment opportunities in Gujarat span a wide range, from small-scale startups requiring minimal investment to large industrial projects demanding significant financial outlay. This variety ensures that Gujarat can accommodate entrepreneurs with varying investment capacities and business visions.
+                Navigating the vast and vibrant business landscape of Gujarat can be challenging, but FranchiseIndia is here to light the way. Our platform is dedicated to connecting you with the most suitable franchise opportunities in Gujarat, aligning with your investment level, industry interest, and business goals.
+                FranchiseIndia is your compass in the entrepreneurial journey through Gujarat’s dynamic economy. With us, you gain access to a curated selection of business opportunities, comprehensive support, and the insights necessary to make your venture in Gujarat a resounding success.
+                Begin your business voyage in Gujarat with FranchiseIndia, and let us help you harness the state’s entrepreneurial spirit to realize your dreams and ambitions.
+                "
         ),
         'loc15' => array(
-            'title' => 'Kerala - Entrepreneurial State with Highest Literacy Rate',
-            'description' => "Kerala is a state with highest literacy rate and is emerging as an entrepreneurial state with maximum number of skilled technical human resources. One can explore Business opportunity in Kerala in various industries like education; tourism & IT sector looking expansion in southern India.<br><br> Every business owner aims to setup a franchise at the state because of the higher literacy & skilled people. And with the growing number of industries, Franchise model is also getting pace in the state.The moderate climate is also a great supportive reason for the industries to come and explore the growth potential in the state. State's success in education inflows in the growth model and encourage more people for a start-up.<br><br><div id='show-full-txt' style='display: none;'>With rich heritage the state is also known for the treatment of many diseases with the natural oils and flora & fauna of Kerala add a refreshing blow to it. This being the reason for the location to offer business opportunity models for great profits.<br><br>The connectivity and the transport facilities here also play an important role in encouraging the youth to start a new business and plan for a future with good profitable franchise models of their own. Start searching your franchise opportunity in Kerala today to feel the hidden entrepreneur inside you and to help you out franchiseindia.com is the best platform to go with.</div>"
+            'title' => 'Business & franchise opportinities in Kerala',
+            'description' => "Kerala, often referred to as 'God’s Own Country,' is not just a tourist paradise but a hotbed of entrepreneurial activity and innovation. With its lush landscapes, booming tourism, advanced healthcare system, and rapidly growing IT sector, Kerala offers a fertile ground for diverse business ventures. The state's commitment to sustainable development and its high literacy rate make it an ideal location for knowledge-based and eco-friendly businesses.<br><br>
+            Whether you're looking to immerse yourself in the vibrant tourism and hospitality industry, make a mark in the healthcare sector, explore the possibilities in education and technology, or innovate within the green and agricultural sectors, Kerala presents a wide spectrum of opportunities.<br><br>
+            Embark on Business Ventures in Kerala:<br><br>
+            ●	<b>Tourism & Hospitality Franchise</b>: Leverage Kerala’s status as a global tourism hotspot.<br>
+            ●	<b>Healthcare Services Franchise</b>: Contribute to the state’s renowned healthcare sector.<br>
+            ●	<b>Educational Institutes Franchise</b>: Tap into a culture that values education highly.<br>
+            ●	<b>IT & Tech Startups Franchise</b>: Join the digital wave in one of India’s rising tech hubs.<br>
+            ●	<b>Eco-friendly Projects Franchise</b>: Engage with sustainable business practices in agriculture and beyond.<br>
+            ●	<b>Food & Beverage Ventures Franchise</b>: Explore Kerala’s rich culinary traditions and organic produce markets.<br>
+            The investment needed to start your venture in Kerala can range widely, reflecting the diverse economic landscape of the state. Whether you’re eyeing a small cafe by the backwaters or a tech startup in Technopark, the investment could start from as little as Rs 2 Lakhs to more substantial amounts for larger projects.<br><br>
+            Finding the right business opportunity in Kerala’s dynamic market can seem daunting, but FranchiseIndia is here to simplify your journey. Our platform matches you with franchise opportunities that align with your budget, passion, and the unique market dynamics of Kerala.<br><br>
+            With FranchiseIndia, navigating Kerala’s business opportunities becomes an exciting adventure. Our platform offers a gateway to a broad selection of franchises and business ventures, equipped with insights and support to guide you every step of the way.<br><br>
+            Step into Kerala’s business landscape with FranchiseIndia and unlock the potential of operating in a state known for its innovation, sustainability, and entrepreneurial spirit.
+            "
         ),
         'loc18' => array(
-            'title' => 'Maharashtra - The State of Dreams with fast-paced Opportunities',
-            'description' => "Talking about Maharashtra - the state is known for its industrial development scenario which has attracted the major quantum of investments for the Country. Business opportunity in Maharashtra has a wider array to choose from various sectors. One can choose from models in engineering, automobiles and auto components, pharmaceuticals, textiles, IT and biotechnology as these are among the majorly developed businesses in the state.<br><br>If you are looking for a business model in Maharashtra, you can find the right opportunity as per your interest with us. The State possesses a very effervescent industrial sector and provides great opportunity for an individual to emerge as a leading entrepreneur.<br><br><div id='show-full-txt' style='display: none;'>Businesses in Maharashtra are recognised as the country's strongest arm it is among the most industrialized state which helps you surpass your barriers in opening your own business.<br><br>Maharashtra being the top preference for infrastructure, educational facilities & trained manpower is also most recommended for best Businesses to grow to newer heights. Having a business in a state which is fast-paced is an added advantage you get in this western state of India. Business opportunity in Maharashtra are often far less intrusive as compared to other states of the country, and offer owners a greater flexibility. Buying a franchise is undoubtedly, one of the best things you can get to become a successful business owner in much shorter time as compared to a start-up from scratch. Franchiseindia.com is the best place to find a Business opportunity in Maharashtra to suit you. We have made it possible for you to buy a franchise business in this location with simple filters. All you need to do is start searching for the perfect match and tap it for the great future.</div>"
+            'title' => 'Business & franchise opportinities in Maharashtra',
+            'description' => "Maharashtra, India's economic powerhouse, presents a landscape teeming with business opportunities. From the bustling streets of Mumbai, the financial capital, to the sprawling vineyards of Nashik, the state is a beacon for entrepreneurs and investors alike. Maharashtra's diverse economy, encompassing everything from Bollywood to IT and financial services, along with manufacturing and agriculture, offers a fertile ground for a wide array of franchise opportunities.<br><br>
+            Whether you're looking to dive into the dynamic retail sector, tap into the booming tech industry, explore the rich culinary heritage with a food and beverage venture, or make an impact in the education and healthcare sectors, Maharashtra provides the perfect backdrop for your entrepreneurial aspirations.<br>
+            Spotlight on Franchise Opportunities in Maharashtra:<br><br>
+            ●	<b>Food & Beverage Franchise</b>: Capture the gastronomic diversity of Maharashtra with a restaurant or café.<br>
+            ●	<b>Retail Franchise</b>: Tap into one of India’s largest consumer markets with a retail outlet.<br>
+            ●	<b>Tech & IT Franchise</b>: Join the state's burgeoning tech scene, home to startups and global IT firms.<br>
+            ●	<b>Education Franchise</b>: Contribute to the state's legacy of academic excellence with an educational institution.<br>
+            ●	<b>Healthcare Franchise</b>: Meet the growing demand for healthcare services in urban and rural areas alike.<br>
+            ●	<b>Entertainment & Leisure Franchise</b>: Leverage Maharashtra’s status as the hub of Bollywood and entertainment.<br><br>
+            The investment required to start a franchise in Maharashtra can range significantly, from as low as Rs 5 Lakhs to over Rs 2 Crores, depending on the franchise's nature, brand, and location. This variety ensures that investors of different capacities can find suitable business opportunities within the state.<br>
+            Navigating the vast and diverse business environment of Maharashtra may seem daunting, but FranchiseIndia is here to ease the process. Our platform is designed to connect you with franchise opportunities that align with your investment capacity, business goals, and the unique market dynamics of Maharashtra.<br>
+            With FranchiseIndia, stepping into Maharashtra's vibrant business scene has never been easier. We provide a gateway to a wide range of franchise opportunities, equipped with the tools and insights needed to embark on a successful entrepreneurial journey in Maharashtra.<br>
+            Discover the perfect franchise opportunity in Maharashtra with FranchiseIndia and join the ranks of successful entrepreneurs in one of India's most dynamic and prosperous states.
+            "
+        ),
+         'loc10' => array(
+            'title' => 'Business & franchise opportinities in Haryana',
+            'description' => "Haryana, a state known for its agricultural prosperity, has rapidly transformed into a hub of industrial and economic activity. Strategically located adjacent to the national capital, Haryana has leveraged its geographical advantage to attract a plethora of businesses and industries, ranging from manufacturing and automobile to IT and education. The state's commitment to fostering an investor-friendly environment has made it a fertile ground for entrepreneurs looking to sow the seeds of their business dreams.<br><br>
+            With its blend of urban growth centers like Gurugram and Faridabad, alongside its strong rural foundations, Haryana offers diverse opportunities for business ventures. Whether you aim to tap into the bustling corporate life of its cities or cater to the agricultural and rural markets, Haryana's economy provides a vibrant landscape for a wide range of franchises.<br><br>
+            Venture into Haryana’s Business Opportunities:<br><br> 
+            ●	Manufacturing & Automobile Franchises: Capitalize on the state's industrial backbone.<br>
+            ●	IT & Technology Startups Franchise: Dive into the digital wave in cities renowned for their tech parks.<br>
+            ●	Agricultural Enterprises Franchise: Engage with the agrarian economy through agribusiness and related services.<br>
+            ●	Education & Training Centers Franchise: Fulfill the growing demand for quality education and professional training.<br>
+            ●	Healthcare Services Franchise: Address the healthcare needs of an expanding urban and rural population.<br>
+            ●	Retail & Hospitality Ventures Franchise: Meet the consumer demands in Haryana’s affluent and growing cities.<br><br>
+            Investment prospects in Haryana cater to a broad spectrum of entrepreneurs, with opportunities ranging from small-scale startups to significant industrial ventures. The state's dynamic economic policies ensure a supportive environment for businesses at all investment levels.<br><br>
+            The journey to finding the right franchise or business opportunity in Haryana's evolving market can seem challenging, but with FranchiseIndia, it becomes an exciting exploration. Our platform is designed to match you with opportunities that align with your investment profile, business aspirations, and the unique economic landscape of Haryana.<br><br>
+            Embrace the dynamic business opportunities Haryana offers with FranchiseIndia as your partner. Our platform opens doors to a curated selection of franchises and business ventures, backed by insights and support to ensure your success in this vibrant state.<br><br>
+            Step into the promising economic terrain of Haryana with FranchiseIndia, and let us guide you through the process of establishing a thriving business in a state that is as diverse in its opportunities as it is rich in its cultural heritage.<br><br>
+            "
         ),
         'loc29' => array(
-            'title' => 'Tamil Nadu - Great place Capable of Profits ',
-            'description' => "One of the largest contributors to India's GDP - Tamil Nadu has proved to be a great location for business start-ups. Being the most urbanised state, Automobiles, Textiles and leather industry has witnessed great growth here. And starting a new franchise business in Tamil Nadu in engineering & servicing sector is a proven way of getting success.<br><br>Electronics manufacturing is also increasing in the state and due to this one can also opt for retail sector as it will incur less transportation fees and greater profits. Having your own business is the need of time to develop a secured future for yourself.<div id='show-full-txt' style='display: none;'><br><br>Chennai is base to 30 percent of India's automobile industry and this is why the state is also known as manufacturing hub. Business opportunities in Chennai are also vast if one goes to start his own business, but selecting the right franchise model is a task. You can have a look at various business models available in the location at franchiseindia.com, just selection your location and get going to achieve your dreams.</div>"
+            'title' => 'Business & franchise opportinities in Tamil Nadu',
+            'description' => "Tamil Nadu, a state that epitomizes the perfect blend of tradition and modernity, is a powerhouse of economic activity in India. With its strong manufacturing base, thriving IT industry, and rich cultural tourism, Tamil Nadu presents a plethora of opportunities for entrepreneurs and business investors looking to make their mark.<br><br>
+            From the bustling metropolis of Chennai to the textile hub of Coimbatore, the state is ripe with potential for a wide range of franchise businesses. Whether it’s tapping into the vibrant food culture, leveraging the state's industrial and technological prowess, or exploring the realms of education and healthcare, Tamil Nadu offers a conducive environment for all.<br><br>
+            Explore Business Avenues in Tamil Nadu:<br><br>
+            ●	<b>Food & Beverage Franchise</b>: Delve into Tamil Nadu’s culinary diversity with a restaurant or cafe.<br>
+            ●	<b>IT & Tech Franchise</b>: Join the ranks of global IT companies in India’s software and services hub.<br>
+            ●	<b>Textile Franchise</b>: Be part of a long-standing textile and garment industry.<br>
+            ●	<b>Education Franchise</b>: Invest in the future with a franchise in Tamil Nadu’s booming education sector.<br>
+            ●	<b>Healthcare Franchise</b>: Address the growing healthcare needs of a diverse population.<br>
+            ●	<b>Renewable Energy Franchise</b>: Capitalize on Tamil Nadu’s leadership in renewable energy.<br>
+            The investment required to start a franchise in Tamil Nadu varies widely, ranging from Rs 3 Lakhs to over Rs 2 Crores, depending on the franchise type, brand, and location. This flexibility ensures that entrepreneurs of all investment levels can find a suitable business opportunity in the state.<br><br>
+            If the breadth of options seems daunting, FranchiseIndia is here to help. Our platform simplifies the process of finding the right franchise opportunity in Tamil Nadu, matching you with ventures that align with your investment capacity and business goals.<br><br>
+            With FranchiseIndia, stepping into Tamil Nadu’s vibrant business scene has never been easier. We offer a gateway to a curated selection of franchise opportunities designed to thrive in Tamil Nadu’s dynamic economic landscape.<br><br>
+            Embrace the opportunity to join Tamil Nadu's thriving community of entrepreneurs with FranchiseIndia. Let us guide you through the process of selecting a franchise that not only meets your investment criteria but also has the potential for substantial growth and success in this culturally rich and economically diverse state.<br><br>
+            "
         ),
     ),
 
