@@ -57,7 +57,7 @@ class ContactUsController extends Controller
             ];
 
             $mailTo = '';
-            $mailBcc = ['pkumar@franchiseindia.net'];
+            $mailBcc = ['techsupport@franchiseindia.com'];
             switch ($request->contreason) {
                 case "Advertise with www.franchiseindia.com":
                 case "Advertise in Magazine":
@@ -70,7 +70,7 @@ class ContactUsController extends Controller
                 case "Buy a Franchise (Business)":
                 case "Sell my Existing Business":
                 case "Subscribe to the Magazine":
-                    $mailTo = 'cnikhil@franchiseindia.net';
+                    $mailTo = 'dharmendra@franchiseindia.net';
                     break;
                 case "Feedback":
                     $mailTo = 'techsupport@franchiseindia.com';
