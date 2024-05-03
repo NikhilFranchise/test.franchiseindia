@@ -8,6 +8,8 @@ use App\Mail\ContactUsMail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cookie;
+
 
 class ContactUsController extends Controller
 {
@@ -44,7 +46,7 @@ class ContactUsController extends Controller
             'mobile' => $request->mobile,
             'user_ip' => $request->ip(),
             'pincode' => $request->pincode,
-            // 'source' => Cookie::get('campaignSource', 'DOTCOM'),
+            'source' => Cookie::get('campaignSource', 'DOTCOM'),
         ]);
 
         if ($contactData) {

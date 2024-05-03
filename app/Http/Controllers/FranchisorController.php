@@ -2537,7 +2537,7 @@ class FranchisorController extends Controller
 
         $data = UserAccount::query()->where('profile_str', request()->user()->profile_str)->first();
         $franData = FranchisorBusinessDetail::query()->where('franchisor_id', request()->user()->profile_str)->first();
-        // dd($data);
+        // dd($franData);
         if ($data->membership_type == 1) {
             $planDetail = OnlinePayment::query()->where('profile_id', request()->user()->profile_str)->orderBy('payment_id', 'DESC')->first();
             $membershipPlan = ProfileMembership::query()->where('profile_id', request()->user()->profile_str)->orderBy('membership_id', 'DESC')->first();

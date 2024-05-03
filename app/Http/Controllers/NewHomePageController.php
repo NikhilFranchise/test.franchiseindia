@@ -8,6 +8,9 @@ use App\Models\HomePremiumPageBrand;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+
 class NewHomePageController extends Controller
 {	
 	public function hindiHomePage()
@@ -31,15 +34,32 @@ class NewHomePageController extends Controller
     {
 		$brands  = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 	
-		$ch = curl_init('https://www.opportunityindia.com/api/article/apidata');
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch,CURLOPT_FOLLOWLOCATION,TRUE);
-		$result = curl_exec($ch);
-		curl_close($ch);
+		// $ch = curl_init('https://www.opportunityindia.com/api/article/apidata');
+		// curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		// curl_setopt($ch,CURLOPT_FOLLOWLOCATION,TRUE);
+		// $result = curl_exec($ch);
+		// curl_close($ch);
 		
-		$articles = json_decode($result, true);
-		
+		// $articles = json_decode($result, true);
+		// Initialize Guzzle client
+		$client = new Client();
+
+		try {
+			// Fetch articles asynchronously
+			$promise = $client->getAsync('https://www.opportunityindia.com/api/article/apidata');
+	
+			// Wait for the request to complete
+			$response = $promise->wait();
+	
+			// Extract articles from response
+			$articles = json_decode($response->getBody()->getContents(), true);
+		} catch (RequestException $e) {
+			// Handle request exception
+			$articles = [];
+			// Log or handle the error appropriately
+		}
+	
 		return view('layout.masternewhomepage')->with(compact('articles', 'brands'));
 		
     }
