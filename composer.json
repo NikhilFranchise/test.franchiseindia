@@ -16,6 +16,7 @@
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.5",
         "predis/predis": "^2.2",
+        "tinymce/tinymce": "^7.0",
         "vemcogroup/laravel-sparkpost-driver": "^5.0"
     },
     "require-dev": {
