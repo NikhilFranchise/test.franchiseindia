@@ -321,7 +321,7 @@ class NewsLetterController extends Controller
         $checkEmail = FiNewsLetter::query()->select('status')->where('site_type', $siteType)->where('email', $email)->first();
 
         // If no record exists, send the verification mail
-        if ($$checkEmail == null || $checkEmail->count() == 0) {
+        if ($checkEmail == null || $checkEmail->count() == 0) {
 
             FiNewsLetter::query()->insert([
                 'email' => $email,
