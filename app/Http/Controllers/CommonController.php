@@ -476,7 +476,7 @@ class CommonController extends Controller
 
         if ($profileData->profile_type == 2) {
             if (request()->segment(1) == "change-password") {
-                Auth::getFacadeRoot()->login(User::query()->find($profileData->user_id));
+                Auth::login(User::query()->find($profileData->user_id));
                 return redirect('investor/myaccount/changepassword');
             }
             return view('static.email-thanks-inv');

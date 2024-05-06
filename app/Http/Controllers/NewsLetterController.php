@@ -69,7 +69,7 @@ class NewsLetterController extends Controller
     public function subscriptionForm()
     {
         $data = FiNewsLetter::query()->where('verify_code', request()->code)->orderby('nid', 'DESC')->first();
-        if (count($data) == 0) {
+        if ($data == null || $data->count() === 0) {
             $news = "wrong";
             return view('newsletter/subscribe')->with(compact('news'));
         }
@@ -321,7 +321,7 @@ class NewsLetterController extends Controller
         $checkEmail = FiNewsLetter::query()->select('status')->where('site_type', $siteType)->where('email', $email)->first();
 
         // If no record exists, send the verification mail
-        if (count($checkEmail) == 0) {
+        if ($checkEmail->count() == 0) {
 
             FiNewsLetter::query()->insert([
                 'email' => $email,
@@ -331,7 +331,7 @@ class NewsLetterController extends Controller
             if (!empty($email))
                 Mail::getFacadeRoot()->to($email)->send(new NewsLetterSubscribe($randCode));
 
-        } else if (count($checkEmail) != 0 && $checkEmail->status != 'S') {
+        } else if ($checkEmail->count() != 0 && $checkEmail->status != 'S') {
             FiNewsLetter::query()->where('email', $email)->where('site_type', $siteType)->update(['verify_code' => $randCode]);
             if (!empty($email))
                 Mail::getFacadeRoot()->to($email)->send(new NewsLetterSubscribe($randCode));
