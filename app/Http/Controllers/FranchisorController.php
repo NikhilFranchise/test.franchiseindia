@@ -796,21 +796,15 @@ class FranchisorController extends Controller
         $layout = $request->layout_type;
 
         //Logo uploading
-        // if ($request->hasFile('company_logo')) {
-        //     $companyLogo = $request->file('company_logo');
-        //     $extension = $request->file('company_logo')->getClientOriginalExtension();
-        //     $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.' . $extension;
-        //     Storage::disk('s3')->put($companyLogoPath, file_get_contents($companyLogo), 'public');
-        //     $url = Storage::disk('s3')->url($companyLogoPath);
-        // }
         if ($request->hasFile('company_logo')) {
             $companyLogo = $request->file('company_logo');
             $extension = $request->file('company_logo')->getClientOriginalExtension();
-            $companyLogoPath = 'images/' . date('md') . '/' . rand() . '.' . $extension; // Path within the public folder
-            $companyLogo->move(public_path($companyLogoPath)); // Move the uploaded file to the specified path
-            $url = asset($companyLogoPath); // Generate a URL to access the uploaded file
+            $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.' . $extension;
+            // Storage::disk('s3')->put($companyLogoPath, file_get_contents($companyLogo), 'public');
+            $companyLogo->storeAs('public', $companyLogoPath);
+            // $url = Storage::disk('s3')->url($companyLogoPath);
+            $url = asset('storage/' . $companyLogoPath);
         }
-
 
         FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)
             ->update([
@@ -2623,28 +2617,14 @@ class FranchisorController extends Controller
 
         // only for testing comment
 
-        // if (!empty($request->file('company_logo'))) {
-        //     $companyLogo = $request->file('company_logo');
-        //     $extension = Input::getFacadeRoot()->file('company_logo')->getClientOriginalExtension();
-        //     $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.' . $extension;
-        //     Storage::getFacadeRoot()->disk('s3')->put($companyLogoPath, file_get_contents($companyLogo), 'public');
-        //     $url = Storage::getFacadeRoot()->disk('s3')->url($companyLogoPath);
-
-        //     FranchisorBusinessDetail::query()->where('franchisor_id', request()->user()->profile_str)
-        //         ->update(['pre_approved_logo' => $url]);
-        //     $this->recordUpdateTime();
-        // }
-
-        // only for testing comment
-
         if (!empty($request->file('company_logo'))) {
             $companyLogo = $request->file('company_logo');
-            $extension = $companyLogo->getClientOriginalExtension();
+            $extension = $request->file('company_logo')->getClientOriginalExtension();
             $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.' . $extension;
-            $companyLogo->move(public_path('uploads'), $companyLogoPath);
-            $url = asset('uploads/' . $companyLogoPath);
+            Storage::getFacadeRoot()->disk('s3')->put($companyLogoPath, file_get_contents($companyLogo), 'public');
+            $url = Storage::getFacadeRoot()->disk('s3')->url($companyLogoPath);
 
-            FranchisorBusinessDetail::where('franchisor_id', request()->user()->profile_str)
+            FranchisorBusinessDetail::query()->where('franchisor_id', request()->user()->profile_str)
                 ->update(['pre_approved_logo' => $url]);
             $this->recordUpdateTime();
         }
@@ -2864,7 +2844,7 @@ class FranchisorController extends Controller
      */
     private function sendMailNotification($email, $data)
     {
-        //  Mail::getFacadeRoot()->to($email)->send($data);
+         Mail::getFacadeRoot()->to($email)->send($data);
     }
 
     /**

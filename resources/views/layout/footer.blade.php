@@ -308,6 +308,57 @@
 <!--ouer website end here -->
 <!-- Our Group Sites section starts -->
 <!-- Our Group Sites section ends -->
+
+{{-- Browse by investment --}}
+<section class="Our-Group-Sitessection section-30" id="Our-Group-Sitessection">
+   <div class="container">
+       <div class="row justify-content-center">
+           <div class="col-md-12">
+               <p class="section-th">Browse By Investment Range </p>
+               <div class="brows-by-location">
+                   <ul class="fihl-loaction-browse">
+                           <li> <a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-100000
+                               ">Under 1 Lakh</a></li>
+                           <li> <a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-200000">Under 2 Lakh
+                           </a>
+                           </li>
+                           <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-300000">Under 3 Lakh
+                           </a></li>
+                           <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-500000">Under 5 Lakh
+                                   </a>
+                           </li>
+                           <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-1000000">Under 10 Lakh
+                           </a>
+                           </li>
+                           <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-1500000">Under 15 Lakh
+                           </a>
+                           </li> 
+                           <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-2000000">Under 20 Lakh
+                           </a>
+                           </li>
+                           <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-2500000">Under 25 Lakh
+                           </a>
+                           </li> 
+                           <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-3000000">Under 30 Lakh
+                           </a>
+                           </li>
+                           <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-5000000">Under 50 Lakh
+                           </a>
+                           </li>
+                           <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-10000000">Under 1 Crore
+                           </a>
+                           </li>
+                          
+                          
+
+                   </ul>
+               </div>
+           </div>
+       </div>
+   </div>
+</section>
+
+
 <!-- Browse By Location starts -->
 <section class="Our-Group-Sitessection section-30" id="Our-Group-Sitessection">
    <div class="container">

@@ -319,6 +319,8 @@
 </div>
 </div>
 <!-- Modal -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script type="text/javascript">
     
     if (screen.width < 767) {

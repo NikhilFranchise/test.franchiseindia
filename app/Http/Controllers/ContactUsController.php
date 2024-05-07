@@ -86,20 +86,8 @@ class ContactUsController extends Controller
                 Mail::to($mailTo)->bcc($mailBcc)->send(new ContactUsMail($details));
             }
         }
-
-        // $ch = curl_init();
-        // curl_setopt($ch, CURLOPT_URL, url('dotcom-api/contact-us-salescrm-leads.php?contact_id=' . $contactData));
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // curl_exec($ch);
-
-        // if (curl_errno($ch)) {
-        //     Log::alert('SMS Sending in Curl Failed  : ' . curl_error($ch));
-        // }
-
-        // curl_close($ch);
-
         $message = $contactData ? "Contact form submitted successfully..." : "Contact form submission failed...";
 
-        return view('thanks.thanks', compact('message')); 
+        return view('thanks.thanks', compact('message'));
     }
 }

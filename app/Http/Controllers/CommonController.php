@@ -2,15 +2,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\InvestorDetails;
-use App\Mpdels\InvestorIndustry;
+use App\Models\InvestorIndustry;
 use App\Models\Ip2Location;
-use App\SeoTag;
+use App\Models\SeoTag;
 use App\Models\Pincode;
-use App\Advertise;
-use App\PopupLead;
+use App\Models\Advertise;
+use App\Models\PopupLead;
 use App\Models\User;
 use App\Models\UserAccount;
-use App\FiNewsLetter;
+use App\Models\FiNewsLetter;
 use App\Mail\confirmed;
 use App\Models\MobileVerification;
 use App\Mail\AdvertiseMail;
@@ -41,23 +41,23 @@ class CommonController extends Controller
      */
     public function postExitPopup()
     {
-        $emailCount = PopupLead::query()->where('email', request()->email )->orWhere('secondary_email', request()->email)->count();
-        $phoneCount = PopupLead::query()->where('phone_no', request()->phone_no )->orWhere('secondary_phone_no', request()->phone_no)->count();
+        $emailCount = PopupLead::query()->where('email', request()->email)->orWhere('secondary_email', request()->email)->count();
+        $phoneCount = PopupLead::query()->where('phone_no', request()->phone_no)->orWhere('secondary_phone_no', request()->phone_no)->count();
 
-        if($emailCount > 0 && $phoneCount == 0) {
+        if ($emailCount > 0 && $phoneCount == 0) {
             $id = PopupLead::query()->where('email', request()->email)->orWhere('secondary_email', request()->email)->first();
             PopupLead::query()->where('id', $id->id)->update(['secondary_phone_no' => request()->phone_no]);
         }
 
-        if($emailCount == 0 && $phoneCount > 0) {
+        if ($emailCount == 0 && $phoneCount > 0) {
             $id = PopupLead::query()->where('phone_no', request()->phone_no)->orWhere('secondary_phone_no', request()->phone_no)->first();
             PopupLead::query()->where('id', $id->id)->update(['secondary_email' => request()->email]);
         }
 
-        if($emailCount == 0 && $phoneCount == 0) {
+        if ($emailCount == 0 && $phoneCount == 0) {
 
             $source = "DOTCOM";
-            if(!empty(Cookie::get('campaignSource')))
+            if (!empty(Cookie::get('campaignSource')))
                 $source = Cookie::get('campaignSource');
 
             PopupLead::query()->insert(['phone_no' => request()->phone_no, 'email' => request()->email, 'source' => $source]);
@@ -75,10 +75,10 @@ class CommonController extends Controller
     {
         $cities = '<option value="">Select City</option>';
 
-        if(!is_numeric(request()->state))
+        if (!is_numeric(request()->state))
             return $cities;
-        $city   = Config('location.cityArr.'.request()->state);
-        if(is_array($city)) {
+        $city = Config('location.cityArr.' . request()->state);
+        if (is_array($city)) {
             foreach ($city as $index => $value) {
                 $cities .= "<option value='" . $value . "' slug='" . Str::slug($value) . "'>$value</option>";
             }
@@ -91,10 +91,10 @@ class CommonController extends Controller
         $key = array_search(request()->state, Config('location.stateArr'));
         $cities = '<option value="">Select City</option>';
 
-        if(!is_numeric($key))
+        if (!is_numeric($key))
             return $cities;
-        $city   = Config('location.cityArr.'.$key);
-        if(is_array($city)) {
+        $city = Config('location.cityArr.' . $key);
+        if (is_array($city)) {
             foreach ($city as $index => $value) {
                 $cities .= "<option value='" . $value . "' slug='" . Str::slug($value) . "'>$value</option>";
             }
@@ -113,7 +113,7 @@ class CommonController extends Controller
         if (empty(request()->franId) || empty(request()->state))
             return $cities;
 
-        $city   = Config('location.cityArr.'.request()->state);
+        $city = Config('location.cityArr.' . request()->state);
 
         $locationType = FranchisorBusinessDetail::query()->select('expansion_loc_type')
             ->where('franchisor_id', request()->franId)->first()->expansion_loc_type;
@@ -179,8 +179,11 @@ class CommonController extends Controller
      */
     public function getProfileStatus()
     {
-        $profileNameCount = FranchisorBusinessDetail::query()->select('profile_name')->where('profile_name', '=',
-            request()->profile)->count();
+        $profileNameCount = FranchisorBusinessDetail::query()->select('profile_name')->where(
+            'profile_name',
+            '=',
+            request()->profile
+        )->count();
         if ($profileNameCount > 0) {
             $msg1 = "Profile name already exist";
         } else {
@@ -196,7 +199,7 @@ class CommonController extends Controller
     {
         $pinCodeDetails = Pincode::query()->select('city', 'state')->where('pincode', '=', request()->pincode)->first();
         if ($pinCodeDetails) {
-            $pinCodeDetails->city  = ucfirst(strtolower($pinCodeDetails->city));
+            $pinCodeDetails->city = ucfirst(strtolower($pinCodeDetails->city));
             $pinCodeDetails->state = ucfirst(strtolower($pinCodeDetails->state));
             return response()->json($pinCodeDetails);
         } else {
@@ -276,7 +279,7 @@ class CommonController extends Controller
         $GetCategoryData = new CategoryController();
         $subCatArr = $GetCategoryData->getSubCategory($categoryID);
 
-        if(!empty($subCatArr) && is_array($subCatArr)) {
+        if (!empty($subCatArr) && is_array($subCatArr)) {
             asort($subCatArr);
             foreach ($subCatArr as $index => $value) {
                 if (!is_array($value)) {
@@ -297,8 +300,8 @@ class CommonController extends Controller
         asort($subSubCatArr);
         echo '<option value="">Select Service/Product</option>';
         foreach ($subSubCatArr as $index => $value) {
-            if(!is_array($value))
-                echo "<option value=" . $index . " slug=" . Config('category.SeoSubSubCategoryArr.'.$index) . ">$value</option>";
+            if (!is_array($value))
+                echo "<option value=" . $index . " slug=" . Config('category.SeoSubSubCategoryArr.' . $index) . ">$value</option>";
         }
     }
 
@@ -312,7 +315,7 @@ class CommonController extends Controller
         $subCatArr = $GetCategoryData->getSubCategory($categoryID);
         asort($subCatArr);
         foreach ($subCatArr as $index => $value) {
-            if(!is_array($value)) {
+            if (!is_array($value)) {
                 echo '<div class="radio" id="getSubCategoryData">';
                 echo '<label><input value=' . $index . ' type="radio">' . $value . '</label>';
                 echo '</div>';
@@ -330,7 +333,7 @@ class CommonController extends Controller
         $subSubCatArr = $GetCategoryData->getSubSubCategory($subcategoryID);
         asort($subSubCatArr);
         foreach ($subSubCatArr as $index => $value) {
-            if(!is_array($value)) {
+            if (!is_array($value)) {
                 echo '<li>';
                 echo '<div class="checkbox" id="getSubSubCategoryData">';
                 echo '<label><input value=' . $index . ' type="checkbox">' . $value . '</label>';
@@ -347,46 +350,46 @@ class CommonController extends Controller
      */
     public static function sendTxtSms($mobileNo, $message)
     {
-        $mobileNo = (string)((int)$mobileNo);
-        $message  = htmlentities($message);
+        $mobileNo = (string) ((int) $mobileNo);
+        $message = htmlentities($message);
 
         /**
          *  Check For Mobile Verification Code
          */
 
         $contains = Str::contains($message, 'verification code is');
-        if($contains == false){
+        if ($contains == false) {
             return response()->json(['message' => 'SMS Sending Block', 'status' => 'success']);
         }
 
         if (strlen($mobileNo) == 12 && substr($mobileNo, 0, 2) == "91")
             $mobileNo = substr($mobileNo, 2, 10);
 
-        if(strlen($mobileNo) > 10)
+        if (strlen($mobileNo) > 10)
             return response()->json(['message' => 'SMS Sending Failed(Not a valid indian number)', 'status' => 'failed']);
 
-        if(!is_numeric($mobileNo))
+        if (!is_numeric($mobileNo))
             return response()->json(['message' => 'SMS Sending Failed(Not a valid numeric number)', 'status' => 'failed']);
 
-        if(!in_array(substr($mobileNo, 0, 1), [9,8,7,6]))
+        if (!in_array(substr($mobileNo, 0, 1), [9, 8, 7, 6]))
             return response()->json(['message' => 'SMS Sending Failed(Not a valid number)', 'status' => 'failed']);
 
-        $mobile_regex = "/^[6-9][0-9]{9}$/" ;
-        if(strlen($mobileNo) != 10 || !(preg_match($mobile_regex, $mobileNo) === 1))
+        $mobile_regex = "/^[6-9][0-9]{9}$/";
+        if (strlen($mobileNo) != 10 || !(preg_match($mobile_regex, $mobileNo) === 1))
             return response()->json(['message' => 'SMS Sending Failed(Not a valid number)', 'status' => 'failed']);
 
         $mobileNo = CommonController::cleanSpecialChar($mobileNo);
 
         // Account details
         $userName = urlencode(config('txtlocal.username')); // Username
-        $apiKey   = urlencode(config('txtlocal.apiKey')); // Hash
+        $apiKey = urlencode(config('txtlocal.apiKey')); // Hash
 
         // Message details
-        $sender   = urlencode(config('txtlocal.sender'));
-        $message  = rawurlencode($message);
+        $sender = urlencode(config('txtlocal.sender'));
+        $message = rawurlencode($message);
 
         // Prepare data for POST request
-        $data     = "username=".$userName."&hash=".$apiKey."&message=".$message."&sender=".$sender."&numbers=".$mobileNo;
+        $data = "username=" . $userName . "&hash=" . $apiKey . "&message=" . $message . "&sender=" . $sender . "&numbers=" . $mobileNo;
 
         // Send the POST request with cURL
         $ch = curl_init(config('txtlocal.apiUrl'));
@@ -402,7 +405,7 @@ class CommonController extends Controller
         // If sms sending failed, log the data
         if ($jsonData['status'] == 'failure') {
             echo $jsonData['errors'][0]['message'];
-            Log::getFacadeRoot()->alert('SMS sending Failed - CommonController : ' . $jsonData['errors'][0]['message'] . ' -- ' . $message .' -- ' . $jsonData['errors'][0]['code'] . ' -- ' .$mobileNo);
+            Log::getFacadeRoot()->alert('SMS sending Failed - CommonController : ' . $jsonData['errors'][0]['message'] . ' -- ' . $message . ' -- ' . $jsonData['errors'][0]['code'] . ' -- ' . $mobileNo);
             return response()->json(['message' => 'SMS Sending Failed', 'status' => 'failure']);
         }
         // If sms sending successful, return true
@@ -415,7 +418,7 @@ class CommonController extends Controller
     public function pincodeValidation()
     {
         $noResult = '';
-        $users = Pincode::query()->select('city','state')->where('pincode','=',request()->search)->first();
+        $users = Pincode::query()->select('city', 'state')->where('pincode', '=', request()->search)->first();
         if (count($users) > 0) {
             $users->city = ucfirst(strtolower($users->city));
             $users->state = ucfirst(strtolower($users->state));
@@ -433,19 +436,19 @@ class CommonController extends Controller
         $this->validate($request, ['search' => 'required|email']);
 
         $output['email'] = "";
-        if ( request()->search == "fiblbrands@franchiseindia.in" || request()->search == "info@opportunityindia.com" || request()->search == "feedback@franchiseindia.net" || request()->search == "info@franglobal.com" )
+        if (request()->search == "fiblbrands@franchiseindia.in" || request()->search == "info@opportunityindia.com" || request()->search == "feedback@franchiseindia.net" || request()->search == "info@franglobal.com")
             return response($output);
 
-        $email = UserAccount::query()->where('email',request()->search)->first();
-        
-        if(!empty($email) && $email->profile_type == 1) {
-            
+        $email = UserAccount::query()->where('email', request()->search)->first();
+
+        if (!empty($email) && $email->profile_type == 1) {
+
             $checkFranchisor = FranchisorBusinessDetail::query()->where('franchisor_id', $email->profile_str)->first();
-            if(!empty($checkFranchisor) && $checkFranchisor->step_completed > 0 && $checkFranchisor->step_completed < 6)
+            if (!empty($checkFranchisor) && $checkFranchisor->step_completed > 0 && $checkFranchisor->step_completed < 6)
                 return response($output);
         }
         // dd($email);
-        if(!empty($email))
+        if (!empty($email))
             $output['email'] = "email already exists";
 
         return response($output);
@@ -456,28 +459,30 @@ class CommonController extends Controller
      */
     public function verifyEmail()
     {
-        $profileData      = UserAccount::query()->where('email_verification_code', request()->id)->first();
-
-        if(count($profileData) == 0)
+        $profileData = UserAccount::query()->where('email_verification_code', request()->id)->first();
+        // dd(request()->id);
+        if ($profileData === null || $profileData->count() === 0) {
             return view('static.email-reject');
+        }
+        
 
         $status = $profileData->profile_type != 1 ? Config('constants.ProfileStatus.Active') : Config('constants.ProfileStatus.Awaiting');
 
         $update = UserAccount::query()->where('email_verification_code', request()->id)
-            ->update(['email_verification_code' => "",'profile_status' => $status]);
+            ->update(['email_verification_code' => "", 'profile_status' => $status]);
 
         if (!$update)
             return view('static.email-reject');
 
         if ($profileData->profile_type == 2) {
-            if(request()->segment(1) == "change-password") {
-                Auth::getFacadeRoot()->login(User::query()->find($profileData->user_id));
+            if (request()->segment(1) == "change-password") {
+                Auth::login(User::query()->find($profileData->user_id));
                 return redirect('investor/myaccount/changepassword');
             }
-            return  view('static.email-thanks-inv');
+            return view('static.email-thanks-inv');
         }
 
-        return  view('static.email-thanks');
+        return view('static.email-thanks');
     }
 
     /**
@@ -486,10 +491,10 @@ class CommonController extends Controller
     public function advertise()
     {
         Advertise::query()->insert([
-            'name'=>request()->name,
-            'email'=>request()->email,
-            'mobile'=>request()->mobile,
-            'reg_type'=>request()->id
+            'name' => request()->name,
+            'email' => request()->email,
+            'mobile' => request()->mobile,
+            'reg_type' => request()->id
         ]);
         $data[0] = request()->name;
         $data[1] = request()->email;
@@ -497,23 +502,23 @@ class CommonController extends Controller
         $data[3] = request()->id;
 
 
-        if(request()->id == "Retailer"){
-            Mail::getFacadeRoot()->to('retailer@franchiseindia.com')->send(new AdvertiseMail($data));
+        if (request()->id == "Retailer") {
+            Mail::to('retailer@franchiseindia.com')->send(new AdvertiseMail($data));
             return redirect('https://www.franchiseindia.com/pdf/retailer-magazine.pdf');
         }
 
-        if(request()->id == "Entrepreneur"){
-            Mail::getFacadeRoot()->to('aarora@entrepreneurindia.org')->send(new AdvertiseMail($data));
+        if (request()->id == "Entrepreneur") {
+            Mail::to('aarora@entrepreneurindia.org')->send(new AdvertiseMail($data));
             return redirect('https://www.franchiseindia.com/pdf/entrepreneur-magazine.pdf');
         }
 
-        if(request()->id == "Franchiseindia.com"){
-            Mail::getFacadeRoot()->to('member@franchiseindia.com')->send(new AdvertiseMail($data));
+        if (request()->id == "Franchiseindia.com") {
+            Mail::to('member@franchiseindia.com')->send(new AdvertiseMail($data));
             return redirect('https://www.franchiseindia.com/pdf/dotcom-media-kit2016.pdf');
         }
 
-        if(request()->id == "TheFranchisingWorld" ){
-            Mail::getFacadeRoot()->to('ashita@franchiseindia.com')->send(new AdvertiseMail($data));
+        if (request()->id == "TheFranchisingWorld") {
+            Mail::to('ashita@franchiseindia.com')->send(new AdvertiseMail($data));
             return redirect('https://www.franchiseindia.com/pdf/tfw-magazine.pdf');
         }
         return redirect('https://www.franchiseindia.com/pdf/tfw-magazine.pdf');
@@ -522,24 +527,26 @@ class CommonController extends Controller
     /**
      * get subcategories for admin panel in article
      */
-    public function getSubCategoryarticle() {
+    public function getSubCategoryarticle()
+    {
         $categoryID = $_REQUEST['categoryID'];
         $GetCategoryData = new CategoryController();
         $subCatArr = $GetCategoryData->getSubCategory($categoryID);
-        foreach($subCatArr as $index => $value) {
-            echo "<option value=".$index.">$value</option>";
+        foreach ($subCatArr as $index => $value) {
+            echo "<option value=" . $index . ">$value</option>";
         }
     }
 
     /**
      * get sub sub categories for admin panel in article
      */
-    public function getSubCatCategoryarticle() {
+    public function getSubCatCategoryarticle()
+    {
         $subcategoryID = $_REQUEST['subcategoryID'];
         $GetCategoryData = new CategoryController();
-        $subSubCatArr=$GetCategoryData->getSubSubCategory($subcategoryID);
-        foreach($subSubCatArr as $index => $value) {
-            echo "<option value=".$index.">$value</option>";
+        $subSubCatArr = $GetCategoryData->getSubSubCategory($subcategoryID);
+        foreach ($subSubCatArr as $index => $value) {
+            echo "<option value=" . $index . ">$value</option>";
         }
     }
 
@@ -553,7 +560,7 @@ class CommonController extends Controller
     {
 
         foreach ($newsData as &$value) {
-            $value['urlTitle']  = CommonController::cleanSpecialChar($value['title']);
+            $value['urlTitle'] = CommonController::cleanSpecialChar($value['title']);
             $value['urlKicker'] = CommonController::cleanSpecialChar($value['kicker']);
         }
 
@@ -569,12 +576,12 @@ class CommonController extends Controller
     public static function contentUrlSlug($articleData)
     {
         try {
-            if ( !empty($articleData) ) {
+            if (!empty($articleData)) {
                 foreach ($articleData as &$value) {
-                    $value['urlTitle']  = CommonController::cleanSpecialChar($value['title']);
+                    $value['urlTitle'] = CommonController::cleanSpecialChar($value['title']);
                     $value['urlKicker'] = CommonController::cleanSpecialChar($value['kicker']);
                     if ($value['site_type'] == 'ga') {
-                        $seoTagId        = SeoTag::query()->where('name', $value['kicker'])->first();
+                        $seoTagId = SeoTag::query()->where('name', $value['kicker'])->first();
                         if (!empty($seoTagId))
                             $value['kicker_id'] = $seoTagId->tag_id;
                     }
@@ -622,8 +629,8 @@ class CommonController extends Controller
         $string = preg_replace('/[\-]+$/', '', $string);
         $string = preg_replace('/[\-]{2,}/', ' ', $string);
 
-        $array_title_replace     = array("    ","   ","  ", " ","---");
-        $content_title1          = str_replace($array_title_replace,"-",trim($string));
+        $array_title_replace = array("    ", "   ", "  ", " ", "---");
+        $content_title1 = str_replace($array_title_replace, "-", trim($string));
 
         return strtolower($content_title1);
     }
@@ -633,19 +640,19 @@ class CommonController extends Controller
      */
     public function createNewsLetter($email)
     {
-        $siteType  = "fi";
+        $siteType = "fi";
         $randValue = rand(100000, 9999999);
-        $oldData   = FiNewsLetter::query()->select('status')->where('email', $email)->where('site_type', $siteType)->first();
+        $oldData = FiNewsLetter::query()->select('status')->where('email', $email)->where('site_type', $siteType)->first();
 
         // If no record exists, send the verification mail
         if (count($oldData) == 0) {
             FiNewsLetter::query()->insert([
-                'email'       => $email,
+                'email' => $email,
                 'verify_code' => $randValue,
-                'site_type'   => $siteType
+                'site_type' => $siteType
             ]);
         } else {
-            FiNewsLetter::query()->where('email', $email)->where('site_type', $siteType)->update([ 'verify_code' => $randValue]);
+            FiNewsLetter::query()->where('email', $email)->where('site_type', $siteType)->update(['verify_code' => $randValue]);
         }
 
         Mail::getFacadeRoot()->to($email)->send(new NewsLetterSubscribe($randValue));
@@ -656,14 +663,14 @@ class CommonController extends Controller
      * @param $userId
      * @param $name
      */
-    public function sendProfileEmailVerificationMail($email, $userId , $name )
+    public function sendProfileEmailVerificationMail($email, $userId, $name)
     {
         //sending the email on registration
-        $code   = str_random(16);
+        $code = Str::random(16);
         UserAccount::query()->where('profile_str', $userId)->update(['email_verification_code' => $code]);
-        $data   = [
+        $data = [
             'companyName' => $name,
-            'code'        => $code,
+            'code' => $code,
         ];
         Mail::getFacadeRoot()->to($email)->send(new confirmed($data));
 
@@ -685,7 +692,7 @@ class CommonController extends Controller
         session()->flash('errorMessage', $error);
 
         //
-        return redirect( $redirectLink );
+        return redirect($redirectLink);
     }
 
     /**
@@ -695,19 +702,19 @@ class CommonController extends Controller
     public function verifyMobile()
     {
         $mobile = request()->input('mobile');
-        $check  = UserAccount::query()->where('mobile', $mobile)->count();
+        $check = UserAccount::query()->where('mobile', $mobile)->count();
 
-        if(!empty(request()->input('email'))) {
-            $user  = UserAccount::query()->where('mobile', $mobile)->where('email', request()->input('email'))->first();
-            if(!empty($user) && $user->profile_type == 1 && $user->profile_status == 4) {
+        if (!empty(request()->input('email'))) {
+            $user = UserAccount::query()->where('mobile', $mobile)->where('email', request()->input('email'))->first();
+            if (!empty($user) && $user->profile_type == 1 && $user->profile_status == 4) {
                 $checkFranchisor = FranchisorBusinessDetail::query()->where('franchisor_id', $user->profile_str)->first();
-                if(!empty($checkFranchisor) && $checkFranchisor->step_completed > 0 && $checkFranchisor->step_completed < 6)
+                if (!empty($checkFranchisor) && $checkFranchisor->step_completed > 0 && $checkFranchisor->step_completed < 6)
                     return response()->json(['check' => 99999999]);
             }
         }
 
-        if(empty($check))
-            $check = MobileVerification::query()->where('mobile_no', $mobile)->where('is_verified', 1)->count() != 0 ? 99999999 : 0 ;
+        if (empty($check))
+            $check = MobileVerification::query()->where('mobile_no', $mobile)->where('is_verified', 1)->count() != 0 ? 99999999 : 0;
 
         return response()->json(['check' => $check]);
     }
@@ -722,7 +729,7 @@ class CommonController extends Controller
         $otp = request()->input('otpNo');
         $check = MobileVerification::query()->where('mobile_no', $mobile)->where('otp_code', $otp)->count();
         if ($check > 0) {
-            MobileVerification::query()->where('mobile_no', $mobile) ->where('otp_code', $otp)->update(['is_verified' => 1]);
+            MobileVerification::query()->where('mobile_no', $mobile)->where('otp_code', $otp)->update(['is_verified' => 1]);
         }
         return response()->json(['check' => $check]);
     }
@@ -735,10 +742,10 @@ class CommonController extends Controller
     public static function getIpLocationState($locationIp)
     {
         $ip = ip2long($locationIp);
-        if(empty($ip))
+        if (empty($ip))
             return "noresult";
 
-        $result = Ip2Location::query()->select('region_name')->where('ip_from' , '<=', $ip)->where('ip_to', '>=', $ip)->first();
+        $result = Ip2Location::query()->select('region_name')->where('ip_from', '<=', $ip)->where('ip_to', '>=', $ip)->first();
         if (empty($result))
             return "noresult";
 
@@ -749,7 +756,8 @@ class CommonController extends Controller
      * @param $desc
      * @return null|string|string[]
      */
-    public static function cleanContent($desc) {
+    public static function cleanContent($desc)
+    {
         return preg_replace('/style=\\"[^\\"]*\\"/', '', $desc);
     }
 
@@ -757,8 +765,9 @@ class CommonController extends Controller
      * @param $desc
      * @return null|string|string[]
      */
-    public static function cleanImageContent($desc) {
-        return  preg_replace("/<img[^>]+\>/i", "(image) ", $desc);
+    public static function cleanImageContent($desc)
+    {
+        return preg_replace("/<img[^>]+\>/i", "(image) ", $desc);
     }
 
     /**
@@ -767,7 +776,7 @@ class CommonController extends Controller
     public static function getEvents()
     {
         $XML = Storage::getFacadeRoot()->disk('local')->get('public/events.xml');
-        return  collect(json_decode(json_encode((array) simplexml_load_string($XML)), true));
+        return collect(json_decode(json_encode((array) simplexml_load_string($XML)), true));
     }
 
     /**
@@ -775,10 +784,10 @@ class CommonController extends Controller
      */
     public function franAutoLogin()
     {
-        $franchisorId =  base64_decode(request()->id);
-        $userData =  User::query()->where('profile_str', $franchisorId)->first();
+        $franchisorId = base64_decode(request()->id);
+        $userData = User::query()->where('profile_str', $franchisorId)->first();
 
-        if(empty($userData) || $userData->profile_type != 1) {
+        if (empty($userData) || $userData->profile_type != 1) {
             $message = "Oops this is a wrong request...";
             return view('thanks.thanks', compact('message'));
         }
@@ -792,9 +801,9 @@ class CommonController extends Controller
      */
     public function franCampaignDeactivation()
     {
-        $franchisorId =  base64_decode(request()->id);
-        $userData =  User::query()->where('profile_str', $franchisorId)->first();
-        if(!empty($userData) && $userData->profile_type == 1) {
+        $franchisorId = base64_decode(request()->id);
+        $userData = User::query()->where('profile_str', $franchisorId)->first();
+        if (!empty($userData) && $userData->profile_type == 1) {
             User::query()->where('profile_str', $franchisorId)->update([
                 'profile_status' => 7, // 7 is only for campaign data
             ]);
@@ -814,41 +823,41 @@ class CommonController extends Controller
     {
         $eligibility = [
             'abilityToApply' => 1,
-            'message'        => ""
+            'message' => ""
         ];
 
-        if(empty(request()->user()))
+        if (empty(request()->user()))
             return $eligibility;
 
         $profileCompletionPercentage = Cookie::get('invPercentage');
-        if($profileCompletionPercentage  < 70) {
+        if ($profileCompletionPercentage < 70) {
             $eligibility = [
                 'abilityToApply' => 1,
-                'message'        => Config('constants.errorMessageProfileCompletionInvestor.1')
+                'message' => Config('constants.errorMessageProfileCompletionInvestor.1')
             ];
         }
 
         $industryData = InvestorIndustry::query()->where('investor_id', request()->user()->profile_str)->first();
 
-        if(empty($industryData)) {
+        if (empty($industryData)) {
             $eligibility = [
                 'abilityToApply' => 0,
-                'message'        => Config('constants.errorMessageProfileCompletionInvestor.2')
+                'message' => Config('constants.errorMessageProfileCompletionInvestor.2')
             ];
         }
 
-        if(empty(request()->user()->name) || empty(request()->user()->mobile)) {
+        if (empty(request()->user()->name) || empty(request()->user()->mobile)) {
             $eligibility = [
                 'abilityToApply' => 0,
-                'message'        => Config('constants.errorMessageProfileCompletionInvestor.3')
+                'message' => Config('constants.errorMessageProfileCompletionInvestor.3')
             ];
         }
 
         $investorData = InvestorDetails::query()->where('investor_id', request()->user()->profile_str)->first();
-        if(empty($investorData) || empty($investorData->investment_time) || empty($investorData->inv_amt)) {
+        if (empty($investorData) || empty($investorData->investment_time) || empty($investorData->inv_amt)) {
             $eligibility = [
                 'abilityToApply' => 0,
-                'message'        => Config('constants.errorMessageProfileCompletionInvestor.4')
+                'message' => Config('constants.errorMessageProfileCompletionInvestor.4')
             ];
         }
 
@@ -872,10 +881,10 @@ class CommonController extends Controller
             'investment_range' => request()->investment_range,
         ];
 
-        $leadSource = Config('constants.leadSource.'.request()->lead_source);
+        $leadSource = Config('constants.leadSource.' . request()->lead_source);
         $investorController = new InvestorController;
         $investorController->convertLeadsToInvestor($insertData, $leadSource);
-        return ;
+        return;
     }
 
     /**
@@ -883,17 +892,18 @@ class CommonController extends Controller
      */
     public static function checkCampaignUrl()
     {
-        if(!empty(request()->utm_source) && !empty(request()->utm_campaign)) {
+        if (!empty(request()->utm_source) && !empty(request()->utm_campaign)) {
             Cookie::getFacadeRoot()->queue('campaignSource', base64_decode(request()->utm_source), 21600);
             Cookie::getFacadeRoot()->queue('campaignVersion', base64_decode(request()->utm_campaign), 21600);
         }
     }
 
-    public function investormobileverify(){
+    public function investormobileverify()
+    {
 
         $mobile = request()->input('mobile');
         // dd($mobile);
-        $check  = UserAccount::query()->where('mobile', $mobile)->count();
+        $check = UserAccount::query()->where('mobile', $mobile)->count();
         return $check;
 
     }
@@ -904,28 +914,28 @@ class CommonController extends Controller
         $otp = request()->input('otpNo');
         $check = MobileVerification::query()->where('mobile_no', $mobile)->where('otp_code', $otp)->count();
         if ($check > 0) {
-            MobileVerification::query()->where('mobile_no', $mobile) ->where('otp_code', $otp)->update(['is_verified' => 1]);
+            MobileVerification::query()->where('mobile_no', $mobile)->where('otp_code', $otp)->update(['is_verified' => 1]);
         }
         return $check;
     }
 
-   public function brandNameValidation(Request $request)
+    public function brandNameValidation(Request $request)
     {
         $this->validate($request, ['search' => 'required']);
 
         $output['brandname'] = "";
-            $checkFranchisor = FranchisorBusinessDetail::query()->where('brand_name', request()->search)->first();
-            
-			if(!empty($checkFranchisor) && $checkFranchisor->step_completed > 0 && $checkFranchisor->step_completed < 6){
-                return response($output);
-			}
-			if(!empty($checkFranchisor)){
-	            $output['brandname'] = "brand name already exists";
-			}
+        $checkFranchisor = FranchisorBusinessDetail::query()->where('brand_name', request()->search)->first();
+
+        if (!empty($checkFranchisor) && $checkFranchisor->step_completed > 0 && $checkFranchisor->step_completed < 6) {
+            return response($output);
+        }
+        if (!empty($checkFranchisor)) {
+            $output['brandname'] = "brand name already exists";
+        }
         return response($output);
     }
-	
-//TO clean video Urls//
+
+    //TO clean video Urls//
     public static function getVideoUrl($string)
     {
 
@@ -947,7 +957,7 @@ class CommonController extends Controller
 
         //while (list($character, $replacement) = each($specialCharacters)) {
 
-        foreach ( (Array) $specialCharacters as $character => $replacement ) { //replaced above code as The each() function is deprecated in php7//
+        foreach ((Array) $specialCharacters as $character => $replacement) { //replaced above code as The each() function is deprecated in php7//
 
             $string = str_replace($character, '-' . $replacement . '-', $string);
         }
@@ -958,8 +968,8 @@ class CommonController extends Controller
         $string = preg_replace('/^[\-]+/', '', $string);
         $string = preg_replace('/[\-]+$/', '', $string);
         $string = preg_replace('/[\-]{2,}/', ' ', $string);
-        $array_title_replace     = array("    ","   ","  ", " ","---");
-        $content_title1          = str_replace($array_title_replace,"-",trim($string));
+        $array_title_replace = array("    ", "   ", "  ", " ", "---");
+        $content_title1 = str_replace($array_title_replace, "-", trim($string));
 
         return strtolower($content_title1);
         //return str_replace('\'', '', $title);

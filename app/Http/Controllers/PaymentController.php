@@ -10,13 +10,13 @@ use App\Models\InvestorDetails;
 use App\Models\MagazineSubscribe;
 use App\Models\PgInvestorPayment;
 use App\Models\ProfileMembership;
-// use App\Mail\BookPaymentMail;
-// use App\Mail\GeneralPaymentMail;
-// use App\Mail\InvestorPaymentMail;
+use App\Mail\BookPaymentMail;
+use App\Mail\GeneralPaymentMail;
+use App\Mail\InvestorPaymentMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
-// use App\Mail\InvestorCampaignPaymentMail;
-// use App\Mail\RawMail;
+use App\Mail\InvestorCampaignPaymentMail;
+use App\Mail\RawMail;
 class PaymentController extends Controller
 {
     public function payment()
@@ -79,7 +79,7 @@ class PaymentController extends Controller
         // Send Email to Investor Acquisition team for Paid Membership pitching
         /* Html Code for email */
         $data = "<table> <tr> <td>Name : </td><td>".$invName."</td></tr><tr> <td>Email : </td><td>".$invEmail."</td></tr><tr> <td>Mobile No. : </td><td>".$invMobile."</td></tr><tr> <td>Investor Id : </td><td>".$investorId."</td></tr><tr> <td>Address : </td><td>".$invAddress.", Country: ".$invData->inv_country."</td></tr><tr> <td>Time Of Payment : </td><td>".date('Y-m-d H:i:s')."</td></tr></table>";
-        // Mail::getFacadeRoot()->to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
+        Mail::getFacadeRoot()->to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
         // // End of Email to Investor Acquisition team
 
         if (!$insInvPay->save()){

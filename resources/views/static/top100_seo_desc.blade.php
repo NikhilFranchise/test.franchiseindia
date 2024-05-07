@@ -1,11 +1,11 @@
 
-<div class="back-bg-home hidden-xs">
-    <div class="container">
+<div class="back-bg-home ">
+    <div class="container" style="padding: 25px">
         <div class="company-profile">
             <h2 class="catbheading">
                 Understanding the Top 100 Franchise Selection Criteria:
             </h2>
-            <p class="company-txt">
+            <p class="company-txt" >
                 <ul>
                     <li> <strong> 1. Annual Turnover of the Company:</strong>
 
@@ -22,7 +22,7 @@
               </li>
               <li>
                 <strong> 4. Presence Across Cities:</strong>
-                The number of cities where the franchise is present indicates its geographical spread and market penetration. This metric is important for evaluating the brand’s &nbsp; &nbsp; appeal across diverse markets and its scalability.
+                The number of cities where the franchise is present indicates its geographical spread and market penetration. This metric is important for evaluating the brand’s <br> appeal across diverse markets and its scalability.
               </li>
               <li>
 
@@ -38,7 +38,7 @@
                
                 <li>
                     <strong>7. Total Investment and Area Required:</strong>
-                    This encompasses the capital and space needed to start a franchise, impacting the accessibility and initial costs for franchisees. It is essential for &nbsp;&nbsp; gauging the entry barriers and potential financial commitment involved.
+                    This encompasses the capital and space needed to start a franchise, impacting the accessibility and initial costs for franchisees. It is essential for <br> gauging the entry barriers and potential financial commitment involved.
                 
                 </li>
                 
@@ -87,14 +87,13 @@
                         15. Average Business from a Franchise Unit:
                     </strong>
                     Shows the typical revenue generated per unit. This metric is crucial for prospective franchisees to assess potential earnings and compare &nbsp; performance across different franchises.
-                
-                </li>
-            
+                </li> 
                <li>
                 <strong>
                     16. Franchisees Owning More Than One Unit:
                 </strong>
-                Reflects franchisee satisfaction and success within the franchise system. Multiple units under single franchisee ownership suggest a strong &nbsp;business model and franchisee confidence, important for assessing the franchise's appeal and operational success.
+                Reflects franchisee satisfaction and success within the franchise system. Multiple units under single franchisee ownership suggest a strong <br>
+                business model and franchisee confidence, important for assessing the franchise's appeal and operational success.
 
                </li>
                <li>

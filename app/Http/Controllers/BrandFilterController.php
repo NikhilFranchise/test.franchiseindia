@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\UserClick;
+use App\Models\UserClick;
 use App\FranchisorTradePartner;
 use App\UniqueVisit;
 use App\ContentList;

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class AskInvestor extends Model
 {
     use HasFactory;
-    public $table = 'ask_investor';
+    protected $table = 'ask_investor';
+    protected $fillable = ['name'];
 
 }

@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cookie;
+
 class ExpressInstaController extends Controller
 {
     public function invNormalLead(Request $request)
@@ -77,11 +78,11 @@ class ExpressInstaController extends Controller
         if ($insert == 1) {
             //Lead Notification to Free Franchisor
 
-            $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 30).".." : $request->user()->name);
+            $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 30) . ".." : $request->user()->name);
             $this->sendFranNotifications($franData->userDetail->email, $details[1], $franData->userDetail->mobile, $franSmsMsg, 'free');
 
             //Lead Notification to Free Investor
-            $invSmsMsg = sprintf(config('txtlocal.InvFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 30).".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40).".." : $franData->company_name);
+            $invSmsMsg = sprintf(config('txtlocal.InvFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 30) . ".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40) . ".." : $franData->company_name);
             $this->sendInvNotifications($request->user()->email, $dataInvFree, $request->user()->mobile, $invSmsMsg, 'free');
         }
     }
@@ -93,7 +94,7 @@ class ExpressInstaController extends Controller
      */
     public function invLead(Request $request)
     {
-        if(!Auth::check())
+        if (!Auth::check())
             return "";
 
         $visibility = 0;
@@ -105,7 +106,7 @@ class ExpressInstaController extends Controller
             ->where('investor_id', $request->user()->profile_str)
             ->first();
 
-        $invData  = InvestorDetails::query()->where('investor_id', $request->user()->profile_str)->first();
+        $invData = InvestorDetails::query()->where('investor_id', $request->user()->profile_str)->first();
         $franData = FranchisorBusinessDetail::query()->select('franchisor_business_details.*', 'user_accounts.name', 'user_accounts.email', 'user_accounts.mobile')
             ->where('franchisor_id', $request->input('franId'))
             ->leftJoin('user_accounts', 'franchisor_business_details.franchisor_id', '=', 'user_accounts.profile_str')
@@ -212,22 +213,22 @@ class ExpressInstaController extends Controller
             //Sending notifications to franchisor
             if ($franData->membership_type != 1) {
                 //Lead Notification to Free Franchisor
-                $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40).".." : $request->user()->name);
+                $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name);
                 $this->sendFranNotifications($franData->userDetail->email, $details[1], $franData->userDetail->mobile, $franSmsMsg, 'free');
             } else {
                 //Lead Notification to paid franchisor
-                $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40).".." : $request->user()->name, strlen($request->user()->mobile) > 15 ? substr($request->user()->mobile, 0, 15).".." : $request->user()->mobile);
+                $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name, strlen($request->user()->mobile) > 15 ? substr($request->user()->mobile, 0, 15) . ".." : $request->user()->mobile);
                 $this->sendFranNotifications($franData->userDetail->email, $details, $franData->userDetail->mobile, $franSmsMsg, 'paid');
             }
 
             //Sending notifications to Investor
             if ($request->user()->membership_type != 1 && $lastApply != 1) {
                 //Lead Notification to Free Investor
-                $invSmsMsg = sprintf(config('txtlocal.InvFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40).".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40).".." : $franData->company_name);
+                $invSmsMsg = sprintf(config('txtlocal.InvFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40) . ".." : $franData->company_name);
                 $this->sendInvNotifications($request->user()->email, $dataInvFree, $request->user()->mobile, $invSmsMsg, 'free');
             } else {
                 //Lead Notifications to a Paid Investor
-                $invSmsMsg = sprintf(config('txtlocal.InvPaid'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40).".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40).".." : $franData->company_name, strlen($franData->userDetail->mobile) > 15 ? substr($franData->userDetail->mobile, 0, 15).".." : $franData->userDetail->mobile);
+                $invSmsMsg = sprintf(config('txtlocal.InvPaid'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40) . ".." : $franData->company_name, strlen($franData->userDetail->mobile) > 15 ? substr($franData->userDetail->mobile, 0, 15) . ".." : $franData->userDetail->mobile);
                 $this->sendInvNotifications($request->user()->email, $detailsInv, $request->user()->mobile, $invSmsMsg, 'paid');
             }
 
@@ -239,9 +240,9 @@ class ExpressInstaController extends Controller
         if ($action == 1 || $request->user()->membership_type != 1)
             return 'upgrade';
 
-        $telephone = ($franData->telephone == '')? 'NA': $franData->telephone;
-        $Website = ($franData->website == '')?'NA':$franData->website;
-        $myJson = '{"success":true,"user":{"company_name":"'.$franData->company_name.'","ceo_name":"'.$franData->ceo_name.'","telephone":"'.$telephone.'","fran_address":"'.$franData->fran_address.'","city":"'.$franData->city.'","state":"'.$franData->state.'","pincode":"'.$franData->pincode.'","email":"'.$franData->userDetail->email.'","website":"'.$Website.'"}}';
+        $telephone = ($franData->telephone == '') ? 'NA' : $franData->telephone;
+        $Website = ($franData->website == '') ? 'NA' : $franData->website;
+        $myJson = '{"success":true,"user":{"company_name":"' . $franData->company_name . '","ceo_name":"' . $franData->ceo_name . '","telephone":"' . $telephone . '","fran_address":"' . $franData->fran_address . '","city":"' . $franData->city . '","state":"' . $franData->state . '","pincode":"' . $franData->pincode . '","email":"' . $franData->userDetail->email . '","website":"' . $Website . '"}}';
         return $myJson;
     }
 
@@ -265,7 +266,7 @@ class ExpressInstaController extends Controller
             if ((!empty($check) && $check->visibility == 1) || $request->user()->membership_plan == 405)
                 $visibility = 1;
 
-            $invData  = InvestorDetails::query()->where('investor_id', $request->user()->profile_str)->first();
+            $invData = InvestorDetails::query()->where('investor_id', $request->user()->profile_str)->first();
             $franData = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisor)->first();
 
             $result .= $franData->company_name . ", ";
@@ -326,21 +327,21 @@ class ExpressInstaController extends Controller
                 //Sending notifications to paid investor
                 if ($franData->membership_type == 1) {
                     //Notifications to paid franchisor
-                    $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40).".." : $request->user()->name, strlen($request->user()->mobile) > 15 ? substr($request->user()->mobile, 0, 15).".." : $request->user()->mobile);
+                    $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name, strlen($request->user()->mobile) > 15 ? substr($request->user()->mobile, 0, 15) . ".." : $request->user()->mobile);
                     $this->sendFranNotifications($franData->userDetail->email, $details, $franData->userDetail->mobile, $franSmsMsg, 'paid');
                 } else {
                     //Notification to free franchisor
-                    $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40).".." : $request->user()->name);
+                    $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name);
                     $this->sendFranNotifications($franData->userDetail->email, $details[1], $franData->userDetail->mobile, $franSmsMsg, 'free');
                 }
 
                 if ($request->user()->membership_plan == 405 || $visibility == 1) {
                     //sms sending
-                    $invSmsMsg = sprintf(config('txtlocal.InvPaid'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40).".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40).".." : $franData->company_name, strlen($franData->userDetail->mobile) > 15 ? substr($franData->userDetail->mobile, 0, 15).".." : $franData->userDetail->mobile);
+                    $invSmsMsg = sprintf(config('txtlocal.InvPaid'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40) . ".." : $franData->company_name, strlen($franData->userDetail->mobile) > 15 ? substr($franData->userDetail->mobile, 0, 15) . ".." : $franData->userDetail->mobile);
                     $this->sendInvNotifications($request->user()->email, $detailsInv, $request->user()->mobile, $invSmsMsg, 'paid');
                 } else {
                     //Notification to free investor
-                    $invSmsMsg = sprintf(config('txtlocal.InvFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40).".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40).".." : $franData->company_name);
+                    $invSmsMsg = sprintf(config('txtlocal.InvFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40) . ".." : $franData->company_name);
                     $this->sendInvNotifications($request->user()->email, $dataInvFree, $request->user()->mobile, $invSmsMsg, 'free');
                 }
 
@@ -360,7 +361,7 @@ class ExpressInstaController extends Controller
      */
     public function freeInfo(Request $request)
     {
-        
+
         $companyName = "";
         $successCount = 1;
         $failedCount = 1;
@@ -374,7 +375,7 @@ class ExpressInstaController extends Controller
         $add = $request->input('address');
         $pincode = $request->input('pincode');
         $investmentRange = $request->input('investment_range');
-        
+
         $needLoan = 0;
         if (isset(request()->need_loan) && request()->need_loan == 'on')
             $needLoan = 1;
@@ -394,7 +395,7 @@ class ExpressInstaController extends Controller
                 $franchisorDetail = FranchisorBusinessDetail::query()->where('franchisor_id', $franId)->first();
                 $userDetail = UserAccount::query()->where('profile_str', $franId)->first();
                 $source_ref = "";
-                if(!empty(Cookie::get('campaignSource')))
+                if (!empty(Cookie::get('campaignSource')))
                     $source_ref = Cookie::get('campaignSource');
 
                 if ($countOld == 0) {
@@ -416,14 +417,14 @@ class ExpressInstaController extends Controller
                         'visibility_date' => ($franchisorDetail->membership_type == 1 ? date('Y-m-d H:i:s') : "")
                     ]);
 
-                    if($needLoan == 1) {
+                    if ($needLoan == 1) {
                         PropertyLoan::query()->insert([
                             'name' => $name,
                             'email' => $email,
                             'mobile' => $phone,
                             'address' => $add,
                             'pincode' => $pincode,
-                            'income_range' => Config('constants.investRangeInWords.'.$investmentRange),
+                            'income_range' => Config('constants.investRangeInWords.' . $investmentRange),
                             'source' => 'INSTA APPLY(Multiple Apply)',
                         ]);
                         $needLoan = 0;
@@ -450,7 +451,7 @@ class ExpressInstaController extends Controller
                     if ($userDetail->email == 'fiblbrands@franchiseindia.in') {
                         try {
                             CronController::saveAPI($name, $email, $phone, $franchisorDetail->ind_main_cat, $franchisorDetail->fibl_brands, $city, $state);
-                        } Catch (\Exception $e) {
+                        } catch (\Exception $e) {
                             echo $e->getMessage();
                         }
                     }
@@ -471,7 +472,7 @@ class ExpressInstaController extends Controller
 
                     if ($franchisorDetail->membership_type != 0) {
                         //sms sending
-                        $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($name) > 40 ? substr($name, 0, 40).".." : $name, strlen($phone) > 40 ? substr($phone, 0, 15).".." : $phone);
+                        $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name, strlen($phone) > 40 ? substr($phone, 0, 15) . ".." : $phone);
 
                         //Sending Paid Franchisor Notifications
                         $this->sendFranNotifications($userDetail->email, $details, $userDetail->mobile, $franSmsMsg, 'paid');
@@ -479,7 +480,7 @@ class ExpressInstaController extends Controller
 
                     if ($franchisorDetail->membership_type == 0) {
                         //sms text to be send for free franchisor sending
-                        $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($name) > 40 ? substr($name, 0, 40).".." : $name);
+                        $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
 
                         //Sending Free Franchisor Notifications
                         $this->sendFranNotifications($userDetail->email, $details[1], $userDetail->mobile, $franSmsMsg, 'free');
@@ -524,7 +525,7 @@ class ExpressInstaController extends Controller
         $detailMail[1] = $request->input('infoname');
 
         //Sms text for a visitor
-        $franSmsMsg = sprintf(config('txtlocal.GuestInv'), strlen($name) > 40 ? substr($name, 0, 40).".." : $name);
+        $franSmsMsg = sprintf(config('txtlocal.GuestInv'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
         $this->sendInvNotifications($email, $detailMail, $phone, $franSmsMsg, 'visitor');
 
         return view('thanks/brandcontact', compact('result'));
@@ -537,7 +538,7 @@ class ExpressInstaController extends Controller
      */
     public function brandInfo(Request $request)
     {
-        
+
         $franId = $request->input('frandetailsid');
         $name = $request->input('infoname');
         $email = $request->input('infoemail');
@@ -552,10 +553,10 @@ class ExpressInstaController extends Controller
             ->where('mobile_no', $phone)
             ->where('is_verified', '1')
             ->first();
-       
-        if(empty($chkMobVerify)){
+
+        if (empty($chkMobVerify)) {
             $result = "<span>Congratulations!</span> Your application was successful to $franId . Your request will be sent to the company. The business development representative will contact you soon through your contact number / email ID.";
-        } else{
+        } else {
             if (isset(request()->need_loan) && request()->need_loan == 'on')
                 $needLoan = 1;
 
@@ -591,7 +592,7 @@ class ExpressInstaController extends Controller
                 $resource = "leadPopup";
 
             $source_ref = "";
-            if(!empty(Cookie::get('campaignSource')))
+            if (!empty(Cookie::get('campaignSource')))
                 $source_ref = Cookie::get('campaignSource');
             //$IndMainCat = ($franchisorDetail->ind_main_cat) ? $franchisorDetail->ind_main_cat : 0;
             $insertData = [
@@ -614,17 +615,17 @@ class ExpressInstaController extends Controller
             ];
             // dd($insertData);
             // If count is zero, Insert a new record
-            $insertId =  ExpressInstaApply::query()->insertGetId($insertData);
+            $insertId = ExpressInstaApply::query()->insertGetId($insertData);
 
-            if($needLoan == 1) {
+            if ($needLoan == 1) {
                 PropertyLoan::query()->insert([
                     'name' => $name,
                     'email' => $email,
                     'mobile' => $phone,
                     'address' => $add,
                     'pincode' => $pincode,
-                    'income_range' => Config('constants.investRangeInWords.'.$investmentRange),
-                    'source' => 'INSTA APPLY('.$insertId.')',
+                    'income_range' => Config('constants.investRangeInWords.' . $investmentRange),
+                    'source' => 'INSTA APPLY(' . $insertId . ')',
                 ]);
             }
 
@@ -649,7 +650,7 @@ class ExpressInstaController extends Controller
             if ($userDetail->email == 'fiblbrands@franchiseindia.in') {
                 try {
                     CronController::saveAPI($name, $email, $phone, $franchisorDetail->ind_main_cat, $franchisorDetail->fibl_brands, $city, $state);
-                } Catch (\Exception $e) {
+                } catch (\Exception $e) {
                     echo $e->getMessage();
                 }
             }
@@ -677,7 +678,7 @@ class ExpressInstaController extends Controller
 
             if ($franchisorDetail->membership_type != 0) {
                 //Sms message
-                $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($name) > 40 ? substr($name, 0, 40).".." : $name, strlen($phone) > 15 ? substr($phone, 0, 15).".." : $phone);
+                $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name, strlen($phone) > 15 ? substr($phone, 0, 15) . ".." : $phone);
 
                 //Sending Paid Franchisor Notifications
                 $this->sendFranNotifications($userDetail->email, $details, $userDetail->mobile, $franSmsMsg, 'paid');
@@ -685,7 +686,7 @@ class ExpressInstaController extends Controller
 
             if ($franchisorDetail->membership_type == 0) {
                 //sms sending
-                $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($name) > 40 ? substr($name, 0, 40).".." : $name);
+                $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
 
                 //Sending Free Franchisor Notifications
                 $this->sendFranNotifications($userDetail->email, $details[1], $userDetail->mobile, $franSmsMsg, 'free');
@@ -695,7 +696,7 @@ class ExpressInstaController extends Controller
             $detailMail[1] = $request->input('infoname');
 
             //sms message for a visitor sending
-            $franSmsMsg = sprintf(config('txtlocal.GuestInv'), strlen($name) > 40 ? substr($name, 0, 40).".." : $name);
+            $franSmsMsg = sprintf(config('txtlocal.GuestInv'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
 
             $this->sendInvNotifications($email, $detailMail, $phone, $franSmsMsg, 'visitor');
 
@@ -742,9 +743,11 @@ class ExpressInstaController extends Controller
         // If no record exists, send the verification mail
         if ($checkEmail != null && $checkEmail->count() == 0) {
 
-            FiNewsLetter::query()->insert(['email' => $email,
+            FiNewsLetter::query()->insert([
+                'email' => $email,
                 'verify_code' => $randCode,
-                'site_type' => $siteType]);
+                'site_type' => $siteType
+            ]);
             $this->sendNewsletterNotifications($email, $randCode);
 
         } else if ($checkEmail != null && $checkEmail->count() != 0 && $checkEmail->status != 'S') {
@@ -764,7 +767,7 @@ class ExpressInstaController extends Controller
     {
         switch ($type) {
             case 'paid':
-                // $senderClass = new PaidFranchisor($data);
+                $senderClass = new PaidFranchisor($data);
                 break;
             default:
                 $senderClass = new FreeFranchisor($data);
@@ -776,7 +779,7 @@ class ExpressInstaController extends Controller
                 $this->sendNotificationToSalesPerson($email);
         }
 
-        // $this->sendMail($email, $senderClass);
+        $this->sendMail($email, $senderClass);
     }
 
     /**
@@ -867,6 +870,6 @@ class ExpressInstaController extends Controller
     private function logErrorForLeadGeneration($path, $msg)
     {
         Storage::getFacadeRoot()->append($path, $msg);
-    
-}
+
+    }
 }
