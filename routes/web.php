@@ -24,9 +24,14 @@ use App\Http\Controllers\FranPaymentController;
 use App\Http\Controllers\NewsLetterController;
 use App\Http\Controllers\RestaurantController;
 Use App\Http\Controllers\ArticleController;
+<<<<<<< HEAD
 Use App\Http\Controllers\InstaSubscribeController;
 Use App\Http\Controllers\AdvertiseController;
 Use App\Http\Controllers\BookController;
+=======
+Use App\Http\Controllers\AmpArticleController;
+
+>>>>>>> 75f33fdb98a86a1e6d674964f599e5ffa0475d9c
 use Illuminate\Support\Facades\Route;
 
 
@@ -323,6 +328,7 @@ Route::group( [ 'prefix' => 'restaurant' ], function()
 
 });
 
+<<<<<<< HEAD
 
 
 //for books
@@ -333,4 +339,150 @@ Route::group( [ 'prefix' => 'book' ], function()
     Route::get('{name}',                              [BookController::class,'bookInner']);
     //Post routes
     Route::post('{name}',                             [BookController::class,'bookInner']);
+=======
+// amp routes 
+Route::group( [ 'prefix' => 'amp' ], function()
+{
+	Route::get('location/{city}',         [BusinessListingController::class,'listingLocation']);
+	Route::get('location',            [BusinessListingController::class,'listingLocation']);
+
+    //Hindi language amp pages routes
+    Route::group( [ 'prefix' => 'hi' ], function()
+    {
+        //Category Page Routes
+        Route::group( [ 'prefix' => 'category' ], function()
+        {
+            Route::get('atoz',        [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('search',      [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('searchby',    [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('index',              function(){return redirect('business-opportunities/all/all', 301);});
+        });
+
+        //Directory Page Routes
+        Route::group( [ 'prefix' => 'business-opportunities' ], function()
+        {
+            Route::get('/',                                       function() { return view('category/category'); } );
+            Route::get('all/all',                   [BusinessListingController::class,'searchBusinessListing']       );
+            Route::get('franchises-{price_range}',    [BusinessListingController::class,'searchBusinessListing']     );
+            Route::get('tamilnadu.{state_code}',       [BusinessListingController::class,'searchBusinessListing']    );
+            Route::get('telangana.{state_code}',       [BusinessListingController::class,'searchBusinessListing']    );
+            Route::get('andaman-and-nicobar.{state_code}', [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('maharashtra.{state_code}',         [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('delhi.{state_code}',               [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('karnataka.{state_code}',           [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('west-bengal.{state_code}',         [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('gujarat.{state_code}',            [BusinessListingController::class,'searchBusinessListing'] );
+            Route::get('uttar-pradesh.{state_code}',      [BusinessListingController::class,'searchBusinessListing'] );
+            Route::get('madhya-pradesh.{state_code}',     [BusinessListingController::class,'searchBusinessListing'] );
+            Route::get('haryana.{state_code}',            [BusinessListingController::class,'searchBusinessListing'] );
+            Route::get('rajasthan.{state_code}',          [BusinessListingController::class,'searchBusinessListing'] );
+            Route::get('andhra-pradesh.{state_code}',      [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('kerala.{state_code}',              [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('punjab.{state_code}',              [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('chandigarh.{state_code}',           [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('arunachal-pradesh.{state_code}',    [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('assam.{state_code}',                [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('bihar.{state_code}',                [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('chhattisgarh.{state_code}',         [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('daman-and-diu.{state_code}',        [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('goa.{state_code}',                  [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('jharkhand.{state_code}',            [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('lakshadweep.{state_code}',          [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('manipur.{state_code}',              [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('meghalaya.{state_code}',            [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('mizoram.{state_code}',              [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('nagaland.{state_code}',             [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('odisha.{state_code}',               [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('pondicherry.{state_code}',          [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('sikkim.{state_code}',               [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('tripura.{state_code}',              [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('uttarakhand.{state_code}',          [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('himachal-pradesh.{state_code}',     [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('jammu-and-kashmir.{state_code}',    [BusinessListingController::class,'searchBusinessListing']);
+
+            Route::get('{searchTerm}.FT{ftype}',    [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('{searchTerm}/{categoryIds}',    [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('{searchTerm}/{categoryIds}/{locationIds}',    [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}',    [BusinessListingController::class,'searchBusinessListing']);
+            Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}',    [BusinessListingController::class,'searchBusinessListing']);
+
+            Route::get('{catUrl}.{category_param}',    [BusinessListingController::class,'getBusinessListing']);
+            Route::get('{lowcost}',                     [BusinessListingController::class,'searchBusinessListing'] );
+        });
+
+
+
+
+        Route::get('content/{kicker}/{kickerId}', [AmpArticleController::class,'getAmpHindiKickerList']); // Hindi Kicker Url
+        Route::get('content',                   [AmpArticleController::class,'ampArticleHindiHome'] );         // Article Hindi Home amp
+        Route::get('brands/{profileName}',      [BrandController::class,'ampBrandDetails']);                // Hindi brand url
+        Route::get('{contentSite}/{title}.{id}', [AmpArticleController::class,'getAmpHindiArticle']);
+    });
+
+    //Category Page Routes
+    Route::group( [ 'prefix' => 'category' ], function()
+    {
+        Route::get('atoz',       [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('search',     [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('searchby',   [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('index',              function(){return redirect('business-opportunities/all/all', 301);});
+    });
+
+    //Directory Page Routes
+    Route::group( [ 'prefix' => 'business-opportunities' ], function()
+    {
+        Route::get('/',                                       function() { return view('category/category'); } );
+        Route::get('all/all',                           [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('franchises-{price_range}',          [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('tamilnadu.{state_code}',            [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('telangana.{state_code}',            [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('andaman-and-nicobar.{state_code}',  [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('maharashtra.{state_code}',          [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('delhi.{state_code}',                [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('karnataka.{state_code}',            [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('west-bengal.{state_code}',          [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('gujarat.{state_code}',              [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('uttar-pradesh.{state_code}',        [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('madhya-pradesh.{state_code}',       [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('haryana.{state_code}',              [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('rajasthan.{state_code}',            [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('andhra-pradesh.{state_code}',       [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('kerala.{state_code}',               [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('punjab.{state_code}',               [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('chandigarh.{state_code}',           [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('arunachal-pradesh.{state_code}',    [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('assam.{state_code}',                [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('bihar.{state_code}',                [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('chhattisgarh.{state_code}',         [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('daman-and-diu.{state_code}',        [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('goa.{state_code}',                  [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('jharkhand.{state_code}',            [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('lakshadweep.{state_code}',          [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('manipur.{state_code}',              [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('meghalaya.{state_code}',            [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('mizoram.{state_code}',              [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('nagaland.{state_code}',             [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('odisha.{state_code}',               [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('pondicherry.{state_code}',          [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('sikkim.{state_code}',               [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('tripura.{state_code}',              [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('uttarakhand.{state_code}',          [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('himachal-pradesh.{state_code}',     [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('jammu-and-kashmir.{state_code}',    [BusinessListingController::class,'searchBusinessListing']);
+
+        Route::get('{searchTerm}.FT{ftype}',            [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('{searchTerm}/{categoryIds}',        [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('{searchTerm}/{categoryIds}/{locationIds}',    [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}',    [BusinessListingController::class,'searchBusinessListing']);
+        Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}',    [BusinessListingController::class,'searchBusinessListing']);
+
+        Route::get('{catUrl}.{category_param}',      [BusinessListingController::class,'getBusinessListing']);
+        Route::get('{lowcost}',                         [BusinessListingController::class,'searchBusinessListing']);
+    });
+
+
+
+    Route::get('brands/{profileName}',                [BrandController::class,'ampBrandDetails']);                // Eng AMP brand url
+    Route::get('{contentSite}/{title}.{id}',           [AmpArticleController::class,'ampCreate']);
+>>>>>>> 75f33fdb98a86a1e6d674964f599e5ffa0475d9c
 });
