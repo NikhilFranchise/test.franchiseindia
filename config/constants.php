@@ -7,8 +7,8 @@ return [
     | Application specific config array values
     |--------------------------------------------------------------------------
     */
-    //'MainDomain' => env( 'APP_URL' ,'https://fiuat.franchiseindia.com'),
-     'MainDomain' => 'http://127.0.0.1:8000',
+    'MainDomain' => env( 'APP_URL' ,'https://fiuat.franchiseindia.com'),
+    // 'MainDomain' => 'http://127.0.0.1:8000',
 
     'brandPagePattern' => '%s/brands/%s.%s',
     'catListUrl' => '%s/%s/%s.%s',

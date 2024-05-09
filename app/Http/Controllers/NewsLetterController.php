@@ -329,12 +329,12 @@ class NewsLetterController extends Controller
                 'site_type' => $siteType
             ]);
             if (!empty($email))
-                Mail::getFacadeRoot()->to($email)->send(new NewsLetterSubscribe($randCode));
+                Mail::to($email)->send(new NewsLetterSubscribe($randCode));
 
         } else if ($checkEmail->count() != 0 && $checkEmail->status != 'S') {
             FiNewsLetter::query()->where('email', $email)->where('site_type', $siteType)->update(['verify_code' => $randCode]);
             if (!empty($email))
-                Mail::getFacadeRoot()->to($email)->send(new NewsLetterSubscribe($randCode));
+                Mail::to($email)->send(new NewsLetterSubscribe($randCode));
         }
     }
 }
