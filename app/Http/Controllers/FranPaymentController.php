@@ -179,6 +179,7 @@ class FranPaymentController extends Controller
      */
     public function paymentFailure(Request $request)
     {
+        // dd($request);
         $paymentController = new PaymentController();
         $order_id = 0;
         $encResponse=$_POST["encResp"];			//This is the response sent by the CCAvenue Server

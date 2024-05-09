@@ -112,4 +112,7 @@ class NewHomePageController extends Controller
 
 		return $url;
 	}
+	public function top100(){
+        return view('static.top-100-franchisors');
+    }
 }

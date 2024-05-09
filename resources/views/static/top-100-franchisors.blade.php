@@ -1,5 +1,5 @@
-@section('seoTitle', 'Franchise India Top 100 Franchisees 2019 - Franchise India')
-@section('seoDesc', 'Checkout the top 100 franchisees of year 2019.')
+@section('seoTitle', 'Top 100 Franchise/Franchisor 2023 Opportunities in India 2023: Franchisor Insights - Franchise India')
+@section('seoDesc', 'Top 100 Franchise Businesses in India 2023: Dive into the most successful franchisor and franchisee opportunities. Gain insights into the best sectors to launch and grow your franchise this year.')
 @section('seoKeywords', 'Franchise India Top 100 Franchisees, Top 100 Franchisees')
 @extends('layout.master')
 @section('content')
@@ -64,7 +64,7 @@ ul.topp li{color: #333333;font-size: 15px;margin-bottom: 5px;position: relative;
 
 }
 @media screen and (max-width:767px){
-.moblink{display: block;}
+.moblink{display: none;}
 .yeartab{margin-top:-60px;}
 .top-hundred h2{font-size:20px;}
 a.desklink{display: none;}
@@ -125,8 +125,9 @@ a.desklink{display: none;}
 <div id="year2023" role="tabpanel" class="tab-pane active">
 
 <div class="top-hundred">    
-<h2>Top 100 Franchise 2023</h2>
-<p>Revealing brand impact, consumer value, and dynamic opportunities. Explore Indian franchise trends, encompassing global giants and emerging innovators. Rankings consider financial strength, expansion, growth rate, and success, reflecting distinct identity, strong planning, support, innovation, and cultural sensitivity.</p>
+    <br>
+<h1>Top 100 Franchise/Franchisor 2023</h1>
+<p>Revealing brand impact, consumer value, and dynamic opportunities. Explore trends in Indian franchises, including global giants and emerging innovators. Rankings consider financial strength, expansion, growth rate, and success, reflecting a distinct identity, robust planning, support, innovation, and cultural sensitivity. This analysis assists franchisees and franchisors alike, offering insights into the franchise sector that underpin thriving business ventures.</p>
 <a data-target="#topFranchise" data-toggle="modal">Understand Selection Criteria</a>
 </div>
 
@@ -1476,8 +1477,7 @@ a.desklink{display: none;}
 <a class="load_more moreless-button1">Load more »</a>
 </div>
 <!-- all -->
-
-
+@include('static.top100_seo_desc')
 <!-- Automotive -->
 <div id="automotive1" role="tabpanel" class="tab-pane ">
 <table class="table-striped table-responsive top-table">
@@ -3054,8 +3054,9 @@ a.desklink{display: none;}
 <div id="year2022" role="tabpanel" class="tab-pane">
 
 <div class="top-hundred">    
-<h2>Top 100 Franchise 2022</h2>
-<p>Revealing brand impact, consumer value, and dynamic opportunities. Explore Indian franchise trends, encompassing global giants and emerging innovators. Rankings consider financial strength, expansion, growth rate, and success, reflecting distinct identity, strong planning, support, innovation, and cultural sensitivity.</p>
+    <br>
+<h1>Top 100 Franchise/Franchisor 2022</h1>
+<p>Revealing brand impact, consumer value, and dynamic opportunities. Explore trends in Indian franchises, including global giants and emerging innovators. Rankings consider financial strength, expansion, growth rate, and success, reflecting a distinct identity, robust planning, support, innovation, and cultural sensitivity. This analysis assists franchisees and franchisors alike, offering insights into the franchise sector that underpin thriving business ventures.</p>
 <a data-target="#topFranchise" data-toggle="modal">Understand Selection Criteria</a>
 </div>
 
@@ -4448,7 +4449,7 @@ a.desklink{display: none;}
     <a class="load_more moreless-button2">Load more »</a>
     </div>
     <!-- all -->
-
+    @include('static.top100_seo_desc')
 <!-- Automotive -->
 <div id="automotive2" role="tabpanel" class="tab-pane">
 <table class="table-striped table-responsive top-table">
@@ -5925,8 +5926,9 @@ a.desklink{display: none;}
 <div id="year2021" role="tabpanel" class="tab-pane">
 
 <div class="top-hundred">    
-<h2>Top 100 Franchise 2021</h2>
-<p>Revealing brand impact, consumer value, and dynamic opportunities. Explore Indian franchise trends, encompassing global giants and emerging innovators. Rankings consider financial strength, expansion, growth rate, and success, reflecting distinct identity, strong planning, support, innovation, and cultural sensitivity.</p>
+    <br>
+<h1>Top 100 Franchise/Franchisor 2021</h1>
+<p>Revealing brand impact, consumer value, and dynamic opportunities. Explore trends in Indian franchises, including global giants and emerging innovators. Rankings consider financial strength, expansion, growth rate, and success, reflecting a distinct identity, robust planning, support, innovation, and cultural sensitivity. This analysis assists franchisees and franchisors alike, offering insights into the franchise sector that underpin thriving business ventures.</p>
 <a data-target="#topFranchise" data-toggle="modal">Understand Selection Criteria</a>
 </div>
 
@@ -7311,7 +7313,7 @@ a.desklink{display: none;}
     <a class="load_more moreless-button3">Load more »</a>
     </div>
     <!-- a -->
-
+    @include('static.top100_seo_desc')
 <!-- Automotive -->
 <div id="automotive3" role="tabpanel" class="tab-pane">
 <table class="table-striped table-responsive top-table">
@@ -8813,8 +8815,9 @@ a.desklink{display: none;}
 <div id="year2020" role="tabpanel" class="tab-pane">
 
 <div class="top-hundred">    
-<h2>Top 100 Franchise 2020</h2>
-<p>Revealing brand impact, consumer value, and dynamic opportunities. Explore Indian franchise trends, encompassing global giants and emerging innovators. Rankings consider financial strength, expansion, growth rate, and success, reflecting distinct identity, strong planning, support, innovation, and cultural sensitivity.</p>
+    <br>
+<h1>Top 100 Franchise/Franchisor 2020</h1>
+<p>Revealing brand impact, consumer value, and dynamic opportunities. Explore trends in Indian franchises, including global giants and emerging innovators. Rankings consider financial strength, expansion, growth rate, and success, reflecting a distinct identity, robust planning, support, innovation, and cultural sensitivity. This analysis assists franchisees and franchisors alike, offering insights into the franchise sector that underpin thriving business ventures.</p>
 <a data-target="#topFranchise" data-toggle="modal">Understand Selection Criteria</a>
 </div>
 
@@ -10183,8 +10186,9 @@ a.desklink{display: none;}
         <a class="load_more moreless-button4">Load more »</a>
         </div>
         <!-- all -->
-
-<!-- Automotive -->
+        @include('static.top100_seo_desc')
+        
+        <!-- Automotive -->
 <div id="automotive4" role="tabpanel" class="tab-pane ">
 <table class="table-striped table-responsive top-table">
     <tr>
@@ -11579,6 +11583,7 @@ a.desklink{display: none;}
         </a>
     </td>
 </tr>
+
 <tr>
     <td>11</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/BONBENO.gif" alt="BONBENO">BONBENO</a></td>
@@ -11593,6 +11598,7 @@ a.desklink{display: none;}
         </a>
     </td>
 </tr>
+
 <tr>
     <td>12</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/blinkit.75501"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/blinkit_1.png" alt="Grofers (Blinkit)">Grofers (Blinkit)</a></td>
@@ -11641,8 +11647,9 @@ a.desklink{display: none;}
 <div id="year2019" role="tabpanel" class="tab-pane">
 
     <div class="top-hundred">    
-    <h2>Top 100 Franchise 2019</h2>
-    <p>Revealing brand impact, consumer value, and dynamic opportunities. Explore Indian franchise trends, encompassing global giants and emerging innovators. Rankings consider financial strength, expansion, growth rate, and success, reflecting distinct identity, strong planning, support, innovation, and cultural sensitivity.</p>
+        <br>
+    <h1>Top 100 Franchise/Franchisor 2019</h1>
+    <p>Revealing brand impact, consumer value, and dynamic opportunities. Explore trends in Indian franchises, including global giants and emerging innovators. Rankings consider financial strength, expansion, growth rate, and success, reflecting a distinct identity, robust planning, support, innovation, and cultural sensitivity. This analysis assists franchisees and franchisors alike, offering insights into the franchise sector that underpin thriving business ventures.</p>
     <a data-target="#topFranchise" data-toggle="modal">Understand Selection Criteria</a>
     </div>
     
@@ -13086,6 +13093,8 @@ a.desklink{display: none;}
         </div>
         <!-- all -->
     
+        @include('static.top100_seo_desc')
+
     <!-- Automotive -->
     <div id="automotive5" role="tabpanel" class="tab-pane">
     <table class="table-striped table-responsive top-table">

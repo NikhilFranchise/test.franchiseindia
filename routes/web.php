@@ -22,6 +22,9 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\InvPaymentController;
 use App\Http\Controllers\FranPaymentController;
 use App\Http\Controllers\NewsLetterController;
+use App\Http\Controllers\RestaurantController;
+Use App\Http\Controllers\ArticleController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -94,6 +97,7 @@ Route::get('fibl/login', [LoginController::class, 'fiblLogin']);  // FIBL brand 
 Route::post('fibl/login', [LoginController::class, 'fiblLoginCheck']);
 Route::post('getfreeinfo', [ExpressInstaController::class, 'freeInfo']);      //guest
 
+Route::get('/top-100-franchise',    [NewHomePageController::class,'top100']);
 
 //Payment Routes
 Route::get('payment', [PaymentController::class, 'payment']);
@@ -296,4 +300,21 @@ Route::post('payment/failure', [PaymentController::class, 'getHdfcPgResponseFail
 Route::post('payment/cancelled', [PaymentController::class, 'getHdfcPgResponseFailed']);
 Route::get('confirm/{id}', [CommonController::class, 'verifyEmail']); // Mail Verification
 Route::get('newsletter/{code}', [NewsLetterController::class, 'subscriptionForm']);
+
+// Restaurant Routes
+Route::group( [ 'prefix' => 'restaurant' ], function()
+{
+    Route::get('/',                      [RestaurantController::class,'articleRestaurant']);
+    Route::get('about',                      function() { return redirect('https://www.restaurantindia.in/about-us', 301);});
+    Route::get('contact',                    function() { return redirect('https://www.restaurantindia.in/contact', 301);});
+    Route::get('terms',                      function() { return redirect('https://www.restaurantindia.in/terms', 301);});
+    Route::get('feedback',                   function() { return redirect('https://www.restaurantindia.in/feedback', 301);});
+    Route::get('unsubscribeme',          [MailerController::class,'unsub']);
+    Route::get('newsletter/thanks',      [MailerController::class,'newsletterUnsub']);    //Newsletter thanks
+    Route::get('newsletter/subscriptionForm',[NewsLetterController::class,'newsletterForm']);
+    Route::get('newsletter/newsub',          [NewsLetterController::class,'newsletterSub']);
+    Route::get('{content_id}',       [ArticleController::class,'commonInner']);
+    Route::post('newslettersignup',        [NewsLetterController::class,'newsletter']);     // Newsletter signup
+
+});
 
