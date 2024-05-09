@@ -24,7 +24,9 @@ use App\Http\Controllers\FranPaymentController;
 use App\Http\Controllers\NewsLetterController;
 use App\Http\Controllers\RestaurantController;
 Use App\Http\Controllers\ArticleController;
-
+Use App\Http\Controllers\InstaSubscribeController;
+Use App\Http\Controllers\AdvertiseController;
+Use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -96,6 +98,9 @@ Route::get('logoutprofile', [LoginController::class, 'logoutProfile']);
 Route::get('fibl/login', [LoginController::class, 'fiblLogin']);  // FIBL brand routes
 Route::post('fibl/login', [LoginController::class, 'fiblLoginCheck']);
 Route::post('getfreeinfo', [ExpressInstaController::class, 'freeInfo']);      //guest
+Route::post('instasubsribe',                  [InstaSubscribeController::class,'instasubsribe']);
+Route::post('advertise/addform',              [AdvertiseController::class,'advertise']);
+
 
 Route::get('/top-100-franchise',    [NewHomePageController::class,'top100']);
 
@@ -318,3 +323,14 @@ Route::group( [ 'prefix' => 'restaurant' ], function()
 
 });
 
+
+
+//for books
+Route::group( [ 'prefix' => 'book' ], function()
+{
+    //Get routes
+    Route::get('/',                                   [BookController::class,'bookHome']);
+    Route::get('{name}',                              [BookController::class,'bookInner']);
+    //Post routes
+    Route::post('{name}',                             [BookController::class,'bookInner']);
+});
