@@ -24,14 +24,11 @@ use App\Http\Controllers\FranPaymentController;
 use App\Http\Controllers\NewsLetterController;
 use App\Http\Controllers\RestaurantController;
 Use App\Http\Controllers\ArticleController;
-<<<<<<< HEAD
 Use App\Http\Controllers\InstaSubscribeController;
 Use App\Http\Controllers\AdvertiseController;
 Use App\Http\Controllers\BookController;
-=======
 Use App\Http\Controllers\AmpArticleController;
 
->>>>>>> 75f33fdb98a86a1e6d674964f599e5ffa0475d9c
 use Illuminate\Support\Facades\Route;
 
 
@@ -328,7 +325,6 @@ Route::group( [ 'prefix' => 'restaurant' ], function()
 
 });
 
-<<<<<<< HEAD
 
 
 //for books
@@ -339,7 +335,6 @@ Route::group( [ 'prefix' => 'book' ], function()
     Route::get('{name}',                              [BookController::class,'bookInner']);
     //Post routes
     Route::post('{name}',                             [BookController::class,'bookInner']);
-=======
 // amp routes 
 Route::group( [ 'prefix' => 'amp' ], function()
 {
@@ -484,5 +479,4 @@ Route::group( [ 'prefix' => 'amp' ], function()
 
     Route::get('brands/{profileName}',                [BrandController::class,'ampBrandDetails']);                // Eng AMP brand url
     Route::get('{contentSite}/{title}.{id}',           [AmpArticleController::class,'ampCreate']);
->>>>>>> 75f33fdb98a86a1e6d674964f599e5ffa0475d9c
 });
