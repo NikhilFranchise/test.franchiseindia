@@ -149,14 +149,16 @@
             </div>
             <div class="marginbor"></div>
         </div>
-    @mobile
+        @if ($agent->isMobile())
+    {{-- @mobile --}}
     <!-- /1057625/FIHL/WAP_ROS_300X250_ATF-->
         <div id='adslot300x250_ATF' style="height: 250px;text-align:center;">
             <script>
                 googletag.cmd.push(function() { googletag.display('adslot300x250_ATF'); });
             </script>
         </div>
-        @endmobile
+        @endif
+        {{-- @endmobile --}}
         <div class="row row-no-margin">
             <div class="col-xs-12 col-sm-9 col-md-9 row-no-padding resmodfidevice">
                 <div class="abigima"><img itemprop="image" itemscope itemtype="https://schema.org/ImageObject" src="{{Config('constants.awsS3Url').$articles->image}}" alt="{{$articles['title']}}"></div>
@@ -303,27 +305,32 @@
                     <div class="fullcontainer">
                         <div class="text-center">
                             <!-- /1057625/FIHL/Desktop_Category_300x600_Mid_2-->
-                            @desktop
+                            @if ($agent->isDesktop())
+                            {{-- @desktop --}}
                             <div id='adslot970x90'>
                                 <script>
                                     googletag.cmd.push(function() { googletag.display('adslot970x90'); });
                                 </script>
                             </div>
-                            @enddesktop
-                            @tablet
+                            {{-- @enddesktop --}}
+                            @elseif ($agent->isTablet() || $agent->isDesktop())
+                            {{-- @tablet --}}
                             <div id='adslot728x90_ATF'>
                                 <script>
                                     googletag.cmd.push(function() { googletag.display('adslot728x90_ATF'); });
                                 </script>
                             </div>
-                            @endtablet
-                            @mobile
+                            {{-- @endtablet --}}
+                            @elseif ($agent->isMobile())
+
+                            {{-- @mobile --}}
                             <div id='adslot300x250_Mid_1'>
                                 <script>
                                     googletag.cmd.push(function() { googletag.display('adslot300x250_Mid_1'); });
                                 </script>
                             </div>
-                            @endmobile
+                            @endif
+                            {{-- @endmobile --}}
                         </div>
                     </div>
                 </div>
@@ -374,18 +381,24 @@
                     @endforeach
                 </div>
             </div>
-            @notmobile
+            {{-- @notmobile --}}
+            @if ($agent->isDesktop() || $agent->isTablet() )
+
             @include('includes/article/rightinnerarticle')
-            @endnotmobile
+            {{-- @endnotmobile --}}
+            @endif
         </div>
     </div>
     <div class="borbtmdotarticleads"></div>
     <div class="artibottombanner">
         <div class="fullcontainer">
-            @desktop
+            {{-- @desktop --}}
+            @if ($agent->isDesktop())
             @include("includes.banners.dfp_970X250")
-            @enddesktop
-            @tablet
+            {{-- @enddesktop --}}
+            @elseif ($agent->isTablet() ||$agent->isDesktop() )
+
+            {{-- @tablet --}}
             <div class="text-center">
                 <div id='adslot468x60_ACS'>
                     <script>
@@ -393,14 +406,17 @@
                     </script>
                 </div>
             </div>
-            @endtablet
-            @mobile
+            {{-- @endtablet --}}
+            {{-- @mobile --}}
+            @elseif ($agent->isMobile())
+
             <div class="dfp_300X250" id='adslot300x250_Mid_2'>
                 <script>
                     googletag.cmd.push(function() { googletag.display('adslot300x250_Mid_2'); });
                 </script>
             </div>
-            @endmobile
+            @endif
+            {{-- @endmobile --}}
         </div>
     </div>
     <div class="row marginborbtm articlebottom">

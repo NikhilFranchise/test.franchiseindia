@@ -149,13 +149,19 @@
                 {{ $contentIds->links() }}
             </div>
             <div class="col-xs-12 col-sm-3 hidden-xs hidden-sm hiddcontain col-md-3 row-no-padding">
-                @notmobile
+                {{-- @notmobile --}}
+                @if ($agent->isDesktop()  || $agent->isTablet())
+
                     <div class="sidearce"> @include("includes.banners.google_300X600") </div>
-                @endnotmobile
+                {{-- @endnotmobile --}}
+                @endif
                 <div class="sidearce"> @include('includes.magazinesubscribe') </div>
-                @notmobile
+                @if ($agent->isDesktop()  || $agent->isTablet())
+
+                {{-- @notmobile --}}
                     <div class="sidearce"> @include("includes.banners.yahoo_300X600") </div>
-                @endnotmobile
+                {{-- @endnotmobile --}}
+                @endif
                 <div class="sidearce"> @include('includes.banners.dfp_300X250') </div>
                 <div class="sidearce"> @include('includes.banners.yahoo_300X250') </div>
             </div>

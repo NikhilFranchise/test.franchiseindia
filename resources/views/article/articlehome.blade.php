@@ -10,15 +10,22 @@
 @section('hindiUrl', $hindiUrl)
 @section('englishUrl', $engUrl)
 <!-- Top search header code Start-->
-@mobile
+{{-- @mobile --}}
+@if ($agent->isMobile())
+
 @include('layout.newhomepage.mobile.topsearch')
-@endmobile
-@tablet
+{{-- @endmobile --}}
+{{-- @tablet --}}
+@elseif ($agent->isTablet() || $agent->isDesktop() )
+
 @include('layout.newhomepage.topsearch')
-@endtablet
-@desktop
+{{-- @endtablet --}}
+@elseif ($agent->isDesktop())
+
+{{-- @desktop --}}
 @include('layout.newhomepage.topsearch')
-@enddesktop
+@endif
+{{-- @enddesktop --}}
 <!-- Top search header code End-->
 @section('content')
     <div class="artsec">
@@ -78,15 +85,21 @@
     <div class="row headcommbanner artibanner">
         <div class="fullcontainer">
 
-            @desktop
+            {{-- @desktop --}}
+            @if ($agent->isDesktop())
             @include("includes.banners.dfp_970X90")
-            @enddesktop
-            @mobile
+            {{-- @enddesktop --}}
+            @elseif ($agent->isMobile())
+
+            {{-- @mobile --}}
             @include("includes.banners.dfp_320X100")
-            @endmobile
-            @tablet
+            {{-- @endmobile --}}
+            @elseif ($agent->isTablet() || $agent->isDesktop())
+
+            {{-- @tablet --}}
             @include("includes.banners.dfp_Tab_728X90")
-            @endtablet
+            @endif
+            {{-- @endtablet --}}
         </div>
     </div>
 
@@ -114,12 +127,15 @@
                 @if($loop->index == 4)
                     <div class="sidearce">
                         <div class="sidearce">
-                            @mobile
+                            {{-- @mobile --}}
+                            @if ($agent->isMobile())
+
                             <div class="row row-no-margin adcebtbtm">
                                 @include("includes.banners.dfp_300X250")
 
                             </div>
-                            @endmobile
+                            {{-- @endmobile --}}
+                            @endif
                         </div>
                     </div>
                 @endif
@@ -249,12 +265,15 @@
                         </div>
                     @endif
                 @endforeach
-                @mobile
+                {{-- @mobile --}}
+                @if ($agent->isMobile())
+
                 <div class="row row-no-margin adcebtbtm">
                     @include("includes.banners.dfp_300X250_Mid_1")
 
                 </div>
-                @endmobile
+                @endif
+                {{-- @endmobile --}}
                 <div class="row marminleft bortop">
                     <div class="mohead">
                         Most Commented <!--<a href="{{ Config('constants.MainDomain') }}/commented" class="commanviewall">View All</a>-->
@@ -461,11 +480,14 @@
             </div>
 
             @if($loop->index == 2)
-                @notmobile
+                {{-- @notmobile --}}
+                @if ($agent->isDesktop() || $agent->isTablet())
+
                 <div class="sidearce">
                     @include('includes.banners.dfp_300X600')
                 </div>
-                @endnotmobile
+                {{-- @endnotmobile --}}
+                @endif
             @endif
 
                 {{-- @if($loop->index == 5)
@@ -742,24 +764,31 @@
 </div>
 </div>
 <!-- more article section end here -->
-    @desktop
+    {{-- @desktop --}}
+    @if ($agent->isDesktop())
+
     <div class="row row-no-margin adcebtbtm">
         @include("includes.banners.dfp_Desktop_728X90_BTF")
 
     </div>
-    @enddesktop
-    @tablet
+    {{-- @enddesktop --}}
+    @elseif ($agent->isTablet() || $agent->isDesktop())
+
+    {{-- @tablet --}}
     <div class="row row-no-margin adcebtbtm">
         @include("includes.banners.dfp_Tablet_728X90_BTF")
 
     </div>
-    @endtablet
-    @mobile
+    {{-- @endtablet --}}
+    @elseif ($agent->isMobile())
+
+    {{-- @mobile --}}
     <div class="row row-no-margin adcebtbtm">
         @include("includes.banners.dfp_300X250_BTF")
 
     </div>
-    @endmobile
+    @endif
+    {{-- @endmobile --}}
 @include('layout.articlefooter')
 <!--form end here -->
 @endsection

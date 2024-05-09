@@ -28,6 +28,7 @@ Use App\Http\Controllers\InstaSubscribeController;
 Use App\Http\Controllers\AdvertiseController;
 Use App\Http\Controllers\BookController;
 Use App\Http\Controllers\AmpArticleController;
+Use App\Http\Controllers\CampaignController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+
+Route::get('campaign/franchisor/{id}',            [CommonController::class,'franAutoLogin']);
+Route::get('campaign/deactivate/franchisor/{id}', [CommonController::class,'franCampaignDeactivation']);
+
 
 Route::get('/', [NewHomePageController::class, 'homeNew']);
 Route::get('/home', function () {
@@ -102,6 +107,7 @@ Route::post('fibl/login', [LoginController::class, 'fiblLoginCheck']);
 Route::post('getfreeinfo', [ExpressInstaController::class, 'freeInfo']);      //guest
 Route::post('instasubsribe',                  [InstaSubscribeController::class,'instasubsribe']);
 Route::post('advertise/addform',              [AdvertiseController::class,'advertise']);
+Route::post('hi-fi-form-submit',                  [CampaignController::class,'insertHiFiCampaign']);
 
 
 Route::get('/top-100-franchise',    [NewHomePageController::class,'top100']);
@@ -481,4 +487,24 @@ Route::group( [ 'prefix' => 'amp' ], function()
 
     Route::get('brands/{profileName}',                [BrandController::class,'ampBrandDetails']);                // Eng AMP brand url
     Route::get('{contentSite}/{title}.{id}',           [AmpArticleController::class,'ampCreate']);
+});
+
+
+
+//Education routes
+Route::group( [ 'prefix' => 'education' ], function()
+{
+    //Route::get('/',                          'EducationController@articleEducation');
+	Route::get('/',                           function() { return redirect('https://www.opportunityindia.com/english/tag/education', 301);});
+	Route::get('contact',                    [ContactUsController::class,'contactUsForm']);   // Static route for Contact us page
+    Route::get('about',                      [StaticPageController::class,'aboutus']);        // Static route for About us page
+    Route::get('terms',                      [StaticPageController::class,'siteTerm']);       // Terms page
+    Route::get('feedback',                   [SiteFeedbackController::class,'feedbackForm']); // Site Feedback
+    Route::get('unsubscribeme',              [MailerController::class,'unsub']);
+    Route::get('newsletter/thanks',          [MailerController::class,'newsletterUnsub']);    //Newsletter thanks
+    Route::get('newsletter/subscriptionForm',[NewsLetterController::class,'newsletterForm']);
+    Route::get('newsletter/newsub',          [NewsLetterController::class,'newsletterSub']);
+    Route::get('{content_id}',               [ArticleController::class,'commonInner']);
+
+    Route::post('newslettersignup',          [NewsLetterController::class,'newsletter']);     // Newsletter signup
 });

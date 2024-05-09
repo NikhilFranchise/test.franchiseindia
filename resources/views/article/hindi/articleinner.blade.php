@@ -120,26 +120,7 @@
                 <div class="clr"></div>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 artinner articontent-hind">
-                       {{--@php
-                            $custom_data = explode("\r\n", $article->hindi->content);
-                            if(count($custom_data) == 1){
-                            $articleData[0] = $custom_data[0];
-                            $articleData[1] = '<div id = "v-franchiseindia"></div><script>(function(v,d,o,ai){ai=d.createElement("script");ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");</script>';
-                            } else{
-                            $counter = 0;
-                            foreach($custom_data as $cdata){
-                            if($counter == 2){
-                            $articleData[] = '<div id = "v-franchiseindia"></div><script>(function(v,d,o,ai){ai=d.createElement("script");ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");</script>';
-                            } else{
-                            $articleData[] = $cdata;
-                            }
-                            $counter++;
-                            }
-                            }
-                            $resultArticle  = implode("\r\n", $articleData);
-                            echo html_entity_decode($resultArticle);--}}
-                        {{--@endphp--}}
-                        @php
+                                            @php
                             echo html_entity_decode($article->hindi->content);
                        @endphp
 					   
