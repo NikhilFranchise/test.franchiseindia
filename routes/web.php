@@ -335,6 +335,8 @@ Route::group( [ 'prefix' => 'book' ], function()
     Route::get('{name}',                              [BookController::class,'bookInner']);
     //Post routes
     Route::post('{name}',                             [BookController::class,'bookInner']);
+
+});
 // amp routes 
 Route::group( [ 'prefix' => 'amp' ], function()
 {
