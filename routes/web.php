@@ -29,7 +29,9 @@ Use App\Http\Controllers\AdvertiseController;
 Use App\Http\Controllers\BookController;
 Use App\Http\Controllers\AmpArticleController;
 Use App\Http\Controllers\CampaignController;
-
+Use App\Http\Controllers\InternationalController;
+Use App\Http\Controllers\EIController;
+Use App\Http\Controllers\MailerController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -50,6 +52,7 @@ Auth::routes();
 
 Route::get('campaign/franchisor/{id}',            [CommonController::class,'franAutoLogin']);
 Route::get('campaign/deactivate/franchisor/{id}', [CommonController::class,'franCampaignDeactivation']);
+Route::get('international',                  [InternationalController::class,'getHomePage']); // International Page routes
 
 
 Route::get('/', [NewHomePageController::class, 'homeNew']);
@@ -507,4 +510,21 @@ Route::group( [ 'prefix' => 'education' ], function()
     Route::get('{content_id}',               [ArticleController::class,'commonInner']);
 
     Route::post('newslettersignup',          [NewsLetterController::class,'newsletter']);     // Newsletter signup
+});
+
+
+
+//Entrepreneur routes
+Route::group( [ 'prefix' => 'entrepreneur' ], function()
+{
+    Route::get('/',                                          [ArticleController::class,'articleHome']);
+    Route::get('subscribe',                                  [MailerController::class,'unsub']);
+    Route::get('article/{category}/{subcategory}/{title}',   [EIController::class,'articleInner']);
+    Route::get('news/{title}',                               [EIController::class,'newsInner']);
+    Route::get('interview/{category}/{subcategory}/{title}', [EIController::class,'interviewInner']);
+    Route::get('magazine/{year}/{month}/{title}',            [EIController::class,'magazineInner']);
+    Route::get('{params}',                                           function(){return redirect(Config('constants.MainDomain').'/content', 301);});
+    Route::get('{param1}/{param2}',                                  function(){return redirect(Config('constants.MainDomain').'/content', 301);});
+    Route::get('{param1}/{param2}/{param3}',                         function(){return redirect(Config('constants.MainDomain').'/content', 301);});
+    Route::get('{param1}/{param2}/{param3}/{param4}',                function(){return redirect(Config('constants.MainDomain').'/content', 301);});
 });
