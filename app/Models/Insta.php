@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Insta extends Model
 {
     use HasFactory;
+    protected $table = 'express_fran_insta_apply';
+
 }
