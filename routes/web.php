@@ -40,6 +40,7 @@ Use App\Http\Controllers\NewsController;
 Use App\Http\Controllers\StartupEventController;
 Use App\Http\Controllers\WellnessController;
 Use App\Http\Controllers\HomepageController;
+Use App\Http\Controllers\GalleryController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -647,4 +648,13 @@ Route::group( [ 'prefix' => 'magazine' ], function()
     Route::get('{year}/{month}/{title}.{id}',                       [MagazineController::class,'magazineListInner']);
     Route::get('{url}/{urlnew}',                                           function(){return redirect('/magazine', 301);});
     Route::get('{url}/{urlnew}/{urlmag}',                                  function(){return redirect('/magazine', 301);});
+});
+
+
+// Gallery Articles Section
+Route::group( [ 'prefix' => 'gallery' ], function()
+{
+    Route::get('/',                          [GalleryController::class,'galleryArticleHome']);
+    Route::get('{title}.{id}',               [GalleryController::class,'galleryArticle']);
+    Route::get('{kicker}/{kicker_id}',       [GalleryController::class,'galleryArticleKickersPage']);
 });
