@@ -6,16 +6,20 @@
 
     <div class="row headcommbanner">
         <div class="fullcontainer">
-            @desktop
+            {{-- @desktop --}}
+            @if ($agent->isDesktop())
             @include("includes.banners.dfp_970X90")
-            @enddesktop
-            @mobile
+            {{-- @enddesktop --}}
+            @elseif ($agent->isMobile())
+            {{-- @mobile --}}
             @include("includes.banners.dfp_468X60")
             @include("includes.banners.dfp_320X100")
-            @endmobile
-            @tablet
+            {{-- @endmobile --}}
+            @elseif ($agent->isTablet())
+            {{-- @tablet --}}
             @include("includes.banners.dfp_728X90")
-            @endtablet
+            {{-- @endtablet --}}
+            @endif
         </div>
     </div>
 
@@ -274,16 +278,22 @@
     <div class="height40"></div>
     <div class="row headcommbanner">
         <div class="fullcontainer">
-            @desktop
+            {{-- @desktop --}}
+            @if ($agent->isDesktop())
+
             @include("includes.banners.google_970X90")
-            @enddesktop
-            @tablet
+            {{-- @enddesktop --}}
+            @elseif ($agent->isTablet())
+
+            {{-- @tablet --}}
             @include("includes.banners.google_728X90")
-            @endtablet
-            @mobile
+            {{-- @endtablet --}}
+            @elseif ($agent->isMobile())
+            {{-- @mobile --}}
             @include("includes.banners.google_468X60")
             @include("includes.banners.google_320X100")
-            @endmobile
+           @endif
+            {{-- @endmobile --}}
         </div>
     </div>
 @endsection
