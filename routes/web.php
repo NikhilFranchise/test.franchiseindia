@@ -32,6 +32,7 @@ Use App\Http\Controllers\CampaignController;
 Use App\Http\Controllers\InternationalController;
 Use App\Http\Controllers\EIController;
 Use App\Http\Controllers\MailerController;
+Use App\Http\Controllers\FacebookArticleController;
 use Illuminate\Support\Facades\Route;
 
 
