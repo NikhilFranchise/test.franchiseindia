@@ -337,9 +337,11 @@ use Illuminate\Support\Str;
         <!--next article section end here-->
             <div class="sidearce"> @include("includes.banners.google_300X250")  </div>
             @include("includes.magazinesubscribe")
-            @notmobile
+            {{-- @notmobile --}}
+            @if ($agent->isDesktop() || $agent->isTablet())
             <div class="sidearce"> @include('includes.banners.dfp_600X300') </div>
-            @endnotmobile
+            @endif
+            {{-- @endnotmobile --}}
             <div class="sidearce">  <div class="mhead">Most Shared</div>
                 @foreach($likeArticles as $article)
                     @if ( $loop->index == 0 )
