@@ -100,7 +100,12 @@ Route::get('get-city-list-landing-page', [CommonController::class, 'getCityListL
 Route::get('compare-brands', [BrandCompareController::class, 'compareBrands']);
 Route::get('get-brands', [BrandCompareController::class, 'getComparableBrands']);
 Route::get('/get-brand-compare', [BrandCompareController::class, 'getSingleBrand']);
+Route::get('newsletter/unsubscribe/thanks',  [MailerController::class,'newsletterUnsub']);  //unsubscribe thanks msg
+
+
+
 // post routes
+
 Route::post('property-loan-submit', [StaticPageController::class, 'postPropertyLoanForm']);
 Route::post('contact-submit', [ContactUsController::class, 'contact']);
 Route::post('feedback', [FeedbackController::class, 'feedback']);
@@ -125,6 +130,7 @@ Route::post('newscomments',                   [NewsController::class,'commentFor
 Route::post('startup-mail-submit',            [StartupEventController::class,'mailStartup']); // Event conference routes
 Route::post('wivote',                         [WellnessController::class,'vote']);
 Route::post('wiviewresult',                   [WellnessController::class,'viewResult']);
+Route::post('unsub',                          [MailerController::class,'unsubMailer']); //Newsletter unsubscribe
 
 
 //Payment Routes
