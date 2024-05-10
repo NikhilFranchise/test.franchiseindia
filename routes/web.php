@@ -61,7 +61,7 @@ Auth::routes();
 
 Route::get('campaign/franchisor/{id}',            [CommonController::class,'franAutoLogin']);
 Route::get('campaign/deactivate/franchisor/{id}', [CommonController::class,'franCampaignDeactivation']);
-Route::get('international',                  [InternationalController::class,'getHomePage']); // International Page routes
+Route::get('franchiseinternational',                  [InternationalController::class,'getHomePage']); // International Page routes
 
 
 Route::get('/', [NewHomePageController::class, 'homeNew']);
@@ -102,6 +102,7 @@ Route::get('compare-brands', [BrandCompareController::class, 'compareBrands']);
 Route::get('get-brands', [BrandCompareController::class, 'getComparableBrands']);
 Route::get('/get-brand-compare', [BrandCompareController::class, 'getSingleBrand']);
 Route::get('newsletter/unsubscribe/thanks',  [MailerController::class,'newsletterUnsub']);  //unsubscribe thanks msg
+Route::get('international',                  [InternationalController::class,'getHomePage']); // International Page routes
 
 
 
