@@ -36,6 +36,9 @@ Use App\Http\Controllers\FacebookArticleController;
 Use App\Http\Controllers\EventController;
 Use App\Http\Controllers\NewArticleController;
 Use App\Http\Controllers\MagazineController;
+Use App\Http\Controllers\NewsController;
+Use App\Http\Controllers\StartupEventController;
+Use App\Http\Controllers\WellnessController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -116,8 +119,12 @@ Route::post('instasubsribe',                  [InstaSubscribeController::class,'
 Route::post('advertise/addform',              [AdvertiseController::class,'advertise']);
 Route::post('hi-fi-form-submit',                  [CampaignController::class,'insertHiFiCampaign']);
 Route::post('magazinecomments',               [MagazineController::class,'commentForm']);
-
 Route::get('/top-100-franchise',    [NewHomePageController::class,'top100']);
+Route::post('newscomments',                   [NewsController::class,'commentForm']);         // Newscomment
+Route::post('startup-mail-submit',            [StartupEventController::class,'mailStartup']); // Event conference routes
+Route::post('wivote',                         [WellnessController::class,'vote']);
+Route::post('wiviewresult',                   [WellnessController::class,'viewResult']);
+
 
 //Payment Routes
 Route::get('payment', [PaymentController::class, 'payment']);
