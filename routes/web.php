@@ -35,6 +35,7 @@ Use App\Http\Controllers\MailerController;
 Use App\Http\Controllers\FacebookArticleController;
 Use App\Http\Controllers\EventController;
 Use App\Http\Controllers\NewArticleController;
+Use App\Http\Controllers\MagazineController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -114,7 +115,7 @@ Route::post('getfreeinfo', [ExpressInstaController::class, 'freeInfo']);      //
 Route::post('instasubsribe',                  [InstaSubscribeController::class,'instasubsribe']);
 Route::post('advertise/addform',              [AdvertiseController::class,'advertise']);
 Route::post('hi-fi-form-submit',                  [CampaignController::class,'insertHiFiCampaign']);
-
+Route::post('magazinecomments',               [MagazineController::class,'commentForm']);
 
 Route::get('/top-100-franchise',    [NewHomePageController::class,'top100']);
 
@@ -621,4 +622,15 @@ Route::group( [ 'prefix' => 'hi' ], function()
 	Route::get('newcontent/{slug}.{id}',          [NewArticleController::class,'getHindiContent']);
 	Route::get('next-article',                [NewArticleController::class,'getNextArticleHindiForRepeat']);// Hindi Repeat 
 	Route::get('video-and-podcast',              [NewArticleController::class,'getVideoAndPodcast']);
+});
+
+
+//Magazine Routes
+Route::group( [ 'prefix' => 'magazine' ], function()
+{
+    Route::get('/',                                                 [MagazineController::class,'magazineListHome']);
+    Route::get('{year}/{month}/The-Franchising-World-{pyear}-{id}', [MagazineController::class,'magazineList']);
+    Route::get('{year}/{month}/{title}.{id}',                       [MagazineController::class,'magazineListInner']);
+    Route::get('{url}/{urlnew}',                                           function(){return redirect('/magazine', 301);});
+    Route::get('{url}/{urlnew}/{urlmag}',                                  function(){return redirect('/magazine', 301);});
 });
