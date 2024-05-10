@@ -33,6 +33,7 @@ Use App\Http\Controllers\InternationalController;
 Use App\Http\Controllers\EIController;
 Use App\Http\Controllers\MailerController;
 Use App\Http\Controllers\FacebookArticleController;
+Use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 
