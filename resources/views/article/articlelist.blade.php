@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Str;
+@endphp
 @extends('layout.master')
 @section('seoTitle', ucwords($kicker) . ' Articles and Information - Franchise India')
 @section('seoDesc', ucwords($kicker) . ' Articles - ' . $articles[0]['shortDesc'])
@@ -103,7 +106,7 @@
                         $url = Config('constants.MainDomain') . '/' . $site . '/' . $article['slug'] . '.' . $article['content_id'];
                         
                         if ($article['site_type'] == 'ga') {
-                            $kicker = Config('constants.MainDomain') . '/gallery/' . str_slug($article['kicker']) . '/' . $article['kicker_id'];
+                            $kicker = Config('constants.MainDomain') . '/gallery/' . Str::slug($article['kicker']) . '/' . $article['kicker_id'];
                             $image = $article['image'];
                         }
                     @endphp

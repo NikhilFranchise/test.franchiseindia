@@ -19,6 +19,8 @@ use App\Models\ContentTagsAssignedHindi;
 use App\Models\ArticleInterviewCommentReply;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 
 class NewArticleController extends Controller
 {
@@ -57,8 +59,8 @@ class NewArticleController extends Controller
 
         $kicker           = str_replace('-', ' ', $contentKick);
 
-        if( $contentKick != str_slug($contentKick))
-            return redirect('/content/'.str_slug($contentKick), 301);
+        if( $contentKick != Str::slug($contentKick))
+            return redirect('/content/'.Str::slug($contentKick), 301);
 
         $seoTagId         = SeoTag::query()->where('name', 'LIKE', $kicker)->first();
 

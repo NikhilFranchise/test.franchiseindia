@@ -1,4 +1,7 @@
 @php
+use Illuminate\Support\Str;
+@endphp
+@php
     $seoTitle = $articles->title;
     $seoKeywords = '';
     foreach ($seoVal as $tags) {
@@ -346,7 +349,7 @@
                                 $image = Config('constants.awsS3Url').$article['image'];
                                 $url = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                                 if ( $article['site_type'] == 'ga' ) {
-                                $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                                $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                                 $image = $article['image'];
                                 $url = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                                 }
@@ -431,7 +434,7 @@
                             $image = Config('constants.awsS3Url').$article['image'];
                             $url = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                             if ( $article['site_type'] == 'ga' ) {
-                            $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                            $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                             $image = $article['image'];
                             $url = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                             }
@@ -476,7 +479,7 @@
                         $image = Config('constants.awsS3Url').$article['image'];
                         $url = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                         if ( $article['site_type'] == 'ga' ) {
-                        $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                        $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                         $image = $article['image'];
                         $url = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                         }

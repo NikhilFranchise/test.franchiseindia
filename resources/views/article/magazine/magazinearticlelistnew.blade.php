@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Str;
+@endphp
 @extends('layout.master')
 @section('seoTitle', 'Top Franchise Magazine | Franchising World - Franchise India')
 @section('seoDesc', 'Franchise India Holdings Limited presents the online version of Asia&#039;s largest selling franchise magazine- &#039;The Franchising World. &#039; This monthly publication is a complete guide for entrepreneurs seeking business opportunities in various sectors of the franchising industry.')
@@ -80,7 +83,7 @@
                                     if (!empty($magazineArticle['magz_id']))
                                         $magFetchId = $magazineArticle['magz_id'];
                                     if (empty($result['slug']))
-                                        $magazineArticleSlug = str_slug($result['title']);
+                                        $magazineArticleSlug = Str::slug($result['title']);
                                 @endphp
 						  <li>
 							 <div class="imgbl">

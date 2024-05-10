@@ -1495,7 +1495,7 @@ public function listingLocation()
 					else
 						$type = 'ssc';
 				}
-				$url =  'business-opportunities/'.str_slug($catId->catname).'.'.$type.$catId->catid;
+				$url =  'business-opportunities/'.Str::slug($catId->catname).'.'.$type.$catId->catid;
                 // dd($url);
 				return redirect($url);
 			}

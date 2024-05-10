@@ -75,6 +75,9 @@
     $catArr = Config('constants.CategoryArr');
     asort($catArr);
 @endphp
+@php
+use Illuminate\Support\Str;
+@endphp
 
 <div class="o-wrapper" id="o-wrapper"></div>
 <div class="row bydef" id="headstickae">
@@ -110,7 +113,7 @@
                             <select class="form-control myselectclasscat" id="stateHeaderTop" name="loc" >
                                 <option value="">Select Location</option>
                                 @foreach(Config('location.stateArr') as $key => $value)
-                                    <option value="{{$key}}" slug="{{strtolower(str_slug($value))}}">{{$value}}</option>
+                                    <option value="{{$key}}" slug="{{strtolower(Str::slug($value))}}">{{$value}}</option>
                                 @endforeach
                             </select>
                         </li>
