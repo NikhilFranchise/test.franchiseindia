@@ -40,6 +40,7 @@ Use App\Http\Controllers\NewsController;
 Use App\Http\Controllers\StartupEventController;
 Use App\Http\Controllers\WellnessController;
 Use App\Http\Controllers\HomepageController;
+Use App\Http\Controllers\GalleryController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -100,7 +101,12 @@ Route::get('get-city-list-landing-page', [CommonController::class, 'getCityListL
 Route::get('compare-brands', [BrandCompareController::class, 'compareBrands']);
 Route::get('get-brands', [BrandCompareController::class, 'getComparableBrands']);
 Route::get('/get-brand-compare', [BrandCompareController::class, 'getSingleBrand']);
+Route::get('newsletter/unsubscribe/thanks',  [MailerController::class,'newsletterUnsub']);  //unsubscribe thanks msg
+
+
+
 // post routes
+
 Route::post('property-loan-submit', [StaticPageController::class, 'postPropertyLoanForm']);
 Route::post('contact-submit', [ContactUsController::class, 'contact']);
 Route::post('feedback', [FeedbackController::class, 'feedback']);
@@ -125,6 +131,7 @@ Route::post('newscomments',                   [NewsController::class,'commentFor
 Route::post('startup-mail-submit',            [StartupEventController::class,'mailStartup']); // Event conference routes
 Route::post('wivote',                         [WellnessController::class,'vote']);
 Route::post('wiviewresult',                   [WellnessController::class,'viewResult']);
+Route::post('unsub',                          [MailerController::class,'unsubMailer']); //Newsletter unsubscribe
 
 
 //Payment Routes
@@ -641,4 +648,13 @@ Route::group( [ 'prefix' => 'magazine' ], function()
     Route::get('{year}/{month}/{title}.{id}',                       [MagazineController::class,'magazineListInner']);
     Route::get('{url}/{urlnew}',                                           function(){return redirect('/magazine', 301);});
     Route::get('{url}/{urlnew}/{urlmag}',                                  function(){return redirect('/magazine', 301);});
+});
+
+
+// Gallery Articles Section
+Route::group( [ 'prefix' => 'gallery' ], function()
+{
+    Route::get('/',                          [GalleryController::class,'galleryArticleHome']);
+    Route::get('{title}.{id}',               [GalleryController::class,'galleryArticle']);
+    Route::get('{kicker}/{kicker_id}',       [GalleryController::class,'galleryArticleKickersPage']);
 });

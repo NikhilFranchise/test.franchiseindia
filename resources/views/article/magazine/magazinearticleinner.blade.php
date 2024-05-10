@@ -180,7 +180,7 @@ use Illuminate\Support\Str;
                                     </script>
                                 </div>
                                 {{-- @enddesktop --}}
-                                @if ($agent->isDesktop()  || $agent->isTablet())
+                                @elseif ($agent->isDesktop()  || $agent->isTablet())
 
                                 {{-- @tablet --}}
                                 <div id='adslot728x90_ATF'>
