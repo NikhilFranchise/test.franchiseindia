@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\FranchisorBusinessDetail;
 
 class CategorySlider extends Model
 {
@@ -15,6 +16,7 @@ class CategorySlider extends Model
      */
     public function franchisor()
     {
-        return $this->hasOne('App\Models\FranchisorBusinessDetail', 'franchisor_id', 'franchisor_id');
+
+        return $this->hasOne(FranchisorBusinessDetail::class, 'franchisor_id', 'franchisor_id');
     }
 }
