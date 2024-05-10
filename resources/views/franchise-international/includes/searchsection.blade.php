@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Str;
+@endphp
 <div class="flex-container">
     <div class="flexslider">
         <ul class="slides">
@@ -26,7 +29,7 @@
                             <select class="form-control myselectclasscat" id="stateHeader" title="location" name="loc" >
                                 <option value="">Select Location</option>                        
                                 @foreach(Config('location.stateArr') as $key => $value)
-                                    <option value="{{$key}}" slug="{{strtolower(str_slug($value))}}">{{$value}}</option>
+                                    <option value="{{$key}}" slug="{{strtolower(Str::slug($value))}}">{{$value}}</option>
                                 @endforeach
                             </select>                        
                         </li>

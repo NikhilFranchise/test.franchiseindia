@@ -1,5 +1,8 @@
 <style type="text/css">.content{display:none}.subcontent{display:none}</style>
 @php
+use Illuminate\Support\Str;
+@endphp
+@php
     if(empty($minRangeValue))
     $minRangeValue = 10000;
     if(empty($maxRangevalue))
@@ -164,8 +167,8 @@
                                                         $ftypeCheck = "checked";
                                                         }
                                                     @endphp
-                                                    <input type="radio" url="{{Config::get('MainDomain')}}/hi/business-opportunities/{{str_slug(Config('constants.masterfranchiseType')[$key])}}.FT{{ $key }}" slug="{{str_slug(Config('constants.masterfranchiseType')[$key])}}" {{$ftypeCheck}} class="franType" name="franchise_type" id="ftype{{$key}}" value={{ $key }}>
-                                                    <a href="{{Config::get('MainDomain')}}/hi/business-opportunities/{{str_slug(Config('constants.masterfranchiseType')[$key])}}.FT{{ $key }}" class="sub-cat-disable" id="aftype{{$key}}">
+                                                    <input type="radio" url="{{Config::get('MainDomain')}}/hi/business-opportunities/{{Str::slug(Config('constants.masterfranchiseType')[$key])}}.FT{{ $key }}" slug="{{Str::slug(Config('constants.masterfranchiseType')[$key])}}" {{$ftypeCheck}} class="franType" name="franchise_type" id="ftype{{$key}}" value={{ $key }}>
+                                                    <a href="{{Config::get('MainDomain')}}/hi/business-opportunities/{{Str::slug(Config('constants.masterfranchiseType')[$key])}}.FT{{ $key }}" class="sub-cat-disable" id="aftype{{$key}}">
                                                         {{$value}}
                                                     </a>
                                                 </label>
@@ -216,8 +219,8 @@
                                             <li>
                                                 <div class="checkbox">
                                                     <label>
-                                                        <input value="{{$stateId}}" {{$stateChecked}} name="state[]" slug="{{strtolower(str_slug($stateValue))}}" class="statecheckbox" id="location{{$l}}" type="checkbox" url="{{Config('MainDomain')}}/hi/business-opportunities/{{strtolower(str_slug($stateValue))}}.LOC{{ $stateId }}">
-                                                        <a href="{{Config('MainDomain')}}/hi/business-opportunities/{{strtolower(str_slug($stateValue))}}.LOC{{ $stateId }}" class="states-link-disable" id="alocation{{$l}}">
+                                                        <input value="{{$stateId}}" {{$stateChecked}} name="state[]" slug="{{strtolower(Str::slug($stateValue))}}" class="statecheckbox" id="location{{$l}}" type="checkbox" url="{{Config('MainDomain')}}/hi/business-opportunities/{{strtolower(Str::slug($stateValue))}}.LOC{{ $stateId }}">
+                                                        <a href="{{Config('MainDomain')}}/hi/business-opportunities/{{strtolower(Str::slug($stateValue))}}.LOC{{ $stateId }}" class="states-link-disable" id="alocation{{$l}}">
                                                             {{ Config('location.hindiStatesArr.'.$stateValue) }}
                                                         </a>
                                                     </label>

@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Str;
+@endphp
 <div class="row marginborbtm articlebottom bornonecat">
     <div class="container">
         <div class="mrehead">More Stories</div>
@@ -12,10 +15,10 @@
                     $url    = 'https://opportunityindia.franchiseindia.com/article/'.$article['slug'].'-'.$article['content_id'];
 					
                     if ( $article['site_type'] == 'ga' ) {
-                        $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
-                        $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                        $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
+                        $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                         $image  = $article['image'];
-                        $url    = Config('constants.MainDomain').'/'.$site.'/'.str_slug($article['title']).'.'.$article['content_id'];
+                        $url    = Config('constants.MainDomain').'/'.$site.'/'.Str::slug($article['title']).'.'.$article['content_id'];
                     }
                 @endphp
                 @if($loop->index < 2)

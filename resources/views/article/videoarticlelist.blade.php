@@ -1,4 +1,6 @@
-
+@php
+use Illuminate\Support\Str;
+@endphp
 @extends('layout.newArticalMaster')
 @section('seoTitle', 'Video and Podcast Articles and Information - Franchise India')
 @section('seoDesc',  'Video and Podcast Articles -  '. $videoArticles[0]['description'])
@@ -20,8 +22,8 @@
                     @if($loop->index < 5)
                         @php
                             $image  = Config('constants.youtubeImageUrl');
-                            $url    = "https://video.franchiseindia.com/".str_slug(strtolower($article['title']), '-')."/".$article['videoID'];
-                            $kicker = "https://video.franchiseindia.com/".str_slug(strtolower($article['title']), '-')."/".$article['videoID'];
+                            $url    = "https://video.franchiseindia.com/".Str::slug(strtolower($article['title']), '-')."/".$article['videoID'];
+                            $kicker = "https://video.franchiseindia.com/".Str::slug(strtolower($article['title']), '-')."/".$article['videoID'];
                         @endphp
                 <li>
                     <div class="row">
@@ -138,8 +140,8 @@
                             @if($loop->index < 5)
                                 @php
                                     $image  = Config('constants.youtubeImageUrl');
-                                    $url    = "https://video.franchiseindia.com/".str_slug(strtolower($article['title']), '-')."/".$article['videoID'];
-                                    $kicker = "https://video.franchiseindia.com/".str_slug(strtolower($article['title']), '-')."/".$article['videoID'];
+                                    $url    = "https://video.franchiseindia.com/".Str::slug(strtolower($article['title']), '-')."/".$article['videoID'];
+                                    $kicker = "https://video.franchiseindia.com/".Str::slug(strtolower($article['title']), '-')."/".$article['videoID'];
                                 @endphp
                                 <li>
                                     <div class="row">

@@ -1,4 +1,7 @@
 @php
+use Illuminate\Support\Str;
+@endphp
+@php
 
     $catArr = Config('hindiConstants.CategoryArr');
     asort($catArr);
@@ -163,7 +166,7 @@
                                           form-control-search-main-custom" name="loc" id="stateHeader" required="required" onchange="getcity(this.value)">
                                                 <option value="" hidden>एक राज्य का चयन करे</option>
                                                 @foreach($states as $index => $value)
-                                                    <option slug="{{strtolower(str_slug($value))}}" value="{{ $index }}" @if(isset($loc[0]) && $loc[0] == $index) selected @endif>{{ Config('location.hindiStatesArr.'.$value) }}</option>
+                                                    <option slug="{{strtolower(Str::slug($value))}}" value="{{ $index }}" @if(isset($loc[0]) && $loc[0] == $index) selected @endif>{{ Config('location.hindiStatesArr.'.$value) }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

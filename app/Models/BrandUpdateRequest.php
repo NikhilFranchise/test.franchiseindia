@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class BrandUpdateRequest extends Model
 {
     use HasFactory;
+    protected $table="brand_update_request";
+
 }

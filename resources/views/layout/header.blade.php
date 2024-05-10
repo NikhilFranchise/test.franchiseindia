@@ -1,4 +1,7 @@
 @php
+use Illuminate\Support\Str;
+@endphp
+@php
     $auth   = new \Illuminate\Support\Facades\Auth();
     $catTab = "active";
     $locTab = "";
@@ -355,7 +358,7 @@
                                             <select name="loc" id="stateHeader" class="form-control myselectclasssearch" required onchange="getcity(this.value)" >
                                                 <option value="">एक राज्य का चयन करे</option>
                                                 @foreach($states as $index => $value)
-                                                    <option slug="{{strtolower(str_slug($value))}}" value="{{ $index }}" @if(isset($loc[0]) && $loc[0] == $index) selected @endif>{{ Config('location.hindiStatesArr.'.$value) }}</option>
+                                                    <option slug="{{strtolower(Str::slug($value))}}" value="{{ $index }}" @if(isset($loc[0]) && $loc[0] == $index) selected @endif>{{ Config('location.hindiStatesArr.'.$value) }}</option>
                                                 @endforeach
                                             </select>
                                         </li>

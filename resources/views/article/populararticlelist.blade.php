@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Str;
+@endphp
 @extends('layout.master')
 @section('seoTitle', 'Todays highlights')
 @section('seoDesc',  'latest articles')
@@ -45,7 +48,7 @@
 
                             if ( $most[0]['site_type'] == 'ga' ) {
                                 $image  = $most[0]['image'];
-                                $url    = Config('constants.MainDomain').'/'.$site.'/'.str_slug($most[0]['title']).'.'.$most[0]['content_id'];
+                                $url    = Config('constants.MainDomain').'/'.$site.'/'.Str::slug($most[0]['title']).'.'.$most[0]['content_id'];
                             }
                         @endphp
                         <div class="img-txtlayout572">
@@ -114,7 +117,7 @@
                         $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
 
                         if ( $article['site_type'] == 'ga' ) {
-                            $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                            $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                             $image  = $article['image'];
                             $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                         }

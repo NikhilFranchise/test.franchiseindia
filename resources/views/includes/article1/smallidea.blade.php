@@ -1,5 +1,7 @@
 <div class="slidercomman">
-
+    @php
+    use Illuminate\Support\Str;
+    @endphp
 
 <div class="container">
 <div class="comhead"><a href="{{(Request::segment(1) == 'hi') ? Config('constants.MainDomain').'/hi/newcontent/'.$smallBusiness[0]['name'].'/'.$smallBusiness[0]['tag_id']  : Config('constants.MainDomain').'/newcontent/'.$smallBusiness[0]['urlKicker']}}">{{ (Request::segment(1) == 'hi') ? 'लघु व्यवसाय विचार' : 'Small Business Ideas' }}</a> <span class="slidervall"><a href="{{(Request::segment(1) == 'hi') ? Config('constants.MainDomain').'/hi/newcontent/'.$smallBusiness[0]['name'].'/'.$smallBusiness[0]['tag_id']  : Config('constants.MainDomain').'/newcontent/'.$smallBusiness[0]['urlKicker']}}">View All</a></div>
@@ -16,7 +18,7 @@
            $url    = Config('constants.MainDomain').'/newcontent/'.$article['slug'].'.'.$article['content_id'];
             $authorUrl  = Config('constants.MainDomain').'/newcontent/author/'.$art->slugify($article['author'],'-');
             if ( $article['site_type'] == 'ga' ) {
-                $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                 $image  = $article['image'];
                 $url    = Config('constants.MainDomain').'/newcontent/'.$article['slug'].'.'.$article['content_id'];
             }
@@ -64,7 +66,7 @@
                 $url    = Config('constants.MainDomain').'/hi/newcontent/'.$article['slug'].'.'.$article['content_id'];
                  $authorUrl  = Config('constants.MainDomain').'/hi/newcontent/author/'.$art->slugify($article['author'],'-');
                  if ( $article['site_type'] == 'ga' ) {
-                     $kicker = Config('constants.MainDomain').'/hi/gallery/'.str_slug($article['name']).'/'.$article['tag_id'];
+                     $kicker = Config('constants.MainDomain').'/hi/gallery/'.Str::slug($article['name']).'/'.$article['tag_id'];
                      $image  = $article['image'];
                      $url    = Config('constants.MainDomain').'/hi/newcontent/'.$article['slug'].'.'.$article['content_id'];
                      $authorUrl  = Config('constants.MainDomain').'/hi/newcontent/author/'.$article['author'];

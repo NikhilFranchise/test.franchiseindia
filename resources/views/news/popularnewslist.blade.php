@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Str;
+@endphp
 @extends('layout.master')
 @section('seoTitle', 'Todays highlights')
 @section('seoDesc',  'latest articles')

@@ -39,6 +39,7 @@ Use App\Http\Controllers\MagazineController;
 Use App\Http\Controllers\NewsController;
 Use App\Http\Controllers\StartupEventController;
 Use App\Http\Controllers\WellnessController;
+Use App\Http\Controllers\HomepageController;
 use Illuminate\Support\Facades\Route;
 
 

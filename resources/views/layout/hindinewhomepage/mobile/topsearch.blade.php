@@ -1,4 +1,7 @@
 @php
+use Illuminate\Support\Str;
+@endphp
+@php
 
     $catArr = Config('hindiConstants.CategoryArr');
     asort($catArr);
@@ -192,7 +195,7 @@
                                                     onchange="getcity(this.value)" required="required">
                                                     <option value="" hidden>एक राज्य का चयन करे</option>
                                                     @foreach ($states as $index => $value)
-                                                        <option slug="{{ strtolower(str_slug($value)) }}"
+                                                        <option slug="{{ strtolower(Str::slug($value)) }}"
                                                             value="{{ $index }}"
                                                             @if (isset($loc[0]) && $loc[0] == $index) selected @endif>
                                                             {{ Config('location.hindiStatesArr.' . $value) }}</option>

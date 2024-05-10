@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class LeadDownload extends Model
 {
     use HasFactory;
+    public $table = 'lead_downloads';
+
 }

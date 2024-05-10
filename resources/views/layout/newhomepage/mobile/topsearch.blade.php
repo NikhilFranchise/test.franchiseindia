@@ -1,4 +1,7 @@
+
 @php
+use Illuminate\Support\Str;
+@endphp@php
 
     $catArr = Config('constants.CategoryArr');
     asort($catArr);

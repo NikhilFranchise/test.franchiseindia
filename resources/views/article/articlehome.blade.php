@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Str;
+@endphp
 @extends('layout.articlemaster')
 @section('seoTitle', 'Franchise Articles and Information, New Business Ideas - Franchise India')
 @section('seoDesc', 'Read our latest and popular collection of franchise articles includes new business ideas,franchise information and franchise opportunities')
@@ -38,7 +41,7 @@
                    $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
 
                     if ( $article['site_type'] == 'ga' ) {
-                        $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                        $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                         $image  = $article['image'];
                         $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                     }
@@ -117,7 +120,7 @@
                     $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
 
                     if ( $article['site_type'] == 'ga' ) {
-                        $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                        $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                         $image  = $article['image'];
                         $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                     }
@@ -179,12 +182,12 @@
                 $date = date_format($a,"M, d Y");
 
                 $site   = Config('constants.articleArr.'.$homeArticle[4]['site_type']);
-                $kicker = Config('constants.MainDomain').'/content/'.str_slug($homeArticle[4]['kicker']);
+                $kicker = Config('constants.MainDomain').'/content/'.Str::slug($homeArticle[4]['kicker']);
                 $image  = Config('constants.awsS3Url').$homeArticle[4]['image'];
                 $url    = Config('constants.MainDomain').'/'.$site.'/'.$homeArticle[4]['slug'].'.'.$homeArticle[4]['content_id'];
 
                 if ( $homeArticle[4]['site_type'] == 'ga' ) {
-                    $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($homeArticle[4]['kicker']).'/'.$homeArticle[4]['kicker_id'];
+                    $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($homeArticle[4]['kicker']).'/'.$homeArticle[4]['kicker_id'];
                     $image  = $homeArticle[4]['image'];
                     $url    = Config('constants.MainDomain').'/'.$site.'/'.$homeArticle[4]['slug'].'.'.$homeArticle[4]['content_id'];
                 }
@@ -225,7 +228,7 @@
                         $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
 
                         if ( $article['site_type'] == 'ga' ) {
-                            $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                            $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                             $image  = $article['image'];
                             $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                         }
@@ -287,7 +290,7 @@
                             $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
 
                             if ( $article['site_type'] == 'ga' ) {
-                                $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                                $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                                 $image  = $article['image'];
                                 $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                             }
@@ -372,7 +375,7 @@
                      @endphp
                     <div class="img-txtlayoutnew">
                         <div class="img-valayout">
-                            <a href="https://video.franchiseindia.com/{{str_slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">
+                            <a href="https://video.franchiseindia.com/{{Str::slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">
                                 <img src="@php printf(Config('constants.youtubeImageUrl'),$article['videoID'])@endphp" alt="{{$article['title']}}">
                             </a>
                         </div>
@@ -380,16 +383,16 @@
                             <div class="text-rep-blk">
                                 <div class="a-name-red">
                                     <span>
-                                        <a href="https://video.franchiseindia.com/{{str_slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">
+                                        <a href="https://video.franchiseindia.com/{{Str::slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">
                                             {{ $article->categoryName->catname }}
                                         </a>
                                     </span>
-                                    <a href="https://video.franchiseindia.com/{{str_slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">
+                                    <a href="https://video.franchiseindia.com/{{Str::slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">
                                         <img class="lozad imgleft" data-src="{{url('images/video-icon.png')}}" alt="video-icon"/>
                                     </a>
                                 </div>
                                 <div class="show-an-txt">
-                                    <a href="https://video.franchiseindia.com/{{str_slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">{{$article['title']}}</a>
+                                    <a href="https://video.franchiseindia.com/{{Str::slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">{{$article['title']}}</a>
                                 </div>
                             </div>
                         </span>
@@ -397,22 +400,22 @@
                 @else
                     <div class="img-txtlayoutpart">
                         <div class="img-valayoutpart">
-                            <a href="https://video.franchiseindia.com/{{str_slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">
+                            <a href="https://video.franchiseindia.com/{{Str::slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">
                                 <img class="lozad" alt="{{ $article->categoryName->catname }}" data-src="@php printf(Config('constants.youtubeImageUrl'),$article['videoID'])@endphp">
                             </a>
                         </div>
                         <span class="text-contentnewlayoutpart">
                             <div class="text-rep-blkpart">
                                 <div class="a-name-redpart">
-                                    <a href="https://video.franchiseindia.com/{{str_slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">
+                                    <a href="https://video.franchiseindia.com/{{Str::slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">
                                         <span>{{ $article->categoryName->catname }}</span>
                                     </a>
-                                    <a href="https://video.franchiseindia.com/{{str_slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">
+                                    <a href="https://video.franchiseindia.com/{{Str::slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/">
                                         <img class="lozad imgleft" alt="video icon franchiseindia" data-src="{{url('images/video-icon.png')}}"/>
                                     </a>
                                 </div>
                                 <div class="show-an-txtpart">
-                                    <a href="https://video.franchiseindia.com/{{str_slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/"> {{$article['title']}} </a>
+                                    <a href="https://video.franchiseindia.com/{{Str::slug(strtolower($article['title']), '-')}}/{{$article['videoID']}}/"> {{$article['title']}} </a>
                                 </div>
                             </div>
                         </span>
@@ -444,7 +447,7 @@
                     $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
 
                     if ( $article['site_type'] == 'ga' ) {
-                        $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                        $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                         $image  = $article['image'];
                         $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                     }
@@ -552,7 +555,7 @@
                             $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
 
                             if ( $article['site_type'] == 'ga' ) {
-                                $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                                $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                                 $image  = $article['image'];
                                 $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                             }
@@ -614,7 +617,7 @@
                             $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
 
                             if ( $article['site_type'] == 'ga' ) {
-                                $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                                $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                                 $image  = $article['image'];
                                 $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                             }
@@ -694,7 +697,7 @@
                                 $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
 
                                 if ( $article['site_type'] == 'ga' ) {
-                                    $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                                    $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                                     $image  = $article['image'];
                                     $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                                 }

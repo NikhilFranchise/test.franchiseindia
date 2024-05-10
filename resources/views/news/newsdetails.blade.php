@@ -1,3 +1,6 @@
+@php
+use Illuminate\Support\Str;
+@endphp
 @extends('layout.master')
 @section('seoTitle', $newsDetails['title'])
 @section('seoDesc', $newsDetails['shortDesc'])
@@ -150,7 +153,7 @@
                                 <div class="col-xs-12 col-sm-6 col-md-6 row-no-padding">
                                     <div class="rightsubhead">
                                         <a
-                                            href="{{ Config('constants.MainDomain') }}/insights/{{ str_slug($nextArticle[0]['kicker']) }}">
+                                            href="{{ Config('constants.MainDomain') }}/insights/{{ Str::slug($nextArticle[0]['kicker']) }}">
                                             {{ $nextArticle[0]['kicker'] }}
                                         </a>
                                     </div>
@@ -253,7 +256,7 @@
                                 <div class="col-xs-12 col-sm-6 col-md-6 row-no-padding">
                                     <div class="rightsubhead">
                                         <a
-                                            href="{{ Config('constants.MainDomain') }}/insights/{{ str_slug($nextArticle[0]['kicker']) }}">
+                                            href="{{ Config('constants.MainDomain') }}/insights/{{ Str::slug($nextArticle[0]['kicker']) }}">
                                             {{ $nextArticle[0]['kicker'] }}
                                         </a>
                                     </div>
