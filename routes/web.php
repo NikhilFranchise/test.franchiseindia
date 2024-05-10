@@ -528,3 +528,8 @@ Route::group( [ 'prefix' => 'entrepreneur' ], function()
     Route::get('{param1}/{param2}/{param3}',                         function(){return redirect(Config('constants.MainDomain').'/content', 301);});
     Route::get('{param1}/{param2}/{param3}/{param4}',                function(){return redirect(Config('constants.MainDomain').'/content', 301);});
 });
+
+Route::get('event',                           [EventController::class,'event']);
+
+//Rss Route
+Route::get('rss',                            [FacebookArticleController::class,'rss']); // Facebook Instant Articles RSS feed route
