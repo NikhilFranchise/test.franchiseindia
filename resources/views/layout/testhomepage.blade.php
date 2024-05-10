@@ -4,10 +4,16 @@
     @include('layout.newhomepage.testhead')
 </head>
 <body>
-@mobile
+{{-- @mobile --}}
+@if ($agent->isMobile())
+
 @include('layout.newhomepage.mobile.topsearch')
-@endmobile
+@endif
+{{-- @endmobile --}}
 @include('layout.newhomepage.topsearch');
+@php
+use Illuminate\Support\Str;
+@endphp
 @php
     $TopInternationalOpportunities = array(
 
@@ -203,7 +209,9 @@
     <!-- Sidebar  -->
 @include('layout.newhomepage.sidemenu')
 <!-- Sidebar End -->
-@notmobile
+{{-- @notmobile --}}
+@if ($agent->isDesktop() || $agent->isTablet())
+
 <!-- Page Content  -->
     <div id="content">
     @include('layout.newhomepage.header')
@@ -779,7 +787,7 @@
                                         $sourcePhoto       = public_path($article['image']);
                                         $imagename         = pathinfo($sourcePhoto)['basename'];
                                         $imagePath         = Config('constants.MainDomain')."/uploads/thumbnails/ga/".$imagename;
-                                        $kickerUrl         = '/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                                        $kickerUrl         = '/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                                         }
                                         $content = ($article['homeTitle']) ? $article['homeTitle'] : $article['title'];
                                         $articless[] = array(
@@ -1207,9 +1215,11 @@
         @include('layout.newhomepage.footer')
     </div>
 </div>
-@endnotmobile
+{{-- @endnotmobile --}}
+@endif
 <!-- mobile section start -->
-@mobile
+@if ($agent->isMobile())
+{{-- @mobile --}}
 <div id="content">
     <header class="header" id="header">
         <div class="container-fluid">
@@ -1798,7 +1808,7 @@
                                     $sourcePhoto       = public_path($article['image']);
                                     $imagename         = pathinfo($sourcePhoto)['basename'];
                                     $imagePath         = Config('constants.MainDomain')."/uploads/thumbnails/ga/".$imagename;
-                                    $kickerUrl         = '/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                                    $kickerUrl         = '/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                                     }
                                     $content = ($article['homeTitle']) ? $article['homeTitle'] : $article['title'];
                                     $articless[] = array(
@@ -2236,7 +2246,8 @@
     </main>
     @include('layout.newhomepage.footer')
 </div>
-@endmobile
+@endif
+{{-- @endmobile --}}
 <!-- mobile section end -->
 @include('layout.newhomepage.popupfranchiseshowmain')
 <div class="overlay"></div>
@@ -2255,20 +2266,28 @@
 <!-- Owl carousel -->
 <script src="{{url('newhomepage/assets/vendor/owl.carousel/owl.carousel.min.js')}}"></script>
 <!-- Custom JS -->
-@notmobile
+{{-- @notmobile --}}
+@if ($agent->isDesktop())
+
 <script src="{{url('newhomepage/assets/js/app.js')}}"></script>
-@endnotmobile
-@tablet
+{{-- @endnotmobile --}}
+@elseif ($agent->isTablet())
+
+{{-- @tablet --}}
 <script src="{{url('newhomepage/assets/js/app.mobile.js')}}"></script>
-@endtablet
-@mobile
+{{-- @endtablet --}}
+@elseif ($agent->isMobile())
+{{-- @mobile --}}
 <script src="{{url('newhomepage/assets/js/app.mobile.js')}}"></script>
-@endmobile
+@endif
+{{-- @endmobile --}}
 <script type="text/javascript" src="{{url('awesomplete/awesomplete.js') }}"></script>
 <script>function frg_panel(){$("#lg-pnl").hide(),$("#frg-pnl").show()}function lg_panel(){$("#lg-pnl").show(),$("#loginactive").click(),$("#frg-pnl").hide()}$("#exampleFormControlSelect1").change(function(){window.location=$(this).val()}),$("#exampleFormControlSelect2").change(function(){window.location=$(this).val()}),$(document).ready(function(){$("#btnhome").click(function(){var e=$("input[name='optionsRadios']:checked").val(),i=document.getElementById("emailfreeadvice").value,n=document.getElementById("mobilefreeadvice").value;$.ajax({type:"post",url:"/freeadvice",data:{optionsRadios:e,name:"abc",pincode:"000000",email:i,mobile:n,details:"test",is_newsletter:1},success:function(e){alert(e),window.location="/thanks-advice-form"}})})}),$("#registerselect").click(function(){$("#registeractive").click()}),$("#loginselect").click(function(){$("#loginactive").click()}),$("#mobilereg").click(function(){$("#registeractive").click()}),$("#registerselect1").click(function(){$("#login").addClass("active"),$("#register").removeClass("active"),$("#loginactiveopen").addClass("active"),$("#registeractiveopen").removeClass("active")}),$("#loginselect1").click(function(){$("#login").removeClass("active"),$("#register").addClass("active"),$("#loginactiveopen").removeClass("active"),$("#registeractiveopen").addClass("active")});const input=document.getElementById("dealer-bar-search"),awesomplete=new Awesomplete(input),navBarSearch=$("#dealer-bar-search");function prepareList(e){var i=[];e.forEach(e=>{i.push(e.name)}),awesomplete.list=i}function setCookie(){document.cookie="accept_cookie=ok",$("#cookie").hide()}function getCookie(){return checkCookie("accept_cookie")}function checkCookie(e){for(var i=e+"=",n=document.cookie.split(";"),a=0;a<n.length;a++){for(var o=n[a];" "==o.charAt(0);)o=o.substring(1);if(0==o.indexOf(i))return o.substring(i.length,o.length)}return""}navBarSearch.on("keypress keyup keypress blur change",function(){var e=$(this).val();e.length>=2&&$.ajax({url:"/dealers-search/"+e,type:"GET",dataType:"json",success:function(e){prepareList(JSON.parse(JSON.stringify(e)))},error:function(e){console.log(e)}})}),navBarSearch.on("awesomplete-selectcomplete",function(){if(""!=$("#dealer-bar-search").val()){var e=$("#dealer-bar-search").val(),i=e.split(" - <strong> in");i.length>1&&(e=i[0]),window.location.href="/dealers-india/search/"+e}}),$("#textcompany").on("click",function(){if(""!=$("#dealer-bar-search").val()){var e=$("#dealer-bar-search").val(),i=e.split(" - <strong> in");i.length>1&&(e=i[0]),window.location.href="/dealers-india/search/"+e}}),$(document).ready(function(){"ok"==getCookie()?$("#cookie").hide():$("#cookie").show()});</script>
 @if( !(!empty(request()->segment(2)) && request()->segment(1) == "brands" && isset(explode('.', request()->segment(2))[1]) && in_array(explode('.', request()->segment(2))[1], Config('constants.popupBrands')) ))
 
-    @notmobile
+@if ($agent->isTablet() || $agent->isDesktop)
+
+    {{-- @notmobile --}}
     @php
         $expoPopup = 0;
         if (empty(Cookie::get('expoppoup17'))) {
@@ -2342,7 +2361,8 @@
         @endif
     @endif
     <!-- popupmag Start of franchiseindia Zendesk Widget script  popupmag -->
-    @endnotmobile
+    @endif
+    {{-- @endnotmobile --}}
 
 @endif
 <script>function submitCategory(){var a=$("#getSubCatCategoryDataHeader").val(),t=$("#getSubCategoryDataHeader").val(),e=$("#getMainCategoryDataHeader").val(),n="/business-opportunities/";return a?n=n+$("option:selected",$("#getSubCatCategoryDataHeader")).attr("slug")+".ssc"+a+"?catTab=1":t?n=n+$("option:selected",$("#getSubCategoryDataHeader")).attr("slug")+".sc"+t+"?catTab=1":e&&void 0!==$("option:selected",$("#getMainCategoryDataHeader")).attr("slug")?n=n+$("option:selected",$("#getMainCategoryDataHeader")).attr("slug")+".m"+e+"?catTab=1":n+="all/all",window.open(n,"_blank"),!1}function submitLocation(){var a=$("#getMainCategoryDataHeaderLoc").val(),t=$("#headercity").val(),e=$("#stateHeader").val(),n=$("option:selected",$("#getMainCategoryDataHeaderLoc")).attr("slug"),o=$("option:selected",$("#headercity")).attr("slug"),i=$("option:selected",$("#stateHeader")).attr("slug"),r="/business-opportunities/";return""!=a&&""!=e&&""!=t?r=r+n+"-in-"+i+"/mc-"+a+"/loc-"+e+"/ct-"+o:""!=a&&""!=e?r=r+n+"-in-"+i+"/mc-"+a+"/loc-"+e:""!=e&&""!=t?r=r+"business-in-"+i+"/loc-"+e+"/ct-"+o:""!=e?r=r+i+".LOC"+e:(r+="all/all",window.open(r,"_blank")),window.open(r+"?locTab=1","_blank"),!1}function submitInvestment(){var a=$("#getMainCategoryDataHeaderInv").val(),t=$("#minAmount").val(),e=$("#maxAmount").val(),n=$("option:selected",$("#getMainCategoryDataHeaderInv")).attr("slug"),o=$("option:selected",$("#minAmount")).attr("slug"),i=$("option:selected",$("#maxAmount")).attr("slug"),r="/business-opportunities/";return""!=a&&""!=t&&""!=e?r=r+n+"-in-india/mc-"+a+"/range-"+o+"-"+i:""!=a&&""!=t?r=r+n+"-in-india/mc-"+a+"/range-"+o:""!=t&&""!=e?r=r+"business/range-"+o+"-"+i:window.open(r+"all/all?invTab=1","_blank"),window.open(r+"?invTab=1","_blank"),!1}function submitCategory1(){var a=$("#getSubCatCategoryDataHeader1").val(),t=$("#getSubCategoryDataHeader1").val(),e=$("#getMainCategoryDataHeader1").val(),n="/business-opportunities/";return a?n=n+$("option:selected",$("#getSubCatCategoryDataHeader1")).attr("slug")+".ssc"+a+"?catTab=1":t?n=n+$("option:selected",$("#getSubCategoryDataHeader1")).attr("slug")+".sc"+t+"?catTab=1":e&&void 0!==$("option:selected",$("#getMainCategoryDataHeader1")).attr("slug")?n=n+$("option:selected",$("#getMainCategoryDataHeader1")).attr("slug")+".m"+e+"?catTab=1":n+="all/all",window.open(n,"_blank"),!1}function submitLocation1(){var a=$("#getMainCategoryDataHeaderLoc1").val(),t=$("#headercity1").val(),e=$("#stateHeader1").val(),n=$("option:selected",$("#getMainCategoryDataHeaderLoc1")).attr("slug"),o=$("option:selected",$("#headercity1")).attr("slug"),i=$("option:selected",$("#stateHeader1")).attr("slug"),r="/business-opportunities/";return""!=a&&""!=e&&""!=t?r=r+n+"-in-"+i+"/mc-"+a+"/loc-"+e+"/ct-"+o:""!=a&&""!=e?r=r+n+"-in-"+i+"/mc-"+a+"/loc-"+e:""!=e&&""!=t?r=r+"business-in-"+i+"/loc-"+e+"/ct-"+o:""!=e?r=r+i+".LOC"+e:(r+="all/all",window.open(r,"_blank")),window.open(r+"?locTab=1","_blank"),!1}function submitInvestment1(){var a=$("#getMainCategoryDataHeaderInv1").val(),t=$("#minAmount1").val(),e=$("#maxAmount1").val(),n=$("option:selected",$("#getMainCategoryDataHeaderInv1")).attr("slug"),o=$("option:selected",$("#minAmount1")).attr("slug"),i=$("option:selected",$("#maxAmount1")).attr("slug"),r="/business-opportunities/";return""!=a&&""!=t&&""!=e?r=r+n+"-in-india/mc-"+a+"/range-"+o+"-"+i:""!=a&&""!=t?r=r+n+"-in-india/mc-"+a+"/range-"+o:""!=t&&""!=e?r=r+"business/range-"+o+"-"+i:window.open(r+"all/all?invTab=1","_blank"),window.open(r+"?invTab=1","_blank"),!1}</script>

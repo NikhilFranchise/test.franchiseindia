@@ -4,10 +4,16 @@
     @include('layout.hindinewhomepage.head')
 </head>
 <body>
-@mobile
+{{-- @mobile --}}
+@if ($agent->isMobile())
+
 @include('layout.hindinewhomepage.mobile.topsearch')
-@endmobile
+@endif
+{{-- @endmobile --}}
 @include('layout.hindinewhomepage.topsearch');
+@php
+use Illuminate\Support\Str;
+@endphp
 @php
     $TopInternationalOpportunities = array(
 
@@ -197,7 +203,9 @@
     <!-- Sidebar  -->
 @include('layout.hindinewhomepage.sidemenu')
 <!-- Sidebar End -->
-@notmobile
+{{-- @notmobile --}}
+@if ($agent->isTablet() || $agent->isDesktop())
+
 <!-- Page Content  -->
     <div id="content">
     @include('layout.hindinewhomepage.header')
@@ -760,7 +768,7 @@
                                         $sourcePhoto       = public_path($article['image']);
                                         $imagename         = pathinfo($sourcePhoto)['basename'];
                                         $imagePath         = Config('constants.MainDomain')."/uploads/thumbnails/ga/".$imagename;
-                                        $kickerUrl         = '/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                                        $kickerUrl         = '/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                                         }
                                         $content = ($article['homeTitle']) ? $article['homeTitle'] : $article['title'];
                                         $articless[] = array(
@@ -1211,8 +1219,11 @@
         @include('layout.newhomepage.footer')
     </div>
 </div>
-@endnotmobile
-@mobile
+@endif
+{{-- @endnotmobile --}}
+@if ($agent->isMobile())
+
+{{-- @mobile --}}
 <div id="content">
     <header class="header" id="header">
         <div class="container-fluid">
@@ -1895,7 +1906,7 @@
                                     $sourcePhoto       = public_path($article['image']);
                                     $imagename         = pathinfo($sourcePhoto)['basename'];
                                     $imagePath         = Config('constants.MainDomain')."/uploads/thumbnails/ga/".$imagename;
-                                    $kickerUrl         = '/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                                    $kickerUrl         = '/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                                     }
                                     $content = ($article['homeTitle']) ? $article['homeTitle'] : $article['title'];
                                     $articless[] = array(
@@ -2332,7 +2343,8 @@
     </main>
     @include('layout.hindinewhomepage.footer')
 </div>
-@endmobile
+@endif
+{{-- @endmobile --}}
 @include('layout.newhomepage.popupfranchiseshowmain')
 <div class="overlay"></div>
 <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
@@ -2350,15 +2362,24 @@
 <!-- Owl carousel -->
 <script src="{{url('newhomepage/assets/vendor/owl.carousel/owl.carousel.min.js')}}"></script>
 <!-- Custom JS -->
-@notmobile
+{{-- @notmobile --}}
+@if ($agent->isDesktop())
+
 <script src="{{url('newhomepage/assets/js/app.js')}}"></script>
-@endnotmobile
-@tablet
+{{-- @endnotmobile --}}
+@endif
+@if ($agent->isTablet())
+
+{{-- @tablet --}}
 <script src="{{url('newhomepage/assets/js/app.mobile.js')}}"></script>
-@endtablet
-@mobile
+{{-- @endtablet --}}
+@endif
+{{-- @mobile --}}
+@if ($agent->isMobile())
+
 <script src="{{url('newhomepage/assets/js/app.mobile.js')}}"></script>
-@endmobile
+@endif
+{{-- @endmobile --}}
 <script type="text/javascript" src="{{url('awesomplete/awesomplete.js') }}"></script>
 <script>
     $('#exampleFormControlSelect1').change(function() {
@@ -2505,7 +2526,8 @@
 </script>
 @if( !(!empty(request()->segment(2)) && request()->segment(1) == "brands" && isset(explode('.', request()->segment(2))[1]) && in_array(explode('.', request()->segment(2))[1], Config('constants.popupBrands')) ))
 
-    @notmobile
+@if ($agent->isDesktop() || $agent->isTablet())
+    {{-- @notmobile --}}
     @php
         $expoPopup = 0;
         if (empty(Cookie::get('expoppoup17'))) {
@@ -2579,7 +2601,8 @@
         @endif
     @endif
     <!-- popupmag Start of franchiseindia Zendesk Widget script  popupmag -->
-    @endnotmobile
+    @endif
+    {{-- @endnotmobile --}}
 
 @endif
 <script>

@@ -1,4 +1,7 @@
 @php
+use Illuminate\Support\Str;
+@endphp
+@php
     $extend = 'amp-master-eng';
         if(request()->segment(2) == 'hi')
             $extend = 'hindi.amp-master';
@@ -61,7 +64,7 @@
             <li>
                 <div class="blk">
                     <div  class="brandlogolist"><a href="{{ $brandUrl }}"><amp-img src="{{ $brandImagepath }}" width="199" height="81" layout="responsive"></amp-img></a> </div>
-                    <div class="brandcatname"><a href="{{ url('amp/hi/business-opportunities/'.str_slug($SubCatName).'.ssc'.$brandResult->ind_sub_cat) }}">{{ request()->segment(2) == 'hi' ? $SubCatNameHindi : $SubCatName }}</a></div>
+                    <div class="brandcatname"><a href="{{ url('amp/hi/business-opportunities/'.Str::slug($SubCatName).'.ssc'.$brandResult->ind_sub_cat) }}">{{ request()->segment(2) == 'hi' ? $SubCatNameHindi : $SubCatName }}</a></div>
                     <div class="brandname"><a href="{{ $brandUrl }}">{{ $brandResult->company_name }}</a></div>
                     <div class="investvalue">{{ request()->segment(2) == 'hi' ? "निवेश का आकार " : "Investment Size" }}<span>INR {{ $minValue  }} - {{ $maxValue }}</span></div>
                 </div>

@@ -4,6 +4,9 @@
     $engUrl = url('/newcontent');
 @endphp
 @php
+use Illuminate\Support\Str;
+@endphp
+@php
 
     $catArr = Config('constants.CategoryArr');
     asort($catArr);
@@ -504,7 +507,7 @@
                                                         <option value="" hidden>Select State</option>
                                                         @foreach ($states as $index => $value)
                                                             <option value="{{ $index }}"
-                                                                slug="{{ strtolower(str_slug($value)) }}"
+                                                                slug="{{ strtolower(Str::slug($value)) }}"
                                                                 @if (isset($loc[0]) && $loc[0] == $index) selected @endif>
                                                                 {!! $value !!}</option>
                                                         @endforeach

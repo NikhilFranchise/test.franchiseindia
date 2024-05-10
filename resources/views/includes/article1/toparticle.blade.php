@@ -5,7 +5,9 @@
 </div>
 </div>
 
-
+@php
+use Illuminate\Support\Str;
+@endphp
 <div class="topblk">
 <div class="container">
 	@if((Request::segment(1) != 'hi'))
@@ -21,7 +23,7 @@
                    $url    = Config('constants.MainDomain').'/newcontent/'.$article['slug'].'.'.$article['content_id'];
                    $authorUrl  = Config('constants.MainDomain').'/newcontent/author/'.$art->slugify($article['author'],'-');
                     if ( $article['site_type'] == 'ga' ) {
-                        $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                        $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                         $image  = $article['image'];
                         $url    = Config('constants.MainDomain').'/newcontent/'.$article['slug'].'.'.$article['content_id'];
                     }
@@ -61,7 +63,7 @@
                 $url    = Config('constants.MainDomain').'/newcontent/'.$article['slug'].'.'.$article['content_id'];
                 $authorUrl  = Config('constants.MainDomain').'/newcontent/author/'.$art->slugify($article['author'],'-');
                 if ( $article['site_type'] == 'ga' ) {
-                    $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                    $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                     $image  = $article['image'];
                     $url    = Config('constants.MainDomain').'/newcontent/'.$article['slug'].'.'.$article['content_id'];
                 }
@@ -123,7 +125,7 @@
             $url    = Config('constants.MainDomain').'/hi/newcontent/'.$article['slug'].'.'.$article['content_id'];
 
              if ( $article['site_type'] == 'ga' ) {
-                 $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($tagName->name).'/'.$article->hindi['kicker'];
+                 $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($tagName->name).'/'.$article->hindi['kicker'];
                  $image  = $article['image'];
                  $url    = Config('constants.MainDomain').'/newcontent/'.$article['slug'].'.'.$article['content_id'];
              }
@@ -168,7 +170,7 @@
             $authorUrl = Config('constants.MainDomain').'/hi/newcontent/author/'.$art->slugify($article['hindi_author'],'-');
 
             if ( $article['site_type'] == 'ga' ) {
-                $kicker = Config('constants.MainDomain').'/hi/gallery/'.str_slug($article['hindi_kicker']).'/'.$article['kicker_id'];
+                $kicker = Config('constants.MainDomain').'/hi/gallery/'.Str::slug($article['hindi_kicker']).'/'.$article['kicker_id'];
                 $image  = $article['image'];
                 $url    = Config('constants.MainDomain').'/hi/newcontent/'.$article['slug'].'.'.$article['content_id'];
                 $authorUrl = Config('constants.MainDomain').'/hi/newcontent/author/'.$article['hindi_author'];

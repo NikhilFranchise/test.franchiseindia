@@ -1,5 +1,7 @@
 <div class="col-xs-12 col-sm-3 col-md-3 row-no-padding artirightpanel">
-    
+    @php
+use Illuminate\Support\Str;
+@endphp
     <!--next article section start here-->
     @if(count($nextArticle[0])!=0)
         @php
@@ -18,7 +20,7 @@
                 </div>
 
                 <div class="col-xs-12 col-sm-6 col-md-6 row-no-padding">
-                    <div class="rightsubhead"><a href="{{ Config('constants.MainDomain') }}/content/{{str_slug($nextArticle[0]['kicker'])}} ">{{$nextArticle[0]['kicker']}}</a></div>
+                    <div class="rightsubhead"><a href="{{ Config('constants.MainDomain') }}/content/{{Str::slug($nextArticle[0]['kicker'])}} ">{{$nextArticle[0]['kicker']}}</a></div>
                     <div class="righttartsidetext">
                         <a href="{{ Config('constants.MainDomain') }}/{{$site}}/{{$nextArticle[0]['slug']}}.{{$nextArticle[0]['content_id']}}">
                             @if(empty($nextArticle[0]['homeTitle']))
@@ -104,7 +106,7 @@
                 $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
 
                 if ( $article['site_type'] == 'ga' ) {
-                    $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                    $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                     $image  = $article['image'];
                     $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                 }
@@ -169,7 +171,7 @@
                 $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
 
                 if ( $article['site_type'] == 'ga' ) {
-                    $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                    $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                     $image  = $article['image'];
                     $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                 }
@@ -238,7 +240,7 @@
 
                 <div class="col-xs-12 col-sm-6 col-md-6 row-no-padding">
                     <div class="rightsubhead">
-                        <a href="{{ Config('constants.MainDomain') }}/content/{{str_slug($nextArticle[0]['kicker'])}}">
+                        <a href="{{ Config('constants.MainDomain') }}/content/{{Str::slug($nextArticle[0]['kicker'])}}">
                             {{$nextArticle[0]['kicker']}}
                         </a>
                     </div>

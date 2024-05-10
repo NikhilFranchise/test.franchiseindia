@@ -1,3 +1,7 @@
+
+@php
+use Illuminate\Support\Str;
+@endphp
 <div role="tabpanel" class="tab-pane active" id="whatsnew">
     <div class="row">
         <div class="bxsliderarticle">
@@ -14,7 +18,7 @@
                                 $sourcePhoto       = public_path($article['image']);
                                 $imagename         = pathinfo($sourcePhoto)['basename'];
                                 $imagePath         = Config('constants.MainDomain')."/uploads/thumbnails/ga/".$imagename;
-                                $kickerUrl         = '/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
+                                $kickerUrl         = '/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
                             }
                         @endphp
                         <div class="col-xs-12 col-sm-6 col-md-4 mdfiywidth">
