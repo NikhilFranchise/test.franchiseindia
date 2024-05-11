@@ -1,11 +1,11 @@
 <script async src="{{ url('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js') }}"></script>
 {{--<script async src="https://rtbcdn.andbeyond.media/prod-global-550463.js"></script>--}}
 <!-- Affinity HVR Invocation Code //-->
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     (function(){var o='script',s=top.document,a=s.createElement(o),m=s.getElementsByTagName(o)[0],d=new Date();a.async=1;a.src='https://hbs.ph.affinity.com/v5/franchiseindia.com/index.php?t='+d.getDate()+d.getMonth()+d.getHours();m.parentNode.insertBefore(a,m)})()
-</script>
+</script> --}}
 @if(request()->segment(1) == 'business-opportunities' || request()->segment(2) == 'business-opportunities' || request()->segment(1) == 'brands' || request()->segment(2) == 'brands')
-    <div id = "v-franchiseindia-v1"></div><script>(function(v,d,o,ai){ai=d.createElement('script');ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, '//a.vdo.ai/core/v-franchiseindia-v1/vdo.ai.js');</script>
+    {{-- <div id = "v-franchiseindia-v1"></div><script>(function(v,d,o,ai){ai=d.createElement('script');ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, '//a.vdo.ai/core/v-franchiseindia-v1/vdo.ai.js');</script> --}}
 @endif
 <!-- Old script end -->
 <!-- new code start -->

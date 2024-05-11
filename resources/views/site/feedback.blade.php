@@ -49,7 +49,7 @@
             <!---->
             <form class="form-horizontal" id="feedbackform" name="feedbackform" method="post"
                 action="{{ Config::get('constants.MainDomain') }}/feedback">
-
+                @csrf
                 <div class="sidehead2">
                     i'm writing about something i saw on franchiseindia.com
                 </div>

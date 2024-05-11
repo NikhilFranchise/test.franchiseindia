@@ -76,7 +76,7 @@ class LoginController extends Controller
             return redirect('login');
         }
 
-        $user = Socialite::getFacadeRoot()->driver($provider)->stateless()->user();
+        $user = Socialite::driver($provider)->stateless()->user();
 
         if (empty($user)) {
             session()->flash('loginFailed', 'Please try again');

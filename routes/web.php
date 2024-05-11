@@ -75,7 +75,10 @@ Route::get('/hi', [NewHomePageController::class, 'hindiHomePage']); //checck
 Route::get('about', [StaticPageController::class, 'aboutus']);
 Route::get('contact', [ContactUsController::class, 'contactUsForm']);
 Route::get('feedback', [SiteFeedbackController::class, 'feedbackForm']);
-Route::get('testimonials', [StaticPageController::class, 'getTestimonials']);
+Route::get('testimonials', function(){
+    return redirect('testimonials-reviews',301);
+});
+Route::get('testimonials-reviews', [StaticPageController::class, 'getTestimonials']);
 Route::get('terms', [StaticPageController::class, 'mainTerm']);
 Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBystateName']);
 Route::get('invester-verifyformmobilenumber', [MobileVerificationController::class, 'investerverifyMobile']);
