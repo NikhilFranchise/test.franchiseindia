@@ -7,16 +7,15 @@ use App\Models\ContentList;
 use App\Models\SeoTagHindi;
 use App\Models\FranchisorBusinessDetail;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-
 
 class SitemapController extends Controller
 {
     public function sitemap()
     {
-        ini_set('memory_limit', '-1');
+        try {
+            ini_set('memory_limit', '-1');
 
-        $siteMapInitializer = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">";
+            $siteMapInitializer = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">";
         $siteMapTerminator  = "</urlset>";
 
         /* Brands Site map Generation start */
@@ -152,7 +151,7 @@ class SitemapController extends Controller
         $kickers     = array_unique(ContentList::query()->select('kicker')->where('kicker', '!=', '')->where('status', 1)->get()->pluck('kicker')->toArray());
         foreach ($kickers as $kicker) {
             $siteMapData .= "<url>
-                                <loc>https://www.franchiseindia.com/content/".str_replace('&', '&amp;', Str::slug($kicker))."</loc>
+                                <loc>https://www.franchiseindia.com/content/".str_replace('&', '&amp;', str_slug($kicker))."</loc>
                                 <lastmod>".date('Y-m-d')."</lastmod>
                             </url>";
         }
@@ -241,7 +240,7 @@ class SitemapController extends Controller
 
             foreach ($locations as $key1 => $location) {
                 $siteMapData .= "<url>
-                            <loc>https://www.franchiseindia.com/business-opportunities/".$category."-in-".Str::slug($location)."/mc-".$key."/loc-".$key1."</loc>
+                            <loc>https://www.franchiseindia.com/business-opportunities/".$category."-in-".str_slug($location)."/mc-".$key."/loc-".$key1."</loc>
                             <lastmod>".date('Y-m-d')."</lastmod>
                         </url>";
             }
@@ -264,7 +263,7 @@ class SitemapController extends Controller
         $siteMapData = "";
         foreach ($locations as $key => $location) {
             $siteMapData .= "<url>
-                                <loc>https://www.franchiseindia.com/business-opportunities/".Str::slug($location).".LOC".$key."</loc>
+                                <loc>https://www.franchiseindia.com/business-opportunities/".str_slug($location).".LOC".$key."</loc>
                                 <lastmod>".date('Y-m-d')."</lastmod>
                             </url>";
         }
@@ -279,7 +278,7 @@ class SitemapController extends Controller
 
             foreach ($locations as $key1 => $location) {
                 $siteMapData .= "<url>
-                                    <loc>https://www.franchiseindia.com/business-opportunities/".$category."-in-".Str::slug($location)."/sc-".$key."/loc-".$key1."</loc>
+                                    <loc>https://www.franchiseindia.com/business-opportunities/".$category."-in-".str_slug($location)."/sc-".$key."/loc-".$key1."</loc>
                                     <lastmod>".date('Y-m-d')."</lastmod>
                                 </url>";
             }
@@ -305,7 +304,7 @@ class SitemapController extends Controller
 
             foreach ($locations as $key1 => $location) {
                 $siteMapData .= "<url>
-                                    <loc>https://www.franchiseindia.com/business-opportunities/".$category."-in-".Str::slug($location)."/ssc-".$key."/loc-".$key1."</loc>
+                                    <loc>https://www.franchiseindia.com/business-opportunities/".$category."-in-".str_slug($location)."/ssc-".$key."/loc-".$key1."</loc>
                                     <lastmod>".date('Y-m-d')."</lastmod>
                                 </url>";
                 ++$subCount;
@@ -400,7 +399,7 @@ class SitemapController extends Controller
 
             foreach ($locations as $key1 => $location) {
                 $siteMapData .= "<url>
-                            <loc>https://www.franchiseindia.com/hi/business-opportunities/".$category."-in-".Str::slug($location)."/mc-".$key."/loc-".$key1."</loc>
+                            <loc>https://www.franchiseindia.com/hi/business-opportunities/".$category."-in-".str_slug($location)."/mc-".$key."/loc-".$key1."</loc>
                             <lastmod>".date('Y-m-d')."</lastmod>
                         </url>";
             }
@@ -420,7 +419,7 @@ class SitemapController extends Controller
         $siteMapData = "";
         foreach ($locations as $key => $location) {
             $siteMapData .= "<url>
-                                <loc>https://www.franchiseindia.com/hi/business-opportunities/".Str::slug($location).".LOC".$key."</loc>
+                                <loc>https://www.franchiseindia.com/hi/business-opportunities/".str_slug($location).".LOC".$key."</loc>
                                 <lastmod>".date('Y-m-d')."</lastmod>
                             </url>";
         }
@@ -435,7 +434,7 @@ class SitemapController extends Controller
 
             foreach ($locations as $key1 => $location) {
                 $siteMapData .= "<url>
-                                    <loc>https://www.franchiseindia.com/hi/business-opportunities/".$category."-in-".Str::slug($location)."/sc-".$key."/loc-".$key1."</loc>
+                                    <loc>https://www.franchiseindia.com/hi/business-opportunities/".$category."-in-".str_slug($location)."/sc-".$key."/loc-".$key1."</loc>
                                     <lastmod>".date('Y-m-d')."</lastmod>
                                 </url>";
             }
@@ -461,7 +460,7 @@ class SitemapController extends Controller
 
             foreach ($locations as $key1 => $location) {
                 $siteMapData .= "<url>
-                                    <loc>https://www.franchiseindia.com/hi/business-opportunities/".$category."-in-".Str::slug($location)."/ssc-".$key."/loc-".$key1."</loc>
+                                    <loc>https://www.franchiseindia.com/hi/business-opportunities/".$category."-in-".str_slug($location)."/ssc-".$key."/loc-".$key1."</loc>
                                     <lastmod>".date('Y-m-d')."</lastmod>
                                 </url>";
                 ++$subCount;
@@ -508,7 +507,7 @@ class SitemapController extends Controller
         $cities     = Config('location.City');
         foreach ($cities as $citi) {
             $siteMapData .= "<url>
-                                <loc>https://www.franchiseindia.com/location/".str_replace('&', '&amp;', Str::slug($citi))."</loc>
+                                <loc>https://www.franchiseindia.com/location/".str_replace('&', '&amp;', str_slug($citi))."</loc>
                                 <lastmod>".date('Y-m-d')."</lastmod>
                             </url>";
         }
@@ -516,5 +515,9 @@ class SitemapController extends Controller
         Storage::getFacadeRoot()->put( "sitemap_cities.xml", $siteMapInitializer.$siteMapData.$siteMapTerminator);
         /* Top City Site map Generation End */
 
+            return "Sitemaps generated successfully!";
+        } catch (\Exception $e) {
+            return "Error generating sitemaps: " . $e->getMessage();
+        }
     }
 }
