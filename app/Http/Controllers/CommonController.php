@@ -775,7 +775,8 @@ class CommonController extends Controller
      */
     public static function getEvents()
     {
-        $XML = Storage::getFacadeRoot()->disk('local')->get('public/events.xml');
+        $XML = Storage::disk('local')->get('public/events.xml');
+        // dd($XML);
         return collect(json_decode(json_encode((array) simplexml_load_string($XML)), true));
     }
 

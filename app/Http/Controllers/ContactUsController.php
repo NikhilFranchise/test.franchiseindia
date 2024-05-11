@@ -50,13 +50,19 @@ class ContactUsController extends Controller
         ]);
 
         if ($contactData) {
+            $stateName = config('location.stateArr.' . $request->state);
+            $countryName = config('location.countryName.' . $request->country);
             $details = [
                 'name' => $request->name,
                 'email' => $request->email,
                 'mobile' => $request->mobile,
                 'contreason' => $request->contreason,
-                'address' => $request->address . ', ' . $request->city . ', ' . $request->state . ', ' . $request->country . ', Pincode:- ' . $request->pincode,
+                'address' => $request->address . ', ' . $request->city . ', ' . $stateName . ', ' . $countryName . ', Pincode:- ' . $request->pincode,
             ];
+
+            // Now you can use $details['address'] to get the complete address with the state name.
+
+
 
             $mailTo = '';
             $mailBcc = ['techsupport@franchiseindia.com'];

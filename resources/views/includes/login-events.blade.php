@@ -55,14 +55,14 @@
                 <div class="hometopadsright">
                     <div class="upcomhead"> <a href="https://www.franchiseindia.com/event" target="_blank" style="color:#333">Upcoming Events</a></div>
                     <div id="slideshow">
-                        {{-- @php
+                        @php
                             $events = App\Http\Controllers\CommonController::getEvents();
                         @endphp
                         @foreach($events['event'] as $event)
                             <div class="eventc">
                                 <a href="{{ $event['url'] }}" target="_blank"><div class="eventvenuedate">{{ $event['name'] }} <span>{{ $event['date'] }}, {{ $event['place'] }}</span></div></a>
                             </div>
-                        @endforeach --}}
+                        @endforeach
                     </div>
                 </div>
             </div>
