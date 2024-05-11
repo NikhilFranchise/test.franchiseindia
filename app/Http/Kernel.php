@@ -82,7 +82,7 @@ class Kernel extends HttpKernel
 	    //$schedule->call('\App\Http\Controllers\CronController@freeFranchisorLeadInsertion')->dailyAt('02:30')->timezone('Asia/Kolkata');
         //$schedule->call('\App\Http\Controllers\CronController@feedbackMail')->dailyAt('11:30')->timezone('Asia/Kolkata');
         // $schedule->call(\App\Http\Controllers\SitemapController::class . '@sitemap')->dailyAt('11:55')->timezone('Asia/Kolkata');
-        $schedule->call('\App\Http\Controllers\SitemapController@sitemap')->dailyAt('11:02')->timezone('Asia/Kolkata');
+        $schedule->call('\App\Http\Controllers\SitemapController@sitemap')->dailyAt('11:06')->timezone('Asia/Kolkata');
 
         // $schedule->call('\App\Http\Controllers\CronController@getSscArray')->dailyAt('05:00')->timezone('Asia/Kolkata');
        $schedule->call(\App\Http\Controllers\CronController::class . '@investorMembershipExpiration')->dailyAt('03:00')->timezone('Asia/Kolkata');
