@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http;
+namespace App\Console;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
