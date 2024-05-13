@@ -22,8 +22,8 @@
                     </div>
                 @endif
 
-                <input type="hidden" name="site_type" value="{{ $data[0] }}">
                 {{ csrf_field() }}
+                <input type="hidden" name="site_type" value="{{ $data[0] }}">
                 <div class="form-group">
                     <label class="col-xs-12 col-sm-4 col-md-4 com4mod control-label mandatory">Name</label>
                     <div class="col-sm-1 com1mod padtop20 hidden-xs">:</div>
@@ -41,7 +41,7 @@
                     <div class="col-xs-12 col-sm-7 col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon"><img src="{{url('images/email.png')}}" alt="email"></span>
-                            <input type="text" class="form-control" value="{{ $data[1] }}" name="email" placeholder="Enter Secondary Email" readonly>
+                            <input type="text" class="form-control" value="{{ $data[1] }}" name="email" placeholder="Enter Secondary Email">
                         </div>
                     </div>
                 </div>

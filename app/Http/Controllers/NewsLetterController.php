@@ -7,7 +7,6 @@ use App\Mail\NewsLetterSubscribe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
-
 define('EMAIL_MARKETER_API', 'http://mailer.franchiseindia.com/emailmarketer/xml.php');
 
 class NewsLetterController extends Controller
@@ -18,45 +17,45 @@ class NewsLetterController extends Controller
      */
     public function newsletter()
     {
-        $email = request()->email;
-        $siteType = request()->site_type;
-        $randValue = rand(100000, 9999999);
-        $checkEmail = FiNewsLetter::query()->select('status')->where('email', $email)->where('site_type', $siteType)->orderby('nid', 'DESC')->first();
-        $news = 'subscribing';
+        $email      = request()->email;
+        $siteType   = request()->site_type;
+        $randValue  = rand(100000, 9999999);
+        $checkEmail = FiNewsLetter::query()->select('status')->where('email',$email)->where('site_type', $siteType)->orderby('nid','DESC')->first();
+        $news       = 'subscribing';
 
-        if (count($checkEmail) > 0) {
-            if ($checkEmail->status == "S") {
+        if($checkEmail != null) {
+            if($checkEmail->status == "S"){
                 $news = 'alreadysubscribed';
                 return view('newsletter/subscribe')->with(compact('news'));
             }
         }
 
         $source = "DOTCOM";
-        if (!empty(Cookie::get('campaignSource')))
+        if(!empty(Cookie::get('campaignSource')))
             $source = Cookie::get('campaignSource');
 
         // If no record exists, send the verification mail
-        if (count($checkEmail) == 0) {
-            $news = 'subscribing';
+        if ($checkEmail == null){
+            $news    = 'subscribing';
             FiNewsLetter::query()->insert([
-                'email' => $email,
+                'email'       => $email,
                 'verify_code' => $randValue,
-                'site_type' => $siteType,
-                'source_ref' => $source
+                'site_type'   => $siteType,
+                'source_ref'  => $source
             ]);
-            if (!empty($email))
+            if(!empty($email))
                 Mail::getFacadeRoot()->to($email)->send(new NewsLetterSubscribe($randValue));
 
-        } else if ($checkEmail->status == "P") {
+        } else if ($checkEmail->status == "P"){
             $news = 'pending';
 
         } else if ($checkEmail->status == "U") {
-            $news = 'againsubscribe';
-            FiNewsLetter::query()->where('email', $email)->where('site_type', $siteType)->update(['verify_code' => $randValue]);
-            if (!empty($email))
+            $news   = 'againsubscribe';
+            FiNewsLetter::query()->where('email', $email)->where('site_type', $siteType)->update([ 'verify_code' => $randValue]);
+            if(!empty($email))
                 Mail::getFacadeRoot()->to($email)->send(new NewsLetterSubscribe($randValue));
 
-        } else if ($checkEmail->status == "S") {
+        } else if ($checkEmail->status == "S"){
             $news = 'subscribed';
         }
 
@@ -68,8 +67,9 @@ class NewsLetterController extends Controller
      */
     public function subscriptionForm()
     {
-        $data = FiNewsLetter::query()->where('verify_code', request()->code)->orderby('nid', 'DESC')->first();
-        if ($data == null || $data->count() === 0) {
+        $data = FiNewsLetter::query()->where('verify_code',request()->code)->orderby('nid','DESC')->first();
+        // dd($data);
+        if ($data->count() == 0) {
             $news = "wrong";
             return view('newsletter/subscribe')->with(compact('news'));
         }
@@ -90,8 +90,8 @@ class NewsLetterController extends Controller
                 <requesttype>subscribers</requesttype>
                 <requestmethod>AddSubscriberToList</requestmethod>
                 <details>
-                <emailaddress>' . $data->email . '</emailaddress>
-                <mailinglist>' . $site . '</mailinglist>
+                <emailaddress>'.$data->email.'</emailaddress>
+                <mailinglist>'.$site.'</mailinglist>
                 <format>html</format>
                 <confirmed>yes</confirmed>
                 <customfields>                                
@@ -109,16 +109,16 @@ class NewsLetterController extends Controller
         curl_exec($ch);
         curl_close($ch);
 
-        FiNewsLetter::query()->where('verify_code', request()->code)->update(['status' => 'S', 'verify_code' => '']);
+        FiNewsLetter::query()->where('verify_code',request()->code)->update(['status' => 'S', 'verify_code' => '']);
 
-        session()->flash('siteType', $data->site_type);
-        session()->flash('newsletterEmail', $data->email);
+        session()->flash('siteType',$data->site_type);
+        session()->flash('newsletterEmail',$data->email);
 
-        if ($data->site_type == "ri")
+        if($data->site_type == "ri")
             return redirect('restaurant/newsletter/subscriptionForm');
-        if ($data->site_type == "wi")
+        if($data->site_type == "wi")
             return redirect('wellness/newsletter/subscriptionForm');
-        if ($data->site_type == "edu")
+        if($data->site_type == "edu")
             return redirect('education/newsletter/subscriptionForm');
 
         return redirect('/newsletter/subscriptionForm');
@@ -132,7 +132,7 @@ class NewsLetterController extends Controller
     {
         $data[0] = session()->get('siteType');
         $data[1] = session()->get('newsletterEmail');
-        return view('newsletter/subscriptionForm', compact('data'));
+        return view('newsletter/subscriptionForm',compact('data'));
     }
 
     /**
@@ -155,109 +155,109 @@ class NewsLetterController extends Controller
             'wantTo' => 'required'
         ]);
 
-        $name = request()->name;
-        $email = request()->email;
-        $mobile = request()->mobile;
-        $country = config('location.countryName.' . request()->input('country'));
-        $wantTo = request()->wantTo;
-        $industry = implode(',', request()->industry);
-        $address = request()->address;
-        $pincode = request()->pincode;
-        $state = request()->state;
-        $about = request()->input('about');
-        $info = request()->info;
-        $franoppo = request()->franoppo;
-        $news = request()->news;
-        $events = request()->events;
-        $services = request()->services;
-        $articles = request()->articles;
-        $newsletter = request()->newsletter;
-        $other = request()->other;
-        $iwant = array();
+        $name          = request()->name;
+        $email         = request()->email;
+        $mobile        = request()->mobile;
+        $country       = config('location.countryName.'.request()->input('country'));
+        $wantTo        = request()->wantTo;
+        $industry      = implode(',', request()->industry);
+        $address       = request()->address;
+        $pincode       = request()->pincode;
+        $state         = request()->state;
+        $about         = request()->input('about');
+        $info          = request()->info;
+        $franoppo      = request()->franoppo;
+        $news          = request()->news;
+        $events        = request()->events;
+        $services      = request()->services;
+        $articles      = request()->articles;
+        $newsletter    = request()->newsletter;
+        $other         = request()->other;
+        $iwant         = array();
 
         if ($franoppo == 1) {
-            array_push($iwant, "Business & Franchise opportunities");
+            array_push($iwant,"Business & Franchise opportunities");
         } else {
             $franoppo = '0';
         }
         if ($news == 1) {
-            array_push($iwant, "Business News & Trends");
+            array_push($iwant,"Business News & Trends");
         } else {
             $news = '0';
         }
         if ($events == 1) {
-            array_push($iwant, "Events and Seminars");
+            array_push($iwant,"Events and Seminars");
         } else {
             $events = '0';
         }
         if ($services == 1) {
-            array_push($iwant, "Business Services");
+            array_push($iwant,"Business Services");
         } else {
             $services = '0';
         }
         if ($articles == 1) {
-            array_push($iwant, "Articles & Research");
+            array_push($iwant,"Articles & Research");
         } else {
             $articles = '0';
         }
         if ($newsletter == 1) {
-            array_push($iwant, "Newsletter");
+            array_push($iwant,"Newsletter");
         } else {
             $newsletter = '0';
         }
         if ($other == 1) {
-            array_push($iwant, "Others");
+            array_push($iwant,"Others");
         } else {
             $other = '0';
         }
         if ($info == 1) {
-            array_push($iwant, "ALL");
+            array_push($iwant,"ALL");
         }
 
         $iam = "";
         $want = implode(',', $iwant);
 
-        if (!empty($about))
-            $iam = implode(',', $about);
+        if(!empty($about))
+            $iam       = implode(',', $about);
 
-        $prevRecord = FiNewsLetter::query()->where('email', $email)->where('site_type', request()->site_type)->count();
+        $prevRecord   = FiNewsLetter::query()->where('email',$email)->where('site_type', request()->site_type)->count();
 
         if ($prevRecord != 0) {
             FiNewsLetter::query()->where('email', $email)
                 ->where('site_type', request()->site_type)
                 ->update([
-                    'name' => $name,
-                    'email' => $email,
-                    'phone' => $mobile,
-                    'country' => $country,
-                    'state' => $state,
-                    'i_want_to' => $wantTo,
-                    'category' => $industry,
-                    'address' => $address,
-                    'pincode' => $pincode,
-                    'iam' => $iam,
-                    'iw_fran_oppor' => $franoppo,
-                    'iwant' => $want,
-                    'iw_news_trends' => $news,
-                    'iw_events_seminars' => $events,
-                    'iw_business_service' => $services,
+                    'name'                 => $name,
+                    'email'                => $email,
+                    'phone'                => $mobile,
+                    'country'              => $country,
+                    'state'                => $state,
+                    'i_want_to'            => $wantTo,
+                    'category'             => $industry,
+                    'address'              => $address,
+                    'pincode'              => $pincode,
+                    'iam'                  => $iam,
+                    'iw_fran_oppor'        => $franoppo,
+                    'iwant'                => $want,
+                    'iw_news_trends'       => $news,
+                    'iw_events_seminars'   => $events,
+                    'iw_business_service'  => $services,
                     'iw_articles_research' => $articles,
-                    'iw_newsletter' => $newsletter,
-                    'iw_others' => $other,
-                    'status' => 'S'
+                    'iw_newsletter'        => $newsletter,
+                    'iw_others'            => $other,
+                    'status'               => 'S'
                 ]);
 
-            $news = 'thanks';
+            $news          = 'thanks';
 
-            if (!empty(request()->site_type)) {
+            if(!empty(request()->site_type)){
 
-                if (request()->site_type == 'ri')
+                if(request()->site_type == 'ri')
                     return redirect('restaurant/newsletter/newsub');
 
-                if (request()->site_type == 'wi')
+                if(request()->site_type == 'wi')
                     return redirect('/wellness/newsletter/newsub');
 
-                if (request()->site_type == 'edu')
+                if(request()->site_type == 'edu')
                     return redirect('/education/newsletter/newsub');
 
             }
@@ -265,38 +265,38 @@ class NewsLetterController extends Controller
         }
 
         FiNewsLetter::query()->insert([
-            'name' => $name,
-            'email' => $email,
-            'phone' => $mobile,
-            'country' => $country,
-            'state' => $state,
-            'i_want_to' => $wantTo,
-            'category' => $industry,
-            'address' => $address,
-            'pincode' => $pincode,
-            'iam' => $iam,
-            'iw_fran_oppor' => $franoppo,
-            'iwant' => $want,
-            'iw_news_trends' => $news,
-            'iw_events_seminars' => $events,
-            'iw_business_service' => $services,
+            'name'                 => $name,
+            'email'                => $email,
+            'phone'                => $mobile,
+            'country'              => $country,
+            'state'                => $state,
+            'i_want_to'            => $wantTo,
+            'category'             => $industry,
+            'address'              => $address,
+            'pincode'              => $pincode,
+            'iam'                  => $iam,
+            'iw_fran_oppor'        => $franoppo,
+            'iwant'                => $want,
+            'iw_news_trends'       => $news,
+            'iw_events_seminars'   => $events,
+            'iw_business_service'  => $services,
             'iw_articles_research' => $articles,
-            'iw_newsletter' => $newsletter,
-            'iw_others' => $other,
-            'site_type' => request()->site_type,
-            'status' => 'S'
+            'iw_newsletter'        => $newsletter,
+            'iw_others'            => $other,
+            'site_type'            => request()->site_type,
+            'status'               => 'S'
         ]);
 
         $news = 'thanks';
 
-        if (!empty(request()->site_type)) {
-            if (request()->site_type == 'ri')
+        if(!empty(request()->site_type)){
+            if(request()->site_type == 'ri')
                 return redirect('restaurant/newsletter/newsub');
 
-            if (request()->site_type == 'wi')
+            if(request()->site_type == 'wi')
                 return redirect('/wellness/newsletter/newsub');
 
-            if (request()->site_type == 'edu')
+            if(request()->site_type == 'edu')
                 return redirect('/education/newsletter/newsub');
         }
         return view('newsletter/subscribe')->with(compact('news'));
@@ -307,7 +307,7 @@ class NewsLetterController extends Controller
      */
     public function newsletterSub()
     {
-        $news = 'thanks';
+        $news          = 'thanks';
         return view('newsletter/subscribe')->with(compact('news'));
     }
 
@@ -321,20 +321,20 @@ class NewsLetterController extends Controller
         $checkEmail = FiNewsLetter::query()->select('status')->where('site_type', $siteType)->where('email', $email)->first();
 
         // If no record exists, send the verification mail
-        if ($checkEmail == null || $checkEmail->count() == 0) {
+        if (count($checkEmail) == 0) {
 
             FiNewsLetter::query()->insert([
                 'email' => $email,
                 'verify_code' => $randCode,
                 'site_type' => $siteType
             ]);
-            if (!empty($email))
-                Mail::to($email)->send(new NewsLetterSubscribe($randCode));
+            if(!empty($email))
+                Mail::getFacadeRoot()->to($email)->send(new NewsLetterSubscribe($randCode));
 
-        } else if ($checkEmail->count() != 0 && $checkEmail->status != 'S') {
+        } else if (count($checkEmail) != 0 && $checkEmail->status != 'S') {
             FiNewsLetter::query()->where('email', $email)->where('site_type', $siteType)->update(['verify_code' => $randCode]);
-            if (!empty($email))
-                Mail::to($email)->send(new NewsLetterSubscribe($randCode));
+            if(!empty($email))
+                Mail::getFacadeRoot()->to($email)->send(new NewsLetterSubscribe($randCode));
         }
     }
 }

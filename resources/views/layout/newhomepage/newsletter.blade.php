@@ -7,6 +7,7 @@
                 <h2>{{ Request::segment(1) == 'hi' ? 'न्यूज़लेटर साइन अप' : 'Newsletter Signup' }}</h2>
                 <div class="main-newsletter">
                     <form id="update" method="post" action="{{ url('newslettersignup') }}">
+                        @csrf
                         <ul class="newsletter">
                             <li>
                                 <input type="hidden" name="site_type" value="fi">
