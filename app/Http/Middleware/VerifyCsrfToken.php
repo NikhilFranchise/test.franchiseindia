@@ -14,7 +14,14 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         //
         'franfailed',
+        'fransuccess',
+        'francancelled',
+        'invfailed',
+        'invsuccess',
+        'invcancelled',
         'book/payment',
-        'unsub',
+        'unsub'
+      
+        
     ];
 }

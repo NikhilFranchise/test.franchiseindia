@@ -71,7 +71,7 @@ Route::get('/home', function () {
 Route::get('pagenotfound', function () {
     return view('static.404');
 }); //404 ERROR PAGE
-Route::get('/hi', [NewHomePageController::class, 'hindiHomePage']);
+Route::get('/hi', [NewHomePageController::class, 'hindiHomePage']); //checck
 Route::get('about', [StaticPageController::class, 'aboutus']);
 Route::get('contact', [ContactUsController::class, 'contactUsForm']);
 Route::get('feedback', [SiteFeedbackController::class, 'feedbackForm']);
