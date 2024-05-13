@@ -14,6 +14,8 @@ return [
     */
 
     'default' => env('FILESYSTEM_DISK', 'local'),
+    'cloud' => env('FILESYSTEM_CLOUD', 's3'),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -27,7 +29,7 @@ return [
     | Supported Drivers: "local", "ftp", "sftp", "s3"
     |
     */
-
+    
     'disks' => [
 
         'local' => [
@@ -46,15 +48,15 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
-            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'throw' => false,
+            'key'    => 'AKIAJQM6GFY5T2WRI5ZQ', //env('AWS_KEY'),
+            'secret' => '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', //env('AWS_SECRET'),
+            'region' => 'ap-south-1', //env('AWS_REGION'),
+            'bucket' => 'franchiseindia',
+            'options' => ['CacheControl' => 'max-age=31536000',
+                          'Expires'      => gmdate("D, d M Y H:i:s T", strtotime("+1 years"))],
         ],
+
+
 
     ],
 
