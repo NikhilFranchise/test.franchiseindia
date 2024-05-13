@@ -68,6 +68,9 @@ Route::get('/', [NewHomePageController::class, 'homeNew']);
 Route::get('/home', function () {
     return redirect('/', 301);
 });
+Route::get('/dashboard', function () {
+    return redirect('/', 301);
+});
 Route::get('pagenotfound', function () {
     return view('static.404');
 }); //404 ERROR PAGE
