@@ -407,7 +407,8 @@
                         <!-- Insta Apply section start here -->
 
                         @if (Auth::check() && Auth::user()->profile_type == Config('constants.ProfileType.Investor'))
-                            @if (count($expIntVal) == 0 || (Auth::user()->membership_type == 1 && $expIntVal->visibility == 0))
+                            {{-- @if (count($expIntVal) == 0 || (Auth::user()->membership_type == 1 && $expIntVal->visibility == 0)) --}}
+                            @if (is_null($expIntVal) || (Auth::user()->membership_type == 1 && $expIntVal->visibility == 0))
                                 @if (!empty($checkData['message']))
                                     {{ $checkData['message'] }}
                                 @endif
@@ -475,10 +476,12 @@
                                 <p> But you have already applied for {{ $franDetails->company_name }}.</p>
                             </div>
                             <div class="frm-sec" id="instaForm">
-                                <form id="insta" action="{{ url('brandcontactinfo') }}" method="post" name="insta">
+                                <form id="insta" action="{{ url('brandcontactinfo') }}" method="post"
+                                    name="insta">
 
                                     @csrf
-                                    <input type="hidden" name="frandetailsid" id="franId" value="{{$franDetails->franchisor_id}}">
+                                    <input type="hidden" name="frandetailsid" id="franId"
+                                        value="{{ $franDetails->franchisor_id }}">
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="infoname"
                                             placeholder="Enter Name">
