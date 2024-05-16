@@ -53,12 +53,10 @@
 <link href="{{url('newhomepage/assets/vendor/owl.carousel/assets/owl.carousel.min.css?ver=2.1')}}"
       rel="stylesheet">
 <!-- Our Custom CSS -->
-{{-- @notmobile --}}
-@if ($agent->isDesktop() && $agent->isTablest())
+@notmobile
+
 <link rel="stylesheet" href="{{url('newhomepage/assets/css/style.css?ver=2.1')}}">
-@else
-<link rel="stylesheet" href="{{url('newhomepage/assets/css/style-mobile-new.css?ver=2.1')}}">
-@endif
-{{-- @endnotmobile
+@endnotmobile
 @mobile
-@endmobile --}}
+<link rel="stylesheet" href="{{url('newhomepage/assets/css/style-mobile-new.css?ver=2.1')}}">
+@endmobile

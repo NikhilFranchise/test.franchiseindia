@@ -199,8 +199,7 @@
                                 @if ($i % 2 != 0)
 
                                     <div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding" >
-                                        {{-- @desktop --}}
-                                        @if($agent-> isDesktop())
+                                        @desktop
                                         <div class="dfp_240X400">
                                         {{--<div id='div-gpt-ad-1504794961823-0' style='height:400px; width:240px; margin:0 auto;'></div>--}}
                                         <!-- /1057625/FIHL/Desktop_Category_240x400_Mid_1-->
@@ -210,9 +209,8 @@
                                                 </script>
                                             </div>
                                         </div>
-                                        {{-- @enddesktop --}}
-                                        @elseif ($agent->isTablet())
-                                        {{-- @tablet --}}
+                                        @enddesktop
+                                        @tablet
                                         <div class="dfp_240X400">
                                         {{--<div id='div-gpt-ad-1504794961823-0' style='height:400px; width:240px; margin:0 auto;'></div>--}}
                                         <!-- /1057625/FIHL/Desktop_Category_240x400_Mid_1-->
@@ -222,9 +220,8 @@
                                                 </script>
                                             </div>
                                         </div>
-                                        {{-- @endtablet --}}
-                                        @elseif($agent->isMobile())
-                                        {{-- @mobile --}}
+                                        @endtablet
+                                        @mobile
                                         <div class="dfp_300X250">
                                         {{--<div id='div-gpt-ad-1504794961823-0' style='height:400px; width:240px; margin:0 auto;'></div>--}}
                                         <!-- /1057625/FIHL/Desktop_Category_240x400_Mid_1-->
@@ -234,8 +231,8 @@
                                                 </script>
                                             </div>
                                         </div>
-                                        {{-- @endmobile --}}
-                                        @endif
+                                        @endmobile
+                                        
                                     </div>
                                     @php
                                         $flag++;
@@ -246,8 +243,7 @@
                                 @if($longbanner == 0)
                                     @if($i > 1)
                                         <div class="row row-no-margin borderbd padtb20 catbannertop">
-                                            {{-- @desktop --}}
-                                            @if ($agent-> isDesktop())
+                                            @desktop
                                             <div class="yahoo_728X90">
 
                                             <!-- /1057625/FIHL/Desktop_Category_728x90_Mid_1-->
@@ -257,9 +253,8 @@
                                                     </script>
                                                 </div>
                                             </div>
-                                            {{-- @enddesktop --}}
-                                            @elseif ($agent-> isMobile())
-                                            {{-- @mobile --}}
+                                            @enddesktop
+                                            @mobile
                                             <div class="yahoo_cat_468X60">
                                             {{--<div id='div-gpt-ad-1563348795825-2' style='width: 300px; height: 250px;'></div>--}}
                                             <!-- /1057625/FIHL/Desktop_Category_300x250_Mid_3-->
@@ -275,8 +270,8 @@
                                             {{--<div class="yahoo_300X250cat">--}}
                                                 {{--<div id="div-gpt-ad-1531467713014-0" style='height:250px; width:300px;'></div>--}}
                                             {{--</div>--}}
-                                            @endif
-                                            {{-- @endmobile --}}
+                                            
+                                            @endmobile
                                         </div>
                                     @endif
                                     @php
@@ -394,7 +389,7 @@
     <div id="comparebottom" class="ttl-brnd-list">
         <div class="popblkbtm">
             <form method="post" action="{{URL('compare-brands')}}">
-                You selected <span class="count">0</span>Brands for Comparison (Max @if ($agent->isMobile()) 2  @endif @if($agent->isDesktop() || $agent->isTablet()) 3 @endif)
+                You selected <span class="count">0</span>Brands for Comparison (Max @mobile 2  @endmobile @notmobile 3 @endnotmobile)
                 <input type="hidden" name="franchisors" id="franchisorsForComparison">
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <input type="submit" class="brandRequest" value="Compare" />

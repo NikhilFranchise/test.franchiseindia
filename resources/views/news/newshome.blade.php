@@ -1,6 +1,3 @@
-@php
-use Illuminate\Support\Str;
-@endphp
 @extends('layout.master')
 @section('seoTitle', 'Franchise Articles and Information, New Business Ideas - Franchise India')
 @section('seoDesc', 'Read our latest and popular collection of franchise articles includes new business ideas,franchise
@@ -56,22 +53,15 @@ use Illuminate\Support\Str;
     </div>
     <div class="row headcommbanner artibanner">
         <div class="fullcontainer">
-            {{-- @desktop --}}
-            @if ($agent->isDesktop())
-
+            @desktop
                 @include('includes.banners.dfp_970X90')
-            {{-- @enddesktop --}}
-            @elseif ($agent->isMobile())
-
-            {{-- @mobile --}}
+            @enddesktop
+            @mobile
                 @include('includes.banners.dfp_320X100')
-            {{-- @endmobile --}}
-            @elseif ($agent->isTablet()|| $agent->isDesktop)
-
-            {{-- @tablet --}}
+            @endmobile
+            @tablet
                 @include('includes.banners.dfp_Tab_728X90')
-                @endif
-            {{-- @endtablet --}}
+            @endtablet
         </div>
     </div>
     <div class="container articlesection">
@@ -90,14 +80,11 @@ use Illuminate\Support\Str;
                     @if ($loop->index == 4)
                         <div class="sidearce">
                             <div class="sidearce">
-                                {{-- @mobile --}}
-                                @if ($agent->isMobile())
-
+                                @mobile
                                     <div class="row row-no-margin adcebtbtm">
                                         @include('includes.banners.dfp_300X250')
                                     </div>
-                                    @endif
-                                {{-- @endmobile --}}
+                                @endmobile
                             </div>
                         </div>
                     @endif
@@ -139,7 +126,7 @@ use Illuminate\Support\Str;
                     $a = date_create($homeArticle[4]['time']);
                     $date = date_format($a, 'M, d Y');
                     $site = Config('constants.articleArr.' . $homeArticle[4]['news_type']);
-                    $kicker = Config('constants.MainDomain') . '/insights/' . Str::slug($homeArticle[4]['kicker']);
+                    $kicker = Config('constants.MainDomain') . '/insights/' . str_slug($homeArticle[4]['kicker']);
                     $image = Config('constants.awsS3Url') . $homeArticle[4]['image'];
                     $url = Config('constants.MainDomain') . '/insights/' . $homeArticle[4]['slug'] . '.' . $homeArticle[4]['news_id'];
                 @endphp
@@ -204,14 +191,11 @@ use Illuminate\Support\Str;
                             </div>
                         @endif
                     @endforeach
-                    {{-- @mobile --}}
-                    @if ($agent->isMobile())
-
+                    @mobile
                         <div class="row row-no-margin adcebtbtm">
                             @include('includes.banners.dfp_300X250_Mid_1')
                         </div>
-                        @endif
-                    {{-- @endmobile --}}
+                    @endmobile
                     <div class="row marminleft bortop">
                         <div class="mohead">
                             Most Commented <a href="{{ Config('constants.MainDomain') }}/commented"
@@ -295,7 +279,7 @@ use Illuminate\Support\Str;
     @endphp
                 <div class="img-txtlayoutnew">
                    <div class="img-valayout">
-                      <a href="https://video.franchiseindia.com/{{ Str::slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">
+                      <a href="https://video.franchiseindia.com/{{ str_slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">
                       <img src="@php printf(Config('constants.youtubeImageUrl'),$article['videoID']) @endphp" alt="{{ $article['title'] }}">
                       </a>
                    </div>
@@ -303,16 +287,16 @@ use Illuminate\Support\Str;
                       <div class="text-rep-blk">
                          <div class="a-name-red">
                             <span>
-                            <a href="https://video.franchiseindia.com/{{ Str::slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">
+                            <a href="https://video.franchiseindia.com/{{ str_slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">
                             {{ $article->categoryName->catname }}
                             </a>
                             </span>
-                            <a href="https://video.franchiseindia.com/{{ Str::slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">
+                            <a href="https://video.franchiseindia.com/{{ str_slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">
                             <img class="lozad imgleft" data-src="{{ url('images/video-icon.png') }}" alt="video-icon"/>
                             </a>
                          </div>
                          <div class="show-an-txt">
-                            <a href="https://video.franchiseindia.com/{{ Str::slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">{{ $article['title'] }}</a>
+                            <a href="https://video.franchiseindia.com/{{ str_slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">{{ $article['title'] }}</a>
                          </div>
                       </div>
                    </span>
@@ -320,22 +304,22 @@ use Illuminate\Support\Str;
 @else
     <div class="img-txtlayoutpart">
                    <div class="img-valayoutpart">
-                      <a href="https://video.franchiseindia.com/{{ Str::slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">
+                      <a href="https://video.franchiseindia.com/{{ str_slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">
                       <img class="lozad" alt="{{ $article->categoryName->catname }}" data-src="@php printf(Config('constants.youtubeImageUrl'),$article['videoID']) @endphp">
                       </a>
                    </div>
                    <span class="text-contentnewlayoutpart">
                       <div class="text-rep-blkpart">
                          <div class="a-name-redpart">
-                            <a href="https://video.franchiseindia.com/{{ Str::slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">
+                            <a href="https://video.franchiseindia.com/{{ str_slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">
                             <span>{{ $article->categoryName->catname }}</span>
                             </a>
-                            <a href="https://video.franchiseindia.com/{{ Str::slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">
+                            <a href="https://video.franchiseindia.com/{{ str_slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/">
                             <img class="lozad imgleft" alt="video icon franchiseindia" data-src="{{ url('images/video-icon.png') }}"/>
                             </a>
                          </div>
                          <div class="show-an-txtpart">
-                            <a href="https://video.franchiseindia.com/{{ Str::slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/"> {{ $article['title'] }} </a>
+                            <a href="https://video.franchiseindia.com/{{ str_slug(strtolower($article['title']), '-') }}/{{ $article['videoID'] }}/"> {{ $article['title'] }} </a>
                          </div>
                       </div>
                    </span>
@@ -392,22 +376,16 @@ use Illuminate\Support\Str;
                     </div>
         </div>
         @if ($loop->index == 2)
-            {{-- @notmobile --}}
-            @if ($agent->isTablet() || $agent->isDesktop())
-
+            @notmobile
                 <div class="sidearce">
                     @include('includes.banners.dfp_300X600')
                 </div>
-                @endif
-            {{-- @endnotmobile --}}
+            @endnotmobile
         @endif
         @if ($loop->index == 5)
-            {{-- @notmobile --}}
-            @if ($agent->isTablet() || $agent->isDesktop())
-
+            @notmobile
                 <div class="sidearce">@include('includes.banners.yahoo_300X600_Article')</div>
-            @endif
-                {{-- @endnotmobile --}}
+            @endnotmobile
             <div class="sidearce">
                 <!-- /1057625/FIHL/Desktop_ROS_300x250_ATF-->
                 <div id='adslot300x250_ATF'>
@@ -425,14 +403,11 @@ use Illuminate\Support\Str;
     <!--right section end here -->
     </div>
     </div>
-    {{-- @mobile --}}
-    @if ($agent->isMobile())
-
+    @mobile
         <div class="row row-no-margin adcebtbtm">
             @include('includes.banners.dfp_300X250_Mid_2')
         </div>
-        @endif
-    {{-- @endmobile --}}
+    @endmobile
     <!--Top Franchise Categories start here -->
     {{-- 
    <div class="cat-article">
@@ -468,7 +443,7 @@ use Illuminate\Support\Str;
                   $image  = Config('constants.awsS3Url').$article['image'];
                   $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                   if ( $article['site_type'] == 'ga' ) {
-                  $kicker = Config('constants.MainDomain').'/gallery/'.Str::slug($article['kicker']).'/'.$article['kicker_id'];
+                  $kicker = Config('constants.MainDomain').'/gallery/'.str_slug($article['kicker']).'/'.$article['kicker_id'];
                   $image  = $article['image'];
                   $url    = Config('constants.MainDomain').'/'.$site.'/'.$article['slug'].'.'.$article['content_id'];
                   }
@@ -667,27 +642,20 @@ use Illuminate\Support\Str;
     </div>
     </div>
     <!-- more article section end here -->
-    {{-- @desktop --}}
-    @if ($agent->isDesktop())
-
+    @desktop
         <div class="row row-no-margin adcebtbtm">
             @include('includes.banners.dfp_Desktop_728X90_BTF')
         </div>
-    {{-- @enddesktop --}}
-    @elseif ($agent->isTablet() || $agent->isDesktop())
-
-    {{-- @tablet --}}
+    @enddesktop
+    @tablet
         <div class="row row-no-margin adcebtbtm">
             @include('includes.banners.dfp_Tablet_728X90_BTF')
         </div>
-    {{-- @endtablet --}}
-    @elseif ($agent->isMobile())
-
-    {{-- @mobile --}}
+    @endtablet
+    @mobile
         <div class="row row-no-margin adcebtbtm">
             @include('includes.banners.dfp_300X250_BTF')
         </div>
-        @endif
-    {{-- @endmobile --}}
+    @endmobile
     <!--form end here -->
 @endsection

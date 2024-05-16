@@ -1,3 +1,5 @@
+{{--<script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>--}}
+<!-- <script src="{{url('newhomepage/assets/js/lazysizes.min.js')}}" async></script> -->
 <!-- Popper.JS -->
 <script src="{{url('newhomepage/assets/vendor/popper/js/popper.min.js')}}"></script>
 <!-- Bootstrap JS -->
@@ -11,18 +13,19 @@
 <script src="{{url('newhomepage/assets/vendor/swiper/js/swiper-bundle.min.js')}}"></script>
 <!-- Owl carousel -->
 <script src="{{url('newhomepage/assets/vendor/owl.carousel/owl.carousel.min.js')}}"></script>
+@notmobile
 
-@if ($agent->isDesktop())
 <script src="{{url('newhomepage/assets/js/app.js')}}"></script>
-
-@elseif ($agent->isTablet())
+@endnotmobile
+@tablet
 
 <script src="{{url('newhomepage/assets/js/app.mobile.js')}}"></script>
+@endtablet
+@mobile
 
-@else
 <script src="{{url('newhomepage/assets/js/app.mobile.js')}}"></script>
+@endmobile
 
-@endif
 <script type="text/javascript" src="{{url('awesomplete/awesomplete.js') }}"></script>
 
 

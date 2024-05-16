@@ -132,11 +132,11 @@ use Illuminate\Support\Str;
                 <!-- magazine Subscribe code start here -->
                 @include('includes.magazinesubscribe')
                 <!-- magazine Subscribe code start here -->
-                {{-- @notmobile --}}
-                @if ($agent->isDesktop() || $agent->isTablet())
+                @notmobile
+                
                 <div class="sidearce"> @include('includes.banners.dfp_600X300') </div>
-                @endif
-                {{-- @endnotmobile --}}
+                {{-- @endif --}}
+                @endnotmobile
                 <div class="sidearce"> @include('includes.banners.google_300X250') </div>
                 <div class="sidearce"> @include('includes.banners.yahoo_300X250') </div>
                 <div class="sidearce"> @include('includes.banners.dfp_300X250') </div>

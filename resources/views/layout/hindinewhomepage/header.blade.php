@@ -44,7 +44,12 @@
     }
 @endphp
 <header class="header" id="header">
-       
+        <!--<div class="topmost">
+            <marquee>
+Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a href="https://www.franchiseindia.com/expo/?id=dotcom" target="_blank">Book your ticket</a>   
+</marquee>
+<a id="myclose">x</a>
+        </div>-->
     <div class="topbar">
         <div class="container-fluid">
             <div class="row">
@@ -68,10 +73,8 @@
 
                             </ul>
                         </div>
-                        {{-- @notmobile --}}
-                        @if ($agent->isDesktop())
-                            
-                       @if($__env->yieldContent('hindiUrl'))
+                        @notmobile
+                        @if($__env->yieldContent('hindiUrl'))
                             <div class="p-2 ml-auto">
                                 <div class="input-group
                                           input-group-custom">
@@ -94,8 +97,7 @@
                                 </div>
                             </div>
                         @endif
-                        @endif
-                        {{-- @endnotmobile --}}
+                        @endnotmobile
                     </div>
 
                 </div>
@@ -117,7 +119,10 @@
                                        </div>
                                     </div>
 
-                                    <div class="logo"> <a href="{{url('')}}"><img
+                                    <!--<div class="logo"> <a href="{{url('')}}"><img
+                                             src="{{url('newhomepage/assets/img/Logo.svg')}}" alt=" Franchiseindia Logo"></a></div>-->
+
+                                              <div class="logo"> <a href="{{url('')}}"><img
                                              src="https://www.franchiseindia.com/images/filogob.png" alt=" Franchiseindia Logo"></a></div>
 
                                     <div class="d-flex">
@@ -172,3 +177,11 @@
         });
     });
 </script>
+{{--<script>--}}
+    {{--function getSubCategoryHeader1(value){$.ajax({type:'GET',url:'{{url('/hindi-get-sub-cat')}}',data:{categoryID:value},success:function(data){$("#getSubCategoryDataHeader1").html(data);}});}--}}
+    {{--function getSubCatCategoryHeader1(value){$.ajax({type:'GET',url:'{{url('getsubcatcategory')}}',data:{subcategoryID:value},success:function(data){$("#getSubCatCategoryDataHeader1").html(data);}});}--}}
+
+    {{--function submitCategory1(){var subSubCat=$('#getSubCatCategoryDataHeader1').val();var subCat=$('#getSubCategoryDataHeader1').val();var mainCat=$('#getMainCategoryDataHeader1').val();var url='{{url('business-opportunities')}}/';if(subSubCat){url=url+$('option:selected',$('#getSubCatCategoryDataHeader1')).attr('slug')+'.ssc'+subSubCat+"?catTab=1";}else if(subCat){url=url+$('option:selected',$('#getSubCategoryDataHeader1')).attr('slug')+'.sc'+subCat+"?catTab=1";}else if(mainCat&&typeof $('option:selected',$('#getMainCategoryDataHeader1')).attr('slug')!=="undefined"){url=url+$('option:selected',$('#getMainCategoryDataHeader1')).attr('slug')+'.m'+mainCat+"?catTab=1";}else{url=url+'all/all';}--}}
+        {{--window.open(url, '_blank');return false;}--}}
+
+{{--</script>--}}

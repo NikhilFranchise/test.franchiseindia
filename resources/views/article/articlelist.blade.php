@@ -1,5 +1,5 @@
 @php
-use Illuminate\Support\Str;
+    use Illuminate\Support\Str;
 @endphp
 @extends('layout.master')
 @section('seoTitle', ucwords($kicker) . ' Articles and Information - Franchise India')
@@ -29,7 +29,14 @@ use Illuminate\Support\Str;
                                 @php
                                     $site = Config('constants.articleArr.' . $article->site_type);
                                     $image = Config('constants.awsS3Url') . $article->image;
-                                    $url = Config('constants.MainDomain') . '/' . $site . '/' . $article->slug . '.' . $article->content_id;
+                                    $url =
+                                        Config('constants.MainDomain') .
+                                        '/' .
+                                        $site .
+                                        '/' .
+                                        $article->slug .
+                                        '.' .
+                                        $article->content_id;
                                     if ($article->site_type == 'ga') {
                                         $image = $article->image;
                                     }
@@ -73,9 +80,23 @@ use Illuminate\Support\Str;
                             @if ($loop->index > 0)
                                 @php
                                     $site = Config('constants.articleArr.' . $article['site_type']);
-                                    $url = Config('constants.MainDomain') . '/' . $site . '/' . $article['slug'] . '.' . $article['content_id'];
+                                    $url =
+                                        Config('constants.MainDomain') .
+                                        '/' .
+                                        $site .
+                                        '/' .
+                                        $article['slug'] .
+                                        '.' .
+                                        $article['content_id'];
                                     if ($article['site_type'] == 'ga') {
-                                        $url = Config('constants.MainDomain') . '/' . $site . '/' . $article['slug'] . '.' . $article['content_id'];
+                                        $url =
+                                            Config('constants.MainDomain') .
+                                            '/' .
+                                            $site .
+                                            '/' .
+                                            $article['slug'] .
+                                            '.' .
+                                            $article['content_id'];
                                     }
                                 @endphp
                                 <div class="smallatcmost">
@@ -99,14 +120,26 @@ use Illuminate\Support\Str;
                     {{-- @php echo '<pre/>'; print_r($loop);exit; @endphp --}}
                     {{-- @if ($loop->index) --}}
                     @php
-                        
+
                         $site = Config('constants.articleArr.' . $article['site_type']);
                         $kicker = Config('constants.MainDomain') . '/content/' . $article['urlKicker'];
                         $image = Config('constants.awsS3Url') . $article['image'];
-                        $url = Config('constants.MainDomain') . '/' . $site . '/' . $article['slug'] . '.' . $article['content_id'];
-                        
+                        $url =
+                            Config('constants.MainDomain') .
+                            '/' .
+                            $site .
+                            '/' .
+                            $article['slug'] .
+                            '.' .
+                            $article['content_id'];
+
                         if ($article['site_type'] == 'ga') {
-                            $kicker = Config('constants.MainDomain') . '/gallery/' . Str::slug($article['kicker']) . '/' . $article['kicker_id'];
+                            $kicker =
+                                Config('constants.MainDomain') .
+                                '/gallery/' .
+                                Str::slug($article['kicker']) .
+                                '/' .
+                                $article['kicker_id'];
                             $image = $article['image'];
                         }
                     @endphp
@@ -157,14 +190,11 @@ use Illuminate\Support\Str;
 
             <div class="col-xs-12 col-sm-3 hidden-xs hidden-sm hiddcontain col-md-3 row-no-padding">
                 @include('includes.magazinesubscribe')
-                {{-- @notmobile --}}
-                @if ($agent->isDesktop() || $agent->isTablet())
-
+                @notmobile
                     <div class="sidearce">
                         @include('includes.banners.dfp_600X300')
                     </div>
-                    @endif
-                {{-- @endnotmobile --}}
+                @endnotmobile
                 @include('includes.article.newsection')
                 {{-- @notmobile
                     <div class="sidearce">
@@ -180,13 +210,11 @@ use Illuminate\Support\Str;
             </div>
         </div>
     </div>
-    @if ($agent->isMobile())
 
-    {{-- @mobile --}}
+    @mobile
         <div class="mobileban">
             @include('includes.banners.yahoo_300X250')
         </div>
-        @endif
-    {{-- @endmobile --}}
+    @endmobile
 
 @endsection

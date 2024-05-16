@@ -1,6 +1,5 @@
 <hr>
-{{-- @mobile --}}
-@if ($agent-> isMobile())
+@mobile
 
 <div class="row row-no-margin padtb20 catbannertop">
     <div class="dfp_320X100">
@@ -11,7 +10,6 @@
         @endif
     </div>
 </div>
-@endif
-{{-- @endmobile --}}
+@endmobile
 
 

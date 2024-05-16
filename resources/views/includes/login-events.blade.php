@@ -31,8 +31,7 @@
             <div class="regblkright">
                 <div class="hometopadsleft">
                     <div class="adshom newbandfp">
-                        {{-- @desktop --}}
-                        @if ($agent->isDesktop())
+                        @desktop
                         <div class="homeadd728">
                            
 							@if(isset($mc) && $mc == 2)
@@ -41,15 +40,14 @@
                             @include('includes.banners-new.HP_DSK_ATF_728x90')
 							@endif
                         </div>
-                        {{-- @enddesktop --}}
-                        {{-- @tablet --}}
-                        @elseif ($agent->isTablet())
-
+                        @enddesktop
+                        @tablet
+                        
                         <div class="homeadd468">
                             @include('includes.banners-new.HP_TB_ATF_468x60')
                         </div>
-                        @endif
-                        {{-- @endtablet --}}
+                        
+                        @endtablet
                     </div>
                 </div>
                 <div class="hometopadsright">

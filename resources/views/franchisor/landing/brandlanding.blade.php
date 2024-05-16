@@ -55,7 +55,6 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form method="post" id="contactform" action="{{ Config::get('constants.MainDomain')}}/brandcontactinfo">
-                    @csrf
                     <input type="hidden" name="frandetailsid" id="freeinfovalue" value="{{$franDetails->franchisor_id}}">
                     <div class="modal-header" style="text-align: center;">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -104,36 +103,35 @@
                                             <select class="form-control" id="contactstate" name="infostate" required onchange="getcityinfo(this.value)">
                                                 <option value="">Select State for Franchise</option>
                                                 @php
-    if (is_array($stateList)) {
-        $states = array_unique(array_column($stateList, 'state'));
-        if (count($states) > 0) {
-            foreach ($states as $state) {
-                $key = 0;
-                $array = Config('location.stateArr');
-                while ($arrayState = current($array)) {
-                    if ($arrayState == $state) {
-                        $key = key($array);
-                    }
-                    next($array);
-                }
-                echo "<option value='$key'>$state</option>";
-            }
-        } else {
-            $stateArrVal = Config::get('location.stateArr');
-            asort($stateArrVal);
-            foreach ($stateArrVal as $key => $value) {
-                echo "<option value='$key'>$value</option>";
-            }
-        }
-    } else {
-        $stateArrVal = Config::get('location.stateArr');
-        asort($stateArrVal);
-        foreach ($stateArrVal as $key => $value) {
-            echo "<option value='$key'>$value</option>";
-        }
-    }
-@endphp
-
+                                                    if (is_array($stateList)) {
+                                                        $states = array_unique(array_column($stateList, 'state'));
+                                                        if (count($states) > 0) {
+                                                            foreach ($states as $state) {
+                                                                $key = 0;
+                                                                $array = Config('location.stateArr');
+                                                                while ($arrayState = current($array)) {
+                                                                    if ($arrayState == $state) {
+                                                                        $key = key($array);
+                                                                    }
+                                                                    next($array);
+                                                                }
+                                                                echo "<option value='$key'>$state</option>";
+                                                            }
+                                                        } else {
+                                                            $stateArrVal = Config::get('location.stateArr');
+                                                            asort($stateArrVal);
+                                                            foreach ($stateArrVal as $key => $value) {
+                                                                echo "<option value='$key'>$value</option>";
+                                                            }
+                                                        }
+                                                    } else {
+                                                        $stateArrVal = Config::get('location.stateArr');
+                                                        asort($stateArrVal);
+                                                        foreach ($stateArrVal as $key => $value) {
+                                                            echo "<option value='$key'>$value</option>";
+                                                        }
+                                                    }
+                                                @endphp
                                             </select>
                                         </div>
                                     </div>
@@ -188,7 +186,7 @@
                                     <div class="col-xs-12 col-sm-6 col-md-6">
                                         <div class="form-group txt-center">
                                             <div class="checkbox">
-                                                <label><input type="checkbox" id="expressinstanewsletters" name="newsletter_sub" checked>Yes, I want to subscribe for weekly Newsletter</label>
+                                                <label><input type="checkbox" id="expressinstanewsletters" name="newsletter_sub" checked>Yes, i want to subscribe for weekly Newsletter</label>
                                             </div>
                                         </div>
                                     </div>
@@ -288,14 +286,15 @@
 
     <div class="row headcommbanner branddetailads">
         <div class="fullcontainer">
-            @if ($agent->isDesktop())
-                @include("includes.banners.dfp_970X250")
-            @elseif ($agent->isTablet())
-                @include("includes.banners.dfp_728X90")
-            @else
-                @include("includes.banners.dfp_468X60")
-            @endif
-            
+            @desktop
+            @include("includes.banners.dfp_970X250")
+            @enddesktop
+            @tablet
+            @include("includes.banners.dfp_728X90")
+            @endtablet
+            @mobile
+            @include("includes.banners.dfp_468X60")
+            @endmobile
         </div>
     </div>
 

@@ -422,8 +422,7 @@
                 <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css" />
             </div>
         </li>
-        @if ($agent->isMobile())
-        {{-- @mobile --}}
+        @mobile
         @if($__env->yieldContent('hindiUrl'))
             <li>
                 <div class="p-2 language-main-bx">
@@ -445,8 +444,7 @@
                 </div>
             </li>
         @endif
-        @endif
-        {{-- @endmobile --}}
+        @endmobile
 
         <li>&nbsp;</li>
         <li><a target="_blank" href="{{Config('constants.MainDomain')}}/hi">घरेलू ब्रांड</a></li>

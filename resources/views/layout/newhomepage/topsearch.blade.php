@@ -194,9 +194,11 @@
                                                     onchange="getcity(this.value)">
                                                     <option value="" hidden>Select State</option>
                                                     @foreach ($states as $index => $value)
-
-                                                    <option value="{{ $index }}" slug="{{strtolower(Str::slug($value))}}" @if (isset($loc[0]) && $loc[0] == $index) selected @endif>{!! $value !!}</option>
-                                                @endforeach
+                                                        <option value="{{ $index }}"
+                                                            slug="{{ strtolower(Str::slug($value)) }}"
+                                                            @if (isset($loc[0]) && $loc[0] == $index) selected @endif>
+                                                            {!! $value !!}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -322,7 +324,6 @@
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 
 <script type="text/javascript">
-    
     if (screen.width < 767) {
         $(document).ready(function() {
             setTimeout(function() {
@@ -448,5 +449,5 @@
         $('.dropdown-toggle').click(function() {
             $('.searchoption').hide(400);
         });
-    }); 
+    });
 </script>

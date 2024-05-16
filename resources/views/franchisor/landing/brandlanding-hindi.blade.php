@@ -260,14 +260,15 @@ $engUrl   = Config('constants.MainDomain').'/brands/'.$franDetails->profile_name
 
     <div class="row headcommbanner branddetailads">
         <div class="fullcontainer">
-            {{-- @desktop --}}
-            @if ($agent->isDesktop())
+            @desktop
                 @include("includes.banners.dfp_970X250")
-            @elseif ($agent->isTablet())
+            @enddesktop
+            @tablet
                 @include("includes.banners.dfp_728X90")
-            @else
+            @endtablet
+            @mobile
                 @include("includes.banners.dfp_468X60")
-            @endif
+            @endmobile
            
         </div>
     </div>

@@ -171,34 +171,29 @@ use Illuminate\Support\Str;
                         <div class="fullcontainer">
                             <div class="text-center">
                                 <!-- /1057625/FIHL/Desktop_Category_300x600_Mid_2-->
-                                @if ($agent->isDesktop())
-
-                                {{-- @desktop --}}
+                                
+                                @desktop
                                 <div id='adslot970x90'>
                                     <script>
                                         googletag.cmd.push(function() { googletag.display('adslot970x90'); });
                                     </script>
                                 </div>
-                                {{-- @enddesktop --}}
-                                @elseif ($agent->isDesktop()  || $agent->isTablet())
-
-                                {{-- @tablet --}}
+                                @enddesktop
+                                @tablet
                                 <div id='adslot728x90_ATF'>
                                     <script>
                                         googletag.cmd.push(function() { googletag.display('adslot728x90_ATF'); });
                                     </script>
                                 </div>
-                                {{-- @endtablet --}}
-                                @elseif ($agent->isMobile())
-
-                                {{-- @mobile --}}
+                                @endtablet
+                                @mobile
                                 <div id='adslot300x250_Mid_1'>
                                     <script>
                                         googletag.cmd.push(function() { googletag.display('adslot300x250_Mid_1'); });
                                     </script>
                                 </div>
-                                @endif
-                                {{-- @endmobile --}}
+                                {{-- @endif --}}
+                                @endmobile
                             </div>
                         </div>
                     </div>
@@ -252,15 +247,13 @@ use Illuminate\Support\Str;
     </div>
     <div class="artibottombanner">
         <div class="fullcontainer">
-            @if ($agent->isDesktop())
 
-            {{-- @desktop --}}
+            @desktop
             @include("includes.banners.dfp_970X250")
 
-            {{-- @enddesktop --}}
-            @elseif ($agent->isDesktop()  || $agent->isTablet())
+            @enddesktop
 
-            {{-- @tablet --}}
+            @tablet
             <div class="text-center">
                 <div id='adslot468x60_ACS'>
                     <script>
@@ -268,17 +261,15 @@ use Illuminate\Support\Str;
                     </script>
                 </div>
             </div>
-            {{-- @endtablet --}}
-            @elseif ($agent->isMobile())
+            @endtablet
 
-            {{-- @mobile --}}
+            @mobile
             <div class="dfp_300X250" id='adslot300x250_Mid_2'>
                 <script>
                     googletag.cmd.push(function() { googletag.display('adslot300x250_Mid_2'); });
                 </script>
             </div>
-            @endif
-            {{-- @endmobile --}}
+            @endmobile
         </div>
     </div>
     <div class="row marginborbtm articlebottom">

@@ -53,8 +53,7 @@
 
 </div>
 
-{{-- @notmobile --}}
-@if ($agent->isDesktop() || $agent->isTablet())
+@notmobile
 @include('includes.brandlanding.wider-insta-apply-form')
-@endif
-{{-- @endnotmobile --}}
+
+@endnotmobile

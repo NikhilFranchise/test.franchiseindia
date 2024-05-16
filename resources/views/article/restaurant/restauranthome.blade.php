@@ -141,12 +141,11 @@
         </div>
     </div>
     <!-- more article section end here -->
-    @if ($agent->isDesktop()  || $agent->isTablet())
-
-    {{-- @notmobile --}}
+   
+    @notmobile
     <div class="sidearce">
         @include("includes.banners.res-banner970X250")
     </div>
-    @endif
-    {{-- @endnotmobile --}}
+    {{-- @endif --}}
+    @endnotmobile
 @endsection

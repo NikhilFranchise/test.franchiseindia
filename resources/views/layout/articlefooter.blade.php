@@ -1,9 +1,8 @@
-@if(url()->current() != url('/') && request()->segment(1) != 'premiumbrand' && request()->segment(2) != 'myaccount')
+@if (url()->current() != url('/') && request()->segment(1) != 'premiumbrand' && request()->segment(2) != 'myaccount')
     @include('includes/side-popup')
 @endif
 <!-- Business Opportunities section starts -->
-<section class="Business-Opportunitiessection section-30"
-         id="Business-Opportunitiessection">
+<section class="Business-Opportunitiessection section-30" id="Business-Opportunitiessection">
     <div class="container">
         <div class="row">
             <div class="modified-col col-xs-12 col-sm-12 col-md-12 col-xl-12
@@ -14,23 +13,18 @@
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2
                            col-lg-2">
                 <div class="footer-widget-link">
-                    <p><a
-                                href="https://www.franchiseindia.com/business-opportunities/automotive.m8">Automotive</a></p>
+                    <p><a href="https://www.franchiseindia.com/business-opportunities/automotive.m8">Automotive</a></p>
                     <ul class="footer-links">
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/automobile-related.sc344">Automobile
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/automobile-related.sc344">Automobile
                                 related</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/four-wheeler.sc342">Four
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/four-wheeler.sc342">Four
                                 Wheeler</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/heavy-moving-vehicles.sc343">Heavy
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/heavy-moving-vehicles.sc343">Heavy
                                 moving vehicles</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/automotive.m8">View
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/automotive.m8">View
                                 All &gt;</a>
                         </li>
                     </ul>
@@ -39,23 +33,20 @@
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2
                            col-lg-2">
                 <div class="footer-widget-link">
-                    <p><a
-                                href="https://www.franchiseindia.com/business-opportunities/beauty-and-health.m1">Beauty
+                    <p><a href="https://www.franchiseindia.com/business-opportunities/beauty-and-health.m1">Beauty
                             &amp; Health</a>
                     </p>
                     <ul class="footer-links">
                         <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/beauty-salons-and-supplies.sc13">Beauty
+                                href="https://www.franchiseindia.com/business-opportunities/beauty-salons-and-supplies.sc13">Beauty
                                 Asthetics &amp; Supplies</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/foreign-exchange.sc14">Health
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/foreign-exchange.sc14">Health
                                 Care</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/wellness.sc538">Wellness</a></li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/beauty-and-health.m1">View
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/wellness.sc538">Wellness</a>
+                        </li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/beauty-and-health.m1">View
                                 All &gt;</a>
                         </li>
                     </ul>
@@ -64,36 +55,35 @@
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2
                            col-lg-2">
                 <div class="footer-widget-link">
-                    <p><a
-                                href="https://www.franchiseindia.com/business-opportunities/business-services.m6">Business
+                    <p><a href="https://www.franchiseindia.com/business-opportunities/business-services.m6">Business
                             Services</a>
                     </p>
                     <ul class="footer-links">
                         <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/advertisement-and-media-services.sc23">Advertisement
+                                href="https://www.franchiseindia.com/business-opportunities/advertisement-and-media-services.sc23">Advertisement
                                 &amp; Media Services</a>
                         </li>
                         <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/consultancy.sc31">Consultancy</a></li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/it-services.sc26">IT
+                                href="https://www.franchiseindia.com/business-opportunities/consultancy.sc31">Consultancy</a>
+                        </li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/it-services.sc26">IT
                                 Services</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/business-services.m6">View
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/business-services.m6">View
                                 All &gt;</a>
                         </li>
                     </ul>
                 </div>
             </div>
-           
-			<div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2 col-lg-2">
+
+            <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2 col-lg-2">
                 <div class="footer-widget-link">
                     <p><a href="https://www.dealerindia.com" target="_blank">Dealers &amp; Distributors</a></p>
                     <ul class="footer-links">
                         <li><a href="https://www.dealerindia.com/dir/automobile" target="_blank">Automobile</a></li>
                         <li><a href="https://www.dealerindia.com/dir/food-beverages" target="_blank">FMCG</a></li>
-                        <li><a href="https://www.dealerindia.com/dir/office-school-supplies" target="_blank">Office supplies</a></li>
+                        <li><a href="https://www.dealerindia.com/dir/office-school-supplies" target="_blank">Office
+                                supplies</a></li>
                         <li><a href="https://www.dealerindia.com" target="_blank">View All &gt;</a></li>
                     </ul>
                 </div>
@@ -101,23 +91,18 @@
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2
                            col-lg-2">
                 <div class="footer-widget-link">
-                    <p><a
-                                href="https://www.franchiseindia.com/business-opportunities/education.m3">Education</a></p>
+                    <p><a href="https://www.franchiseindia.com/business-opportunities/education.m3">Education</a></p>
                     <ul class="footer-links">
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/coaching-and-tutoring.sc19">Coaching
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/coaching-and-tutoring.sc19">Coaching
                                 &amp; Tutoring</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/higher-education.sc20">Higher
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/higher-education.sc20">Higher
                                 Education</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/online-education.sc22">Online
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/online-education.sc22">Online
                                 Education</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/education.m3">View
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/education.m3">View
                                 All &gt;</a>
                         </li>
                     </ul>
@@ -126,17 +111,16 @@
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2
                            col-lg-2">
                 <div class="footer-widget-link">
-                    <p><a
-                                href="https://www.franchiseindia.com/business-opportunities/fashion.m10">Fashion</a></p>
+                    <p><a href="https://www.franchiseindia.com/business-opportunities/fashion.m10">Fashion</a></p>
                     <ul class="footer-links">
                         <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/accessories.sc44">Accessories</a></li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/clothing.sc40">Clothing</a></li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/footwear.sc41">Footwear</a></li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/fashion.m10">View
+                                href="https://www.franchiseindia.com/business-opportunities/accessories.sc44">Accessories</a>
+                        </li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/clothing.sc40">Clothing</a>
+                        </li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/footwear.sc41">Footwear</a>
+                        </li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/fashion.m10">View
                                 All&gt;</a>
                         </li>
                     </ul>
@@ -145,17 +129,16 @@
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2
                            col-lg-2">
                 <div class="footer-widget-link">
-                    <p><a
-                                href="https://www.franchiseindia.com/business-opportunities/education.m3">Education</a></p>
+                    <p><a href="https://www.franchiseindia.com/business-opportunities/education.m3">Education</a></p>
                     <ul class="footer-links">
                         <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/accessories.sc44">Accessories</a></li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/clothing.sc40">Clothing</a></li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/footwear.sc41">Footwear</a></li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/fashion.m10">View
+                                href="https://www.franchiseindia.com/business-opportunities/accessories.sc44">Accessories</a>
+                        </li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/clothing.sc40">Clothing</a>
+                        </li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/footwear.sc41">Footwear</a>
+                        </li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/fashion.m10">View
                                 All&gt;</a>
                         </li>
                     </ul>
@@ -164,25 +147,20 @@
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2
                            col-lg-2">
                 <div class="footer-widget-link">
-                    <p><a
-                                href="https://www.franchiseindia.com/business-opportunities/home-based-businesses.m7">Home
+                    <p><a href="https://www.franchiseindia.com/business-opportunities/home-based-businesses.m7">Home
                             Based Business</a>
                     </p>
                     <ul class="footer-links">
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/beauty-and-fitness.sc276">Beauty
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/beauty-and-fitness.sc276">Beauty
                                 &amp; Fitness</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/home-care-services.sc275">Home
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/home-care-services.sc275">Home
                                 Care Services</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/home-based-tutoring.sc279">Home
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/home-based-tutoring.sc279">Home
                                 based Tutoring</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/home-based-businesses.m7">View
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/home-based-businesses.m7">View
                                 All &gt;</a>
                         </li>
                     </ul>
@@ -191,25 +169,21 @@
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2
                            col-lg-2">
                 <div class="footer-widget-link">
-                    <p><a
-                                href="https://www.franchiseindia.com/business-opportunities/hotels-travel-and-tourism.m263">Hotels,Travel
+                    <p><a href="https://www.franchiseindia.com/business-opportunities/hotels-travel-and-tourism.m263">Hotels,Travel
                             &amp; Tourism</a>
                     </p>
                     <ul class="footer-links">
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/hotels-and-resorts.sc15">Hotels
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/hotels-and-resorts.sc15">Hotels
                                 and Resorts</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/taxi-and-rental.sc379">Taxi
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/taxi-and-rental.sc379">Taxi
                                 &amp; Rental</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/tourism-services.sc380">Tourism
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/tourism-services.sc380">Tourism
                                 Services</a>
                         </li>
                         <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/hotels-travel-and-tourism.m263">View
+                                href="https://www.franchiseindia.com/business-opportunities/hotels-travel-and-tourism.m263">View
                                 All &gt;</a>
                         </li>
                     </ul>
@@ -218,19 +192,16 @@
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2
                            col-lg-2">
                 <div class="footer-widget-link">
-                    <p><a
-                                href="https://www.franchiseindia.com/business-opportunities/retail.m9">Retail</a></p>
+                    <p><a href="https://www.franchiseindia.com/business-opportunities/retail.m9">Retail</a></p>
                     <ul class="footer-links">
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/books-toys-and-gifts.sc36">Books
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/books-toys-and-gifts.sc36">Books
                                 &amp; Toys &amp; Gifts</a>
                         </li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/fashion.sc556">Fashion</a></li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/e-retail.sc39">E-Retail</a></li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/retail.m9">View
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/fashion.sc556">Fashion</a>
+                        </li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/e-retail.sc39">E-Retail</a>
+                        </li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/retail.m9">View
                                 All &gt;</a>
                         </li>
                     </ul>
@@ -240,20 +211,20 @@
                            col-lg-2">
                 <div class="footer-widget-link">
                     <p><a
-                                href="https://www.franchiseindia.com/business-opportunities/sports-fitness-and-entertainment.m11">
+                            href="https://www.franchiseindia.com/business-opportunities/sports-fitness-and-entertainment.m11">
                             Sports, Fitness &amp; Entertainment </a>
                     </p>
                     <ul class="footer-links">
                         <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/entertainment-and-leisure.sc45">Entertainment
+                                href="https://www.franchiseindia.com/business-opportunities/entertainment-and-leisure.sc45">Entertainment
                                 &amp; Leisure</a>
                         </li>
                         <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/sports-goods-and-fitness-stores.sc37">Sports
+                                href="https://www.franchiseindia.com/business-opportunities/sports-goods-and-fitness-stores.sc37">Sports
                                 Goods &amp; Fitness Stores</a>
                         </li>
                         <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/sports-fitness-and-entertainment.m11">View
+                                href="https://www.franchiseindia.com/business-opportunities/sports-fitness-and-entertainment.m11">View
                                 All &gt;</a>
                         </li>
                     </ul>
@@ -264,19 +235,15 @@
 </section>
 <!-- Business Opportunities section ends -->
 <!-- our website start here -->
-{{-- @desktop --}}
-@if ($agent->isDesktop())
-@include('layout.newhomepage.desktopwebsite');
-@elseif ($agent->isTablet())
-@include('layout.newhomepage.desktopwebsite');
-@else
-@include('layout.newhomepage.mobilewebsite');
-@endif
-{{-- @enddesktop --}}
-{{-- @tablet
+@desktop
+    @include('layout.newhomepage.desktopwebsite');
+@enddesktop
+@tablet
+    ('layout.newhomepage.desktopwebsite');
 @endtablet
 @mobile
-@endmobile --}}
+    @include('layout.newhomepage.mobilewebsite');
+@endmobile
 <!--ouer website end here -->
 
 
@@ -292,31 +259,46 @@
                 <div class="brows-by-location">
                     <ul class="fihl-loaction-browse">
                         <ul class="fihl-loaction-browse">
-                            <li> <a href="https://www.franchiseindia.com/business-opportunities/maharashtra.LOC18">Maharashtra</a></li>
+                            <li> <a
+                                    href="https://www.franchiseindia.com/business-opportunities/maharashtra.LOC18">Maharashtra</a>
+                            </li>
                             <li> <a href="https://www.franchiseindia.com/business-opportunities/delhi.LOC23">Delhi</a>
                             </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/karnataka.LOC14">Karnataka</a></li>
+                            <li><a
+                                    href="https://www.franchiseindia.com/business-opportunities/karnataka.LOC14">Karnataka</a>
+                            </li>
                             <li><a href="https://www.franchiseindia.com/business-opportunities/tamilnadu.LOC29">Tamil
                                     Nadu</a>
                             </li>
                             <li><a href="https://www.franchiseindia.com/business-opportunities/west-bengal.LOC33">West
                                     Bengal</a>
                             </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/gujarat.LOC9">Gujarat</a></li>
+                            <li><a
+                                    href="https://www.franchiseindia.com/business-opportunities/gujarat.LOC9">Gujarat</a>
+                            </li>
                             <li><a href="https://www.franchiseindia.com/business-opportunities/uttar-pradesh.LOC32">Uttar
                                     Pradesh</a>
                             </li>
                             <li><a href="https://www.franchiseindia.com/business-opportunities/madhya-pradesh.LOC17">Madhya
                                     Pradesh</a>
                             </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/haryana.LOC10">Haryana</a></li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/rajasthan.LOC27">Rajasthan</a></li>
+                            <li><a
+                                    href="https://www.franchiseindia.com/business-opportunities/haryana.LOC10">Haryana</a>
+                            </li>
+                            <li><a
+                                    href="https://www.franchiseindia.com/business-opportunities/rajasthan.LOC27">Rajasthan</a>
+                            </li>
                             <li> <a href="https://www.franchiseindia.com/business-opportunities/andhra-pradesh.LOC1">Andhra
                                     Pradesh</a>
                             </li>
-                            <li> <a href="https://www.franchiseindia.com/business-opportunities/kerala.LOC15">Kerala</a></li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/punjab.LOC26">Punjab</a></li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/chandigarh.LOC5">Chandigarh</a></li>
+                            <li> <a
+                                    href="https://www.franchiseindia.com/business-opportunities/kerala.LOC15">Kerala</a>
+                            </li>
+                            <li><a href="https://www.franchiseindia.com/business-opportunities/punjab.LOC26">Punjab</a>
+                            </li>
+                            <li><a
+                                    href="https://www.franchiseindia.com/business-opportunities/chandigarh.LOC5">Chandigarh</a>
+                            </li>
                         </ul>
                     </ul>
                 </div>
@@ -350,7 +332,8 @@
         </div>
     </div>
 </footer>
-<a href="javascript:void(0)" id="scroll" title="Scroll to Top" style="display:none"><i class="fa fa-angle-up fa-2x" aria-hidden="true"></i></a>
+<a href="javascript:void(0)" id="scroll" title="Scroll to Top" style="display:none"><i
+        class="fa fa-angle-up fa-2x" aria-hidden="true"></i></a>
 <script type="text/javascript" src="{{ url('js/jquery.bxslider.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/validationInsta.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/js.cookie.min.js') }}"></script>
@@ -358,32 +341,30 @@
 <script type="text/javascript" src="{{ url('js/bootstrap-filestyle.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/custom.js?version=2.0') }}"></script>
 <script type="text/javascript" src="{{ url('js/bootstrap-typeahead.js') }}"></script>
-{{-- @notmobile --}}
-@if ($agent->isDesktop() || $agent->isTablet)
-<script type="text/javascript" src="{{ url('js/bioep.js') }}"></script>
-@endif
-{{-- @endnotmobile --}}
+@notmobile
+    <script type="text/javascript" src="{{ url('js/bioep.js') }}"></script>
+@endnotmobile
 <script type="text/javascript" src="{{ url('js/lozad.min.js') }}"></script>
 <script charset="UTF-8" src="//cdn.sendpulse.com/js/push/10b86845b3b698a88af195580a87545c_1.js" async></script>
 <!-- jQuery Custom Scroller CDN -->
-<script src="{{url('newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+<script src="{{ url('newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
 
 <!-- Font Awesome JS -->
-<script defer src="{{url('newhomepage/assets/vendor/fontawesome/js/solid.js')}}"></script>
-<script defer src="{{url('newhomepage/assets/vendor/fontawesome/js/fontawesome.js')}}"></script>
-<script type="text/javascript" src="{{url('awesomplete/awesomplete.js') }}"></script>
+<script defer src="{{ url('newhomepage/assets/vendor/fontawesome/js/solid.js') }}"></script>
+<script defer src="{{ url('newhomepage/assets/vendor/fontawesome/js/fontawesome.js') }}"></script>
+<script type="text/javascript" src="{{ url('awesomplete/awesomplete.js') }}"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $("#sidebar").mCustomScrollbar({
             theme: "minimal"
         });
 
-        $('#dismiss, .overlay').on('click', function () {
+        $('#dismiss, .overlay').on('click', function() {
             $('#sidebar').removeClass('active');
             $('.overlay').removeClass('active');
         });
 
-        $('#sidebarCollapse').on('click', function () {
+        $('#sidebarCollapse').on('click', function() {
             $('#sidebar').addClass('active');
             $('.overlay').addClass('active');
             $('.collapse.in').toggleClass('in');
@@ -392,12 +373,12 @@
     });
     var header = $('.header');
 
-    $(window).scroll(function(e){
-        if(header.offset().top !== 0){
-            if(!header.hasClass('shadow')){
+    $(window).scroll(function(e) {
+        if (header.offset().top !== 0) {
+            if (!header.hasClass('shadow')) {
                 header.addClass('shadow');
             }
-        }else{
+        } else {
             header.removeClass('shadow');
         }
     });
@@ -435,7 +416,7 @@
 
         list.forEach(item => {
             c_list.push(item.name);
-    });
+        });
 
         // Assigned the c_list to the list property of Awesomplete instance
         awesomplete.list = c_list;
@@ -462,118 +443,258 @@
     });
 </script>
 @notmobile
-@php
-    $expoPopup = 0;
-    if (empty(Cookie::get('expoppoup17'))) {
-    $expoPopup = 1;
-    Cookie::queue("expoppoup17", 'RI2017', 120);
-    }
-    $ip = $_SERVER['REMOTE_ADDR'];
-    $query = "";
-    $query = App\Http\Controllers\CommonController::getIpLocationState($ip);
-    if(!empty($query))
-    $query = strtolower($query);
+    @php
+        $expoPopup = 0;
+        if (empty(Cookie::get('expoppoup17'))) {
+            $expoPopup = 1;
+            Cookie::queue('expoppoup17', 'RI2017', 120);
+        }
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $query = '';
+        $query = App\Http\Controllers\CommonController::getIpLocationState($ip);
+        if (!empty($query)) {
+            $query = strtolower($query);
+        }
 
-	$southCodes = ['tamil nadu', 'telangana', 'kerala', 'pondicherry'];
-	$eastCodes = ['bihar', 'jharkhand', 'odisha', 'nepal', 'arunachal pradesh', 'assam', 'meghalaya', 'orissa', 'tripura'];		
-	$westCodes  = ['goa', 'gujarat', 'maharashtra', 'rajasthan'];
-	$northCodes  = ['punjab', 'jammu and kashmir', 'jammu', 'kashmir', 'himachal pradesh', 'chandigarh', 'uttarakhand', 'uttar pradesh', 'delhi', 'haryana'];
-	$centerCodes = ['madhya pradesh', 'chhattisgarh'];
-	$indiaCodes  = ['andhra pradesh', 'kerala', 'lakshadweep', 'pondicherry', 'telangana', 'tamil nadu', 'tamilnadu', 'uttar pradesh', 'rajasthan', 'haryana'];		
-	$GreenTrends  =  ['west bengal', 'karnataka', 'andhra pradesh'];				
+        $southCodes = ['tamil nadu', 'telangana', 'kerala', 'pondicherry'];
+        $eastCodes = [
+            'bihar',
+            'jharkhand',
+            'odisha',
+            'nepal',
+            'arunachal pradesh',
+            'assam',
+            'meghalaya',
+            'orissa',
+            'tripura',
+        ];
+        $westCodes = ['goa', 'gujarat', 'maharashtra', 'rajasthan'];
+        $northCodes = [
+            'punjab',
+            'jammu and kashmir',
+            'jammu',
+            'kashmir',
+            'himachal pradesh',
+            'chandigarh',
+            'uttarakhand',
+            'uttar pradesh',
+            'delhi',
+            'haryana',
+        ];
+        $centerCodes = ['madhya pradesh', 'chhattisgarh'];
+        $indiaCodes = [
+            'andhra pradesh',
+            'kerala',
+            'lakshadweep',
+            'pondicherry',
+            'telangana',
+            'tamil nadu',
+            'tamilnadu',
+            'uttar pradesh',
+            'rajasthan',
+            'haryana',
+        ];
+        $GreenTrends = ['west bengal', 'karnataka', 'andhra pradesh'];
 
-    App\Http\Controllers\CommonController::checkCampaignUrl();
-@endphp
+        App\Http\Controllers\CommonController::checkCampaignUrl();
+    @endphp
 
-@if($expoPopup == 1)
-	@if(in_array($query, $southCodes))
-		@if(request()->segment(1) == 'brands')
-			@if($franDetails->membership_type != 1)
-				@include('includes.banners.popupmag')
-			@endif
-		@else
-			@include('includes.banners.popupmag')
-		@endif
-	@elseif(in_array($query, $eastCodes))
-		@if(request()->segment(1) == 'brands')
-			@if($franDetails->membership_type != 1)
-				@include('includes.banners.popupmag')
-			@endif
-		@else
-			@include('includes.banners.popupmag')
-		@endif
-
-	@elseif(in_array($query, $westCodes))
-		@if(request()->segment(1) == 'brands')
-			@if($franDetails->membership_type != 1)
-				@include('includes.banners.popupmag')
-			@endif
-		@else
-			@include('includes.banners.popupmag')
-		@endif
-
-	@elseif(in_array($query, $northCodes))
-		@if(request()->segment(1) == 'brands')
-			@if($franDetails->membership_type != 1)
-				@include('includes.banners.popupmag')
-			@endif
-		@else
-			@include('includes.banners.popupmag')
-		@endif
-
-	@elseif(in_array($query, $centerCodes))
-		@if(request()->segment(1) == 'brands')
-			@if($franDetails->membership_type != 1)
-				@include('includes.banners.popupmag')
-			@endif
-		@else
-			@include('includes.banners.popupmag')
-		@endif
-
-	@else
-		@if(request()->segment(1) == 'brands')
-			@if($franDetails->membership_type != 1)
-				@include('includes.banners.popupmag')
-			@endif
-		@else
-			@include('includes.banners.popupmag')
-		@endif
-	@endif
-@endif
+    @if ($expoPopup == 1)
+        @if (in_array($query, $southCodes))
+            @if (request()->segment(1) == 'brands')
+                @if ($franDetails->membership_type != 1)
+                    @include('includes.banners.popupmag')
+                @endif
+            @else
+                @include('includes.banners.popupmag')
+            @endif
+        @elseif(in_array($query, $eastCodes))
+            @if (request()->segment(1) == 'brands')
+                @if ($franDetails->membership_type != 1)
+                    @include('includes.banners.popupmag')
+                @endif
+            @else
+                @include('includes.banners.popupmag')
+            @endif
+        @elseif(in_array($query, $westCodes))
+            @if (request()->segment(1) == 'brands')
+                @if ($franDetails->membership_type != 1)
+                    @include('includes.banners.popupmag')
+                @endif
+            @else
+                @include('includes.banners.popupmag')
+            @endif
+        @elseif(in_array($query, $northCodes))
+            @if (request()->segment(1) == 'brands')
+                @if ($franDetails->membership_type != 1)
+                    @include('includes.banners.popupmag')
+                @endif
+            @else
+                @include('includes.banners.popupmag')
+            @endif
+        @elseif(in_array($query, $centerCodes))
+            @if (request()->segment(1) == 'brands')
+                @if ($franDetails->membership_type != 1)
+                    @include('includes.banners.popupmag')
+                @endif
+            @else
+                @include('includes.banners.popupmag')
+            @endif
+        @else
+            @if (request()->segment(1) == 'brands')
+                @if ($franDetails->membership_type != 1)
+                    @include('includes.banners.popupmag')
+                @endif
+            @else
+                @include('includes.banners.popupmag')
+            @endif
+        @endif
+    @endif
 @endnotmobile
-<script type="text/javascript">/*<![CDATA[*/
-    var linkElement=document.createElement("link");linkElement.rel="stylesheet";linkElement.href="{{ url('css/font-awesome.minfresh.css') }}";document.head.appendChild(linkElement);const observer=lozad();observer.observe();$(document).ready(function(){$(window).scroll(function(){if($(this).scrollTop()>100)
-        $('#scroll').fadeIn();else
-        $('#scroll').fadeOut();});$('#scroll').click(function(){$("html, body").animate({scrollTop:0},600);return false;});$("#changeLang").on('click',function(){$('#langType').slideToggle();});$("#changeLang1").on('click',function(){$('#langType1').slideToggle();});var langType=Cookies.get('langType');if(langType==='hindi')
-        Cookies.set('langType','');setTimeout(function(){Cookies.set('langType','english',{expires:7});},20000);@include('includes.banners-new.footer-google-tags')});function submitCategory(){var subSubCat=$('#getSubCatCategoryDataHeader').val();var subCat=$('#getSubCategoryDataHeader').val();var mainCat=$('#getMainCategoryDataHeader').val();var url='/business-opportunities/';if(subSubCat){url=url+$('option:selected',$('#getSubCatCategoryDataHeader')).attr('slug')+'.ssc'+subSubCat+"?catTab=1";}else if(subCat){url=url+$('option:selected',$('#getSubCategoryDataHeader')).attr('slug')+'.sc'+subCat+"?catTab=1";}else if(mainCat&&typeof $('option:selected',$('#getMainCategoryDataHeader')).attr('slug')!=="undefined"){url=url+$('option:selected',$('#getMainCategoryDataHeader')).attr('slug')+'.m'+mainCat+"?catTab=1";}else{url=url+'all/all';}
-        window.open(url, '_blank');;return false;}
-    function submitLocation(){var mainCat=$('#getMainCategoryDataHeaderLoc').val();var headerCity=$('#headercity').val();var stateHeader=$('#stateHeader').val();var mainCatText=$('option:selected',$('#getMainCategoryDataHeaderLoc')).attr('slug');var headerCityText=$('option:selected',$('#headercity')).attr('slug');var stateHeaderText=$('option:selected',$('#stateHeader')).attr('slug');var url='/business-opportunities/';if(mainCat!=''&&stateHeader!=''&&headerCity!=''){url=url+mainCatText+"-in-"+stateHeaderText+"/mc-"+mainCat+"/loc-"+stateHeader+"/ct-"+headerCityText;}else if(mainCat!=''&&stateHeader!=''){url=url+mainCatText+"-in-"+stateHeaderText+"/mc-"+mainCat+"/loc-"+stateHeader;}else if(stateHeader!=''&&headerCity!=''){url=url+"business-in-"+stateHeaderText+"/loc-"+stateHeader+"/ct-"+headerCityText;}else if(stateHeader!=''){url=url+stateHeaderText+".LOC"+stateHeader;}else{url=url+mainCat+".m"+mainCatText;}
-        window.open(url + "?locTab=1", '_blank');return false;}
-    function submitInvestment(){var mainCat=$('#getMainCategoryDataHeaderInv').val();var minAmount=$('#minAmount').val();var maxAmount=$('#maxAmount').val();var mainCatText=$('option:selected',$('#getMainCategoryDataHeaderInv')).attr('slug');var minAmountText=$('option:selected',$('#minAmount')).attr('slug');var maxAmountText=$('option:selected',$('#maxAmount')).attr('slug');var url='/business-opportunities/';if(mainCat!=''&&minAmount!=''&&maxAmount!=''){url=url+mainCatText+"-in-india/mc-"+mainCat+"/range-"+minAmountText+"-"+maxAmountText;}else if(mainCat!=''&&minAmount!=''){url=url+mainCatText+"-in-india/mc-"+mainCat+"/range-"+minAmountText;}else if(minAmount!=''&&maxAmount!=''){url=url+"business/range-"+minAmountText+"-"+maxAmountText;}
-        window.open(url + "?invTab=1", '_blank');return false;}/*]]>*/</script>
-{{--<script>window.zE||(function(e,t,s){var n=window.zE=window.zEmbed=function(){n._.push(arguments)},a=n.s=e.createElement(t),r=e.getElementsByTagName(t)[0];n.set=function(e){n.set._.push(e)},n._=[],n.set._=[],a.async=true,a.setAttribute("charset","utf-8"),a.src="https://static.zdassets.com/ekr/asset_composer.js?key="+s,n.t=+new Date,a.type="text/javascript",r.parentNode.insertBefore(a,r)})</script>--}}
+<script type="text/javascript">
+    /*<![CDATA[*/
+    var linkElement = document.createElement("link");
+    linkElement.rel = "stylesheet";
+    linkElement.href = "{{ url('css/font-awesome.minfresh.css') }}";
+    document.head.appendChild(linkElement);
+    const observer = lozad();
+    observer.observe();
+    $(document).ready(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 100)
+                $('#scroll').fadeIn();
+            else
+                $('#scroll').fadeOut();
+        });
+        $('#scroll').click(function() {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 600);
+            return false;
+        });
+        $("#changeLang").on('click', function() {
+            $('#langType').slideToggle();
+        });
+        $("#changeLang1").on('click', function() {
+            $('#langType1').slideToggle();
+        });
+        var langType = Cookies.get('langType');
+        if (langType === 'hindi')
+            Cookies.set('langType', '');
+        setTimeout(function() {
+            Cookies.set('langType', 'english', {
+                expires: 7
+            });
+        }, 20000);
+        @include('includes.banners-new.footer-google-tags')
+    });
+
+    function submitCategory() {
+        var subSubCat = $('#getSubCatCategoryDataHeader').val();
+        var subCat = $('#getSubCategoryDataHeader').val();
+        var mainCat = $('#getMainCategoryDataHeader').val();
+        var url = '/business-opportunities/';
+        if (subSubCat) {
+            url = url + $('option:selected', $('#getSubCatCategoryDataHeader')).attr('slug') + '.ssc' + subSubCat +
+                "?catTab=1";
+        } else if (subCat) {
+            url = url + $('option:selected', $('#getSubCategoryDataHeader')).attr('slug') + '.sc' + subCat +
+            "?catTab=1";
+        } else if (mainCat && typeof $('option:selected', $('#getMainCategoryDataHeader')).attr('slug') !==
+            "undefined") {
+            url = url + $('option:selected', $('#getMainCategoryDataHeader')).attr('slug') + '.m' + mainCat +
+                "?catTab=1";
+        } else {
+            url = url + 'all/all';
+        }
+        window.open(url, '_blank');;
+        return false;
+    }
+
+    function submitLocation() {
+        var mainCat = $('#getMainCategoryDataHeaderLoc').val();
+        var headerCity = $('#headercity').val();
+        var stateHeader = $('#stateHeader').val();
+        var mainCatText = $('option:selected', $('#getMainCategoryDataHeaderLoc')).attr('slug');
+        var headerCityText = $('option:selected', $('#headercity')).attr('slug');
+        var stateHeaderText = $('option:selected', $('#stateHeader')).attr('slug');
+        var url = '/business-opportunities/';
+        if (mainCat != '' && stateHeader != '' && headerCity != '') {
+            url = url + mainCatText + "-in-" + stateHeaderText + "/mc-" + mainCat + "/loc-" + stateHeader + "/ct-" +
+                headerCityText;
+        } else if (mainCat != '' && stateHeader != '') {
+            url = url + mainCatText + "-in-" + stateHeaderText + "/mc-" + mainCat + "/loc-" + stateHeader;
+        } else if (stateHeader != '' && headerCity != '') {
+            url = url + "business-in-" + stateHeaderText + "/loc-" + stateHeader + "/ct-" + headerCityText;
+        } else if (stateHeader != '') {
+            url = url + stateHeaderText + ".LOC" + stateHeader;
+        } else {
+            url = url + mainCat + ".m" + mainCatText;
+        }
+        window.open(url + "?locTab=1", '_blank');
+        return false;
+    }
+
+    function submitInvestment() {
+        var mainCat = $('#getMainCategoryDataHeaderInv').val();
+        var minAmount = $('#minAmount').val();
+        var maxAmount = $('#maxAmount').val();
+        var mainCatText = $('option:selected', $('#getMainCategoryDataHeaderInv')).attr('slug');
+        var minAmountText = $('option:selected', $('#minAmount')).attr('slug');
+        var maxAmountText = $('option:selected', $('#maxAmount')).attr('slug');
+        var url = '/business-opportunities/';
+        if (mainCat != '' && minAmount != '' && maxAmount != '') {
+            url = url + mainCatText + "-in-india/mc-" + mainCat + "/range-" + minAmountText + "-" + maxAmountText;
+        } else if (mainCat != '' && minAmount != '') {
+            url = url + mainCatText + "-in-india/mc-" + mainCat + "/range-" + minAmountText;
+        } else if (minAmount != '' && maxAmount != '') {
+            url = url + "business/range-" + minAmountText + "-" + maxAmountText;
+        }
+        window.open(url + "?invTab=1", '_blank');
+        return false;
+    } /*]]>*/
+</script>
+{{-- <script>window.zE||(function(e,t,s){var n=window.zE=window.zEmbed=function(){n._.push(arguments)},a=n.s=e.createElement(t),r=e.getElementsByTagName(t)[0];n.set=function(e){n.set._.push(e)},n._=[],n.set._=[],a.async=true,a.setAttribute("charset","utf-8"),a.src="https://static.zdassets.com/ekr/asset_composer.js?key="+s,n.t=+new Date,a.type="text/javascript",r.parentNode.insertBefore(a,r)})</script> --}}
 <script type="text/javascript" src="/wle_tracker.js" async></script>
-<img height="1" width="1" style="border-style:none" alt="ads" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/868915294/?guid=ON&amp;script=0"/>
-<img height="1" width="1" style="border-style:none" alt="ads" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/953817322/?guid=ON&amp;script=0"/>
-<img height="1" width="1" style="border-style:none" alt="ads" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/942199108/?guid=ON&amp;script=0"/>
-<img height="1" width="1" style="border-style:none" alt="ads" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/940655726/?guid=ON&amp;script=0"/>
+<img height="1" width="1" style="border-style:none" alt="ads"
+    src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/868915294/?guid=ON&amp;script=0" />
+<img height="1" width="1" style="border-style:none" alt="ads"
+    src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/953817322/?guid=ON&amp;script=0" />
+<img height="1" width="1" style="border-style:none" alt="ads"
+    src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/942199108/?guid=ON&amp;script=0" />
+<img height="1" width="1" style="border-style:none" alt="ads"
+    src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/940655726/?guid=ON&amp;script=0" />
 
 
 <style type="text/css">
-    .footrtwhatsapp-icon { position: fixed; z-index:999999999; bottom: 30px; width:100px; right: 20px;}
+    .footrtwhatsapp-icon {
+        position: fixed;
+        z-index: 999999999;
+        bottom: 30px;
+        width: 100px;
+        right: 20px;
+    }
 
-    .footerknow-btn { float: right; }
-    .footerknow-btn img { width: 115px;}
+    .footerknow-btn {
+        float: right;
+    }
+
+    .footerknow-btn img {
+        width: 115px;
+    }
+
     @media only screen and (min-device-width: 1px) and (max-device-width: 1259px) {
 
-        .footrtwhatsapp-icon .container { width: 100%;}
+        .footrtwhatsapp-icon .container {
+            width: 100%;
+        }
     }
 </style>
 <!--<div class="footrtwhatsapp-icon">
     <div >
         <div class="footerknow-btn">
             <a class="whatsapp-plain-round-btn" href="https://api.whatsapp.com/send?phone=918860645454&amp;text=Hello,%20I%20am%20interested%20in%20knowing%20more%20about ➞%20https://www.franchiseindia.com/" target="_blank">
-                <img src="{{url('newhomepage/assets/img/chatonwa.svg')}}" class="imgwaaps" alt="whatappsicon" /></a>
+                <img src="{{ url('newhomepage/assets/img/chatonwa.svg') }}" class="imgwaaps" alt="whatappsicon" /></a>
             </a>
         </div>
     </div>

@@ -103,28 +103,13 @@
             </div>
             <div class="col-xs-12 col-sm-3 hidden-xs hidden-sm hiddcontain col-md-3 row-no-padding">
                 @include('includes.magazinesubscribe')
-                {{-- @notmobile --}}
-                @if ($agent->isTablet() || $agent->isDesktop())
-
+                @notmobile
                     <div class="sidearce">
                         @include('includes.banners.dfp_600X300')
                     </div>
-                    @endif
-                {{-- @endnotmobile --}}
+                @endnotmobile
                 @include('includes.article.newsection')
-                {{-- @notmobile
-         <div class="sidearce">
-            <div class="dfp_300X250">
-               <div id='div-gpt-ad-1498540898563-5' style='height:250px; width:300px;'></div>
-            </div>
-         </div>
-         @endnotmobile --}}
-                {{-- @include('includes.article.videosection') --}}
-                {{-- 
-         <div class="sidearce">
-            @include('includes.banners.dfp_300X250')
-         </div>
-         --}}
+              
             </div>
         </div>
     </div>

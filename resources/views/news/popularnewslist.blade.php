@@ -1,6 +1,3 @@
-@php
-use Illuminate\Support\Str;
-@endphp
 @extends('layout.master')
 @section('seoTitle', 'Todays highlights')
 @section('seoDesc',  'latest articles')
@@ -172,14 +169,11 @@ $url   = 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
    <!-- magazine Subscribe code start here -->
    @include('includes.magazinesubscribe')
    <!-- magazine Subscribe code start here -->
-   {{-- @notmobile --}}
-   @if ($agent->isTablet() || $agent->isDesktop())
-
+   @notmobile
    <div class="sidearce">
        @include('includes.banners.dfp_600X300')
    </div>
-@endif
-   {{-- @endnotmobile --}}
+   @endnotmobile
    @include('includes.article.newsection')
    <div class="sidearce">
        @include('includes.banners.yahoo_300X250')

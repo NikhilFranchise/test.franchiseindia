@@ -97,148 +97,96 @@
     </div>
 
     <div class="container">
-
-        {{-- @mobile --}}
-        @if ($agent->isMobile())
-            <style type="text/css">
-                #myCarouselmobile {
-                    display: none;
-                }
-
-                @media only screen and (min-width:1px) and (max-width:767px) {
-                    #myCarouselmobile {
-                        display: block;
-                    }
-
-                    #desktopvisible {
-                        display: none;
-                    }
-
-                    #myCarouselmobile .carousel-inner>.item {
-                        text-align: center;
-                    }
-
-                    #myCarouselmobile .carousel-inner>.item>a>img,
-                    #myCarouselmobile .carousel-inner>.item>img {
-                        margin: 0 auto;
-                    }
-
-                    #myCarouselmobile .carousel-control.left {
-                        background-image: none;
-                    }
-
-                    #myCarouselmobile .carousel-control.right {
-                        background-image: none;
-                    }
-
-                    #myCarouselmobile .glyphicon-chevron-left:before,
-                    #myCarouselmobile .glyphicon-chevron-right:before {
-                        color: #dc3322;
-                    }
-
-                    #myCarouselmobile .carousel-control {
-                        text-shadow: none;
-                        opacity: 0.8;
-                    }
-
-                    #myCarouselmobile .carousel-indicators li {
-                        border: 1px solid #dc3322;
-                    }
-
-                    #myCarouselmobile .carousel-indicators .active {
-                        background-color: #dc3322;
-                    }
-
-                    #myCarouselmobile .carousel-control .glyphicon-chevron-left,
-                    #myCarouselmobile .carousel-control .glyphicon-chevron-right,
-                    #myCarouselmobile .carousel-control .icon-next,
-                    #myCarouselmobile .carousel-control .icon-prev {
-                        top: 56%;
-                    }
-                }
-            </style>
-            <!--- start here -->
-            <div id="myCarouselmobile" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    @foreach ($images as $image)
-                        <li data-target="#myCarouselmobile" data-slide-to="{{ $loop->index }}"
-                            @if ($loop->index == 0) class="active" @endif></li>
-                    @endforeach
-                </ol>
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner">
-                    @foreach ($images as $image)
-                        <div class="item @if ($loop->index == 0) active @endif">
-                            <img src="{{ $image->image_type_slider2 }}" alt="Yummerica Fries - 1">
-                        </div>
-                    @endforeach
-                </div>
-                <!-- Left and right controls -->
-                <a class="left carousel-control" href="#myCarouselmobile" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#myCarouselmobile" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+        @mobile
+        <style type="text/css">
+            #myCarouselmobile { display:none;}
+            @media only screen and (min-width:1px) and (max-width:767px) {
+                #myCarouselmobile { display:block;}
+                #desktopvisible { display:none;}
+                #myCarouselmobile .carousel-inner>.item { text-align:center;}
+                #myCarouselmobile .carousel-inner>.item>a>img, #myCarouselmobile .carousel-inner>.item>img {     margin: 0 auto;}
+                #myCarouselmobile .carousel-control.left { background-image: none;     }
+                #myCarouselmobile .carousel-control.right { background-image: none;     }
+                #myCarouselmobile .glyphicon-chevron-left:before, #myCarouselmobile .glyphicon-chevron-right:before {    color: #dc3322;}
+                #myCarouselmobile .carousel-control { text-shadow: none;   opacity: 0.8;}
+                #myCarouselmobile .carousel-indicators li {    border: 1px solid #dc3322;}
+                #myCarouselmobile .carousel-indicators .active { background-color: #dc3322;}
+                #myCarouselmobile .carousel-control .glyphicon-chevron-left, #myCarouselmobile .carousel-control .glyphicon-chevron-right, #myCarouselmobile .carousel-control .icon-next, #myCarouselmobile .carousel-control .icon-prev {top: 56%;}
+            }
+        </style>
+        <!--- start here -->
+        <div id="myCarouselmobile" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                @foreach ($images as $image)
+                    <li data-target="#myCarouselmobile" data-slide-to="{{ $loop->index }}" @if($loop->index == 0)  class="active" @endif></li>
+                @endforeach
+            </ol>
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                @foreach ($images as $image)
+                    <div class="item @if($loop->index == 0)  active @endif">
+                        <img src="{{ $image->image_type_slider2 }}" alt="Yummerica Fries - 1">
+                    </div>
+                @endforeach
             </div>
-            <!--- end here -->
-        @elseif ($agent->isDesktop())
-            <div class="row" id="desktopvisible">
-                <div class="col-xs-12 col-sm-9 col-md-9 mdf">
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarouselmobile" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarouselmobile" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <!--- end here -->
+        @elsemobile
+        <div class="row" id="desktopvisible">
+            <div class="col-xs-12 col-sm-9 col-md-9 mdf">
+                @foreach ($images as $image)
+                    @if($loop->index == 0)
+                        <a href="#" data-toggle="modal" data-target="#myGallery">
+                            <img src="{{ $image->image_type_slider2 }}" alt="{{$franDetails->company_name}}" />
+                        </a>
+                    @endif
+                @endforeach
+                <div class="mortxt"><h1 class="txtshow"><span> {{Config('constants.subSubCategoryArr.'.$franDetails->ind_cat.'.'.$franDetails->ind_sub_cat)}}</span>
+                        {{$franDetails->company_name}} Franchise Cost – How to get, Contact, Apply, Fee</h1></div>
+            </div>
+            <div class="col-xs-12 col-sm-3 col-md-3 mdf">
+                <ul>
+
                     @foreach ($images as $image)
-                        @if ($loop->index == 0)
-                            <a href="#" data-toggle="modal" data-target="#myGallery">
-                                <img src="{{ $image->image_type_slider2 }}" alt="{{ $franDetails->company_name }}" />
-                            </a>
+                        @if($loop->index > 0 && $loop->index < 3)
+                            <li><a href="#" data-toggle="modal" data-target="#myGallery"><img src="{{ $image->image_type_slider2 }}" alt="{{$franDetails->company_name}}" ></a></li>
                         @endif
                     @endforeach
-                    <div class="mortxt">
-                        <h1 class="txtshow"><span>
-                                {{ Config('constants.subSubCategoryArr.' . $franDetails->ind_cat . '.' . $franDetails->ind_sub_cat) }}</span>
-                            {{ $franDetails->company_name }} Franchise Cost – How to get, Contact, Apply, Fee</h1>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-3 col-md-3 mdf">
-                    <ul>
+
+                    <li class="ts">
+                        @if(count($images) > 4)
+                            <div class="mortxt">
+                                <div class="txtshow">
+                                    <a href="#" data-toggle="modal" data-target="#myGallery"><span>+</span> <br /> {{count($images) - 4}} More</a>
+                                </div>
+                            </div>
+                        @endif
 
                         @foreach ($images as $image)
-                            @if ($loop->index > 0 && $loop->index < 3)
-                                <li><a href="#" data-toggle="modal" data-target="#myGallery"><img
-                                            src="{{ $image->image_type_slider2 }}"
-                                            alt="{{ $franDetails->company_name }}"></a></li>
+                            @if( $loop->index == 3 )
+                                <img src="{{ $image->image_type_slider2 }}" alt="{{$franDetails->company_name}}">
                             @endif
                         @endforeach
-
-                        <li class="ts">
-                            @if (count($images) > 4)
-                                <div class="mortxt">
-                                    <div class="txtshow">
-                                        <a href="#" data-toggle="modal" data-target="#myGallery"><span>+</span>
-                                            <br /> {{ count($images) - 4 }} More</a>
-                                    </div>
-                                </div>
-                            @endif
-
-                            @foreach ($images as $image)
-                                @if ($loop->index == 3)
-                                    <img src="{{ $image->image_type_slider2 }}"
-                                        alt="{{ $franDetails->company_name }}">
-                                @endif
-                            @endforeach
-                        </li>
-                    </ul>
-                </div>
+                    </li>
+                </ul>
             </div>
-        @endif
-        {{-- @endmobile --}}
-
+        </div>
+        @endmobile
+   
         <div class="row">
             <div class="infobrand col-xs-12 col-sm-12 col-md-12">
                 <ul>
-                    {{-- @php
+                    @php
                         $area = $franDetails->prop_area_min.' - '.$franDetails->prop_area_max.' Sq.ft';
                         if(empty($franDetails->prop_area_max))
                             $area = $franDetails->prop_area_min;
@@ -266,59 +214,13 @@
 
                         if($maxValue > 9999999)
                            $maxValue = substr(($maxValue/10000000),0,5).' Cr';
-                    @endphp --}}
-                    @php
-                        $area = '-N/A-';
-                        if (!empty($franDetails->prop_area_min)) {
-                            $area = $franDetails->prop_area_min;
-                            if (!empty($franDetails->prop_area_max)) {
-                                $area .= ' - ' . $franDetails->prop_area_max;
-                            }
-                            $area .= ' Sq.ft';
-                        }
-
-                        $minValue = $franDetails->unit_inv_min;
-                        if (is_numeric($minValue)) {
-                            if ($minValue < 100000 && $minValue > 10000) {
-                                $minValue = substr($minValue / 1000, 0, 5) . ' K';
-                            } elseif ($minValue <= 9999999 && $minValue > 100000) {
-                                $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
-                            } elseif ($minValue > 9999999) {
-                                $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
-                            }
-                        } else {
-                            $minValue = '-N/A-';
-                        }
-
-                        $maxValue = $franDetails->unit_inv_max;
-                        if (is_numeric($maxValue)) {
-                            if ($maxValue < 100000 && $maxValue > 10000) {
-                                $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
-                            } elseif ($maxValue <= 9999999 && $maxValue > 100000) {
-                                $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
-                            } elseif ($maxValue > 9999999) {
-                                $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
-                            }
-                        } else {
-                            $maxValue = '-N/A-';
-                        }
                     @endphp
-
-                    <li>
-                        <div>{{ $area }}</div>Area Req
-                    </li>
-                    <li>
-                        <div>
-                            INR {{ $minValue }} - {{ $maxValue }}
-                        </div>Investment Size
-                    </li>
-                    <li>
-                        <div>{{ $franDetails->no_fran_outlets ?: '- NA -' }}</div>
-                        {{ $franDetails->looking_tradepartner == 1 || $franDetails->ind_main_cat == 5 ? 'No. Of Dealer/Distributor' : 'No. Of Franchise Outlets' }}
-                    </li>
-                    <li>
-                        <div>{{ $franDetails->operations_start_year }}</div> Establishment Year
-                    </li>
+                    <li><div>{{ $area }}</div>Area Req </li>
+                    <li><div>
+                            INR {{ $minValue  }} - {{ $maxValue }}
+                        </div>Investment Size </li>
+                    <li><div>{{ $franDetails->no_fran_outlets ?: '- NA -' }}</div> {{ $franDetails->looking_tradepartner == 1 || $franDetails->ind_main_cat == 5 ? "No. Of Dealer/Distributor" : "No. Of Franchise Outlets" }}</li>
+                    <li><div>{{ $franDetails->operations_start_year }}</div> Establishment Year </li>
                 </ul>
             </div>
         </div>
@@ -611,8 +513,7 @@
                     @endif
                     <!-- Insta Apply section end here -->
                     <div class="clr"></div>
-                    {{-- @desktop --}}
-                    @if ($agent->isDesktop())
+                    @desktop
                         <div class="catleftbanner300 detailpage">
                             {{-- @include("includes.banners.dfp_300X600") --}}
                             <!-- /1057625/FIHL/Desktop_ROS_300x250_ATF-->
@@ -625,8 +526,8 @@
                                 </script>
                             </div>
                         </div>
-                    @endif
-                    {{-- @enddesktop --}}
+                    {{-- @endif --}}
+                    @enddesktop
 
                 </div>
                 <!-- Right panel End here -->

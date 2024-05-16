@@ -14,30 +14,22 @@
     </div>
 @endif
 <!-- Top search header code Start-->
-{{-- @mobile --}}
-@if ($agent->isMobile())
-
+@mobile
 @include('layout.newhomepage.mobile.topsearch')
-{{-- @endmobile --}}
-@elseif ($agent->isTablet())
-
-{{-- @tablet --}}
+@endmobile
+@tablet
 @include('layout.newhomepage.topsearch')
-{{-- @endtablet --}}
-@elseif ($agent->isDesktop())
-{{-- @desktop --}}
+@endtablet
+@desktop
 @include('layout.newhomepage.topsearch')
-@endif
-{{-- @enddesktop --}}
+@enddesktop
 <!-- Top search header code End-->
 
 @yield('content')
 @include('layout-hindi.footer')
 @include('layout-hindi.sidemenu')
-@if ($agent->isDesktop())
-{{-- @desktop --}}
+@desktop
 @include('includes.exit-popup')
-@endif
-{{-- @enddesktop --}}
+@enddesktop
 </body>
 </html>

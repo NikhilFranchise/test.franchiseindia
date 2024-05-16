@@ -6,20 +6,16 @@
     <!--Book start here -->
     <div class="row headcommbanner">
         <div class="fullcontainer">
-             {{-- @desktop --}}
-             @if ($agent->isDesktop())
-             @include("includes.banners.dfp_970X90")
-             {{-- @enddesktop --}}
-             @elseif ($agent->isMobile())
-             {{-- @mobile --}}
-             @include("includes.banners.dfp_468X60")
-             @include("includes.banners.dfp_320X100")
-             {{-- @endmobile --}}
-             @elseif ($agent->isTablet())
-             {{-- @tablet --}}
-             @include("includes.banners.dfp_728X90")
-             {{-- @endtablet --}}
-             @endif
+            @desktop
+            @include("includes.banners.dfp_970X90")
+            @enddesktop
+            @mobile
+            @include("includes.banners.dfp_468X60")
+            @include("includes.banners.dfp_320X100")
+            @endmobile
+            @tablet
+            @include("includes.banners.dfp_728X90")
+            @endtablet
         </div>
     </div>
 
@@ -257,22 +253,16 @@
     <div class="height40"></div>
     <div class="row headcommbanner">
         <div class="fullcontainer">
-            {{-- @desktop --}}
-            @if ($agent->isDesktop())
-
+            @desktop
             @include("includes.banners.google_970X90")
-            {{-- @enddesktop --}}
-            @elseif ($agent->isTablet())
-
-            {{-- @tablet --}}
+            @enddesktop
+            @tablet
             @include("includes.banners.google_728X90")
-            {{-- @endtablet --}}
-            @elseif ($agent->isMobile())
-            {{-- @mobile --}}
+            @endtablet
+            @mobile
             @include("includes.banners.google_468X60")
             @include("includes.banners.google_320X100")
-           @endif
-            {{-- @endmobile --}}
+            @endmobile
         </div>
     </div>
 @endsection

@@ -1,8 +1,3 @@
-@php
-    use Jenssegers\Agent\Agent;
-    $agent = new Agent();
-@endphp
-
 <meta charset="UTF-8">
 <meta content="{{ request()->segment(1) == 'hi' ? 'hi-in' : 'en-in' }}" name="language" />
 <title>@if (request()->segment(1) != 'hi')@yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities')@elseif (request()->segment(1) == 'hi')@yield('seoTitle', 'फ्रैंचाइज़ इंडिया - व्यावसायिक अवसर, फ्रैंचाइज़ अवसर')@endif</title>
@@ -37,13 +32,17 @@
 <link href="{{ url('newhomepage/assets/vendor/owl.carousel/assets/owl.carousel.min.css?ver=2.2') }}" rel="stylesheet">
 <!-- Our Custom CSS -->
 
-@if ($agent->isMobile())
+@mobile
     <link rel="stylesheet" href="{{ url('newhomepage/assets/css/style-mobile-new.css?ver=12.8') }}">
 
     @include('layout.newhomepage.topsearch')
-@else
+@endmobile
+@desktop
     <link rel="stylesheet" href="{{ url('newhomepage/assets/css/style.css?ver=11.0') }}">
-@endif
+@enddesktop
+@tablet
+    <link rel="stylesheet" href="{{ url('newhomepage/assets/css/style.css?ver=11.0') }}">
+@endtablet
 
 
 <!-- Google tag (gtag.js) -->

@@ -1,9 +1,7 @@
 @if(url()->current() != url('/hi'))
     @include('includes/side-popup')
 @endif
-@if ($agent->isDesktop())
-
-{{-- @desktop --}}
+@desktop
 <div class="dfp_728X90">
     <!-- /1057625/FIHL/Desktop_Category_728x90_BTF-->
     <div id='adslot728x90_BTF'  style="text-align:center;">
@@ -12,10 +10,8 @@
         </script>
     </div>
 </div>
-{{-- @enddesktop --}}
-@elseif ($agent->isMobile())
-
-{{-- @mobile --}}
+@enddesktop
+@mobile
 <div class="dfp_300X250">
     <!-- /1057625/FIHL/WAP_Category_300x250_BTF-->
     <div id='adslot300x250_BTF'  style="text-align:center;">
@@ -24,9 +20,8 @@
         </script>
     </div>
 </div>
-{{-- @endmobile --}}
-@elseif ($agent->isTablet())
-{{-- @tablet --}}
+@endmobile
+@tablet
 <div class="dfp_728X90">
     <!-- /1057625/FIHL/Tab_Category_728x90_BTF-->
     <div id='adslot728x90_BTF'  style="text-align:center;">
@@ -35,8 +30,7 @@
         </script>
     </div>
 </div>
-@endif
-{{-- @endtablet --}}
+@endtablet
 
 <!-- Business Opportunities section starts -->
 <section class="Business-Opportunitiessection section-30"
@@ -310,21 +304,15 @@
 <!-- Business Opportunities section ends -->
 
 <!-- our website start here -->
-@if ($agent->isDesktop())
-
-{{-- @desktop --}}
+@desktop
 @include('layout.newhomepage.hindidesktopwebsite');
-{{-- @enddesktop --}}
-@elseif ($agent->isTablet())
-{{-- @tablet --}}
+@enddesktop
+@tablet
 @include('layout.newhomepage.hindidesktopwebsite');
-{{-- @endtablet --}}
-@elseif ($agent->isMobile())
-
-{{-- @mobile --}}
+@endtablet
+@mobile
 @include('layout.newhomepage.hindimobilewebsite');
-@endif
-{{-- @endmobile --}}
+@endmobile
 <!--ouer website end here -->
 
 
@@ -770,8 +758,8 @@
     {{--<!--copy right end here -->--}}
 {{--</footer>--}}
 <!-- back to top start here  -->
-@if ($agent->isMobile())
-{{-- @mobile --}}
+
+@mobile
 @if(url()->current() == url('/hi'))
 <style type="text/css">
 @media only screen and (min-width:1px) and (max-width: 639px) {
@@ -787,8 +775,7 @@
 </div>
 </div>
 @endif
-@endif
-{{-- @endmobile --}}
+@endmobile
 
 <!-- back to top start here  -->
 <a href="javascript:void(0);" id="scroll" title="Scroll to Top" style="display: none;"><i class="fa fa-angle-up fa-2x" aria-hidden="true"></i></a>
@@ -802,12 +789,9 @@
 <script type="text/javascript" src="{{ url('js/custom.js?version=2.1') }}"></script>
 <script type="text/javascript" src="{{ url('js/bootstrap-typeahead.js') }}"></script>
 <script type="text/javascript" src="{{url('awesomplete/awesomplete.js')}}"></script>
-@if ($agent->isDesktop())
-{{-- @desktop --}}
+@desktop
 <script type="text/javascript" src="{{ url('js/bioep.js') }}"></script>
-@endif
-{{-- @enddesktop --}}
-
+@enddesktop
 <script type="text/javascript" src="{{ url('js/lozad.min.js') }}"></script>
 
 <!----- Start of Push notifications script ------->
@@ -907,9 +891,7 @@
         }
     });
 </script>
-@if ($agent->isDesktop() || $agent->isTablet())
-
-{{-- @notmobile --}}
+@notmobile
     @php
         $expoPopup = 0;
         if (empty(Cookie::get('expoppoup17'))) {
@@ -944,8 +926,7 @@
         @endif
     @endif
 <!-- Start of franchiseindia Zendesk Widget script -->
-@endif
-{{-- @endnotmobile --}}
+@endnotmobile
 
 
 <script type="text/javascript">

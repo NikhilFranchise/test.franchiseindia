@@ -1,20 +1,102 @@
 <script async src="{{ url('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js') }}"></script>
 {{--<script async src="https://rtbcdn.andbeyond.media/prod-global-550463.js"></script>--}}
 <!-- Affinity HVR Invocation Code //-->
-{{-- <script type="text/javascript">
+<script type="text/javascript">
     (function(){var o='script',s=top.document,a=s.createElement(o),m=s.getElementsByTagName(o)[0],d=new Date();a.async=1;a.src='https://hbs.ph.affinity.com/v5/franchiseindia.com/index.php?t='+d.getDate()+d.getMonth()+d.getHours();m.parentNode.insertBefore(a,m)})()
-</script> --}}
+</script>
 @if(request()->segment(1) == 'business-opportunities' || request()->segment(2) == 'business-opportunities' || request()->segment(1) == 'brands' || request()->segment(2) == 'brands')
-    {{-- <div id = "v-franchiseindia-v1"></div><script>(function(v,d,o,ai){ai=d.createElement('script');ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, '//a.vdo.ai/core/v-franchiseindia-v1/vdo.ai.js');</script> --}}
+    <div id = "v-franchiseindia-v1"></div><script>(function(v,d,o,ai){ai=d.createElement('script');ai.defer=true;ai.async=true;ai.src=v.location.protocol+o;d.head.appendChild(ai);})(window, document, '//a.vdo.ai/core/v-franchiseindia-v1/vdo.ai.js');</script>
 @endif
+{{--<script async src="{{ url('https://www.googletagservices.com/tag/js/gpt.js') }}"></script>--}}
+{{--<script>--}}
+    {{--var googletag = googletag || {};--}}
+    {{--googletag.cmd = googletag.cmd || [];--}}
+    {{--googletag.cmd.push(function () {--}}
+        {{--var REFRESH_KEY = 'refresh';--}}
+        {{--var REFRESH_VALUE = 'true';--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_DSK_ATF_970x90A', [970, 90], 'div-gpt-ad-1553254858292-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_TB_ATF_728x90A', [728, 90], 'div-gpt-ad-1553583946684-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_MW_ATF_468x60', [468, 60], 'div-gpt-ad-1553583750770-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_MW_ATF_320x100', [320, 100], 'div-gpt-ad-1553255122847-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_DSK_ATF_728x90', [728, 90], 'div-gpt-ad-1553254788308-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_TB_ATF_468x60', [468, 60], 'div-gpt-ad-1553583905604-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--@if(url()->current() == url('/') || url()->current() == url('/hi') || url()->current() == url('/premiumbrand') || url()->current() == url('/hi/premiumbrand'))--}}
+        {{--googletag.defineSlot('/1057625/Mobile-300X250', [300, 250], 'div-gpt-ad-1545127137860-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_DSK_BTF_970x250A', [970, 250], 'div-gpt-ad-1553255012674-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_DSK_BTF_970x250B', [970, 250], 'div-gpt-ad-1572784246238-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_DSK_ATF_160x600', [160, 600], 'div-gpt-ad-1553254664817-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_DSK_ATF_970x90B', [970, 90], 'div-gpt-ad-1572784309605-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_DSK_BTF_300x250', [300, 250], 'div-gpt-ad-1553254959051-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_MW_BTF_300x250', [300, 250], 'div-gpt-ad-1553255256562-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_TB_ATF_160x600', [160, 600], 'div-gpt-ad-1553583812198-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_TB_ATF_728x90B', [728, 90], 'div-gpt-ad-1553584020716-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_TB_BTF_728x90A', [728, 90], 'div-gpt-ad-1553584389239-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_TB_BTF_728x90B', [728, 90], 'div-gpt-ad-1553584425545-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_MW_ATF_320x50(Freeze)', [320, 50], 'div-gpt-ad-1553255200835-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Left-160X600', [160, 600], 'div-gpt-ad-1529306124339-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/HP_TB_BTF_300x250', [300, 250], 'div-gpt-ad-1553584196447-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--@elseif(request()->segment(1) == 'category' || request()->segment(1) == 'business-opportunities' || request()->segment(2) == 'category' || request()->segment(2) == 'business-opportunities')--}}
+        {{--googletag.defineSlot('/1057625/FB_320x100', [320, 100], 'div-gpt-ad-1573467896971-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Header-728X90', [728, 90], 'div-gpt-ad-1498540898563-1').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Sub_Education_728x90', [728, 90], 'div-gpt-ad-1573815617456-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/New_Category/CP_300x250', [300, 250], 'div-gpt-ad-1563348795825-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/New_Category/CP_300x250', [300, 250], 'div-gpt-ad-1563348795825-1').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/New_Category/CP_300x250', [300, 250], 'div-gpt-ad-1563348795825-2').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Vocational_ATF_728x90', [728, 90], 'div-gpt-ad-1555584209385-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/FranchiseIndia/Sub-Cat_DSK_ATF_728x90', [728, 90], 'div-gpt-ad-1555484449148-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Category_200X200', [200, 200], 'div-gpt-ad-1506599299695-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Category_200X200', [200, 200], 'div-gpt-ad-1506599299695-1').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Category_200X200', [200, 200], 'div-gpt-ad-1506599299695-2').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Category_200X200', [200, 200], 'div-gpt-ad-1506599299695-3').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Category-240X400', [240, 400], 'div-gpt-ad-1504794961823-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Food-and-Beverage-728X90', [728, 90], 'div-gpt-ad-1542018830077-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Food-and-Beverage-320X100', [300, 100], 'div-gpt-ad-1542088756268-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Food-and-Beverage-468X60', [468, 60], 'div-gpt-ad-1542171953324-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/IR_728X90', [728, 90], 'div-gpt-ad-1548423273179-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Education-728X90', [728, 90], 'div-gpt-ad-1568723407638-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/New_Category/CP_970x250', [970, 250], 'div-gpt-ad-1563348824884-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/New_Category/CP_970x90', [970, 90], 'div-gpt-ad-1563427321783-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/New_Category/CP_160x600', [160, 600], 'div-gpt-ad-1563348666654-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/HomePage-300X600', [300, 600], 'div-gpt-ad-1498540898563-3').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/HomePage-300X600', [300, 600], 'div-gpt-ad-1498540898563-7').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Category-728X90', [728, 90], 'div-gpt-ad-1500379519668-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/HomePage-300X600', [300, 600], 'div-gpt-ad-1498540898563-4').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--@else--}}
+        {{--googletag.defineSlot('/1057625/Header-320X100', [320, 100], 'div-gpt-ad-1539683561574-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Header-320X100', [320, 100], 'div-gpt-ad-1539683561574-1').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Header-728X90', [728, 90], 'div-gpt-ad-1498540898563-8').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Header-728X90', [728, 90], 'div-gpt-ad-1498540898563-9').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Header-728X90', [728, 90], 'div-gpt-ad-1498540898563-10').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Header-468X60', [468, 60], 'div-gpt-ad-1498540898563-12').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Mobile-300X250', [300, 250], 'div-gpt-ad-1545127137860-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/RightSide-300X250-1', [300, 250], 'div-gpt-ad-1498540898563-5').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/RightSide-300X250-1', [300, 250], 'div-gpt-ad-1498540898563-6').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Category-468X60', [468, 60], 'div-gpt-ad-1536149771913-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Category-970X90', [970, 90], 'div-gpt-ad-1499086858072-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+        {{--googletag.defineSlot('/1057625/Home-970X250', [970, 250], 'div-gpt-ad-1504330473217-0').setTargeting(REFRESH_KEY, REFRESH_VALUE).addService(googletag.pubads());--}}
+                {{--@endif--}}
+
+        {{--var SECONDS_TO_WAIT_AFTER_VIEWABILITY = 60;--}}
+        {{--googletag.pubads().enableSingleRequest();--}}
+        {{--googletag.enableServices();--}}
+        {{--googletag.pubads().addEventListener('impressionViewable', function (event) {--}}
+            {{--var slot = event.slot;--}}
+            {{--if (slot.getTargeting(REFRESH_KEY).indexOf(REFRESH_VALUE) > -1) {--}}
+                {{--setTimeout(function () {--}}
+                    {{--googletag.pubads().refresh([slot]);--}}
+                {{--}, SECONDS_TO_WAIT_AFTER_VIEWABILITY * 1000);--}}
+            {{--}--}}
+        {{--});--}}
+    {{--});--}}
+{{--</script>--}}
+
 <!-- Old script end -->
 <!-- new code start -->
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
 <script>
     window.googletag = window.googletag || {cmd: []};
     <!-- For mobile start-->
-    // @mobile
-    @if ($agent->isMobile())
+    @mobile
     googletag.cmd.push(function() {
         @if(request()->segment(1) == '')
         googletag.defineSlot('/1057625/FIHL/Tab_ROS_728x90_BTF', [728, 90], 'adslot728x90_BTF').addService(googletag.pubads());
@@ -72,10 +154,9 @@
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
     });
-    // @endmobile
+    @endmobile
     <!-- For Mobile end -->
-    // @desktop
-    @elseif ($agent->isDesktop())
+    @desktop
     googletag.cmd.push(function() {
 
         @if(request()->segment(1) == '')
@@ -129,6 +210,9 @@
         googletag.defineSlot('/1057625/FIHL/Desktop_Category_728x90_BTF', [[728, 90], [970, 90],[970,250]], 'adslot728x90_BTF').addService(googletag.pubads());
 
         @elseif(request()->segment(1) == 'brands')
+//         googletag.defineSlot('/1057625/FIHL/Desktop_ROS_970x90', [[728, 90], [970, 90],[970,250]], 'adslot970x90').addService(googletag.pubads());
+//         googletag.defineSlot('/1057625/FIHL/Desktop_ROS_300x250_ATF', [[300, 250],[300,600]], 'adslot300x250_ATF').addService(googletag.pubads());
+//        googletag.defineSlot('/1057625/FIHL/Desktop_ROS_728x90_BTF', [728, 90], 'adslot728x90_BTF').addService(googletag.pubads());
 
         googletag.defineSlot('/1057625/FIHL/Desktop_ROS_728x90_ATF', [728, 90], 'adslot728x90_ATF').addService(googletag.pubads());
         googletag.defineSlot('/1057625/FIHL/Desktop_ROS_300x250_ATF', [[300, 250],[300,600]], 'adslot300x250_ATF').addService(googletag.pubads());
@@ -161,10 +245,9 @@
         googletag.enableServices();
     });
 
-    // @enddesktop
+    @enddesktop
 
-    // @tablet
-    @else
+    @tablet
     googletag.cmd.push(function() {
         @if(request()->segment(1) == '')
         googletag.defineSlot('/1057625/FIHL/Tab_ROS_728x90_BTF', [728, 90], 'adslot728x90_BTF').addService(googletag.pubads());
@@ -204,8 +287,7 @@
         googletag.pubads().enableSingleRequest();
         googletag.enableServices();
     });
-    // @endtablet
-    @endif
+    @endtablet
 </script>
 <!-- Global site tag (gtag.js) - Google Ads: 767541249 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-767541249"></script>

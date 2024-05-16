@@ -5,23 +5,18 @@
 @section('content')
     <div class="row headcommbanner">
         <div class="fullcontainer">
-            {{-- @desktop --}}
-            @if ($agent->isDesktop())
+            @desktop
 
             @include("includes.banners.dfp_970X90")
-            {{-- @enddesktop --}}
-            @elseif ($agent->isMobile())
+            @enddesktop
 
-            {{-- @mobile --}}
+            @mobile
             @include("includes.banners.dfp_468X60")
             @include("includes.banners.dfp_320X100")
-            {{-- @endmobile --}}
-            @elseif ($agent->isDesktop() || $agent->isTablet() )
-
-            {{-- @tablet --}}
+            @endmobile
+            @tablet
             @include("includes.banners.dfp_728X90")
-            @endif
-            {{-- @endtablet --}}
+            @endtablet
         </div>
     </div>
     <style type="text/css">.bookmartop{padding-top:20px;padding-bottom:5px;border:none!important}ul.book-list,ul.book-list-1,ul.book-list-2,ul.book-list-3,ul.book-list-4{margin-left:-15px;margin-right:-15px}.book-subheadingnew,.book-blk .static-subheading,.book-blk-2 .static-subheading,ul.book-list-4 .static-subheading,.book-blk-3 .static-subheading{font-family:'Open Sans Bold';font-size:22px;color:#333;line-height:25px;text-transform:uppercase;margin-bottom:5px;margin-top:10px;margin-left:0}.book-img-i img{border:1px solid #dfdfdf}.book-blk-2{overflow:hidden}.reportborder{height:1px;width:100%;background:#f3f3f3;clear:both}.bookmartop20px{margin-top:20px}.bookmarminus20px{margin-top:-10px}.bookmartop30px{margin-top:30px}@media only screen and (min-width:1px) and (max-width:767px){ul.book-list li,ul.book-list-1 li,ul.book-list-2 li,ul.book-list-3 li{text-align:center;height:auto;margin-bottom:20px}}</style>

@@ -25,31 +25,29 @@
                         @endforeach
                     </ul>
                 </div>
-                @if ($agent->isMobile())
 
-                {{-- @mobile --}}
+                @mobile
                 <div id='adslot300x250_ATF' style='text-align: center;'>
                     <script>
                         googletag.cmd.push(function() { googletag.display('adslot300x250_ATF'); });
                     </script>
                 </div>
-                @endif
+                
 
-                {{-- @endmobile --}}
+                @endmobile
                 <!-- Education Franchise Opportunities end here  -->
                 @include("includes/education/eifirstmost")
                 @include("includes/education/educationbusiness")
-                @if ($agent->isDesktop() || $agent->isTablet())
 
-                {{-- @notmobile --}}
+                @notmobile
 
                             <div id='adslot728x90_Mid_1' style='text-align: center;'>
                                 <script>
                                     googletag.cmd.push(function() { googletag.display('adslot728x90_Mid_1'); });
                                 </script>
                             </div>
-                @endif
-                {{-- @endnotmobile --}}
+                
+                @endnotmobile
                 @include("includes/education/educationblog")
                 @include("includes/education/educationstartups")
                 @include("includes/education/pre-schools-k12")
@@ -63,8 +61,7 @@
         <!--right section end here -->
         </div>
     </div>
-    @if ($agent->isDesktop() || $agent->isTablet())
-    {{-- @notmobile --}}
+    @notmobile
         <div class="sidearce">
             <div class="dfp_cat_728X90">
                 <div id='adslot728x90_BTF'>
@@ -74,8 +71,8 @@
                 </div>
             </div>
         </div>
-        @endif
-    {{-- @endnotmobile --}}
+        
+    @endnotmobile
 
 
 @endsection
