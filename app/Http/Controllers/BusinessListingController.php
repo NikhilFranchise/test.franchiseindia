@@ -196,8 +196,11 @@ public function listingLocation()
     {
         // dd($request->getRequestUri());
         $requestUri = $request->getRequestUri();
-        $segments = explode('/', $requestUri);
+        $segments = explode('/', $requestUri);        
         // dd($segments[3]);
+       // Check if the segments array has at least 4 elements
+       $segment = isset($segments[3]) ? $segments[3] : null;
+
        
 
         if (!empty(request()->franchiseType)) {
@@ -223,52 +226,43 @@ public function listingLocation()
         
         $seoTitle = '';
         $seoDesc = '';
-
-        // investment page seo title and desc
-        if($segments[3]== 'range-10000-100000'){
+         // Set SEO title and description based on the segment
+    if ($segment) {
+        if ($segment == "range-10000-100000") {
             $seoTitle = 'Top Franchises Under 1 Lakh in India: Affordable Business Opportunities 2024';
             $seoDesc = 'Discover the top franchises available under 1 lakh in India for 2024. Invest in affordable, high-return business opportunities ideal for first-time entrepreneurs. Begin your successful business journey today!';
-        }
-        elseif($segments[3] == 'range-10000-200000'){
-                $seoTitle = 'Top Franchises Under 2 Lakhs in India: Affordable Investments 2024';
-                $seoDesc = 'Explore high-potential franchises available under 2 lakhs in India for 2024. Seize low-cost, profitable business opportunities perfect for emerging entrepreneurs. Start your entrepreneurial journey now!';
-        }
-        elseif($segments[3] == 'range-10000-300000'){
+        } elseif ($segment == "range-10000-200000") {
+            $seoTitle = 'Top Franchises Under 2 Lakhs in India: Affordable Investments 2024';
+            $seoDesc = 'Explore high-potential franchises available under 2 lakhs in India for 2024. Seize low-cost, profitable business opportunities perfect for emerging entrepreneurs. Start your entrepreneurial journey now!';
+        } elseif ($segment == "range-10000-300000") {
             $seoTitle = 'Best Franchises Under 3 Lakhs in India: Start Your Business in 2024';
             $seoDesc = 'Discover leading franchises under 3 lakhs in India for 2024. Invest in cost-effective, scalable business opportunities suitable for aspiring entrepreneurs. Launch your successful venture today!';
-        }
-        elseif($segments[3] == 'range-10000-500000'){
-        $seoTitle = 'Top Franchises Under 5 Lakhs in India: High ROI Business Opportunities 2024';
-        $seoDesc = 'Explore the best franchises available under 5 lakhs in India for 2024. Discover affordable, high-return business ventures perfect for budding entrepreneurs. Start your profitable journey today!';
-        }
-        elseif($segments[3] == 'range-10000-1000000'){
+        } elseif ($segment == "range-10000-500000") {
+            $seoTitle = 'Top Franchises Under 5 Lakhs in India: High ROI Business Opportunities 2024';
+            $seoDesc = 'Explore the best franchises available under 5 lakhs in India for 2024. Discover affordable, high-return business ventures perfect for budding entrepreneurs. Start your profitable journey today!';
+        } elseif ($segment == "range-10000-1000000") {
             $seoTitle = 'Best Franchises Under 10 Lakhs in India: Lucrative Opportunities 2024';
             $seoDesc = 'Uncover top franchises available under 10 lakhs in India for 2024. Choose from profitable, low-cost business opportunities ideal for new entrepreneurs. Begin your successful journey now!';
-        }
-        elseif($segments[3] == 'range-10000-1500000'){
+        } elseif ($segment == "range-10000-1500000") {
             $seoTitle = 'Top Franchises Under 15 Lakhs in India: Affordable Business Ventures 2024';
             $seoDesc = 'Explore affordable franchises under 15 lakhs in India for 2024. Seize low-investment, high-return business opportunities perfect for first-time entrepreneurs. Start building your business empire today!';
-        }
-        elseif($segments[3] == 'range-10000-2000000'){
+        } elseif ($segment == "range-10000-2000000") {
             $seoTitle = 'Best Franchises Under 20 Lakhs in India: Smart Business Choices 2024';
             $seoDesc = 'Explore leading franchises under 20 lakhs in India for 2024. Choose from cost-effective, high-return business opportunities perfect for savvy entrepreneurs looking to make a mark. Start your profitable venture today!';
-        }
-        elseif($segments[3] == 'range-10000-2500000'){
+        } elseif ($segment == "range-10000-2500000") {
             $seoTitle = 'Top Franchises Under 25 Lakh in India: Affordable Business Opportunities 2024';
             $seoDesc = 'Discover leading franchises under 25 lakhs in India for 2024. Invest in cost-effective, high-potential business opportunities suitable for savvy entrepreneurs. Launch your profitable venture today!';
-        }
-        elseif($segments[3] == 'range-10000-3000000'){
+        } elseif ($segment == "range-10000-3000000") {
             $seoTitle = 'Top Franchises Under 30 Lakhs in India: Ideal Investments 2024';
             $seoDesc = 'Explore the most promising franchises under 30 lakhs in India for 2024. Find affordable, scalable business opportunities perfect for emerging entrepreneurs. Kickstart your entrepreneurial success now!';
-        }
-        elseif($segments[3] == 'range-10000-5000000'){
+        } elseif ($segment == "range-10000-5000000") {
             $seoTitle = 'Best Franchises Under 50 Lakhs in India: Profitable Investments 2024';
             $seoDesc = 'Discover top franchises available under 50 lakhs in India for 2024. Secure profitable and sustainable business opportunities ideal for growth-focused entrepreneurs. Start your journey to success today!';
-        }
-        elseif($segments[3] == 'range-10000-10000000'){
+        } elseif ($segment == "range-10000-10000000") {
             $seoTitle = 'Top Franchises Under 1 Crore in India: Lucrative Business Opportunities 2024';
             $seoDesc = 'Uncover leading franchises under 1 crore in India for 2024. Invest in high-return business opportunities suited for ambitious entrepreneurs. Begin your profitable venture now!';
         }
+    }
 
 
         $seoKeywords = '';
