@@ -443,9 +443,11 @@
                                 @if(count($brandResults) == 0)
                                     <div class="noresults">No result found</div>
                                 @endif
-                                {!! $brandResults
+                                {{-- {!! $brandResults
                                 ->appends($params)
-                                ->render() !!}
+                                ->render() !!} --}}
+                                {!! $brandResults->appends($params)->links('vendor.pagination.custom') !!}
+
                             </div>
                         </div>
                     </div>
@@ -789,14 +791,7 @@
                 }
             });
 
-            {{--$('#categorysearch').typeahead({--}}
-            {{--onSelect: function(item) {--}}
-            {{--console.log(item);--}}
-            {{--},--}}
-            {{--ajax: {--}}
-            {{--url: "{{Config('constants.MainDomain')}}/searchbusiness",--}}
-            {{--}--}}
-            {{--});--}}
+           
 
         });
 

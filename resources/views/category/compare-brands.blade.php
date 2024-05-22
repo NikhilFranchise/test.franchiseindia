@@ -424,12 +424,7 @@
                             <td id="rating2"></td>
                             <td id="rating3"></td>
                         </tr>
-                        {{--<tr>--}}
-                            {{--<td class="fi"></td>--}}
-                            {{--<td class="firstBrand"><a href="#" class="btn btn-default btn-red">Apply Now</a> </td>--}}
-                            {{--<td class="secondBrand"><a href="#" class="btn btn-default btn-red">Apply Now</a> </td>--}}
-                            {{--<td class="thirdBrand"><a href="#" class="btn btn-default btn-red">Apply Now</a> </td>--}}
-                        {{--</tr>--}}
+                       
                     </tbody>
                 </table>
             </div>
