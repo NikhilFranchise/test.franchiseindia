@@ -108,7 +108,7 @@ class GalleryController extends Controller
                                   ->orderBy('content_id', 'asc')
                                   ->first();
 
-        if ($nextArticle->count() == null && $nextArticle->count() == 0)  {
+        if ($nextArticle == null && $nextArticle->count() == 0)  {
             $nextArticle = ContentList::select('kicker', 'image', 'title', 'homeTitle', 'content_id', 'site_type')
                                     ->where('content_id', '<', $request->id)
                                     ->where('site_type', 'ga')
