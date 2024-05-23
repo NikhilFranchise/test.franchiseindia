@@ -80,7 +80,7 @@ class GalleryController extends Controller
         //fetch data with selected contentId
         $articles    = ContentList::where('content_id', $request->id)->first();
 
-        if(count($articles) == 0 || $articles->status == 0 || $articles->site_type != 'ga')
+        if($articles->count() == 0 || $articles->status == 0 || $articles->site_type != 'ga')
          return redirect('404');
                                 
         $slider      = DB::table('content_slider_images')->select('image', 'content')->where('content_id', $request->id)->get();
