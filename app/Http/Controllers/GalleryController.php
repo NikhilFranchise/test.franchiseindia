@@ -207,7 +207,7 @@ class GalleryController extends Controller
                                    ->where('content_id', '<>', $likeContents->pluck('content_id'))
                                    ->orderByRaw("RAND()")
                                    ->where('site_type', 'ga')
-                                   ->take(10)
+                                   ->take(1)
                                    ->get();
 
 
