@@ -41,6 +41,7 @@ use App\Http\Controllers\StartupEventController;
 use App\Http\Controllers\WellnessController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\DealersAndDistributorController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -111,14 +112,15 @@ Route::get('get-brands', [BrandCompareController::class, 'getComparableBrands'])
 Route::get('/get-brand-compare', [BrandCompareController::class, 'getSingleBrand']);
 Route::get('newsletter/unsubscribe/thanks', [MailerController::class, 'newsletterUnsub']);  //unsubscribe thanks msg
 Route::get('international', [InternationalController::class, 'getHomePage']); // International Page routes
-Route::get('newsletter/subscriptionForm',     [NewsLetterController::class, 'newsletterForm']);
-Route::get('premiumbrand',                   [HomepageController::class, 'premiumHome']);
-
+Route::get('newsletter/subscriptionForm', [NewsLetterController::class, 'newsletterForm']);
+Route::get('premiumbrand', [HomepageController::class, 'premiumHome']);
+Route::get('dealers-search/{search}',        [DealersAndDistributorController::class, 'searchForDealerHomePage']);
+Route::get('dealers-india/search/{search}',  [DealersAndDistributorController::class, 'searchDealer']);
 
 
 // post routes
 Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);
-Route::post('subscribenews',     [NewsLetterController::class, 'subscriptionFormsubmit']);
+Route::post('subscribenews', [NewsLetterController::class, 'subscriptionFormsubmit']);
 Route::post('property-loan-submit', [StaticPageController::class, 'postPropertyLoanForm']);
 Route::post('contact-submit', [ContactUsController::class, 'contact']);
 Route::post('feedback', [FeedbackController::class, 'feedback']);
