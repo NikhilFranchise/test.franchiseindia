@@ -19,6 +19,7 @@ use App\Models\MagazineCategorie;
 use App\Models\ContentTagsAssigned;
 use App\Models\FranchisorBusinessDetail;
 use App\Models\ArticleInterviewCommentReply;
+use Illuminate\Support\Str;
 
 class GalleryController extends Controller
 {
@@ -95,7 +96,7 @@ class GalleryController extends Controller
 
         $count       = ContentList::select('views')->where('content_id', $request->id)->get();
 
-        $redirectUrl = config('constants.MainDomain') . '/gallery/' . str_slug($articles->title) .'.'. $request->id;
+        $redirectUrl = config('constants.MainDomain') . '/gallery/' .  Str::slug($articles->title) .'.'. $request->id;
 
         //update views whenever article is viewed
         $updateViews = ContentList::where('content_id', $request->id)->increment('views');
