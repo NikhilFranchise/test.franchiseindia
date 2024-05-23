@@ -49,8 +49,8 @@
 
     <div class="container-fluid">
         <div class="lnkblk">
-            <a href="https://www.franchiseindia.com/expo/" target="_blank" class="setpat"><img
-                    src="{{ url('newhomepage/assets/img/delhi-show.png') }}"></a>
+            <a href="https://www.franchiseindia.com/brands/direct-english.78387" target="_blank" class="setpat"><img
+                    src="https://www.franchiseindia.com/newhomepage/assets/img/direct-english.png"></a>
         </div>
 
         <div class="row">
