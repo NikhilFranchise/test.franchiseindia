@@ -190,7 +190,7 @@ use Illuminate\Support\Str;
                                             s.parentNode.insertBefore(gcse, s);
                                         })();
                                     </script>
-                                    <gcse:searchbox-only resultsUrl="{{ url('/') }}/search" newWindow="true" queryParameterName="search">
+                                    <gcse:searchbox-only resultsUrl="{{ url('/') }}/search" newWindow="true" queryParameterName="search"></gcse:searchbox-only>
                                     <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css"/>
                                 </div>
                                 <div class="hidesub" id="closegsearch"><img src="{{url('images/crosssearch.png')}}" alt="cross search"></div>
