@@ -1515,7 +1515,7 @@ ul.sharecat li.btline{border-bottom:none}
 .tdss img{height: 91px;object-fit: contain;background: #ffffff;}
 .midimg img{height: 105px;object-fit: contain;background: #ffffff;}
 .artbigimg img{height: 327px;object-fit: contain;background: #ffffff;}
-.sidearce img{height: 134px;object-fit: contain;background: #ffffff;}
+.sidearce img{height: 25px;object-fit: contain;background: #ffffff;}
 .arimg198 img{height: 137px;object-fit: contain;background: #ffffff;}
 .avbb{margin-bottom:30px;overflow:hidden}
 .avbb .row-npadding{padding-right:0;padding-left:0}
@@ -1641,7 +1641,7 @@ h1.bordertb{margin-top:0}
 .smallatcmost{width:245px;border-bottom:1px solid #dfdfdf;padding-bottom:20px;margin-bottom:20px}
 .mostwnew .mdfiartimost{width:68%}
 .smallatcmost:last-child{border-bottom:none}
-.arti271 img,.babcblk,.tts img{border:1px solid #dfdfdf}
+.arti271 img,.babcblk,.tts img{border:1px solid #dfdfdf;height: 125px;}
 .arti271{width:271px}
 .arti271 img{width:100%}
 .listkick{font-family:'Open Sans Light',serif;font-size:13px;line-height:18px;margin-top:-4px;margin-bottom:15px}
@@ -1686,7 +1686,7 @@ h1.bordertb{margin-top:0}
 .rigauthor{font-size:13px;color:#333;font-family:'Open Sans Light',serif;margin-bottom:20px}
 .rigauthor a,.subrigcatheading a{color:#069}
 .rigtimg{width:258px;margin:0 auto}
-.rigtimg img{width:100%;border:1px solid #dfdfdf}
+.rigtimg img{width:100%;border:1px solid #dfdfdf;height: auto;}
 .marfix{margin-top:10px}
 .smallatcmostright{border-top:1px solid #dfdfdf;margin-top:20px;padding-top:15px}
 .subrigcatheading{font-size:13px;color:#069;font-family:'Open Sans Light',serif;margin-bottom:0}
