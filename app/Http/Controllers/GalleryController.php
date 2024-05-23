@@ -125,7 +125,7 @@ class GalleryController extends Controller
         $relatedArr      = explode(',', $articles['related_brand']);
 
         //check data is available with given contentId
-        if ($articles->count() == 0 || $articles->count() == null) {
+        if ($articles->count() == 0 || $articles == null) {
             return "NO result found with the given id..!";
         }
 
@@ -238,13 +238,13 @@ class GalleryController extends Controller
     {
         $kicker           = SeoTag::where('tag_id', $request->kicker_id)->first();
         
-        if ($kicker->count() == 0 || $kicker->count() == null)
+        if ($kicker->count() == 0 || $kicker == null)
             return redirect('/gallery');
 
         $kicker           = $kicker->name;
         $kickerContent    = ContentTagsAssigned::where('tag_id', $request->kicker_id)->get();
 
-        if ($kickerContent->count() == 0 || $kickerContent->count() == null)
+        if ($kickerContent->count() == 0 || $kickerContent == null)
             return redirect('404');
 
 
@@ -257,7 +257,7 @@ class GalleryController extends Controller
                            ->orderBy('content_id', 'desc')
                            ->first();
 
-        if ($most->count() == 0 || $most->count() == null)
+        if ($most->count() == 0 || $most == null)
             return redirect('404');
 
         //for Popular
@@ -305,7 +305,7 @@ class GalleryController extends Controller
 
 
         //if no data related with contentId then show "404 ERROR"
-        if ($articles->count() == 0 || $articles->count() == null) {
+        if ($articles->count() == 0 || $articles == null) {
             return redirect('404');
         }
 
