@@ -19,6 +19,7 @@ use App\Models\MagazineCategorie;
 use App\Models\ContentTagsAssigned;
 use App\Models\FranchisorBusinessDetail;
 use App\Models\ArticleInterviewCommentReply;
+use Illuminate\Support\Str;
 
 class GalleryController extends Controller
 {
@@ -80,7 +81,7 @@ class GalleryController extends Controller
         //fetch data with selected contentId
         $articles    = ContentList::where('content_id', $request->id)->first();
 
-        if(count($articles) == 0 || $articles->status == 0 || $articles->site_type != 'ga')
+        if($articles->count() == 0 || $articles->status == 0 || $articles->site_type != 'ga')
          return redirect('404');
                                 
         $slider      = DB::table('content_slider_images')->select('image', 'content')->where('content_id', $request->id)->get();
@@ -95,7 +96,7 @@ class GalleryController extends Controller
 
         $count       = ContentList::select('views')->where('content_id', $request->id)->get();
 
-        $redirectUrl = config('constants.MainDomain') . '/gallery/' . str_slug($articles->title) .'.'. $request->id;
+        $redirectUrl = config('constants.MainDomain') . '/gallery/' .  Str::slug($articles->title) .'.'. $request->id;
 
         //update views whenever article is viewed
         $updateViews = ContentList::where('content_id', $request->id)->increment('views');
@@ -107,7 +108,7 @@ class GalleryController extends Controller
                                   ->orderBy('content_id', 'asc')
                                   ->first();
 
-        if (count($nextArticle) == 0) {
+        if ($nextArticle == null || $nextArticle->count() == 0)  {
             $nextArticle = ContentList::select('kicker', 'image', 'title', 'homeTitle', 'content_id', 'site_type')
                                     ->where('content_id', '<', $request->id)
                                     ->where('site_type', 'ga')
@@ -124,7 +125,7 @@ class GalleryController extends Controller
         $relatedArr      = explode(',', $articles['related_brand']);
 
         //check data is available with given contentId
-        if (count($articles) == 0) {
+        if ($articles->count() == 0 || $articles == null) {
             return "NO result found with the given id..!";
         }
 
@@ -133,7 +134,7 @@ class GalleryController extends Controller
                                  ->where('title', $articles->author)
                                  ->first();
         $authorDesig = '';
-        if (count($authorDesc) == 1) {
+        if ($authorDesc->count() == 1) {
             $authorDesig = $authorDesc->designation;
         }
 
@@ -184,7 +185,7 @@ class GalleryController extends Controller
                                    ->get();
 
         $i = 0;
-        while ($i < count($likeArticles)) {
+        while ($i < $likeArticles->count()) {
           $likeArticles[$i]['kicker_id']   = "";
           if ($likeArticles[$i]['site_type'] == 'ga') {
             $seoTagId                  = SeoTag::where('name', $likeArticles[$i]['kicker'])->first();
@@ -211,7 +212,7 @@ class GalleryController extends Controller
 
 
         $i = 0;
-        while ($i < count($moreArticles)) {
+        while ($i < $moreArticles->count()) {
           $moreArticles[$i]['kicker_id']   = "";
           if ($moreArticles[$i]['site_type'] == 'ga') {
             $seoTagId                  = SeoTag::where('name', $moreArticles[$i]['kicker'])->first();
@@ -237,13 +238,13 @@ class GalleryController extends Controller
     {
         $kicker           = SeoTag::where('tag_id', $request->kicker_id)->first();
         
-        if (count($kicker) == 0)
+        if ($kicker->count() == 0 || $kicker == null)
             return redirect('/gallery');
 
         $kicker           = $kicker->name;
         $kickerContent    = ContentTagsAssigned::where('tag_id', $request->kicker_id)->get();
 
-        if (count($kickerContent) == 0)
+        if ($kickerContent->count() == 0 || $kickerContent == null)
             return redirect('404');
 
 
@@ -256,7 +257,7 @@ class GalleryController extends Controller
                            ->orderBy('content_id', 'desc')
                            ->first();
 
-        if (count($most) == 0)
+        if ($most->count() == 0 || $most == null)
             return redirect('404');
 
         //for Popular
@@ -270,7 +271,7 @@ class GalleryController extends Controller
                                       ->get();
 
 
-        if (count($popularArticles) < 5) {
+        if ($popularArticles->count() < 5) {
             $popularArticles = ContentList::select('title', 'homeTitle', 'content_id', 'site_type', 'image')
                                           ->where('status', 1)
                                           ->where('content_id', '!=', $most->content_id)
@@ -291,7 +292,7 @@ class GalleryController extends Controller
                                ->paginate(15);
 
         $i = 0;
-        while ($i < count($articles)) {
+        while ($i < $articles->count()) {
             $articles[$i]['kicker_id']   = "";
             if ($articles[$i]['site_type'] == 'ga') {
               $seoTagId                  = SeoTag::where('name', $articles[$i]['kicker'])->first();
@@ -304,7 +305,7 @@ class GalleryController extends Controller
 
 
         //if no data related with contentId then show "404 ERROR"
-        if (count($articles) == 0) {
+        if ($articles->count() == 0 || $articles == null) {
             return redirect('404');
         }
 

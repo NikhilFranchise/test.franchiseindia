@@ -23,6 +23,7 @@
                                           col-lg-6 col-xl-6">
                                 <div class="card-news-info">
                                     <div class="news-overlay">
+                                        
                                         <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][0]['title'], $articles['article'][0]['id']) }}"
                                             target="_blank">
                                             <img src="{{ \App\Http\Controllers\NewHomePageController::getImageUrl($articles['article'][0]['image_path']) }}"
