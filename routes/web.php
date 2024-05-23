@@ -112,6 +112,7 @@ Route::get('/get-brand-compare', [BrandCompareController::class, 'getSingleBrand
 Route::get('newsletter/unsubscribe/thanks', [MailerController::class, 'newsletterUnsub']);  //unsubscribe thanks msg
 Route::get('international', [InternationalController::class, 'getHomePage']); // International Page routes
 Route::get('newsletter/subscriptionForm',     [NewsLetterController::class, 'newsletterForm']);
+Route::get('premiumbrand',                   [HomepageController::class, 'premiumHome']);
 
 
 
