@@ -101,7 +101,8 @@
                                         ai.async = true;
                                         ai.src = v.location.protocol + o;
                                         d.head.appendChild(ai);
-                                    })(window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
+                                    })
+                                    (window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
                                 </script>';
                             } else {
                                 $counter = 0;
