@@ -1,11 +1,5 @@
 @extends('layout.master')
-@php
-    $brandCount = count($brandResults);
-@endphp
 
-@if($brandCount < 10)
-    @section('robot', 'noindex, nofollow')
-@endif
 
 
 @if($mc == 2)
