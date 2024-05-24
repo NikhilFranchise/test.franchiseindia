@@ -1,6 +1,5 @@
-
 @php
-use Illuminate\Support\Str;
+    use Illuminate\Support\Str;
 @endphp
 @php
     $catArr = Config('constants.CategoryArr');
@@ -195,10 +194,10 @@ use Illuminate\Support\Str;
                                                     name="loc" id="stateHeader" onchange="getcity(this.value)"
                                                     required="required">
                                                     <option value="" hidden>Select State</option>
-                                                    {{-- @foreach ($states as $index => $value)
+                                                    @foreach ($states as $index => $value)
 
-                                                    <option value="{{ $index }}" slug="{{strtolower(str_slug($value))}}" @if (isset($loc[0]) && $loc[0] == $index) selected @endif>{!! $value !!}</option>
-                                                @endforeach --}}
+                                                    <option value="{{ $index }}" slug="{{strtolower(Str::slug($value))}}" @if (isset($loc[0]) && $loc[0] == $index) selected @endif>{!! $value !!}</option>
+                                                @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -444,5 +443,5 @@ use Illuminate\Support\Str;
         $('.dropdown-toggle').click(function() {
             $('.searchoption').hide(400);
         });
-    }); 
+    });
 </script>
