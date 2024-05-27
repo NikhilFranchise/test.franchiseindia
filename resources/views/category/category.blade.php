@@ -1,4 +1,13 @@
 @extends('layout.master')
+@php
+    $brandCount = count($brandResults);
+@endphp
+
+@if($brandCount < 2)
+    @section('robot', 'noindex, nofollow')
+@endif
+
+
 @if($mc == 2)
     @section('seoTitle', 'Food and Beverage - Business Ideas and Franchise Opportunities')
 @elseif(!empty($seoTitle))

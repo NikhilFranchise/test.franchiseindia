@@ -314,9 +314,12 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'searchBusinessListing']);
 
-    Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListingnormalization']);
-    Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
+    // Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListingnormalization']);
+    // Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
+    Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
+
     Route::get('/lowcost', [BusinessListingController::class, 'searchBusinessListing'])
         ->defaults('lowcost', 'lowcost');
 
@@ -389,9 +392,14 @@ Route::group(['prefix' => 'book'], function () {
 
 });
 // amp routes 
+// 301 redirect route to remove 'amp' prefix
+Route::get('amp/{path}', function ($path) {
+    return redirect('/' . $path, 301);
+})->where('path', '.*');
+
 Route::group(['prefix' => 'amp'], function () {
-    Route::get('location/{city}', [BusinessListingController::class, 'listingLocation']);
-    Route::get('location', [BusinessListingController::class, 'listingLocation']);
+    Route::get('location/{city}', [BusinessListingController::class, 'listingLocation']);   //working
+    Route::get('location', [BusinessListingController::class, 'listingLocation']);          //working 
 
     //Hindi language amp pages routes
     Route::group(['prefix' => 'hi'], function () {
@@ -467,7 +475,7 @@ Route::group(['prefix' => 'amp'], function () {
         Route::get('{contentSite}/{title}.{id}', [AmpArticleController::class, 'getAmpHindiArticle']);
     });
 
-    //Category Page Routes
+    //Category Page Routes   working 
     Route::group(['prefix' => 'category'], function () {
         Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('search', [BusinessListingController::class, 'searchBusinessListing']);
@@ -477,7 +485,7 @@ Route::group(['prefix' => 'amp'], function () {
         });
     });
 
-    //Directory Page Routes
+    //Directory Page Routes      working
     Route::group(['prefix' => 'business-opportunities'], function () {
         Route::get('/', function () {
             return view('category/category');
@@ -519,7 +527,7 @@ Route::group(['prefix' => 'amp'], function () {
         Route::get('uttarakhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('himachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('jammu-and-kashmir.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-
+//Dikkat below 
         Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
@@ -532,7 +540,7 @@ Route::group(['prefix' => 'amp'], function () {
 
 
 
-    Route::get('brands/{profileName}', [BrandController::class, 'ampBrandDetails']);                // Eng AMP brand url
+    Route::get('brands/{profileName}', [BrandController::class, 'ampBrandDetails']);                // Eng AMP brand url  working 
     Route::get('{contentSite}/{title}.{id}', [AmpArticleController::class, 'ampCreate']);
 });
 
