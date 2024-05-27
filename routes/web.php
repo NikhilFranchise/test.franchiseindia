@@ -392,6 +392,11 @@ Route::group(['prefix' => 'book'], function () {
 
 });
 // amp routes 
+// 301 redirect route to remove 'amp' prefix
+Route::get('amp/{path}', function ($path) {
+    return redirect('/' . $path, 301);
+})->where('path', '.*');
+
 Route::group(['prefix' => 'amp'], function () {
     Route::get('location/{city}', [BusinessListingController::class, 'listingLocation']);   //working
     Route::get('location', [BusinessListingController::class, 'listingLocation']);          //working 
