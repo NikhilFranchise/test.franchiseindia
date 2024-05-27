@@ -106,7 +106,7 @@
                                                         <option value="{{ $index }}"
                                                             slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                             @if (isset($mc) && $index == $mc) selected @endif>
-                                                            {!! $value !!}</option>
+                                                            {{ $value }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -149,7 +149,8 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            <a href="javascript:void(0)" onclick="catform.reset();">Clear All</a>
+                                            <a href="javascript:void(0)" onclick="document.forms['catform'].reset();">Clear All</a>
+
                                         </span>
                                     </div>
                                 </div>
@@ -176,7 +177,7 @@
                                                         <option value="{{ $index }}"
                                                             slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                             @if (isset($mc) && $index == $mc) selected @endif>
-                                                            {!! $value !!}</option>
+                                                            {{ $value }}</option>
                                                     @endforeach
 
                                                 </select>
@@ -196,7 +197,7 @@
                                                     <option value="" hidden>Select State</option>
                                                     @foreach ($states as $index => $value)
 
-                                                    <option value="{{ $index }}" slug="{{strtolower(Str::slug($value))}}" @if (isset($loc[0]) && $loc[0] == $index) selected @endif>{!! $value !!}</option>
+                                                    <option value="{{ $index }}" slug="{{strtolower(Str::slug($value))}}" @if (isset($loc[0]) && $loc[0] == $index) selected @endif>{{ $value }}</option>
                                                 @endforeach
                                                 </select>
                                             </div>
@@ -250,7 +251,7 @@
                                                         <option value="{{ $index }}"
                                                             slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                             @if (isset($mc) && $index == $mc) selected @endif>
-                                                            {!! $value !!}</option>
+                                                            {{ $value }}</option>
                                                     @endforeach
 
                                                 </select>
@@ -273,7 +274,7 @@
                                                             slug="{{ Config('constants.InvestRange')[$index]['min'] }}"
                                                             @if (isset($minCost)) @if ($minCost == $index) selected @endif
                                                             @endif
-                                                            value="{{ $index }}">{!! $value !!}
+                                                            value="{{ $index }}">{{ $value }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -387,6 +388,7 @@
                 categoryID: value
             },
             success: function(data) {
+                alert(data);
                 $("#getSubCategoryDataHeader").html(data);
             }
         });
