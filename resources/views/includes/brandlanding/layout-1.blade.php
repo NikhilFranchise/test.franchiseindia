@@ -132,8 +132,8 @@
                                     if ($maxValue <= 9999999 && $maxValue > 100000) {
                                         $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
                                     }
-                                    if ($maxValue > 9999999) {
-                                        $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
+                                    if (is_numeric($maxValue) > 9999999) {
+                                        is_numeric($maxValue) = substr($maxValue / 10000000, 0, 5) . ' Cr';
                                     }
                                 @endphp
                                 <li>
