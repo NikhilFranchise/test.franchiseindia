@@ -321,7 +321,7 @@
     </div>
 </div>
 
-{{-- <script type="text/javascript">
+<script type="text/javascript">
     /*<![CDATA[*/
     if (screen.width < 767) {
         $(document).ready(function() {
@@ -367,15 +367,16 @@
         $('#registeractiveopen').addClass("active");
     });
 
-    function selectMax(selectmaxheaderval) {
+    function selectMax1(selectmaxheaderval) {
+        // console.log(selectmaxheaderval);
         let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
-        let maxAmount = $('#maxAmount');
+        let maxAmount = $('#maxAmount1');
         let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
         maxAmount.html("");
         selectmaxheaderval = parseInt(selectmaxheaderval);
         $.each(amountConfigArr, function(key, value) {
             if (key > selectmaxheaderval)
-                $('#maxAmount').append($("<option></option>").attr({
+                $('#maxAmount1').append($("<option></option>").attr({
                     "value": key,
                     "slug": getSlugAmount[key]['min']
                 }).text(value));
@@ -406,7 +407,7 @@
                 subcategoryID: value
             },
             success: function(data) {
-                $("#getSubCatCategoryDataHeader").html(data);
+                $("#getSubCatCategoryDataHeader2").html(data);
             }
         });
     }
@@ -419,7 +420,7 @@
                 state: value
             },
             success: function(data) {
-                $("#headercity").html(data);
+                $("#headercity2").html(data);
             }
         });
     }
@@ -449,5 +450,16 @@
         $('.dropdown-toggle').click(function() {
             $('.searchoption').hide(400);
         });
-    }); /*]]>*/
-</script> --}}
+    });
+    function customResetForm() {
+    let form = document.getElementById('invform');
+    
+    // Reset the form
+    form.reset();
+    
+    // Reset maxAmount1 select element to its default state
+    let maxAmount1 = document.getElementById('maxAmount1');
+    maxAmount1.innerHTML = '<option value="" hidden>Select Max Investment</option>';
+}
+    /*]]>*/
+</script>
