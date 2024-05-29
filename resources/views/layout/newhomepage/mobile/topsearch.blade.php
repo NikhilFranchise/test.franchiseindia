@@ -1,7 +1,5 @@
 @php
-    use Illuminate\Support\Str;
-@endphp
-@php
+    use Illuminate\support\Str;
     $catArr = Config('constants.CategoryArr');
     asort($catArr);
     $states = Config('location.stateArr');
@@ -83,14 +81,14 @@
                     </h2>
                 </div>
                 <ul class="nav nav-tabs custom-nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#categories">Categories</a></li>
-                    <li><a data-toggle="tab" href="#location">Location</a></li>
-                    <li><a data-toggle="tab" href="#investment">Investment</a></li>
+                    <li class="active"><a data-toggle="tab" href="#categories2">Categories</a></li>
+                    <li><a data-toggle="tab" href="#location2">Location</a></li>
+                    <li><a data-toggle="tab" href="#investment2">Investment</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div id="categories" class="tab-pane tab-pane-main fade in active">
-                        <form name="catform"class="form-horizontal" method="get"
+                    <div id="categories2" class="tab-pane tab-pane-main fade in active">
+                        <form name="catform" id="catform" class="form-horizontal" method="get"
                             action="{{ url('category/searchby') }}" onsubmit="return submitCategory()">
                             <div class="container-fluid">
                                 <div class="row">
@@ -106,7 +104,7 @@
                                                         <option value="{{ $index }}"
                                                             slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                             @if (isset($mc) && $index == $mc) selected @endif>
-                                                            {{ $value }}</option>
+                                                            {!! $value !!}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -117,12 +115,12 @@
                                             <div
                                                 class="form-group
                                        form-group-search-section-li">
-                                                <select name="sc" id="getSubCategoryDataHeader"
+                                                <select name="sc" id="getSubCategoryDataHeader2"
                                                     onchange="getSubCatCategoryHeader(this.value)"
                                                     class="form-control
                                           form-control-search-main-custom"
                                                     id="exampleFormControlSelect1">
-                                                    <option value="" hidden>Select Sector</option>
+                                                    <option value="0">Select Sector</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -135,7 +133,7 @@
                                                 <select
                                                     class="form-control
                                           form-control-search-main-custom"
-                                                    name="ssc" id="getSubCatCategoryDataHeader">
+                                                    name="ssc" id="getSubCatCategoryDataHeader2">
                                                     <option value="" hidden>Select Service / Product</option>
                                                 </select>
                                             </div>
@@ -149,16 +147,17 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            <a href="javascript:void(0)" onclick="document.forms['catform'].reset();">Clear All</a>
-
+                                            {{-- <a href="javascript:void(0)" onclick="catform.reset();">Clear All</a> --}}
+                                            <a href="javascript:void(0)"
+                                                onclick="document.getElementById('catform').reset();">Clear All</a>
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div id="location" class="tab-pane tab-pane-main fade">
-                        <form name="locform" class="form-horizontal" method="get"
+                    <div id="location2" class="tab-pane tab-pane-main fade">
+                        <form name="locform" id="locform" class="form-horizontal" method="get"
                             action="{{ url('category/searchby') }}" onsubmit="return submitLocation()">
                             <input type="hidden" name="locTab" value="1">
                             <div class="container-fluid">
@@ -177,7 +176,7 @@
                                                         <option value="{{ $index }}"
                                                             slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                             @if (isset($mc) && $index == $mc) selected @endif>
-                                                            {{ $value }}</option>
+                                                            {!! $value !!}</option>
                                                     @endforeach
 
                                                 </select>
@@ -196,9 +195,11 @@
                                                     required="required">
                                                     <option value="" hidden>Select State</option>
                                                     @foreach ($states as $index => $value)
-
-                                                    <option value="{{ $index }}" slug="{{strtolower(Str::slug($value))}}" @if (isset($loc[0]) && $loc[0] == $index) selected @endif>{{ $value }}</option>
-                                                @endforeach
+                                                        <option value="{{ $index }}"
+                                                            slug="{{ strtolower(Str::slug($value)) }}"
+                                                            @if (isset($loc[0]) && $loc[0] == $index) selected @endif>
+                                                            {{ $value }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -211,7 +212,7 @@
                                                 <select
                                                     class="form-control
                                           form-control-search-main-custom"
-                                                    id="headercity" name="city">
+                                                    id="headercity2" name="city">
                                                     <option value="" hidden>Select a City</option>
                                                 </select>
                                             </div>
@@ -225,15 +226,16 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            <a href="javascript:void(0)" onclick="locform.reset();">Clear All</a>
+                                            <a href="javascript:void(0)"
+                                                onclick="document.getElementById('locform').reset();">Clear All</a>
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div id="investment" class="tab-pane tab-pane-main fade">
-                        <form name="invform" class="form-horizontal" method="get"
+                    <div id="investment2" class="tab-pane tab-pane-main fade">
+                        <form name="invform" id="invform" class="form-horizontal" method="get"
                             action="{{ url('category/searchby') }}" onsubmit="return submitInvestment()">
                             <input type="hidden" name="invTab" value="1">
                             <div class="container-fluid">
@@ -251,7 +253,7 @@
                                                         <option value="{{ $index }}"
                                                             slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                             @if (isset($mc) && $index == $mc) selected @endif>
-                                                            {{ $value }}</option>
+                                                            {!! $value !!}</option>
                                                     @endforeach
 
                                                 </select>
@@ -267,14 +269,14 @@
                                                     class="form-control
                                           form-control-search-main-custom"
                                                     id="minAmount" required="required"
-                                                    onchange="selectMax(this.value)">
+                                                    onchange="selectMax1(this.value)">
                                                     <option value="" hidden>Select Min Investment</option>
                                                     @foreach (Config('constants.investRangeInWordsSingle') as $index => $value)
                                                         <option
                                                             slug="{{ Config('constants.InvestRange')[$index]['min'] }}"
                                                             @if (isset($minCost)) @if ($minCost == $index) selected @endif
                                                             @endif
-                                                            value="{{ $index }}">{{ $value }}
+                                                            value="{{ $index }}">{!! $value !!}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -289,8 +291,8 @@
                                                 <select name="max_cost"
                                                     class="form-control
                                           form-control-search-main-custom"
-                                                    id="maxAmount">
-                                                    <option value="" hidden> Select Max Investment </option>
+                                                    id="maxAmount1">
+                                                    <option value="0" hidden> Select Max Investment </option>
 
                                                 </select>
 
@@ -305,7 +307,7 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            <a href="javascript:void(0)" onclick="invform.reset();">Clear All</a>
+                                            <a href="javascript:void(0)" onclick="customResetForm()">Clear All</a>
                                         </span>
                                     </div>
                                 </div>
@@ -318,7 +320,9 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
+
+{{-- <script type="text/javascript">
+    /*<![CDATA[*/
     if (screen.width < 767) {
         $(document).ready(function() {
             setTimeout(function() {
@@ -388,8 +392,8 @@
                 categoryID: value
             },
             success: function(data) {
-                alert(data);
-                $("#getSubCategoryDataHeader").html(data);
+               console.log(data);
+                $("#getSubCategoryDataHeader2").html(data);
             }
         });
     }
@@ -445,5 +449,5 @@
         $('.dropdown-toggle').click(function() {
             $('.searchoption').hide(400);
         });
-    });
-</script>
+    }); /*]]>*/
+</script> --}}

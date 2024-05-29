@@ -266,7 +266,6 @@
 </section>
 
 <script type="text/javascript">
-  
     if (screen.width < 767) {
         $(document).ready(function() {
             setTimeout(function() {
@@ -328,7 +327,11 @@
             maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
     }
 
+    
+
+
     function getSubCategoryHeader(value) {
+        // alert(value);
         $.ajax({
             type: 'GET',
             url: '{{ url('getsubcategory') }}',
@@ -336,7 +339,10 @@
                 categoryID: value
             },
             success: function(data) {
+                // alert(data);
+
                 $("#getSubCategoryDataHeader").html(data);
+                $("#getSubCategoryDataHeader2").html(data);
             }
         });
     }
@@ -350,11 +356,13 @@
             },
             success: function(data) {
                 $("#getSubCatCategoryDataHeader").html(data);
+                $("#getSubCatCategoryDataHeader2").html(data);
             }
         });
     }
 
     function getcity(value) {
+        // alert(value);
         $.ajax({
             type: 'GET',
             url: '{{ url('getcitylist') }}',
@@ -362,17 +370,14 @@
                 state: value
             },
             success: function(data) {
+                // alert(data);
                 $("#headercity").html(data);
+                $("#headercity2").html(data);
             }
         });
     }
 
-    {{-- function submitCategory(){var subSubCat=$('#getSubCatCategoryDataHeader').val();var subCat=$('#getSubCategoryDataHeader').val();var mainCat=$('#getMainCategoryDataHeader').val();var url='{{url('business-opportunities')}}/';if(subSubCat){url=url+$('option:selected',$('#getSubCatCategoryDataHeader')).attr('slug')+'.ssc'+subSubCat+"?catTab=1";}else if(subCat){url=url+$('option:selected',$('#getSubCategoryDataHeader')).attr('slug')+'.sc'+subCat+"?catTab=1";}else if(mainCat&&typeof $('option:selected',$('#getMainCategoryDataHeader')).attr('slug')!=="undefined"){url=url+$('option:selected',$('#getMainCategoryDataHeader')).attr('slug')+'.m'+mainCat+"?catTab=1";}else{url=url+'all/all';} --}}
-    {{-- window.open(url, '_blank');return false;} --}}
-    {{-- function submitLocation(){var mainCat=$('#getMainCategoryDataHeaderLoc').val();var headerCity=$('#headercity').val();var stateHeader=$('#stateHeader').val();var mainCatText=$('option:selected',$('#getMainCategoryDataHeaderLoc')).attr('slug');var headerCityText=$('option:selected',$('#headercity')).attr('slug');var stateHeaderText=$('option:selected',$('#stateHeader')).attr('slug');var url='{{('business-opportunities')}}/';if(mainCat!=''&&stateHeader!=''&&headerCity!=''){url=url+mainCatText+"-in-"+stateHeaderText+"/mc-"+mainCat+"/loc-"+stateHeader+"/ct-"+headerCityText;}else if(mainCat!=''&&stateHeader!=''){url=url+mainCatText+"-in-"+stateHeaderText+"/mc-"+mainCat+"/loc-"+stateHeader;}else if(stateHeader!=''&&headerCity!=''){url=url+"business-in-"+stateHeaderText+"/loc-"+stateHeader+"/ct-"+headerCityText;}else if(stateHeader!=''){url=url+stateHeaderText+".LOC"+stateHeader;}else{url=url+mainCat+".m"+mainCatText;} --}}
-    {{-- window.open(url + "?locTab=1", '_blank');return false;} --}}
-    {{-- function submitInvestment(){var mainCat=$('#getMainCategoryDataHeaderInv').val();var minAmount=$('#minAmount').val();var maxAmount=$('#maxAmount').val();var mainCatText=$('option:selected',$('#getMainCategoryDataHeaderInv')).attr('slug');var minAmountText=$('option:selected',$('#minAmount')).attr('slug');var maxAmountText=$('option:selected',$('#maxAmount')).attr('slug');var url='https://www.franchiseindia.com/business-opportunities/';if(mainCat!=''&&minAmount!=''&&maxAmount!=''){url=url+mainCatText+"-in-india/mc-"+mainCat+"/range-"+minAmountText+"-"+maxAmountText;}else if(mainCat!=''&&minAmount!=''){url=url+mainCatText+"-in-india/mc-"+mainCat+"/range-"+minAmountText;}else if(minAmount!=''&&maxAmount!=''){url=url+"business/range-"+minAmountText+"-"+maxAmountText;} --}}
-    {{-- window.open(url + "?invTab=1", '_blank');return false;} --}}
+
 
     function getSubCategoryHeader1(value) {
         $.ajax({
@@ -412,12 +417,6 @@
             }
         });
     }
-    {{-- function submitCategory1(){var subSubCat=$('#getSubCatCategoryDataHeader1').val();var subCat=$('#getSubCategoryDataHeader1').val();var mainCat=$('#getMainCategoryDataHeader1').val();var url='{{url('business-opportunities')}}/';if(subSubCat){url=url+$('option:selected',$('#getSubCatCategoryDataHeader1')).attr('slug')+'.ssc'+subSubCat+"?catTab=1";}else if(subCat){url=url+$('option:selected',$('#getSubCategoryDataHeader1')).attr('slug')+'.sc'+subCat+"?catTab=1";}else if(mainCat&&typeof $('option:selected',$('#getMainCategoryDataHeader1')).attr('slug')!=="undefined"){url=url+$('option:selected',$('#getMainCategoryDataHeader1')).attr('slug')+'.m'+mainCat+"?catTab=1";}else{url=url+'all/all';} --}}
-    {{-- window.open(url, '_blank');return false;} --}}
-    {{-- function submitLocation1(){var mainCat=$('#getMainCategoryDataHeaderLoc1').val();var headerCity=$('#headercity1').val();var stateHeader=$('#stateHeader1').val();var mainCatText=$('option:selected',$('#getMainCategoryDataHeaderLoc1')).attr('slug');var headerCityText=$('option:selected',$('#headercity1')).attr('slug');var stateHeaderText=$('option:selected',$('#stateHeader1')).attr('slug');var url='{{('business-opportunities')}}/';if(mainCat!=''&&stateHeader!=''&&headerCity!=''){url=url+mainCatText+"-in-"+stateHeaderText+"/mc-"+mainCat+"/loc-"+stateHeader+"/ct-"+headerCityText;}else if(mainCat!=''&&stateHeader!=''){url=url+mainCatText+"-in-"+stateHeaderText+"/mc-"+mainCat+"/loc-"+stateHeader;}else if(stateHeader!=''&&headerCity!=''){url=url+"business-in-"+stateHeaderText+"/loc-"+stateHeader+"/ct-"+headerCityText;}else if(stateHeader!=''){url=url+stateHeaderText+".LOC"+stateHeader;}else{url=url+mainCat+".m"+mainCatText;} --}}
-    {{-- window.open(url + "?locTab=1", '_blank');return false;} --}}
-    {{-- function submitInvestment1(){var mainCat=$('#getMainCategoryDataHeaderInv1').val();var minAmount=$('#minAmount1').val();var maxAmount=$('#maxAmount1').val();var mainCatText=$('option:selected',$('#getMainCategoryDataHeaderInv1')).attr('slug');var minAmountText=$('option:selected',$('#minAmount1')).attr('slug');var maxAmountText=$('option:selected',$('#maxAmount1')).attr('slug');var url='https://www.franchiseindia.com/business-opportunities/';if(mainCat!=''&&minAmount!=''&&maxAmount!=''){url=url+mainCatText+"-in-india/mc-"+mainCat+"/range-"+minAmountText+"-"+maxAmountText;}else if(mainCat!=''&&minAmount!=''){url=url+mainCatText+"-in-india/mc-"+mainCat+"/range-"+minAmountText;}else if(minAmount!=''&&maxAmount!=''){url=url+"business/range-"+minAmountText+"-"+maxAmountText;} --}}
-    {{-- window.open(url + "?invTab=1", '_blank');return false;} --}}
 
 
     $(document).ready(function() {
@@ -446,4 +445,15 @@
             $('.searchoption').hide(400);
         });
     });
+
+    function customResetForm() {
+    let form = document.getElementById('invform');
+    
+    // Reset the form
+    form.reset();
+    
+    // Reset maxAmount1 select element to its default state
+    let maxAmount1 = document.getElementById('maxAmount1');
+    maxAmount1.innerHTML = '<option value="" hidden>Select Max Investment</option>';
+}
 </script>
