@@ -22,10 +22,10 @@ class BrandController extends Controller
     public function brandDetails(Request $request)
     {
         // Initialize the variables
-        // dd($request);
         $ratings = 0;
         $likesCnt = 0;
         $brandUrlParam = $request->profileName;         // Fetch the request parameter        
+        dd($brandUrlParam);
         $brandParamsArr = explode('.', $brandUrlParam);  // Explode it by separator & fetch details from DB
         $images = [];
         $view = "brandlanding";
