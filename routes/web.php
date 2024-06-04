@@ -116,9 +116,11 @@ Route::get('newsletter/subscriptionForm', [NewsLetterController::class, 'newslet
 Route::get('premiumbrand', [HomepageController::class, 'premiumHome']);
 Route::get('dealers-search/{search}',        [DealersAndDistributorController::class, 'searchForDealerHomePage']);
 Route::get('dealers-india/search/{search}',  [DealersAndDistributorController::class, 'searchDealer']);
+Route::get('mailer',                         [MailerController::class,'feedbackMailer']);
+Route::get('mailermessage',                  [MailerController::class,'thanksMessage']);
+Route::get('cy_mails/unsubscribeme/',        [MailerController::class,'unsub']);
 
-
-// post routes
+// post and get routes
 Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);
 Route::post('subscribenews', [NewsLetterController::class, 'subscriptionFormsubmit']);
 Route::post('property-loan-submit', [StaticPageController::class, 'postPropertyLoanForm']);
