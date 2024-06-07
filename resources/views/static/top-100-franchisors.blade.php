@@ -65,7 +65,7 @@ ul.topp li{color: #333333;font-size: 15px;margin-bottom: 5px;position: relative;
 }
 @media screen and (max-width:767px){
 .moblink{display: none;}
-.yeartab{margin-top:-60px;}
+.top-hundred a{font-size:15px;}
 .top-hundred h2{font-size:20px;}
 a.desklink{display: none;}
 .top-table td:nth-child(2) img{margin-right: 10px; width: 47%;float: left;}
