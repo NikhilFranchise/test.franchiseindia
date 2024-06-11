@@ -728,6 +728,7 @@ class FranchisorController extends Controller
 
     public function advertisewithuspayment(Request $request)
     {
+        $franchisorId = $request->franchisorId;
 
         return view('franchisor.register.advertisewithuspayment', compact('franchisorId'));
     }
