@@ -429,7 +429,7 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListing']);
 
     // Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListingnormalization']);
     // Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
