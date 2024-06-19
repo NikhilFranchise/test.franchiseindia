@@ -35,7 +35,7 @@ class="selected"
             $compLogo       = 'no-photo.jpg';
             $invMemberType  = Auth::user()->membership_type;
         @endphp
-        @if ($expIntFranData != null && $expIntFranData->count() > 0)
+        @if ($expIntFranData != null)
                 @foreach ($expIntBrands as $expIntBrand)
                     @php
                         $key = array_search($expIntBrand->franchisor_id, $expFranIdArr);
@@ -84,7 +84,7 @@ class="selected"
                      $franIdArr      = array_column($viewedFranData, 'franchisor_id');
                    }
                 @endphp
-                @if($viewedFranData && $viewedFranData->count() > 0)
+                @if($viewedFranData != null)
                 @foreach($viewedBrands as $viewedBrand)
                     @php
                         $key = array_search($viewedBrand->franchisor_id, $franIdArr);

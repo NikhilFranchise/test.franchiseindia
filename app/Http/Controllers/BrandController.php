@@ -13,6 +13,7 @@ use App\Models\FranchisorSliderTenure;
 use App\Models\FranchisorLike;
 use App\Models\OiBrands;
 use App\Models\FranchisorBusinessDetail;
+use App\Models\InvestorDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
@@ -34,7 +35,7 @@ class BrandController extends Controller
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
         $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
-
+        // dd($franDetails->userActivity);
         //OI Redirection Start
         if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
             $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
@@ -164,8 +165,13 @@ class BrandController extends Controller
         if (request()->segment(1) == 'hi')
             $view = "brandlanding-hindi";
 
+            $inv_credits =  InvestorDetails::select('investor_details.credit_limit', 'user_accounts.reg_source')
+            ->join('user_accounts', 'investor_details.investor_id', '=', 'user_accounts.profile_str')
+            ->where('investor_details.investor_id', request()->user()->profile_str)->where('user_accounts.reg_source','DelhiExpoPaid')
+            ->first();
+            // dd($inv_credits);
         // return the data to blade view
-        return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData'));
+        return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData','inv_credits'));
     }
 
     /**
@@ -414,6 +420,7 @@ class BrandController extends Controller
 
             // Check whether logged in user already expressed interest
             $data = $franDetails->userActivity;
+
             if (!empty($data))
                 $data = $data->where('investor_id', Auth::user()->profile_str)
                     ->where('franchisor_id', $franDetails->franchisor_id)

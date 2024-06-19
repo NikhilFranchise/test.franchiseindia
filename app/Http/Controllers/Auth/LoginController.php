@@ -334,8 +334,8 @@ class LoginController extends Controller
         ));
 
         $userData = UserAccount::query()->select('profile_status', 'membership_type', 'profile_type', 'profile_str')->where('email', $request->email)->first();
-
-        if ($userData->count() > 0) {
+        // dd($request);
+        if ($userData != null) {
 
             if ($userData->profile_status == 2) {
                 session()->put('loginFailed', 'Dear User, Your Email verification is pending, kindly check your mail inbox for verification mail');

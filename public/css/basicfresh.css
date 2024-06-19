@@ -513,7 +513,7 @@ ul.fromstaticlist li span{color:#f22406}
 .formsection .form-horizontal .blinkline20{height:20px}
 .formsection .checkmargin{margin-top:3px}
 .formsection label{color:#666;font-weight:400}
-.formsection .input-group-addon{padding:9px 12px;background:#fff;-webkit-box-shadow:inset 3px 5px 5px 0 rgba(0,0,0,.05);-moz-box-shadow:inset 3px 5px 5px 0 rgba(0,0,0,.05);box-shadow:inset 3px 5px 5px 0 rgba(0,0,0,.05)}
+.formsection .input-group-addon{padding:8px 12px;background:#fff;-webkit-box-shadow:inset 3px 5px 5px 0 rgba(0,0,0,.05);-moz-box-shadow:inset 3px 5px 5px 0 rgba(0,0,0,.05);box-shadow:inset 3px 5px 5px 0 rgba(0,0,0,.05)}
 .formsection .form-group label span.mandatory:after,.formsection .form-group label.mandatory:after{content:"\f005";top:-5px;margin-right:2px;padding-left:5px;position:relative}
 .formsection .form-group label span.mandatory:after{color:#f22406;font:normal normal normal 8px/1 FontAwesome}
 .formsection .form-group label span.note{font-size:13px;color:#999}

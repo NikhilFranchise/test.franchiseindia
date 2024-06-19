@@ -2,8 +2,9 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form method="post" action="{{ Config('constants.MainDomain')}}/getfreeinfo">
+                @csrf
                 <input type="hidden" name="frandetailsid" id="freeinfovalue" value="">
-                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                {{-- <input type="hidden" name="_token" value="{{csrf_token()}}"> --}}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">You have requested information For Brands</h4>
