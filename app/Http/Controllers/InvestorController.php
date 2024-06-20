@@ -485,9 +485,9 @@ class InvestorController extends Controller
             'companyName' => $name,
             'code' => $code,
         ];
-
+        dd($email);
         //Mail sending to investor for confirmation
-        Mail::getFacadeRoot()->to($email)->send(new confirmed($data));
+        Mail::to($email)->send(new confirmed($data));
 
         if (!empty($request->input('flag'))) {
 

@@ -460,7 +460,7 @@ class CommonController extends Controller
     public function verifyEmail()
     {
         $profileData = UserAccount::query()->where('email_verification_code', request()->id)->first();
-        dd(request()->id);
+        // dd(request()->id);
         if ($profileData === null || $profileData->count() === 0) {
             return view('static.email-reject');
         }

@@ -43,6 +43,7 @@ use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\DealersAndDistributorController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
 
 
@@ -123,7 +124,7 @@ Route::get('mailermessage',                  [MailerController::class, 'thanksMe
 Route::get('cy_mails/unsubscribeme/',        [MailerController::class, 'unsub']);
 
 // post and get routes
-Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);
+// Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);
 Route::post('subscribenews', [NewsLetterController::class, 'subscriptionFormsubmit']);
 Route::post('property-loan-submit', [StaticPageController::class, 'postPropertyLoanForm']);
 Route::post('contact-submit', [ContactUsController::class, 'contact']);
@@ -677,7 +678,7 @@ Route::group(['prefix' => 'education'], function () {
     Route::get('newsletter/newsub', [NewsLetterController::class, 'newsletterSub']);
     Route::get('{content_id}', [ArticleController::class, 'commonInner']);
 
-    Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);     // Newsletter signup
+    // Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);     // Newsletter signup
 });
 
 

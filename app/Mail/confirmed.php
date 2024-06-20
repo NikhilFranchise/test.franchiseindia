@@ -32,6 +32,7 @@ class confirmed extends Mailable
      */
     public function build()
     {
+        // dd($this->code);
         return $this->from('no-reply@franchiseindia.com')
                     //->bcc('techsupport@franchiseindia.com')
                     ->subject('Thankyou for registration | Franchise India')
