@@ -165,16 +165,18 @@ class BrandController extends Controller
         if (request()->segment(1) == 'hi') {
             $view = "brandlanding-hindi";
         }
+        if (Auth::check()) {
+            $inv_credits =  InvestorDetails::select('investor_details.credit_limit', 'user_accounts.reg_source')
+                ->join('user_accounts', 'investor_details.investor_id', '=', 'user_accounts.profile_str')
+                ->where('investor_details.investor_id', request()->user()->profile_str)->where('user_accounts.reg_source', 'DelhiExpoPaid')
+                ->first();
 
-        // $inv_credits =  InvestorDetails::select('investor_details.credit_limit', 'user_accounts.reg_source')
-        //     ->join('user_accounts', 'investor_details.investor_id', '=', 'user_accounts.profile_str')
-        //     ->where('investor_details.investor_id', request()->user()->profile_str)->where('user_accounts.reg_source', 'DelhiExpoPaid')
-        //     ->first();
-
-        // return the data to blade view
-        // return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits'));
-        
-        return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData'));
+            // return the investor data to blade view 
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits'));
+        } else {
+            // return the data to blade view
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData'));
+        }
     }
 
     /**
