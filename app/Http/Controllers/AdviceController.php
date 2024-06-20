@@ -22,7 +22,7 @@ class AdviceController extends Controller
      */
     public function freeadvice(Request $request)
     {
-        // dd($request);
+        
         $request->validate([
             'email' => 'required|email',
             'name' => 'required|min:2',
@@ -48,8 +48,8 @@ class AdviceController extends Controller
             $state = ucfirst(strtolower($pincodeDetails->state));
         }
         // dd($name);
-        // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
-        $mailTo = ($user != 'franchisor') ? "pganesh@franchiseindia.net" : "pganesh@franchiseindia.net";
+        $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
+        // $mailTo = ($user != 'franchisor') ? "pganesh@franchiseindia.net" : "pganesh@franchiseindia.net";
 
         $users = $table::create([
             'name' => $name,
