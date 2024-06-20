@@ -18,12 +18,16 @@
 @section('hindiUrl', $hindiUrl)
 @section('englishUrl', $engUrl)
 
-@section('hindibrandUrls')
+{{-- @section('hindibrandUrls')
     <link href="{{ str_replace('/hi/', '/amp/hi/', $hindiUrl) }}" rel="amphtml">
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
+@endsection --}}
+@section('hindibrandUrls')
+    <link href="{{ str_replace('/hi/',  $hindiUrl) }}" >
+    <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
+    <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
 @endsection
-
 @section('content')
 
     @php

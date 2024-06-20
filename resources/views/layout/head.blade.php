@@ -105,9 +105,9 @@
         }
     }
 @endphp
-@if($ampFlag == 1)
+{{-- @if($ampFlag == 1)
     <link href="{{$ampUrl}}" rel="amphtml">
-@endif
+@endif --}}
 {{-- <link rel="preload" href="{{ url('js/jquery-3.1.1.min.js') }}" as="script"> --}}
 <!-- Scrollbar Custom CSS -->
 <link rel="stylesheet" href="{{url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css')}}" >

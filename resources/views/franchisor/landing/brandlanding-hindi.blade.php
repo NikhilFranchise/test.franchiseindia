@@ -10,8 +10,13 @@
 $hindiUrl = Config('constants.MainDomain').'/hi/brands/'.$franDetails->profile_name.$franDetails->fran_detail_id;
 $engUrl   = Config('constants.MainDomain').'/brands/'.$franDetails->profile_name.$franDetails->fran_detail_id;
 @endphp
-@section('hindibrandUrls')
+{{-- @section('hindibrandUrls')
     <link rel="amphtml"   href="{{ Config('constants.MainDomain') }}/amp/hi/brands/{{ $franDetails->profile_name }}.{{ $franDetails->fran_detail_id }}">
+    <link rel="alternate" href="{{ Config('constants.MainDomain') }}/brands/{{ $franDetails->profile_name }}.{{ $franDetails->fran_detail_id }}" hreflang="en-IN" />
+    <link rel="alternate" href="{{ Config('constants.MainDomain') }}/hi/brands/{{ $franDetails->profile_name }}.{{ $franDetails->fran_detail_id }}" hreflang="hi-IN" />
+@endsection --}}
+@section('hindibrandUrls')
+    {{-- <link rel="amphtml"   href="{{ Config('constants.MainDomain') }}/amp/hi/brands/{{ $franDetails->profile_name }}.{{ $franDetails->fran_detail_id }}"> --}}
     <link rel="alternate" href="{{ Config('constants.MainDomain') }}/brands/{{ $franDetails->profile_name }}.{{ $franDetails->fran_detail_id }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ Config('constants.MainDomain') }}/hi/brands/{{ $franDetails->profile_name }}.{{ $franDetails->fran_detail_id }}" hreflang="hi-IN" />
 @endsection

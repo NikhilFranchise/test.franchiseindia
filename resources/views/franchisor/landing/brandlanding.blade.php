@@ -17,8 +17,8 @@
         Config('constants.MainDomain') . '/brands/' . $franDetails->profile_name . '.' . $franDetails->fran_detail_id;
 @endphp
 @section('hindibrandUrls')
-    <link rel="amphtml"
-        href="{{ Config('constants.MainDomain') }}/amp/brands/{{ $franDetails->profile_name }}.{{ $franDetails->fran_detail_id }}">
+    {{-- <link rel="amphtml"
+        href="{{ Config('constants.MainDomain') }}/amp/brands/{{ $franDetails->profile_name }}.{{ $franDetails->fran_detail_id }}"> --}}
     @if ($franDetails->is_hindi == 1)
         <link rel="alternate" hreflang="en-IN" href="{{ $engUrl }}" />
         <link rel="alternate" hreflang="hi-IN" href="{{ $hindiUrl }}" />

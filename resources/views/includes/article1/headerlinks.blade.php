@@ -95,9 +95,9 @@ $title = str_replace("- Franchise India",$title1,$seoTitle);
         }
     }
 @endphp
-@if($ampFlag == 1)
+{{-- @if($ampFlag == 1)
     <link href="{{$ampUrl}}" rel="amphtml">
-@endif
+@endif --}}
 <!--START NEW ARTICLE HYPERLINKS  -->
 <!-- Favicons -->
 {{--<link href="{{asset('assets/img/favicon.png')}}" rel="icon">--}}

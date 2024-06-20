@@ -3,8 +3,11 @@
 @section('seoDesc',  ucwords($kicker->name).' Articles -  ')
 @section('seoKeywords', $kicker->name.' latest articles, information about '.$kicker->name)
 @section('canonicalUrl', Config('constants.MainDomain').'/hi/content/'.$kicker->name.'/'.$kicker->tag_id)
-@section('hindibrandUrls')
+{{-- @section('hindibrandUrls')
     <link href="{{ str_replace('/hi/', '/amp/hi/', Config('constants.MainDomain').'/hi/content/'.$kicker->name.'/'.$kicker->tag_id) }}" rel="amphtml">
+@endsection --}}
+@section('hindibrandUrls')
+    <link href="{{ str_replace('/hi/',  Config('constants.MainDomain').'/hi/content/'.$kicker->name.'/'.$kicker->tag_id) }}" >
 @endsection
 @section('content')
 
