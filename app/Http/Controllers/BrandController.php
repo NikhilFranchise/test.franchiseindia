@@ -164,7 +164,7 @@ class BrandController extends Controller
 
         if (request()->segment(1) == 'hi')
             $view = "brandlanding-hindi";
-
+            // dd(request()->user());
             $inv_credits =  InvestorDetails::select('investor_details.credit_limit', 'user_accounts.reg_source')
             ->join('user_accounts', 'investor_details.investor_id', '=', 'user_accounts.profile_str')
             ->where('investor_details.investor_id', request()->user()->profile_str)->where('user_accounts.reg_source','DelhiExpoPaid')
