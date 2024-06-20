@@ -194,6 +194,12 @@ public function listingLocation()
      */
     public function searchBusinessListing(Request $request)
     {
+        $searchTerm = $request->route('searchTerm');
+        $categoryIds = $request->route('categoryIds');
+        $locationIds = $request->route('locationIds');
+    
+        // Use dd() to inspect the parameters
+        // dd($searchTerm, $categoryIds, $locationIds);
         // dd($request->getRequestUri());
         $requestUri = $request->getRequestUri();
         $segments = explode('/', $requestUri);        
