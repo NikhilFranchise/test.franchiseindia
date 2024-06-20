@@ -97,6 +97,7 @@ Route::get('validate-email', [CommonController::class, 'emailValidation']);
 Route::get('thanks-advice-form', function () {
     return view('thanks.advice-form');
 });
+
 Route::get('property-loan', [StaticPageController::class, 'getPropertyLoanForm']);
 Route::get('getpincode', [CommonController::class, 'getPincodeDetails']);
 Route::get('get-city-list-landing-page', [CommonController::class, 'getCityListLandingPage']);
@@ -117,9 +118,9 @@ Route::get('newsletter/subscriptionForm', [NewsLetterController::class, 'newslet
 Route::get('premiumbrand', [HomepageController::class, 'premiumHome']);
 Route::get('dealers-search/{search}',        [DealersAndDistributorController::class, 'searchForDealerHomePage']);
 Route::get('dealers-india/search/{search}',  [DealersAndDistributorController::class, 'searchDealer']);
-Route::get('mailer',                         [MailerController::class,'feedbackMailer']);
-Route::get('mailermessage',                  [MailerController::class,'thanksMessage']);
-Route::get('cy_mails/unsubscribeme/',        [MailerController::class,'unsub']);
+Route::get('mailer',                         [MailerController::class, 'feedbackMailer']);
+Route::get('mailermessage',                  [MailerController::class, 'thanksMessage']);
+Route::get('cy_mails/unsubscribeme/',        [MailerController::class, 'unsub']);
 
 // post and get routes
 Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);
@@ -149,7 +150,8 @@ Route::post('startup-mail-submit', [StartupEventController::class, 'mailStartup'
 Route::post('wivote', [WellnessController::class, 'vote']);
 Route::post('wiviewresult', [WellnessController::class, 'viewResult']);
 Route::post('unsub', [MailerController::class, 'unsubMailer']); //Newsletter unsubscribe
-
+Route::post('inv-lead',                       [ExpressInstaController::class, 'invLead']);       // inv view cont & exp int & category page exp int
+Route::post('inv-lead-normal',                [ExpressInstaController::class, 'invNormalLead']); // paid inv not want to spent credit
 
 //Payment Routes
 Route::get('payment', [PaymentController::class, 'payment']);
@@ -259,7 +261,6 @@ Route::group(['prefix' => 'franchisor'], function () {
         Route::post('updateprofessionaldetails', [FranchisorController::class, 'updateProfessionalDetails']);
         Route::post('updatepropertydetails', [FranchisorController::class, 'updatePropertyDetails']);
         Route::post('updatetrainingaggrementdetails', [FranchisorController::class, 'updateTrainingAgreement']);
-
     });
 });
 
@@ -274,45 +275,117 @@ Route::post('francancelledmyaccount', [FranPaymentController::class, 'paymentCan
 
 
 Route::group(['prefix' => 'business-opportunities'], function () {
-    Route::get('dealers-and-distributors.m5',         function() { return redirect('https://dealer.franchiseindia.com/', 301);});	
-	Route::get('education-supplies.sc269',                   function() { return redirect('business-opportunities/education-services.sc269', 301);});
-    Route::get('food',                                       function() { return redirect('business-opportunities/food-and-beverage.m2', 301);});
-    Route::get('accessories',                                function() { return redirect('business-opportunities/automobile-accessories.ssc262', 301);});
-    Route::get('Others',                                     function() { return redirect('business-opportunities/others-dealers-and-distributors.ssc126', 301);});
-    Route::get('bakery',                                     function() { return redirect('business-opportunities/bakery-sweets-and-ice-cream.sc424', 301);});
-    Route::get('lowcost205',                                 function() { return redirect('business-opportunities/lowcost', 301);});
-    Route::get('retail/',                                    function() { return redirect('business-opportunities/retail.m9', 301);});
-    Route::get('.ssc243',                                    function() { return redirect('business-opportunities/designer-wear.ssc243', 301);});
-    Route::get('.ssc198',                                    function() { return redirect('business-opportunities/stationery-stores.ssc198', 301);});
-    Route::get('food-marts',                                 function() { return redirect('business-opportunities/food-and-beverage.sc16', 301);});
-    Route::get('retail-Franchise',                           function() { return redirect('business-opportunities/retail.m9', 301);});
-    Route::get('health-care',                                function() { return redirect('business-opportunities/health-care.sc14', 301);});
-    Route::get('Florists-Franchise/',                        function() { return redirect('business-opportunities/florists.ssc207', 301);});
-    Route::get('.m1',                                        function() { return redirect('business-opportunities/beauty-and-health.m1', 301);});
-    Route::get('.ssc127',                                    function() { return redirect('business-opportunities/courier-and-delivery.ssc127', 301);});
-    Route::get('.ssc156',                                    function() { return redirect('business-opportunities/matrimonial.ssc156', 301);});
-    Route::get('.ssc110',                                    function() { return redirect('business-opportunities/digital-media-and-internet-marketing.ssc110', 301);});
-    Route::get('direct-selling',                             function() { return redirect('business-opportunities/direct-selling.ssc293', 301);});
-    Route::get('consulting-Franchise',                       function() { return redirect('business-opportunities/consulting-services.ssc300', 301);});
-    Route::get('Automotive-Franchise',                       function() { return redirect('business-opportunities/automotive.m8', 301);});
-    Route::get('.ssc184',                                    function() { return redirect('business-opportunities/photography.ssc184', 301);});
-    Route::get('.ssc90',                                     function() { return redirect('business-opportunities/online-coaching.ssc90', 301);});
-    Route::get('.sc15',                                      function() { return redirect('business-opportunities/hotels-and-resorts.sc15', 301);});
-    Route::get('.ssc225',                                    function() { return redirect('business-opportunities/kids-wear.ssc225', 301);});
-    Route::get('.ssc130',                                    function() { return redirect('business-opportunities/security-services.ssc130', 301);});
-    Route::get('.LOC1',                                      function() { return redirect('business-opportunities/andhra-pradesh.LOC1', 301);});
-	//Route::get('uttaranchal.LOC31',                          function() { return redirect('business-opportunities/uttarakhand.LOC31', 301);});	
-	Route::get('Jewellery-Franchise',                        function() { return redirect('business-opportunities/jewellery.sc42', 301);});
-    Route::get('clothing-Franchise/',                        function() { return redirect('business-opportunities/clothing.sc40', 301);});
-    Route::get('mbo-clothing-Franchise',                     function() { return redirect('business-opportunities/clothing.sc40', 301);});
-    Route::get('opticians-eye-wear',                         function() { return redirect('business-opportunities/opticians-eye-wear.ssc246', 301);});
-    Route::get('franchises-under-50Lac',                     function() { return redirect('business-opportunities/franchises-under-50lac', 301);});
-    Route::get('franchises-under-30Lac',                     function() { return redirect('business-opportunities/franchises-under-30lac', 301);});
-    Route::get('GFAI-Franchise',                             function() { return redirect('business-opportunities/all/all', 301);});
-    Route::get('Tanclean-Franchise',                         function() { return redirect('business-opportunities/all/all', 301);});
+    Route::get('dealers-and-distributors.m5',         function () {
+        return redirect('https://dealer.franchiseindia.com/', 301);
+    });
+    Route::get('education-supplies.sc269',                   function () {
+        return redirect('business-opportunities/education-services.sc269', 301);
+    });
+    Route::get('food',                                       function () {
+        return redirect('business-opportunities/food-and-beverage.m2', 301);
+    });
+    Route::get('accessories',                                function () {
+        return redirect('business-opportunities/automobile-accessories.ssc262', 301);
+    });
+    Route::get('Others',                                     function () {
+        return redirect('business-opportunities/others-dealers-and-distributors.ssc126', 301);
+    });
+    Route::get('bakery',                                     function () {
+        return redirect('business-opportunities/bakery-sweets-and-ice-cream.sc424', 301);
+    });
+    Route::get('lowcost205',                                 function () {
+        return redirect('business-opportunities/lowcost', 301);
+    });
+    Route::get('retail/',                                    function () {
+        return redirect('business-opportunities/retail.m9', 301);
+    });
+    Route::get('.ssc243',                                    function () {
+        return redirect('business-opportunities/designer-wear.ssc243', 301);
+    });
+    Route::get('.ssc198',                                    function () {
+        return redirect('business-opportunities/stationery-stores.ssc198', 301);
+    });
+    Route::get('food-marts',                                 function () {
+        return redirect('business-opportunities/food-and-beverage.sc16', 301);
+    });
+    Route::get('retail-Franchise',                           function () {
+        return redirect('business-opportunities/retail.m9', 301);
+    });
+    Route::get('health-care',                                function () {
+        return redirect('business-opportunities/health-care.sc14', 301);
+    });
+    Route::get('Florists-Franchise/',                        function () {
+        return redirect('business-opportunities/florists.ssc207', 301);
+    });
+    Route::get('.m1',                                        function () {
+        return redirect('business-opportunities/beauty-and-health.m1', 301);
+    });
+    Route::get('.ssc127',                                    function () {
+        return redirect('business-opportunities/courier-and-delivery.ssc127', 301);
+    });
+    Route::get('.ssc156',                                    function () {
+        return redirect('business-opportunities/matrimonial.ssc156', 301);
+    });
+    Route::get('.ssc110',                                    function () {
+        return redirect('business-opportunities/digital-media-and-internet-marketing.ssc110', 301);
+    });
+    Route::get('direct-selling',                             function () {
+        return redirect('business-opportunities/direct-selling.ssc293', 301);
+    });
+    Route::get('consulting-Franchise',                       function () {
+        return redirect('business-opportunities/consulting-services.ssc300', 301);
+    });
+    Route::get('Automotive-Franchise',                       function () {
+        return redirect('business-opportunities/automotive.m8', 301);
+    });
+    Route::get('.ssc184',                                    function () {
+        return redirect('business-opportunities/photography.ssc184', 301);
+    });
+    Route::get('.ssc90',                                     function () {
+        return redirect('business-opportunities/online-coaching.ssc90', 301);
+    });
+    Route::get('.sc15',                                      function () {
+        return redirect('business-opportunities/hotels-and-resorts.sc15', 301);
+    });
+    Route::get('.ssc225',                                    function () {
+        return redirect('business-opportunities/kids-wear.ssc225', 301);
+    });
+    Route::get('.ssc130',                                    function () {
+        return redirect('business-opportunities/security-services.ssc130', 301);
+    });
+    Route::get('.LOC1',                                      function () {
+        return redirect('business-opportunities/andhra-pradesh.LOC1', 301);
+    });
+    //Route::get('uttaranchal.LOC31',                          function() { return redirect('business-opportunities/uttarakhand.LOC31', 301);});	
+    Route::get('Jewellery-Franchise',                        function () {
+        return redirect('business-opportunities/jewellery.sc42', 301);
+    });
+    Route::get('clothing-Franchise/',                        function () {
+        return redirect('business-opportunities/clothing.sc40', 301);
+    });
+    Route::get('mbo-clothing-Franchise',                     function () {
+        return redirect('business-opportunities/clothing.sc40', 301);
+    });
+    Route::get('opticians-eye-wear',                         function () {
+        return redirect('business-opportunities/opticians-eye-wear.ssc246', 301);
+    });
+    Route::get('franchises-under-50Lac',                     function () {
+        return redirect('business-opportunities/franchises-under-50lac', 301);
+    });
+    Route::get('franchises-under-30Lac',                     function () {
+        return redirect('business-opportunities/franchises-under-30lac', 301);
+    });
+    Route::get('GFAI-Franchise',                             function () {
+        return redirect('business-opportunities/all/all', 301);
+    });
+    Route::get('Tanclean-Franchise',                         function () {
+        return redirect('business-opportunities/all/all', 301);
+    });
 
 
-    Route::get('/',                                       function(){return redirect('business-opportunities/all/all', 301);});
+    Route::get('/',                                       function () {
+        return redirect('business-opportunities/all/all', 301);
+    });
     Route::get('all/all', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('franchises-{price_range}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('tamilnadu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
@@ -431,7 +504,6 @@ Route::group(['prefix' => 'book'], function () {
     Route::get('{name}', [BookController::class, 'bookInner']);
     //Post routes
     Route::post('{name}', [BookController::class, 'bookInner']);
-
 });
 // amp routes 
 // 301 redirect route to remove 'amp' prefix
@@ -720,10 +792,10 @@ Route::group(['prefix' => 'hi'], function () {
     Route::get('{site}/{slug}.{id}', [ArticleController::class, 'getHindiContent']);          // Hindi Article Url
 
     Route::get('newcontent', [NewArticleController::class, 'articleHindiHome']);
-    Route::get('newcontent/author/{author}', [NewArticleController::class, 'getAuthorHindiDetails']);// Hindi Author url
+    Route::get('newcontent/author/{author}', [NewArticleController::class, 'getAuthorHindiDetails']); // Hindi Author url
     Route::get('newcontent/{kicker}/{kickerId}', [NewArticleController::class, 'getHindiKickerList']);
     Route::get('newcontent/{slug}.{id}', [NewArticleController::class, 'getHindiContent']);
-    Route::get('next-article', [NewArticleController::class, 'getNextArticleHindiForRepeat']);// Hindi Repeat 
+    Route::get('next-article', [NewArticleController::class, 'getNextArticleHindiForRepeat']); // Hindi Repeat 
     Route::get('video-and-podcast', [NewArticleController::class, 'getVideoAndPodcast']);
 });
 
@@ -755,108 +827,107 @@ Route::group(['prefix' => 'gallery'], function () {
 
 //Admin Panel Post Routes
 
-Route::post('updateauthorstatus',             [AdminController::class,'updateAuthorStatus']);
-Route::post('updatearticalinterviewstatus',   [AdminController::class,'updateArticalInterviewStatus']);
-Route::post('updatenewsstatus',               [AdminController::class,'updateNewsStatus']);
-Route::post('updateaicommentstatus',          [AdminController::class,'updateAICommentStatus']);
-Route::post('updatenewscommentstatus',        [AdminController::class,'updateNewsCommentStatus']);
-Route::post('updatemagazinestatus',           [AdminController::class,'updateMagazineStatus']);
-Route::post('deletemagazine',                 [AdminController::class,'deleteMagazine']);
-Route::post('updatemagazinearticlestatus',    [AdminController::class,'updateMagazineArticleStatus']);
-Route::post('deletemagazinearticle',          [AdminController::class,'deleteMagazineArticle']);
-Route::post('deletearticle',                  [AdminController::class,'deleteArticle']);
-Route::post('deletenews',                     [AdminController::class,'deleteNews']);
-Route::get('relatedbrands',                   [AdminController::class,'relatedBrands']);
-Route::get('associatedtags',                  [AdminController::class,'associatedTags']);
-Route::get('publisher',                       [AdminController::class,'publisher']);
-Route::get('find',                            [AdminController::class,'find']);
-Route::get('searcharticleinterview',          [AdminController::class,'searchArticleInterview']);
-Route::get('searchnews',                      [AdminController::class,'searchNews']);
-Route::get('searchmagazine',                  [AdminController::class,'searchMagazine']);
-Route::get('articleinterviewcommentsearch',   [AdminController::class,'searchArticleInterviewComment']);
-Route::get('newscommentsearch',               [AdminController::class,'searchNewsComment']);
-Route::get('admin-logout',                    [AdminController::class,'logout']);
+Route::post('updateauthorstatus',             [AdminController::class, 'updateAuthorStatus']);
+Route::post('updatearticalinterviewstatus',   [AdminController::class, 'updateArticalInterviewStatus']);
+Route::post('updatenewsstatus',               [AdminController::class, 'updateNewsStatus']);
+Route::post('updateaicommentstatus',          [AdminController::class, 'updateAICommentStatus']);
+Route::post('updatenewscommentstatus',        [AdminController::class, 'updateNewsCommentStatus']);
+Route::post('updatemagazinestatus',           [AdminController::class, 'updateMagazineStatus']);
+Route::post('deletemagazine',                 [AdminController::class, 'deleteMagazine']);
+Route::post('updatemagazinearticlestatus',    [AdminController::class, 'updateMagazineArticleStatus']);
+Route::post('deletemagazinearticle',          [AdminController::class, 'deleteMagazineArticle']);
+Route::post('deletearticle',                  [AdminController::class, 'deleteArticle']);
+Route::post('deletenews',                     [AdminController::class, 'deleteNews']);
+Route::get('relatedbrands',                   [AdminController::class, 'relatedBrands']);
+Route::get('associatedtags',                  [AdminController::class, 'associatedTags']);
+Route::get('publisher',                       [AdminController::class, 'publisher']);
+Route::get('find',                            [AdminController::class, 'find']);
+Route::get('searcharticleinterview',          [AdminController::class, 'searchArticleInterview']);
+Route::get('searchnews',                      [AdminController::class, 'searchNews']);
+Route::get('searchmagazine',                  [AdminController::class, 'searchMagazine']);
+Route::get('articleinterviewcommentsearch',   [AdminController::class, 'searchArticleInterviewComment']);
+Route::get('newscommentsearch',               [AdminController::class, 'searchNewsComment']);
+Route::get('admin-logout',                    [AdminController::class, 'logout']);
 
 
 
 
 
 //admin panel routes
-Route::group( [ 'prefix' => 'admin' ], function()
-{
+Route::group(['prefix' => 'admin'], function () {
     //Get routes
-    Route::get('login',                                [AdminController::class,'loginView']);
-    Route::get('list-news',                            [AdminController::class,'listNews']);
-    Route::get('edit-news-view/{id}',                  [AdminController::class,'editNewsView']);
-    Route::get('dashboard',                            [AdminController::class,'viewDashboard']);
-    Route::get('create-author',                        [AdminController::class,'createAuthor']);
-    Route::get('edit-author/{id}',                     [AdminController::class,'viewAuthor']);
-    Route::get('list-magazine-articles/{id}',          [AdminController::class,'listMagazineArticles']);
-    Route::get('create-magazine-article/{id}',         [AdminController::class,'createMagazineArticleView']);
-    Route::get('list-author',                          [AdminController::class,'listAuthor']);
-    Route::get('create-article-interview',             [AdminController::class,'createArticleView']);
-    Route::get('list-article-interview',               [AdminController::class,'listArticleInterview']);
-    Route::get('edit-article-interview/{id}',          [AdminController::class,'editViewArticleInterview']);
-    Route::get('create-news',                          [AdminController::class,'createNewsView']);
-    Route::get('create-magazine',                      [AdminController::class,'createMagazineView']);
-    Route::get('edit-magazine-view/{id}',              [AdminController::class,'editMagazineView']);
-    Route::get('list-magazine',                        [AdminController::class,'listMagazine']);
-    Route::get('edit-magazine-article/{id}',           [AdminController::class,'editMagazineArticleView']);
-    Route::get('list-article-interview-comments',      [AdminController::class,'listArticleInterviewComments']);
-    Route::get('list-news-comments',                   [AdminController::class,'listNewsComments']);
-    Route::get('edit-article-interview-comment/{id}',  [AdminController::class,'editArticleInterviewComment']);
-    Route::get('edit-news-comment/{id}',               [AdminController::class,'editNewsComment']);
-    Route::get('article-interview-comment-reply/{id}', [AdminController::class,'articleCommentReply']);
-    Route::get('magazine-comment-list',                [AdminController::class,'getMagazineComments']);
-    Route::get('magzine-comment-search',               [AdminController::class,'searchMagazineComment']);
-    Route::get('edit-mag-comment/{id}',                [AdminController::class,'editMagazineComment']);
-    Route::get('kicker/create/{type}',                 [AdminController::class,'getCreateKickerView']);
-    Route::get('get-kickers',                          [AdminController::class,'getHindiKickers']);
-    Route::get('kickers/list/{type}',                  [AdminController::class,'getKickersList']);
-    Route::get('{type}/hindi/{contentId}',             [AdminController::class,'getCreateHindiArticleNewsForm']);
+    Route::get('login',                                [AdminController::class, 'loginView']);
+    Route::get('list-news',                            [AdminController::class, 'listNews']);
+    Route::get('edit-news-view/{id}',                  [AdminController::class, 'editNewsView']);
+    Route::get('dashboard',                            [AdminController::class, 'viewDashboard']);
+    Route::get('create-author',                        [AdminController::class, 'createAuthor']);
+    Route::get('edit-author/{id}',                     [AdminController::class, 'viewAuthor']);
+    Route::get('list-magazine-articles/{id}',          [AdminController::class, 'listMagazineArticles']);
+    Route::get('create-magazine-article/{id}',         [AdminController::class, 'createMagazineArticleView']);
+    Route::get('list-author',                          [AdminController::class, 'listAuthor']);
+    Route::get('create-article-interview',             [AdminController::class, 'createArticleView']);
+    Route::get('list-article-interview',               [AdminController::class, 'listArticleInterview']);
+    Route::get('edit-article-interview/{id}',          [AdminController::class, 'editViewArticleInterview']);
+    Route::get('create-news',                          [AdminController::class, 'createNewsView']);
+    Route::get('create-magazine',                      [AdminController::class, 'createMagazineView']);
+    Route::get('edit-magazine-view/{id}',              [AdminController::class, 'editMagazineView']);
+    Route::get('list-magazine',                        [AdminController::class, 'listMagazine']);
+    Route::get('edit-magazine-article/{id}',           [AdminController::class, 'editMagazineArticleView']);
+    Route::get('list-article-interview-comments',      [AdminController::class, 'listArticleInterviewComments']);
+    Route::get('list-news-comments',                   [AdminController::class, 'listNewsComments']);
+    Route::get('edit-article-interview-comment/{id}',  [AdminController::class, 'editArticleInterviewComment']);
+    Route::get('edit-news-comment/{id}',               [AdminController::class, 'editNewsComment']);
+    Route::get('article-interview-comment-reply/{id}', [AdminController::class, 'articleCommentReply']);
+    Route::get('magazine-comment-list',                [AdminController::class, 'getMagazineComments']);
+    Route::get('magzine-comment-search',               [AdminController::class, 'searchMagazineComment']);
+    Route::get('edit-mag-comment/{id}',                [AdminController::class, 'editMagazineComment']);
+    Route::get('kicker/create/{type}',                 [AdminController::class, 'getCreateKickerView']);
+    Route::get('get-kickers',                          [AdminController::class, 'getHindiKickers']);
+    Route::get('kickers/list/{type}',                  [AdminController::class, 'getKickersList']);
+    Route::get('{type}/hindi/{contentId}',             [AdminController::class, 'getCreateHindiArticleNewsForm']);
 
     //Post routes
-    Route::post('update-magazine-comment',             [AdminController::class,'updateMagazineComment']);
-    Route::post('update-mag-comment-status',           [AdminController::class,'setMagazineCommentStatus']);
-    Route::post('article-comment-reply',               [AdminController::class,'createArticleCommentReply']);
-    Route::post('edit-comment-reply/{replyId}',        [AdminController::class,'updateArticleCommentReply']);
-    Route::post('article-register',                    [AdminController::class,'createArticle']);
-    Route::post('create-news',                         [AdminController::class,'createNews']);
-    Route::post('create-magazine',                     [AdminController::class,'createMagazine']);
-    Route::post('edit-magazine',                       [AdminController::class,'updateMagazine']);
-    Route::post('article-interview-edit',              [AdminController::class,'editArticleInterview']);
-    Route::post('create-magazine-article',             [AdminController::class,'createMagazineArticle']);
-    Route::post('update-magazine-article',             [AdminController::class,'updateMagazineArticle']);
-    Route::post('author-edit',                         [AdminController::class,'updateAuthor']);
-    Route::post('author-register',                     [AdminController::class,'registerAuthor']);
-    Route::post('login-check',                         [AdminController::class,'loginCheck']);
-    Route::post('update-news',                         [AdminController::class,'updateNews']);
-    Route::post('edit-article-interview-comment',      [AdminController::class,'updateArticleInterviewComment']);
-    Route::post('edit-news-comment',                   [AdminController::class,'updateNewsComment']);
-    Route::post('delete-article-slider-image',         [AdminController::class,'deleteArticleSliderImage']);
-    Route::post('create/kicker/{type}',                [AdminController::class,'insertUpdateKicker']);
-    Route::post('delete-kicker',                       [AdminController::class,'deleteKicker']);
-    Route::post('hindi/create',                        [AdminController::class,'createUpdateHindiArticle']);
-     // insights get routes code by gp
-     Route::get('create-insights',                      [AdminController::class,'createinsightsView']);
-     Route::get('list-insights',                        [AdminController::class,'listinsights']);
-     Route::get('edit-insights-view/{id}',              [AdminController::class,'editInsightsView']);
-      // insights post routes
-     Route::post('/create-insights',                      [AdminController::class,'createInsights']);
-     Route::post('update-insights',                      [AdminController::class,'updateInsights']);
-     Route::post('updateinsightstatus',                  [AdminController::class,'updateInsightStatus']);
-     Route::post('deleteinsights',                       [AdminController::class,'deleteInsights']);
-      // insights post routes end here
-     // category and sub category get routes code by gp
-    Route::get('cat/create',                      [AdminController::class,'categoryform']);
-    Route::get('subcat/create',                  [AdminController::class,'subcatform']);
-    Route::get('cat/list',                        [AdminController::class,'catlist']);
-    Route::get('subcat/list',                        [AdminController::class,'subcatlist']);
-    Route::get('getSubcategories/{catid}', [AdminController::class,'getSubcategories']);
+    Route::post('update-magazine-comment',             [AdminController::class, 'updateMagazineComment']);
+    Route::post('update-mag-comment-status',           [AdminController::class, 'setMagazineCommentStatus']);
+    Route::post('article-comment-reply',               [AdminController::class, 'createArticleCommentReply']);
+    Route::post('edit-comment-reply/{replyId}',        [AdminController::class, 'updateArticleCommentReply']);
+    Route::post('article-register',                    [AdminController::class, 'createArticle']);
+    Route::post('create-news',                         [AdminController::class, 'createNews']);
+    Route::post('create-magazine',                     [AdminController::class, 'createMagazine']);
+    Route::post('edit-magazine',                       [AdminController::class, 'updateMagazine']);
+    Route::post('article-interview-edit',              [AdminController::class, 'editArticleInterview']);
+    Route::post('create-magazine-article',             [AdminController::class, 'createMagazineArticle']);
+    Route::post('update-magazine-article',             [AdminController::class, 'updateMagazineArticle']);
+    Route::post('author-edit',                         [AdminController::class, 'updateAuthor']);
+    Route::post('author-register',                     [AdminController::class, 'registerAuthor']);
+    Route::post('login-check',                         [AdminController::class, 'loginCheck']);
+    Route::post('update-news',                         [AdminController::class, 'updateNews']);
+    Route::post('edit-article-interview-comment',      [AdminController::class, 'updateArticleInterviewComment']);
+    Route::post('edit-news-comment',                   [AdminController::class, 'updateNewsComment']);
+    Route::post('delete-article-slider-image',         [AdminController::class, 'deleteArticleSliderImage']);
+    Route::post('create/kicker/{type}',                [AdminController::class, 'insertUpdateKicker']);
+    Route::post('delete-kicker',                       [AdminController::class, 'deleteKicker']);
+    Route::post('hindi/create',                        [AdminController::class, 'createUpdateHindiArticle']);
+    // insights get routes code by gp
+    Route::get('create-insights',                      [AdminController::class, 'createinsightsView']);
+    Route::get('list-insights',                        [AdminController::class, 'listinsights']);
+    Route::get('edit-insights-view/{id}',              [AdminController::class, 'editInsightsView']);
+    // insights post routes
+    Route::post('/create-insights',                      [AdminController::class, 'createInsights']);
+    Route::post('update-insights',                      [AdminController::class, 'updateInsights']);
+    Route::post('updateinsightstatus',                  [AdminController::class, 'updateInsightStatus']);
+    Route::post('deleteinsights',                       [AdminController::class, 'deleteInsights']);
+    // insights post routes end here
+    // category and sub category get routes code by gp
+    Route::get('cat/create',                      [AdminController::class, 'categoryform']);
+    Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
+    Route::get('cat/list',                        [AdminController::class, 'catlist']);
+    Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
+    Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
     // routes/web.php
-     // insights post routes
-    Route::post('create/cat',                      [AdminController::class,'storecat']);
-    Route::post('create/subcat',                      [AdminController::class,'storesubcat']);
-    Route::post('delete-category',                 [AdminController::class,'deleteCat']);
-    Route::post('delete-subcategory',                 [AdminController::class,'deletesubCat']);
+    // insights post routes
+    Route::post('create/cat',                      [AdminController::class, 'storecat']);
+    Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
+    Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
+    Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
 });

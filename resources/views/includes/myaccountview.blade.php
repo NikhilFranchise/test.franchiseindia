@@ -1,7 +1,8 @@
-<div class="welhaed marleft investleft">Welcome {{Auth::user()->name}}
-    @if(Auth::user()->membership_type == 1)
+<div class="welhaed marleft investleft">Welcome {{ Auth::user()->name }}
+    @if (Auth::user()->membership_type == 1)
         <div class="expireplan">Plan expires:
-            <span>{{date('d/m/Y', strtotime(session()->get('membership_expiry')))}}</span></div>
+            <span>{{ date('d/m/Y', strtotime(session()->get('membership_expiry'))) }}</span>
+        </div>
     @endif
 </div>
 <div class="row row-no-margin martn30 investmyprofile">
@@ -14,7 +15,7 @@
     </div>
     <div class="col-sm-12 col-sm-4 col-md-4">
         <div class="backwhite bgimgyear pad20">
-            <div class="msectio"><span>{{date('d/m/Y', strtotime(Auth::user()->created_at))}}</span>
+            <div class="msectio"><span>{{ date('d/m/Y', strtotime(Auth::user()->created_at)) }}</span>
                 Member since
             </div>
         </div>
@@ -22,22 +23,22 @@
 
     @php
         switch (Auth::user()->membership_plan) {
-            case 402 :
+            case 402:
                 $planCss = 'copperplan';
                 $plan = 'Copper';
-            break;
-            case 403 :
+                break;
+            case 403:
                 $planCss = 'sliverplan';
                 $plan = 'silver';
-            break;
-            case 404 :
+                break;
+            case 404:
                 $planCss = 'goldplan';
                 $plan = 'Gold';
-            break;
-            case 405 :
+                break;
+            case 405:
                 $planCss = 'platinumplan';
                 $plan = 'Platinum';
-            break;
+                break;
             default:
                 $planCss = 'basicplan';
                 $plan = 'Basic';
@@ -50,9 +51,18 @@
                 (Membership)
             </div>
 
-            @if(Auth::user()->membership_plan == 401)
-                <div class="investviewleft"><a href="{{ Config('constants.MainDomain') }}/investor/myaccount/payment"
-                                               class="btn btn-default btnupg">Upgrade Account </a></div>
+            @if (Auth::user()->membership_plan == 401)
+
+                <div class="investviewleft">
+                    @if (!empty($userAccountData->reg_source))
+                        @if ($userAccountData->reg_source == 'DelhiExpoPaid' && $credits->credit_limit > 0)
+                            Credits left:
+                            {{ $credits->credit_limit }} / {{ $credits->total_credits }}
+                        @endif
+                    @endif
+                    </br><a href="{{ Config('constants.MainDomain') }}/investor/myaccount/payment"
+                        class="btn btn-default btnupg">Upgrade Account </a>
+                </div>
             @else
                 <div class="investviewleft">
                     Credits left:
@@ -62,18 +72,17 @@
                         Unlimited
                     @endif
 
-                    @if(!empty($membershipDays))
+                    @if (!empty($membershipDays))
                         @php
-                            $date1 = new \DateTime($membershipDays->expiry_date);  //current date or any date
-                            $date2 = new \DateTime(date('Y-m-d'));   //Future date
-                            $diff = $date2->diff($date1)->format("%a");  //find difference
-                            $days = intval($diff);   //rounding days
+                            $date1 = new \DateTime($membershipDays->expiry_date); //current date or any date
+                            $date2 = new \DateTime(date('Y-m-d')); //Future date
+                            $diff = $date2->diff($date1)->format('%a'); //find difference
+                            $days = intval($diff); //rounding days
                         @endphp
-                    <span>{{ $days }} Days Left</span></div>
-                @endif
+                        <span>{{ $days }} Days Left</span>
+                    @endif
+                </div>
             @endif
         </div>
     </div>
 </div>
-
-    

@@ -105,13 +105,13 @@ class ExpressInstaController extends Controller
             ->where('franchisor_id', $request->input('franId'))
             ->where('investor_id', $request->user()->profile_str)
             ->first();
-
+        // dd($check);
         $invData = InvestorDetails::query()->where('investor_id', $request->user()->profile_str)->first();
         $franData = FranchisorBusinessDetail::query()->select('franchisor_business_details.*', 'user_accounts.name', 'user_accounts.email', 'user_accounts.mobile')
             ->where('franchisor_id', $request->input('franId'))
             ->leftJoin('user_accounts', 'franchisor_business_details.franchisor_id', '=', 'user_accounts.profile_str')
             ->first();
-
+        // dd($franData);
         if (!empty($check) && $check->visibility == 1)
             return json_encode(array('success' => true, 'user' => $franData));
 
@@ -123,7 +123,7 @@ class ExpressInstaController extends Controller
             $action = 1;
 
         //express interest with condition of paid investor and free franchisor
-        if ($request->user()->membership_type == 1 && $request->user()->membership_plan != 405) {
+        if ($request->user()->membership_type == 1 && $request->user()->membership_plan != 405 || $request->user()->reg_source == "DelhiExpoPaid") {
 
             //check for the confirmation of cutting the credit
             if (isset($request->flag) && ($request->flag == 'confirm' || $request->flag == 'expint'))
@@ -154,11 +154,10 @@ class ExpressInstaController extends Controller
                         'membership_type' => 0,
                         'membership_plan' => 401
                     ]);
-
             }
         }
 
-        if ($request->user()->membership_type == 1 && $request->user()->membership_plan != 401)
+    if ($request->user()->membership_type == 1 && $request->user()->membership_plan != 401 || $request->user()->reg_source == 'DelhiExpoPaid')
             $visibility = 1;
 
         //update details of existing record
@@ -196,7 +195,7 @@ class ExpressInstaController extends Controller
         ];
 
         $details[1] = $franData->ceo_name;
-
+        // dd($franData->userDetail->email);
         $detailsInv = [
             'companyName' => $franData->company_name,
             'managerName' => $franData->fran_manager,
@@ -231,7 +230,6 @@ class ExpressInstaController extends Controller
                 $invSmsMsg = sprintf(config('txtlocal.InvPaid'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40) . ".." : $franData->company_name, strlen($franData->userDetail->mobile) > 15 ? substr($franData->userDetail->mobile, 0, 15) . ".." : $franData->userDetail->mobile);
                 $this->sendInvNotifications($request->user()->email, $detailsInv, $request->user()->mobile, $invSmsMsg, 'paid');
             }
-
         }
 
         if (isset($request->flag) && $request->flag == 'expint' && $request->user()->membership_type != 1)
@@ -344,7 +342,6 @@ class ExpressInstaController extends Controller
                     $invSmsMsg = sprintf(config('txtlocal.InvFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40) . ".." : $franData->company_name);
                     $this->sendInvNotifications($request->user()->email, $dataInvFree, $request->user()->mobile, $invSmsMsg, 'free');
                 }
-
             }
         }
 
@@ -455,7 +452,6 @@ class ExpressInstaController extends Controller
                             echo $e->getMessage();
                         }
                     }
-
                 }
 
                 $details[0] = [
@@ -540,6 +536,7 @@ class ExpressInstaController extends Controller
     {
 
         $franId = $request->input('frandetailsid');
+
         $name = $request->input('infoname');
         $email = $request->input('infoemail');
         $phone = $request->input('mobile');
@@ -749,7 +746,6 @@ class ExpressInstaController extends Controller
                 'site_type' => $siteType
             ]);
             $this->sendNewsletterNotifications($email, $randCode);
-
         } else if ($checkEmail != null && $checkEmail->count() != 0 && $checkEmail->status != 'S') {
             FiNewsLetter::query()->where('email', $email)->where('site_type', $siteType)->update(['verify_code' => $randCode]);
             $this->sendNewsletterNotifications($email, $randCode);
@@ -840,7 +836,7 @@ class ExpressInstaController extends Controller
     private function sendMail($emailId, $senderClass)
     {
         try {
-            // Mail::getFacadeRoot()->to($emailId)->send($senderClass);
+            // Mail::to($emailId)->send($senderClass);
         } catch (ClientException $e) {
             $this->logError('could not send to ' . $e->getMessage());
         }
@@ -860,7 +856,7 @@ class ExpressInstaController extends Controller
      */
     private function logError($msg)
     {
-        Log::getFacadeRoot()->error($msg);
+        Log::error($msg);
     }
 
     /**
@@ -869,7 +865,6 @@ class ExpressInstaController extends Controller
      */
     private function logErrorForLeadGeneration($path, $msg)
     {
-        Storage::getFacadeRoot()->append($path, $msg);
-
+        Storage::append($path, $msg);
     }
 }

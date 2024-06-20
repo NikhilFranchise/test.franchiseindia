@@ -1,5 +1,6 @@
 <div class="tab-section frmwider">
     <form method="post" id="wider-insta-form" action="{{ url('brandcontactinfo') }}">
+        @csrf
         <input type="hidden" name="frandetailsid" value="{{$franDetails->franchisor_id}}">
         <p>Interested in {{$franDetails->company_name}} Franchise? Apply here</p>
         <div class="modal-body popcentreq">

@@ -341,7 +341,7 @@ class InvestorController extends Controller
             }
         }
         // Begin the transaction
-        DB::getFacadeRoot()->beginTransaction();
+        DB::beginTransaction();
 
         // Insert into UserAccount Model
         $insertUser = UserAccount::query()->insert([
@@ -358,7 +358,7 @@ class InvestorController extends Controller
 
         // If saving the record in User Model failed
         if (!$insertUser) {
-            DB::getFacadeRoot()->rollback();
+            DB::rollBack();
 
             // Log the error
             $errorMsg = "Investor Registration Failed: UserAccount Model $email";
@@ -424,7 +424,7 @@ class InvestorController extends Controller
 
         // If saving the record in InvestorDetail Model failed
         if (!$insertInvestor) {
-            DB::getFacadeRoot()->rollback();
+            DB::rollBack();
             // Log the error
 
             // Log the error
@@ -443,7 +443,7 @@ class InvestorController extends Controller
 
             // If saving the record in InvestorDetail Model failed
             if (!$insertInvestorIndustryDetails) {
-                DB::getFacadeRoot()->rollback();
+                DB::rollBack();
 
                 // Log the error
                 $errorMsg = "Investor Registration Failed : InvestorIndustry Model  $email";
@@ -460,7 +460,7 @@ class InvestorController extends Controller
 
                 // If saving the record in InvestorDetail Model failed
                 if (!$insertInvestorIndustryDetails) {
-                    DB::getFacadeRoot()->rollback();
+                    DB::rollBack();
 
                     // Log the error
                     $errorMsg = "Investor Registration Failed : InvestorIndustryBusiness Model  $email";
@@ -474,7 +474,7 @@ class InvestorController extends Controller
         }
 
         // If we reach here, then data is valid and working. Commit the queries!
-        DB::getFacadeRoot()->commit();
+        DB::commit();
 
         //sending the email on registration
         $code = Str::random(16);
@@ -587,7 +587,7 @@ class InvestorController extends Controller
         $investorId = $request->user()->profile_str;
         $personalData = UserAccount::query()->where('profile_str', $investorId)->select('name', 'mobile', 'title', 'reg_source')->first();
         $data = InvestorDetails::query()->where('investor_id', $investorId)->first();
-
+        // 
         return view('investor/myAccount/personal-details', compact('data', 'personalData'));
     }
 
@@ -598,15 +598,16 @@ class InvestorController extends Controller
      */
     public function updatePersonalDetails(Request $request)
     {
-        $this->validate($request, [
-            'invName' => 'required|min:3',
-            'address' => 'required',
-            'country' => 'required',
-            'state' => 'required',
-            'city' => 'required',
-            'dob' => 'required',
-            'pincode' => 'required|numeric',
-        ]);
+        // dd(Cookie::get('invPercentage'));
+        // $this->validate($request, [
+        //     'invName' => 'required|min:3',
+        //     'address' => 'required',
+        //     'country' => 'required',
+        //     'state' => 'required',
+        //     'city' => 'required',
+        //     'dob' => 'required',
+        //     'pincode' => 'required|numeric',
+        // ]);
 
         $investorId = $request->user()->profile_str;
         $finalmobile = $request->input('chkmobile');
@@ -636,9 +637,10 @@ class InvestorController extends Controller
         // Insert into UserAccount Model
         $updateUser = UserAccount::query()->where('profile_str', $investorId)->update(['name' => $name, 'title' => request()->title, 'mobile' => $finalmobile]);
 
+        
         // If saving the record in User Model failed
         if (!$updateUser) {
-            DB::getFacadeRoot()->rollback();
+            DB::rollBack();
 
             // Log the error
             $errorMsg = "updation of investor personal details : UserAccount Model . $investorId";
@@ -675,6 +677,24 @@ class InvestorController extends Controller
         }
         $this->setPercentage();
         $this->recordUpdateTime();
+        
+        //add event statement for event investors 14-06-2024
+        $profile_percentage = (Cookie::get('invPercentage'));
+        // dd($profile_percentage);
+        $credit_points = InvestorDetails::query()->where('investor_id', $request->user()->profile_str)->first();
+        if($request->input('reg_source') == 'DelhiExpoPaid' && $profile_percentage > 59 && $profile_percentage < 100 && $credit_points->event_credit_status == 0){
+
+            // dd($profile_percentage,$credit_points->total_credits,$credit_points->event_credit_status);
+            $credit_add = InvestorDetails::query()->where('investor_id', $investorId)->update(['total_credits' => 5, 'event_credit_status' => '1', 'credit_limit' => 5 ]);
+            // echo $credit_add;exit;
+        }else if($request->input('reg_source') == 'DelhiExpoPaid'  && $profile_percentage == 100 &&               $credit_points->event_credit_status == 1){
+            $newCreditLimit = $credit_points->credit_limit + 2;
+            
+            $credit_add = InvestorDetails::query()->where('investor_id', $investorId)->update(['total_credits' => 7, 'event_credit_status' => '2', 'credit_limit' => $newCreditLimit ]);
+            // dd($credit_add);
+
+        }
+        //add event statement for event investors 14-06-2024
         //redirecting to the same page with successful flash data
         session()->flash('Success', 'Successfully Updated');
         return redirect('/investor/myaccount/personaldetails');
@@ -903,6 +923,7 @@ class InvestorController extends Controller
      */
     public function updatePropertyDetails(Request $request)
     {
+        dd($request->all());
         $investorId = $request->user()->profile_str;
         $update = InvestorDetails::query()->where('investor_id', $investorId)
             ->update([
@@ -957,12 +978,12 @@ class InvestorController extends Controller
         $investorId = $request->user()->profile_str;
         $oldPassword = UserAccount::query()->where('profile_str', '=', $investorId)->select('password')->first();
 
-        if (!Hash::getFacadeRoot()->check($request->password, $oldPassword->password)) {
+        if (!Hash::check($request->password, $oldPassword->password)) {
             session()->flash('failed', 'Password did not match please try again with correct password');
             return redirect('investor/myaccount/changepassword');
         }
 
-        $update = UserAccount::query()->where('profile_str', $investorId)->update(['password' => Hash::getFacadeRoot()->make($request->new_password)]);
+        $update = UserAccount::query()->where('profile_str', $investorId)->update(['password' => Hash::make($request->new_password)]);
 
 
         if (!$update) {
@@ -1003,7 +1024,8 @@ class InvestorController extends Controller
         $viewedFranData = '';
         $expIntFranData = '';
         $investorId = $request->user()->profile_str;
-
+        $userAccountData = UserAccount::select('email','name','membership_type','membership_plan','profile_type','reg_source','profile_status')->where('profile_str', $investorId)->where('reg_source','DelhiExpoPaid')->first();
+        // dd($userAccountData);
         if ($request->user()->membership_type == 1) {
             $paymentDetail = PgInvestorPayment::query()->select('order_status', 'expiry_date')
                 ->where('investor_id', $investorId)
@@ -1070,7 +1092,7 @@ class InvestorController extends Controller
         $membershipDays = PgInvestorPayment::query()->where('investor_id', $investorId)->where('order_status', 1)->first();
 
 
-        return view('investor/myAccount/dashboard', compact('count', 'expIntBrands', 'expIntFranData', 'viewedBrands', 'viewedFranData', 'credits', 'membershipDays'));
+        return view('investor/myAccount/dashboard', compact('count', 'expIntBrands', 'expIntFranData', 'viewedBrands', 'viewedFranData', 'credits', 'membershipDays','userAccountData'));
     }
 
     /**
@@ -1129,6 +1151,7 @@ class InvestorController extends Controller
         $investorData = InvestorDetails::query()->where('investor_id', request()->user()->profile_str)->first();
         $industryData = InvestorIndustry::query()->where('investor_id', request()->user()->profile_str)->first();
         $userAccountData = UserAccount::query()->where('profile_str', request()->user()->profile_str)->first();
+        
 
         if (!empty($industryData)) {
             $value = $value + 5;
@@ -1206,7 +1229,8 @@ class InvestorController extends Controller
         if (!empty(request()->user()->name))
             $value = $value + 5;
 
-        Cookie::getFacadeRoot()->queue($name, $value);
+            // dd($name,$value);
+        Cookie::queue($name, $value);
     }
 
     /**

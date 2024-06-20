@@ -41,7 +41,7 @@
                                             </div>
                                         </div>
                                         <div class="col-xs-3 col-sm-9 col-md-9 row-no-padding eds2">
-                                            <input type="text" class="form-control" placeholder="Enter Your Name" minlength="3" name="invName" value="{{$personalData->name}}" required="required">
+                                            <input type="text" class="form-control" placeholder="Enter Your Name" minlength="3" name="invName" value="{{$personalData->name}}" >
                                         </div>
                                     </div>
 
@@ -69,7 +69,7 @@
                                     <div class="col-xs-12 col-sm-7 col-md-7 com7mod">
                                         <div class="input-group">
                                             <span class="input-group-addon"><img src="{{url('images/mobile.png')}}" alt="mobile"></span>
-                                            <input name="mobile" id="mobile" type="text"  class="form-control" maxlength="10" placeholder="Enter Mobile" required>
+                                            <input name="mobile" id="mobile" type="text"  class="form-control" maxlength="10" placeholder="Enter Mobile">
                                             <center><span onClick="validatemobile();" id="validatemobile" class="showhidecng" style="display: none">Verify</span></center>
                                             <center><span onClick="editmobile();" id="editmobile" class="showhidecng" style="display: none">Edit</span></center>
                                             <center><span id="successmobile" class="showhideright" style="display: none"><i class="fa fa-check fa-lg" aria-hidden="true"></i></span></center>
@@ -109,7 +109,7 @@
                                 <div  class="col-xs-12 col-sm-7 col-md-7 com7mod">
                                     <div class="input-group">
                                         <span class="input-group-addon height100" ><img src="{{URL::asset('images/addreess.png')}}" alt="address"></span>
-                                        <textarea class="form-control height100" placeholder="please enter your address" minlength="6" name="address" required="required">{{$data->inv_address}}</textarea>
+                                        <textarea class="form-control height100" placeholder="please enter your address" minlength="6" name="address" >{{$data->inv_address}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +131,7 @@
                                 <div  class="col-xs-12 col-sm-7 col-md-7 com7mod">
                                     <div class="input-group">
                                         <span class="input-group-addon"><img src="{{URL::asset('images/country.png')}}" alt="country"></span>
-                                        <select class="form-control myselectclass" name="country" required="required">
+                                        <select class="form-control myselectclass" name="country" >
                                             @foreach(Config::get('location.countryName') as $index => $val )
                                                 <option value="{{ $index }}" @if($data->inv_country == $val) selected @endif> {{ $val }}</option>
                                             @endforeach
@@ -146,7 +146,7 @@
                                 <div  class="col-xs-12 col-sm-7 col-md-7 com7mod">
                                     <div class="input-group">
                                         <span class="input-group-addon"><img src="{{URL::asset('images/pincode.png')}}" alt="pincode"></span>
-                                        <input type="text" name="pincode" pattern="[0-9]{6,6}" maxlength="6" class="form-control" placeholder="Enter Pincode" required="required"  value="{{$data->inv_pincode}}">
+                                        <input type="text" name="pincode" pattern="[0-9]{6,6}" maxlength="6" class="form-control" placeholder="Enter Pincode"   value="{{$data->inv_pincode}}">
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +158,7 @@
                                 <div  class="col-xs-12 col-sm-7 col-md-7 com7mod">
                                     <div class="input-group">
                                         <span class="input-group-addon"><img src="{{URL::asset('images/state.png')}}" alt="state"></span>
-                                        <select class="form-control myselectclass" name="state" required="required">
+                                        <select class="form-control myselectclass" name="state" >
                                             @foreach(Config('location.stateArr') as $index => $value)
                                                 <option value="{{ $value }}" @if($data->inv_state == $value) selected @endif >{{ $value }}</option>
                                             @endforeach
@@ -173,7 +173,7 @@
                                 <div  class="col-xs-12 col-sm-7 col-md-7 com7mod">
                                     <div class="input-group">
                                         <span class="input-group-addon"><img src="{{URL::asset('images/city.png')}}" alt="city"></span>
-                                        <input type="text" id="city" name="city" class="form-control" minlength="3" placeholder="City" required="required" value="{{$data->inv_city}}">
+                                        <input type="text" id="city" name="city" class="form-control" minlength="3" placeholder="City"  value="{{$data->inv_city}}">
                                     </div>
                                 </div>
                             </div>
@@ -184,7 +184,7 @@
                                 <div  class="col-xs-12 col-sm-7 col-md-7 com7mod">
                                     <div class="input-group">
                                         <span class="input-group-addon"><img src="{{URL::asset('images/calendar.png')}}" alt="calender"></span>
-                                        <input type="text" id="datepicker" name="dob" class="form-control" placeholder="yyyy-mm-dd" required="required"  value="{{$data->dob}}">
+                                        <input type="text" id="datepicker" name="dob" class="form-control" placeholder="yyyy-mm-dd"   value="{{$data->dob}}">
                                     </div>
                                 </div>
                             </div>

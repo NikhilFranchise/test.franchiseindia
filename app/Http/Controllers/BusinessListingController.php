@@ -968,7 +968,7 @@ public function listingLocation()
         }
 
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
-
+        // echo $shuffledResults;exit;
         if (!empty($catArr->seoTitle)) {
             $seoTitle = $catArr->seoTitle;
             // dd($catArr);
