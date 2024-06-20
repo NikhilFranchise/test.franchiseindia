@@ -34,7 +34,12 @@
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
 @endsection --}}
 @section('hindibrandUrls')
-    <link href="{{ str_replace( '/category/',  str_replace('/business-opportunities/',  url()->current())) }}">
+<?php
+$currentUrl = url()->current();
+$hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
+?>
+<link href="{{ $hindiUrl }}">
+    {{-- <link href="{{ str_replace( '/category/',  str_replace('/business-opportunities/',  url()->current())) }}"> --}}
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
 @endsection
