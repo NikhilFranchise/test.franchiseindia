@@ -32,9 +32,7 @@
 {{-- @section('ampHindi')
 <link href="{{str_replace( '/hi/', '/amp/hi/', url()->current())}}" rel="amphtml">
 @endsection --}}
-@section('ampHindi')
-<link href="{{str_replace( '/hi/',  url()->current())}}" >
-@endsection
+
 @section('content')
     @include("includes.addthis")
     <style type="text/css">
