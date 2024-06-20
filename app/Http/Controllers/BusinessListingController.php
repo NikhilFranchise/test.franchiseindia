@@ -886,7 +886,7 @@ public function listingLocation()
         $catArr   = $seoClass->select('catname', 'parent_id', 'seoTitle', 'description', 'keywords')
             ->where('catid', $cid[1])
             ->first();
-        if ( $catArr == null && $catArr->count() == 0)
+        if ( $catArr == null)
             return redirect('/business-opportunities/all/all', 301);
 
         $catName = $catArr->catname;
