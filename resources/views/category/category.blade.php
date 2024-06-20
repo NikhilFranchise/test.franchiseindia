@@ -28,16 +28,16 @@
 @section('hindiUrl', $hindiUrl)
 @section('englishUrl', $engUrl)
 
-{{-- @section('hindibrandUrls')
+@section('hindibrandUrls')
     <link href="{{ str_replace( '/category/', '/amp/category/', str_replace('/business-opportunities/', '/amp/business-opportunities/', url()->current())) }}" rel="amphtml">
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
-@endsection --}}
-@section('hindibrandUrls')
+@endsection
+{{-- @section('hindibrandUrls')
     <link href="{{ str_replace( '/category/',  str_replace('/business-opportunities/',  url()->current())) }}">
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
-@endsection
+@endsection --}}
 
 @section('content')
 
