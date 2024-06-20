@@ -162,16 +162,19 @@ class BrandController extends Controller
         //for You may like
         $likeArticles = $this->getContentForBrandLanding(10, $franDetails, $isHindi);
 
-        if (request()->segment(1) == 'hi'){
+        if (request()->segment(1) == 'hi') {
             $view = "brandlanding-hindi";
         }
-        $inv_credits =  InvestorDetails::select('investor_details.credit_limit', 'user_accounts.reg_source')
-        ->join('user_accounts', 'investor_details.investor_id', '=', 'user_accounts.profile_str')
-        ->where('investor_details.investor_id', request()->user()->profile_str)->where('user_accounts.reg_source','DelhiExpoPaid')
-        ->first();
-        dd($inv_credits);
+
+        // $inv_credits =  InvestorDetails::select('investor_details.credit_limit', 'user_accounts.reg_source')
+        //     ->join('user_accounts', 'investor_details.investor_id', '=', 'user_accounts.profile_str')
+        //     ->where('investor_details.investor_id', request()->user()->profile_str)->where('user_accounts.reg_source', 'DelhiExpoPaid')
+        //     ->first();
+
         // return the data to blade view
-        return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData','inv_credits'));
+        // return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits'));
+        
+        return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData'));
     }
 
     /**
@@ -368,7 +371,6 @@ class BrandController extends Controller
         Cookie::queue("franRate" . $franchisorId, 1, 43800);
 
         return response()->json(array('ratings' => $updatedRatings), 200);
-
     }
 
     /**
@@ -382,7 +384,6 @@ class BrandController extends Controller
             ->orderByRaw("RAND()")
             ->take($count)
             ->get();
-
     }
 
     /**
