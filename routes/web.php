@@ -124,7 +124,7 @@ Route::get('mailermessage',                  [MailerController::class, 'thanksMe
 Route::get('cy_mails/unsubscribeme/',        [MailerController::class, 'unsub']);
 
 // post and get routes
-// Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);
+Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);
 Route::post('subscribenews', [NewsLetterController::class, 'subscriptionFormsubmit']);
 Route::post('property-loan-submit', [StaticPageController::class, 'postPropertyLoanForm']);
 Route::post('contact-submit', [ContactUsController::class, 'contact']);
@@ -492,7 +492,7 @@ Route::group(['prefix' => 'restaurant'], function () {
     Route::get('newsletter/subscriptionForm', [NewsLetterController::class, 'newsletterForm']);
     Route::get('newsletter/newsub', [NewsLetterController::class, 'newsletterSub']);
     Route::get('{content_id}', [ArticleController::class, 'commonInner']);
-    Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);     // Newsletter signup
+    // Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);     // Newsletter signup
 
 });
 

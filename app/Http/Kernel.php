@@ -4,7 +4,7 @@ namespace App\Http;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-
+use App\Http\Controllers\SitemapController;
 class Kernel extends HttpKernel
 {
     /**
@@ -82,7 +82,7 @@ class Kernel extends HttpKernel
         //$schedule->call('\App\Http\Controllers\CronController@fixingDangerZonesBrands')->dailyAt('04:00')->timezone('Asia/Kolkata');
 	    //$schedule->call('\App\Http\Controllers\CronController@freeFranchisorLeadInsertion')->dailyAt('02:30')->timezone('Asia/Kolkata');
         //$schedule->call('\App\Http\Controllers\CronController@feedbackMail')->dailyAt('11:30')->timezone('Asia/Kolkata');
-        $schedule->call(\App\Http\Controllers\SitemapController::class, 'sitemap')->dailyAt('05:48')->timezone('Asia/Kolkata');
+        $schedule->call([SitemapController::class, 'sitemap'])->dailyAt('05:48')->timezone('Asia/Kolkata');
        // $schedule->call('\App\Http\Controllers\CronController@getSscArray')->dailyAt('05:00')->timezone('Asia/Kolkata');
       
       //stop for some time pankaj

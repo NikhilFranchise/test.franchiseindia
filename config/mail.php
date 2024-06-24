@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'noreply@franchiseindia.com'),
-        'name' => env('MAIL_FROM_NAME', 'FranchiseIndia Support'),
+        'name' => env('MAIL_FROM_NAME', 'FiUat.FranchiseIndia Support'),
     ],
 
     /*
