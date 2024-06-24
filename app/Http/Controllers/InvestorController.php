@@ -485,7 +485,7 @@ class InvestorController extends Controller
             'companyName' => $name,
             'code' => $code,
         ];
-        dd($email);
+        // dd($email);
         //Mail sending to investor for confirmation
         Mail::to($email)->send(new confirmed($data));
 
@@ -913,6 +913,7 @@ class InvestorController extends Controller
     public function showPropertyDetails(Request $request)
     {
         $data = InvestorDetails::query()->where('investor_id', $request->user()->profile_str)->first();
+        // dd($data);
         return view('investor/myAccount/property-details', compact('data'));
     }
 
@@ -923,17 +924,17 @@ class InvestorController extends Controller
      */
     public function updatePropertyDetails(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $investorId = $request->user()->profile_str;
         $update = InvestorDetails::query()->where('investor_id', $investorId)
             ->update([
                 'prop_address' => ($request->input('property_use') != 0 ? $request->input('prop_address') : ""),
                 'area_req_min' => ($request->input('property_use') != 0 ? $request->input('min_area') : 0),
                 'area_req_max' => ($request->input('property_use') != 0 ? $request->input('max_area') : 0),
-                'area_type' => $request->input('area_type'),
+                // 'area_type' => $request->input('area_type'),
                 'property_type' => $request->input('property_use'),
             ]);
-
+            // dd($update);
         if (!$update) {
             // Log the error
             $errorMsg = "updation of investor property details : InvestorDetail Model . $investorId";

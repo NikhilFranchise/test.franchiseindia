@@ -3,26 +3,30 @@
     $brandCount = count($brandResults);
 @endphp
 
-@if($brandCount < 2)
+@if ($brandCount < 2)
     @section('robot', 'noindex, nofollow')
 @endif
 
 
-@if($mc == 2)
+@if ($mc == 2)
     @section('seoTitle', 'Food and Beverage - Business Ideas and Franchise Opportunities')
 @elseif(!empty($seoTitle))
     @section('seoTitle', $brandResults->total() . '+ ' . $seoTitle)
 @endif
-@if(!empty($seoDesc))
+@if (!empty($seoDesc))
     @section('seoDesc', $seoDesc)
-@endif 
-@if(!empty($seoKeywords))
+@endif
+@if (!empty($seoKeywords))
     @section('seoKeywords', $seoKeywords)
 @endif
 
 @php
-    $hindiUrl = str_replace( '/category/', '/hi/category/', str_replace('/business-opportunities/', '/hi/business-opportunities/', url()->current()));
-    $engUrl   = url()->current();
+    $hindiUrl = str_replace(
+        '/category/',
+        '/hi/category/',
+        str_replace('/business-opportunities/', '/hi/business-opportunities/', url()->current()),
+    );
+    $engUrl = url()->current();
 @endphp
 
 @section('hindiUrl', $hindiUrl)
@@ -34,11 +38,11 @@
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
 @endsection --}}
 @section('hindibrandUrls')
-<?php
-$currentUrl = url()->current();
-$hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
-?>
-<link href="{{ $hindiUrl }}">
+    <?php
+    $currentUrl = url()->current();
+    $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
+    ?>
+    <link href="{{ $hindiUrl }}">
     {{-- <link href="{{ str_replace( '/category/',  str_replace('/business-opportunities/',  url()->current())) }}"> --}}
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
@@ -46,35 +50,35 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
 
 @section('content')
 
-    <link href="{{url('css/vit-gallery.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ url('css/vit-gallery.css') }}" rel="stylesheet" type="text/css">
 
-    <div class="sortbtn"> <span  id="sortlbtn"> <i class="fa fa-filter" aria-hidden="true"></i> Filter</span> </div>
+    <div class="sortbtn"> <span id="sortlbtn"> <i class="fa fa-filter" aria-hidden="true"></i> Filter</span> </div>
     <!--runner start here 1 -->
     <div class="cateblock catmargintop5 categories-list">
         <div class="container">
             <div class="row row-no-margin">
                 <!-- category left panel start here  -->
-            @include('category.category-left-section')
-            <!-- category left panel end here  -->
+                @include('category.category-left-section')
+                <!-- category left panel end here  -->
                 <div class="col-xs-12 col-sm-8 col-md-9 bor-radius backwhite catright row-no-padding">
 
-                @include('category.navigation-search-by')
+                    @include('category.navigation-search-by')
 
-                @include('category.top-paid-cat-banner')
+                    @include('category.top-paid-cat-banner')
 
-                <!-- category list section start here-pawan-->
+                    <!-- category list section start here-pawan-->
                     <div class="row row-no-margin catpadtop20">
-                        @if(session()->has('freeinfomsg'))
+                        @if (session()->has('freeinfomsg'))
                             <div class="alert alert-info">{!! session()->get('freeinfomsg') !!}</div>
                         @endif
                         @php
-                            $i          = 0;
-                            $banner     = 1;
+                            $i = 0;
+                            $banner = 1;
                             $longbanner = 0;
-                            $shortBox   = 0;
+                            $shortBox = 0;
                         @endphp
-                        @foreach($shuffledResults as $brandResult)
-                        <!-- category list section start here-->
+                        @foreach ($shuffledResults as $brandResult)
+                            <!-- category list section start here-->
                             {{-- @php
                                 $brandUrl       = sprintf(Config('constants.brandPagePattern'), Config('constants.MainDomain'), $brandResult->profile_name, $brandResult->fran_detail_id);
                                 $is_premium     = 0;
@@ -217,22 +221,24 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
                                 }
                             @endphp
 
-                            @if($brandResult->membership_type == 1 || $brandResult->free_logo_visibility == 1)
+                            @if ($brandResult->membership_type == 1 || $brandResult->free_logo_visibility == 1)
 
                                 @include('category.paid-brand')
 
-                                @if($banner == 7)
-                                    <div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding" >
+                                @if ($banner == 7)
+                                    <div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding">
                                         <div>
                                             <div class="catbannerblk">
                                                 <div class="dfp_300X250">
-                                                    {{--<div id='div-gpt-ad-1563348795825-0' style='width: 300px; height: 250px;'></div>--}}
+                                                    {{-- <div id='div-gpt-ad-1563348795825-0' style='width: 300px; height: 250px;'></div> --}}
                                                     <!-- /1057625/FIHL/Desktop_Category_300x250_Mid_1-->
-                                                        <div id='adslot300x250_Mid_1' style='width: 300px; height: 250px;'>
-                                                            <script>
-                                                                googletag.cmd.push(function() { googletag.display('adslot300x250_Mid_1'); });
-                                                            </script>
-                                                        </div>
+                                                    <div id='adslot300x250_Mid_1' style='width: 300px; height: 250px;'>
+                                                        <script>
+                                                            googletag.cmd.push(function() {
+                                                                googletag.display('adslot300x250_Mid_1');
+                                                            });
+                                                        </script>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -243,16 +249,18 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
                                     @endphp
                                 @endif
 
-                                @if($banner == 14)
-                                    <div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding" >
+                                @if ($banner == 14)
+                                    <div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding">
                                         <div class="catbannerblk">
-                                            {{--<div id='div-gpt-ad-1563348795825-1' style='width: 300px; height: 250px;'></div>--}}
+                                            {{-- <div id='div-gpt-ad-1563348795825-1' style='width: 300px; height: 250px;'></div> --}}
                                             <!-- /1057625/FIHL/Desktop_Category_300x250_Mid_2-->
-                                                <div id='adslot300x250_Mid_2' style='width: 300px; height: 250px;'>
-                                                    <script>
-                                                        googletag.cmd.push(function() { googletag.display('adslot300x250_Mid_2'); });
-                                                    </script>
-                                                </div>
+                                            <div id='adslot300x250_Mid_2' style='width: 300px; height: 250px;'>
+                                                <script>
+                                                    googletag.cmd.push(function() {
+                                                        googletag.display('adslot300x250_Mid_2');
+                                                    });
+                                                </script>
+                                            </div>
                                         </div>
                                     </div>
                                     @php
@@ -261,17 +269,19 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
                                     @endphp
                                 @endif
 
-                                @if($banner == 21)
-                                    <div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding" >
+                                @if ($banner == 21)
+                                    <div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding">
                                         <div class="catbannerblk">
                                             <div class="dfp_300X250">
-                                                {{--<div id='div-gpt-ad-1563348795825-2' style='width: 300px; height: 250px;'></div>--}}
+                                                {{-- <div id='div-gpt-ad-1563348795825-2' style='width: 300px; height: 250px;'></div> --}}
                                                 <!-- /1057625/FIHL/Desktop_Category_300x250_Mid_3-->
-                                                    <div id='adslot300x250_Mid_3' style='width: 300px; height: 250px;'>
-                                                        <script>
-                                                            googletag.cmd.push(function() { googletag.display('adslot300x250_Mid_3'); });
-                                                        </script>
-                                                    </div>
+                                                <div id='adslot300x250_Mid_3' style='width: 300px; height: 250px;'>
+                                                    <script>
+                                                        googletag.cmd.push(function() {
+                                                            googletag.display('adslot300x250_Mid_3');
+                                                        });
+                                                    </script>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -285,46 +295,53 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
                                     $banner++;
                                     $i++;
                                 @endphp
-
                             @elseif($brandResult->membership_type == 0)
                                 @php
                                     $flag = 1;
                                 @endphp
                                 @if ($i % 2 != 0)
-
-                                    <div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding" >
+                                    <div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding">
                                         @desktop
-                                        <div class="dfp_240X400">
-                                        {{--<div id='div-gpt-ad-1504794961823-0' style='height:400px; width:240px; margin:0 auto;'></div>--}}
-                                        <!-- /1057625/FIHL/Desktop_Category_240x400_Mid_1-->
-                                            <div id='adslot240x400_Mid_{{$flag}}' style='height:400px; width:240px; margin:0 auto;'>
-                                                <script>
-                                                    googletag.cmd.push(function() { googletag.display('adslot240x400_Mid_{{$flag}}'); });
-                                                </script>
+                                            <div class="dfp_240X400">
+                                                {{-- <div id='div-gpt-ad-1504794961823-0' style='height:400px; width:240px; margin:0 auto;'></div> --}}
+                                                <!-- /1057625/FIHL/Desktop_Category_240x400_Mid_1-->
+                                                <div id='adslot240x400_Mid_{{ $flag }}'
+                                                    style='height:400px; width:240px; margin:0 auto;'>
+                                                    <script>
+                                                        googletag.cmd.push(function() {
+                                                            googletag.display('adslot240x400_Mid_{{ $flag }}');
+                                                        });
+                                                    </script>
+                                                </div>
                                             </div>
-                                        </div>
                                         @enddesktop
                                         @tablet
-                                        <div class="dfp_240X400">
-                                        {{--<div id='div-gpt-ad-1504794961823-0' style='height:400px; width:240px; margin:0 auto;'></div>--}}
-                                        <!-- /1057625/FIHL/Desktop_Category_240x400_Mid_1-->
-                                            <div id='adslot240x400_Mid_{{$flag}}' style='height:400px; width:240px; margin:0 auto;'>
-                                                <script>
-                                                    googletag.cmd.push(function() { googletag.display('adslot240x400_Mid_{{$flag}}'); });
-                                                </script>
+                                            <div class="dfp_240X400">
+                                                {{-- <div id='div-gpt-ad-1504794961823-0' style='height:400px; width:240px; margin:0 auto;'></div> --}}
+                                                <!-- /1057625/FIHL/Desktop_Category_240x400_Mid_1-->
+                                                <div id='adslot240x400_Mid_{{ $flag }}'
+                                                    style='height:400px; width:240px; margin:0 auto;'>
+                                                    <script>
+                                                        googletag.cmd.push(function() {
+                                                            googletag.display('adslot240x400_Mid_{{ $flag }}');
+                                                        });
+                                                    </script>
+                                                </div>
                                             </div>
-                                        </div>
                                         @endtablet
                                         @mobile
-                                        <div class="dfp_300X250">
-                                        {{--<div id='div-gpt-ad-1504794961823-0' style='height:400px; width:240px; margin:0 auto;'></div>--}}
-                                        <!-- /1057625/FIHL/Desktop_Category_240x400_Mid_1-->
-                                            <div id='adslot300X250_Mid_{{$flag}}' style='height:300px; width:250px; margin:0 auto;'>
-                                                <script>
-                                                    googletag.cmd.push(function() { googletag.display('adslot300X250_Mid_{{$flag}}'); });
-                                                </script>
+                                            <div class="dfp_300X250">
+                                                {{-- <div id='div-gpt-ad-1504794961823-0' style='height:400px; width:240px; margin:0 auto;'></div> --}}
+                                                <!-- /1057625/FIHL/Desktop_Category_240x400_Mid_1-->
+                                                <div id='adslot300X250_Mid_{{ $flag }}'
+                                                    style='height:300px; width:250px; margin:0 auto;'>
+                                                    <script>
+                                                        googletag.cmd.push(function() {
+                                                            googletag.display('adslot300X250_Mid_{{ $flag }}');
+                                                        });
+                                                    </script>
+                                                </div>
                                             </div>
-                                        </div>
                                         @endmobile
 
                                     </div>
@@ -334,36 +351,40 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
                                     @endphp
                                 @endif
 
-                                @if($longbanner == 0)
-                                    @if($i > 1)
+                                @if ($longbanner == 0)
+                                    @if ($i > 1)
                                         <div class="row row-no-margin borderbd padtb20 catbannertop">
                                             @desktop
-                                            <div class="yahoo_728X90">
+                                                <div class="yahoo_728X90">
 
-                                            <!-- /1057625/FIHL/Desktop_Category_728x90_Mid_1-->
-                                                <div id='adslot728x90_Mid_1' style='height:90px; width:728px;'>
-                                                    <script>
-                                                        googletag.cmd.push(function() { googletag.display('adslot728x90_Mid_1'); });
-                                                    </script>
+                                                    <!-- /1057625/FIHL/Desktop_Category_728x90_Mid_1-->
+                                                    <div id='adslot728x90_Mid_1' style='height:90px; width:728px;'>
+                                                        <script>
+                                                            googletag.cmd.push(function() {
+                                                                googletag.display('adslot728x90_Mid_1');
+                                                            });
+                                                        </script>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             @enddesktop
                                             @mobile
-                                            <div class="yahoo_cat_468X60">
-                                            {{--<div id='div-gpt-ad-1563348795825-2' style='width: 300px; height: 250px;'></div>--}}
-                                            <!-- /1057625/FIHL/Desktop_Category_300x250_Mid_3-->
-                                                <div id='adslot300x250_Mid_1' style='width: 300px; height: 250px;'>
-                                                    <script>
-                                                        googletag.cmd.push(function() { googletag.display('adslot300x250_Mid_3'); });
-                                                    </script>
+                                                <div class="yahoo_cat_468X60">
+                                                    {{-- <div id='div-gpt-ad-1563348795825-2' style='width: 300px; height: 250px;'></div> --}}
+                                                    <!-- /1057625/FIHL/Desktop_Category_300x250_Mid_3-->
+                                                    <div id='adslot300x250_Mid_1' style='width: 300px; height: 250px;'>
+                                                        <script>
+                                                            googletag.cmd.push(function() {
+                                                                googletag.display('adslot300x250_Mid_3');
+                                                            });
+                                                        </script>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            {{--<div class="yahoo_cat_468X60">--}}
-                                                {{--<div id="div-gpt-ad-1536149771913-0" style='height:60px; width:468px;'></div>--}}
-                                            {{--</div>--}}
-                                            {{--<div class="yahoo_300X250cat">--}}
-                                                {{--<div id="div-gpt-ad-1531467713014-0" style='height:250px; width:300px;'></div>--}}
-                                            {{--</div>--}}
+                                                {{-- <div class="yahoo_cat_468X60"> --}}
+                                                {{-- <div id="div-gpt-ad-1536149771913-0" style='height:60px; width:468px;'></div> --}}
+                                                {{-- </div> --}}
+                                                {{-- <div class="yahoo_300X250cat"> --}}
+                                                {{-- <div id="div-gpt-ad-1531467713014-0" style='height:250px; width:300px;'></div> --}}
+                                                {{-- </div> --}}
                                             @endmobile
                                         </div>
                                     @endif
@@ -372,19 +393,20 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
                                     @endphp
                                 @endif
 
-                                @if($banner == 7 )
-
+                                @if ($banner == 7)
                                     <div class="col-xs-12 col-sm-6 col-md-4 catlistmar sec-slide-effect">
                                         <div class="business-list hvr-effect">
                                             <div class="smallcatblk">
                                                 <div class="dfp_200X200">
-                                                    {{--<div id='div-gpt-ad-1506599299695-0' style='height:200px; width:200px;'></div>--}}
+                                                    {{-- <div id='div-gpt-ad-1506599299695-0' style='height:200px; width:200px;'></div> --}}
                                                     <!-- /1057625/FIHL/Desktop_Category_200x200_Mid_1-->
-                                                        <div id='adslot200x200_Mid_1' style='height:200px; width:200px;'>
-                                                            <script>
-                                                                googletag.cmd.push(function() { googletag.display('adslot200x200_Mid_1'); });
-                                                            </script>
-                                                        </div>
+                                                    <div id='adslot200x200_Mid_1' style='height:200px; width:200px;'>
+                                                        <script>
+                                                            googletag.cmd.push(function() {
+                                                                googletag.display('adslot200x200_Mid_1');
+                                                            });
+                                                        </script>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -395,18 +417,20 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
                                     @endphp
                                 @endif
 
-                                @if($banner == 14 )
+                                @if ($banner == 14)
                                     <div class="col-xs-12 col-sm-6 col-md-4 catlistmar sec-slide-effect">
                                         <div class="business-list hvr-effect">
                                             <div class="smallcatblk">
                                                 <div class="dfp_200X200">
-                                                    {{--<div id='div-gpt-ad-1506599299695-1' style='height:200px; width:200px;'></div>--}}
+                                                    {{-- <div id='div-gpt-ad-1506599299695-1' style='height:200px; width:200px;'></div> --}}
                                                     <!-- /1057625/FIHL/Desktop_Category_200x200_Mid_2-->
-                                                        <div id='adslot200x200_Mid_2' style='height:200px; width:200px;'>
-                                                            <script>
-                                                                googletag.cmd.push(function() { googletag.display('adslot200x200_Mid_2'); });
-                                                            </script>
-                                                        </div>
+                                                    <div id='adslot200x200_Mid_2' style='height:200px; width:200px;'>
+                                                        <script>
+                                                            googletag.cmd.push(function() {
+                                                                googletag.display('adslot200x200_Mid_2');
+                                                            });
+                                                        </script>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -417,18 +441,20 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
                                     @endphp
                                 @endif
 
-                                @if($banner == 21 )
+                                @if ($banner == 21)
                                     <div class="col-xs-12 col-sm-6 col-md-4 catlistmar sec-slide-effect">
                                         <div class="business-list hvr-effect">
                                             <div class="smallcatblk">
                                                 <div class="dfp_200X200">
-                                                    {{--<div id='div-gpt-ad-1506599299695-2' style='height:200px; width:200px;'></div>--}}
+                                                    {{-- <div id='div-gpt-ad-1506599299695-2' style='height:200px; width:200px;'></div> --}}
                                                     <!-- /1057625/FIHL/Desktop_Category_200x200_Mid_3-->
-                                                        <div id='adslot200x200_Mid_3' style='height:200px; width:200px;'>
-                                                            <script>
-                                                                googletag.cmd.push(function() { googletag.display('adslot200x200_Mid_3'); });
-                                                            </script>
-                                                        </div>
+                                                    <div id='adslot200x200_Mid_3' style='height:200px; width:200px;'>
+                                                        <script>
+                                                            googletag.cmd.push(function() {
+                                                                googletag.display('adslot200x200_Mid_3');
+                                                            });
+                                                        </script>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -451,15 +477,17 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
 
                         @include('category.final-conditions')
                         @php
-                            $params = ['sortby'=>$orderby];
-                            if(!empty($text))
+                            $params = ['sortby' => $orderby];
+                            if (!empty($text)) {
                                 $params['text'] = $text;
-                            if(!empty($searchq))
+                            }
+                            if (!empty($searchq)) {
                                 $params['searchq'] = $searchq;
+                            }
                         @endphp
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                @if(count($brandResults) == 0)
+                                @if (count($brandResults) == 0)
                                     <div class="noresults">No result found</div>
                                 @endif
                                 {{-- {!! $brandResults
@@ -483,27 +511,31 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
 
     <div id="comparebottom" class="ttl-brnd-list">
         <div class="popblkbtm">
-            <form method="post" action="{{URL('compare-brands')}}">
-                You selected <span class="count">0</span>Brands for Comparison (Max @mobile 2 @endmobile @notmobile 3 @endnotmobile)
+            <form method="post" action="{{ URL('compare-brands') }}">
+                You selected <span class="count">0</span>Brands for Comparison (Max @mobile
+                    2
+                    @endmobile @notmobile
+                    3
+                @endnotmobile)
                 <input type="hidden" name="franchisors" id="franchisorsForComparison">
-                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="submit" class="brandRequest" value="Compare" />
             </form>
         </div>
     </div>
     <!--- Get Free Info stickely start here  -->
-    @if(!Auth::check() || Auth::user()->profile_type == 1 || Auth::user()->mobile == '')
+    @if (!Auth::check() || Auth::user()->profile_type == 1 || Auth::user()->mobile == '')
         <div id="getFreeInfo" class="ttl-brnd-list">
             <span class="count">0</span>Brands in my List
-            <a href="#" data-toggle="modal" data-target="#modalGetFree"  id="getfreewindowstate" >Request Now</a>
+            <a href="#" data-toggle="modal" data-target="#modalGetFree" id="getfreewindowstate">Request Now</a>
         </div>
     @else
         <div id="getFreeInfo" class="ttl-brnd-list">
             <div class="popblkbtm">
                 <div class="blkpop"> <span class="count">0</span>Brands in my List </div>
-                <form method="post" action="{{URL('multipleInvFreeinfo')}}">
+                <form method="post" action="{{ URL('multipleInvFreeinfo') }}">
                     <input type="hidden" name="franchisors" id="franchisorsForInv">
-                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="submit" class="brandRequest" value="Apply Now" />
                 </form>
             </div>
@@ -522,10 +554,9 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
     </div>
 
 
-    <script type="text/javascript" src="{{url('awesomplete/awesomplete.js') }}"></script>
+    <script type="text/javascript" src="{{ url('awesomplete/awesomplete.js') }}"></script>
 
     <script language="javascript">
-
         //action on submit your interest
         $('#expbtn').on('click', function() {
             var franId = document.getElementById('expIntFranId').value;
@@ -533,20 +564,22 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
             document.getElementById("expbtnloading").style.display = "block";
             $.ajax({
                 type: 'post',
-                url: '{{URL('/inv-lead?flag=expint')}}',
+                url: '{{ URL('/inv-lead?flag=expint') }}',
                 data: {
                     franId: franId,
                 },
-                success: function (data) {
+                success: function(data) {
 
-                    if ( $.isNumeric(data) ) {
+                    if ($.isNumeric(data)) {
 
                         $('#expintbutton').css('display', 'block');
-                        $('#creditRemaining').html('You have '+ data +' credits remaining. Do you want to use the credit');
+                        $('#creditRemaining').html('You have ' + data +
+                            ' credits remaining. Do you want to use the credit');
 
-                    } else if ( data == "showMsg" ) {
+                    } else if (data == "showMsg") {
 
-                        window.location.assign('{{Config('constants.MainDomain')}}/investor/myaccount/payment');
+                        window.location.assign(
+                            '{{ Config('constants.MainDomain') }}/investor/myaccount/payment');
 
                     } else {
 
@@ -555,10 +588,13 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
                         $('#companyContactinsta').html(data.user.company_name);
                         $('#ceocontactinsta').html(data.user.ceo_name);
                         $('#telephonecontactinsta').html(data.user.telephone);
-                        $('#addressocontactinsta').html(data.user.fran_address+""+data.user.city+""+data.user.state+""+data.user.pincode);
-                        $('#emailcontactinsta').html("<a href='mailto:"+data.user.email+"' target='_blank'>"+data.user.email+"</a>");
+                        $('#addressocontactinsta').html(data.user.fran_address + "" + data.user.city +
+                            "" + data.user.state + "" + data.user.pincode);
+                        $('#emailcontactinsta').html("<a href='mailto:" + data.user.email +
+                            "' target='_blank'>" + data.user.email + "</a>");
                         $('#mobilecontactinsta').html(data.user.mobile);
-                        $('#websitecontactinsta').html("<a href='http://"+data.user.website+"' target='_blank'>"+data.user.website+"</a>");
+                        $('#websitecontactinsta').html("<a href='http://" + data.user.website +
+                            "' target='_blank'>" + data.user.website + "</a>");
 
                     }
                 }
@@ -566,45 +602,48 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
         });
 
 
-        $('#proceedInterest').on('click', function () {
+        $('#proceedInterest').on('click', function() {
 
             $('#expintbutton').css('display', 'none');
             $('#creditRemaining').html('Please wait....');
             var franId = document.getElementById('expIntFranId').value;
             $.ajax({
                 type: 'post',
-                url: '{{URL('/inv-lead')}}',
+                url: '{{ URL('/inv-lead') }}',
                 data: {
                     franId: franId,
                 },
-                success: function (data) {
+                success: function(data) {
 
                     document.getElementById("expbtnloading").style.display = "none";
                     document.getElementById("expmsg").style.display = "block";
                     $('#companyContactinsta').html(data.user.company_name);
                     $('#ceocontactinsta').html(data.user.ceo_name);
                     $('#telephonecontactinsta').html(data.user.telephone);
-                    $('#addressocontactinsta').html(data.user.fran_address+""+data.user.city+""+data.user.state+""+data.user.pincode);
-                    $('#emailcontactinsta').html("<a href='mailto:"+data.user.email+"' target='_blank'>"+data.user.email+"</a>");
+                    $('#addressocontactinsta').html(data.user.fran_address + "" + data.user.city + "" +
+                        data.user.state + "" + data.user.pincode);
+                    $('#emailcontactinsta').html("<a href='mailto:" + data.user.email +
+                        "' target='_blank'>" + data.user.email + "</a>");
                     $('#mobilecontactinsta').html(data.user.mobile);
-                    $('#websitecontactinsta').html("<a href='http://"+data.user.website+"' target='_blank'>"+data.user.website+"</a>");
+                    $('#websitecontactinsta').html("<a href='http://" + data.user.website +
+                        "' target='_blank'>" + data.user.website + "</a>");
 
                 }
             });
 
         });
 
-        $('#cancelinterest').on('click', function () {
+        $('#cancelinterest').on('click', function() {
             $('#creditRemaining').html('Please wait...');
             $('#expintbutton').css('display', 'none');
             var franId = document.getElementById('expIntFranId').value;
             $.ajax({
                 type: 'post',
-                url: '{{URL('/inv-lead-normal')}}',
+                url: '{{ URL('/inv-lead-normal') }}',
                 data: {
                     franId: franId,
                 },
-                success: function (data) {
+                success: function(data) {
                     $('#expbtnloading').css('display', 'none');
                     $('#cancelExpress').css('display', 'block');
                 }
@@ -612,14 +651,16 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
         });
 
         //get the selected states for the selected brands
-        $('#getfreewindowstate').on('click', function(){
+        $('#getfreewindowstate').on('click', function() {
             var keyword = document.getElementById('freeinfovalue').value;
             $.ajax({
                 type: 'get',
                 url: '/getfreestates',
-                data: {fid: keyword},
-                success:function(data){
-                    if(data != "<option>Select State</option>") {
+                data: {
+                    fid: keyword
+                },
+                success: function(data) {
+                    if (data != "<option>Select State</option>") {
                         $("#statesforinfo").html(data);
                     }
                 }
@@ -628,79 +669,89 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
 
         //windows scrolling button
         $(window).scroll(function() {
-            if ( $(this).scrollTop() > 1 )
+            if ($(this).scrollTop() > 1)
                 $('.sortbtn').addClass("aedtt");
             else
-                $ ('.sortbtn').removeClass("aedtt");
+                $('.sortbtn').removeClass("aedtt");
         });
 
         // JavaScript Document
         $(document).ready(function() {
-            $('#sortlbtn').click(function () {
+            $('#sortlbtn').click(function() {
                 $('.backdrop').show(200);
-                $('#sideslide').animate({'left':'0px'});
+                $('#sideslide').animate({
+                    'left': '0px'
+                });
             });
-            $('#closecat').click(function () {
-                $('#sideslide').animate({'left':'-300px'});
+            $('#closecat').click(function() {
+                $('#sideslide').animate({
+                    'left': '-300px'
+                });
                 $('.backdrop').hide(200);
             });
-            $('#closecatnew').click(function () {
-                $('#sideslide').animate({'left':'-300px'});
+            $('#closecatnew').click(function() {
+                $('#sideslide').animate({
+                    'left': '-300px'
+                });
                 $('.backdrop').hide(200);
             });
         });
 
         //get city list according to the selected state
-        function getcityinfo(value){
+        function getcityinfo(value) {
             $.ajax({
-                type:'GET',
-                url:'/getcitylist',
-                data:{state : value},
-                success:function(data){
+                type: 'GET',
+                url: '/getcitylist',
+                data: {
+                    state: value
+                },
+                success: function(data) {
                     $("#getinfocity").html(data);
                 }
             });
         }
 
         //mobile status if it is exists or not using jquery
-        function getMobileStatuscontact(value){
-            if($('#successmobile').css('display') != "block"){
-                if(value.length == 10){
-                    if ($.isNumeric( value )){
+        function getMobileStatuscontact(value) {
+            if ($('#successmobile').css('display') != "block") {
+                if (value.length == 10) {
+                    if ($.isNumeric(value)) {
                         $.ajax({
-                            type:'GET',
-                            url:'/mobcheck',
-                            data:{mobile : value},
-                            success:function(data){
-                                if(data == 1){
-                                    $('#successmobile').css('display','block');
+                            type: 'GET',
+                            url: '/mobcheck',
+                            data: {
+                                mobile: value
+                            },
+                            success: function(data) {
+                                if (data == 1) {
+                                    $('#successmobile').css('display', 'block');
                                 }
-                                if(data == 0){
-                                    $('#contactsubmit').prop('disabled',true);
-                                    $('#validatemobile').css('display','block');
-                                    $('#successmobile').css('display','none');
+                                if (data == 0) {
+                                    $('#contactsubmit').prop('disabled', true);
+                                    $('#validatemobile').css('display', 'block');
+                                    $('#successmobile').css('display', 'none');
                                 }
                             }
                         });
                     }
                 }
             }
-            if(value.length != 10){
-                if ($.isNumeric( value )){
-                    $('#successmobile').css('display','none');
-                    $('#contactsubmit').prop('disabled',false);
-                    $('#editmobile').css('display','none');
-                    $('#validatemobile').css('display','none');
+            if (value.length != 10) {
+                if ($.isNumeric(value)) {
+                    $('#successmobile').css('display', 'none');
+                    $('#contactsubmit').prop('disabled', false);
+                    $('#editmobile').css('display', 'none');
+                    $('#validatemobile').css('display', 'none');
                 }
             }
         }
 
         //edit the entered mobile field
-        function editmobile(){
-            $('#mobile').attr('readonly',false);
-            $('#editmobile').css('display','none');
-            $('#validatemobile').css('display','block');
-            $('#otpblock').css('display','none');
+        function editmobile() {
+            $('#mobile').attr('readonly', false);
+            $('#editmobile').css('display', 'none');
+            $('#validatemobile').css('display', 'block');
+            $('#otpblock').css('display', 'none');
         }
 
         //validate mobile from table
@@ -709,32 +760,37 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
             $.ajax({
                 type: 'get',
                 url: '/verify',
-                data: {mobile: keyword}
+                data: {
+                    mobile: keyword
+                }
             });
-            $('#mobile').attr('readonly',true);
-            $('#editmobilecontact').css('display','block');
-            $('#validatemobile').css('display','none');
+            $('#mobile').attr('readonly', true);
+            $('#editmobilecontact').css('display', 'block');
+            $('#validatemobile').css('display', 'none');
             document.getElementById("otpblock").style.display = "block";
-            $('#contactsubmit').prop('disabled',true);
+            $('#contactsubmit').prop('disabled', true);
         }
 
         //verify the otp
         function verify() {
             var otp = document.getElementById('otpcontact').value;
-            var mobile  = document.getElementById('mobile').value;
+            var mobile = document.getElementById('mobile').value;
             $.ajax({
-                type    : 'get',
-                url     : '/investor/verify-otp',
-                data    : {otpNo: otp, mobileNo: mobile},
-                success : function (data) {
+                type: 'get',
+                url: '/investor/verify-otp',
+                data: {
+                    otpNo: otp,
+                    mobileNo: mobile
+                },
+                success: function(data) {
                     if (data == 0) {
-                        $('#mismatch').css('display','block');
+                        $('#mismatch').css('display', 'block');
                     } else {
-                        $('#successmobile').css('display','block');
-                        $('#contactsubmit').prop('disabled',false);
-                        $('#otpblock').css('display','none');
-                        $('#editmobilecontact').css('display','none');
-                        $('#validatemobile').css('display','none');
+                        $('#successmobile').css('display', 'block');
+                        $('#contactsubmit').prop('disabled', false);
+                        $('#otpblock').css('display', 'none');
+                        $('#editmobilecontact').css('display', 'none');
+                        $('#validatemobile').css('display', 'none');
                     }
                 }
 
@@ -742,13 +798,13 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
         }
 
         //Seo related state wise desc hide and show
-        $(document).ready(function () {
-            $("#buttonAreaHide").click(function () {
+        $(document).ready(function() {
+            $("#buttonAreaHide").click(function() {
                 $("#show-full-txt").slideUp("slow");
                 $('#buttonAreaHide').hide();
                 $('#buttonAreaShow').show();
             });
-            $("#buttonAreaShow").click(function () {
+            $("#buttonAreaShow").click(function() {
                 $("#show-full-txt").slideDown("slow");
                 $('#buttonAreaHide').show();
                 $('#buttonAreaShow').hide();
@@ -760,57 +816,58 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
             const awesomplete = new Awesomplete(input);
             const navBarSearch = $("#dealer-bar-search");
             //navBarSearch.keypress(function () {
-            navBarSearch.on('keypress keyup keypress blur change', function () {
+            navBarSearch.on('keypress keyup keypress blur change', function() {
                 var search_keyword = $(this).val();
                 // Check if atleast 2 chars are typed
-                if(search_keyword.length >= 2){
+                if (search_keyword.length >= 2) {
                     $.ajax({
                         url: '/dealers-search/' + search_keyword,
                         type: 'GET',
                         dataType: 'json',
-                        success: function (response) {
+                        success: function(response) {
                             prepareList(JSON.parse(JSON.stringify(response)));
 
                         },
-                        error: function (err) {
+                        error: function(err) {
                             console.log(err);
 
                         }
                     });
                 }
             });
+
             function prepareList(list) {
                 var c_list = [];
 
                 list.forEach(item => {
                     c_list.push(item.name);
-            });
+                });
 
                 // Assigned the c_list to the list property of Awesomplete instance
                 awesomplete.list = c_list;
             }
 
-            navBarSearch.on('awesomplete-selectcomplete',function(){
-                if($("#dealer-bar-search").val() != "") {
+            navBarSearch.on('awesomplete-selectcomplete', function() {
+                if ($("#dealer-bar-search").val() != "") {
                     var value = $("#dealer-bar-search").val();
                     var items = value.split(' - <strong> in');
-                    if(items.length > 1)
+                    if (items.length > 1)
                         value = items[0];
-                    window.location.href = '/dealers-india/search/'+value;
+                    window.location.href = '/dealers-india/search/' + value;
                 }
             });
 
-            $("#textcompany").on('click', function(){
-                if($("#dealer-bar-search").val() != "") {
+            $("#textcompany").on('click', function() {
+                if ($("#dealer-bar-search").val() != "") {
                     var value = $("#dealer-bar-search").val();
                     var items = value.split(' - <strong> in');
-                    if(items.length > 1)
+                    if (items.length > 1)
                         value = items[0];
-                    window.location.href = '/dealers-india/search/'+value;
+                    window.location.href = '/dealers-india/search/' + value;
                 }
             });
 
-           
+
 
         });
 
@@ -830,16 +887,18 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
             id = id.replace("fran_", "");
             var i = 0;
             $.ajax({
-                type:"GET",
-                url : "{{ url('/')}}/cat-brand-images",
-                data:{franId : id},
-                success:function(data){
+                type: "GET",
+                url: "{{ url('/') }}/cat-brand-images",
+                data: {
+                    franId: id
+                },
+                success: function(data) {
 
                     $('#push-gallery').html(data[0]);
-                    if(data[1] == 0)
+                    if (data[1] == 0)
                         $('#notApplied').css('display', 'block');
 
-                    if(data[1] == 1)
+                    if (data[1] == 1)
                         $('#alreadyApplied').css('display', 'block');
 
                     $('#expIntFranId').val(id);
@@ -855,12 +914,14 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
             });
         }
 
-        function getcityinfoinsta(value){
+        function getcityinfoinsta(value) {
             $.ajax({
-                type:'GET',
-                url:'/getcitylist',
-                data:{state : value},
-                success:function(data){
+                type: 'GET',
+                url: '/getcitylist',
+                data: {
+                    state: value
+                },
+                success: function(data) {
                     $("#city").html(data);
                 }
             });
