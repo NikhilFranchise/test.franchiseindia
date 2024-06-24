@@ -1025,6 +1025,7 @@ class InvestorController extends Controller
         $viewedFranData = '';
         $expIntFranData = '';
         $investorId = $request->user()->profile_str;
+        dd($investorId);
         $userAccountData = UserAccount::select('email','name','membership_type','membership_plan','profile_type','reg_source','profile_status')->where('profile_str', $investorId)->where('reg_source','DelhiExpoPaid')->first();
         // dd($userAccountData);
         if ($request->user()->membership_type == 1) {
