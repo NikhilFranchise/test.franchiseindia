@@ -39,10 +39,10 @@ class InvestorController extends Controller
     /**
      * Create a new controller instance.
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('invAuth')->except('vrifyOtp', 'verifyMobile', 'viewInvQuickRegForm', 'campaignNewRegistration', 'campaignPlanCheck', 'createInvestor', 'viewInvestorRegistrationForm', 'upgradeInvestor', 'updateCampaignInfo', 'paymentRequest', 'viewInvesterLogin', 'campaignPlan', 'setcampaignPlan', 'checkInvestorExistence');
-    // }
+    public function __construct()
+    {
+        $this->middleware('invAuth')->except('vrifyOtp', 'verifyMobile', 'viewInvQuickRegForm', 'campaignNewRegistration', 'campaignPlanCheck', 'createInvestor', 'viewInvestorRegistrationForm', 'upgradeInvestor', 'updateCampaignInfo', 'paymentRequest', 'viewInvesterLogin', 'campaignPlan', 'setcampaignPlan', 'checkInvestorExistence');
+    }
 
     /**
      * @return Factory|RedirectResponse|Redirector|View
