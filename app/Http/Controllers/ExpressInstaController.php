@@ -169,7 +169,7 @@ class ExpressInstaController extends Controller
 
         //insert a new record if not in the database
         if ($insert == 1) {
-           $data = UserActivity::query()->insert([
+            UserActivity::query()->insert([
                 'investor_id' => $request->user()->profile_str,
                 'franchisor_id' => $request->input('franId'),
                 'email' => $request->user()->email,
@@ -179,7 +179,6 @@ class ExpressInstaController extends Controller
                 'franchisor_visibility' => ($franData->membership_type == 1 ? 1 : 0),
                 'franchisor_visibility_date' => ($franData->membership_type == 1 ? date('Y-m-d H:i:s') : "")
             ]);
-            dd($data);
         }
 
 
