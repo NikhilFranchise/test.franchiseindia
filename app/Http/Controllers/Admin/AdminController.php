@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-
-
 use App\Models\ContentTagsAssignedHindi;
 use App\Models\HindiContentRef;
 use App\Models\HindiNewsRef;
@@ -23,7 +20,7 @@ use App\Models\ContentList;
 use App\Models\MagazineList;
 use App\Models\ContentComment;
 use App\Models\MagazineComment;
-use App\Models\MagazineCategorie;
+use App\Models\MagazineCategory;
 use App\Models\ContentSliderImage;
 use App\Models\ContentTagsAssigned;
 use App\Mail\CommentReplyMail;
@@ -34,7 +31,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\ArticleInterviewCommentReply;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -86,11 +83,12 @@ class AdminController extends Controller
         $password   = $request->password;
         $admUser    = AdminUser::query()->where(['admin_email'=>$email])->first();
 
-        if (count($admUser) == 0)
+        if ($admUser == false)
+        dd('hello-false');
             return redirect('admin/login');
         
         //checking if hash exists in the entered password
-        if (Hash::getFacadeRoot()->check($password, $admUser->admin_password)) {
+        if (Hash::check($password, $admUser->admin_password)) {
             session()->flush();
             $adm_name = $admUser->admin_name;
             $request->session()->put('admin_name',$adm_name);
@@ -99,7 +97,7 @@ class AdminController extends Controller
             $request->session()->put('author_creation_capability', $admUser->can_create_author);
             return redirect('admin/dashboard');
         }
-
+        dd('hello');
         return redirect('admin/login');
     }
 
@@ -124,7 +122,7 @@ class AdminController extends Controller
         $email          = $request->email;
         $company        = $request->company;
         $desc           = $request->desc;
-        $slug           = str_slug($request->name);
+        $slug           = Str::slug($request->name);
         $designation    = $request->designation;
 
         if ($request->hasFile('image')) {
@@ -191,7 +189,7 @@ class AdminController extends Controller
                 'designation'            => $request->designation,
                 'text'                   => $this->cleanContent($request->desc),
                 'emailid'                => $request->email,
-                'slug'                   => str_slug($request->name),
+                'slug'                   => Str::slug($request->name),
                 'news_upload_capability' => ((request()->news_upload_capability == 1) ? 1 : 0),
                 'phone_no'               => request()->phone_no,
                 'address'                => request()->address,
@@ -412,7 +410,7 @@ class AdminController extends Controller
             'is_noindexnofollow'          => (($request->is_noindexnofollow == 1) ? '1' : '0'),
             'author'                      => $request->content_publisher,
             'image'                       => $imageUrl,
-            'slug'                        => str_slug($request->title),
+            'slug'                        => Str::slug($request->title),
             'company'                     => $request->company,
             'site_type'                   => $role,
             'homeTitle'                   => $request->home_title,
@@ -568,9 +566,9 @@ class AdminController extends Controller
             $this->thumbnailCreation($imageUrl, 'Gallery', 247, 139);
         }
         if(!empty($request->slug)){
-            $slug = str_slug($request->slug);
+            $slug = Str::slug($request->slug);
         }else{
-            $slug = str_slug($request->title);
+            $slug = Str::slug($request->title);
         }
 
         $update = [
@@ -718,7 +716,7 @@ class AdminController extends Controller
         $kicker            = $request->kicker;
         $homeTitle         = $request->home_title;
         $subTitle          = $request->sub_title;
-        $slug              = str_slug($title);
+        $slug              = Str::slug($title);
         $desc              = $request->input('content');
         $isInternational   = ($request->is_intl == 1) ? 1 : 0;
 
@@ -820,9 +818,9 @@ class AdminController extends Controller
         $brand             = !empty($request->brands) ? $this->stringyfyText($request->brands) : "";
         $title             = $request->title;
         if (!empty($request->slug)){
-        $slug              = str_slug($request->slug);
+        $slug              = Str::slug($request->slug);
         }else{
-        $slug              = str_slug($title);
+        $slug              = Str::slug($title);
         }
         $kicker            = $request->kicker;
         $homeTitle         = $request->home_title;
@@ -1020,7 +1018,7 @@ class AdminController extends Controller
         $title          = $request->title;
         $month          = $request->month;
         $year           = $request->year;
-        $slug           = str_slug($request->title);
+        $slug           = Str::slug($request->title);
         $imageUrl       = "";
         
         //upload image file to server
@@ -1029,7 +1027,7 @@ class AdminController extends Controller
             $imageUrl  = $this->uploadImage($magImage, 'Magazine', 0, 's3', '');
         }
 
-        MagazineCategorie::query()->insert(['title' => $title, 'iss_month' => $month, 'iss_year' => $year, 'image' => $imageUrl, 'slug' => $slug, 'status' => 0]);
+        MagazineCategory::query()->insert(['title' => $title, 'iss_month' => $month, 'iss_year' => $year, 'image' => $imageUrl, 'slug' => $slug, 'status' => 0]);
         return redirect('admin/list-magazine');
     }
 
@@ -1039,7 +1037,7 @@ class AdminController extends Controller
      */
     public function listMagazine()
     {
-        $magazineData = MagazineCategorie::query()->select('category_id','title','status')->orderBy('category_id','DESC')->paginate(30);
+        $magazineData = MagazineCategory::query()->select('category_id','title','status')->orderBy('category_id','DESC')->paginate(30);
         return view('admin/magazine/list-magazine',compact('magazineData'));
     }
 
@@ -1051,7 +1049,7 @@ class AdminController extends Controller
     public function editMagazineView(Request $request)
     {
         $magazineId    = $request->id;
-        $magazineData  = MagazineCategorie::query()->where('category_id',$magazineId)->first();
+        $magazineData  = MagazineCategory::query()->where('category_id',$magazineId)->first();
         return view('admin/magazine/edit-magazine',compact('magazineData'));
     }
 
@@ -1066,16 +1064,16 @@ class AdminController extends Controller
         $title          = $request->title;
         $month          = $request->month;
         $year           = $request->year;
-        $slug           = str_slug($request->title);
+        $slug           = Str::slug($request->title);
 
         //delete old image and upload new image
         if ( $request->hasFile('image') ) {
             $magImage = $request->file('image');
             $imageUrl  = $this->uploadImage($magImage, 'Magazine', 1, 's3', $request->old_image);
-            MagazineCategorie::query()->where('category_id',$categoryId)->update(['image'=>$imageUrl]);
+            MagazineCategory::query()->where('category_id',$categoryId)->update(['image'=>$imageUrl]);
         }
 
-        MagazineCategorie::query()->where('category_id',$categoryId)->update(['title'=>$title,'iss_month'=>$month,'iss_year'=>$year,'slug'=>$slug]);
+        MagazineCategory::query()->where('category_id',$categoryId)->update(['title'=>$title,'iss_month'=>$month,'iss_year'=>$year,'slug'=>$slug]);
         return redirect('admin/list-magazine');
     }
 
@@ -1088,7 +1086,7 @@ class AdminController extends Controller
     {
         $caregoryId = $request->id;
         $articleData = MagazineList::query()->where('category_id',$caregoryId)->select('category_id','item_id','title','views','status')->orderBy('category_id','DESC')->paginate(30);
-        $magazine   = MagazineCategorie::query()->where('category_id',$caregoryId)->select('title')->first();
+        $magazine   = MagazineCategory::query()->where('category_id',$caregoryId)->select('title')->first();
         return view('admin/magazine/magazine-article-list',compact('articleData','caregoryId','magazine'));
     }
 
@@ -1117,7 +1115,7 @@ class AdminController extends Controller
         $summery           = $request->summery;
         $pharagraph        = $request->pharagraph;
         $content           = $this->cleanContent($request->desc);
-        $slug              = str_slug($request->article_title);
+        $slug              = Str::slug($request->article_title);
 
         //inserting new image
         if ( $request->hasFile('image') ) {
@@ -1144,7 +1142,7 @@ class AdminController extends Controller
     {
         $magazineId    = $request->magazine;
         $status        = $request->contentStatus;
-        MagazineCategorie::query()->where('category_id',$magazineId)->update(['status'=>$status]);
+        MagazineCategory::query()->where('category_id',$magazineId)->update(['status'=>$status]);
         return response()->json(array('status'=> $status), 200);
     }
 
@@ -1156,7 +1154,7 @@ class AdminController extends Controller
     public function deleteMagazine(Request $request)
     {
         $magazineId    = $request->magazineId;
-        $delete        = MagazineCategorie::query()->where('category_id',$magazineId)->delete();
+        $delete        = MagazineCategory::query()->where('category_id',$magazineId)->delete();
         return response()->json(array('delete'=> $delete), 200);
     }
 
@@ -1218,7 +1216,7 @@ class AdminController extends Controller
         $summery           = $request->summery;
         $pharagraph        = $request->pharagraph;
         $content           = $this->cleanContent($request->desc);
-        $slug              = str_slug($request->article_title);
+        $slug              = Str::slug($request->article_title);
 
         //deleting previous image and inserting new image
         if ( $request->hasFile('image') ) {
@@ -1300,7 +1298,7 @@ class AdminController extends Controller
     public function searchMagazine(Request $request)
     {
         $output = "";
-        $results = MagazineCategorie::query()->where('title','LIKE','%'.$request->search.'%')->paginate(25);
+        $results = MagazineCategory::query()->where('title','LIKE','%'.$request->search.'%')->paginate(25);
 
         if(count($results) == 0)
             return response($output);
@@ -1755,7 +1753,7 @@ class AdminController extends Controller
         // $kicker            = $request->kicker;
         $homeTitle         = $request->home_title;
         $subTitle          = $request->sub_title;
-        $slug              = str_slug($title);
+        $slug              = Str::slug($title);
         $desc              = $request->input('content');
         $insights_type      = $request->insights_type;
         $cat_id             = $request->insights_cat;
@@ -1912,9 +1910,9 @@ class AdminController extends Controller
         $brand             = !empty($request->brands) ? $this->stringyfyText($request->brands) : "";
         $title             = $request->title;
         if(!empty($request->slug)){
-        $slug              = str_slug($request->slug);
+        $slug              = Str::slug($request->slug);
         }else{
-            $slug              = str_slug($title);   
+            $slug              = Str::slug($title);   
         }
         // dd($role);
         $kicker            = $request->kicker;

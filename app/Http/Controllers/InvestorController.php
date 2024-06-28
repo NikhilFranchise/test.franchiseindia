@@ -167,16 +167,13 @@ class InvestorController extends Controller
 
 
                 return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, '');
-
             }
-
         }
 
         session()->flash('loginFailed', 'The user ID or password is incorrect. Kindly re-enter.');
         $plan = $request->input('invPlan');
 
         return view('inv-campaign.investlogin_new', compact('plan', 'gst'));
-
     }
 
     /**
@@ -187,7 +184,6 @@ class InvestorController extends Controller
         $plan = request()->invPlan;
         $flag = 2;
         return view('investor/register/investor-quick-registration', compact('flag', 'plan'));
-
     }
 
     /**
@@ -470,7 +466,6 @@ class InvestorController extends Controller
                     return redirect('investor/create');
                 }
             }
-
         }
 
         // If we reach here, then data is valid and working. Commit the queries!
@@ -502,8 +497,7 @@ class InvestorController extends Controller
                 $amount = Config('constants.invPlanAmount.' . $request->input('inv_plan'));
                 $membership = config('constants.invPlanDetails.' . $request->input('inv_plan'));
                 $planId = $request->input('inv_plan');
-                $detail = config('constants.invPlanDetails.' . $request->input('inv_plan'));
-                ;
+                $detail = config('constants.invPlanDetails.' . $request->input('inv_plan'));;
             }
 
             if ($request->input('inv_plan') == 401)
@@ -519,7 +513,6 @@ class InvestorController extends Controller
 
         //Return to plan page
         return view('investor.register.investor-plan', compact('investorId'));
-
     }
 
     /**
@@ -547,13 +540,10 @@ class InvestorController extends Controller
             $investorId = $request->input('investorId');
             $membership = config('constants.invPlanDetails.' . $request->input('invPlan'));
             $planId = $request->input('invPlan');
-            $detail = config('constants.invPlanDetails.' . $request->input('invPlan'));
-
-            ;
+            $detail = config('constants.invPlanDetails.' . $request->input('invPlan'));;
             $gst = $request->gst_no;
 
             return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, $pmode);
-
         }
     }
 
@@ -637,7 +627,7 @@ class InvestorController extends Controller
         // Insert into UserAccount Model
         $updateUser = UserAccount::query()->where('profile_str', $investorId)->update(['name' => $name, 'title' => request()->title, 'mobile' => $finalmobile]);
 
-        
+
         // If saving the record in User Model failed
         if (!$updateUser) {
             DB::rollBack();
@@ -677,20 +667,20 @@ class InvestorController extends Controller
         }
         $this->setPercentage();
         $this->recordUpdateTime();
-        
+
         //add event statement for event investors 14-06-2024
         $profile_percentage = (Cookie::get('invPercentage'));
         // dd($profile_percentage);
         $credit_points = InvestorDetails::query()->where('investor_id', $request->user()->profile_str)->first();
-        if($request->input('reg_source') == 'DelhiExpoPaid' && $profile_percentage > 59 && $profile_percentage < 100 && $credit_points->event_credit_status == 0){
+        if ($request->input('reg_source') == 'DelhiExpoPaid' && $profile_percentage > 59 && $profile_percentage < 100 && $credit_points->event_credit_status == 0) {
 
             // dd($profile_percentage,$credit_points->total_credits,$credit_points->event_credit_status);
-            $credit_add = InvestorDetails::query()->where('investor_id', $investorId)->update(['total_credits' => 5, 'event_credit_status' => '1', 'credit_limit' => 5 ]);
+            $credit_add = InvestorDetails::query()->where('investor_id', $investorId)->update(['total_credits' => 5, 'event_credit_status' => '1', 'credit_limit' => 5]);
             // echo $credit_add;exit;
-        }else if($request->input('reg_source') == 'DelhiExpoPaid'  && $profile_percentage == 100 &&               $credit_points->event_credit_status == 1){
+        } else if ($request->input('reg_source') == 'DelhiExpoPaid'  && $profile_percentage == 100 &&               $credit_points->event_credit_status == 1) {
             $newCreditLimit = $credit_points->credit_limit + 2;
-            
-            $credit_add = InvestorDetails::query()->where('investor_id', $investorId)->update(['total_credits' => 7, 'event_credit_status' => '2', 'credit_limit' => $newCreditLimit ]);
+
+            $credit_add = InvestorDetails::query()->where('investor_id', $investorId)->update(['total_credits' => 7, 'event_credit_status' => '2', 'credit_limit' => $newCreditLimit]);
             // dd($credit_add);
 
         }
@@ -767,7 +757,6 @@ class InvestorController extends Controller
                     return redirect('investor/create');
                 }
             }
-
         }
         $this->recordUpdateTime();
         $this->setPercentage();
@@ -825,7 +814,6 @@ class InvestorController extends Controller
         //redirecting to the same page with successful flash data
         session()->flash('Success', 'Successfully Updated');
         return redirect('/investor/myaccount/jobdetails');
-
     }
 
     /**
@@ -934,7 +922,7 @@ class InvestorController extends Controller
                 // 'area_type' => $request->input('area_type'),
                 'property_type' => $request->input('property_use'),
             ]);
-            // dd($update);
+        // dd($update);
         if (!$update) {
             // Log the error
             $errorMsg = "updation of investor property details : InvestorDetail Model . $investorId";
@@ -952,7 +940,6 @@ class InvestorController extends Controller
         //redirecting to the same page with successful flash data
         session()->flash('Success', 'Successfully Updated');
         return redirect('/investor/myaccount/propertydetails');
-
     }
 
     /**
@@ -1025,7 +1012,7 @@ class InvestorController extends Controller
         $viewedFranData = '';
         $expIntFranData = '';
         $investorId = $request->user()->profile_str;
-        $userAccountData = UserAccount::select('email','name','membership_type','membership_plan','profile_type','reg_source','profile_status')->where('profile_str', $investorId)->where('reg_source','DelhiExpoPaid')->first();
+        $userAccountData = UserAccount::select('email', 'name', 'membership_type', 'membership_plan', 'profile_type', 'reg_source', 'profile_status')->where('profile_str', $investorId)->where('reg_source', 'DelhiExpoPaid')->first();
         // dd($userAccountData);
         if ($request->user()->membership_type == 1) {
             $paymentDetail = PgInvestorPayment::query()->select('order_status', 'expiry_date')
@@ -1093,7 +1080,7 @@ class InvestorController extends Controller
         $membershipDays = PgInvestorPayment::query()->where('investor_id', $investorId)->where('order_status', 1)->first();
 
 
-        return view('investor/myAccount/dashboard', compact('count', 'expIntBrands', 'expIntFranData', 'viewedBrands', 'viewedFranData', 'credits', 'membershipDays','userAccountData'));
+        return view('investor/myAccount/dashboard', compact('count', 'expIntBrands', 'expIntFranData', 'viewedBrands', 'viewedFranData', 'credits', 'membershipDays', 'userAccountData'));
     }
 
     /**
@@ -1152,7 +1139,7 @@ class InvestorController extends Controller
         $investorData = InvestorDetails::query()->where('investor_id', request()->user()->profile_str)->first();
         $industryData = InvestorIndustry::query()->where('investor_id', request()->user()->profile_str)->first();
         $userAccountData = UserAccount::query()->where('profile_str', request()->user()->profile_str)->first();
-        
+
 
         if (!empty($industryData)) {
             $value = $value + 5;
@@ -1230,7 +1217,7 @@ class InvestorController extends Controller
         if (!empty(request()->user()->name))
             $value = $value + 5;
 
-            // dd($name,$value);
+        // dd($name,$value);
         Cookie::queue($name, $value);
     }
 
@@ -1263,7 +1250,6 @@ class InvestorController extends Controller
         $gst = $request->gst_no;
 
         return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, '');
-
     }
 
     /**
@@ -1332,7 +1318,6 @@ class InvestorController extends Controller
         $gst = $request->gst_no;
 
         return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, '');
-
     }
 
     /**
@@ -1350,7 +1335,6 @@ class InvestorController extends Controller
         if (is_array($membership)) {
             $membership = $membership[0];
             $checkCampaign = 1;
-
         }
 
         $invData = InvestorDetails::query()->select('investor_id', 'inv_city', 'inv_state', 'inv_country', 'inv_address')->where('investor_id', $investorId)->first();
@@ -1447,7 +1431,6 @@ class InvestorController extends Controller
         $access_code_new = Config('hdfcpgnew.accessCode');
         // dd($access_code_new);
         return view('payment.payment-request')->with(compact('encrypted_data', 'access_code_new'));
-
     }
 
     /**
