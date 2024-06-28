@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 
-use DB;
+// use DB;
 use App\Models\SeoTag;
 use App\Models\NewsList;
 use App\Models\FihlVideo;
@@ -15,11 +15,11 @@ use App\Models\MagazineList;
 use App\Models\CategoryFinal;
 use App\Models\ContentComment;
 use App\Models\FihlVideoCategory;
-use App\Models\MagazineCategorie;
 use App\Models\ContentTagsAssigned;
 use App\Models\FranchisorBusinessDetail;
 use App\Models\ArticleInterviewCommentReply;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class GalleryController extends Controller
 {

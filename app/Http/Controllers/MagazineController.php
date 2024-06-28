@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\MagazineList;
 use App\Models\MagazineComment;
-use App\Models\MagazineCategorie;
+use App\Models\MagazineCategory;
 
 class MagazineController extends Controller
 {
@@ -18,7 +18,7 @@ class MagazineController extends Controller
     {
         $articleController = new ArticleController();
         $brandController   = new BrandController();
-        $magazineCategory  = MagazineCategorie::query()->select('category_id','title','iss_month','iss_year','image', 'magz_id')
+        $magazineCategory  = MagazineCategory::query()->select('category_id','title','iss_month','iss_year','image', 'magz_id')
             ->where('status', 1)
             ->where('image', '!=', '')
             ->where('iss_year', '!=', '')
@@ -57,11 +57,11 @@ class MagazineController extends Controller
     {
         $contentId    = request()->id;
         $magYear      = request()->pyear;
-        $articles     = MagazineCategorie::query()->where('category_id', $contentId)->where('iss_year', $magYear)->get();
+        $articles     = MagazineCategory::query()->where('category_id', $contentId)->where('iss_year', $magYear)->get();
 
         //return count($articles);
         if (count($articles) == 0)
-            $articles     = MagazineCategorie::query()->where('magz_id', $contentId)->where('iss_year', $magYear)->get();
+            $articles     = MagazineCategory::query()->where('magz_id', $contentId)->where('iss_year', $magYear)->get();
 
         if (count($articles) == 0)
             return redirect('pagenotfound');
@@ -163,7 +163,7 @@ class MagazineController extends Controller
      */
     public function getMagazineCategoryArticleHome($count)
     {
-        return MagazineCategorie::query()->select('category_id', 'title', 'iss_month', 'iss_year', 'image')
+        return MagazineCategory::query()->select('category_id', 'title', 'iss_month', 'iss_year', 'image')
             ->where('status', 1)
             ->where('image', '!=', '')
             ->orderBy('category_id', 'desc')
