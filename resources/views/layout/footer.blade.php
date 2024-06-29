@@ -1328,6 +1328,7 @@
         if ($("#dealer-bar-search-top").val() != "") {
             var value = $("#dealer-bar-search-top").val();
             var items = value.split(' - <strong> in');
+                console.log(items);
             if (items.length > 1)
                 value = items[0];
             window.location.href = '/dealers-india/search/' + value;
@@ -1338,6 +1339,7 @@
         if ($("#dealer-bar-search").val() != "") {
             var value = $("#dealer-bar-search-top").val();
             var items = value.split(' - <strong> in');
+                console.log(items + 2);
             if (items.length > 1)
                 value = items[0];
             window.location.href = '/dealers-india/search/' + value;

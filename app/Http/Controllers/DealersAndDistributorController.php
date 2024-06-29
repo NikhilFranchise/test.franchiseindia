@@ -47,7 +47,7 @@ class DealersAndDistributorController extends Controller
     public function searchForDealerHomePage()
     {
         $companies = FranchisorBusinessDetail::query()
-            ->select(DB::getFacadeRoot()->raw("CONCAT(franchisor_business_details.company_name, ' - <strong> in ', category_final.catname,'<%2Fstrong>') AS name"))
+            ->select(DB::raw("CONCAT(franchisor_business_details.company_name, ' - <strong> in ', category_final.catname,'<%2Fstrong>') AS name"))
             ->where('profile_status', 1)
             ->where('company_name', 'LIKE', "%".request()->search."%")
             ->leftJoin('category_final', 'category_final.catid', '=', 'franchisor_business_details.ind_sub_cat');
