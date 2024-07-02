@@ -129,7 +129,7 @@ Route::post('subscribenews', [NewsLetterController::class, 'subscriptionFormsubm
 Route::post('property-loan-submit', [StaticPageController::class, 'postPropertyLoanForm']);
 Route::post('contact-submit', [ContactUsController::class, 'contact']);
 Route::post('feedback', [FeedbackController::class, 'feedback']);
-Route::post('freeadvice', [AdviceController::class, 'freeadvice']);
+Route::post('freeadvice1', [AdviceController::class, 'freeadvice']);
 Route::post('brandlikes', [BrandController::class, 'likes']);
 Route::post('brandratings', [BrandController::class, 'ratings']);
 Route::post('brandcontactinfo', [ExpressInstaController::class, 'brandInfo']);     //guest
@@ -140,6 +140,8 @@ Route::post('loginform', [LoginController::class, 'login'])->name('franchise.log
 Route::get('logoutprofile', [LoginController::class, 'logoutProfile']);
 Route::get('fibl/login', [LoginController::class, 'fiblLogin']);  // FIBL brand routes
 Route::post('fibl/login', [LoginController::class, 'fiblLoginCheck']);
+Route::get('auth/{provider}',                [LoginController::class, 'redirectToProvider']);  // Routes for social login
+Route::get('auth/{provider}/callback',       [LoginController::class, 'handleProviderCallback']);  // Routes for social login
 Route::post('getfreeinfo', [ExpressInstaController::class, 'freeInfo']);      //guest
 Route::post('instasubsribe', [InstaSubscribeController::class, 'instasubsribe']);
 Route::post('advertise/addform', [AdvertiseController::class, 'advertise']);
@@ -357,7 +359,7 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('.LOC1',                                      function () {
         return redirect('business-opportunities/andhra-pradesh.LOC1', 301);
     });
-    //Route::get('uttaranchal.LOC31',                          function() { return redirect('business-opportunities/uttarakhand.LOC31', 301);});	
+    //Route::get('uttaranchal.LOC31',                          function() { return redirect('business-opportunities/uttarakhand.LOC31', 301);});
     Route::get('Jewellery-Franchise',                        function () {
         return redirect('business-opportunities/jewellery.sc42', 301);
     });
@@ -506,7 +508,7 @@ Route::group(['prefix' => 'book'], function () {
     //Post routes
     Route::post('{name}', [BookController::class, 'bookInner']);
 });
-// amp routes 
+// amp routes
 // 301 redirect route to remove 'amp' prefix
 Route::get('amp/{path}', function ($path) {
     return redirect('/' . $path, 301);
@@ -516,7 +518,7 @@ Route::get('amp/{path}', function ($path) {
 
 // Route::group(['prefix' => 'amp'], function () {
 //     Route::get('location/{city}', [BusinessListingController::class, 'listingLocation']);   //working
-//     Route::get('location', [BusinessListingController::class, 'listingLocation']);          //working 
+//     Route::get('location', [BusinessListingController::class, 'listingLocation']);          //working
 
 //     //Hindi language amp pages routes
 //     Route::group(['prefix' => 'hi'], function () {
@@ -592,7 +594,7 @@ Route::get('amp/{path}', function ($path) {
 //         Route::get('{contentSite}/{title}.{id}', [AmpArticleController::class, 'getAmpHindiArticle']);
 //     });
 
-//     //Category Page Routes   working 
+//     //Category Page Routes   working
 //     Route::group(['prefix' => 'category'], function () {
 //         Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
 //         Route::get('search', [BusinessListingController::class, 'searchBusinessListing']);
@@ -656,7 +658,7 @@ Route::get('amp/{path}', function ($path) {
 
 
 
-//     Route::get('brands/{profileName}', [BrandController::class, 'ampBrandDetails']);                // Eng AMP brand url  working 
+//     Route::get('brands/{profileName}', [BrandController::class, 'ampBrandDetails']);                // Eng AMP brand url  working
 //     Route::get('{contentSite}/{title}.{id}', [AmpArticleController::class, 'ampCreate']);
 // });
 
@@ -781,7 +783,7 @@ Route::group(['prefix' => 'hi'], function () {
         Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
     });
 
-    Route::get('/', [NewHomePageController::class, 'hindiHomePage']);               // Hindi Home Page	
+    Route::get('/', [NewHomePageController::class, 'hindiHomePage']);               // Hindi Home Page
     Route::get('content', function () {
         return redirect('https://www.opportunityindia.com/hindi', 301);
     });         // Article Hindi Home
@@ -796,7 +798,7 @@ Route::group(['prefix' => 'hi'], function () {
     Route::get('newcontent/author/{author}', [NewArticleController::class, 'getAuthorHindiDetails']); // Hindi Author url
     Route::get('newcontent/{kicker}/{kickerId}', [NewArticleController::class, 'getHindiKickerList']);
     Route::get('newcontent/{slug}.{id}', [NewArticleController::class, 'getHindiContent']);
-    Route::get('next-article', [NewArticleController::class, 'getNextArticleHindiForRepeat']); // Hindi Repeat 
+    Route::get('next-article', [NewArticleController::class, 'getNextArticleHindiForRepeat']); // Hindi Repeat
     Route::get('video-and-podcast', [NewArticleController::class, 'getVideoAndPodcast']);
 });
 
