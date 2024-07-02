@@ -35,7 +35,7 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
     'facebook' => [
-        
+
         'client_id' => '693166321174131',
         'client_secret' => 'd6c7ecd475ea74ce71f26194d489a7d0',
         'redirect' => 'https://www.franchiseindia.com/auth/facebook/callback',
@@ -44,7 +44,7 @@ return [
     'google' => [
         'client_id' => '419712793551-job4lnjbv425s7lqcnkfj8f8m7o2f2f3.apps.googleusercontent.com',
         'client_secret' => 'h2jtjDzljsRqKIQY8eF58RwM',
-        'redirect' => 'https://www.franchiseindia.com/auth/google/callback',
+        'redirect' => 'https://fiuat.franchiseindia.com/auth/google/callback',
     ],
 
     'linkedin' => [

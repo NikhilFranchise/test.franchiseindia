@@ -240,10 +240,10 @@ class LoginController extends Controller
         $admAuthHost = "{mail.franchiseindia.com:143/imap/notls}";
         $userData    = UserAccount::query()->where('profile_str', $request->fid)
 						->where('profile_type', 1)
-						->where('profile_status', 1)						
+						->where('profile_status', 1)
 						//->orWhere('email', 'fiblbrands@franchiseindia.in')
 						//->orWhere('email', 'info@opportunityindia.com')
-						//->orWhere('email', 'info@franglobal.com')												
+						//->orWhere('email', 'info@franglobal.com')
 						->first();
 
         if ($userData->count() > 0) {
@@ -291,7 +291,7 @@ class LoginController extends Controller
             }*/
 
            // if($request->password == 'KHBIUB*^211*YIjbkijbclkd%wf' || $mbox) {
-            if($request->password == 'Ki5LH,gb-Mkd%wfJU4@siBA0') {		   
+            if($request->password == 'Ki5LH,gb-Mkd%wfJU4@siBA0') {
 
                 if (Auth::getFacadeRoot()->login(User::query()->find($userData->user_id))) {
                     $this->recordLoginTime();

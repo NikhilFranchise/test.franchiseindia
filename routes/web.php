@@ -129,7 +129,7 @@ Route::post('subscribenews', [NewsLetterController::class, 'subscriptionFormsubm
 Route::post('property-loan-submit', [StaticPageController::class, 'postPropertyLoanForm']);
 Route::post('contact-submit', [ContactUsController::class, 'contact']);
 Route::post('feedback', [FeedbackController::class, 'feedback']);
-Route::post('freeadvice1', [AdviceController::class, 'freeadvice']);
+Route::post('freeadvice', [AdviceController::class, 'freeadvice']);
 Route::post('brandlikes', [BrandController::class, 'likes']);
 Route::post('brandratings', [BrandController::class, 'ratings']);
 Route::post('brandcontactinfo', [ExpressInstaController::class, 'brandInfo']);     //guest

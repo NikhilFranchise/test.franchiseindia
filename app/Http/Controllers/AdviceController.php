@@ -9,9 +9,7 @@ use App\Mail\FreeAdviceForm;
 use App\Models\Pincode;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
-use SparkPost\SparkPost;
-use GuzzleHttp\Client;
-use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
+
 
 class AdviceController extends Controller
 {
@@ -20,7 +18,7 @@ class AdviceController extends Controller
      * @param Request $request
      * @return bool
      */
-    public function freeadvice(Request $request)
+    public function freeadvice1(Request $request)
     {
         
         $request->validate([
@@ -28,7 +26,7 @@ class AdviceController extends Controller
             'name' => 'required|min:2',
             'mobile' => 'required|min:10',
         ]);
-
+        // dd($request->all());
         $user = $request->optionsRadios;
         $name = $request->name;
         $pincode = $request->pincode;
@@ -41,15 +39,15 @@ class AdviceController extends Controller
         $ip = $request->ip();
 
         $table = ($user == 'franchisor') ? AskFranchisor::class : AskInvestor::class;
-        // dd($table);
         $pincodeDetails = Pincode::select('city', 'state')->where('pincode', $pincode)->first();
+        // dd($pincodeDetails);
         if (!empty($pincodeDetails)) {
             $city = ucfirst(strtolower($pincodeDetails->city));
             $state = ucfirst(strtolower($pincodeDetails->state));
         }
-        // dd($name);
-        $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
-        // $mailTo = ($user != 'franchisor') ? "pganesh@franchiseindia.net" : "pganesh@franchiseindia.net";
+        // dd($email,$mobile);
+        // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
+        $mailTo = ($user != 'franchisor') ? "pganesh@franchiseindia.net" : "pganesh@franchiseindia.net";
 
         $users = $table::create([
             'name' => $name,
@@ -67,8 +65,8 @@ class AdviceController extends Controller
         if (!$users)
             return response()->json('Insertion failed..!');
 
-        Mail::to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
-        // Mail::to($mailTo)->bcc("krituraj@franchiseindia.com")->send(new FreeAdviceForm($request));
+        // Mail::to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
+        Mail::to($mailTo)->bcc("krituraj@franchiseindia.com")->send(new FreeAdviceForm($request));
 
         if ($newsLetter == 1)
             NewsLetterController::createNewsLetter($request->input('email'), "fi");
@@ -77,7 +75,8 @@ class AdviceController extends Controller
         return response()->json('true');
     }
 
-    public function freeadviceHome(Request $request)
+    public function freeadvice(Request $request)
+    // public function freeadviceHome(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
@@ -103,7 +102,8 @@ class AdviceController extends Controller
             $state = ucfirst(strtolower($pincodeDetails->state));
         }
 
-        $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
+        $mailTo = ($user != 'franchisor') ? "pganesh@franchiseindia.net" : "cnikhil@franchiseindia.net";
+        // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
 
         $users = $table::create([
             'name' => $name,
@@ -121,7 +121,8 @@ class AdviceController extends Controller
         if (!$users)
             return response()->json('Insertion failed..!');
 
-        Mail::to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
+        // Mail::to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
+        Mail::to($mailTo)->bcc("pkumar@franchiseindia.net")->send(new FreeAdviceForm($request));
 
         if ($newsLetter == 1)
             NewsLetterController::createNewsLetter($request->input('email'), "fi");
