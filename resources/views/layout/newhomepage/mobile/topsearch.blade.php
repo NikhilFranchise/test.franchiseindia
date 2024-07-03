@@ -104,7 +104,7 @@
                                                         <option value="{{ $index }}"
                                                             slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                             @if (isset($mc) && $index == $mc) selected @endif>
-                                                            {!! $value !!}</option>
+                                                            {{ $value }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -385,6 +385,16 @@
             maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
     }
 
+    {{--  //code start by gp  --}}
+    document.addEventListener('DOMContentLoaded', function() {
+        var mainCategorySelect = document.getElementById('getMainCategoryDataHeader');
+        //console.log(mainCategorySelect);
+        if (mainCategorySelect.value) {
+            getSubCategoryHeader(mainCategorySelect.value);
+        }
+    });
+    {{--  //code end by gp  --}}
+
     function getSubCategoryHeader(value) {
         $.ajax({
             type: 'GET',
@@ -453,10 +463,10 @@
     });
     function customResetForm() {
     let form = document.getElementById('invform');
-    
+
     // Reset the form
     form.reset();
-    
+
     // Reset maxAmount1 select element to its default state
     let maxAmount1 = document.getElementById('maxAmount1');
     maxAmount1.innerHTML = '<option value="" hidden>Select Max Investment</option>';
