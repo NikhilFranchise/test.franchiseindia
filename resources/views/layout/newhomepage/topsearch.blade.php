@@ -384,8 +384,16 @@
             maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
     }
 
+    document.addEventListener('DOMContentLoaded', function() {
+        var mainCategorySelect = document.getElementById('getMainCategoryDataHeader');
+        //console.log(mainCategorySelect);
+        if (mainCategorySelect.value) {
+            getSubCategoryHeader(mainCategorySelect.value);
+        }
+    });
+
     function getSubCategoryHeader(value) {
-        
+
         $.ajax({
             type: 'GET',
             url: '{{ url('getsubcategory') }}',
@@ -393,7 +401,7 @@
                 categoryID: value
             },
             success: function(data) {
-                console.log(data);
+                //console.log(data);
                 $("#getSubCategoryDataHeader").html(data);
             }
         });
@@ -454,10 +462,10 @@
 
     function customResetForm() {
     let form = document.getElementById('invform_desktop');
-    
+
     // Reset the form
     form.reset();
-    
+
     // Reset maxAmount1 select element to its default state
     let maxAmount1 = document.getElementById('maxAmount');
     maxAmount1.innerHTML = '<option value="" hidden>Select Max Investment</option>';
