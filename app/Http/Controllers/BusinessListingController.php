@@ -1047,15 +1047,18 @@ public function listingLocation()
 
     public function searchBusinessListingnormalization(Request $request)
     {
+        // dd($request);
          $url = $request->url();
         $lowcost      = request()->lowcost;
-        preg_match('/[a-zA-Z]+(\d+)$/', $lowcost, $matches);    // Match all integers at the end of $lowcost
+        preg_match('/[a-zA-Z]+(\d+)/', $lowcost, $matches);
+
+        // preg_match('/[a-zA-Z]+(\d+)$/', $lowcost, $matches);    // Match all integers at the end of $lowcost
         $lastIntegers = $matches[1] ?? null;    // Get the last set of integers
          $seoCategoriesm = Config('category.SeoCategoryArr'); // Corrected variable name
          $seoCategoriessc = Config('category.SeoSubCategoryArr'); // Corrected variable name
          $seoCategoriesssc = Config('category.SeoSubSubCategoryArr'); // Corrected variable name
 
-         //  dd($lastIntegers,$seoCategories);
+        //   dd($lastIntegers);
          if (array_key_exists($lastIntegers, $seoCategoriesm)) {
             
             $category = $seoCategoriesm[$lastIntegers];
@@ -1075,10 +1078,10 @@ public function listingLocation()
             $newUrl = '/business-opportunities/' . $category . '.'.'ssc' . $lastIntegers;
             return redirect($newUrl);
         }
-        else {
-                    $defaultUrl = 'business-opportunities/all/all';
-                    return redirect($defaultUrl);
-                }
+        // else {
+        //             $defaultUrl = 'business-opportunities/all/all';
+        //             return redirect($defaultUrl);
+        //         }
         
         if (!empty(request()->franchiseType)) {
             
@@ -1660,18 +1663,20 @@ public function listingLocation()
     }
     public function getBusinessListingnormalization(Request $request)
     {
+        // dd($request);
         // $lowcost = $request->route('lowcost');
 
         // Fetch the request parameters
         $catParam      = request()->category_param;
         $catUrl      = request()->catUrl;
-        preg_match('/[a-zA-Z\d\W_]+(\d+)$/', $catParam, $matches);
+        preg_match('/[a-zA-Z]+(\d+)/', $catParam, $matches);
+        
         $allIntegers = $matches[1] ?? null;
         // dd($catUrl,$catParam,$allIntegers);
         $seoCategoriesm = Config('category.SeoCategoryArr'); // Corrected variable name
         $seoCategoriessc = Config('category.SeoSubCategoryArr'); // Corrected variable name
         $seoCategoriesssc = Config('category.SeoSubSubCategoryArr'); // Corrected variable name
-        // dd($catUrl, $category_param,$allIntegers,$seoCategoriesssc);
+        // dd($catUrl, $catParam,$allIntegers,$seoCategoriessc,$seoCategoriesssc);
 
 // Check if $allIntegers exists in $seoCategoriesm configuration array
         if (array_key_exists($allIntegers, $seoCategoriesm)) {
@@ -1697,7 +1702,7 @@ public function listingLocation()
                 }
             }        
         }
-        else if (array_key_exists($allIntegers, $seoCategoriessc)) {
+         if (array_key_exists($allIntegers, $seoCategoriessc)) {
             // If $allIntegers exists in $seoCategoriesm, add "m" to $allIntegers
             $allIntegers = 'sc' . $allIntegers;
             // dd($allIntegers);
@@ -1748,11 +1753,11 @@ public function listingLocation()
                 }
             }        
         }
-        else{
+        // else{
 
-            $defaultUrl = 'business-opportunities/all/all';
-            return redirect($defaultUrl);
-        }
+        //     $defaultUrl = 'business-opportunities/all/all';
+        //     return redirect($defaultUrl);
+        // }
         $breadCrumb    = '';
         $sortby        = '';
         $minRangeValue = '';
