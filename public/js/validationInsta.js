@@ -1,35 +1,59 @@
-JQuery.validator.addMethod("accept", function (value, element, param) { return value.match(new RegExp("." + param + "$")) });
-$(document).ready(function () {
+// Custom method to validate accepted characters
+jQuery.validator.addMethod("accept", function(value, element, param) {
+    return value.match(new RegExp("." + param + "$"));
+});
+
+$(document).ready(function() {
+    // Initialize hints for input, textarea, and select elements with titles
     $('input[title!=""]').hint();
     $('textarea[title!=""]').hint();
     $('select[title!=""]').hint();
+
+    // Validation for the homepage form
     $("#homepage").validate({
         rules: {
-            namefreeadvice: {required: !0, accept: "[a-zA-Z\s]+", minlength: 3, maxlength: 35},
-            emailfreeadvice: {required: !0, email: !0},
-            mobilefreeadvice: {required: !0, accept: "[0-9]", minlength: 10, maxlength: 10, number: !0},
-            pincodefreeadvice: {required: !0, number: !0},
+            namefreeadvice: {
+                required: true,
+                accept: "[a-zA-Z\\s]+",
+                minlength: 3,
+                maxlength: 35
+            },
+            emailfreeadvice: {
+                required: true,
+                email: true
+            },
+            mobilefreeadvice: {
+                required: true,
+                accept: "[0-9]",
+                minlength: 10,
+                maxlength: 10,
+                number: true
+            },
+            pincodefreeadvice: {
+                required: true,
+                number: true
+            },
             detailsfreeadvice: "required"
         },
         messages: {
-            namefreeadvice: {required: "", accept: ""},
-            emailfreeadvice: {required: "", email: ""},
-            mobilefreeadvice: {required: "", accept: "", number: ""},
+            namefreeadvice: { required: "", accept: "" },
+            emailfreeadvice: { required: "", email: "" },
+            mobilefreeadvice: { required: "", accept: "", number: "" },
             pincodefreeadvice: "",
             detailsfreeadvice: ""
         },
-        errorPlacement: function (error, element) {
-            error.appendTo(element.parent().parent())
+        errorPlacement: function(error, element) {
+            error.appendTo(element.parent().parent());
         },
-        submitHandler: function () {
+        submitHandler: function() {
             var type = $("input[name='optionsRadios']:checked").val();
-            var name = document.getElementById('namefreeadvice').value;
-            var email = document.getElementById('emailfreeadvice').value;
-            var mobile = document.getElementById('mobilefreeadvice').value;
-            var details = document.getElementById('detailsfreeadvice').value;
-            var pincode = document.getElementById('pincodefreeadvice').value;
-            var is_newsletter = 0;
-            if ($('#is_newsletterfreeadvice').is(':checked')) is_newsletter = 1;
+            var name = $('#namefreeadvice').val();
+            var email = $('#emailfreeadvice').val();
+            var mobile = $('#mobilefreeadvice').val();
+            var details = $('#detailsfreeadvice').val();
+            var pincode = $('#pincodefreeadvice').val();
+            var is_newsletter = $('#is_newsletterfreeadvice').is(':checked') ? 1 : 0;
+
             $.ajax({
                 type: 'post',
                 url: '/freeadvice',
@@ -42,105 +66,252 @@ $(document).ready(function () {
                     details: details,
                     is_newsletter: is_newsletter
                 },
-				success: function (data) {
-					//alert(data);
-					const text = data;
-					const newText = text.split(/\s/).join('');
-					if (newText == 'true') {
-						// alert('ok');
-						// document.getElementById("askForm").style.display = "none";
-						// document.getElementById("askMsg").style.display = "block";
-						// if (window.location.pathname !== "/" && window.location.pathname !== "/premium")
-						window.location = "/thanks-advice-form";
-					} else {
-						//alert('failed');
-						document.getElementById("errMsg").style.display = "block";
-					}
-				}
-
-
+                success: function(data) {
+                    const newText = data.split(/\s/).join('');
+                    if (newText === 'true') {
+                        window.location = "/thanks-advice-form";
+                    } else {
+                        $("#errMsg").show();
+                    }
+                }
             });
-            return !1
+            return false;
         }
     });
+
+    // Validation for the insta form
     $("#insta").validate({
         rules: {
-            infoname: {required: !0, accept: "[a-zA-Z\s]+", minlength: 3, maxlength: 35},
-            infoemail: {required: !0, email: !0},
-            mobile: {required: !0, accept: "[0-9]", minlength: 10, maxlength: 10, number: !0},
+            infoname: {
+                required: true,
+                accept: "[a-zA-Z\\s]+",
+                minlength: 3,
+                maxlength: 35
+            },
+            infoemail: {
+                required: true,
+                email: true
+            },
+            mobile: {
+                required: true,
+                accept: "[0-9]",
+                minlength: 10,
+                maxlength: 10,
+                number: true
+            },
             infostate: "required",
-            infocity: {required: !0},
-            pincode: {required: !0, accept: "[0-9]", minlength: 6, maxlength: 6, number: !0},
+            infocity: { required: true },
+            pincode: {
+                required: true,
+                accept: "[0-9]",
+                minlength: 6,
+                maxlength: 6,
+                number: true
+            },
             address: "required",
             investment_range: "required"
         },
         messages: {
-            name: {required: "", accept: ""},
-            email: {required: "", email: ""},
-            mobile: {required: "", accept: "Please enter 10 digit mobile no", number: ""},
-            state: "",
-            city: {required: ""},
-            pincode: {required: "", accept: "", number: ""},
+            infoname: { required: "", accept: "" },
+            infoemail: { required: "", email: "" },
+            mobile: { required: "", accept: "Please enter 10 digit mobile no", number: "" },
+            infostate: "",
+            infocity: { required: "" },
+            pincode: { required: "", accept: "", number: "" },
             address: "",
             investment_range: ""
         },
-        errorPlacement: function (error, element) {
-            error.appendTo(element.parent().parent())
+        errorPlacement: function(error, element) {
+            error.appendTo(element.parent().parent());
         }
-    })
+    });
+
+    // Additional validation for wider insta form
+    $("#wider-insta-form").validate({
+        rules: {
+            infoname: {
+                required: true,
+                accept: "[a-zA-Z\\s]+",
+                minlength: 3,
+                maxlength: 35
+            },
+            infoemail: {
+                required: true,
+                email: true
+            },
+            mobile: {
+                required: true,
+                accept: "[0-9]",
+                minlength: 10,
+                maxlength: 10,
+                number: true
+            },
+            infostate: "required",
+            infocity: { required: true },
+            pincode: {
+                required: true,
+                accept: "[0-9]",
+                minlength: 6,
+                maxlength: 6,
+                number: true
+            },
+            address: "required",
+            investment_range: "required"
+        },
+        messages: {
+            infoname: { required: "", accept: "" },
+            infoemail: { required: "", email: "" },
+            mobile: { required: "", accept: "Please enter 10 digit mobile no", number: "" },
+            infostate: "",
+            infocity: { required: "" },
+            pincode: { required: "", accept: "", number: "" },
+            address: "",
+            investment_range: ""
+        },
+        errorPlacement: function(error, element) {
+            error.appendTo(element.parent().parent());
+        }
+    });
 });
+
+// Function to check mobile status
 function getMobileStatus(value) {
-    if (value.length === 10) {
-        if ($.isNumeric(value)) {
-            $.ajax({
-                type: 'GET', url: '/mobcheck', data: {mobile: value}, success: function (data) {
-                    if (parseInt(data) === 1) {
-                        $('#sub').css('display', 'block')
-                    }
-                    if (parseInt(data) === 0) {
-                        $('#verifybutton').css('display', 'block');
-                        $('#sub').css('display', 'none')
-                    }
+    if (value.length === 10 && $.isNumeric(value)) {
+        $.ajax({
+            type: 'GET',
+            url: '/mobcheck',
+            data: { mobile: value },
+            success: function(data) {
+                if (parseInt(data) === 1) {
+                    $('#sub').show();
+                } else {
+                    $('#verifybutton').show();
+                    $('#sub').hide();
                 }
-            })
-        }
-    }
-    if (value.length !== 10) {
-        if ($.isNumeric(value)) {
-            $('#verifybutton').css('display', 'none');
-            $('#sub').css('display', 'none')
-        }
+            }
+        });
+    } else if (value.length !== 10 && $.isNumeric(value)) {
+        $('#verifybutton, #sub').hide();
     }
 }
+
+// Function to verify mobile
 function veryfie() {
-    var keyword = document.getElementById('txtPhone').value;
-    $.ajax({type: 'get', url: '/verify', data: {mobile: keyword}});
-    document.getElementById("otpblk").style.display = "block";
-    $('#verifybutton').css('display', 'none');
-    $('#editmobile').css('display', 'block');
-    document.getElementById("txtPhone").readOnly = !0
-}
-function editmobileinsta() {
-    document.getElementById("otpblk1").style.display = "none";
-    $('#verifybutton').css('display', 'block');
-    $('#editmobile').css('display', 'none');
-    document.getElementById("txtPhone").readOnly = !1
-}
-function checkinstaotp() {
-    var keyword = document.getElementById('otp').value;
-    var mobile = document.getElementById('txtPhone').value;
+    var keyword = $('#txtPhone').val();
     $.ajax({
-        type: 'get', url: '/check', data: {otpNo: keyword, mobileNo: mobile}, success: function (data) {
+        type: 'get',
+        url: '/verify',
+        data: { mobile: keyword }
+    });
+    $("#otpblk").show();
+    $('#verifybutton').hide();
+    $('#editmobile').show();
+    $('#txtPhone').prop('readonly', true);
+}
+
+// Function to edit mobile number in insta form
+function editmobileinsta() {
+    $("#otpblk1").hide();
+    $('#verifybutton').show();
+    $('#editmobile').hide();
+    $('#txtPhone').prop('readonly', false);
+}
+
+// Function to check OTP
+function checkinstaotp() {
+    var keyword = $('#otp').val();
+    var mobile = $('#txtPhone').val();
+    $.ajax({
+        type: 'get',
+        url: '/check',
+        data: { otpNo: keyword, mobileNo: mobile },
+        success: function(data) {
             if (data == 'notexists') {
-                $('#otpblk1').css('display', 'block')
+                $('#otpblk1').show();
             } else {
-                $('#otpblk1').css('display', 'none');
-                document.getElementById("otpblk").style.display = "none";
-                document.getElementById("txtPhone").readOnly = !0;
-                document.getElementById("sub").style.display = "block";
-                $('#editmobile').css('display', 'none')
+                $('#otpblk1').hide();
+                $('#otpblk').hide();
+                $('#txtPhone').prop('readonly', true);
+                $('#sub').show();
+                $('#editmobile').hide();
             }
         }
-    })
+    });
 }
-$("#wider-insta-form").validate({rules:{infoname:{required:!0,accept:"[a-zA-Zs]+",minlength:3,maxlength:35},infoemail:{required:!0,email:!0},mobile:{required:!0,accept:"[0-9]",minlength:10,maxlength:10,number:!0},infostate:"required",infocity:{required:!0},pincode:{required:!0,accept:"[0-9]",minlength:6,maxlength:6,number:!0},address:"required",investment_range:"required"},messages:{infoname:{required:"",accept:""},infoemail:{required:"",email:""},mobile:{required:"",accept:"Please enter 10 digit mobile no",number:""},infostate:"",infocity:{required:""},pincode:{required:"",accept:"",number:""},address:"",investment_range:""},errorPlacement:function(a,b){a.appendTo(b.parent().parent())}});function getCityWiderInsta(a){var b=document.getElementById("freeinfovalue").value;$.ajax({type:"GET",url:"/get-city-list-landing-page",data:{state:a,franId:b},success:function(c){$("#city-wider").html(c)}})}function getMobileStatusWider(a){if($("#success-mobile-wider").css("display")!="block"){if(parseInt(a.length)===10){if($.isNumeric(a)){$.ajax({type:"GET",url:"/mobcheck",data:{mobile:a},success:function(b){if(parseInt(b)===1){$("#success-mobile-wider").css("display","block")}if(parseInt(b)===0){$("#wider-submit-button").prop("disabled",true);$("#validate-mobile-contact").css("display","block");$("#success-mobile-wider").css("display","none")}}})}}if(parseInt(a.length)!==10){if($.isNumeric(a)){$("#success-mobile-wider").css("display","none");$("#wider-submit-button").prop("disabled",false);$("#edit-mobile-wider").css("display","none");$("#validate-mobile-contact").css("display","none")}}}}function editMobileWider(){$("#mobile-wider").attr("readonly",false);$("#edit-mobile-wider").css("display","none");$("#validate-mobile-contact").css("display","block");$("#otp-block-wider").css("display","none")}function validateMobileWider(){var a=document.getElementById("mobile-wider").value;$.ajax({type:"get",url:"/verify",data:{mobile:a}});$("#mobile-wider").attr("readonly",true);$("#edit-mobile-wider").css("display","block");$("#validate-mobile-contact").css("display","none");document.getElementById("otp-block-wider").style.display="block";$("#wider-submit-button").prop("disabled",true)}function verifyWiderOTP(){var b=document.getElementById("otp-insta-wider").value;var a=document.getElementById("mobile-wider").value;$.ajax({type:"get",url:"/investor/verify-otp",data:{otpNo:b,mobileNo:a},success:function(c){if(c==0){$("#mismatch-wider").css("display","block")}else{$("#success-mobile-wider").css("display","block");$("#wider-submit-button").prop("disabled",false);$("#otp-block-wider").css("display","none");$("#edit-mobile-wider").css("display","none");$("#validate-mobile-contact").css("display","none")}}})};
+
+// Additional functions for wider insta form
+function getCityWiderInsta(state) {
+    var franId = $('#freeinfovalue').val();
+    $.ajax({
+        type: 'GET',
+        url: '/get-city-list-landing-page',
+        data: { state: state, franId: franId },
+        success: function(data) {
+            $("#city-wider").html(data);
+        }
+    });
+}
+
+function getMobileStatusWider(mobile) {
+    if ($("#success-mobile-wider").css("display") !== "block") {
+        if (mobile.length === 10 && $.isNumeric(mobile)) {
+            $.ajax({
+                type: 'GET',
+                url: '/mobcheck',
+                data: { mobile: mobile },
+                success: function(data) {
+                    if (parseInt(data) === 1) {
+                        $("#success-mobile-wider").show();
+                    } else {
+                        $("#wider-submit-button").prop("disabled", true);
+                        $("#validate-mobile-contact, #success-mobile-wider").hide();
+                    }
+                }
+            });
+        } else if (mobile.length !== 10 && $.isNumeric(mobile)) {
+            $("#success-mobile-wider").hide();
+            $("#wider-submit-button").prop("disabled", false);
+            $("#edit-mobile-wider, #validate-mobile-contact").hide();
+        }
+    }
+}
+
+function editMobileWider() {
+    $("#mobile-wider").prop("readonly", false);
+    $("#edit-mobile-wider").hide();
+    $("#validate-mobile-contact").show();
+    $("#otp-block-wider").hide();
+}
+
+function validateMobileWider() {
+    var mobile = $('#mobile-wider').val();
+    $.ajax({
+        type: 'get',
+        url: '/verify',
+        data: { mobile: mobile }
+    });
+    $("#mobile-wider").prop("readonly", true);
+    $("#edit-mobile-wider").show();
+    $("#validate-mobile-contact").hide();
+    $("#otp-block-wider").show();
+    $("#wider-submit-button").prop("disabled", true);
+}
+
+function verifyWiderOTP() {
+    var otp = $('#otp-insta-wider').val();
+    var mobile = $('#mobile-wider').val();
+    $.ajax({
+        type: 'get',
+        url: '/investor/verify-otp',
+        data: { otpNo: otp, mobileNo: mobile },
+        success: function(data) {
+            if (data == 0) {
+                $("#mismatch-wider").show();
+            } else {
+                $("#success-mobile-wider").show();
+                $("#wider-submit-button").prop("disabled", false);
+                $("#otp-block-wider, #edit-mobile-wider, #validate-mobile-contact").hide();
+            }
+        }
+    });
+}

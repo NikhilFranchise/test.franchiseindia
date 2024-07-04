@@ -280,7 +280,7 @@
 
 <!-- mobile section end -->
 <div class="overlay"></div>
-<script src="https://www.franchiseindia.com/js/jquery-3.6.0.min.js"></script>
+<script src="{{ url('/js/jquery-3.1.1.min.js') }}"></script>
 @include('layout.newhomepage.jslink')
 
 <script>

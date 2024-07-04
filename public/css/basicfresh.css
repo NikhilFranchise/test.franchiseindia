@@ -1,4 +1,5 @@
 ol,ul,ul li{list-style-type:none}
+.overin{position: fixed;z-index: 12;background-color: rgba(255, 255, 255, 0.5);width: 100%;height: 100vh;top: 0px;left: 0px;display:none;}
 .c-button,.c-menu__close,.myselectclass,.myselectclass2,.myselectclass3,.myselectclass4,.myselectclasscat,.myselectclasssearch,.myselectclassuni{-moz-appearance:none}
 #testimonial-slider{overflow:hidden}
 .testimonial{margin:0 15px}
@@ -513,7 +514,7 @@ ul.fromstaticlist li span{color:#f22406}
 .formsection .form-horizontal .blinkline20{height:20px}
 .formsection .checkmargin{margin-top:3px}
 .formsection label{color:#666;font-weight:400}
-.formsection .input-group-addon{padding:8px 12px;background:#fff;-webkit-box-shadow:inset 3px 5px 5px 0 rgba(0,0,0,.05);-moz-box-shadow:inset 3px 5px 5px 0 rgba(0,0,0,.05);box-shadow:inset 3px 5px 5px 0 rgba(0,0,0,.05)}
+.formsection .input-group-addon{padding:9px 12px;background:#fff;-webkit-box-shadow:inset 3px 5px 5px 0 rgba(0,0,0,.05);-moz-box-shadow:inset 3px 5px 5px 0 rgba(0,0,0,.05);box-shadow:inset 3px 5px 5px 0 rgba(0,0,0,.05)}
 .formsection .form-group label span.mandatory:after,.formsection .form-group label.mandatory:after{content:"\f005";top:-5px;margin-right:2px;padding-left:5px;position:relative}
 .formsection .form-group label span.mandatory:after{color:#f22406;font:normal normal normal 8px/1 FontAwesome}
 .formsection .form-group label span.note{font-size:13px;color:#999}
@@ -651,12 +652,12 @@ input[type=text].trrr{background:#fff;color:#666;float:left;height:35px;padding:
 .cateblock .catlistinfo .catbottp .bd{border-right:1px solid #e7e7e7;text-align:center;margin:auto;line-height:33px}
 .cateblock .catlistinfo .catbottp .bd:last-child{border-right:none}
 .cateblock .catlistinfo .prembtn{position:absolute;top:6px;right:-9px}
-.cateblock .catbtn{margin:15px auto;position:relative;cursor:pointer;width:202px;float:left}
+.cateblock .catbtn{margin:15px auto;position:relative;cursor:pointer;width:202px;}
 .cateblock .catlistinfo.rm-elmnt .catlistdest .catbtn{margin-left:0}
 .cateblock .catlistinfo.rm-elmnt{border:0;margin-left:0;padding-right:15px;padding-left:15px}
 .cateblock .catbtn input[type=checkbox]{display:none}
 .cateblock .catbtn input[type=checkbox]+label{color:#000;font-family:Arial,sans-serif;font-size:14px}
-.cateblock .catbtn input[type=checkbox]+label span{display:inline-block;width:144px;height:34px;margin:-1px 4px 0 0;vertical-align:middle;background:url(https://www.franchiseindia.com/images/brand-btn.png) left top no-repeat;cursor:pointer}
+.cateblock .catbtn input[type=checkbox]+label span{display:inline-block;width:170px;height:34px;margin:-1px 4px 0 0;vertical-align:middle;background:url(https://stgfi.franchiseindia.com/images/brand-btn1.png) left top no-repeat;cursor:pointer}
 .cateblock .catbtn input[type=checkbox]:checked+label span{background-position:0 -36px}
 .cateblock .catlistinfo:hover{-webkit-box-shadow:0 0 15px 0 rgba(0,0,0,.2);-moz-box-shadow:0 0 15px 0 rgba(0,0,0,.2);box-shadow:0 0 15px 0 rgba(0,0,0,.2)}
 .cateblock .sidedtc{font-family:Open Sans Bold,serif;font-size:16px;color:#333;text-transform:uppercase;background-color:#fbfbfb;border-top-right-radius:3px;border-top-left-radius:3px}
@@ -1515,7 +1516,7 @@ ul.sharecat li.btline{border-bottom:none}
 .tdss img{height: 91px;object-fit: contain;background: #ffffff;}
 .midimg img{height: 105px;object-fit: contain;background: #ffffff;}
 .artbigimg img{height: 327px;object-fit: contain;background: #ffffff;}
-.sidearce img{height: 25px;object-fit: contain;background: #ffffff;}
+.sidearce img{height: 134px;object-fit: contain;background: #ffffff;}
 .arimg198 img{height: 137px;object-fit: contain;background: #ffffff;}
 .avbb{margin-bottom:30px;overflow:hidden}
 .avbb .row-npadding{padding-right:0;padding-left:0}
@@ -1641,7 +1642,7 @@ h1.bordertb{margin-top:0}
 .smallatcmost{width:245px;border-bottom:1px solid #dfdfdf;padding-bottom:20px;margin-bottom:20px}
 .mostwnew .mdfiartimost{width:68%}
 .smallatcmost:last-child{border-bottom:none}
-.arti271 img,.babcblk,.tts img{border:1px solid #dfdfdf;height: 125px;}
+.arti271 img,.babcblk,.tts img{border:1px solid #dfdfdf}
 .arti271{width:271px}
 .arti271 img{width:100%}
 .listkick{font-family:'Open Sans Light',serif;font-size:13px;line-height:18px;margin-top:-4px;margin-bottom:15px}
@@ -1686,7 +1687,7 @@ h1.bordertb{margin-top:0}
 .rigauthor{font-size:13px;color:#333;font-family:'Open Sans Light',serif;margin-bottom:20px}
 .rigauthor a,.subrigcatheading a{color:#069}
 .rigtimg{width:258px;margin:0 auto}
-.rigtimg img{width:100%;border:1px solid #dfdfdf;height: auto;}
+.rigtimg img{width:100%;border:1px solid #dfdfdf}
 .marfix{margin-top:10px}
 .smallatcmostright{border-top:1px solid #dfdfdf;margin-top:20px;padding-top:15px}
 .subrigcatheading{font-size:13px;color:#069;font-family:'Open Sans Light',serif;margin-bottom:0}
@@ -4457,7 +4458,7 @@ ul.sidebt li.fi{height:160px}
 .searblkright input[type="submit"] { position:absolute; top:2px; right:1px; background:#dc3322; color:#fff; padding:6px 7px 6px; box-shadow:none; text-transform:uppercase;    outline: none; border:0px;}
 .searblkright .awesomplete > ul { background: #fff; z-index: 5;  }
 .awesomplete > ul > li {border-bottom: 1px solid #dfdfdf;font-size: 12px; padding: .4em .5em; line-height: 25px;}
-img.sts { width:2%; }
+.sts { width:24px; }
 .margintop60.paddingset { margin-top: 0px; padding-top: 140px;}
 .videoyou { text-align:center;}
 .mostpopu.arttilist.settops { margin-top:80px;}

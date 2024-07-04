@@ -43,6 +43,7 @@
 
 <!-- Business Opportunities section starts -->
 <section class="Business-Opportunitiessection section-30" id="Business-Opportunitiessection">
+    <div class="overin"></div>
     <div class="container">
         <div class="row">
             <div class="modified-col col-xs-12 col-sm-12 col-md-12 col-xl-12
@@ -115,6 +116,17 @@
                     </ul>
                 </div>
             </div>
+            <!--<div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2 col-lg-2">
+                <div class="footer-widget-link">
+                    <p><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5">Dealers &amp; Distributors</a></p>
+                    <ul class="footer-links">
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/automobile.sc443">Automobile</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/fmcg.sc476">FMCG</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/office-supplies.sc478">Office supplies</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5">View All &gt;</a></li>
+                    </ul>
+                </div>
+            </div>-->
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2 col-lg-2">
                 <div class="footer-widget-link">
                     <p><a href="https://dealer.franchiseindia.com" target="_blank">Dealers &amp; Distributors</a></p>
@@ -291,7 +303,8 @@
 <!-- Our Group Sites section starts -->
 
 <!-- Our Group Sites section ends -->
-<!-- Browse By Location starts -->
+
+{{-- Browse by investment range --}}
 <section class="Our-Group-Sitessection section-30" id="Our-Group-Sitessection">
     <div class="container">
         <div class="row justify-content-center">
@@ -299,37 +312,59 @@
                 <p class="section-th">Browse By Investment Range </p>
                 <div class="brows-by-location">
                     <ul class="fihl-loaction-browse">
-                            <li> <a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-100000
-                                ">Under 1 Lakh</a></li>
-                            <li> <a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-200000">Under 2 Lakh
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/business/range-10000-100000
+                                ">Under
+                                1 Lakh</a></li>
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/business/range-10000-200000">Under
+                                2 Lakh
                             </a>
-                            </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-300000">Under 3 Lakh
+                        </li>
+                        <li><a
+                                href="https://www.franchiseindia.com/business-opportunities/business/range-10000-300000">Under
+                                3 Lakh
                             </a></li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-500000">Under 5 Lakh
-                                    </a>
-                            </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-1000000">Under 10 Lakh
+                        <li><a
+                                href="https://www.franchiseindia.com/business-opportunities/business/range-10000-500000">Under
+                                5 Lakh
                             </a>
-                            </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-1500000">Under 15 Lakh
+                        </li>
+                        <li><a
+                                href="https://www.franchiseindia.com/business-opportunities/business/range-10000-1000000">Under
+                                10 Lakh
                             </a>
-                            </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-2000000">Under 20 Lakh
+                        </li>
+                        <li><a
+                                href="https://www.franchiseindia.com/business-opportunities/business/range-10000-1500000">Under
+                                15 Lakh
                             </a>
-                            </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-2500000">Under 25 Lakh
+                        </li>
+                        <li><a
+                                href="https://www.franchiseindia.com/business-opportunities/business/range-10000-2000000">Under
+                                20 Lakh
                             </a>
-                            </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-3000000">Under 30 Lakh
+                        </li>
+                        <li><a
+                                href="https://www.franchiseindia.com/business-opportunities/business/range-10000-2500000">Under
+                                25 Lakh
                             </a>
-                            </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-5000000">Under 50 Lakh
+                        </li>
+                        <li><a
+                                href="https://www.franchiseindia.com/business-opportunities/business/range-10000-3000000">Under
+                                30 Lakh
                             </a>
-                            </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-10000000">Under 1 Crore
+                        </li>
+                        <li><a
+                                href="https://www.franchiseindia.com/business-opportunities/business/range-10000-5000000">Under
+                                50 Lakh
                             </a>
-                            </li>
+                        </li>
+                        <li><a
+                                href="https://www.franchiseindia.com/business-opportunities/business/range-10000-10000000">Under
+                                1 Crore
+                            </a>
+                        </li>
 
 
 
@@ -340,6 +375,7 @@
     </div>
 </section>
 
+<!-- Browse By Location starts -->
 <section class="Our-Group-Sitessection section-30" id="Our-Group-Sitessection">
     <div class="container">
         <div class="row justify-content-center">
@@ -395,6 +431,7 @@
         </div>
     </div>
 </section>
+
 
 
 
@@ -1112,7 +1149,9 @@
 
 @endif
 <script>
+   
     $(document).ready(function() {
+        
         $("#sidebar").mCustomScrollbar({
             theme: "minimal"
         });
@@ -1120,15 +1159,23 @@
         $('#dismiss, .overlay').on('click', function() {
             $('#sidebar').removeClass('active');
             $('.overlay').removeClass('active');
+            $('.overin').css("display","none");
+        });
+
+        $('.overin').on('click', function() {
+            $('#sidebar').removeClass('active');
+            $('.overin').css("display","none");
         });
 
         $('#sidebarCollapse').on('click', function() {
             $('#sidebar').addClass('active');
             $('.overlay').addClass('active');
+            $('.overin').css("display","block");
             $('.collapse.in').toggleClass('in');
             $('a[aria-expanded=true]').attr('aria-expanded', 'false');
         });
     });
+
     var header = $('.header');
 
     $(window).scroll(function(e) {
@@ -1328,7 +1375,6 @@
         if ($("#dealer-bar-search-top").val() != "") {
             var value = $("#dealer-bar-search-top").val();
             var items = value.split(' - <strong> in');
-                console.log(items);
             if (items.length > 1)
                 value = items[0];
             window.location.href = '/dealers-india/search/' + value;
@@ -1339,7 +1385,6 @@
         if ($("#dealer-bar-search").val() != "") {
             var value = $("#dealer-bar-search-top").val();
             var items = value.split(' - <strong> in');
-                console.log(items + 2);
             if (items.length > 1)
                 value = items[0];
             window.location.href = '/dealers-india/search/' + value;
