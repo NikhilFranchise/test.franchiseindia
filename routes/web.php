@@ -109,7 +109,6 @@ Route::get('most-visitedbrands', [BrandFilterController::class, 'topbrands']);
 Route::get('brands/{profileName}', [BrandController::class, 'brandDetails']);
 Route::get('check-existing-registration', [InvestorController::class, 'checkInvestorExistence']);
 Route::get('mobcheck', [MobileVerificationController::class, 'mobCheck']);
-Route::get('get-city-list-landing-page', [CommonController::class, 'getCityListLandingPage']);
 Route::get('compare-brands', [BrandCompareController::class, 'compareBrands']);
 Route::get('get-brands', [BrandCompareController::class, 'getComparableBrands']);
 Route::get('/get-brand-compare', [BrandCompareController::class, 'getSingleBrand']);
