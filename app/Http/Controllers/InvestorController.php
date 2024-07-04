@@ -93,7 +93,7 @@ class InvestorController extends Controller
             $amount = Config('constants.invPlanAmount.' . $request->input('invPlan'));
             // $chmop = array('OPTCRDC', 'OPTDBCRD', 'OPTEMI', 'OPTNBK');
             //if(!array_key_exists($mopt, $chmop)){
-            //$pmode = "OPTNBK";	
+            //$pmode = "OPTNBK";
             //}
             $amount = round($amount + (($amount * 18) / 100));
             // $mop  = config('constants.Charges.' . $pmode);
@@ -262,7 +262,7 @@ class InvestorController extends Controller
         // Fetch values from the request
         $name = $request->input('invName');
         $email = $request->input('email');
-        $password = Hash::getFacadeRoot()->make($request->input('password'));
+        $password = Hash::make($request->input('password'));
         $address = $request->input('address');
         $country = config('location.countryName.' . $request->input('country'));
         $pincode = $request->input('pincode');
@@ -360,7 +360,7 @@ class InvestorController extends Controller
             $errorMsg = "Investor Registration Failed: UserAccount Model $email";
             $this->generateLog($errorMsg);
 
-            // Flash the error message in client window            
+            // Flash the error message in client window
             session()->flash('errorMessage', $error);
 
             // return back to the investor registration page
@@ -523,6 +523,7 @@ class InvestorController extends Controller
     public function upgradeInvestor(Request $request)
     {
 
+        // dd($request->all());
         if ($request->input('invPlan') == 401) {
             return view('includes/investor-thanks');
         } else {
@@ -535,6 +536,7 @@ class InvestorController extends Controller
             $amount = $amount + (($amount * 18) / 100);
             $mop = config('constants.Charges.' . $pmode);
             $amount = round($amount + $amount * ($mop) / 100);
+            // dd($amount);
 
 
             $investorId = $request->input('investorId');
@@ -577,7 +579,7 @@ class InvestorController extends Controller
         $investorId = $request->user()->profile_str;
         $personalData = UserAccount::query()->where('profile_str', $investorId)->select('name', 'mobile', 'title', 'reg_source')->first();
         $data = InvestorDetails::query()->where('investor_id', $investorId)->first();
-        // 
+        //
         return view('investor/myAccount/personal-details', compact('data', 'personalData'));
     }
 
@@ -636,7 +638,7 @@ class InvestorController extends Controller
             $errorMsg = "updation of investor personal details : UserAccount Model . $investorId";
             $this->generateLog($errorMsg);
 
-            // Flash the error message in client window            
+            // Flash the error message in client window
             session()->flash('errorMessage', "Update Failed");
 
             // return back to the investor registration page
@@ -979,7 +981,7 @@ class InvestorController extends Controller
             $errorMsg = "updation of investor password details : UserAccount Model . $investorId";
             $this->generateLog($errorMsg);
 
-            // Flash the error message in client window            
+            // Flash the error message in client window
             session()->flash('errorMessage', "update failed");
             session()->flash('failed', 'Update Failed');
 

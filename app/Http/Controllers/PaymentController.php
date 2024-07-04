@@ -39,7 +39,7 @@ class PaymentController extends Controller
      */
     public function upgradeInvestorMembership(Request $request)
     {
-        
+
         $investorId = request()->user()->profile_str;
         $invName    = request()->user()->name;
         $invMobile  = request()->user()->mobile;
@@ -48,8 +48,8 @@ class PaymentController extends Controller
         $amount     = config('constants.invPlanAmount.' . $request->payment_plan);
         $amount     = $amount + (($amount*18)/100);
 
-		if(!array_key_exists($mopt, config('constants.Charges'))){		
-			$mopt = "OPTNBK";	
+		if(!array_key_exists($mopt, config('constants.Charges'))){
+			$mopt = "OPTNBK";
 		}
         $mop  = config('constants.Charges.' . $mopt);
         $amount = round($amount + $amount *($mop)/100);
@@ -79,7 +79,7 @@ class PaymentController extends Controller
         // Send Email to Investor Acquisition team for Paid Membership pitching
         /* Html Code for email */
         $data = "<table> <tr> <td>Name : </td><td>".$invName."</td></tr><tr> <td>Email : </td><td>".$invEmail."</td></tr><tr> <td>Mobile No. : </td><td>".$invMobile."</td></tr><tr> <td>Investor Id : </td><td>".$investorId."</td></tr><tr> <td>Address : </td><td>".$invAddress.", Country: ".$invData->inv_country."</td></tr><tr> <td>Time Of Payment : </td><td>".date('Y-m-d H:i:s')."</td></tr></table>";
-        Mail::getFacadeRoot()->to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
+        Mail::to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
         // // End of Email to Investor Acquisition team
 
         if (!$insInvPay->save()){
@@ -102,7 +102,7 @@ class PaymentController extends Controller
                 'product_details' => config('constants.invPlanDetails.' . $request->payment_plan),
                 'membership_plan' => $request->payment_plan,
                 'amount'          => $amount,
-                'mopt'          => $mopt,				
+                'mopt'          => $mopt,
                 'gst_no'          => $request->gst_no,
                 'payment_status'  => 0
             ]);
@@ -153,7 +153,7 @@ class PaymentController extends Controller
             $information=explode('=',$decryptValues[$i]);
             if($i==3)   $order_status=$information[1];
             if($i==0)   $order_id=$information[1];
-			if($i==2)	$bank_ref_no=$information[1];		
+			if($i==2)	$bank_ref_no=$information[1];
 			if($i==1)	$tracking_id=$information[1];
             if($i==10)  $amount=$information[1];
         }
@@ -200,8 +200,8 @@ class PaymentController extends Controller
                 'payment_status'  => $dbStatus,
                 'order_status'    => $dbStatus,
                 'payment_notes'   => $payStatus,
-				'saltkey'   => $tracking_id,	
-				'bank_ref_no'   => $bank_ref_no,								
+				'saltkey'   => $tracking_id,
+				'bank_ref_no'   => $bank_ref_no,
                 'expiry_date'     => date('Y-m-d h:i:s', strtotime("+".$days." days"))
             ]);
 
@@ -315,8 +315,8 @@ class PaymentController extends Controller
      */
     public function bookPayment(Request $request){
 		$pmode = $request->payment_mode;
-		if(!array_key_exists($pmode, config('constants.Charges'))){		
-			$pmode = "OPTNBK";	
+		if(!array_key_exists($pmode, config('constants.Charges'))){
+			$pmode = "OPTNBK";
 		}
         $mop  = config('constants.Charges.' . $pmode);
         $amount = ($pmode!= 'CHEQUE') ? round($request->amount + $request->amount *($mop)/100) : $request->amount;
@@ -452,16 +452,16 @@ class PaymentController extends Controller
         $pincode  = $request->pincode;
         $details  = $request->details;
         $mopt  = $request->mop;
-		$currency = $request->currency;		
+		$currency = $request->currency;
 
 		$currencytype = array("USD", "AED", "AUD", "CAD", "EUR", "INR");
 		if(!in_array($currency, $currencytype)){
-			$currency = "INR";	
-		}		
-			
+			$currency = "INR";
+		}
+
         $country  = config('location.countryName.' . $request->input('country'));
 		if(!array_key_exists($mopt, config('constants.Charges'))){
-			$mopt = "OPTNBK";	
+			$mopt = "OPTNBK";
 		}
         $mop  = config('constants.Charges.' . $mopt);
         $amount = round($amt + $amt *($mop)/100);
@@ -477,7 +477,7 @@ class PaymentController extends Controller
         $hdfcpg->cemail         = $email;
         $hdfcpg->cdetail        = $details;
         $hdfcpg->payment_mode   = $mopt;
-        $hdfcpg->currency   = $currency;				
+        $hdfcpg->currency   = $currency;
         $hdfcpg->camount        = $amount;
         $hdfcpg->client_ip      = $userIp;
         $hdfcpg->payment_status = config('hdfcpgnew.paymentStatus.Initiated');

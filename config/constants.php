@@ -17,7 +17,7 @@ return [
     'franAwsImgPath' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/',
     'franAwsS3Url' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/',
     'awsS3Url' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com', // duplicate for news
-    'OIDomain' => 'https://www.dealerindia.com', // duplicate for news	
+    'OIDomain' => 'https://www.dealerindia.com', // duplicate for news
 
     'leadSource' => [
         'FiInstantApply' => 1,
@@ -169,7 +169,8 @@ return [
     'invPlanAmount' => [
         401 => 0,
         402 => 500,
-        403 => 2599,
+        // 403 => 2599,
+        403 => 1,
         404 => 3999,
         405 => 6999
     ],
@@ -641,7 +642,7 @@ return [
             //"445" => "Fashion & Apparel",
             //"476" => "FMCG",
             //"954" => "Resellers",
-            //"955" => "Others"			
+            //"955" => "Others"
             "787" => "Agriculture",
             "443" => "Automobile",
             "477" => "Building & Construction",
@@ -920,7 +921,7 @@ return [
             "459" => "Skincare Products",
             //"457" => "Pharmaceutical Shop",
             //"458" => "Hospital Related Medical Products",
-            //"460" => "Healthcare & Medical Products",           
+            //"460" => "Healthcare & Medical Products",
             //"462" => "Surgical Instruments",
             //"463" => "Laboratory Equipment & Instruments"
         ),
@@ -995,8 +996,8 @@ return [
             //"836" => "Construction Equipments",
             //"837" => "Fooring/Ceiling",
             //"838" => "Granite"
-        
-           
+
+
         ),
 
         "478" => array(
@@ -1039,7 +1040,7 @@ return [
             //"523" => "Solar Equipments",
             //"524" => "Doors, Windows, Floorings, Panels, Laminates",
             //"525" => "Plumbing, Sanitary Ware And Bathroom Fittings",
-            //"527" => "Inverters, UPS & Battery Charger",          
+            //"527" => "Inverters, UPS & Battery Charger",
             //"530" => "LPG Distributors",
             //"531" => "Security & Surveillance Products",
             //"887" => "Home Decoration Items",
@@ -1063,20 +1064,20 @@ return [
             //"743" => "Air Compressors",
             //"744" => "Conveyor & Conveyor/Industrial Belts",
             //"745" => "Material Handling Equipments",
-            
+
             //"747" => "Cooling Tower & Chilling Plants",
             //"748" => "Gear Boxes, Reduction Gears & Gear Cutting",
             //"749" => "Fasteners",
             //"750" => "Filters-Air, Gas & Liquid",
             //"751" => "Dies & Moulds",
             //"752" => "Pumps & Pumping Equipments",
-           
+
             //"755" => "Draught Fans",
             //"756" => "Boilers, Components & Spares",
             //"757" => "Industrial Blowers",
             //"758" => "Weighing Scales",
             //"759" => "Plastic Pet Products",
-          
+
         ),
 
         "761" => array(
@@ -1098,7 +1099,7 @@ return [
             "777" => "Software",
             //"771" => "Printer Parts & Accessories",
             //"772" => "Server & Work Station",
-           
+
             //"776" => "UPS & Power Supply",
             //"778" => "Drives & Storage Devices",
             //"779" => "Mobile Handset",
@@ -1181,7 +1182,7 @@ return [
              //"871" => "Healthcare Products",
             //"882" => "Mouth Freshers",
             //"884" => "Saffrons",
-           
+
         ),
 
         "896" => array(
@@ -1212,15 +1213,15 @@ return [
             "910" => "Wires, Cables & Accessories & Conductors",
 
             //"914" => "Decorative Lights",
-           
+
             //"917" => "Bulbs & Tubelights",
             //"918" => "Electronic Signs",
-            
+
             //"920" => "Electric Power Tools",
             //"922" => "Solar Lights",
             //"923" => "Electric Fitting & Accessories",
-            //"967" => "3D Technology",		
-            //"971" => "Audio & Video Products/Home Theatre",						
+            //"967" => "3D Technology",
+            //"971" => "Audio & Video Products/Home Theatre",
         ),
 
         "925" => array(
@@ -1477,7 +1478,7 @@ return [
             "219" => "Painting",
         ),
         "39" => array(
-             "223" => "E-Commerce & Related", 
+             "223" => "E-Commerce & Related",
              "557" => "Mobile Commerce",
              "222" => "TV/Web Shopping",
             ),
@@ -1795,7 +1796,7 @@ return [
             "718" => "Operation Theatre Equipments",
             "716" => "Strectcher",
         ),
-		"968" => array()	
+		"968" => array()
     ],
 
     // Mobile OTP, SMS URL, Msg template
@@ -3147,7 +3148,7 @@ return [
             'title' => 'Business & franchise opportinities in Haryana',
             'description' => "Haryana, a state known for its agricultural prosperity, has rapidly transformed into a hub of industrial and economic activity. Strategically located adjacent to the national capital, Haryana has leveraged its geographical advantage to attract a plethora of businesses and industries, ranging from manufacturing and automobile to IT and education. The state's commitment to fostering an investor-friendly environment has made it a fertile ground for entrepreneurs looking to sow the seeds of their business dreams.<br><br>
             With its blend of urban growth centers like Gurugram and Faridabad, alongside its strong rural foundations, Haryana offers diverse opportunities for business ventures. Whether you aim to tap into the bustling corporate life of its cities or cater to the agricultural and rural markets, Haryana's economy provides a vibrant landscape for a wide range of franchises.<br><br>
-            Venture into Haryana’s Business Opportunities:<br><br> 
+            Venture into Haryana’s Business Opportunities:<br><br>
             ●	Manufacturing & Automobile Franchises: Capitalize on the state's industrial backbone.<br>
             ●	IT & Technology Startups Franchise: Dive into the digital wave in cities renowned for their tech parks.<br>
             ●	Agricultural Enterprises Franchise: Engage with the agrarian economy through agribusiness and related services.<br>
