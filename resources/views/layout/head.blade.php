@@ -112,7 +112,7 @@
 <!-- Scrollbar Custom CSS -->
 <link rel="stylesheet" href="{{url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css')}}" >
 
-<link rel="preload" href="{{ url('js/jquery.validate.min.js') }}" as="script">
+{{--  <link rel="preload" href="{{ url('js/jquery.validate.min.js') }}" as="script">  --}}
 <link rel="preload" href="{{ url('js/jquery.hint.js') }}" as="script">
 <link rel="preload" href="{{ url('js/jquery.bxslider.js') }}" as="script">
 <link rel="preload" href="//cdn.sendpulse.com/js/push/10b86845b3b698a88af195580a87545c_1.js" as="script">
@@ -120,7 +120,7 @@
 <link rel="preload" href="{{ url('wle_tracker.js')}}" as="script">
 <link rel="preload" href="{{ url('js/bootstrap-filestyle.min.js')}}" as="script">
 <link rel="preload" href="{{ url('js/js.cookie.min.js')}}" as="script">
-<link rel="preload" href="{{ url('js/validationInsta.js?ver='.date('d'))}}" as="script">
+{{--  <link rel="preload" href="{{ url('js/validationInsta.js?ver='.date('d'))}}" as="script">  --}}
 <link rel="preload" href="{{ url('js/bootstrap.min.js')}}" as="script">
 <link rel="preload" href="{{ url('js/custom.js?ver='.date('d'))}}" as="script">
 <link rel="preload" href="{{ url('js/lozad.min.js')}}" as="script">

@@ -67,15 +67,15 @@
         @include('layout.newhomepage.bestfranchiseopportunity')
 
         <!-- Best Franchise Opportunity ends -->
-		
+
 		<!-- TOP DEALERSHIP OPPORTUNITIES START -->
 		@include('layout.newhomepage.top_dealership_opportunities')
 		<!-- TOP DEALERSHIP OPPORTUNITIES END -->
-		
+
 		<!-- BUSINESS FOR SALE OPPORTUNITIES START -->
 		@include('layout.newhomepage.business_for_sale_opportunities')
 		<!-- BUSINESS FOR SALE OPPORTUNITIES END -->
-		
+
             <!-- Upcoming Events starts -->
         {{--@include('layout.newhomepage.upcomingevents')--}}
         @include('layout.newhomepage.videoevent')
@@ -83,11 +83,11 @@
 		<!-- Top International Opportunities starts -->
         @include('layout.newhomepage.topinternational')
         <!-- Top International Opportunities ends -->
-		
+
 		<!-- HIGH GROWTH POTENTIAL STARTUPS OPPORTUNITIES START -->
 		@include('layout.newhomepage.high_growth_potential_startups_opportunities')
 		<!-- HIGH GROWTH POTENTIAL STARTUPS OPPORTUNITIES END -->
-		
+
 	    <!-- Top Franchise Opportunities starts -->
         @include('layout.newhomepage.tfo')
         <!-- Top Franchise Opportunities ends -->
@@ -145,15 +145,15 @@
     @include('layout.newhomepage.bestfranchiseopportunity')
 
     <!-- Best Franchise Opportunity ends -->
-	
+
 	<!-- TOP DEALERSHIP OPPORTUNITIES START -->
 	@include('layout.newhomepage.top_dealership_opportunities')
 	<!-- TOP DEALERSHIP OPPORTUNITIES END -->
-	
+
 	<!-- BUSINESS FOR SALE OPPORTUNITIES START -->
 	@include('layout.newhomepage.business_for_sale_opportunities')
 	<!-- BUSINESS FOR SALE OPPORTUNITIES END -->
-	
+
         <!-- Upcoming Events starts -->
     {{--@include('layout.newhomepage.upcomingevents')--}}
     @include('layout.newhomepage.videoevent')
@@ -166,7 +166,7 @@
 	<!-- HIGH GROWTH POTENTIAL STARTUPS OPPORTUNITIES START -->
 	@include('layout.newhomepage.high_growth_potential_startups_opportunities')
 	<!-- HIGH GROWTH POTENTIAL STARTUPS OPPORTUNITIES END -->
-	
+
         <!-- Top Franchise Opportunities starts -->
     @include('layout.newhomepage.tfo')
 
@@ -223,11 +223,11 @@
 	<!-- TOP DEALERSHIP OPPORTUNITIES START -->
 	@include('layout.newhomepage.top_dealership_opportunities')
 	<!-- TOP DEALERSHIP OPPORTUNITIES END -->
-	
+
 	<!-- BUSINESS FOR SALE OPPORTUNITIES START -->
 	@include('layout.newhomepage.business_for_sale_opportunities')
 	<!-- BUSINESS FOR SALE OPPORTUNITIES END -->
-	
+
         <!-- Upcoming Events starts -->
     @include('layout.newhomepage.mobile.upcomingevents')
 
@@ -280,17 +280,17 @@
 
 <!-- mobile section end -->
 <div class="overlay"></div>
-<script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
+<script src="https://www.franchiseindia.com/js/jquery-3.6.0.min.js"></script>
 @include('layout.newhomepage.jslink')
 
 <script>
     $(document).ready(function() {
         function selectMax(selectmaxheaderval) {
             let amountConfigArr = '<?php echo json_encode(Config('constants.investRangeInWordsSingle')); ?>';
-        
+
             let maxAmount = $('#maxAmount');
             let getSlugAmount = '<?php echo json_encode(Config('constants.InvestRange')); ?>';
-        
+
             maxAmount.html("");
             selectmaxheaderval = parseInt(selectmaxheaderval);
             $.each(amountConfigArr, function (key, value) {
@@ -417,12 +417,12 @@
         if(!empty($query))
         $query = strtolower($query);
 		$southCodes = ['tamil nadu', 'telangana', 'kerala', 'pondicherry'];
-        $eastCodes = ['bihar', 'jharkhand', 'odisha', 'nepal', 'arunachal pradesh', 'assam', 'meghalaya', 'orissa', 'tripura'];		
+        $eastCodes = ['bihar', 'jharkhand', 'odisha', 'nepal', 'arunachal pradesh', 'assam', 'meghalaya', 'orissa', 'tripura'];
         $westCodes  = ['goa', 'gujarat',  'rajasthan'];
         $northCodes  = ['punjab', 'jammu and kashmir', 'jammu', 'kashmir', 'himachal pradesh', 'chandigarh', 'uttarakhand', 'uttar pradesh', 'delhi', 'haryana'];
 		$centerCodes = ['madhya pradesh', 'chhattisgarh', 'maharashtra'];
-        $indiaCodes  = ['andhra pradesh', 'kerala', 'lakshadweep', 'pondicherry', 'telangana', 'tamil nadu', 'tamilnadu', 'uttar pradesh', 'rajasthan', 'haryana'];		
-        $GreenTrends  =  ['west bengal', 'karnataka', 'andhra pradesh'];			
+        $indiaCodes  = ['andhra pradesh', 'kerala', 'lakshadweep', 'pondicherry', 'telangana', 'tamil nadu', 'tamilnadu', 'uttar pradesh', 'rajasthan', 'haryana'];
+        $GreenTrends  =  ['west bengal', 'karnataka', 'andhra pradesh'];
 
         App\Http\Controllers\CommonController::checkCampaignUrl();
     @endphp

@@ -92,7 +92,7 @@ class ExpressInstaController extends Controller
      * Function to express interest by free investor
      * @return \Illuminate\Http\JsonResponse|string
      */
-    // code  by GP start 28-06-2024 
+    // code  by GP start 28-06-2024
 
     public function invLead(Request $request)
     {
@@ -738,6 +738,18 @@ class ExpressInstaController extends Controller
      */
     public function brandInfo(Request $request)
     {
+        // dd($request->all());
+        $request->validate([
+            'infoname' => 'required',
+            'infoemail' => 'required|email',
+            'mobile' => 'required|numeric|min:10',
+            'infostate' => 'required',
+            'infocity' => 'required',
+            'address' => 'required',
+            'pincode' => 'required|numeric|min:6',
+            'investment_range' => 'required',
+
+        ]);
 
         $franId = $request->input('frandetailsid');
 

@@ -314,13 +314,13 @@
                             </li>
                             <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-1500000">Under 15 Lakh
                             </a>
-                            </li> 
+                            </li>
                             <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-2000000">Under 20 Lakh
                             </a>
                             </li>
                             <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-2500000">Under 25 Lakh
                             </a>
-                            </li> 
+                            </li>
                             <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-3000000">Under 30 Lakh
                             </a>
                             </li>
@@ -330,8 +330,8 @@
                             <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-10000000">Under 1 Crore
                             </a>
                             </li>
-                           
-                           
+
+
 
                     </ul>
                 </div>
