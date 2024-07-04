@@ -27,7 +27,24 @@
                                 <div class="investhead"><span>Free</span> registration </div>
                                 <div class="priceshownew">View and enquire about all brands</div>
                             </div>
-                            
+                            <!-- silver plan -->
+                            <div class="col-xs-12 col-sm-3 col-md-3 bor-radius row-no-padding boxheightinvestor boxwidth silver" id="403">
+                                <div class="padspc silver">
+                                    <input type="radio" id="test3" name="invPlan" value="403"/>
+                                    <label for="test3">Silver</label>
+                                </div>
+                                <div class="investheadprice">
+                                    <i class="fa fa-inr" aria-hidden="true"></i>{{ number_format(Config('constants.invPlanAmount.403')) }}
+                                    <div class="txtgst">+18% GST</div>
+                                    <span>3 Months</span>
+                                </div>
+                                <div class="priceshownew">View and enquire about all brands</div>
+                                <div class="priceshownew">View contact details of 20 brands</div>
+                                <div class="priceshownew">Newsletter subscription</div>
+                                <div class="priceshownew"> A monthly recommendation of brands will be visible on your dashboard </div>
+                                <div class="priceshownew">1 month subscription of The franchising world.</div>
+                            </div>
+                            <!--4-->
 
                             <!--4 Gold plan Start -->
                             <div class="col-xs-12 col-sm-3 col-md-3 bor-radius row-no-padding boxheightinvestor boxwidth goldb" id="404">
@@ -221,81 +238,81 @@
     </div>
 
     <script type="text/javascript">
-        $('#test1').click(function () {
-            $('#401').addClass('active');
-            $('#402').removeClass('active');
-            $('#403').removeClass('active');
-            $('#404').removeClass('active');
-            $('#405').removeClass('active');
+        $("#test1").click(function () {
+            $("#401").addClass('active');
+            $("#402").removeClass('active');
+            $("#403").removeClass('active');
+            $("#404").removeClass('active');
+            $("#405").removeClass('active');
         });
-        $('#test2').click(function () {
-            $('#401').removeClass('active');
-            $('#402').addClass('active');
-            $('#403').removeClass('active');
-            $('#404').removeClass('active');
-            $('#405').removeClass('active');
+        $("#test2").click(function () {
+            $("#401").removeClass('active');
+            $("#402").addClass('active');
+            $("#403").removeClass('active');
+            $("#404").removeClass('active');
+            $("#405").removeClass('active');
         });
-        $('#test3').click(function () {
-            $('#401').removeClass('active');
-            $('#402').removeClass('active');
-            $('#403').addClass('active');
-            $('#404').removeClass('active');
-            $('#405').removeClass('active');
+        $("#test3").click(function () {
+            $("#401").removeClass('active');
+            $("#402").removeClass('active');
+            $("#403").addClass('active');
+            $("#404").removeClass('active');
+            $("#405").removeClass('active');
         });
-        $('#test4').click(function () {
-            $('#401').removeClass('active');
-            $('#402').removeClass('active');
-            $('#403').removeClass('active');
-            $('#404').addClass('active');
-            $('#405').removeClass('active');
+        $("#test4").click(function () {
+            $("#401").removeClass('active');
+            $("#402").removeClass('active');
+            $("#403").removeClass('active');
+            $("#404").addClass('active');
+            $("#405").removeClass('active');
         });
-        $('#test5').click(function () {
-            $('#401').removeClass('active');
-            $('#402').removeClass('active');
-            $('#403').removeClass('active');
-            $('#404').removeClass('active');
-            $('#405').addClass('active');
+        $("#test5").click(function () {
+            $("#401").removeClass('active');
+            $("#402").removeClass('active');
+            $("#403").removeClass('active');
+            $("#404").removeClass('active');
+            $("#405").addClass('active');
         });
 
-        $('#401').click(function () {
+        $("#401").click(function () {
             $("input[name='invPlan'][value='401']").prop('checked', true);
-            $('#401').addClass('active');
-            $('#402').removeClass('active');
-            $('#403').removeClass('active');
-            $('#404').removeClass('active');
-            $('#405').removeClass('active');
+            $("#401").addClass('active');
+            $("#402").removeClass('active');
+            $("#403").removeClass('active');
+            $("#404").removeClass('active');
+            $("#405").removeClass('active');
         });
-        $('#402').click(function () {
+        $("#402").click(function () {
             $("input[name='invPlan'][value='402']").prop('checked', true);
-            $('#401').removeClass('active');
-            $('#402').addClass('active');
-            $('#403').removeClass('active');
-            $('#404').removeClass('active');
-            $('#405').removeClass('active');
+            $("#401").removeClass('active');
+            $("#402").addClass('active');
+            $("#403").removeClass('active');
+            $("#404").removeClass('active');
+            $("#405").removeClass('active');
         });
-        $('#403').click(function () {
+        $("#403").click(function () {
             $("input[name='invPlan'][value='403']").prop('checked', true);
-            $('#401').removeClass('active');
-            $('#402').removeClass('active');
-            $('#403').addClass('active');
-            $('#404').removeClass('active');
-            $('#405').removeClass('active');
+            $("#401").removeClass('active');
+            $("#402").removeClass('active');
+            $("#403").addClass('active');
+            $("#404").removeClass('active');
+            $("#405").removeClass('active');
         });
-        $('#404').click(function () {
+        $("#404").click(function () {
             $("input[name='invPlan'][value='404']").prop('checked', true);
-            $('#401').removeClass('active');
-            $('#402').removeClass('active');
-            $('#403').removeClass('active');
-            $('#404').addClass('active');
-            $('#405').removeClass('active')
+            $("#401").removeClass('active');
+            $("#402").removeClass('active');
+            $("#403").removeClass('active');
+            $("#404").addClass('active');
+            $("#405").removeClass('active')
         });
-        $('#405').click(function () {
+        $("#405").click(function () {
             $("input[name='invPlan'][value='405']").prop('checked', true);
-            $('#401').removeClass('active');
-            $('#402').removeClass('active');
-            $('#403').removeClass('active');
-            $('#404').removeClass('active');
-            $('#405').addClass('active');
+            $("#401").removeClass('active');
+            $("#402").removeClass('active');
+            $("#403").removeClass('active');
+            $("#404").removeClass('active');
+            $("#405").addClass('active');
         });
     </script>
     @include('includes.banners-new.facebook-pixel')
