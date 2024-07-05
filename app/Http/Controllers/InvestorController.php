@@ -1365,7 +1365,7 @@ class InvestorController extends Controller
         $data = "<table> <tr> <td>Name : </td><td>" . $name . "</td></tr><tr> <td>Email : </td><td>" . $email . "</td></tr><tr> <td>Mobile No. : </td><td>" . $phone . "</td></tr><tr> <td>Investor Id : </td><td>" . $investorId . "</td></tr><tr> <td>Address : </td><td>" . $address . ", City: " . $city . ", State: " . $invData->inv_state . ", Country: " . $country . "</td></tr><tr> <td>Time Of Payment : </td><td>" . date('Y-m-d H:i:s') . "</td></tr></table>";
 
         // *******commented for testing**********
-        Mail::getFacadeRoot()->to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
+        Mail::to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
 
         // End of Email to Investor Acquisition team
 
