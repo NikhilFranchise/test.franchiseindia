@@ -355,7 +355,9 @@ class LoginController extends Controller
         if ($type == 1)
             return redirect('franchisor/myaccount/dashboard');
         if ($type == 2)
-            return redirect('/');
+            // return redirect('/');
+
+            return redirect()->back(); // Redirects to the previous URL
 
         session()->put('loginFailed', 'Oops! The password entered is incorrect.');
         return redirect('/login');
