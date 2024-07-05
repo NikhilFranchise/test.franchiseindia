@@ -18,21 +18,12 @@
 @section('hindiUrl', $hindiUrl)
 @section('englishUrl', $engUrl)
 
-{{-- @section('hindibrandUrls')
+@section('hindibrandUrls')
     <link href="{{ str_replace('/hi/', '/amp/hi/', $hindiUrl) }}" rel="amphtml">
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
-@endsection --}}
-@section('hindibrandUrls')
-<?php
-$currentUrl = url()->current();
-$hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
-?>
-<link href="{{ $hindiUrl }}">
-    {{-- <link href="{{ str_replace('/hi/',  $hindiUrl) }}" > --}}
-    <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
-    <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
 @endsection
+
 @section('content')
 
     @php
@@ -76,7 +67,8 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
                             $shortBox = 0;
                         @endphp
                         @foreach ($shuffledResults as $brandResult)
-                            @php
+
+                            {{--  @php
                                 $brandUrl = sprintf(
                                     Config('constants.brandPagePattern'),
                                     Config('constants.MainDomain'),
@@ -167,7 +159,80 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
                                         $rate = round($rate, 1);
                                     }
                                 }
-                            @endphp
+                            @endphp  --}}
+                            @php
+                            $brandUrl = sprintf(
+                                Config('constants.brandPagePattern'),
+                                Config('constants.MainDomain'),
+                                $brandResult->profile_name,
+                                $brandResult->fran_detail_id,
+                            );
+                            $is_premium = 0;
+                            $imgCount = 0;
+                            $SubCatName = '';
+                            $noImage = 'https://www.franchiseindia.com/images/no-img.gif';
+                            $image = $noImage;
+                            $brandImagepath = Config('constants.franAwsImgPath') . $brandResult->company_logo;
+                            $minValue = $brandResult->unit_inv_min;
+                            $area = '-N/A-';
+                            if (is_numeric($minValue)) {
+                                if ($minValue < 100000 && $minValue > 10000) {
+                                    $minValue = substr($minValue / 1000, 0, 5) . ' K';
+                                } elseif ($minValue <= 9999999 && $minValue > 100000) {
+                                    $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
+                                } elseif ($minValue > 9999999) {
+                                    $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
+                                }
+                            }
+                            $maxValue = $brandResult->unit_inv_max;
+                            if (is_numeric($maxValue)) {
+                                if ($maxValue < 100000 && $maxValue > 10000) {
+                                    $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
+                                } elseif ($maxValue <= 9999999 && $maxValue > 100000) {
+                                    $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
+                                } elseif ($maxValue > 9999999) {
+                                    $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
+                                }
+                            }
+                            $priceRange = "INR $minValue - $maxValue ";
+                            if (empty($brandResult->company_logo)) {
+                                $brandImagepath = $noImage;
+                            }
+                            foreach (Config('constants.subSubCategoryArr') as $key => $abc) {
+                                if (array_key_exists($brandResult->ind_sub_cat, $abc)) {
+                                    $SubCatName = $abc[$brandResult->ind_sub_cat];
+                                }
+                            }
+                            foreach ($franImageData as $imgData) {
+                                if ($imgData->franchisor_id == $brandResult->franchisor_id) {
+                                    $image = $imgData->image_type_slider2;
+                                    $is_premium = 1;
+                                    $imgCount = $imgData->count;
+                                }
+                            }
+                            if (!empty($brandResult->prop_area_max)) {
+                                $area = $brandResult->prop_area_min . ' - ' . $brandResult->prop_area_max;
+                            }
+                            if (empty($brandResult->prop_area_max)) {
+                                $area = $brandResult->prop_area_min;
+                            }
+                            if (empty($brandResult->prop_area_min)) {
+                                $area = '-N/A-';
+                            }
+                            $likes = 0;
+                            $rate = 0;
+                            if (!empty($brandResult->franchisorLike)) {
+                                $likes = $brandResult->franchisorLike->blike;
+                                if (
+                                    $brandResult->franchisorLike->brate != 0 &&
+                                    $brandResult->franchisorLike->bclick != 0
+                                ) {
+                                    $rate =
+                                        $brandResult->franchisorLike->brate / $brandResult->franchisorLike->bclick;
+                                    $rate = round($rate, 1);
+                                }
+                            }
+                        @endphp
 
                             @if ($brandResult->membership_type == 1)
 
@@ -264,6 +329,7 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
                                         @enddesktop
                                         @tablet
                                             <div class="dfp_240X400">
+                                                {{-- <div id='div-gpt-ad-1504794961823-0' style='height:400px; width:240px; margin:0 auto;'></div> --}}
                                                 <!-- /1057625/FIHL/Desktop_Category_240x400_Mid_1-->
                                                 <div id='adslot240x400_Mid_{{ $flag }}'
                                                     style='height:400px; width:240px; margin:0 auto;'>
@@ -445,7 +511,9 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
             <form method="post" action="{{ URL('compare-brands') }}">
                 You selected <span class="count">0</span>Brands for Comparison (Max @mobile
                     2
-                @endmobile @notmobile 3 @notmobile)
+                    @endmobile @notmobile
+                    3
+                @endnotmobile)
                 <input type="hidden" name="franchisors" id="franchisorsForComparison">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="submit" class="brandRequest" value="Compare" />
@@ -800,7 +868,7 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
 
         });
 
-        //Popup Gallery        
+        //Popup Gallery
         $(document).ready(function() {
             let gallery = $('.gallery');
             gallery.vitGallery({
