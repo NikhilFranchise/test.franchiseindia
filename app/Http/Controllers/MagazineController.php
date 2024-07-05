@@ -64,8 +64,8 @@ class MagazineController extends Controller
             $articles     = MagazineCategory::query()->where('magz_id', $contentId)->where('iss_year', $magYear)->get();
 
         if (count($articles) == 0)
-            return redirect('pagenotfound');
-
+            // return redirect('pagenotfound');
+            abort(404);
         $year  = $articles[0]['iss_year'];
 
         $magFetchId    = $articles[0]['category_id'];

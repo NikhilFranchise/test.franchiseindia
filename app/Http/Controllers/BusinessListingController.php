@@ -880,7 +880,8 @@ public function listingLocation()
             $cid = preg_split('#(?<=[a-z])(?=\d)#i', $catParam);
 
         if (count($cid) != 2)
-            return redirect('pagenotfound');
+            // return redirect('pagenotfound');
+            abort(404);
 
         $seoClass = (request()->segment(1) == 'hi') ? CategoryFinalHindi::query() : CategoryFinal::query();
         $catArr   = $seoClass->select('catname', 'parent_id', 'seoTitle', 'description', 'keywords')
@@ -1781,7 +1782,8 @@ public function listingLocation()
             $cid = preg_split('#(?<=[a-z])(?=\d)#i', $catParam);
 
         if (count($cid) != 2)
-            return redirect('pagenotfound');
+            // return redirect('pagenotfound');
+            abort(404);
 
         $seoClass = (request()->segment(1) == 'hi') ? CategoryFinalHindi::query() : CategoryFinal::query();
         $catArr   = $seoClass->select('catname', 'parent_id', 'seoTitle', 'description', 'keywords')

@@ -781,9 +781,11 @@ $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
                 if ($("#dealer-bar-search").val() != "") {
                     var value = $("#dealer-bar-search").val();
                     var items = value.split(' - <strong> in');
-                    if (items.length > 1)
+                    if (items.length > 1){
                         value = items[0];
-                    window.location.href = '/dealers-india/search/' + value;
+                        window.location.href = '/dealers-india/search/' + value;
+                    }
+                        
                 }
             });
 
