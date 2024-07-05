@@ -24,6 +24,7 @@
                     </div>
                     <div class="frm-container" id="askForm">
                         <form id="homepage" name="homepage" method="post" action="{{Config('constants.MainDomain')}}/freeadvice">
+                            @csrf
                             <h2 class="ttl">Free Advice - Ask Our Experts</h2>
                             <div id="errMsg" style="display:none;"><span style="color: red; ">Please select one
                             option..!</span></div>
