@@ -30,7 +30,7 @@ overflow: hidden;
             </div>
         </div>
         <div class="row">
-            
+
                 <ul class="top-franchise">
                     @foreach ($brands->where('brand_section', 4)->where('page_type', $pageType)->take(25)->shuffle() as $logoDetail) @php $brandUrl = Config('constants.MainDomain').$logoDetail['brand_link']; if(isset($hindiFrans) &&
                     is_array($hindiFrans) && in_array($logoDetail['fihl_id'], $hindiFrans)) $brandUrl = Config('constants.MainDomain').'/hi'.$logoDetail['brand_link']; $cat_url = "/business-opportunities/".strtolower(str_replace(' ', '-',
@@ -76,7 +76,7 @@ overflow: hidden;
                     </li>
                     @endforeach
                 </ul>
-            
+
         </div>
     </div>
 </section>
