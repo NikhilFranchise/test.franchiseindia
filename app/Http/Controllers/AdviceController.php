@@ -65,8 +65,8 @@ class AdviceController extends Controller
         if (!$users)
             return response()->json('Insertion failed..!');
 
-        // Mail::to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
-        Mail::to($mailTo)->bcc("krituraj@franchiseindia.com")->send(new FreeAdviceForm($request));
+        Mail::to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
+        // Mail::to($mailTo)->bcc("krituraj@franchiseindia.com")->send(new FreeAdviceForm($request));
 
         if ($newsLetter == 1)
             NewsLetterController::createNewsLetter($request->input('email'), "fi");
