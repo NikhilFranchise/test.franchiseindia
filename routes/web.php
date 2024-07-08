@@ -75,9 +75,7 @@ Route::get('/dashboard', function () {
     return redirect('/', 301);
 });
 Route::get('pagenotfound', function () {
-    // return view('static.404');
-    abort(404);
-
+    return view('static.404');
 }); //404 ERROR PAGE
 Route::get('/hi', [NewHomePageController::class, 'hindiHomePage']); //checck
 Route::get('about', [StaticPageController::class, 'aboutus']);
