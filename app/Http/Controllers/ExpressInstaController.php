@@ -493,7 +493,7 @@ class ExpressInstaController extends Controller
                     'visibility' => $visibility,
                     'visit_date' => date('Y-m-d'),
                     'franchisor_visibility' => ($franData->membership_type == 1 ? 1 : 0),
-                    'franchisor_visibility_date' => ($franData->membership_type == 1 ? date('Y-m-d H:i:s') : "")
+                    'franchisor_visibility_date' => ($franData->membership_type == 1 ? date('Y-m-d H:i:s') : null)
                 ]);
             }
 
