@@ -8,7 +8,7 @@
 @endif
 @php
     $hindiUrl =
-        Config('constants.MainDomain') .
+        Config('constants.MainDomain') .   
         '/hi/brands/' .
         $franDetails->profile_name .
         '.' .
@@ -31,6 +31,9 @@
 @endif
 
 @section('content')
+
+@include('layout.newhomepage.expeFndfrm')
+
 
 
 
