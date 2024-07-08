@@ -14,7 +14,7 @@ use Illuminate\Support\Arr;
                ];
                if (Auth::check() && Auth::user()->profile_type == 2) {
                 // @dd(Auth::user());
-               if (Auth::user()->membership_type == 1 || Auth::user()->reg_source == 'DelhiExpoPaid' && $inv_credits->credit_limit > 0) {
+               if (Auth::user()->membership_type == 1 ) {
                $eligibility = 1;
                } else {
                $checkData = \App\Http\Controllers\CommonController::checkInvestorApplicationEligibility();
