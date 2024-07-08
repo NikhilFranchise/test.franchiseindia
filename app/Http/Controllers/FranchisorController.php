@@ -25,6 +25,7 @@ use App\Models\UserAccount;
 use App\Models\UserActivity;
 use App\Models\UserRecord;
 use App\Models\BrandUpdateRequest;
+use App\Models\HomePremiumPageBrand;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
@@ -792,7 +793,7 @@ class FranchisorController extends Controller
     {
         //dd($request);
         $url = ''; //"no url";
-//        dd($request->memberplan);
+        //        dd($request->memberplan);
         $franchisorId = $request->franchisorId;
         $layout = $request->layout_type;
 
@@ -980,7 +981,6 @@ class FranchisorController extends Controller
 
             if ($regSource == "facebook2019")
                 $regSourceValue = "facebook";
-
         }
 
         //step 1 data insertion
@@ -1271,7 +1271,6 @@ class FranchisorController extends Controller
                     }
                 }
             }
-
         }
 
         //Inserting data into franchisor_loc_states for states for diffrent regions
@@ -1815,7 +1814,6 @@ class FranchisorController extends Controller
                     return redirect()->back();
                 }
             }
-
         }
 
         //updating the database
@@ -1854,6 +1852,22 @@ class FranchisorController extends Controller
             'unitinv_royalty' => $unitInvRoyalty,
             'business_desc_update' => $detail
         ]);
+        $invest = ($unitInvMin == 0) ? $unitInvestment : config('constants.investmentRangeFetch')[$unitInvMin];
+
+        // $investment = ($invest == 0) ? config('constants.investRangeInWords')[1] : config('constants.investRangeInWords')[$invest];
+
+        $invesRange = str_replace('Rs. ', '', str_replace('lakh', 'L', $invest));
+        // dd($invesRange);
+
+
+        if ($franchisorId != null) {
+            HomePremiumPageBrand::query()->where('fihl_id', $franchisorId)->update([
+                'brand_heading' => $request->input('brand_name'),
+                'investment_range' => $invesRange,
+                'investment_range_new' => $invesRange,
+                'franchise_outlets' => $request->input('no_fran_outlets'),
+            ]);
+        }
 
         $this->recordUpdateTime();
 
@@ -2170,7 +2184,6 @@ class FranchisorController extends Controller
                 ];
 
                 $this->sendMailNotification('sachin@franchiseindia.com', new international($companyData));
-
             }
         }
 
@@ -2497,7 +2510,7 @@ class FranchisorController extends Controller
         if ($mail == 1) {
             $company = FranchisorBusinessDetail::query()->select('company_name')->where('franchisor_id', request()->user()->profile_str)->first()->company_name;
 
-            $data = " 
+            $data = "
                     FranchisorId                                       =   " . request()->user()->profile_str . "
                     Company Name                                       =   " . $company;
 

@@ -245,8 +245,8 @@ class LoginController extends Controller
 						//->orWhere('email', 'info@opportunityindia.com')
 						//->orWhere('email', 'info@franglobal.com')
 						->first();
-
-        if ($userData->count() > 0) {
+        // dd($userData);
+        if ($userData != null) {
 
             $check = $this->checkProfile($userData);
 
