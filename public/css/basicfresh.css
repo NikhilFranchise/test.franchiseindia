@@ -1182,7 +1182,7 @@ a:focus{outline-offset:0;color:#333}
 .freeoverh{position:absolute;background:rgba(255,255,255,.9);height:100%;z-index:9;text-align:center;padding-top:70px}
 .freeoverh p{clear:both;padding:70px 100px 0}
 .myaccount .borleft{border-right:1px solid #dfdfdf;padding:16px 23px;height:auto;min-height:110px}
-.myaccount .borleft img{text-align:center;margin-left:10px}
+.myaccount .borleft img{text-align:center;margin-left:10px; width: 100%;}
 .cathead{font-family:'Open Sans Bold',serif;font-size:25px;color:#333;line-height:25px}
 .cathead span{font-family:'Open Sans Light',serif;font-size:13px;line-height:13px;color:#999;display:block}
 .catheadnew,.myaccount .fra-title{font-family:'Open Sans Regular',serif}
@@ -4473,7 +4473,7 @@ ul.sidebt li.fi{height:160px}
 .btnclose { display: none;}
 .margintop60.paddingset {     margin-top: 0px;
     padding-top: 90px!important;}
-.videoyou {} 
+.videoyou {}
 .videoyou iframe { width:98%!important; height:auto;}
 .mostpopu.arttilist.settops { margin-top:80px;}
 }

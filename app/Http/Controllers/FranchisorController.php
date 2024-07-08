@@ -1857,7 +1857,7 @@ class FranchisorController extends Controller
         // $investment = ($invest == 0) ? config('constants.investRangeInWords')[1] : config('constants.investRangeInWords')[$invest];
 
         $invesRange = str_replace('Rs. ', '', str_replace('lakh', 'L', $invest));
-        // dd($invesRange);
+        dd($invesRange);
 
 
         if ($franchisorId != null) {
