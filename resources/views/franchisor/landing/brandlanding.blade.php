@@ -8,7 +8,7 @@
 @endif
 @php
     $hindiUrl =
-        Config('constants.MainDomain') .   
+        Config('constants.MainDomain') .
         '/hi/brands/' .
         $franDetails->profile_name .
         '.' .
@@ -402,7 +402,8 @@
                 type: 'post',
                 url: '{{ URL('/inv-lead?flag=expint') }}',
                 data: {
-                    franId: franId
+                    franId: franId,
+                    "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
 
@@ -490,7 +491,7 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
-                    
+
                     $('#waitquery').css('display', 'none');
                     if ($.isNumeric(data)) {
                         $('#paidinvBeforeApply').css('display', 'block');
