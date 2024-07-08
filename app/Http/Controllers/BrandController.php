@@ -308,7 +308,7 @@ class BrandController extends Controller
         $likesFranData = FranchisorLike::query()->select('blike')->where('franchisor_id', $franchisorId)->first();
 
         // If the record count is 0, create new entry by franchisor_id
-        if ($likesFranData->count() == 0) {
+        if ($likesFranData == null || $likesFranData->count() == 0) {
             $likesFranData = 0;
             FranchisorLike::query()->insert(['franchisor_id' => $franchisorId, 'blike' => 1]);
         } else {
