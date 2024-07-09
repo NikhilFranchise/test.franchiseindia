@@ -3136,7 +3136,7 @@ ul.tobbxslider li img{width:449px;height:253px}
     .hidedesktopmenu{display:block}
     .abotimg img{width:100%}
 }
-@media only screen and (min-width:1024px) and (max-width:1280px) {
+@media only screen and (min-width:1024px) and (max-width:1199px) {
     .formsection .eds2{width:61.8%}
     .hide768,.othersliderblk #tab-carousel .col-md-4{display:none}
     .brand-lst-sec .bdy .logo-list.sm-fe{height:67px}
