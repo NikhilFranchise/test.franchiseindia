@@ -108,14 +108,14 @@ class CommonController extends Controller
      */
     public function getCityListLandingPage(Request $request)
     {
-        dd($request->all());
+
         $cities = '<option value="">Select City</option>';
 
         if (empty($request->franId) || empty($request->state))
             return $cities;
 
-        $city = Config('location.cityArr.' . request()->state);
-
+        $city = Config('location.cityArr.' . $request->state);
+        dd($city);
         $locationType = FranchisorBusinessDetail::query()->select('expansion_loc_type')
             ->where('franchisor_id', request()->franId)->first()->expansion_loc_type;
 
