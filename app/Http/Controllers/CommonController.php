@@ -115,9 +115,9 @@ class CommonController extends Controller
             return $cities;
 
         $city = Config('location.cityArr.' . $request->state);
-        dd($city);
         $locationType = FranchisorBusinessDetail::query()->select('expansion_loc_type')
-            ->where('franchisor_id', request()->franId)->first()->expansion_loc_type;
+        ->where('franchisor_id', $request->franId)->first()->expansion_loc_type;
+        dd($locationType);
 
         if ($locationType == 2) {
             $citiesType2 = FranchisorLocState::query()->where('franchisor_id', request()->franId)
