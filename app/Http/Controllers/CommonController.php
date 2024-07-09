@@ -106,11 +106,12 @@ class CommonController extends Controller
      * Function to generate city list based upon Franchisor
      * @return string
      */
-    public function getCityListLandingPage()
+    public function getCityListLandingPage(Request $request)
     {
+        dd($request->all());
         $cities = '<option value="">Select City</option>';
 
-        if (empty(request()->franId) || empty(request()->state))
+        if (empty($request->franId) || empty($request->state))
             return $cities;
 
         $city = Config('location.cityArr.' . request()->state);
@@ -464,7 +465,7 @@ class CommonController extends Controller
         if ($profileData === null || $profileData->count() === 0) {
             return view('static.email-reject');
         }
-        
+
 
         $status = $profileData->profile_type != 1 ? Config('constants.ProfileStatus.Active') : Config('constants.ProfileStatus.Awaiting');
 
