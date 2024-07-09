@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\InvestorDetails;
@@ -116,15 +117,16 @@ class CommonController extends Controller
 
         $city = Config('location.cityArr.' . $request->state);
         $locationType = FranchisorBusinessDetail::query()->select('expansion_loc_type')
-        ->where('franchisor_id', $request->franId)->first()->expansion_loc_type;
-        dd($locationType);
+            ->where('franchisor_id', $request->franId)->first()->expansion_loc_type;
+        // dd($locationType);
 
         if ($locationType == 2) {
-            $citiesType2 = FranchisorLocState::query()->where('franchisor_id', request()->franId)
-                ->where('state', Config('location.stateArr.' . request()->state))->get()->pluck('city');
-
-            if (!empty($citiesType2))
+            $citiesType2 = FranchisorLocState::query()->where('franchisor_id', $request->franId)
+                ->where('state', Config('location.stateArr.' . $request->state))->get()->pluck('city');
+            dd($citiesType2);
+            if (!empty($citiesType2)) {
                 $city = $citiesType2;
+            }
         }
 
         foreach ($city as $index => $value) {
@@ -206,7 +208,6 @@ class CommonController extends Controller
         } else {
             return response()->json(array('msg3' => "Pincode not found"), 200);
         }
-
     }
 
     /**
@@ -674,7 +675,6 @@ class CommonController extends Controller
             'code' => $code,
         ];
         Mail::getFacadeRoot()->to($email)->send(new confirmed($data));
-
     }
 
     /**
@@ -907,7 +907,6 @@ class CommonController extends Controller
         // dd($mobile);
         $check = UserAccount::query()->where('mobile', $mobile)->count();
         return $check;
-
     }
 
     public function investervrifyOtp()
@@ -959,7 +958,7 @@ class CommonController extends Controller
 
         //while (list($character, $replacement) = each($specialCharacters)) {
 
-        foreach ((Array) $specialCharacters as $character => $replacement) { //replaced above code as The each() function is deprecated in php7//
+        foreach ((array) $specialCharacters as $character => $replacement) { //replaced above code as The each() function is deprecated in php7//
 
             $string = str_replace($character, '-' . $replacement . '-', $string);
         }
@@ -976,5 +975,4 @@ class CommonController extends Controller
         return strtolower($content_title1);
         //return str_replace('\'', '', $title);
     }
-
 }
