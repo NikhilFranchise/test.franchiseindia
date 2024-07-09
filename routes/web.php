@@ -109,7 +109,6 @@ Route::get('most-visitedbrands', [BrandFilterController::class, 'topbrands']);
 Route::get('brands/{profileName}', [BrandController::class, 'brandDetails']);
 Route::get('check-existing-registration', [InvestorController::class, 'checkInvestorExistence']);
 Route::get('mobcheck', [MobileVerificationController::class, 'mobCheck']);
-Route::get('get-city-list-landing-page', [CommonController::class, 'getCityListLandingPage']);
 Route::get('compare-brands', [BrandCompareController::class, 'compareBrands']);
 Route::get('get-brands', [BrandCompareController::class, 'getComparableBrands']);
 Route::get('/get-brand-compare', [BrandCompareController::class, 'getSingleBrand']);
@@ -435,7 +434,7 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     // Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
     // Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListing']);
     // Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
-    
+
     Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
@@ -443,8 +442,8 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListingnormalization']);
     Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
-    
-    
+
+
 
 
     Route::get('/lowcost', [BusinessListingController::class, 'searchBusinessListing'])
