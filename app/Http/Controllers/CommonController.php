@@ -121,9 +121,9 @@ class CommonController extends Controller
         // dd($locationType);
 
         if ($locationType == 2) {
-            $citiesType2 = FranchisorLocState::query()->where('franchisor_id', $request->franId)
+          echo  $citiesType2 = FranchisorLocState::query()->where('franchisor_id', $request->franId)
                 ->where('state', Config('location.stateArr.' . $request->state))->get()->pluck('city');
-            dd($citiesType2);
+die;
             if (!empty($citiesType2)) {
                 $city = $citiesType2;
             }
