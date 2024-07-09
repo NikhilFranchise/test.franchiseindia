@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\InvestorDetails;
@@ -106,26 +107,28 @@ class CommonController extends Controller
      * Function to generate city list based upon Franchisor
      * @return string
      */
-    public function getCityListLandingPage()
+    public function getCityListLandingPage(Request $request)
     {
+
         $cities = '<option value="">Select City</option>';
 
-        if (empty(request()->franId) || empty(request()->state))
+        if (empty($request->franId) || empty($request->state))
             return $cities;
 
-        $city = Config('location.cityArr.' . request()->state);
-
+        $city = Config('location.cityArr.' . $request->state);
         $locationType = FranchisorBusinessDetail::query()->select('expansion_loc_type')
-            ->where('franchisor_id', request()->franId)->first()->expansion_loc_type;
+            ->where('franchisor_id', $request->franId)->first()->expansion_loc_type;
+        // dd($locationType);
 
         if ($locationType == 2) {
-            $citiesType2 = FranchisorLocState::query()->where('franchisor_id', request()->franId)
-                ->where('state', Config('location.stateArr.' . request()->state))->get()->pluck('city');
+           $citiesType2 = FranchisorLocState::query()->where('franchisor_id', $request->franId)
+                ->where('state', Config('location.stateArr.' . $request->state))->get()->pluck('city');
 
-            if (!empty($citiesType2))
+            if (!empty($citiesType2)) {
                 $city = $citiesType2;
+            }
         }
-
+        dd($city);
         foreach ($city as $index => $value) {
             $cities .= "<option value='" . $value . "'>$value</option>";
         }
@@ -205,7 +208,6 @@ class CommonController extends Controller
         } else {
             return response()->json(array('msg3' => "Pincode not found"), 200);
         }
-
     }
 
     /**
@@ -464,7 +466,7 @@ class CommonController extends Controller
         if ($profileData === null || $profileData->count() === 0) {
             return view('static.email-reject');
         }
-        
+
 
         $status = $profileData->profile_type != 1 ? Config('constants.ProfileStatus.Active') : Config('constants.ProfileStatus.Awaiting');
 
@@ -673,7 +675,6 @@ class CommonController extends Controller
             'code' => $code,
         ];
         Mail::getFacadeRoot()->to($email)->send(new confirmed($data));
-
     }
 
     /**
@@ -906,7 +907,6 @@ class CommonController extends Controller
         // dd($mobile);
         $check = UserAccount::query()->where('mobile', $mobile)->count();
         return $check;
-
     }
 
     public function investervrifyOtp()
@@ -958,7 +958,7 @@ class CommonController extends Controller
 
         //while (list($character, $replacement) = each($specialCharacters)) {
 
-        foreach ((Array) $specialCharacters as $character => $replacement) { //replaced above code as The each() function is deprecated in php7//
+        foreach ((array) $specialCharacters as $character => $replacement) { //replaced above code as The each() function is deprecated in php7//
 
             $string = str_replace($character, '-' . $replacement . '-', $string);
         }
@@ -975,5 +975,4 @@ class CommonController extends Controller
         return strtolower($content_title1);
         //return str_replace('\'', '', $title);
     }
-
 }
