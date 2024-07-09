@@ -2325,7 +2325,7 @@ ul.tobbxslider li img{width:449px;height:253px}
     .catleftbanner300 .google_cat_160X600{display:block}
     .smallcatblk,.yahoo_250X250,.yahoocate200{overflow:hidden}
     .col-md-2.selfix{width:24.666667%}
-    .sidesslideform .container{height:350px;overflow:auto;}
+    .sideslideform .container{height:350px;overflow:auto;}
 }
 @media only screen and (min-width:1px) and (max-width:1199px) {
     .cateblock .catimgmobile{width:122px;display:block}
@@ -3136,7 +3136,7 @@ ul.tobbxslider li img{width:449px;height:253px}
     .hidedesktopmenu{display:block}
     .abotimg img{width:100%}
 }
-@media only screen and (min-width:1024px) and (max-width:1199px) {
+@media only screen and (min-width:1024px) and (max-width:1280px) {
     .formsection .eds2{width:61.8%}
     .hide768,.othersliderblk #tab-carousel .col-md-4{display:none}
     .brand-lst-sec .bdy .logo-list.sm-fe{height:67px}
