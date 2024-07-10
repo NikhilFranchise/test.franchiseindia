@@ -2051,7 +2051,7 @@ class FranchisorController extends Controller
                     // dd($states);
                     $fran = FranchisorBusinessDetail::query()->where('franchisor_id',$franchisorId)->update([
                         'expansion_location' => implode(',', $states),
-                        'expansion_loc_type' => $request->input('expansion_loc_type')
+                        'expansion_loc_type' => $expansionLocType
                     ]);
                     // dd($fran);
 
@@ -2132,9 +2132,14 @@ class FranchisorController extends Controller
                                 'state' => $state
                             ]);
 
+                            $states = $state;
+                            if (!is_array($states)) {
+                                $states = explode(',', $states); // This assumes the string can be split into an array
+                            }
+                            // dd($states);
                             $fran = FranchisorBusinessDetail::query()->where('franchisor_id',$franchisorId)->update([
-                                'expansion_location' => implode(',',$franchiseNorthStates[$statesCount]),
-                                'expansion_loc_type' => $request->input('expansion_loc_type')
+                                'expansion_location' => implode(',', $states),
+                                'expansion_loc_type' => $expansionLocType
                             ]);
 
                             // If saving the record in FranchisorLocState Model failed
