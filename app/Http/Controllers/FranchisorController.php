@@ -2048,7 +2048,7 @@ class FranchisorController extends Controller
                     if (!is_array($states)) {
                         $states = explode(',', $states); // This assumes the string can be split into an array
                     }
-                    dd($states);
+                    // dd($states);
                     $fran = FranchisorBusinessDetail::query()->where('franchisor_id',$franchisorId)->update([
                         'expansion_location' => implode(',', $states),
                         'expansion_loc_type' => $request->input('expansion_loc_type')
