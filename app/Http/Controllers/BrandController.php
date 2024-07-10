@@ -26,7 +26,7 @@ class BrandController extends Controller
         // dd($request);
         $ratings = 0;
         $likesCnt = 0;
-        $brandUrlParam = $request->profileName;         // Fetch the request parameter        
+        $brandUrlParam = $request->profileName;         // Fetch the request parameter
         $brandParamsArr = explode('.', $brandUrlParam);  // Explode it by separator & fetch details from DB
         $images = [];
         $view = "brandlanding";
@@ -73,7 +73,7 @@ class BrandController extends Controller
         $update = $franDetails->increment('views');
 
         // User Likes & Ratings
-        if ($likeTableData !== null && $likeTableData->count() > 0) {
+        if ($likeTableData !== null || $likeTableData->count() > 0) {
             $likesCnt = $likeTableData->blike; //like count
 
             // User Ratings
@@ -171,7 +171,7 @@ class BrandController extends Controller
                 ->where('investor_details.investor_id', request()->user()->profile_str)->where('user_accounts.reg_source', 'DelhiExpoPaid')
                 ->first();
 
-            // return the investor data to blade view 
+            // return the investor data to blade view
             return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits'));
         } else {
             // return the data to blade view

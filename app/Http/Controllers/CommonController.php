@@ -118,8 +118,6 @@ class CommonController extends Controller
         $city = Config('location.cityArr.' . $request->state);
         $locationType = FranchisorBusinessDetail::query()->select('expansion_loc_type')
             ->where('franchisor_id', $request->franId)->first()->expansion_loc_type;
-        // dd($locationType);
-
         if ($locationType == 2) {
            $citiesType2 = FranchisorLocState::query()->where('franchisor_id', $request->franId)
                 ->where('state', Config('location.stateArr.' . $request->state))->get()->pluck('city');
@@ -128,7 +126,7 @@ class CommonController extends Controller
                 $city = $citiesType2;
             }
         }
-        dd($city);
+        // dd($city);
         foreach ($city as $index => $value) {
             $cities .= "<option value='" . $value . "'>$value</option>";
         }

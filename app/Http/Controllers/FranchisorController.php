@@ -300,7 +300,7 @@ class FranchisorController extends Controller
         if ($request->input('looking_franchise') == config('constants.LookingFor.Franchisor')) {
 
             $lookingFranchise = 1;
-            // dd($request->get('franchise_partner_type'));
+
             $franchisePartner = $request->get('franchise_partner_type');
             $franchisePartnerCount = $franchisePartner != null;
             $franchisorPartnerType = $franchisePartnerCount == 2 ? 3 : ($franchisePartner[0] == "lookingFrUnit" ? 1 : 2);
@@ -2044,10 +2044,16 @@ class FranchisorController extends Controller
                         'region' => $region,
                         'state' => $franchiseNorthStates[$statesCount]
                     ]);
+                    dd($insert);
+                    $fran = FranchisorBusinessDetail::query()->where('franchisor_id',$franchisorId)->update([
+                        'expansion_location' => implode(',',$franchiseNorthStates[$statesCount]),
+                        'expansion_loc_type' => $request->input('expansion_loc_type')
+                    ]);
+
 
                     // If saving the record in FranchisorLocState Model failed
                     if (!$insert) {
-                        DB::getFacadeRoot()->rollback();
+                        DB::rollback();
                         // Log the error
                         $msg = 'franchisor Registration Failed: FranchisorLocState Model' . $franchisorId;
                         $this->generateLog($msg, $error);
@@ -2119,6 +2125,11 @@ class FranchisorController extends Controller
                                 'city' => $value,
                                 'region' => $region,
                                 'state' => $state
+                            ]);
+
+                            $fran = FranchisorBusinessDetail::query()->where('franchisor_id',$franchisorId)->update([
+                                'expansion_location' => implode(',',$franchiseNorthStates[$statesCount]),
+                                'expansion_loc_type' => $request->input('expansion_loc_type')
                             ]);
 
                             // If saving the record in FranchisorLocState Model failed
