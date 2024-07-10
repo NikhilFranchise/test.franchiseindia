@@ -377,7 +377,7 @@ class FranchisorController extends Controller
 
                 // If saving the record in FranchisorMultiUnit Model failed
                 if (!$insFranchisorMultiUnit) {
-                    DB::getFacadeRoot()->rollback();
+                    DB::rollback();
 
                     // Log the error
                     $msg = 'franchisor Registration Failed: FranchisorMultiUnit Model' . $franchisorId;
@@ -418,7 +418,7 @@ class FranchisorController extends Controller
 
                 // If saving the record in FranchisorTradePartner Model failed
                 if (!$insertFranTradePartner) {
-                    DB::getFacadeRoot()->rollback();
+                    DB::rollback();
                     // Log the error
                     $msg = 'franchisor Registration Failed: FranchisorTradePartner Model' . $franchisorId;
                     $this->generateLog($msg, $error);
@@ -1857,7 +1857,7 @@ class FranchisorController extends Controller
         // $investment = ($invest == 0) ? config('constants.investRangeInWords')[1] : config('constants.investRangeInWords')[$invest];
 
         $invesRange = str_replace('Rs. ', '', str_replace('lakh', 'L', $invest));
-        dd($invesRange);
+        // dd($invesRange);
 
 
         if ($franchisorId != null) {

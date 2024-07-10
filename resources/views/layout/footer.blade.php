@@ -1035,7 +1035,7 @@
         }
     });
 </script>
-<script src="https://www.franchiseindia.com/expo/franchise-awards/js/select2.js"></script>
+{{--  <script src="https://www.franchiseindia.com/expo/franchise-awards/js/select2.js"></script>
 <script>
     $(document).ready(function() {
         var citySelect = $(".js-select2");
@@ -1061,7 +1061,7 @@
         citySelect.on('select2:unselect', function(e) {
             // No need to add any specific logic here
         });
-    });
+    });  --}}
 </script>
 <!-- End of franchiseindia Zendesk Widget script -->
 <script type="text/javascript" src="{{ url('wle_tracker.js') }}" async></script>
