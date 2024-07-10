@@ -73,7 +73,7 @@ class BrandController extends Controller
         $update = $franDetails->increment('views');
 
         // User Likes & Ratings
-        if ($likeTableData !== null || $likeTableData->count() > 0) {
+        if ($likeTableData !== null && $likeTableData->count() > 0) {
             $likesCnt = $likeTableData->blike; //like count
 
             // User Ratings
