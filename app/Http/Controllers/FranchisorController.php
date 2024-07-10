@@ -2044,11 +2044,11 @@ class FranchisorController extends Controller
                         'region' => $region,
                         'state' => $franchiseNorthStates[$statesCount]
                     ]);
-                    dd($insert);
                     $fran = FranchisorBusinessDetail::query()->where('franchisor_id',$franchisorId)->update([
                         'expansion_location' => implode(',',$franchiseNorthStates[$statesCount]),
                         'expansion_loc_type' => $request->input('expansion_loc_type')
                     ]);
+                    dd($fran);
 
 
                     // If saving the record in FranchisorLocState Model failed
