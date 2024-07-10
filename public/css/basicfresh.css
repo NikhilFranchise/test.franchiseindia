@@ -2325,6 +2325,7 @@ ul.tobbxslider li img{width:449px;height:253px}
     .catleftbanner300 .google_cat_160X600{display:block}
     .smallcatblk,.yahoo_250X250,.yahoocate200{overflow:hidden}
     .col-md-2.selfix{width:24.666667%}
+    .sideslideform .container{height:350px;overflow:auto;}
 }
 @media only screen and (min-width:1px) and (max-width:1199px) {
     .cateblock .catimgmobile{width:122px;display:block}
