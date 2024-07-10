@@ -64,6 +64,7 @@ class BrandController extends Controller
 
         $region = $franDetails->multiUnit;
         $stateList = (!empty($franDetails->franchisorLocState) ? $franDetails->franchisorLocState->toArray() : "");
+        // dd($region, $stateList);
         $likeTableData = $franDetails->franchisorLike;
         $pageLayout = $franDetails->page_layout_type;
 

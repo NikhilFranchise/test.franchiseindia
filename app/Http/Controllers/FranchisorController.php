@@ -2045,20 +2045,8 @@ class FranchisorController extends Controller
                         'state' => $franchiseNorthStates[$statesCount]
                     ]);
 
-                    if($franData){
-                        $franData->expansion_location = $franchiseNorthStates[$statesCount];
-                        $franData->save();
-                    }
-                    // $states = $franchiseNorthStates[$statesCount];
-                    // if (!is_array($states)) {
-                    //     $states = explode(',', $states); // This assumes the string can be split into an array
-                    // }
-                    // // dd($states);
-                    // $fran = FranchisorBusinessDetail::query()->where('franchisor_id',$franchisorId)->update([
-                    //     'expansion_location' => implode(',', $states),
-                    //     'expansion_loc_type' => $expansionLocType
-                    // ]);
-                    // dd($fran);
+
+
 
 
                     // If saving the record in FranchisorLocState Model failed
@@ -2074,6 +2062,15 @@ class FranchisorController extends Controller
 
                     $statesCount++;
                 }
+                $states = $franchiseNorthStates;
+                if (!is_array($states)) {
+                    $states = explode(',', $states);
+                }
+
+                FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->update([
+                    'expansion_location' => implode(',', $states),
+                    'expansion_loc_type' => $expansionLocType
+                ]);
             }
         }
 
@@ -2137,21 +2134,13 @@ class FranchisorController extends Controller
                                 'state' => $state
                             ]);
 
-                            // $states = $state;
-                            // if (!is_array($states)) {
-                            //     $states = explode(',', $states); // This assumes the string can be split into an array
-                            // }
-                            // // dd($states);
-                            // $fran = FranchisorBusinessDetail::query()->where('franchisor_id',$franchisorId)->update([
-                            //     'expansion_location' => implode(',', $states),
-                            //     'expansion_loc_type' => $expansionLocType
-                            // ]);
+
 
 
 
                             // If saving the record in FranchisorLocState Model failed
                             if (!$insert) {
-                                DB::getFacadeRoot()->rollback();
+                                DB::rollback();
                                 // Log the error
                                 $msg = 'franchisor Registration Failed: FranchisorLocState Model' . $franchisorId;
                                 $this->generateLog($msg, $error);
@@ -2164,7 +2153,17 @@ class FranchisorController extends Controller
                         }
                         $i++;
                     }
-                }
+
+                    if (!is_array($state)) {
+                        $states = explode(',', $state);
+                    }
+                    //print_r($states);
+
+                            FranchisorBusinessDetail::query()->where('franchisor_id',$franchisorId)->update([
+                                'expansion_location' => implode(',', $states),
+                                'expansion_loc_type' => $expansionLocType
+                            ]);
+                } //die;
             }
         }
 

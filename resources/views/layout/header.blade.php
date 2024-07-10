@@ -455,10 +455,10 @@ use Illuminate\Support\Str;
                     </div>
                     <div class="frm-pnl">
                         <form class="form-horizontal" method="POST" action="{{Config('constants.MainDomain')}}/password/email">
+                            <input type ="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="input-group">
                                 <span class="input-group-addon"><div class="usersprite"></div></span>
 
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <input id="email" type="email" class="form-control" name="email" placeholder="Enter Email-Id" value="" required>
                             </div>
                             <button type="submit" class="btn btn-default btn-gry btn-prop">पासवर्ड रीसेट</button>
@@ -476,7 +476,8 @@ use Illuminate\Support\Str;
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane" id="login">
                             <form method="post" action="{{Config('constants.MainDomain')}}/loginform">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                {{--  <input type="hidden" name="_token" value="{{ csrf_token() }}">  --}}
+                                @csrf
                                 <div class="frm-pnl">
                                     <div class="input-group">
                                         <span class="input-group-addon"><div class="usersprite"></div></span>
@@ -498,7 +499,7 @@ use Illuminate\Support\Str;
                                     <ul class="socl">
                                         <li><a href="{{Config('constants.MainDomain')}}/auth/facebook"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
                                         <li><a href="{{Config('constants.MainDomain')}}/auth/google"><i class="fa fa-google fa-lg" aria-hidden="true"></i></a></li>
-                                       
+
                                     </ul>
                                 </div>
                                 <div class='popright'>नया उपयोगकर्ता <a href="#" id="loginselect1">यहां क्लिक करे</a></div>
