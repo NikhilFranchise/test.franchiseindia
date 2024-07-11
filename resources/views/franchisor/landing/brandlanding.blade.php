@@ -450,7 +450,7 @@
                     document.getElementById("expbtnloading").style.display = "none";
                     document.getElementById("expmsg").style.display = "block";
                     //                    $('#companyContactinsta').html(data.user.company_name);
-                    $('#ceocontactinsta').html(data.user.ceo_name);
+                    $('#ceocontact').html(data.user.ceo_name);
                     $('#telephonecontactinsta').html(data.user.telephone);
                     $('#addressocontactinsta').html(data.user.fran_address + "" + data.user.city + "" +
                         data.user.state + "" + data.user.pincode);
@@ -459,7 +459,10 @@
                     $('#mobilecontactinsta').html(data.user.mobile);
                     $('#websitecontactinsta').html("<a href='http://" + data.user.website +
                         "' target='_blank'>" + data.user.website + "</a>");
-                }
+               
+               
+               
+                    }
             });
         });
 
