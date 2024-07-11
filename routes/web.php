@@ -98,7 +98,7 @@ Route::get('validate-email', [CommonController::class, 'emailValidation']);
 Route::get('thanks-advice-form', function () {
     return view('thanks.advice-form');
 });
-
+Route::get('check',                          [MobileVerificationController::class,'verifySmsOTP']);
 Route::get('property-loan', [StaticPageController::class, 'getPropertyLoanForm']);
 Route::get('getpincode', [CommonController::class, 'getPincodeDetails']);
 Route::get('get-city-list-landing-page', [CommonController::class, 'getCityListLandingPage']);
