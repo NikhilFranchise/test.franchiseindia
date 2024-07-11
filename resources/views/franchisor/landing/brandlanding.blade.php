@@ -441,7 +441,8 @@
                 type: 'post',
                 url: '{{ URL('/inv-lead') }}',
                 data: {
-                    franId: franId
+                    franId: franId,
+                    "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
                     console.log(data);
