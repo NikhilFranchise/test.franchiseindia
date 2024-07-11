@@ -436,6 +436,8 @@
         $('#proceedInterest').on('click', function() {
             $('#expintbutton').css('display', 'none');
             $('#creditRemaining').html('Please wait....');
+            $('#expbtnloading').removeClass('hidden');
+            $('#expmsg').addClass('hidden');
             var franId = document.getElementById('freeinfovalue').value;
             $.ajax({
                 type: 'post',
@@ -451,18 +453,15 @@
                     document.getElementById("expmsg").style.display = "block";
                     //                    $('#companyContactinsta').html(data.user.company_name);
                     $('#ceocontact').html(data.user.ceo_name);
-                    $('#telephonecontactinsta').html(data.user.telephone);
-                    $('#addressocontactinsta').html(data.user.fran_address + "" + data.user.city + "" +
+                    $('#telephonecontact').html(data.user.telephone);
+                    $('#addressocontact').html(data.user.fran_address + "" + data.user.city + "" +
                         data.user.state + "" + data.user.pincode);
-                    $('#emailcontactinsta').html("<a href='mailto:" + data.user.email +
+                    $('#emailcontact').html("<a href='mailto:" + data.user.email +
                         "' target='_blank'>" + data.user.email + "</a>");
-                    $('#mobilecontactinsta').html(data.user.mobile);
-                    $('#websitecontactinsta').html("<a href='http://" + data.user.website +
+                    $('#mobilecontact').html(data.user.mobile);
+                    $('#websitecontact').html("<a href='http://" + data.user.website +
                         "' target='_blank'>" + data.user.website + "</a>");
-               
-               
-               
-                    }
+                }
             });
         });
 
