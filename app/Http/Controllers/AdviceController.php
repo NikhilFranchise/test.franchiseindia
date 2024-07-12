@@ -105,8 +105,8 @@ class AdviceController extends Controller
             $state = ucfirst(strtolower($pincodeDetails->state)); 
         }
 
-        $mailTo = ($user != 'franchisor') ? "pganesh@franchiseindia.net" : "cnikhil@franchiseindia.net";
-        // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
+        // $mailTo = ($user != 'franchisor') ? "pganesh@franchiseindia.net" : "cnikhil@franchiseindia.net";
+        $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
 
         $users = $table::create([
             'name' => $name,
@@ -124,7 +124,7 @@ class AdviceController extends Controller
         if (!$users)
             return response()->json('Insertion failed..!');
 
-        // Mail::to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
+        Mail::to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
         // Mail::to($mailTo)->bcc("pkumar@franchiseindia.net")->send(new FreeAdviceForm($request));
 
         if ($newsLetter == 1)
