@@ -230,9 +230,10 @@
                         </div>
                         <!-- Share panel end here-->
                         <!-- Insta Apply section start here -->
-                        @if (Auth::check() && Auth::user()->profile_type == Config('constants.ProfileType.Investor'))
-                            {{-- @dd($expIntVal); --}}
-                            @if ($expIntVal != null && (Auth::user()->membership_type == 1 && $expIntVal->visibility == 0 || $expIntVal == null))
+                        {{--  @if (Auth::check() && Auth::user()->profile_type == Config('constants.ProfileType.Investor'))  --}}
+                        @if (Auth::check() )
+
+                            @if ($expIntVal != null && ((Auth::user()->membership_type == 1 && $expIntVal->visibility == 0) || $expIntVal == null))
                                 @if (!empty($checkData['message']))
                                     {{ $checkData['message'] }}
                                 @endif
@@ -336,37 +337,7 @@
                                             <select class="form-control" id="state" name="infostate"
                                                 onchange="getcityinfoinsta(this.value)">
                                                 <option value>Select State for Franchise</option>
-                                                {{--  @php
-                                                    $stateListArray = Arr::get(
-                                                        json_decode($stateList, true),
-                                                        'region',
-                                                        [],
-                                                    );
-                                                    $states = array_unique(array_column($stateListArray, 'state'));
-                                                    if (count($states) > 0) {
-                                                        foreach ($states as $state) {
-                                                            $key = 0;
-                                                            $array = Config('location.stateArr');
-                                                            while ($arrayState = current($array)) {
-                                                                if ($arrayState == $state) {
-                                                                    $key = key($array);
-                                                                }
-                                                                next($array);
-                                                            }
-                                                            echo "
-                                 <option value='$key'>$state</option>
-                                 ";
-                                                        }
-                                                    } else {
-                                                        $stateArrVal = Config('location.stateArr');
-                                                        asort($stateArrVal);
-                                                        foreach ($stateArrVal as $key => $value) {
-                                                            echo "
-                                 <option value='$key'>$value</option>
-                                 ";
-                                                        }
-                                                    }
-                                                @endphp  --}}
+
                                                 @php
                                                     // Check if $stateList is already an array
                                                     if (is_array($stateList)) {

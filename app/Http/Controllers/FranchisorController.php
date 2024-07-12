@@ -802,10 +802,10 @@ class FranchisorController extends Controller
             $companyLogo = $request->file('company_logo');
             $extension = $request->file('company_logo')->getClientOriginalExtension();
             $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.' . $extension;
-            // Storage::disk('s3')->put($companyLogoPath, file_get_contents($companyLogo), 'public');
-            $companyLogo->storeAs('public', $companyLogoPath);
-            // $url = Storage::disk('s3')->url($companyLogoPath);
-            $url = asset('storage/' . $companyLogoPath);
+            Storage::disk('s3')->put($companyLogoPath, file_get_contents($companyLogo), 'public');
+            // $companyLogo->storeAs('public', $companyLogoPath);
+            $url = Storage::disk('s3')->url($companyLogoPath);
+            // $url = asset('storage/' . $companyLogoPath);
         }
 
         FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)
@@ -985,7 +985,7 @@ class FranchisorController extends Controller
 
         //step 1 data insertion
         $useraccount->email = $request->input('email');
-        $useraccount->password = Hash::getFacadeRoot()->make($request->input('password'));
+        $useraccount->password = Hash::make($request->input('password'));
         $useraccount->mobile = $mobile;
         $useraccount->profile_type = config('constants.ProfileType.Franchisor');
         $useraccount->profile_status = config('constants.ProfileStatus.Pending');
@@ -1587,6 +1587,7 @@ class FranchisorController extends Controller
             ->orderBy('clickID', 'desc')
             ->take(5)
             ->get();
+        // dd($expressedInterests);
 
         $expressInterestCount = UserActivity::query()
             ->where('franchisor_id', $franchisorId)
@@ -2159,10 +2160,10 @@ class FranchisorController extends Controller
                     }
                     //print_r($states);
 
-                            FranchisorBusinessDetail::query()->where('franchisor_id',$franchisorId)->update([
-                                'expansion_location' => implode(',', $states),
-                                'expansion_loc_type' => $expansionLocType
-                            ]);
+                    FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->update([
+                        'expansion_location' => implode(',', $states),
+                        'expansion_loc_type' => $expansionLocType
+                    ]);
                 } //die;
             }
         }
