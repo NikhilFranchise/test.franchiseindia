@@ -538,54 +538,22 @@
                     franId: franId,
                     "_token": "{{ csrf_token() }}",
                 },
-                // success: function(data) {
-                //    console.log("datacheck",data);
-                //     $('#waitquery').css('display', 'none');
-                //     $('#conactheading').html("Contact Details");
-                //     $('#ajaxReshideblock').css('display', 'none');
-                //     $('#ajaxResshowblock').css('display', 'block');
-                //     $('#ceocontact').html(data.user.ceo_name);
-                //     $('#telephonecontact').html(data.user.telephone);
-                //     $('#addressocontact').html(data.user.fran_address + "" + data.user.city + "" + data
-                //         .user.state + "" + data.user.pincode);
-                //     $('#emailcontact').html("<a href='mailto:" + data.user.email +
-                //         "' target='_blank'>" + data.user.email + "</a>");
-                //     $('#mobilecontact').html(data.user.mobile);
-                //     $('#websitecontact').html("<a href='http://" + data.user.website +
-                //         "' target='_blank'>" + data.user.website + "</a>");
-                // }
-
                 success: function(data) {
-    console.log("Received data:", data);
-
-    if (data.success && data.user) {
-        $('#waitquery').css('display', 'none');
-        $('#conactheading').html("Contact Details");
-        $('#ajaxReshideblock').css('display', 'none');
-        $('#ajaxResshowblock').css('display', 'block');
-        
-        // Check if data.user.ceo_name exists before accessing it
-        if (data.user.ceo_name) {
-            $('#ceocontact').html(data.user.ceo_name);
-        } else {
-            $('#ceocontact').html("N/A"); // or handle appropriately
-        }
-        
-        $('#telephonecontact').html(data.user.telephone);
-        $('#addressocontact').html(data.user.fran_address + " " + data.user.city + " " + data.user.state + " " + data.user.pincode);
-        $('#emailcontact').html("<a href='mailto:" + data.user.email + "' target='_blank'>" + data.user.email + "</a>");
-        $('#mobilecontact').html(data.user.mobile);
-        $('#websitecontact').html("<a href='http://" + data.user.website + "' target='_blank'>" + data.user.website + "</a>");
-    } else {
-        console.error("Unexpected response format or operation failure:", data);
-        // Handle unexpected response format or operation failure here
-    }
-},
-error: function(xhr, status, error) {
-    console.error("AJAX request failed:", status, error);
-    // Handle AJAX request failure here
-}
-
+                   console.log("datacheck",data);
+                    $('#waitquery').css('display', 'none');
+                    $('#conactheading').html("Contact Details");
+                    $('#ajaxReshideblock').css('display', 'none');
+                    $('#ajaxResshowblock').css('display', 'block');
+                    $('#ceocontact').html(data.user.ceo_name);
+                    $('#telephonecontact').html(data.user.telephone);
+                    $('#addressocontact').html(data.user.fran_address + "" + data.user.city + "" + data
+                        .user.state + "" + data.user.pincode);
+                    $('#emailcontact').html("<a href='mailto:" + data.user.email +
+                        "' target='_blank'>" + data.user.email + "</a>");
+                    $('#mobilecontact').html(data.user.mobile);
+                    $('#websitecontact').html("<a href='http://" + data.user.website +
+                        "' target='_blank'>" + data.user.website + "</a>");
+                }
             });
         });
 
