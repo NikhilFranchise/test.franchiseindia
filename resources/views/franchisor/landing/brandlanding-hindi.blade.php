@@ -354,6 +354,7 @@
                 url: '{{ URL('/inv-lead?flag=expint') }}',
                 data: {
                     franId: franId,
+                    "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
 
@@ -398,6 +399,8 @@
                 url: '{{ URL('/inv-lead') }}',
                 data: {
                     franId: franId,
+                    "_token": "{{ csrf_token() }}",
+
                 },
                 success: function(data) {
 
@@ -428,6 +431,8 @@
                 url: '{{ URL('/inv-lead-normal') }}',
                 data: {
                     franId: franId,
+                    "_token": "{{ csrf_token() }}",
+
                 },
                 success: function(data) {
                     $('#expbtnloading').css('display', 'none');
@@ -445,6 +450,8 @@
                 url: '{{ URL('/inv-lead?flag=confirm') }}',
                 data: {
                     franId: franId,
+                    "_token": "{{ csrf_token() }}",
+
                 },
                 success: function(data) {
 
@@ -491,6 +498,8 @@
                 url: '{{ URL('/inv-lead?flag=confirmed') }}',
                 data: {
                     franId: franId,
+                    "_token": "{{ csrf_token() }}",
+
                 },
                 success: function(data) {
                     $('#waitquery').css('display', 'none');
@@ -520,6 +529,8 @@
                 url: '{{ URL('/inv-lead-normal') }}',
                 data: {
                     franId: franId,
+                    "_token": "{{ csrf_token() }}",
+
                 },
                 success: function(data) {
                     console.log('successful');
