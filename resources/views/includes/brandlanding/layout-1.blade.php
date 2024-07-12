@@ -232,7 +232,6 @@
                         <!-- Insta Apply section start here -->
                         @if (Auth::check() && Auth::user()->profile_type == Config('constants.ProfileType.Investor'))
 
-
                             @if ($expIntVal != null && ((Auth::user()->membership_type == 1 && $expIntVal->visibility == 0) || $expIntVal == null))
                                 @if (!empty($checkData['message']))
                                     {{ $checkData['message'] }}

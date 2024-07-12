@@ -47,7 +47,7 @@
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
 @endsection
-@include('layout.newhomepage.expeFndfrm')
+{{-- @include('layout.newhomepage.expeFndfrm') --}}
 
 @section('content')
 
