@@ -7,7 +7,7 @@ return [
     | Application specific config array values
     |--------------------------------------------------------------------------
     */
-    'MainDomain' => env( 'APP_URL' ,'https://fiuat.franchiseindia.com'),
+    'MainDomain' => env('APP_URL', 'https://fiuat.franchiseindia.com'),
     // 'MainDomain' => 'http://127.0.0.1:8000',
 
     'brandPagePattern' => '%s/brands/%s.%s',
@@ -169,8 +169,7 @@ return [
     'invPlanAmount' => [
         401 => 0,
         402 => 500,
-        // 403 => 2599,
-        403 => 1,
+        403 => 2599,
         404 => 3999,
         405 => 6999
     ],
@@ -618,7 +617,7 @@ return [
         ),
 
         "2" => array(
-           "424" => "Bakery, Sweets & Ice Cream",
+            "424" => "Bakery, Sweets & Ice Cream",
             "421" => "Cafe & Parlors",
             "425" => "Catering & Food Ordering",
             "16" => "Food & Beverage",
@@ -627,7 +626,7 @@ return [
         ),
 
         "3" => array(
-           "19" => "Coaching & Tutoring",
+            "19" => "Coaching & Tutoring",
             "17" => "Early Education",
             "264" => "Education Consultants",
             "269" => "Education Services",
@@ -664,7 +663,7 @@ return [
         ),
 
         "6" => array(
-           "23" => "Advertisement & Media Services",
+            "23" => "Advertisement & Media Services",
             "31" => "Consultancy",
             "27" => "Financial",
             "30" => "Household Services",
@@ -688,14 +687,14 @@ return [
         ),
 
         "8" => array(
-             "344" => "Automobile Related",
+            "344" => "Automobile Related",
             "343" => "Commercial Vehicles",
             "342" => "Four Wheeler",
             "341" => "Two Wheeler",
         ),
 
         "9" => array(
-           "36" => "Books, Toys & Gifts",
+            "36" => "Books, Toys & Gifts",
             "34" => "Consumer Durables & It",
             "39" => "E-Retail",
             "556" => "Fashion",
@@ -705,7 +704,7 @@ return [
         ),
 
         "10" => array(
-           "44" => "Accessories",
+            "44" => "Accessories",
             "40" => "Clothing",
             "41" => "Footwear",
             "42" => "Jewellery",
@@ -724,7 +723,7 @@ return [
         ),
 
         "573" => array(
-          "585" => "CNC Machinery, Lathe & Tools",
+            "585" => "CNC Machinery, Lathe & Tools",
             "590" => "Construction Machinery",
             "575" => "Cranes",
             "576" => "Drilling & Boring",
@@ -749,7 +748,7 @@ return [
 
     'subSubCategoryArr' => [
         "13" => array(
-           "539" => "Bath Products",
+            "539" => "Bath Products",
             "540" => "Beauty Equipments",
             "47" => "Beauty Salons",
             "541" => "Cosmetic Accessories",
@@ -758,7 +757,7 @@ return [
             "48" => "Tattoo, Piercing & Nail Art",
         ),
         "14" => array(
-           "62" => "Ayurvedic, Herbal & Organic Products",
+            "62" => "Ayurvedic, Herbal & Organic Products",
             "56" => "Clinics & Nursing Homes",
             "59" => "Healthcare Products",
             "57" => "Hospitals",
@@ -767,7 +766,7 @@ return [
             "58" => "Pharmacies",
         ),
         "538" => array(
-           "61" => "Diet Consultancy",
+            "61" => "Diet Consultancy",
             "52" => "Gyms And Fitness Centres",
             "55" => "Massage Centres",
             "54" => "Medical Spas/Med Spas/Medi Spas",
@@ -778,7 +777,7 @@ return [
             "544" => "Yoga Classes",
         ),
         "15" => array(
-           "393" => "Booking & Accomodation",
+            "393" => "Booking & Accomodation",
             "65" => "Guest House / Service Apartments",
             "67" => "Hotel Chain",
             "260" => "Hotel Supplier",
@@ -788,7 +787,7 @@ return [
 
         ),
         "379" => array(
-           "381" => "Bus Rental",
+            "381" => "Bus Rental",
             "549" => "Cab Services",
             "548" => "Car Rental Services",
             "383" => "Chauffer / Driver Services",
@@ -796,7 +795,7 @@ return [
             "382" => "Ticketing Services",
         ),
         "380" => array(
-           "390" => "Adventure Tourism",
+            "390" => "Adventure Tourism",
             "391" => "Business Tourism",
             "389" => "Holiday Services",
             "388" => "Honeymoon Services",
@@ -808,7 +807,7 @@ return [
         "16" => array("972" => "Hotel Equipment and Supplier", "84" => "Others Food Service"),
         "421" => array("426" => "Juices / Smoothies / Dairy Parlors", "427" => "Tea And Coffee Chain"),
         "422" => array(
-           "429" => "Express Food Joints / Drive Through",
+            "429" => "Express Food Joints / Drive Through",
             "430" => "Mobile Vans & Food Trucks",
             "724" => "Pizzeria",
             "428" => "Quick Service Restaurants",
@@ -821,7 +820,7 @@ return [
             "434" => "Theme Restaurants",
         ),
         "424" => array(
-           "437" => "Bakery & Confectionary",
+            "437" => "Bakery & Confectionary",
             "439" => "Chocolate Stores",
             "436" => "Ice Creams & Yogurt Parlors",
             "438" => "Snacks / Namkeen Shops",
@@ -833,22 +832,22 @@ return [
             "87" => "After School Activities",
             "85" => "Preschools"
         ),
-        "18" => array("261" => "Extra Curriculum Activities","88" => "Schools" ),
+        "18" => array("261" => "Extra Curriculum Activities", "88" => "Schools"),
         "19" => array(
-           "733" => "CAD/CAM/CAE & Multimedia",
+            "733" => "CAD/CAM/CAE & Multimedia",
             "89" => "Competitive Exam Coaching Institute",
             "90" => "Online Coaching",
             "91" => "Robotics & Technical Training",
             "92" => "School Tutoring",
         ),
         "20" => array(
-          "94" => "Degree/Diploma Colleges",
+            "94" => "Degree/Diploma Colleges",
             "96" => "Distance Learning Centres",
             "93" => "Professional Education Colleges",
             "95" => "Universities (including Overseas Franchises)",
         ),
         "21" => array(
-           "104" => "Aviation & Hospitality Training Institute",
+            "104" => "Aviation & Hospitality Training Institute",
             "98" => "BPO/KPO Training Institutes",
             "103" => "Banking & Insurance Training Institute",
             "102" => "Beauty & Wellness Training Institute",
@@ -860,9 +859,9 @@ return [
             "968" => "Paramedical/Medical Training",
             "101" => "Retail Training Institutes",
             "105" => "Skills / Personality Development",
-                    ),
+        ),
         "22" => array(
-          "536" => "Certification Course Coaching",
+            "536" => "Certification Course Coaching",
             "535" => "College/University Distance Education",
             "534" => "Corporate Training",
             "532" => "Entrance Examination Coaching",
@@ -881,7 +880,7 @@ return [
         ),
 
         "24" => array(
-           "114" => "Beauty & Health Sub",
+            "114" => "Beauty & Health Sub",
             "122" => "Building & Construction Material",
             "117" => "Clothing",
             "119" => "Computer Hardware & IT",
@@ -950,7 +949,7 @@ return [
         ),
 
         "476" => array(
-           "496" => "Ayurvedic Products",
+            "496" => "Ayurvedic Products",
             "491" => "Bakery Products",
             "486" => "Beauty Cosmetics",
             "492" => "Chocolates",
@@ -980,16 +979,16 @@ return [
             "504" => "Furnishing & Wood Works",
             "824" => "Paints & Allied Products",
             "830" => "Tiles",
-              //"497" => "Construction / Earthmoving Machinery",
-             //"498" => "Swimming Pool Construction",
+            //"497" => "Construction / Earthmoving Machinery",
+            //"498" => "Swimming Pool Construction",
             //"503" => "Steel Supplies",
-           //"501" => "Piping Electrical & Wiring",
-          //"822" => "Electric Fittings & Accessories",
-          //"823" => "Contruction/Earth Moving Machinery",
-          //"827" => "Timber, Timber Products & Plank",
+            //"501" => "Piping Electrical & Wiring",
+            //"822" => "Electric Fittings & Accessories",
+            //"823" => "Contruction/Earth Moving Machinery",
+            //"827" => "Timber, Timber Products & Plank",
             //"828" => "Lime & Lime Products",
             //"829" => "Wall Materials",
-             //"832" => "Building Coating",
+            //"832" => "Building Coating",
             //"833" => "Fireproof/Flameproof Materials",
             //"834" => "Soundproof Materials",
             //"835" => "Building Ceramics",
@@ -1001,7 +1000,7 @@ return [
         ),
 
         "478" => array(
-           "508" => "Electrical Equipments",
+            "508" => "Electrical Equipments",
             "843" => "Office Equipmet & Supplies",
             "507" => "Office Furniture",
             "505" => "Office Stationery",
@@ -1035,7 +1034,7 @@ return [
             //"515" => "Lamps, Bulbs & Lighting",
             //"516" => "Builders Hardware - Knobs, Handles, Fittings",
             //"517" => "Furniture For Household Bed, Modular Kitchen",
-             //"519" => "Pipes And Pipe Fittings",
+            //"519" => "Pipes And Pipe Fittings",
             //"522" => "Air Conditioners & Refrigerators",
             //"523" => "Solar Equipments",
             //"524" => "Doors, Windows, Floorings, Panels, Laminates",
@@ -1089,8 +1088,7 @@ return [
             "767" => "Camping Equipments",
             "768" => "Musical Instruments",
             "769" => "Meat & Poultry",
-            "961" => "Others"*/
-        ),
+            "961" => "Others"*/),
 
         "770" => array(
             "775" => "Computer Cable & Connectors",
@@ -1131,7 +1129,7 @@ return [
 
 
         "846" => array(
-          "850" => "Bath Products",
+            "850" => "Bath Products",
             "848" => "Cosmetics",
             "853" => "Hair Care Products",
             "855" => "Healthcare & Medical Products",
@@ -1141,7 +1139,7 @@ return [
             "859" => "Sanitation Products",
             "847" => "Skincare Products",
 
-             //"851" => "Beauty Equipments",
+            //"851" => "Beauty Equipments",
             //"856" => "Anti Infective Drugs & Medicines",
             //"857" => "Veterinary Medicines",
             //"858" => "Weight Loss/Gain Products",
@@ -1158,7 +1156,7 @@ return [
             //"866" => "Anti Theft Products",
             //"867" => "Roadway Safety",
             //"960" => "Others",
-			//"970" => "Life Saving Products & Equipments"
+            //"970" => "Life Saving Products & Equipments"
         ),
 
         "868" => array(
@@ -1177,9 +1175,9 @@ return [
             //"878" => "Frozen & Dried Fruit",
             //"879" => "Pickles & Murabba",
             //"880" => "Honey Products",
-                        //"875" => "Chocolates",
+            //"875" => "Chocolates",
 
-             //"871" => "Healthcare Products",
+            //"871" => "Healthcare Products",
             //"882" => "Mouth Freshers",
             //"884" => "Saffrons",
 
@@ -1198,11 +1196,11 @@ return [
             "906" => "Air Distribution Products",*/
             "907" => "Solar Products",
             //"908" => "Solar Energy & Components",
-			//"966" => "Eco Friendly Products"
+            //"966" => "Eco Friendly Products"
         ),
 
         "909" => array(
-           "919" => "Chargers",
+            "919" => "Chargers",
             "915" => "Consumer Electronics",
             "921" => "Electronic Intruments",
             "911" => "Electronic Products & Components",
@@ -1225,15 +1223,15 @@ return [
         ),
 
         "925" => array(
-                "944" => "Agriculture Machine & Tools",
-                "927" => "Cranes & Forklifts",
-                "940" => "Farming Tools & Equipments",
-                "934" => "Food Processing Plant & Machinery",
-                "936" => "Pollution Control Machinery",
-                "926" => "Printing Machinery & Equipments",
-                "930" => "Water Treatment & Purifying Plant",
-                "933" => "Welding Equipment & Machinery",
-             //"928" => "Drilling & Boring Machinery",
+            "944" => "Agriculture Machine & Tools",
+            "927" => "Cranes & Forklifts",
+            "940" => "Farming Tools & Equipments",
+            "934" => "Food Processing Plant & Machinery",
+            "936" => "Pollution Control Machinery",
+            "926" => "Printing Machinery & Equipments",
+            "930" => "Water Treatment & Purifying Plant",
+            "933" => "Welding Equipment & Machinery",
+            //"928" => "Drilling & Boring Machinery",
             //"929" => "Industrial Furnaces & Ovens",
             //"935" => "Pharmaceutical Machinery",
             //"931" => "Textile, Garment Machinery & Equipments",
@@ -1268,14 +1266,14 @@ return [
         ),
 
         "25" => array(
-         "127" => "Courier & Delivery",
-        "404" => "Logistics Outsourcing",
-        "405" => "Logistics Technology Provider",
-        "402" => "Material Handling & Order Processing",
-        "128" => "Supply Chain Management",
-        "129" => "Transportation",
-        "403" => "Trucking Logistics Services",
-        "406" => "Warehousing Services",
+            "127" => "Courier & Delivery",
+            "404" => "Logistics Outsourcing",
+            "405" => "Logistics Technology Provider",
+            "402" => "Material Handling & Order Processing",
+            "128" => "Supply Chain Management",
+            "129" => "Transportation",
+            "403" => "Trucking Logistics Services",
+            "406" => "Warehousing Services",
 
         ),
         "407" => array(
@@ -1303,7 +1301,7 @@ return [
             "134" => "Telecom",
         ),
         "27" => array(
-           "552" => "Accounting & Auditing Services",
+            "552" => "Accounting & Auditing Services",
             "139" => "Equity & Debt Providers",
             "137" => "Finance Advisors & Brokers",
             "555" => "Financial Investment & Trading",
@@ -1341,7 +1339,7 @@ return [
 
         ),
         "31" => array(
-           "157" => "BPO",
+            "157" => "BPO",
             "153" => "Business",
             "158" => "Career Counseling",
             "155" => "Financial",
@@ -1355,7 +1353,7 @@ return [
             "400" => "Technology",
         ),
         "32" => array(
-           "163" => "Astrology & Tarot",
+            "163" => "Astrology & Tarot",
             "166" => "Boutique",
             "164" => "Consulting",
             "167" => "Direct Selling (Door-to-Door Etc.)",
@@ -1364,7 +1362,7 @@ return [
             "165" => "Part Time/Flexi Time Businesses",
         ),
         "33" => array(
-           "175" => "Automobile Resellers",
+            "175" => "Automobile Resellers",
             "170" => "Automobile Showrooms",
             "266" => "Batteries",
             "171" => "Car Wash And Maintenance",
@@ -1375,18 +1373,18 @@ return [
 
         ),
         "341" => array(
-          "345" => "Bicycle",
-        "347" => "Bike Maintanance & Repair Services",
-        "545" => "Bike Rental",
-        "348" => "Bike Reselling",
-        "346" => "Bike Showroom",
-        "349" => "Bike Wash",
-        "351" => "Biker's Accessories",
-        "350" => "Electric Two Wheelers",
+            "345" => "Bicycle",
+            "347" => "Bike Maintanance & Repair Services",
+            "545" => "Bike Rental",
+            "348" => "Bike Reselling",
+            "346" => "Bike Showroom",
+            "349" => "Bike Wash",
+            "351" => "Biker's Accessories",
+            "350" => "Electric Two Wheelers",
 
         ),
         "342" => array(
-          "355" => "Car Exterior Parts",
+            "355" => "Car Exterior Parts",
             "357" => "Car Interior Accessories",
             "354" => "Car Interior Spare Parts",
             "353" => "Car Maintanance & Repair Services",
@@ -1397,7 +1395,7 @@ return [
             "359" => "Electric Four Wheelers",
         ),
         "343" => array(
-          "364" => "Agriculture Utility Vehicles",
+            "364" => "Agriculture Utility Vehicles",
             "361" => "Commercial Vehicles Bus/Trucks",
             "725" => "Electric Vehicles (E-Vehicles)",
             "365" => "Off Road / All Terrain Vehicles",
@@ -1405,7 +1403,7 @@ return [
             "363" => "Tractors",
         ),
         "344" => array(
-           "262" => "Automobile Accessories",
+            "262" => "Automobile Accessories",
             "366" => "Automobile Garage Related",
             "367" => "Automobile Maintanance Related",
             "368" => "Automobile Spares / Tyre",
@@ -1415,7 +1413,7 @@ return [
             "369" => "Web Based/Online Platform",
         ),
         "34" => array(
-           "178" => "Computers & Peripherals",
+            "178" => "Computers & Peripherals",
             "177" => "Consumer Electronics",
             "180" => "DVD Rentals",
             "179" => "Mobile & Communication/Internet Connections",
@@ -1425,7 +1423,7 @@ return [
             "183" => "Web Design & Applications",
         ),
         "35" => array(
-           "192" => "Dairy/F&V Stores",
+            "192" => "Dairy/F&V Stores",
             "187" => "Department & Convenience Stores",
             "190" => "Food Marts",
             "195" => "Gourmet Stores",
@@ -1438,7 +1436,7 @@ return [
             "194" => "Wine Shops",
         ),
         "36" => array(
-           "197" => "Book Stores",
+            "197" => "Book Stores",
             "204" => "Candle Stores",
             "732" => "Corporate Gifting",
             "206" => "Deal/Value Stores",
@@ -1454,18 +1452,18 @@ return [
 
         ),
         "37" => array(
-         "372" => "Adventurous Sporting",
-        "373" => "Diet Supplimentary",
-        "374" => "Fitness Accessories",
-        "209" => "Fitness Equipment Stores",
-        "208" => "Golf Stores",
-        "376" => "Sports Accessories",
-        "210" => "Sports Equipment Stores",
-        "375" => "Sports Garments",
+            "372" => "Adventurous Sporting",
+            "373" => "Diet Supplimentary",
+            "374" => "Fitness Accessories",
+            "209" => "Fitness Equipment Stores",
+            "208" => "Golf Stores",
+            "376" => "Sports Accessories",
+            "210" => "Sports Equipment Stores",
+            "375" => "Sports Garments",
 
         ),
         "38" => array(
-           "215" => "Art, Craft, Antique & Framing",
+            "215" => "Art, Craft, Antique & Framing",
             "211" => "Bathroom & Ceramics",
             "221" => "Building Material Stores",
             "213" => "Furniture/Home Decor & Furnishing",
@@ -1478,12 +1476,12 @@ return [
             "219" => "Painting",
         ),
         "39" => array(
-             "223" => "E-Commerce & Related",
-             "557" => "Mobile Commerce",
-             "222" => "TV/Web Shopping",
-            ),
+            "223" => "E-Commerce & Related",
+            "557" => "Mobile Commerce",
+            "222" => "TV/Web Shopping",
+        ),
         "556" => array(
-          "566" => "Bags & Luggage",
+            "566" => "Bags & Luggage",
             "564" => "Designer Jewellery",
             "562" => "Fashion Accessories - Men",
             "563" => "Fashion Accessories - Women",
@@ -1494,7 +1492,7 @@ return [
             "561" => "Women's Footwear",
         ),
         "40" => array(
-          "228" => "Departmental/Unisex",
+            "228" => "Departmental/Unisex",
             "229" => "Ethnic Stores",
             "225" => "Kids Wear",
             "232" => "Lingerie & Innerwear",
@@ -1508,30 +1506,30 @@ return [
             "231" => "Woollens",
         ),
         "41" => array(
-         "235" => "Casuals",
-        "237" => "Designer",
-        "234" => "Formals",
-        "238" => "Kids",
-        "236" => "Sports",
-            ),
+            "235" => "Casuals",
+            "237" => "Designer",
+            "234" => "Formals",
+            "238" => "Kids",
+            "236" => "Sports",
+        ),
         "42" => array(
-           "338" => "Diamond & Platinum Wears",
+            "338" => "Diamond & Platinum Wears",
             "240" => "Gems And Stones",
             "239" => "Imitation/Art/Junk Jewellery",
             "241" => "Precious Jewellery",
             "242" => "Time & Writing Instruments",
 
         ),
-        "43" => array("243" => "Designer Wear","245" => "Luxury Labels", "244" => "Vintage Stores" ),
+        "43" => array("243" => "Designer Wear", "245" => "Luxury Labels", "244" => "Vintage Stores"),
         "44" => array(
-                "248" => "Fashion Accessories",
-                "339" => "Leather Products (bags, Purses & Belts)",
-                "247" => "Luggage, Hand Bags & Backpacks",
-                "246" => "Opticians/Eye Wear",
-                "340" => "Watches",
+            "248" => "Fashion Accessories",
+            "339" => "Leather Products (bags, Purses & Belts)",
+            "247" => "Luggage, Hand Bags & Backpacks",
+            "246" => "Opticians/Eye Wear",
+            "340" => "Watches",
         ),
         "45" => array(
-           "253" => "Amusement Centres",
+            "253" => "Amusement Centres",
             "377" => "Children's Park Amenities",
             "254" => "Clubs",
             "251" => "Kids Entertainment Zones",
@@ -1542,7 +1540,7 @@ return [
             "252" => "Video Game Centres",
         ),
         "46" => array(
-           "257" => "Building Material",
+            "257" => "Building Material",
             "256" => "Home Furnishings",
             "259" => "Manufacturing & Ancillary",
             "258" => "Welding, Cutting & Allied Processes",
@@ -1572,10 +1570,10 @@ return [
             "311" => "Senior Citizen Home Healthcare Services",
         ),
         "276" => array(
-          "316" => "Beauty Stylist",
-        "317" => "Massage Therapist",
-        "315" => "Personal Trainer (fitness/health Recovery)",
-        "318" => "Yoga Centre / Trainer",
+            "316" => "Beauty Stylist",
+            "317" => "Massage Therapist",
+            "315" => "Personal Trainer (fitness/health Recovery)",
+            "318" => "Yoga Centre / Trainer",
         ),
         "277" => array(
             "320" => "Bakery Items Preparation",
@@ -1583,7 +1581,7 @@ return [
             "321" => "Processed Food Manufacturing"
         ),
         "278" => array(
-           "324" => "Costume Stitching (Boutique)",
+            "324" => "Costume Stitching (Boutique)",
             "330" => "Furniture Works",
             "325" => "Gift Item Making & Selling",
             "331" => "Handicraft Making & Selling",
@@ -1606,7 +1604,7 @@ return [
 
         ),
         "281" => array(
-           "290" => "Accountant",
+            "290" => "Accountant",
             "292" => "Astrology & Tarot",
             "295" => "Business Planner",
             "300" => "Consulting Services",
@@ -1625,19 +1623,19 @@ return [
             "299" => "Warehousing Services",
         ),
         "574" => array(
-                "595" => "Flex Printing Machines",
-                "596" => "Newspaper Printing Machine",
-                "598" => "Printer Maintenance",
-                "594" => "Printing Accessories",
-                "593" => "Printing Equipments",
-                "597" => "Screen Printing",
+            "595" => "Flex Printing Machines",
+            "596" => "Newspaper Printing Machine",
+            "598" => "Printer Maintenance",
+            "594" => "Printing Accessories",
+            "593" => "Printing Equipments",
+            "597" => "Screen Printing",
         ),
         "575" => array(
-        "602" => "Crane Accessories",
-        "601" => "Forklifts",
-        "600" => "Material Handling Cranes",
-        "599" => "Material Lifting Cranes",
-        "603" => "Tow Trucks",
+            "602" => "Crane Accessories",
+            "601" => "Forklifts",
+            "600" => "Material Handling Cranes",
+            "599" => "Material Lifting Cranes",
+            "603" => "Tow Trucks",
         ),
         "576" => array(
             "606" => "Boring Machinery",
@@ -1646,14 +1644,14 @@ return [
             "604" => "Drilling Materials",
         ),
         "577" => array(
-           "612" => "Gas Burner",
+            "612" => "Gas Burner",
             "611" => "Incubator",
             "610" => "Industrial Chimney",
             "609" => "Industrial Furnaces",
             "608" => "Industrial Owen",
         ),
         "578" => array(
-                "615" => "Demineralisation Plant",
+            "615" => "Demineralisation Plant",
             "619" => "Desalination Plant",
             "620" => "Mineral Water Package Machine",
             "618" => "Rain Water Harvesting System",
@@ -1675,7 +1673,7 @@ return [
             "624" => "Used Machines",
         ),
         "580" => array(
-           "636" => "Hydraulic Actuators",
+            "636" => "Hydraulic Actuators",
             "633" => "Hydraulic Bender",
             "638" => "Hydraulic Cutting Machine",
             "637" => "Hydraulic Dampener",
@@ -1686,14 +1684,14 @@ return [
             "631" => "Pneumatic Machines",
         ),
         "581" => array(
-          "642" => "Welding Accessories",
+            "642" => "Welding Accessories",
             "641" => "Welding Cables",
             "639" => "Welding Equipment",
             "640" => "Welding Machine",
 
         ),
         "582" => array(
-          "646" => "Bakery Machine Equipments",
+            "646" => "Bakery Machine Equipments",
             "647" => "Biscuit Making Machinery",
             "650" => "Chocolate Machinery",
             "651" => "Coffee Making Machinery",
@@ -1709,7 +1707,7 @@ return [
             "655" => "Vegetables Processing Machinery",
         ),
         "583" => array(
-           "657" => "Capsule Filling Machinery",
+            "657" => "Capsule Filling Machinery",
             "664" => "Pharmaceutical Inspection Machinery",
             "659" => "Pharmaceutical Machinery Parts",
             "663" => "Pharmaceutical Machinery Parts & Accessories",
@@ -1730,13 +1728,13 @@ return [
 
         ),
         "585" => array(
-                "676" => "CNC Computer Boards",
-                "674" => "CNC Parts & Components",
-                "675" => "Grinding, Milling & Cutting Machines",
-                "673" => "Lathe Machines",
+            "676" => "CNC Computer Boards",
+            "674" => "CNC Parts & Components",
+            "675" => "Grinding, Milling & Cutting Machines",
+            "673" => "Lathe Machines",
         ),
         "586" => array(
-           "679" => "Car Lift/elevators",
+            "679" => "Car Lift/elevators",
             "682" => "Elevator Security Systems",
             "681" => "Moving Walkways",
             "680" => "Parts & Accessories",
@@ -1745,7 +1743,7 @@ return [
             "678" => "Service Lifts",
         ),
         "587" => array(
-           "687" => "Beverage Vending Machines",
+            "687" => "Beverage Vending Machines",
             "686" => "Food Vending Machines",
             "688" => "Parts & Accessories",
             "689" => "Storage & Dispensaries",
@@ -1767,7 +1765,7 @@ return [
             "697" => "Wrapping Machine",
         ),
         "590" => array(
-           "699" => "Brick Crusher Machine",
+            "699" => "Brick Crusher Machine",
             "701" => "Building Maintenance Unit",
             "702" => "Cement Mixer",
             "703" => "Concrete Equipment",
@@ -1796,7 +1794,7 @@ return [
             "718" => "Operation Theatre Equipments",
             "716" => "Strectcher",
         ),
-		"968" => array()
+        "968" => array()
     ],
 
     // Mobile OTP, SMS URL, Msg template
@@ -1841,14 +1839,14 @@ return [
         // 118 => 239988,
         118 => 162500,
         119 => 39999,
-       // 120 => 119997,
+        // 120 => 119997,
         // 120 => 143000,
         120 => 1,
 
-       // 121 => 479988,
+        // 121 => 479988,
         121 => 292500,
         122 => 59994,
-       // 123 => 119994,
+        // 123 => 119994,
         123 => 143000,
         //124 => 239994
         124 => 227500
@@ -3144,7 +3142,7 @@ return [
             Discover the perfect franchise opportunity in Maharashtra with FranchiseIndia and join the ranks of successful entrepreneurs in one of India's most dynamic and prosperous states.
             "
         ),
-         'loc10' => array(
+        'loc10' => array(
             'title' => 'Business & franchise opportinities in Haryana',
             'description' => "Haryana, a state known for its agricultural prosperity, has rapidly transformed into a hub of industrial and economic activity. Strategically located adjacent to the national capital, Haryana has leveraged its geographical advantage to attract a plethora of businesses and industries, ranging from manufacturing and automobile to IT and education. The state's commitment to fostering an investor-friendly environment has made it a fertile ground for entrepreneurs looking to sow the seeds of their business dreams.<br><br>
             With its blend of urban growth centers like Gurugram and Faridabad, alongside its strong rural foundations, Haryana offers diverse opportunities for business ventures. Whether you aim to tap into the bustling corporate life of its cities or cater to the agricultural and rural markets, Haryana's economy provides a vibrant landscape for a wide range of franchises.<br><br>
@@ -3180,7 +3178,7 @@ return [
         ),
     ),
 
-    'popupBrands'  => ["1771","8859","28935","13117","16937","3697","4682","11127","14860","19677","12738","4262","15468","18863","17001","10061","27394","19463","9438","12734","16787","12200","23139","104","19574","20908","21213","21110","20904","18286","24461","28343","20943","23907","231","15046","17518","17892","17643","4469","17564","13373","18223","8974","13080","45","23908","20273","5938","1132","20359","13302","19723","28534","15829","19130","27482"],
+    'popupBrands'  => ["1771", "8859", "28935", "13117", "16937", "3697", "4682", "11127", "14860", "19677", "12738", "4262", "15468", "18863", "17001", "10061", "27394", "19463", "9438", "12734", "16787", "12200", "23139", "104", "19574", "20908", "21213", "21110", "20904", "18286", "24461", "28343", "20943", "23907", "231", "15046", "17518", "17892", "17643", "4469", "17564", "13373", "18223", "8974", "13080", "45", "23908", "20273", "5938", "1132", "20359", "13302", "19723", "28534", "15829", "19130", "27482"],
     'Charges' => array(
         "OPTCRDC" => "2.06",
         "OPTDBCRD" => "0",
