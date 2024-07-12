@@ -518,7 +518,7 @@
                         $('#emailcontact').html("<a href='mailto:" + obj.user.email +
                             "' target='_blank'>" + obj.user.email + "</a>");
                         $('#mobilecontact').html(obj.user.mobile);
-                        $('#websitecontact').html("<a href='http://" + obj.user.website +
+                        $('#websitecontact').html("<a href='http://" + obj.user.website + 'paconfirm' +
                             "' target='_blank'>" + obj.user.website + "</a>");
                     }
                 }
@@ -549,7 +549,7 @@
                     $('#emailcontact').html("<a href='mailto:" + data.user.email +
                         "' target='_blank'>" + data.user.email + "</a>");
                     $('#mobilecontact').html(data.user.mobile);
-                    $('#websitecontact').html("<a href='http://" + data.user.website +
+                    $('#websitecontact').html("<a href='http://" + data.user.website +  'paconfirmed' +
                         "' target='_blank'>" + data.user.website + "</a>");
                 }
             });
