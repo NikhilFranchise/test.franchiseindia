@@ -78,19 +78,22 @@ class AdviceController extends Controller
     public function freeadvice(Request $request)
     // public function freeadviceHome(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'name' => 'required|min:2',
-            'mobile' => 'required|min:10',
-        ]);
+    // dd('yes');
 
+        // $request->validate([
+        //     'email' => 'required|email',
+        //     'name' => 'required|min:2',
+        //     'mobile' => 'required|min:10',
+        // ]);
+
+        // dd($request->optionsRadios);
         $user = $request->optionsRadios;
-        $name = $request->name;
-        $pincode = $request->pincode;
-        $email = $request->email;
-        $mobile = $request->mobile;
-        $details = $request->details;
-        $newsLetter = $request->is_newsletter;
+        $name = $request->namefreeadvice;
+        $pincode = $request->pincodefreeadvice;
+        $email = $request->emailfreeadvice;
+        $mobile = $request->mobilefreeadvice;
+        $details = $request->detailsfreeadvice;
+        $newsLetter = $request->is_newsletterfreeadvice;
         $city = "";
         $state = "";
         $ip = $request->ip();
@@ -99,7 +102,7 @@ class AdviceController extends Controller
         $pincodeDetails = Pincode::select('city', 'state')->where('pincode', $pincode)->first();
         if (!empty($pincodeDetails)) {
             $city = ucfirst(strtolower($pincodeDetails->city));
-            $state = ucfirst(strtolower($pincodeDetails->state));
+            $state = ucfirst(strtolower($pincodeDetails->state)); 
         }
 
         $mailTo = ($user != 'franchisor') ? "pganesh@franchiseindia.net" : "cnikhil@franchiseindia.net";
@@ -122,11 +125,13 @@ class AdviceController extends Controller
             return response()->json('Insertion failed..!');
 
         // Mail::to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
-        Mail::to($mailTo)->bcc("pkumar@franchiseindia.net")->send(new FreeAdviceForm($request));
+        // Mail::to($mailTo)->bcc("pkumar@franchiseindia.net")->send(new FreeAdviceForm($request));
 
         if ($newsLetter == 1)
             NewsLetterController::createNewsLetter($request->input('email'), "fi");
 
-        return response()->json('true');
+        // return response()->json('true');
+        return redirect()->back();
+
     }
 }

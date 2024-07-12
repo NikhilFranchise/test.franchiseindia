@@ -9,7 +9,6 @@ class AskFranchisor extends Model
 {
     use HasFactory;
     protected $table = 'ask_franchisor';
-    protected $fillable = ['name'];
-
+    protected $fillable = ['name', 'pincode', 'email', 'mobile', 'details', 'is_newsletter', 'city', 'state', 'ip', 'reg_source'];
 
 }
