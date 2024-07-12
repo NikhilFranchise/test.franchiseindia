@@ -92,7 +92,7 @@
                         <div class="col-xs-12 col-sm-9 col-md-9">
                             <div class="popbranddetail">
                                 <div class="popinfohead" id="companyContact"></div>
-                                <div class="popinfo">Ceo Name:<span id="ceocontact"></span></div>
+                                <div class="popinfo">Ceo Name:<span id="ceocontact"></span>nikhil</div>
                                 <div class="popinfo">Tel No:<span id="telephonecontact"></span></div>
                                 <div class="popinfo">Address :<span id="addressocontact"></span></div>
                                 <div class="popinfo">Mobile :<span id="mobilecontact"></span></div>
@@ -518,7 +518,7 @@
                         $('#emailcontact').html("<a href='mailto:" + obj.user.email +
                             "' target='_blank'>" + obj.user.email + "</a>");
                         $('#mobilecontact').html(obj.user.mobile);
-                        $('#websitecontact').html("<a href='http://" + obj.user.website + 'paconfirm' +
+                        $('#websitecontact').html("<a href='http://" + obj.user.website +
                             "' target='_blank'>" + obj.user.website + "</a>");
                     }
                 }
@@ -549,7 +549,7 @@
                     $('#emailcontact').html("<a href='mailto:" + data.user.email +
                         "' target='_blank'>" + data.user.email + "</a>");
                     $('#mobilecontact').html(data.user.mobile);
-                    $('#websitecontact').html("<a href='http://" + data.user.website +  'paconfirmed' +
+                    $('#websitecontact').html("<a href='http://" + data.user.website +
                         "' target='_blank'>" + data.user.website + "</a>");
                 }
             });
