@@ -539,8 +539,8 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
-        console.log("datacheck",data);
-                    $('#waitquery').css('display', 'none');
+                   console.log("datacheck",data);
+                    // $('#waitquery').css('display', 'none');
                     $('#conactheading').html("Contact Details");
                     $('#ajaxReshideblock').css('display', 'none');
                     $('#ajaxResshowblock').css('display', 'block');
