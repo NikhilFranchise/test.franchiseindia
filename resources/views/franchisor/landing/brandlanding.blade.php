@@ -546,7 +546,7 @@
                     setTimeout(function() {
     console.log(data);  // Log the entire response object to see its structure
 
-    if (data && data.user) {
+    if (data && data.success && data.user) {
         $('#ceocontact').html(data.user.ceo_name);
                     $('#telephonecontact').html(data.user.telephone);
                     $('#addressocontact').html(data.user.fran_address + "" + data.user.city + "" + data
