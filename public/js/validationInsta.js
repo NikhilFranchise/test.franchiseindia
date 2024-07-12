@@ -183,15 +183,16 @@ function getMobileStatus(value) {
             data: { mobile: value },
             success: function(data) {
                 if (parseInt(data) === 1) {
-                    $('#sub').show();
+                    $('#sub1').show();
                 } else {
                     $('#verifybutton').show();
-                    $('#sub').hide();
+                    $('#sub1').hide();
                 }
             }
         });
     } else if (value.length !== 10 && $.isNumeric(value)) {
-        $('#verifybutton, #sub').hide();
+        // $('#verifybutton, #sub').hide();
+        $('#verifybutton').hide();
     }
 }
 
@@ -226,16 +227,13 @@ function checkinstaotp() {
         url: '/check',
         data: { otpNo: keyword, mobileNo: mobile },
         success: function(data) {
-            console.log('checking');
-            $('#sub').show();
-
             if (data == 'notexists') {
                 $('#otpblk1').show();
             } else {
                 $('#otpblk1').hide();
                 $('#otpblk').hide();
                 $('#txtPhone').prop('readonly', true);
-                $('#sub').show();
+                $('#sub1').show();
                 $('#editmobile').hide();
             }
         }

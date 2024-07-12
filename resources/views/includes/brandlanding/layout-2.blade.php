@@ -351,7 +351,7 @@
                                                 <input type="checkbox" name="is_termsagree3" id="is_termsagree3" value="1" checked>  I agree to the <a href="{{Config('constants.MainDomain')}}/terms" target="_blank">Terms & Conditions</a></label>
                                         </div>
                                         
-                                        <div class="submit-btn" id="sub" style="float: none;">
+                                        <div class="submit-btn" id="sub1" style="float: none;">
                                             <input type="submit" id="btninsta" class="btn btn-default btn-red" value="Apply Now">
                                         </div>
 
