@@ -526,46 +526,78 @@
         });
 
         $('#paidYesInvestor').on('click', function() {
-            var franId = document.getElementById('freeinfovalue').value;
-            $('#waitquery').css('display', 'block');
-            $('#paidinvBeforeApply').css('display', 'none');
-            $.ajax({
-                type: 'post',
-                url: '{{ URL('/inv-lead?flag=confirmed') }}',
-                data: {
-                    franId: franId,
-                    "_token": "{{ csrf_token() }}",
-                },
-                success: function(data) {
+    var franId = document.getElementById('freeinfovalue').value;
+    $('#waitquery').css('display', 'block');
+    $('#paidinvBeforeApply').css('display', 'none');
+    
+    $.ajax({
+        type: 'post',
+        url: '{{ URL('/inv-lead?flag=confirmed') }}',
+        data: {
+            franId: franId,
+            "_token": "{{ csrf_token() }}",
+        },
+        success: function(data) {
+            console.log(data);  // Log the entire response object to see its structure
 
-                    $('#waitquery').css('display', 'none');
+            if (data && data.user) {
+                // Populate data into elements
+                $('#ceocontact').html(data.user.ceo_name || 'N/A');
+                $('#telephonecontact').html(data.user.telephone || 'N/A');
+                let fullAddress = `${data.user.fran_address || ''} ${data.user.city || ''} ${data.user.state || ''} ${data.user.pincode || ''}`;
+                $('#addressocontact').html(fullAddress.trim());
+                let email = data.user.email ? `<a href='mailto:${data.user.email}' target='_blank'>${data.user.email}</a>` : 'N/A';
+                $('#emailcontact').html(email);
+                $('#mobilecontact').html(data.user.mobile || 'N/A');
+                let website = data.user.website ? `<a href='http://${data.user.website}' target='_blank'>${data.user.website}</a>` : 'N/A';
+                $('#websitecontact').html(website);
+
+                // Hide the waiting message
+                $('#waitquery').css('display', 'none');
+                
+                // Display elements after a delay of 1 second (1000 milliseconds)
+                setTimeout(function() {
                     $('#conactheading').html("Contact Details");
                     $('#ajaxReshideblock').css('display', 'none');
                     $('#ajaxResshowblock').css('display', 'block');
-                    
-                    setTimeout(function() {
-    console.log(data);  // Log the entire response object to see its structure
-
-    if (data && data.success && data.user) {
-        $('#ceocontact').html(data.user.ceo_name);
-                    $('#telephonecontact').html(data.user.telephone);
-                    $('#addressocontact').html(data.user.fran_address + "" + data.user.city + "" + data
-                        .user.state + "" + data.user.pincode);
-                    $('#emailcontact').html("<a href='mailto:" + data.user.email +
-                        "' target='_blank'>" + data.user.email + "</a>");
-                    $('#mobilecontact').html(data.user.mobile);
-                    $('#websitecontact').html("<a href='http://" + data.user.website +
-                        "' target='_blank'>" + data.user.website + "</a>");
-    } else {
-        console.error("Unexpected response structure:", data);
-    }
-}, 100);  // Delay of 100 milliseconds
-                   
+                }, 1000); // Delay of 1 second
+            } else {
+                console.error("Unexpected response structure:", data);
+            }
+        }
+    });
+});
 
 
-                }
-            });
-        });
+        // $('#paidYesInvestor').on('click', function() {
+        //     var franId = document.getElementById('freeinfovalue').value;
+        //     $('#waitquery').css('display', 'block');
+        //     $('#paidinvBeforeApply').css('display', 'none');
+        //     $.ajax({
+        //         type: 'post',
+        //         url: '{{ URL('/inv-lead?flag=confirmed') }}',
+        //         data: {
+        //             franId: franId,
+        //             "_token": "{{ csrf_token() }}",
+        //         },
+        //         success: function(data) {
+
+        //             $('#waitquery').css('display', 'none');
+        //             $('#conactheading').html("Contact Details");
+        //             $('#ajaxReshideblock').css('display', 'none');
+        //             $('#ajaxResshowblock').css('display', 'block');
+        //             $('#ceocontact').html(data.user.ceo_name);
+        //             $('#telephonecontact').html(data.user.telephone);
+        //             $('#addressocontact').html(data.user.fran_address + "" + data.user.city + "" + data
+        //                 .user.state + "" + data.user.pincode);
+        //             $('#emailcontact').html("<a href='mailto:" + data.user.email +
+        //                 "' target='_blank'>" + data.user.email + "</a>");
+        //             $('#mobilecontact').html(data.user.mobile);
+        //             $('#websitecontact').html("<a href='http://" + data.user.website +
+        //                 "' target='_blank'>" + data.user.website + "</a>");
+        //         }
+        //     });
+        // });
 
         //Cancelling the view contact form and sending the normal lead
         $('#cancelContact').on('click', function() {
