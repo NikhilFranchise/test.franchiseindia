@@ -235,7 +235,7 @@ function checkinstaotp() {
                 $('#otpblk1').hide();
                 $('#otpblk').hide();
                 $('#txtPhone').prop('readonly', true);
-                // $('#sub').show();
+                $('#sub').show();
                 $('#editmobile').hide();
             }
         }
