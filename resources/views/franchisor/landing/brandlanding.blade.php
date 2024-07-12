@@ -92,8 +92,8 @@
                         <div class="col-xs-12 col-sm-9 col-md-9">
                             <div class="popbranddetail">
                                 <div class="popinfohead" id="companyContact"></div>
-                                {{-- <div class="popinfo">Ceo Name:<span id="ceocontact"></span>nikhil</div> --}}
-                                <div class="popinfo">Tel No:<span id="telephonecontact"></span>nikhil</div>
+                                <div class="popinfo">Ceo Name:<span id="ceocontact"></span></div>
+                                <div class="popinfo">Tel No:<span id="telephonecontact"></span></div>
                                 <div class="popinfo">Address :<span id="addressocontact"></span></div>
                                 <div class="popinfo">Mobile :<span id="mobilecontact"></span></div>
                                 <div class="popinfo">Email :<span id="emailcontact"></span></div>
@@ -105,7 +105,7 @@
                         </div>
                     </div>
                     <div class="modal-body popcentreq" id="ajaxReshideblock">
-                        <p id="waitquery" style="display: none">Please wait...</p>
+                        <p id="waitquery" style="display: none">Thank you for your response...</p>
                         @if (Auth::user())
                             <div class="requested-frm" id="paidinvBeforeApply" style="display: none">
                                 <p id="queryCount">Please wait...</p>
@@ -539,7 +539,7 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
-console.log("datacheck",data);
+        console.log("datacheck",data);
                     $('#waitquery').css('display', 'none');
                     $('#conactheading').html("Contact Details");
                     $('#ajaxReshideblock').css('display', 'none');
