@@ -544,15 +544,18 @@
                     $('#conactheading').html("Contact Details");
                     $('#ajaxReshideblock').css('display', 'none');
                     $('#ajaxResshowblock').css('display', 'block');
-                    $('#ceocontact').html(data.user.ceo_name);
-                    $('#telephonecontact').html(data.user.telephone);
-                    $('#addressocontact').html(data.user.fran_address + "" + data.user.city + "" + data
+                    if (data.success && data.user){
+                        $('#ceocontact').html(data.user?.ceo_name);
+                    $('#telephonecontact').html(data?.user?.telephone);
+                    $('#addressocontact').html(data?.user>.fran_address + "" + data?.user?.city + "" + data
                         .user.state + "" + data.user.pincode);
                     $('#emailcontact').html("<a href='mailto:" + data.user.email +
                         "' target='_blank'>" + data.user.email + "</a>");
                     $('#mobilecontact').html(data.user.mobile);
                     $('#websitecontact').html("<a href='http://" + data.user.website +
                         "' target='_blank'>" + data.user.website + "</a>");
+                    }
+           
                 }
             });
         });
