@@ -525,7 +525,7 @@
             });
         });
 
-        
+
 
         $('#paidYesInvestor').on('click', function() {
             var franId = document.getElementById('freeinfovalue').value;
