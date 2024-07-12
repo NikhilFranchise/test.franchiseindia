@@ -92,8 +92,8 @@
                         <div class="col-xs-12 col-sm-9 col-md-9">
                             <div class="popbranddetail">
                                 <div class="popinfohead" id="companyContact"></div>
-                                <div class="popinfo">Ceo Name:<span id="ceocontact"></span>nikhil</div>
-                                <div class="popinfo">Tel No:<span id="telephonecontact"></span></div>
+                                {{-- <div class="popinfo">Ceo Name:<span id="ceocontact"></span>nikhil</div> --}}
+                                <div class="popinfo">Tel No:<span id="telephonecontact"></span>nikhil</div>
                                 <div class="popinfo">Address :<span id="addressocontact"></span></div>
                                 <div class="popinfo">Mobile :<span id="mobilecontact"></span></div>
                                 <div class="popinfo">Email :<span id="emailcontact"></span></div>
