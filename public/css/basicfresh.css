@@ -4484,5 +4484,5 @@ ul.sidebt li.fi{height:160px}
 
 }
 @media only screen and (min-width:1024px) and (max-width:1300px) {
-.sideslideform .container{height:350px;overflow:auto;}
+.sideslideform .frm-container{height:350px;overflow:auto;}
 }
