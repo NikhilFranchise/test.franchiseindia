@@ -226,13 +226,16 @@ function checkinstaotp() {
         url: '/check',
         data: { otpNo: keyword, mobileNo: mobile },
         success: function(data) {
+            console.log('checking');
+            $('#sub').show();
+
             if (data == 'notexists') {
                 $('#otpblk1').show();
             } else {
                 $('#otpblk1').hide();
                 $('#otpblk').hide();
                 $('#txtPhone').prop('readonly', true);
-                $('#sub').show();
+                // $('#sub').show();
                 $('#editmobile').hide();
             }
         }
