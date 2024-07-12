@@ -105,7 +105,7 @@
                         </div>
                     </div>
                     <div class="modal-body popcentreq" id="ajaxReshideblock">
-                        <p id="waitquery" style="display: none">Thank you for your response...</p>
+                        <p id="waitquery" style="display: none">Please wait...</p>
                         @if (Auth::user())
                             <div class="requested-frm" id="paidinvBeforeApply" style="display: none">
                                 <p id="queryCount">Please wait...</p>
