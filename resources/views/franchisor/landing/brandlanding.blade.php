@@ -540,11 +540,18 @@
                 },
                 success: function(data) {
                    console.log("datacheck",data);
-                    // $('#waitquery').css('display', 'none');
+                    $('#waitquery').css('display', 'none');
                     $('#conactheading').html("Contact Details");
                     $('#ajaxReshideblock').css('display', 'none');
                     $('#ajaxResshowblock').css('display', 'block');
-                    $('#ceocontact').html(data.user.ceo_name);
+                    if (data.success && data.user) {
+                    // $('#ceocontact').html(data.user.ceo_name);
+                        // Check if data.user.ceo_name exists before accessing it
+        if (data.user.ceo_name) {
+            $('#ceocontact').html(data.user.ceo_name);
+        } else {
+            $('#ceocontact').html("N/A"); // or handle appropriately
+        }
                     $('#telephonecontact').html(data.user.telephone);
                     $('#addressocontact').html(data.user.fran_address + "" + data.user.city + "" + data
                         .user.state + "" + data.user.pincode);
@@ -553,6 +560,10 @@
                     $('#mobilecontact').html(data.user.mobile);
                     $('#websitecontact').html("<a href='http://" + data.user.website +
                         "' target='_blank'>" + data.user.website + "</a>");
+                    } else {
+        console.error("Unexpected response format:", data);
+        // Handle unexpected response format here
+    }
                 }
             });
         });
