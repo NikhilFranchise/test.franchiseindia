@@ -542,7 +542,7 @@
                     $('#conactheading').html("Contact Details");
                     $('#ajaxReshideblock').css('display', 'none');
                     $('#ajaxResshowblock').css('display', 'block');
-                    $('#ceocontact').html(data.user.ceo_name);
+                    // $('#ceocontact').html(data.user.ceo_name);
                     $('#telephonecontact').html(data.user.telephone);
                     $('#addressocontact').html(data.user.fran_address + "" + data.user.city + "" + data
                         .user.state + "" + data.user.pincode);
