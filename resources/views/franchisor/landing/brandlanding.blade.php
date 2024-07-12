@@ -529,7 +529,7 @@
     var franId = document.getElementById('freeinfovalue').value;
     $('#waitquery').css('display', 'block');
     $('#paidinvBeforeApply').css('display', 'none');
-    
+
     $.ajax({
         type: 'post',
         url: '{{ URL('/inv-lead?flag=confirmed') }}',
@@ -538,9 +538,13 @@
             "_token": "{{ csrf_token() }}",
         },
         success: function(data) {
-            console.log(data);  // Log the entire response object to see its structure
+            console.log("AJAX request successful:", data);  // Log the entire response object to see its structure
 
             if (data && data.user) {
+                // Hide the waiting message
+                $('#waitquery').css('display', 'none');
+                console.log("waitquery hidden");
+
                 // Populate data into elements
                 $('#ceocontact').html(data.user.ceo_name || 'N/A');
                 $('#telephonecontact').html(data.user.telephone || 'N/A');
@@ -552,18 +556,23 @@
                 let website = data.user.website ? `<a href='http://${data.user.website}' target='_blank'>${data.user.website}</a>` : 'N/A';
                 $('#websitecontact').html(website);
 
-                // Hide the waiting message
-                $('#waitquery').css('display', 'none');
-                
+                console.log("Data populated");
+
                 // Display elements after a delay of 1 second (1000 milliseconds)
                 setTimeout(function() {
                     $('#conactheading').html("Contact Details");
                     $('#ajaxReshideblock').css('display', 'none');
                     $('#ajaxResshowblock').css('display', 'block');
+                    console.log("Elements displayed");
                 }, 1000); // Delay of 1 second
             } else {
                 console.error("Unexpected response structure:", data);
+                $('#waitquery').css('display', 'none');
             }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX request failed:", status, error);
+            $('#waitquery').css('display', 'none');
         }
     });
 });
