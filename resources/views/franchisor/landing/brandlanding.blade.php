@@ -537,12 +537,15 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
+                    setTimeout(function() {
+            console.log(data);  // Log the entire response object to see its structure
 
+            if (data && data.user) {
                     $('#waitquery').css('display', 'none');
                     $('#conactheading').html("Contact Details");
                     $('#ajaxReshideblock').css('display', 'none');
                     $('#ajaxResshowblock').css('display', 'block');
-                    // $('#ceocontact').html(data.user.ceo_name);
+                    $('#ceocontact').html(data.user.ceo_name);
                     $('#telephonecontact').html(data.user.telephone);
                     $('#addressocontact').html(data.user.fran_address + "" + data.user.city + "" + data
                         .user.state + "" + data.user.pincode);
@@ -551,7 +554,10 @@
                     $('#mobilecontact').html(data.user.mobile);
                     $('#websitecontact').html("<a href='http://" + data.user.website +
                         "' target='_blank'>" + data.user.website + "</a>");
-                }
+            }else {
+                console.error("Unexpected response structure:", data);
+            }
+                },100);
             });
         });
 
