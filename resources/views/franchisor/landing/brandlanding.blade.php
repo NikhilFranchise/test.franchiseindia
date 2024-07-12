@@ -539,23 +539,22 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
+                var obj = jQuery.parseJSON(data);
+
                    console.log("datacheck",data);
                     $('#waitquery').css('display', 'none');
                     $('#conactheading').html("Contact Details");
                     $('#ajaxReshideblock').css('display', 'none');
                     $('#ajaxResshowblock').css('display', 'block');
-                    if(data.user.ceo_name){
-                        $('#ceocontact').html(data.user.ceo_name);
-
-                    }
-                    $('#telephonecontact').html(data.user.telephone);
-                    $('#addressocontact').html(data.user.fran_address + "" + data.user.city + "" + data
-                        .user.state + "" + data.user.pincode);
-                    $('#emailcontact').html("<a href='mailto:" + data.user.email +
-                        "' target='_blank'>" + data.user.email + "</a>");
-                    $('#mobilecontact').html(data.user.mobile);
-                    $('#websitecontact').html("<a href='http://" + data.user.website +
-                        "' target='_blank'>" + data.user.website + "</a>");
+                    $('#ceocontact').html(obj.user.ceo_name);
+                    $('#telephonecontact').html(obj.user.telephone);
+                    $('#addressocontact').html(obj.user.fran_address + "" + obj.user.city + "" + obj
+                        .user.state + "" + obj.user.pincode);
+                    $('#emailcontact').html("<a href='mailto:" + obj.user.email +
+                        "' target='_blank'>" + obj.user.email + "</a>");
+                    $('#mobilecontact').html(obj.user.mobile);
+                    $('#websitecontact').html("<a href='http://" + obj.user.website +
+                        "' target='_blank'>" + obj.user.website + "</a>");
                 }
             });
         });
