@@ -416,18 +416,19 @@
                         window.location.assign('{{ url('/investor/myaccount/payment') }}');
                     } else {
                         console.log(data);
+                        var obj = jQuery.parseJSON(data);
                         document.getElementById("expbtnloading").style.display = "none";
                         document.getElementById("expmsg").style.display = "block";
                         //                        $('#companyContactinsta').html(data.user.company_name);
-                        $('#ceocontactinsta').html(data.user.ceo_name);
-                        $('#telephonecontactinsta').html(data.user.telephone);
-                        $('#addressocontactinsta').html(data.user.fran_address + "" + data.user.city +
-                            "" + data.user.state + "" + data.user.pincode);
-                        $('#emailcontactinsta').html("<a href='mailto:" + data.user.email +
-                            "' target='_blank'>" + data.user.email + "</a>");
-                        $('#mobilecontactinsta').html(data.user.mobile);
-                        $('#websitecontactinsta').html("<a href='http://" + data.user.website +
-                            "' target='_blank'>" + data.user.website + "</a>");
+                        $('#ceocontactinsta').html(obj.user.ceo_name);
+                        $('#telephonecontactinsta').html(obj.user.telephone);
+                        $('#addressocontactinsta').html(obj.user.fran_address + "" + obj.user.city +
+                            "" + obj.user.state + "" + obj.user.pincode);
+                        $('#emailcontactinsta').html("<a href='mailto:" + obj.user.email +
+                            "' target='_blank'>" + obj.user.email + "</a>");
+                        $('#mobilecontactinsta').html(obj.user.mobile);
+                        $('#websitecontactinsta').html("<a href='http://" + obj.user.website +
+                            "' target='_blank'>" + obj.user.website + "</a>");
 
                     }
                 }
