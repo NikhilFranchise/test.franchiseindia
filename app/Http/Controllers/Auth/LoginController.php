@@ -427,7 +427,7 @@ class LoginController extends Controller
      * @return int
      */
     protected function commonLogin($userName, $password)
-    {   dd($userName, $password);
+    {   
         if (Auth::guard()->attempt(['email' => $userName, 'password' => $password, 'profile_status' => 1] )) {
             $this->recordLoginTime();
             session()->flash('userloggedin', 1);
