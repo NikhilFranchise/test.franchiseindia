@@ -947,3 +947,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
     Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
 });
+
+Route::get('location/{city}',              [BusinessListingController::class,'listingLocation']);
