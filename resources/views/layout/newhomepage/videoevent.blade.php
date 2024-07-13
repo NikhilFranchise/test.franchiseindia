@@ -253,6 +253,448 @@
 
 
 
+ <!-- <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.franglobal.com/nepal-franchise-distribution-show/" target="_blank">
+           <img class="" alt="Nepal Franchise & Distribution Show 2024" src="https://www.franchiseindia.com/images/nepal-franchise-distribution.jpg?id=5"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>Nepal Franchise & Distribution Show 2024</h2>
+                                            <div class="eshowtxt">
+                                                 27 April 2024, Kathmandu Marriott Hotel
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.franglobal.com/nepal-franchise-distribution-show/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 9311148342</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+
+
+ <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.irec.asia/" target="_blank">
+           <img class="" alt="IReC 2024" src="https://www.franchiseindia.com/images/irc2024.jpg"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>IReC 2024</h2>
+                                            <div class="eshowtxt">
+                                                 29-30 April 2024, Hotel Sheraton Grand, Bengaluru
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.irec.asia/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 9354193529</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+
+
+ <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.d2cindia.in/" target="_blank">
+           <img class="" alt="D2C INDIA 2024" src="https://www.franchiseindia.com/images/d2c2024.jpg"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>D2C INDIA 2024</h2>
+                                            <div class="eshowtxt">
+                                                 29-30 April 2024, Hotel Sheraton Grand, Bengaluru
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.d2cindia.in/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 9310811605</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div> -->
+
+
+
+
+
+ <!-- <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.franchiseindia.com/expo/" target="_blank">
+           <img class="" alt="Franchise India 2024 Delhi " src="https://www.franchiseindia.com/images/franchise-india-delhi.jpg?id=2"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>Franchise India 2024 Delhi</h2>
+                                            <div class="eshowtxt">
+                                                 18-19 May 2024, (IICC) , Delhi, India
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.franchiseindia.com/expo/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 9311148342</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+
+
+ <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.bharatstartup.in/delhi/" target="_blank">
+           <img class="" alt="Startup Summit 2024" src="https://www.franchiseindia.com/images/startup-summit.jpg?id=2"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>Startup Summit 2024</h2>
+                                            <div class="eshowtxt">
+                                                 18 May 2024, (IICC) , Delhi, India
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.bharatstartup.in/delhi/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 8800638077</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+
+
+ <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.franchiseindia.com/expo/world-franchise-congress.php" target="_blank">
+           <img class="" alt="World Franchise Congress 2024" src="https://www.franchiseindia.com/images/world-franchise-congress.jpg?id=2"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>World Franchise Congress 2024</h2>
+                                            <div class="eshowtxt">
+                                                 19 May 2024, (IICC) , Delhi, India
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.franchiseindia.com/expo/world-franchise-congress.php" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 9667698380</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+
+ <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.franchiseindia.com/franchise-awards/" target="_blank">
+           <img class="" alt="Franchise Awards 2024" src="https://www.franchiseindia.com/images/franchise-awards.jpg?id=2"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>Franchise Awards 2024</h2>
+                                            <div class="eshowtxt">
+                                                 19 May 2024, (IICC) , Delhi, India
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.franchiseindia.com/franchise-awards/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 8375981341</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>  -->
+
+
+
+
+<!--  <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.restaurantindia.in/awards/chandigarh/" target="_blank">
+           <img class="" alt="Restaurant Awards Chandigarh" src="https://www.franchiseindia.com/images/restaurant-awards-chandigarh.jpg?ver=1"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>Restaurant Awards</h2>
+                                            <div class="eshowtxt">
+                                                 18 June 2024, JW Marriott, Chandigarh
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.restaurantindia.in/awards/chandigarh/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 9654964838</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>  -->
+
+<!--  <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.educationcongress.org/" target="_blank">
+           <img class="" alt="EdTech x Indian Education Summit & Awards" src="https://www.franchiseindia.com/images/ed.jpg?ver=8"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>EdTech x Indian Education Summit & Awards</h2>
+                                            <div class="eshowtxt">
+                                                 19 June 2024, Jw Marriott Chandigarh
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.educationcongress.org/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 7827548909</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>  -->
+
+
+<!--  <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.successpreneur.in" target="_blank">
+           <img class="" alt="Successpreneur Awards 2024" src="https://www.franchiseindia.com/images/success.jpg"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>Successpreneur Awards 2024</h2>
+                                            <div class="eshowtxt">
+                                                 28 June 2024, The Westin, Chennai
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.successpreneur.in" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 9958620920</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>  -->
+
+
+ <!-- <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.franchiseindia.net/fro/chennai/" target="_blank">
+           <img class="" alt="FROEXPO Chennai" src="https://www.franchiseindia.com/images/fro-expo-chennai.jpg?id=2"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>FROEXPO Chennai</h2>
+                                            <div class="eshowtxt">
+                                                 29-30 June 2024, Hall No. 2, Chennai Trade Centre
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.franchiseindia.net/fro/chennai/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 9311254088</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+
+
+ <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.indiaev.org/" target="_blank">
+           <img class="" alt="India EV Show" src="https://www.franchiseindia.com/images/indiaevshow.jpg"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>India EV Show</h2>
+                                            <div class="eshowtxt">
+                                                 29-30 June 2024, Hall No. 3, Chennai Trade Centre
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.indiaev.org/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 9312199219</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+ -->
+
+
+ <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.franchiseindia.net/fro-bos/lucknow/" target="_blank">
+           <img class="" alt="Franchise Expo Lucknow" src="https://www.franchiseindia.com/images/fro-bos-lucknow.jpg?ver=1"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>Franchise Expo Lucknow</h2>
+                                            <div class="eshowtxt">
+                                                 21 July 2024, Hilton Garden Inn, Lucknow
+                                            </div>
+                                            <div class="link-section text-capitalize">
+                                                <a href="https://www.franchiseindia.net/fro-bos/lucknow/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline text-capitalize">
+                                                Hotline: <span>+91 8800638077</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+
+
+ <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.franchiseindia.net/fro-bos/kolkata/" target="_blank">
+           <img class="" alt="Franchise Expo Kolkata" src="https://www.franchiseindia.com/images/fro-bos-kolkata.jpg?ver=1"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>Franchise Expo Kolkata</h2>
+                                            <div class="eshowtxt">
+                                                 27 July 2024, Raajkutir - IHCL SeleQtions, Kolkata
+                                            </div>
+                                            <div class="link-section text-capitalize">
+                                                <a href="https://www.franchiseindia.net/fro-bos/kolkata/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline text-capitalize">
+                                                Hotline: <span>+91 8800638077</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+
+
+ <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.franchiseindia.net/fro/bengaluru/" target="_blank">
+           <img class="" alt="FROEXPO Bengaluru" src="https://www.franchiseindia.com/images/fro-expo-bengaluru.jpg"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>FROEXPO Bengaluru</h2>
+                                            <div class="eshowtxt">
+                                                 31 Aug - 1 Sep 2024, BIEC, Bengaluru, Karnataka
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.franchiseindia.net/fro/bengaluru/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 9311254088</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+
+
+ <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.entrepreneurindia.com/" target="_blank">
+           <img class="" alt="Entrepreneur 2024" src="https://www.franchiseindia.com/images/entrepreneur-event.jpg"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>Entrepreneur 2024</h2>
+                                            <div class="eshowtxt">
+                                                 4 September 2024, Bharat Mandapam, Delhi
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.entrepreneurindia.com/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline text-capitalize">
+                                                Hotline: <span>+91 7290037182</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+
+
+ <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.franchiseindia.net/fro/ahmedabad/" target="_blank">
+           <img class="" alt="FROEXPO Ahmedabad" src="https://www.franchiseindia.com/images/fro-expo-ahmedabad.jpg"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>FROEXPO Ahmedabad</h2>
+                                            <div class="eshowtxt">
+                                                 21-22 September 2024, Mahatma Mandir Convention...
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.franchiseindia.net/fro/ahmedabad/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline text-capitalize">
+                                                Hotline: <span>+91 9311254088</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+
+
+<div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.restaurantindia.in/congress/" target="_blank">
+           <img class="" alt="Indian Restaurant Congress & Awards 2024" src="https://www.franchiseindia.com/images/restaurant-congress.jpg"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>Indian Restaurant Congress & Awards 2024</h2>
+                                            <div class="eshowtxt">
+                                                 8-9 October 2024, YASHOBHOOMI, (IICC), New Delhi
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.restaurantindia.in/congress/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline text-capitalize">
+                                                Hotline: <span>+91 9667698380</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+
+
+ <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.franchiseindia.com/expo/mumbai/" target="_blank">
+           <img class="" alt="Franchise India 2024 Mumbai" src="https://www.franchiseindia.com/images/franchise-india-mumbai.jpg"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>Franchise India 2024 Mumbai</h2>
+                                            <div class="eshowtxt">
+                                                 29-30 November 2024, Jio World Convention Centre
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.franchiseindia.com/expo/mumbai/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 9311148342</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
+
+
+ <div class="swiper-slide">
+                                 <div class="eshowblk">
+                                        <div class="eshowimg">
+                                            <a href="https://www.irec.asia/mumbai/" target="_blank">
+           <img class="" alt="IReC 2024" src="https://www.franchiseindia.com/images/irec.jpg?ver=1"></a>
+                                        </div>
+                                        <div class="eshowcontent">
+                                            <h2>IReC 2024</h2>
+                                            <div class="eshowtxt">
+                                                 29-30 November 2024, Jio World Convention Centre
+                                            </div>
+                                            <div class="link-section  text-capitalize">
+                                                <a href="https://www.irec.asia/mumbai/" target="_blank">Registration</a>
+                                            </div>
+                                            <div class="eventhotline  text-capitalize">
+                                                Hotline: <span>+91 9310438783</span>
+                                            </div>
+                                        </div>
+                                    </div>
+</div>
 
  <!-- <div class="swiper-slide">
                                  <div class="eshowblk">

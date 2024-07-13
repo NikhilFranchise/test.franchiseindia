@@ -405,8 +405,12 @@ class LoginController extends Controller
      * @return int
      */
     protected function commonLogin($userName, $password)
+<<<<<<< HEAD
     {
 
+=======
+    {   
+>>>>>>> 7d445f843256568a12dc48099dcd60c8e18c114e
         if (Auth::guard()->attempt(['email' => $userName, 'password' => $password, 'profile_status' => 1] )) {
             $this->recordLoginTime();
             session()->flash('userloggedin', 1);

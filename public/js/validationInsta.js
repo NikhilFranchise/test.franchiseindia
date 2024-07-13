@@ -253,6 +253,30 @@ function getCityWiderInsta(state) {
     });
 }
 
+// function getMobileStatusWider(mobile) {
+//     if ($("#success-mobile-wider").css("display") !== "block") {
+//         if (mobile.length === 10 && $.isNumeric(mobile)) {
+//             $.ajax({
+//                 type: 'GET',
+//                 url: '/mobcheck',
+//                 data: { mobile: mobile },
+//                 success: function(data) {
+//                     if (parseInt(data) === 1) {
+//                         $("#success-mobile-wider").show();
+//                     } else {
+//                         $("#wider-submit-button").prop("disabled", true);
+//                         $("#validate-mobile-contact, #success-mobile-wider").hide();
+//                     }
+//                 }
+//             });
+//         } else if (mobile.length !== 10 && $.isNumeric(mobile)) {
+//             $("#success-mobile-wider").hide();
+//             $("#wider-submit-button").prop("disabled", false);
+//             $("#edit-mobile-wider, #validate-mobile-contact").hide();
+//         }
+//     }
+// }
+
 function getMobileStatusWider(mobile) {
     if ($("#success-mobile-wider").css("display") !== "block") {
         if (mobile.length === 10 && $.isNumeric(mobile)) {
@@ -263,6 +287,9 @@ function getMobileStatusWider(mobile) {
                 success: function(data) {
                     if (parseInt(data) === 1) {
                         $("#success-mobile-wider").show();
+                    }
+                    else if(parseInt(data) === 0){
+                        $("#validate-mobile-contact").show();
                     } else {
                         $("#wider-submit-button").prop("disabled", true);
                         $("#validate-mobile-contact1, #success-mobile-wider").hide();
