@@ -36,7 +36,9 @@ class Kernel extends ConsoleKernel
     protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
-
+        $this->commands([
+            Commands\RehashPasswords::class,
+        ]);
         require base_path('routes/console.php');
     }
 }
