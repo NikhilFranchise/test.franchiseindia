@@ -86,6 +86,7 @@ Route::get('testimonials', function () {
 });
 Route::get('testimonials-reviews', [StaticPageController::class, 'getTestimonials']);
 Route::get('sitemap/brands', [BrandFilterController::class, 'brandsitemap']);
+Route::get('sitemap/brands/{abre}',           [BrandFilterController::class,'brandfilter']);
 
 Route::get('terms', [StaticPageController::class, 'mainTerm']);
 Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBystateName']);
