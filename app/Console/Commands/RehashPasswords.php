@@ -32,9 +32,9 @@ class RehashPasswords extends Command
          // Get all users
         //  $users = UserAccount::all();
 
-        $user = UserAccount::where('email', 'dharmendra@franchiseindia.net')->first();
+        $users = UserAccount::where('email', 'dharmendra@franchiseindia.net')->first();
 
-        if (!$user) {
+        if (!$users) {
             $this->error('User not found.');
             return;
         }
@@ -47,7 +47,7 @@ class RehashPasswords extends Command
                  $user->save();
              }
          }
- 
+
          $this->info('Passwords rehashed successfully.');
      }
     }

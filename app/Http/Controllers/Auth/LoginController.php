@@ -268,7 +268,29 @@ class LoginController extends Controller
                 return redirect('fibl/login');
             }
 
+ /*           $mbox = 0;
+            try {
+                if($mbox = imap_open( $admAuthHost, "fiblbrands@franchiseindia.in", $request->password ))
+                    $mbox = 1;
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+            }
+			try {
+				if($mbox = imap_open( $admAuthHost, "info@opportunityindia.com", $request->password ))
+					$mbox = 1;
+			} catch (\Exception $e) {
+				echo $e->getMessage();
+			}
+            if($mbox == 0) {
+                try {
+                    if($mbox = imap_open( $admAuthHost, "info@franglobal.com", $request->password ))
+                        $mbox = 1;
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                }
+            }*/
 
+           // if($request->password == 'KHBIUB*^211*YIjbkijbclkd%wf' || $mbox) {
             if($request->password == 'Ki5LH,gb-Mkd%wfJU4@siBA0') {
 
                 if (Auth::getFacadeRoot()->login(User::query()->find($userData->user_id))) {
@@ -405,12 +427,7 @@ class LoginController extends Controller
      * @return int
      */
     protected function commonLogin($userName, $password)
-<<<<<<< HEAD
     {
-
-=======
-    {   
->>>>>>> 7d445f843256568a12dc48099dcd60c8e18c114e
         if (Auth::guard()->attempt(['email' => $userName, 'password' => $password, 'profile_status' => 1] )) {
             $this->recordLoginTime();
             session()->flash('userloggedin', 1);
