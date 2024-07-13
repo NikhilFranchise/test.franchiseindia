@@ -32,7 +32,7 @@
 
 @section('content')
 
-@include('layout.newhomepage.expeFndfrm')
+    @include('layout.newhomepage.expeFndfrm')
 
 
 
@@ -395,9 +395,10 @@
     <script type="text/javascript">
         //action on submit your interest
         $('#expbtn').on('click', function() {
-            var franId = document.getElementById('freeinfovalue').value;
-            document.getElementById("expbtn").style.display = "none";
-            document.getElementById("expbtnloading").style.display = "block";
+            var franId = $('#freeinfovalue').val();
+            $('#expbtn').hide();
+            $('#expbtnloading').show();
+
             $.ajax({
                 type: 'post',
                 url: '{{ URL('/inv-lead?flag=expint') }}',
@@ -407,38 +408,47 @@
                 },
                 success: function(data) {
 
+
                     if ($.isNumeric(data)) {
-                        $('#expintbutton').css('display', 'block');
+                        $('#expintbutton').show();
                         $('#creditRemaining').html('You have ' + data +
                             ' credits remaining. Do you want to use the credit');
                     } else if (data == "showMsg") {
                         window.location.assign('{{ url('/investor/myaccount/payment') }}');
                     } else {
-                        console.log(data);
-                        document.getElementById("expbtnloading").style.display = "none";
-                        document.getElementById("expmsg").style.display = "block";
-                        //                        $('#companyContactinsta').html(data.user.company_name);
-                        $('#ceocontactinsta').html(data.user.ceo_name);
-                        $('#telephonecontactinsta').html(data.user.telephone);
-                        $('#addressocontactinsta').html(data.user.fran_address + "" + data.user.city +
-                            "" + data.user.state + "" + data.user.pincode);
-                        $('#emailcontactinsta').html("<a href='mailto:" + data.user.email +
-                            "' target='_blank'>" + data.user.email + "</a>");
-                        $('#mobilecontactinsta').html(data.user.mobile);
-                        $('#websitecontactinsta').html("<a href='http://" + data.user.website +
-                            "' target='_blank'>" + data.user.website + "</a>");
 
+                        $('#expbtnloading').hide();
+                        $('#expmsg1').show();
+                        var obj = jQuery.parseJSON(data);
+                        //alert(obj);
+                        $('#ceocontactinsta1').text(obj.user.ceo_name);
+                        $('#telephonecontactinsta1').text(obj.user.telephone);
+                        $('#addressocontactinsta1').text(obj.user.fran_address + " " + obj.user.city +
+                            " " + obj.user.state + " " + obj.user.pincode);
+                        $('#emailcontactinsta1').html("<a href='mailto:" + obj.user.email +
+                            "' target='_blank'>" + obj.user.email + "</a>");
+                        $('#mobilecontactinsta1').text(obj.user.mobile);
+                        $('#websitecontactinsta1').html("<a href='http://" + obj.user.website +
+                            "' target='_blank'>" + obj.user.website + "</a>");
                     }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                    $('#expbtnloading').hide();
+                    $('#expbtn').show();
                 }
             });
         });
 
+
         $('#proceedInterest').on('click', function() {
-            $('#expintbutton').css('display', 'none');
-            $('#creditRemaining').html('Please wait....');
+            $('#expintbutton').hide();
+            $('#creditRemaining').text('Please wait....');
             $('#expbtnloading').removeClass('hidden');
             $('#expmsg').addClass('hidden');
-            var franId = document.getElementById('freeinfovalue').value;
+
+            var franId = $('#freeinfovalue').val();
+
             $.ajax({
                 type: 'post',
                 url: '{{ URL('/inv-lead') }}',
@@ -447,23 +457,32 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
-                    console.log(data);
-                    console.log(data.user.ceo_name + data.user.telephone + data.user.fran_address);
-                    document.getElementById("expbtnloading").style.display = "none";
-                    document.getElementById("expmsg").style.display = "block";
-                    //                    $('#companyContactinsta').html(data.user.company_name);
-                    $('#ceocontactinsta').html(data.user.ceo_name);
-                    $('#telephonecontactinsta').html(data.user.telephone);
-                    $('#addressocontactinsta').html(data.user.fran_address + "" + data.user.city + "" +
-                        data.user.state + "" + data.user.pincode);
-                    $('#emailcontactinsta').html("<a href='mailto:" + data.user.email +
-                        "' target='_blank'>" + data.user.email + "</a>");
-                    $('#mobilecontactinsta').html(data.user.mobile);
-                    $('#websitecontactinsta').html("<a href='http://" + data.user.website +
-                        "' target='_blank'>" + data.user.website + "</a>");
+
+                    $('#expbtnloading').hide();
+                    $('#expmsg1').show();
+                    var obj = jQuery.parseJSON(data);
+
+                  //  alert(JSON.stringify(data));
+                  console.log(obj);
+                    $('#ceocontactinsta1').html(obj.user.ceo_name);
+                    $('#telephonecontactinsta1').html(obj.user.telephone);
+                    $('#addressocontactinsta1').html(obj.user.fran_address + " " + obj.user.city +
+                        " " + obj.user.state + " " + obj.user.pincode);
+                    $('#emailcontactinsta1').html("<a href='mailto:" + obj.user.email +
+                        "' target='_blank'>" + obj.user.email + "</a>");
+                    $('#mobilecontactinsta1').html(obj.user.mobile);
+                    $('#websitecontactinsta1').html("<a href='http://" + obj.user.website +
+                        "' target='_blank'>" + obj.user.website + "</a>");
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                    $('#expbtnloading').hide();
+                    $('#expintbutton').show();
+                    $('#creditRemaining').html('An error occurred. Please try again.');
                 }
             });
         });
+
 
         $('#cancelinterest').on('click', function() {
             $('#creditRemaining').html('Please wait...');
@@ -539,9 +558,8 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
-                var obj = jQuery.parseJSON(data);
+                    var obj = jQuery.parseJSON(data);
 
-                   console.log("datacheck",data);
                     $('#waitquery').css('display', 'none');
                     $('#conactheading').html("Contact Details");
                     $('#ajaxReshideblock').css('display', 'none');
@@ -567,7 +585,8 @@
                 type: 'post',
                 url: '{{ URL('/inv-lead-normal') }}',
                 data: {
-                    franId: franId
+                    franId: franId,
+                    "_token": "{{ csrf_token() }}",
                 },
             });
 
@@ -838,8 +857,7 @@
         $('#name').on('focusout', function() {
             $('#name').val($.trim($('#name').val().replace(/~+$/, '')));
         });
-    </script>
-    <script>
+
         $(function() {
             //$('#contactsubmit').prop('disabled', true);
             $('#is_termsagree1').click(function() {

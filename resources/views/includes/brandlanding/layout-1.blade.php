@@ -1,6 +1,3 @@
-@php
-    use Illuminate\Support\Arr;
-@endphp
 <div class="row  landing" id="landfix">
     <div class="container">
         <div class="row">
@@ -13,17 +10,14 @@
                             'abilityToApply' => 1,
                         ];
                         if (Auth::check() && Auth::user()->profile_type == 2) {
-                            // @dd(Auth::user());
-                            if (
-                                Auth::user()->membership_type == 1 ||
-                                (Auth::user()->reg_source == 'DelhiExpoPaid' && $inv_credits->credit_limit > 0)
-                            ) {
+                            if (Auth::user()->membership_type == 1) {
                                 $eligibility = 1;
                             } else {
                                 $checkData = \App\Http\Controllers\CommonController::checkInvestorApplicationEligibility();
                                 $eligibility = $checkData['abilityToApply'];
                             }
                         }
+
                         $img = 'https://www.franchiseindia.com/images/no-img.gif';
                         if (
                             ($franDetails->free_logo_visibility || $franDetails->membership_type != 0) &&
@@ -42,10 +36,10 @@
                                 {{ Config('constants.subSubCategoryArr.' . $franDetails->ind_cat . '.' . $franDetails->ind_sub_cat) }}
                             </div>
                             <h1 class="ttl">{{ $franDetails->company_name }} Franchise Cost – How to get, Contact,
-                                Apply, Fee
-                            </h1>
+                                Apply, Fee</h1>
                         </div>
                         <!-- /Business Title -->
+
                         <!-- Tab Panel Start Here -->
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="tab-panel">
@@ -56,8 +50,7 @@
                                         <li><a href="#property_tab">Property</a></li>
                                         <li><a href="#training_tab">Training</a></li>
                                         <li><a href="#others_tab">Agreement <span class="hidemobileTerm">& Term
-                                                    Details</span></a>
-                                        </li>
+                                                    Details</span></a></li>
                                     </ul>
                                 </div>
                                 <div class="rht-pnl">
@@ -69,6 +62,7 @@
                                                 </li>
                                             </ul>
                                         @endif
+
                                         @if ($eligibility == 1 || $checkData['abilityToApply'] == 1)
                                             @if (Auth::check() && Auth::user()->profile_type == 2)
                                                 <ul>
@@ -121,29 +115,35 @@
                                     if (empty($franDetails->prop_area_min)) {
                                         $area = '-N/A-';
                                     }
+
                                     $minValue = $franDetails->unit_inv_min;
-                                    if (is_numeric($minValue)) {
-                                        if ($minValue < 100000 && $minValue > 10000) {
-                                            $minValue = number_format($minValue / 1000, 2) . ' K';
-                                        } elseif ($minValue <= 9999999 && $minValue > 100000) {
-                                            $minValue = number_format($minValue / 100000, 2) . ' Lakh';
-                                        } elseif ($minValue > 9999999) {
-                                            $minValue = number_format($minValue / 10000000, 2) . ' Cr';
-                                        }
+
+                                    if ($minValue < 100000 && $minValue > 10000) {
+                                        $minValue = substr($minValue / 1000, 0, 5) . ' K';
                                     }
+
+                                    if ($minValue <= 9999999 && $minValue > 100000) {
+                                        $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
+                                    }
+
+                                    if ($minValue > 9999999) {
+                                        $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
+                                    }
+
                                     $maxValue = $franDetails->unit_inv_max;
-                                    if (is_numeric($maxValue)) {
-                                        if ($maxValue < 100000 && $maxValue > 10000) {
-                                            $maxValue = number_format($maxValue / 1000, 2) . ' K';
-                                        } elseif ($maxValue <= 9999999 && $maxValue > 100000) {
-                                            $maxValue = number_format($maxValue / 100000, 2) . ' Lakh';
-                                        } elseif ($maxValue > 9999999) {
-                                            $maxValue = number_format($maxValue / 10000000, 2) . ' Cr';
-                                        }
+                                    if ($maxValue < 100000 && $maxValue > 10000) {
+                                        $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
+                                    }
+
+                                    if ($maxValue <= 9999999 && $maxValue > 100000) {
+                                        $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
+                                    }
+
+                                    if ($maxValue > 9999999) {
+                                        $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
                                     }
                                 @endphp
-                                <li>
-                                    Area Req
+                                <li>Area Req
                                     <div>{{ $area }}</div>
                                 </li>
                                 <li>
@@ -158,9 +158,11 @@
                                 </li>
                             </ul>
                         </div>
+
                         <!-- Business Section Start here -->
                         @include('includes.brandlanding.business_desc_video')
                         <!-- Business Section End here -->
+
                         <!-- Investment Detail Section Start here -->
                         @include('includes.brandlanding.investment_tab')
                         <!-- Investment Detail Section End here -->
@@ -176,15 +178,19 @@
                                 })(window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
                             </script>
                         </div>
+
                         <!-- Property Details Section Start here -->
                         @include('includes.brandlanding.property_tab')
                         <!-- Property Details Section End here -->
+
                         <!-- Training Details Section Start here -->
                         @include('includes.brandlanding.training_tab')
                         <!-- Training Details Section End here -->
+
                         <!-- Training Details Section Start here -->
                         @include('includes.brandlanding.others_tab')
                         <!-- Training Details Section End here -->
+
                     </div>
                     <!-- Left panel content End -->
                     <!-- Right panel Start here -->
@@ -229,13 +235,15 @@
                             <!-- Rate Action Panel End here-->
                         </div>
                         <!-- Share panel end here-->
+
                         <!-- Insta Apply section start here -->
                         @if (Auth::check() && Auth::user()->profile_type == Config('constants.ProfileType.Investor'))
+                            @if ($expIntVal == null || (Auth::user()->membership_type == 1 && $expIntVal->visibility == 0))
 
-                            @if ($expIntVal != null && ((Auth::user()->membership_type == 1 && $expIntVal->visibility == 0) || $expIntVal == null))
                                 @if (!empty($checkData['message']))
                                     {{ $checkData['message'] }}
                                 @endif
+
                                 @if ($eligibility == 1 || $checkData['abilityToApply'] == 1)
                                     <input type="button" value="Submit Your Interest" id="expbtn"
                                         class="btn btn-default submi" /></br>
@@ -254,7 +262,7 @@
                                         color: #fff;
                                     }
                                 </style>
-                                <div class="insta-apply thankscs" id="expmsg" style="display:none;">
+                                <div class="insta-apply thankscs" id="expmsg1" style="display:none;">
                                     <div class="green">
                                         <div class="bigth">Thank You!</div>
                                         <p><span class="popinfohead" id="companyContactinsta"
@@ -283,6 +291,7 @@
                                 </div>
                             @endif
                         @endif
+
                         @if (!Auth::check() || Auth::user()->profile_type == Config('constants.ProfileType.Franchisor'))
                             <div class="insta-apply" id="show-m">
                                 <div class="ttl" id="instahead">Insta Apply</div>
@@ -290,8 +299,7 @@
                                     <div class="bigth">Thank You!</div>
                                     <p>Thanks for showing your interest in {{ $franDetails->company_name }}.</p>
                                     <p> Your contact detail has been shared with the company. requested you to create
-                                        your investor profile and upgrade to directly contact the brand.
-                                    </p>
+                                        your investor profile and upgrade to directly contact the brand.</p>
                                 </div>
                                 <div id="existsMsg" style="display:none;" class="green">
                                     <div class="bigth">Thank You!</div>
@@ -303,7 +311,7 @@
                                         name="insta">
                                         <input type="hidden" name="frandetailsid" id="franId"
                                             value="{{ $franDetails->franchisor_id }}">
-                                        @csrf
+                                        {{ csrf_field() }}
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="infoname"
                                                 placeholder="Enter Name">
@@ -336,18 +344,8 @@
                                             <select class="form-control" id="state" name="infostate"
                                                 onchange="getcityinfoinsta(this.value)">
                                                 <option value>Select State for Franchise</option>
-
                                                 @php
-                                                    // Check if $stateList is already an array
-                                                    if (is_array($stateList)) {
-                                                        $stateListArray = $stateList;
-                                                    } else {
-                                                        $stateListArray = json_decode($stateList, true);
-                                                    }
-
-                                                    // Extract states and remove duplicates
-                                                    $states = array_unique(array_column($stateListArray, 'state'));
-
+                                                    $states = array_unique(array_column($stateList, 'state'));
                                                     if (count($states) > 0) {
                                                         foreach ($states as $state) {
                                                             $key = 0;
@@ -368,7 +366,6 @@
                                                         }
                                                     }
                                                 @endphp
-
                                             </select>
                                         </div>
                                         <div class="form-group">
@@ -383,6 +380,7 @@
                                         <div class="form-group">
                                             <textarea class="form-control" name="address" placeholder="Enter Address" rows="3"></textarea>
                                         </div>
+
                                         <div class="form-group">
                                             <select class="form-control" id="investment_range_gallery"
                                                 name="investment_range">
@@ -400,6 +398,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
+
                                         <div class="checkbox">
                                             <label>
                                                 <input type="checkbox" name="newsletter_sub" checked> Yes, I want to
@@ -413,16 +412,16 @@
                                                     href="{{ Config('constants.MainDomain') }}/terms"
                                                     target="_blank">Terms & Conditions</a></label>
                                         </div>
-                                        <div class="submit-btn" id="sub1" style="float: none;">
+                                        <div class="submit-btn" id="sub" style="float: none;">
                                             <input type="submit" id="btninsta" class="btn btn-default btn-red"
                                                 value="Apply Now">
                                         </div>
+
                                     </form>
                                 </div>
                                 <div class="loantxt"><a target="_blank"
                                         href="{{ Config('constants.MainDomain') }}/property-loan">Loan Against
-                                        Property </a>
-                                </div>
+                                        Property </a></div>
                                 <style type="text/css">
                                     .loantxt {
                                         border-top: 1px solid #dfdfdf;
@@ -444,10 +443,12 @@
                         @endif
                         <!-- Insta Apply section end here -->
                         <div class="clr"></div>
+
                         <div class="catleftbanner300 detailpage">
                             <!-- /1057625/FIHL/Desktop_ROS_300x250_ATF-->
                             @desktop
                                 <div id='adslot300x250_ATF' style="text-align:center;">
+
                                     <script>
                                         googletag.cmd.push(function() {
                                             googletag.display('adslot300x250_ATF');
@@ -457,13 +458,11 @@
                             @enddesktop
                             {{-- @include("includes.banners.dfp_300X600") --}}
                         </div>
-                        {{--
-                  <div class="catleftbanneryahoo300"> --}}
+                        {{-- <div class="catleftbanneryahoo300"> --}}
                         {{-- @include("includes.banners.yahoo_300X600") --}}
-                        {{--
-                  </div>
-                  --}}
+                        {{-- </div> --}}
                         {{-- --}}
+
                     </div>
                     <!-- Right panel End here -->
                 </div>
@@ -473,6 +472,7 @@
         <!-- /row-->
     </div>
 </div>
+
 <script>
     if ("{{ $checkData['message'] }}" != "") {
         alert("{{ $checkData['message'] }}");

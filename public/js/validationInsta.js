@@ -265,7 +265,7 @@ function getMobileStatusWider(mobile) {
                         $("#success-mobile-wider").show();
                     } else {
                         $("#wider-submit-button").prop("disabled", true);
-                        $("#validate-mobile-contact, #success-mobile-wider").hide();
+                        $("#validate-mobile-contact1, #success-mobile-wider").hide();
                     }
                 }
             });
