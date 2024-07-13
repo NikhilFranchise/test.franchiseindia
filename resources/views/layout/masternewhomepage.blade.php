@@ -466,7 +466,7 @@
 		@elseif(in_array($query, $centerCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfranchiseexpolucknow1')
+                    @include('includes.banners.popupfranchiseexpolucknow')
                 @endif
             @else
                 @include('includes.banners.popupfranchiseexpolucknow')
