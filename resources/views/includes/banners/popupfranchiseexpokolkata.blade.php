@@ -72,7 +72,7 @@
         width: 600px;
         padding-top:0px;
         margin: 0 auto;
-        background: url("https://www.franchiseindia.com/images/popup/franchise-expo-lucknow-footer.jpg") no-repeat center top;
+        background: url("https://www.franchiseindia.com/images/popup/franchise-expo-kolkata-footer.jpg") no-repeat center top;
     }
 
 
@@ -113,7 +113,7 @@
    cursor: pointer;
   border: none;
   margin-top: 1px;
-  background: #0a87b3;
+  background:#7a0017;
   display: block;
   padding: 8px 82px;
   color: #fff;
@@ -147,7 +147,7 @@
 
 
 .headtag { height:373px; overflow: hidden; width: 600px;
-background: url("https://www.franchiseindia.com/images/popup/franchise-expo-lucknow-header.jpg") no-repeat center top;
+background: url("https://www.franchiseindia.com/images/popup/franchise-expo-kolkata-header.jpg") no-repeat center top;
 overflow: hidden;
 
 }
@@ -177,7 +177,7 @@ overflow: hidden;
        <input id="source" name="source" type="hidden" value="Popup">   
       <input type="hidden" value="FROBOS 2024" name="event_title" id="event_title">
       <input type="hidden" value="Visit the Expo - Paid" name="tfw_interest" id="tfw_interest"> 
-<input type="hidden" value="Lucknow21stJuly2024" name="eventdays" id="eventdays">
+<input type="hidden" value="Kolkata27thJuly2024" name="eventdays" id="eventdays">
 <div class="sec">
                                       <div class="f1">
                                     </div>
@@ -254,6 +254,7 @@ overflow: hidden;
         </div>
     </div>
 </div>
+
 
 
 <script language="javascript">

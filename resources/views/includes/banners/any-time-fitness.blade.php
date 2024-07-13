@@ -1,15 +1,15 @@
 <style type="text/css">
 ::-webkit-input-placeholder { 
-     color:#000000!important;
+     color:#ffffff!important;
 }
 :-moz-placeholder { 
-    color:#000000!important;
+    color:#ffffff!important;
 }
 ::-moz-placeholder { 
-    color:#000000!important;
+    color:#ffffff!important;
 } /* For the future */
 :-ms-input-placeholder { 
-    color:#000000!important;
+    color:#ffffff!important;
 }
 input:focus {
 
@@ -48,10 +48,10 @@ input:focus {
         width: 100%;
         margin-bottom: 11px
     }
-
+select option{background: #000000;}
     .f1 {
         float: left;
-        width: 48%
+        width: 29%
     }
 
     .f3 {
@@ -59,23 +59,26 @@ input:focus {
         width: 48%
     }
 
-
-    .fi-bg-expo {
-        height:269px;
+    .model_top{
+        height:550px;
         width: 600px;
         margin: 0 auto;
-        background: url("https://www.franchiseindia.com/images/popup/fro-chennai-popup-footer.jpg") no-repeat center top;
+        background: url("https://www.franchiseindia.com/images/popup/any-time-fitness.jpg") no-repeat center top;
+    }
+
+
+    .fi-bg-expo {
+        margin: 0 auto;padding-top: 215px;
     }
 
 
     .sec .f1 .form-control,
     .sec .f3 .form-control {
-        background: transparent;
-  color: #000000 !important;
-  border-radius: 5px !important;
-  height: 40px;
-  border: 1px solid #000000 !important;
-  margin-top: 7px;
+       background: transparent;
+  color: #ffffff !important;
+  border-radius: 3px !important;
+  height: 31px;
+  border: 1px solid #aaaaaa!important;
     }
 
     .fi-expotest {
@@ -88,22 +91,23 @@ input:focus {
     }
     .fi-expotest span { color: #fff;}
 
-.expo-submitnew {
-  padding: 11px 19px;
-  background: #ed1c24 !important;
+.expo-submitnew
+{
+  padding: 6px 52px;
+  background: #d5352e;
   text-transform: uppercase;
   color: #fff;
   font-size: 14px;
-  font-family: Open Sans;
   cursor: pointer;
-  margin: 6px auto 0 0;
+  margin: 1px auto 0 0;
   border: 0;
   display: inline-block;
-  border-radius: 0px;
+  border-radius: 3px;
   font-weight: bold;
+  border: none;
 }
     .boxblk {
-        padding:9px 30px 0px 30px;
+        padding:9px 30px 0px 22px;
     }
 
     .fblk {
@@ -126,8 +130,8 @@ input:focus {
     }
 
 
-.headtag { height: 282px; overflow: hidden; width: 600px;
-background: url("https://www.franchiseindia.com/images/popup/fro-chennai-popup-header.jpg") no-repeat center top;
+.headtag { height: 284px; overflow: hidden; width: 600px;
+background: url("fro-expo-delhi-header.jpg") no-repeat center top;
 overflow: hidden;
 
 }
@@ -144,62 +148,64 @@ overflow: hidden;
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <div class="modal-body">
                 <div id="my_modal" class="model_top" style="width:600px">
-                    <div class="headtag">
-                    </div>
                     <div class="fi-bg-expo">
                         <div class="boxblk">
-                            
-        <form class="form registration-form align-center" action="https://www.franchiseindia.net/fro/chennai/register_update.php" method="post">
-         <input id="ref" name="ref" type="hidden" value="FRO-Insta-Paid">
-         <input type="hidden" value="Chennai June 2024" name="event_year" id="event_year">  
-         <input type="hidden" value="FRO 2024 Chennai" name="event_title" id="event_title">  
-         <input type="hidden" value="Chennai" name="event_city" id="event_city">       
-         <input id="src" name="source" type="hidden" value="Popup" />
-         <input id="tfw_interest" name="tfw_interest" type="hidden" value="Visit the Expo - LP Paid">    
-
-                       <div class="sec">
-                                    <div class="f1">
-<input name="txtName" type="text" class="form-control myselect" placeholder="Name" required="" style="color:#ffffff;">
-                                    </div>
-                                    <div class="f3">
-                                        <input name="txtEmail" type="email" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" class="form-control myselect" placeholder="Email" required="">
-                                    </div>
-                                </div>
+<form id="msform" action="https://www.franchiseindia.com/advertisement/feedback_express.php" name="msform1" method="post">
+<input type="hidden" value="FIHL226456" id="franchisor_id" name="franchisor_id">
+<input type="hidden" value="DOTCOM" id="source" name="source">
+<input type="hidden" value="Popup" id="source_ref" name="source_ref">
 
                                 <div class="sec">
                                     <div class="f1">
-                                        <input name="txtPhone" type="tel" placeholder="Contact No." class="form-control myselect" pattern="[789][0-9]{9}" minlength="10" maxlength="10" onkeypress="return isNumber(event)" required="">
+<input name="txtName" type="text" class="form-control myselect" placeholder="Name" required="" style="color:#ffffff;">
                                     </div>
-                                    <div class="f3">
-                                   
+                                </div>
+
+                                    <div class="sec">
+                                        <div class="f1">
+                                        <input name="txtEmail" type="email" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" class="form-control myselect" placeholder="Email" required="">
+                                    </div>
+                                    </div>
+
+                                <div class="sec">
+                                    <div class="f1">
+                                        <input name="txtMobile" type="tel" placeholder="Contact No." class="form-control myselect" pattern="[789][0-9]{9}" minlength="10" maxlength="10" onkeypress="return isNumber(event)" required="">
+                                    </div>
+                                </div>
+
+                                    <div class="sec">
+                                        <div class="f1">
                                         <select name="txtState" onchange="getcitypopup(this)" class="form-control myselect" id="txtState" required="">
                                               <!-- <option value="new delhi">new delhi</option> -->
-                                            <option value="" data-id="">Select State</option>
+                                            <option value="" data-id="">State</option>
                                             @foreach($states as $index => $value)
                                                 <option value="{{ $value }}" data-id="{{ $index }}">{!! $value !!}</option>
                                             @endforeach 
                                         </select>
                                     </div>
-                                </div>
+                                    </div>
 
                                 <div class="sec">
                                     <div class="f1">
                                          <select name="txtCity" class="form-control myselect" id="popupcity" required="">
-                                            <option value="">Select City</option>
+                                            <option value="">City</option>
                                             <!-- <option value="delhi">delhi</option> -->
                                         </select>
                                     </div>
-                                    <div class="f3">
-                  <select type="text" placeholder="Select event date" id="eventdays" name="eventdays" class="form-control myselectclass3" accesskey="" onchange="checkNumbers();">
-                     <option value="Saturday29thJune" selected="selected">Saturday, 29th June</option>
-                            <option value="Sunday30thJune">Sunday, 30th June</option>
-                            <option value="Bothdays2930June">Bothdays, 29th-30th June</option>
-                  </select>
-                                    </div>
                                 </div>
 
-                            <div class="sec" style="text-align:center">
-                                    <input type="submit" value="Register To Attend" name="btnSubmitReg" class="expo-submitnew">
+
+                                 <div class="sec">
+                                        <div class="f1">
+                                        <input name="txtPin" inputmode="numeric" oninput="this.value = this.value.replace(/\D+/g, '')" type="text" class="form-control myselect" placeholder="Pincode" required="" maxlength="6">
+                                    </div>
+                                    </div>
+
+                                
+                                <div class="sec" style="text-align:center">
+                                    <div class="f1">
+                                    <input type="submit" value="Submit" name="btnSubmitReg" class="expo-submitnew">
+                                </div>
                                 </div>
                             </form>
                         </div>
@@ -210,6 +216,12 @@ overflow: hidden;
         </div>
     </div>
 </div>
+
+
+
+
+
+
 
 <script language="javascript">
     function checkNumbers(){var amt=500;var eventdays=$("#eventdays :selected").val();var visitVal=$("#txtDelegates :selected").val();if(eventdays=="Saturday28thAugust")

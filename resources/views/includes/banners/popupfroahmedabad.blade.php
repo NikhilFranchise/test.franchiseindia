@@ -11,11 +11,11 @@
 :-ms-input-placeholder { 
     color:#000000!important;
 }
-input:focus {
+/*input:focus {
 
     background-color: transparent!important;
 
-}
+}*/
     #myModal .modal-body {
         padding: 0!important
     }
@@ -61,10 +61,10 @@ input:focus {
 
 
     .fi-bg-expo {
-        height:269px;
+        height:260px;
         width: 600px;
         margin: 0 auto;
-        background: url("https://www.franchiseindia.com/images/popup/fro-chennai-popup-footer.jpg") no-repeat center top;
+        background: url("https://www.franchiseindia.com/images/popup/fro-ahmedabad-popup-footer.jpg") no-repeat center top;
     }
 
 
@@ -126,8 +126,8 @@ input:focus {
     }
 
 
-.headtag { height: 282px; overflow: hidden; width: 600px;
-background: url("https://www.franchiseindia.com/images/popup/fro-chennai-popup-header.jpg") no-repeat center top;
+.headtag { height: 289px; overflow: hidden; width: 600px;
+background: url("https://www.franchiseindia.com/images/popup/fro-ahmedabad-popup-header.jpg") no-repeat center top;
 overflow: hidden;
 
 }
@@ -148,12 +148,11 @@ overflow: hidden;
                     </div>
                     <div class="fi-bg-expo">
                         <div class="boxblk">
-                            
-        <form class="form registration-form align-center" action="https://www.franchiseindia.net/fro/chennai/register_update.php" method="post">
+        <form class="form registration-form align-center" action="https://www.franchiseindia.net/fro/ahmedabad/register_update.php" method="post">
          <input id="ref" name="ref" type="hidden" value="FRO-Insta-Paid">
-         <input type="hidden" value="Chennai June 2024" name="event_year" id="event_year">  
-         <input type="hidden" value="FRO 2024 Chennai" name="event_title" id="event_title">  
-         <input type="hidden" value="Chennai" name="event_city" id="event_city">       
+         <input type="hidden" value="Ahmedabad September 2024" name="event_year" id="event_year">  
+         <input type="hidden" value="FRO 2024 Ahmedabad" name="event_title" id="event_title">  
+         <input type="hidden" value="Ahmedabad" name="event_city" id="event_city">       
          <input id="src" name="source" type="hidden" value="Popup" />
          <input id="tfw_interest" name="tfw_interest" type="hidden" value="Visit the Expo - LP Paid">    
 
@@ -191,9 +190,9 @@ overflow: hidden;
                                     </div>
                                     <div class="f3">
                   <select type="text" placeholder="Select event date" id="eventdays" name="eventdays" class="form-control myselectclass3" accesskey="" onchange="checkNumbers();">
-                     <option value="Saturday29thJune" selected="selected">Saturday, 29th June</option>
-                            <option value="Sunday30thJune">Sunday, 30th June</option>
-                            <option value="Bothdays2930June">Bothdays, 29th-30th June</option>
+                     <option value="Saturday21stSeptember" selected="selected">Saturday, 21st September</option>
+                            <option value="Sunday22ndSeptember">Sunday, 22nd September</option>
+                            <option value="Bothdays2122September">Bothdays, 21st-22nd September</option>
                   </select>
                                     </div>
                                 </div>
@@ -210,6 +209,7 @@ overflow: hidden;
         </div>
     </div>
 </div>
+
 
 <script language="javascript">
     function checkNumbers(){var amt=500;var eventdays=$("#eventdays :selected").val();var visitVal=$("#txtDelegates :selected").val();if(eventdays=="Saturday28thAugust")
