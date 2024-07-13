@@ -1064,19 +1064,19 @@ public function listingLocation()
             $category = $seoCategoriesm[$lastIntegers];
             // dd($category);
             $newUrl = '/business-opportunities/' . $category . '.'.'m' . $lastIntegers;
-            return redirect($newUrl)->permanent();;
+            return redirect($newUrl)->permanent();
          
         }
         else if (array_key_exists($lastIntegers, $seoCategoriessc)) {
             $category = $seoCategoriessc[$lastIntegers];
             $newUrl = '/business-opportunities/' . $category . '.'.'sc' . $lastIntegers;
-            return redirect($newUrl)->permanent();;
+            return redirect($newUrl)->permanent();
         }
         else if (array_key_exists($lastIntegers, $seoCategoriesssc)) {
             $category = $seoCategoriesssc[$lastIntegers];
             // dd($category);
             $newUrl = '/business-opportunities/' . $category . '.'.'ssc' . $lastIntegers;
-            return redirect($newUrl)->permanent();;
+            return redirect($newUrl,)->permanent();
         }
         // else {
         //             $defaultUrl = 'business-opportunities/all/all';
@@ -1697,7 +1697,7 @@ public function listingLocation()
                     $newCatUrl = '/business-opportunities/'.$configCatUrl . '.' . $allIntegers;
                     if ($newCatUrl != $oldCaturl ) {
                         // dd($newCatUrl);
-                        return redirect($newCatUrl)->permanent();;
+                        return redirect($newCatUrl)->permanent();
                     }
                 }
             }        
@@ -1722,7 +1722,7 @@ public function listingLocation()
                     $newCatUrl = '/business-opportunities/'.$configCatUrl . '.' . $allIntegers;
                     if ($newCatUrl != $oldCaturl ) {
                         // dd($newCatUrl);
-                        return redirect($newCatUrl)->permanent();;
+                        return redirect($newCatUrl)->permanent();
                     }
                 }
             }        
@@ -1748,7 +1748,7 @@ public function listingLocation()
                     $newCatUrl = '/business-opportunities/'.$configCatUrl . '.' . $allIntegers;
                     if ($newCatUrl != $oldCaturl ) {
                         // dd($newCatUrl);
-                        return redirect($newCatUrl)->permanent();;
+                        return redirect($newCatUrl)->permanent();
                     }
                 }
             }        
