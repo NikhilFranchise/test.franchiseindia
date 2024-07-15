@@ -97,7 +97,7 @@ class LoginController extends Controller
 
         $userData = User::query()->where('email', $email)->first();
 
-        if (count($userData) > 0) {
+        if ($userData->count() > 0) {
 
             $check = $this->checkProfile($userData);
 
