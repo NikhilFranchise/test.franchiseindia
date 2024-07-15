@@ -269,7 +269,7 @@
                                                     class="form-control
                                           form-control-search-main-custom"
                                                     id="minAmount" required="required"
-                                                    onchange="selectMax2(this.value)">
+                                                    onchange="selectMax1(this.value)">
                                                     <option value="" hidden>Select Min Investment</option>
                                                     @foreach (Config('constants.investRangeInWordsSingle') as $index => $value)
                                                         <option
@@ -291,7 +291,7 @@
                                                 <select name="max_cost"
                                                     class="form-control
                                           form-control-search-main-custom"
-                                                    id="maxAmount2">
+                                                    id="maxAmount1">
                                                     <option value="0" hidden> Select Max Investment </option>
 
                                                 </select>
@@ -367,16 +367,16 @@
         $('#registeractiveopen').addClass("active");
     });
 
-    function selectMax2(selectmaxheaderval) {
+    function selectMax1(selectmaxheaderval) {
         // console.log(selectmaxheaderval);
         let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
-        let maxAmount = $('#maxAmount2');
+        let maxAmount = $('#maxAmount1');
         let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
         maxAmount.html("");
         selectmaxheaderval = parseInt(selectmaxheaderval);
         $.each(amountConfigArr, function(key, value) {
             if (key > selectmaxheaderval)
-                $('#maxAmount2').append($("<option></option>").attr({
+                $('#maxAmount1').append($("<option></option>").attr({
                     "value": key,
                     "slug": getSlugAmount[key]['min']
                 }).text(value));
@@ -467,9 +467,9 @@
     // Reset the form
     form.reset();
 
-    // Reset maxAmount2 select element to its default state
-    let maxAmount2 = document.getElementById('maxAmount2');
-    maxAmount2.innerHTML = '<option value="" hidden>Select Max Investment</option>';
+    // Reset maxAmount1 select element to its default state
+    let maxAmount1 = document.getElementById('maxAmount1');
+    maxAmount1.innerHTML = '<option value="" hidden>Select Max Investment</option>';
 }
     /*]]>*/
 </script>
