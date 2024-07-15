@@ -130,6 +130,7 @@
                     <div class="frm-pnl">
                         <form class="form-horizontal" method="POST"
                             action="{{ Config('constants.MainDomain') }}/password/email">
+                            @csrf
                             <div class="input-group">
                                 <span class="input-group-addon">
                                     <div class="usersprite"></div>
