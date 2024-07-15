@@ -566,7 +566,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>29</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/">
+    <td><a target="_blank" href="https://www.dealerindia.com">
         <img src="{{ url('images/top100/brands/loom.gif') }}" alt="Loom Solar logo">Loom Solar</a></td>
     <td>Dealers & Destributors</td>
     <td>Rs. 5 lac - 10 lac</td>   
@@ -1921,7 +1921,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>3</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/">
+    <td><a target="_blank" href="https://www.dealerindia.com">
         <img src="{{ url('images/top100/brands/loom.gif') }} " alt="Loom Solar logo">Loom Solar</a></td>
     <td>Dealers & Destributors</td>
     <td>Rs. 5 lac - 10 lac</td>   
@@ -6426,7 +6426,7 @@ a.desklink{display: none;}
 
 <tr>
     <td>35</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/hatsun.png') }}" alt="Hatsun Agro Products">Hatsun Agro Products</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com"><img src="{{ url('images/top100/brands/hatsun.png') }}" alt="Hatsun Agro Products">Hatsun Agro Products</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 10 Cr. onwards</td>   
     <td>
@@ -6440,7 +6440,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>36</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/lenevo.gif') }}" alt="Lenovo">Lenovo</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com"><img src="{{ url('images/top100/brands/lenevo.gif') }}" alt="Lenovo">Lenovo</a></td>
     <td>Dealer & Distributors</td>
     <td>N/A</td>   
     <td>
@@ -6454,7 +6454,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>37</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 50 lac - 1 Cr.</td>   
     <td>
@@ -6468,7 +6468,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>38</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 10 lac - 20 lac</td>   
     <td>
@@ -7810,7 +7810,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>1</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/hatsun.png') }}" alt="Hatsun Agro Products">Hatsun Agro Products</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com"><img src="{{ url('images/top100/brands/hatsun.png') }}" alt="Hatsun Agro Products">Hatsun Agro Products</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 10 Cr. onwards</td>   
     <td>
@@ -7824,7 +7824,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>2</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/lenevo.gif') }}" alt="Lenovo">Lenovo</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com"><img src="{{ url('images/top100/brands/lenevo.gif') }}" alt="Lenovo">Lenovo</a></td>
     <td>Dealer & Distributors</td>
     <td>N/A</td>   
     <td>
@@ -7838,7 +7838,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>3</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 50 lac - 1 Cr.</td>   
     <td>
@@ -7852,7 +7852,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>4</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 10 lac - 20 lac</td>   
     <td>
@@ -9213,7 +9213,7 @@ a.desklink{display: none;}
 
 <tr>
     <td>28</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 10 lac - 20 lac</td>   
     <td>
@@ -9227,7 +9227,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>29</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/em.gif') }}" alt="Marshalls, India's No.1 Wallcoverings">Marshalls, India's No.1 Wallcoverings</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com"><img src="{{ url('images/top100/brands/em.gif') }}" alt="Marshalls, India's No.1 Wallcoverings">Marshalls, India's No.1 Wallcoverings</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 25 lac - 30 lac</td>   
     <td>
@@ -10581,7 +10581,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>1</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 10 lac - 20 lac</td>   
     <td>
@@ -10595,7 +10595,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>2</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/em.gif') }}" alt="Marshalls, India's No.1 Wallcoverings">Marshalls, India's No.1 Wallcoverings</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com"><img src="{{ url('images/top100/brands/em.gif') }}" alt="Marshalls, India's No.1 Wallcoverings">Marshalls, India's No.1 Wallcoverings</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 25 lac - 30 lac</td>   
     <td>
@@ -12110,7 +12110,7 @@ a.desklink{display: none;}
         </tr>
         <tr>
             <td>31</td>
-            <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Apollo-Tyres.gif" alt="APOLLO TYRES">APOLLO TYRES</a></td>
+            <td><a target="_blank" href="https://www.dealerindia.com"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Apollo-Tyres.gif" alt="APOLLO TYRES">APOLLO TYRES</a></td>
             <td>Dealer & Distributors</td>
             <td>Rs. 50 Lac - 1 Cr.</td>   
             <td>
@@ -12124,7 +12124,7 @@ a.desklink{display: none;}
         </tr>
         <tr>
             <td>32</td>
-            <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/KURL-ON.gif" alt="KURL-ON">KURL-ON</a></td>
+            <td><a target="_blank" href="https://www.dealerindia.com"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/KURL-ON.gif" alt="KURL-ON">KURL-ON</a></td>
             <td>Dealer & Distributors</td>
             <td>N/A</td>   
             <td>
@@ -12138,7 +12138,7 @@ a.desklink{display: none;}
         </tr>
         <tr>
             <td>33</td>
-            <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
+            <td><a target="_blank" href="https://www.dealerindia.com"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
             <td>Dealer & Distributors</td>
             <td>Rs. 50 lac - 1 Cr.</td>   
             <td>
@@ -12152,7 +12152,7 @@ a.desklink{display: none;}
         </tr>
         <tr>
             <td>34</td>
-            <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
+            <td><a target="_blank" href="https://www.dealerindia.com"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
             <td>Dealer & Distributors</td>
             <td>Rs. 10 lac - 20 lac</td>   
             <td>
@@ -12180,7 +12180,7 @@ a.desklink{display: none;}
         </tr>
         <tr>
             <td>36</td>
-            <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Cube-Elevators-Logo.gif" alt="CUBE ELEVATORS">CUBE ELEVATORS</a></td>
+            <td><a target="_blank" href="https://www.dealerindia.com"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Cube-Elevators-Logo.gif" alt="CUBE ELEVATORS">CUBE ELEVATORS</a></td>
             <td>Dealer & Distributors</td>
             <td>N/A</td>   
             <td>
@@ -13587,7 +13587,7 @@ a.desklink{display: none;}
     </tr>
     <tr>
         <td>1</td>
-        <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Apollo-Tyres.gif" alt="APOLLO TYRES">APOLLO TYRES</a></td>
+        <td><a target="_blank" href="https://www.dealerindia.com"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Apollo-Tyres.gif" alt="APOLLO TYRES">APOLLO TYRES</a></td>
         <td>Dealer & Distributors</td>
         <td>Rs. 50 Lac - 1 Cr.</td>   
         <td>
@@ -13601,7 +13601,7 @@ a.desklink{display: none;}
     </tr>
     <tr>
         <td>2</td>
-        <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/KURL-ON.gif" alt="KURL-ON">KURL-ON</a></td>
+        <td><a target="_blank" href="https://www.dealerindia.com"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/KURL-ON.gif" alt="KURL-ON">KURL-ON</a></td>
         <td>Dealer & Distributors</td>
         <td>N/A</td>   
         <td>
@@ -13615,7 +13615,7 @@ a.desklink{display: none;}
     </tr>
     <tr>
         <td>3</td>
-        <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
+        <td><a target="_blank" href="https://www.dealerindia.com"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
         <td>Dealer & Distributors</td>
         <td>Rs. 50 lac - 1 Cr.</td>   
         <td>
@@ -13629,7 +13629,7 @@ a.desklink{display: none;}
     </tr>
     <tr>
         <td>4</td>
-        <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
+        <td><a target="_blank" href="https://www.dealerindia.com"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
         <td>Dealer & Distributors</td>
         <td>Rs. 10 lac - 20 lac</td>   
         <td>
@@ -13657,7 +13657,7 @@ a.desklink{display: none;}
     </tr>
     <tr>
         <td>6</td>
-        <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Cube-Elevators-Logo.gif" alt="CUBE ELEVATORS">CUBE ELEVATORS</a></td>
+        <td><a target="_blank" href="https://www.dealerindia.com"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Cube-Elevators-Logo.gif" alt="CUBE ELEVATORS">CUBE ELEVATORS</a></td>
         <td>Dealer & Distributors</td>
         <td>N/A</td>   
         <td>
