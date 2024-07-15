@@ -980,3 +980,8 @@ Route::middleware('TrailingSlashRedirect')->group(function () {
         Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
     });
 });
+Route::get('categoryall',       [StaticPageController::class,'categoryAll']);
+
+
+
+
