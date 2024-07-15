@@ -9,13 +9,13 @@
             <div class="col-md-7">
                 <ul class="fihl-footer-bottom-links">
                     <li><a href="/">Home</a></li>
-                    <li><a href="about" target="_blank">About Us</a></li>
-                    <li><a href="contact" target="_blank">Contact Us</a></li>
-                    <li><a href="feedback" target="_blank">Feedback</a></li>
-                    <li><a href="sitemap/brands">Brands</a></li>
+                    <li><a href="https://www.franchiseindia.com/about" target="_blank">About Us</a></li>
+                    <li><a href="https://www.franchiseindia.com/contact" target="_blank">Contact Us</a></li>
+                    <li><a href="https://www.franchiseindia.com/feedback" target="_blank">Feedback</a></li>
+                    <li><a href="https://www.franchiseindia.com/sitemap/brands">Brands</a></li>
                     <li><a href="https://www.opportunityindia.com/" target="_blank">News</a></li>
-                    <li><a href="testimonials" target="_blank">Testimonials</a></li>
-                    <li><a href="terms" target="_blank">Terms</a></li>
+                    <li><a href="https://www.franchiseindia.com/testimonials" target="_blank">Testimonials</a></li>
+                    <li><a href="https://www.franchiseindia.com/terms" target="_blank">Terms</a></li>
                 </ul>
             </div>
         </div>
