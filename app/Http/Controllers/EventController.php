@@ -37,7 +37,7 @@ class EventController extends Controller
 		
 		 return view('static.event-new')->with(compact('events'));
 	   
-        /*$ch = curl_init('https://melete.franchiseindia.com/api/franchise-home-videos-and-events');
+        /*$ch = curl_init('https://uat.melete.franchiseindia.com/api/franchise-home-videos-and-events');
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch,CURLOPT_FOLLOWLOCATION,TRUE);
