@@ -24,7 +24,7 @@
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
 @endsection --}}
 @section('hindibrandUrls')
-    <link href="{{ str_replace('/hi/',  $hindiUrl) }}" >
+    <link href="{{ str_replace('/hi/', ' ', $hindiUrl) }}" >
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
 @endsection
