@@ -203,12 +203,20 @@ class GalleryController extends Controller
                                    ->get();
 
 
+        // $moreArticles = ContentList::where('status', 1)
+        //                            ->where('content_id', '<>', $likeContents->pluck('content_id'))
+        //                            ->orderByRaw("RAND()")
+        //                            ->where('site_type', 'ga')
+        //                            ->take(10)
+        //                            ->get();
+
         $moreArticles = ContentList::where('status', 1)
-                                   ->where('content_id', '<>', $likeContents->pluck('content_id'))
-                                   ->orderByRaw("RAND()")
-                                   ->where('site_type', 'ga')
-                                   ->take(10)
-                                   ->get();
+                        ->whereNotIn('content_id', $likeContents->pluck('content_id')->toArray())
+                        ->where('site_type', 'ga')
+                        ->inRandomOrder()
+                        ->take(10)
+                        ->get();
+
 
 
         $i = 0;
