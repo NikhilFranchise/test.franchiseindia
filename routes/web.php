@@ -981,7 +981,4 @@ Route::middleware('TrailingSlashRedirect')->group(function () {
     });
 });
 Route::get('categoryall',       [StaticPageController::class,'categoryAll']);
-
-
-
-
+Route::get('search',                                 function() { return view('site.google-search-result');});
