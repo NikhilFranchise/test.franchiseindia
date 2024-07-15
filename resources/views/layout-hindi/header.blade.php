@@ -42,14 +42,15 @@
     $states = Config('location.stateArr');
     asort($states);
 // @dd($states);
-    if (isset($loc)) {
-        // @dd($loc[0]);
-        if (!empty($loc[0])) {
+    if (isset($loc)  && isset($loc[0])) {
+     $locValue = $loc[0];
+            if (!empty($locValue) && array_key_exists($locValue, Config('location.cityArr'))) {
             $cities = Config('location.cityArr.'.$loc[0]);
-            @dd($cities);
+            // @dd($cities);
             asort($cities);
         }
     }
+
 
     $loginUrl = Config('constants.MainDomain') . '/loginform';
     $loginName = 'लॉगिन';
