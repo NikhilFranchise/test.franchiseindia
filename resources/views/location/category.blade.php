@@ -18,7 +18,7 @@
 @section('englishUrl', $engUrl)
 
 @section('hindibrandUrls')
-    <link href="{{$hindiUrl}}" rel="amphtml">
+    {{-- <link href="{{$hindiUrl}}" rel="amphtml"> --}}
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
 @endsection-->

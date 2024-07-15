@@ -566,7 +566,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>29</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/">
+    <td><a target="_blank" href="https://www.dealerindia.com/">
         <img src="{{ url('images/top100/brands/loom.gif') }}" alt="Loom Solar logo">Loom Solar</a></td>
     <td>Dealers & Destributors</td>
     <td>Rs. 5 lac - 10 lac</td>   
@@ -1921,7 +1921,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>3</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/">
+    <td><a target="_blank" href="https://www.dealerindia.com/">
         <img src="{{ url('images/top100/brands/loom.gif') }} " alt="Loom Solar logo">Loom Solar</a></td>
     <td>Dealers & Destributors</td>
     <td>Rs. 5 lac - 10 lac</td>   
@@ -3543,22 +3543,22 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>35</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/a2z-medicals-su-3402"><img src="https://img.franchiseindia.com/brands/logo/808682587.jpg" alt="A2Z Medicals & Surgicals"> A2Z Medicals & Surgicals</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/a2z-medicals-su-3402"><img src="https://img.franchiseindia.com/brands/logo/808682587.jpg" alt="A2Z Medicals & Surgicals"> A2Z Medicals & Surgicals</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 5 lac - 10 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/pcd-pharma" class="desklink">View more</a>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/pcd-pharma" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
+        <a target="_blank" href="https://www.dealerindia.com/dir/pcd-pharma" class="desklink">View more</a>
+        <a target="_blank" href="https://www.dealerindia.com/dir/pcd-pharma" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
     </td>
 </tr>
 <tr>
     <td>36</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/enggific-engineering-scientific-29320102"><img src="https://img.franchiseindia.com/brands/logo/682998394.jpg" alt=" ENGGIFIC Engineering & Scientific"> ENGGIFIC Engineering & Scientific</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/enggific-engineering-scientific-29320102"><img src="https://img.franchiseindia.com/brands/logo/682998394.jpg" alt=" ENGGIFIC Engineering & Scientific"> ENGGIFIC Engineering & Scientific</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 5 lac - 7 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/laboratory-equipments-instruments" class="desklink">View more</a>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/laboratory-equipments-instruments" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
+        <a target="_blank" href="https://www.dealerindia.com/dir/laboratory-equipments-instruments" class="desklink">View more</a>
+        <a target="_blank" href="https://www.dealerindia.com/dir/laboratory-equipments-instruments" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
 
     </td>
 </tr>
@@ -3568,18 +3568,18 @@ a.desklink{display: none;}
     <td>Dealer & Distributors</td>
     <td>Rs. 90 Lac - 1.5 Cr.</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/oil-lubricants" class="desklink">View more</a>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/oil-lubricants" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}" alt=""></a>
+        <a target="_blank" href="https://www.dealerindia.com/dir/oil-lubricants" class="desklink">View more</a>
+        <a target="_blank" href="https://www.dealerindia.com/dir/oil-lubricants" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}" alt=""></a>
     </td>
 </tr>
 <tr>
     <td>38</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/skippi-ice-pops-29320012"><img src="https://img.franchiseindia.com/brands/logo/343549484.jpg" alt="Skippi Icepops"> Skippi Icepops</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/skippi-ice-pops-29320012"><img src="https://img.franchiseindia.com/brands/logo/343549484.jpg" alt="Skippi Icepops"> Skippi Icepops</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 50 K - 2 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/sweets-deserts" class="desklink">View more</a>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/sweets-deserts" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}" alt=""></a>
+        <a target="_blank" href="https://www.dealerindia.com/dir/sweets-deserts" class="desklink">View more</a>
+        <a target="_blank" href="https://www.dealerindia.com/dir/sweets-deserts" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}" alt=""></a>
  
     </td>
 </tr>
@@ -4003,14 +4003,14 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>69</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/bikanervala-foo-4400"><img src="https://img.franchiseindia.com/brands/logo/440510772.gif" alt="Bikanervala Foods Pvt Ltd"> Bikanervala Foods Pvt Ltd</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/bikanervala-foo-4400"><img src="https://img.franchiseindia.com/brands/logo/440510772.gif" alt="Bikanervala Foods Pvt Ltd"> Bikanervala Foods Pvt Ltd</a></td>
     <td>Food and Beverage</td>
     <td>Rs. 2 Lac - 5 Lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="desklink">
             View more
         </a>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="moblink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="moblink">
           <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>    
     </td>
@@ -4944,23 +4944,23 @@ a.desklink{display: none;}
 
 <tr>
     <td>1</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/a2z-medicals-su-3402"><img src="https://img.franchiseindia.com/brands/logo/808682587.jpg" alt="A2Z Medicals & Surgicals"> A2Z Medicals & Surgicals</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/a2z-medicals-su-3402"><img src="https://img.franchiseindia.com/brands/logo/808682587.jpg" alt="A2Z Medicals & Surgicals"> A2Z Medicals & Surgicals</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 5 lac - 10 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/pcd-pharma" class="desklink">View more</a>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/pcd-pharma" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
+        <a target="_blank" href="https://www.dealerindia.com/dir/pcd-pharma" class="desklink">View more</a>
+        <a target="_blank" href="https://www.dealerindia.com/dir/pcd-pharma" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
 
     </td>
 </tr>
 <tr>
     <td>2</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/enggific-engineering-scientific-29320102"><img src="https://img.franchiseindia.com/brands/logo/682998394.jpg" alt=" ENGGIFIC Engineering & Scientific"> ENGGIFIC Engineering & Scientific</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/enggific-engineering-scientific-29320102"><img src="https://img.franchiseindia.com/brands/logo/682998394.jpg" alt=" ENGGIFIC Engineering & Scientific"> ENGGIFIC Engineering & Scientific</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 5 lac - 7 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/laboratory-equipments-instruments" class="desklink">View more</a>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/laboratory-equipments-instruments" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>        
+        <a target="_blank" href="https://www.dealerindia.com/dir/laboratory-equipments-instruments" class="desklink">View more</a>
+        <a target="_blank" href="https://www.dealerindia.com/dir/laboratory-equipments-instruments" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>        
 
     </td>
 </tr>
@@ -4969,19 +4969,19 @@ a.desklink{display: none;}
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/purefuel-energy.66167"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/purefuel-energy_1.jpg" alt="Purefuel Energy"> Purefuel Energy</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 90 Lac - 1.5 Cr.</td>   
-    <td>    <a target="_blank" href="https://dealer.franchiseindia.com/dir/oil-lubricants" class="desklink">View more</a>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/oil-lubricants" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a> 
+    <td>    <a target="_blank" href="https://www.dealerindia.com/dir/oil-lubricants" class="desklink">View more</a>
+        <a target="_blank" href="https://www.dealerindia.com/dir/oil-lubricants" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a> 
 
     </td>
 </tr>
 <tr>
     <td>4</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/skippi-ice-pops-29320012"><img src="https://img.franchiseindia.com/brands/logo/343549484.jpg" alt="Skippi Icepops"> Skippi Icepops</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/skippi-ice-pops-29320012"><img src="https://img.franchiseindia.com/brands/logo/343549484.jpg" alt="Skippi Icepops"> Skippi Icepops</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 50 K - 2 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/sweets-deserts" class="desklink">View more</a>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/sweets-deserts" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a> 
+        <a target="_blank" href="https://www.dealerindia.com/dir/sweets-deserts" class="desklink">View more</a>
+        <a target="_blank" href="https://www.dealerindia.com/dir/sweets-deserts" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a> 
     </td>
 </tr>
 
@@ -5455,14 +5455,14 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>4</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/bikanervala-foo-4400"><img src="https://img.franchiseindia.com/brands/logo/440510772.gif" alt="Bikanervala Foods Pvt Ltd"> Bikanervala Foods Pvt Ltd</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/bikanervala-foo-4400"><img src="https://img.franchiseindia.com/brands/logo/440510772.gif" alt="Bikanervala Foods Pvt Ltd"> Bikanervala Foods Pvt Ltd</a></td>
     <td>Food and Beverage</td>
     <td>Rs. 2 Lac - 5 Lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="desklink">
             View more
         </a>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="moblink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="moblink">
           <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>    
     </td>
@@ -6426,70 +6426,70 @@ a.desklink{display: none;}
 
 <tr>
     <td>35</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/hatsun.png') }}" alt="Hatsun Agro Products">Hatsun Agro Products</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/"><img src="{{ url('images/top100/brands/hatsun.png') }}" alt="Hatsun Agro Products">Hatsun Agro Products</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 10 Cr. onwards</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/milk-dairy-products" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/milk-dairy-products" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/milk-dairy-products" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/milk-dairy-products" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
     </td>
 </tr>
 <tr>
     <td>36</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/lenevo.gif') }}" alt="Lenovo">Lenovo</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/"><img src="{{ url('images/top100/brands/lenevo.gif') }}" alt="Lenovo">Lenovo</a></td>
     <td>Dealer & Distributors</td>
     <td>N/A</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/computer-parts-accessories" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/computer-parts-accessories" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/computer-parts-accessories" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/computer-parts-accessories" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
     </td>
 </tr>
 <tr>
     <td>37</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 50 lac - 1 Cr.</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/food-processing-plants-machinery" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/food-processing-plants-machinery" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/food-processing-plants-machinery" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/food-processing-plants-machinery" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
     </td>
 </tr>
 <tr>
     <td>38</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 10 lac - 20 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/electronic-products-components" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/electronic-products-components" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/electronic-products-components" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/electronic-products-components" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
     </td>
 </tr>
 <tr>
     <td>39</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/waari-solar-29320401"><img src="https://img.franchiseindia.com/brands/logo/1938180466.jpg" alt="Waaree Solar">Waaree Solar</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/waari-solar-29320401"><img src="https://img.franchiseindia.com/brands/logo/1938180466.jpg" alt="Waaree Solar">Waaree Solar</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 50 K to 1 lac</td>   
     <td>
-         <a target="_blank" href="https://dealer.franchiseindia.com/dir/solar-renewable-energy-products-components" class="desklink">
+         <a target="_blank" href="https://www.dealerindia.com/dir/solar-renewable-energy-products-components" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/solar-renewable-energy-products-components" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/solar-renewable-energy-products-components" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
     </td>
@@ -6857,14 +6857,14 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>66</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/bikanervala-foo-4400"><img src="https://img.franchiseindia.com/brands/logo/440510772.gif" alt="Bikanervala Foods Pvt Ltd">Bikanervala Foods Pvt Ltd</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/bikanervala-foo-4400"><img src="https://img.franchiseindia.com/brands/logo/440510772.gif" alt="Bikanervala Foods Pvt Ltd">Bikanervala Foods Pvt Ltd</a></td>
     <td>Food and Beverage</td>
     <td>Rs. 2 Lac - 5 Lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="desklink">
             View more
         </a>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="moblink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="moblink">
           <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>    
     </td>
@@ -7300,7 +7300,7 @@ a.desklink{display: none;}
 
 <tr>
     <td>100</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/carbon-antidote-5488"><img src="https://img.franchiseindia.com/brands/logo/1474696837.gif" alt="FURTURE DIZICARE ENTERPRISES">FURTURE DIZICARE ENTERPRISES</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/carbon-antidote-5488"><img src="https://img.franchiseindia.com/brands/logo/1474696837.gif" alt="FURTURE DIZICARE ENTERPRISES">FURTURE DIZICARE ENTERPRISES</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 2 lac - 5 lac</td>   
     <td>
@@ -7810,77 +7810,77 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>1</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/hatsun.png') }}" alt="Hatsun Agro Products">Hatsun Agro Products</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/"><img src="{{ url('images/top100/brands/hatsun.png') }}" alt="Hatsun Agro Products">Hatsun Agro Products</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 10 Cr. onwards</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/milk-dairy-products" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/milk-dairy-products" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/milk-dairy-products" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/milk-dairy-products" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
     </td>
 </tr>
 <tr>
     <td>2</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/lenevo.gif') }}" alt="Lenovo">Lenovo</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/"><img src="{{ url('images/top100/brands/lenevo.gif') }}" alt="Lenovo">Lenovo</a></td>
     <td>Dealer & Distributors</td>
     <td>N/A</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/computer-parts-accessories" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/computer-parts-accessories" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/computer-parts-accessories" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/computer-parts-accessories" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
     </td>
 </tr>
 <tr>
     <td>3</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 50 lac - 1 Cr.</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/food-processing-plants-machinery" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/food-processing-plants-machinery" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/food-processing-plants-machinery" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/food-processing-plants-machinery" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
     </td>
 </tr>
 <tr>
     <td>4</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 10 lac - 20 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/electronic-products-components" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/electronic-products-components" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/electronic-products-components" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/electronic-products-components" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
     </td>
 </tr>
 <tr>
     <td>5</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/waari-solar-29320401"><img src="https://img.franchiseindia.com/brands/logo/1938180466.jpg" alt="Waaree Solar">Waaree Solar</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/waari-solar-29320401"><img src="https://img.franchiseindia.com/brands/logo/1938180466.jpg" alt="Waaree Solar">Waaree Solar</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 50 K to 1 lac</td>   
     <td>
-         <a target="_blank" href="https://dealer.franchiseindia.com/dir/solar-renewable-energy-products-components" class="desklink">
+         <a target="_blank" href="https://www.dealerindia.com/dir/solar-renewable-energy-products-components" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/solar-renewable-energy-products-components" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/solar-renewable-energy-products-components" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
     </td>
 </tr>
 <tr>
     <td>6</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/carbon-antidote-5488"><img src="https://img.franchiseindia.com/brands/logo/1474696837.gif" alt="FURTURE DIZICARE ENTERPRISES">FURTURE DIZICARE ENTERPRISES</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/carbon-antidote-5488"><img src="https://img.franchiseindia.com/brands/logo/1474696837.gif" alt="FURTURE DIZICARE ENTERPRISES">FURTURE DIZICARE ENTERPRISES</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 2 lac - 5 lac</td>   
     <td>
@@ -8270,10 +8270,10 @@ a.desklink{display: none;}
     <td>Food and Beverage</td>
     <td>Rs. 20 Lac - 30 Lac</td>   
     <td>
-        <a target="_blank" href="hhttps://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="desklink">
+        <a target="_blank" href="hhttps://dealerindia.com/dir/packaged-food-products-supplies" class="desklink">
             View more
         </a>
-        <a target="_blank" href="hhttps://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="moblink">
+        <a target="_blank" href="hhttps://dealerindia.com/dir/packaged-food-products-supplies" class="moblink">
             <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
 </td>
@@ -8291,14 +8291,14 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>4</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/bikanervala-foo-4400"><img src="https://img.franchiseindia.com/brands/logo/440510772.gif" alt="Bikanervala Foods Pvt Ltd">Bikanervala Foods Pvt Ltd</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/bikanervala-foo-4400"><img src="https://img.franchiseindia.com/brands/logo/440510772.gif" alt="Bikanervala Foods Pvt Ltd">Bikanervala Foods Pvt Ltd</a></td>
     <td>Food and Beverage</td>
     <td>Rs. 2 Lac - 5 Lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="desklink">
             View more
         </a>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="moblink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="moblink">
           <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>    
     </td>
@@ -8308,10 +8308,10 @@ a.desklink{display: none;}
     <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="{{ url('images/top100/brands/dominios.gif') }}" alt="Dominos">Dominos</a></td>
     <td>Food and Beverage</td>
     <td>Rs. 30 lac - 35 lac</td>   
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="desklink">
+    <td><a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="desklink">
         View more
     </a>
-    <a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="moblink">
+    <a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="moblink">
       <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 </td>
@@ -9213,28 +9213,28 @@ a.desklink{display: none;}
 
 <tr>
     <td>28</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 10 lac - 20 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/electronic-products-components" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/electronic-products-components" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/electronic-products-components" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/electronic-products-components" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
     </td>
 </tr>
 <tr>
     <td>29</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/em.gif') }}" alt="Marshalls, India's No.1 Wallcoverings">Marshalls, India's No.1 Wallcoverings</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/"><img src="{{ url('images/top100/brands/em.gif') }}" alt="Marshalls, India's No.1 Wallcoverings">Marshalls, India's No.1 Wallcoverings</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 25 lac - 30 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/home-furniture" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/home-furniture" class="desklink">
             View more 
 </a>
-<a target="_blank" href="https://dealer.franchiseindia.com/dir/home-furniture" class="moblink">
+<a target="_blank" href="https://www.dealerindia.com/dir/home-furniture" class="moblink">
             <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
 </a>  </td>
 </tr>
@@ -9244,10 +9244,10 @@ a.desklink{display: none;}
     <td>Dealer & Distributors</td>
     <td>Rs. 3 lac - 4 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/eco-friendly-products" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/eco-friendly-products" class="desklink">
             View more 
 </a>
-<a target="_blank" href="https://dealer.franchiseindia.com/dir/eco-friendly-products" class="moblink">
+<a target="_blank" href="https://www.dealerindia.com/dir/eco-friendly-products" class="moblink">
             <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
 </a>
     
@@ -10581,28 +10581,28 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>1</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 10 lac - 20 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/electronic-products-components" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/electronic-products-components" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/electronic-products-components" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/electronic-products-components" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
     </td>
 </tr>
 <tr>
     <td>2</td>
-    <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/em.gif') }}" alt="Marshalls, India's No.1 Wallcoverings">Marshalls, India's No.1 Wallcoverings</a></td>
+    <td><a target="_blank" href="https://www.dealerindia.com/"><img src="{{ url('images/top100/brands/em.gif') }}" alt="Marshalls, India's No.1 Wallcoverings">Marshalls, India's No.1 Wallcoverings</a></td>
     <td>Dealer & Distributors</td>
     <td>Rs. 25 lac - 30 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/home-furniture" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/home-furniture" class="desklink">
             View more 
 </a>
-<a target="_blank" href="https://dealer.franchiseindia.com/dir/home-furniture" class="moblink">
+<a target="_blank" href="https://www.dealerindia.com/dir/home-furniture" class="moblink">
             <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
 </a>  </td>
 </tr>
@@ -10612,10 +10612,10 @@ a.desklink{display: none;}
     <td>Dealer & Distributors</td>
     <td>Rs. 3 lac - 4 lac</td>   
     <td>
-        <a target="_blank" href="https://dealer.franchiseindia.com/dir/eco-friendly-products" class="desklink">
+        <a target="_blank" href="https://www.dealerindia.com/dir/eco-friendly-products" class="desklink">
             View more 
 </a>
-<a target="_blank" href="https://dealer.franchiseindia.com/dir/eco-friendly-products" class="moblink">
+<a target="_blank" href="https://www.dealerindia.com/dir/eco-friendly-products" class="moblink">
             <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
 </a>
     
@@ -12110,84 +12110,84 @@ a.desklink{display: none;}
         </tr>
         <tr>
             <td>31</td>
-            <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Apollo-Tyres.gif" alt="APOLLO TYRES">APOLLO TYRES</a></td>
+            <td><a target="_blank" href="https://www.dealerindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Apollo-Tyres.gif" alt="APOLLO TYRES">APOLLO TYRES</a></td>
             <td>Dealer & Distributors</td>
             <td>Rs. 50 Lac - 1 Cr.</td>   
             <td>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/tyre-tubes-accessories" class="desklink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/tyre-tubes-accessories" class="desklink">
                     View more 
                 </a>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/tyre-tubes-accessories" class="moblink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/tyre-tubes-accessories" class="moblink">
                     <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
                 </a>
             </td>
         </tr>
         <tr>
             <td>32</td>
-            <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/KURL-ON.gif" alt="KURL-ON">KURL-ON</a></td>
+            <td><a target="_blank" href="https://www.dealerindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/KURL-ON.gif" alt="KURL-ON">KURL-ON</a></td>
             <td>Dealer & Distributors</td>
             <td>N/A</td>   
             <td>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/home-furnishing-items" class="desklink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/home-furnishing-items" class="desklink">
                     View more 
                 </a>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/home-furnishing-items" class="moblink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/home-furnishing-items" class="moblink">
                     <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
                 </a>
                 </td>
         </tr>
         <tr>
             <td>33</td>
-            <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
+            <td><a target="_blank" href="https://www.dealerindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
             <td>Dealer & Distributors</td>
             <td>Rs. 50 lac - 1 Cr.</td>   
             <td>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/food-processing-plants-machinery" class="desklink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/food-processing-plants-machinery" class="desklink">
                     View more 
                 </a>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/food-processing-plants-machinery" class="moblink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/food-processing-plants-machinery" class="moblink">
                     <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
                 </a>
 </td>
         </tr>
         <tr>
             <td>34</td>
-            <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
+            <td><a target="_blank" href="https://www.dealerindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
             <td>Dealer & Distributors</td>
             <td>Rs. 10 lac - 20 lac</td>   
             <td>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/electronic-products-components" class="desklink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/electronic-products-components" class="desklink">
                     View more 
                 </a>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/electronic-products-components" class="moblink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/electronic-products-components" class="moblink">
                     <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
                 </a>
             </td>
         </tr>
         <tr>
             <td>35</td>
-            <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/mad-2708"><img src="https://img.franchiseindia.com/brands/logo/mad_2.gif" alt="MAD ABOUT DOGS">MAD ABOUT DOGS</a></td>
+            <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/mad-2708"><img src="https://img.franchiseindia.com/brands/logo/mad_2.gif" alt="MAD ABOUT DOGS">MAD ABOUT DOGS</a></td>
             <td>Dealer & Distributors</td>
             <td>Rs. 10 Lac - 20 Lac</td>   
             <td>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/pet-products-furniture" class="desklink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/pet-products-furniture" class="desklink">
                     View more 
                 </a>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/pet-products-furniture" class="moblink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/pet-products-furniture" class="moblink">
                     <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
                 </a>
 </td>
         </tr>
         <tr>
             <td>36</td>
-            <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Cube-Elevators-Logo.gif" alt="CUBE ELEVATORS">CUBE ELEVATORS</a></td>
+            <td><a target="_blank" href="https://www.dealerindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Cube-Elevators-Logo.gif" alt="CUBE ELEVATORS">CUBE ELEVATORS</a></td>
             <td>Dealer & Distributors</td>
             <td>N/A</td>   
             <td>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/cranes-forklifts" class="desklink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/cranes-forklifts" class="desklink">
                     View more 
                 </a>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/cranes-forklifts" class="moblink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/cranes-forklifts" class="moblink">
                     <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
                 </a>
         </tr>
@@ -12643,14 +12643,14 @@ a.desklink{display: none;}
     </tr>
     <tr>
         <td>69</td>
-        <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/bikanervala-foo-4400"><img src="https://img.franchiseindia.com/brands/logo/440510772.gif" alt="Bikanervala Foods Pvt Ltd"> Bikanervala Foods Pvt Ltd</a></td>
+        <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/bikanervala-foo-4400"><img src="https://img.franchiseindia.com/brands/logo/440510772.gif" alt="Bikanervala Foods Pvt Ltd"> Bikanervala Foods Pvt Ltd</a></td>
         <td>Food and Beverage</td>
         <td>Rs. 2 Lac - 5 Lac</td>   
         <td>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="desklink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="desklink">
                     View more 
                 </a>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="moblink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="moblink">
                     <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
                 </a>
         </td>
@@ -13587,84 +13587,84 @@ a.desklink{display: none;}
     </tr>
     <tr>
         <td>1</td>
-        <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Apollo-Tyres.gif" alt="APOLLO TYRES">APOLLO TYRES</a></td>
+        <td><a target="_blank" href="https://www.dealerindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Apollo-Tyres.gif" alt="APOLLO TYRES">APOLLO TYRES</a></td>
         <td>Dealer & Distributors</td>
         <td>Rs. 50 Lac - 1 Cr.</td>   
         <td>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/tyre-tubes-accessories" class="desklink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/tyre-tubes-accessories" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/tyre-tubes-accessories" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/tyre-tubes-accessories" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
             </a>
 </td>
     </tr>
     <tr>
         <td>2</td>
-        <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/KURL-ON.gif" alt="KURL-ON">KURL-ON</a></td>
+        <td><a target="_blank" href="https://www.dealerindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/KURL-ON.gif" alt="KURL-ON">KURL-ON</a></td>
         <td>Dealer & Distributors</td>
         <td>N/A</td>   
         <td>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/home-furnishing-items" class="desklink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/home-furnishing-items" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/home-furnishing-items" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/home-furnishing-items" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
             </a>
      </td>
     </tr>
     <tr>
         <td>3</td>
-        <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
+        <td><a target="_blank" href="https://www.dealerindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/NAYARA-ENERGY.gif" alt="NAYARA ENERGY">NAYARA ENERGY</a></td>
         <td>Dealer & Distributors</td>
         <td>Rs. 50 lac - 1 Cr.</td>   
         <td>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/food-processing-plants-machinery" class="desklink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/food-processing-plants-machinery" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/food-processing-plants-machinery" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/food-processing-plants-machinery" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
             </a>
 </td>
     </tr>
     <tr>
         <td>4</td>
-        <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
+        <td><a target="_blank" href="https://www.dealerindia.com/"><img src="{{ url('images/top100/brands/xiaomi.gif') }}" alt="XIAOMI">XIAOMI</a></td>
         <td>Dealer & Distributors</td>
         <td>Rs. 10 lac - 20 lac</td>   
         <td>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/electronic-products-components" class="desklink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/electronic-products-components" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/electronic-products-components" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/electronic-products-components" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
             </a>
 </td>
     </tr>
     <tr>
         <td>5</td>
-        <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/mad-2708"><img src="https://img.franchiseindia.com/brands/logo/mad_2.gif" alt="MAD ABOUT DOGS">MAD ABOUT DOGS</a></td>
+        <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/mad-2708"><img src="https://img.franchiseindia.com/brands/logo/mad_2.gif" alt="MAD ABOUT DOGS">MAD ABOUT DOGS</a></td>
         <td>Dealer & Distributors</td>
         <td>Rs. 10 Lac - 20 Lac</td>   
         <td>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/pet-products-furniture" class="desklink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/pet-products-furniture" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/pet-products-furniture" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/pet-products-furniture" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
             </a>
 </td>
     </tr>
     <tr>
         <td>6</td>
-        <td><a target="_blank" href="https://dealer.franchiseindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Cube-Elevators-Logo.gif" alt="CUBE ELEVATORS">CUBE ELEVATORS</a></td>
+        <td><a target="_blank" href="https://www.dealerindia.com/"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/Cube-Elevators-Logo.gif" alt="CUBE ELEVATORS">CUBE ELEVATORS</a></td>
         <td>Dealer & Distributors</td>
         <td>N/A</td>   
         <td>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/cranes-forklifts" class="desklink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/cranes-forklifts" class="desklink">
                 View more
             </a>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/cranes-forklifts" class="moblink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/cranes-forklifts" class="moblink">
                 <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
             </a>
         </td>
@@ -14161,14 +14161,14 @@ a.desklink{display: none;}
     </tr>
     <tr>
         <td>5</td>
-        <td><a target="_blank" href="https://dealer.franchiseindia.com/manufacturer/bikanervala-foo-4400"><img src="https://img.franchiseindia.com/brands/logo/440510772.gif" alt="Bikanervala Foods Pvt Ltd"> Bikanervala Foods Pvt Ltd</a></td>
+        <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/bikanervala-foo-4400"><img src="https://img.franchiseindia.com/brands/logo/440510772.gif" alt="Bikanervala Foods Pvt Ltd"> Bikanervala Foods Pvt Ltd</a></td>
         <td>Food and Beverage</td>
         <td>Rs. 2 Lac - 5 Lac</td>   
         <td>
-            <a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="desklink">
+            <a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="desklink">
                     View more 
                 </a>
-                <a target="_blank" href="https://dealer.franchiseindia.com/dir/packaged-food-products-supplies" class="moblink">
+                <a target="_blank" href="https://www.dealerindia.com/dir/packaged-food-products-supplies" class="moblink">
                     <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
                 </a>
         </td>
