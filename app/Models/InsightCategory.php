@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class InsightCategory extends Model
 {
     use HasFactory;
+    protected $table = 'insights-category';
+    protected $primaryKey = 'id';
 }

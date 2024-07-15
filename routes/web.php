@@ -42,6 +42,7 @@ use App\Http\Controllers\WellnessController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\DealersAndDistributorController;
+use App\Http\Controllers\InsightsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
@@ -949,3 +950,25 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 Route::get('location/{city}',              [BusinessListingController::class,'listingLocation']);
+// INSIGHTS ROUTES START HERE //
+Route::middleware('TrailingSlashRedirect')->group(function () {
+    Route::get('/search/insights',                      [InsightsController::class, 'insightSearch']);
+
+    Route::group(['prefix'=>'insights'], function(){
+
+        Route::get('author/{slug}',                         [InsightsController::class, 'authordata']);
+        Route::get('thanks', function () { return view('insights.thanks');})->name('insights.thanks');
+        Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
+        Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
+        Route::get('/',                             [InsightsController::class, 'insightshome']);
+        Route::get('topstories',                    [InsightsController::class, 'getinsightstories']);
+        Route::get('trendstories',                  [InsightsController::class, 'trendstories']);
+        Route::get('interviews',                    [InsightsController::class, 'getinsightsinterviews']);
+        Route::get('events_reports',                [InsightsController::class, 'geteventsreports']);
+        Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
+        Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
+        Route::get('{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
+        Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
+        Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
+    });
+});
