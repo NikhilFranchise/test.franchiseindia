@@ -280,13 +280,12 @@ class ExpressInstaController extends Controller
         $insert = empty($check) ? 1 : 0;
         $update = empty($check) ? 0 : 1;
 
-        if ($franData->membership_type != 1 && $request->user()->membership_type != 1) {
+        if ($franData->membership_type != 1 && $request->user()->membership_type != 1 || $request->user()->reg_source != 'DelhiExpoPaid') {
             $action = 1;
         }
 
         if (($request->user()->membership_type == 1 && $request->user()->membership_plan != 405) ||
-            $request->user()->reg_source == "DelhiExpoPaid"
-        ) {
+            $request->user()->reg_source == "DelhiExpoPaid" && $invData->credit_limit > 0) {
             if (isset($request->flag) && ($request->flag == 'confirm' || $request->flag == 'expint')) {
                 // return $invData->credit_limit;
                 return max($invData->credit_limit, 0);
@@ -323,8 +322,7 @@ class ExpressInstaController extends Controller
 
         if (
             ($request->user()->membership_type == 1 && $request->user()->membership_plan != 401) ||
-            $request->user()->reg_source == 'DelhiExpoPaid'
-        ) {
+            $request->user()->reg_source == 'DelhiExpoPaid' && $invData->credit_limit > 0) {
             $visibility = 1;
         }
 
@@ -434,7 +432,7 @@ class ExpressInstaController extends Controller
             return "showMsg";
         }
 
-        if ($action == 1 || $request->user()->membership_type != 1) {
+        if ($action == 1 || $request->user()->membership_type != 1 || $request->user()->reg_source != 'DelhiExpoPaid' && $invData->credit_limit < 1) {
             return 'upgrade';
         }
 
