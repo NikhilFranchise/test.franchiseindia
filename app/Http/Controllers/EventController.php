@@ -38,6 +38,7 @@ class EventController extends Controller
 		 return view('static.event-new')->with(compact('events'));
 
 
+
     }
 
 }
