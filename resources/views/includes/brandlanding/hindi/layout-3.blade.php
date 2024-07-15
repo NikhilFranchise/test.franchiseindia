@@ -168,7 +168,7 @@
         <div class="row">
             <div class="infobrand col-xs-12 col-sm-12 col-md-12">
                 <ul>
-                    @php
+                    {{-- @php
                         $area = $franDetails->prop_area_min.' - '.$franDetails->prop_area_max.' Sq.ft';
                         if(empty($franDetails->prop_area_max))
                             $area = $franDetails->prop_area_min;
@@ -196,7 +196,43 @@
 
                         if($maxValue > 9999999)
                            $maxValue = substr(($maxValue/10000000),0,5).' Cr';
-                    @endphp
+                    @endphp --}}
+
+                    @php
+                    $area = $franDetails->prop_area_min . ' - ' . $franDetails->prop_area_max . ' Sq.ft';
+                    if (empty($franDetails->prop_area_max)) {
+                        $area = $franDetails->prop_area_min;
+                    }
+                    if (is_numeric($franDetails->prop_area_min) && empty($franDetails->prop_area_max)) {
+                        $area = $franDetails->prop_area_min . ' Sq.ft';
+                    }
+                    if (empty($franDetails->prop_area_min)) {
+                        $area = '-N/A-';
+                    }
+
+                    $minValue = $franDetails->unit_inv_min;
+                    if (is_numeric($minValue)) {
+                        if ($minValue < 100000 && $minValue > 10000) {
+                            $minValue = substr($minValue / 1000, 0, 5) . ' K';
+                        } elseif ($minValue <= 9999999 && $minValue > 100000) {
+                            $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
+                        } elseif ($minValue > 9999999) {
+                            $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
+                        }
+                    }
+
+                    $maxValue = $franDetails->unit_inv_max;
+                    if (is_numeric($maxValue)) {
+                        if ($maxValue < 100000 && $maxValue > 10000) {
+                            $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
+                        } elseif ($maxValue <= 9999999 && $maxValue > 100000) {
+                            $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
+                        } elseif ($maxValue > 9999999) {
+                            $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
+                        }
+                    }
+                @endphp
+
                     <li><div>{{ $area }}</div>क्षेत्र की आवश्यकता </li>
                     <li>
                         <div>
