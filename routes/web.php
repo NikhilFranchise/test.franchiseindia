@@ -739,6 +739,11 @@ Route::group(['prefix' => 'hi'], function () {
             return redirect('business-opportunities/all/all', 301);
         });
     });
+    Route::get('location/{city}', [BusinessListingController::class,'listingLocation']);
+
+
+
+
 
     //Directory Page Routes
     Route::group(['prefix' => 'business-opportunities'], function () {
