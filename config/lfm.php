@@ -96,15 +96,17 @@ return [
 
     'disk'                     => 'public',
 
-    'rename_file'              => false,
+    'prefix'                   => 'laravel-filemanager',
 
-    'rename_duplicates'        => false,
+    'rename_file'              => true,
 
-    'alphanumeric_filename'    => false,
+    'rename_duplicates'        => true,
 
-    'alphanumeric_directory'   => false,
+    'alphanumeric_filename'    => true,
 
-    'should_validate_size'     => false,
+    'alphanumeric_directory'   => true,
+
+    'should_validate_size'     => true,
 
     'should_validate_mime'     => true,
 
