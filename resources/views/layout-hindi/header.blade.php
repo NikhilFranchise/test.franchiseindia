@@ -43,6 +43,7 @@
     asort($states);
 
     if (isset($loc)) {
+        @dd($loc);
         if (!empty($loc[0])) {
             $cities = Config('location.cityArr.' . $loc[0]);
             @dd($cities);
