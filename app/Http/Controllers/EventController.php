@@ -14,7 +14,7 @@ class EventController extends Controller
 		$curl = curl_init();
 		
 		curl_setopt_array($curl, array(
-			CURLOPT_URL => 'https://uatmelete.franchiseindia.com/api/franchise-home-videos-and-events',
+			CURLOPT_URL => 'https://uat.melete.franchiseindia.com/api/franchise-home-videos-and-events',
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING => '',
 			CURLOPT_SSL_VERIFYPEER=>0,
