@@ -129,14 +129,14 @@
             </div>-->
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2 col-lg-2">
                 <div class="footer-widget-link">
-                    <p><a href="https://dealer.franchiseindia.com" target="_blank">Dealers &amp; Distributors</a></p>
+                    <p><a href="https://www.dealerindia.com" target="_blank">Dealers &amp; Distributors</a></p>
                     <ul class="footer-links">
-                        <li><a href="https://dealer.franchiseindia.com/dir/automobile" target="_blank">Automobile</a>
+                        <li><a href="https://www.dealerindia.com/dir/automobile" target="_blank">Automobile</a>
                         </li>
-                        <li><a href="https://dealer.franchiseindia.com/dir/food-beverages" target="_blank">FMCG</a></li>
-                        <li><a href="https://dealer.franchiseindia.com/dir/office-school-supplies"
+                        <li><a href="https://www.dealerindia.com/dir/food-beverages" target="_blank">FMCG</a></li>
+                        <li><a href="https://www.dealerindia.com/dir/office-school-supplies"
                                 target="_blank">Office supplies</a></li>
-                        <li><a href="https://dealer.franchiseindia.com" target="_blank">View All &gt;</a></li>
+                        <li><a href="https://www.dealerindia.com" target="_blank">View All &gt;</a></li>
                     </ul>
                 </div>
             </div>
