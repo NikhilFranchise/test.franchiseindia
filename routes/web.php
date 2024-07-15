@@ -734,6 +734,8 @@ Route::get('rss', [FacebookArticleController::class, 'rss']); // Facebook Instan
 //Hindi language routes
 Route::group(['prefix' => 'hi'], function () {
     //Category Page Routes
+    Route::get('location/{city}', [BusinessListingController::class,'listingLocation']);
+
     Route::group(['prefix' => 'category'], function () {
         Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('search', [BusinessListingController::class, 'searchBusinessListing']);
@@ -742,7 +744,6 @@ Route::group(['prefix' => 'hi'], function () {
             return redirect('business-opportunities/all/all', 301);
         });
     });
-    Route::get('location/{city}', [BusinessListingController::class,'listingLocation']);
 
 
 
