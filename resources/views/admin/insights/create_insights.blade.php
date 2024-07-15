@@ -53,10 +53,10 @@
                     <div class="widget-title"><span class="icon"> <i class="icon-align-justify"></i> </span>
                         <h5>Insights Details</h5>
                     </div>
-                   
+
                     <div class="widget-content nopadding">
                         <form method="POST" class="form-horizontal" enctype="multipart/form-data"
-                            action="{{ Config('constants.MainDomain') }}/admin/create-insights" novalidate>
+                            action="{{ Config('constants.MainDomain') }}/admin/create-insights" id="editform" novalidate />
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                             <div class="control-group">
@@ -353,32 +353,7 @@
             }
         });
 
-        // $("#showImage").change(function () {
-        //     var val = $(this).val();
-        //     switch (val.substring(val.lastIndexOf('.') + 1).toLowerCase()) {
-        //         case 'gif':
-        //         case 'jpg':
-        //         case 'png':
-        //             $('#showImage_msg').css('display', 'none');
-        //             $('#newssubmit').prop('disabled', false);
-        //             break;
-        //         default:
-        //             $(this).val('');
-        //             $('#showImage_msg').css('display', 'block');
-        //             $('#newssubmit').prop('disabled', true);
-        //             break;
-        //     }
-        // });
 
-        // $('#showImage').bind('change', function () {
-        //     if (this.files[0].size > 153600) {
-        //         $('#showImage_msg_size').css('display', 'block');
-        //         $('#newssubmit').prop('disabled', true);
-        //     } else {
-        //         $('#showImage_msg_size').css('display', 'none');
-        //         $('#newssubmit').prop('disabled', false);
-        //     }
-        // });
         $("#showImage").change(function() {
             var val = $(this).val();
             var fileInput = this;
