@@ -96,7 +96,7 @@ return [
 
     'disk'                     => 'public',
 
-    'prefix' => 'laravel-filemanager',
+    'prefix'                   => 'laravel-filemanager',
 
     'rename_file'              => true,
 
