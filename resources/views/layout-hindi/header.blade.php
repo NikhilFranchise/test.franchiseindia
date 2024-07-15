@@ -41,7 +41,7 @@
 
     $states = Config('location.stateArr');
     asort($states);
-
+// @dd($states);
     if (isset($loc)) {
         // @dd($loc[0]);
         if (!empty($loc[0])) {
