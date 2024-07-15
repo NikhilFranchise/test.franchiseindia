@@ -72,7 +72,7 @@
                     </div>
                     <div class="widget-content nopadding">
                         <form method="POST" class="form-horizontal" enctype="multipart/form-data"
-                            action="{{ url('admin/update-insights') }}">
+                            action="{{ url('admin/update-insights') }}" id="editform" />
                             <input type="hidden" name="news_id" value="{{ $data->news_id }}" />
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -95,7 +95,7 @@
                                 </div>
                             </div>
 
-                            
+
                             <div class="control-group">
                                 <label class="control-label">Insights Type :</label>
                                 <div class="controls">
@@ -153,7 +153,7 @@
                                                 {{ $subcat->subcat_name }}</option>
                                         @endforeach
                                     </select>
-                                   
+
                                 </div>
                             </div>
                             <div class="control-group">
@@ -164,7 +164,7 @@
                                         maxlength="125" class="span11" pattern="[a-z0-9\-]+"
                                         title="Only small letters, numbers, and hyphens are allowed"
                                         value="{{ $data->slug }}" />
-                                    
+
                                 </div>
                             </div>
                             <div class="control-group">
@@ -185,7 +185,7 @@
                                     <input type="text" required maxlength="40" class="span11"
                                         placeholder="Enter Home Title" name="home_title"
                                         value="{{ $data->homeTitle }}" />
-                                   
+
                                 </div>
                             </div>
 
@@ -259,7 +259,7 @@
                                         @endif
 
                                     </select>
-                                    
+
                                 </div>
                             </div>
                             <div class="control-group">
@@ -274,7 +274,7 @@
                                             @endforeach
                                         @endif
                                     </select>
-                                   
+
                                 </div>
                             </div>
                             <div class="form-actions">
