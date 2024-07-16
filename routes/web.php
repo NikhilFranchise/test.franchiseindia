@@ -46,6 +46,8 @@ use App\Http\Controllers\InsightsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 
 
@@ -62,15 +64,23 @@ use App\Http\Controllers\Admin\AdminController;
 */
 
 Auth::routes();
+// Auth::routes(['verify' => true]);
 
+// Route::group(['namespace' => 'Auth'], function () {
+//     Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+//     Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+//     Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+//     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+// });
+
+// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+//     \UniSharp\LaravelFilemanager\Lfm::routes();
+// });
 Route::get('campaign/franchisor/{id}', [CommonController::class, 'franAutoLogin']);
 Route::get('campaign/deactivate/franchisor/{id}', [CommonController::class, 'franCampaignDeactivation']);
 Route::get('franchiseinternational', [InternationalController::class, 'getHomePage']); // International Page routes
 
-// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
-//     \UniSharp\LaravelFilemanager\Lfm::routes();
 
-// });
 Route::get('/', [NewHomePageController::class, 'homeNew']);
 Route::get('/home', function () {
     return redirect('/', 301);
@@ -94,7 +104,7 @@ Route::get('testimonials', function () {
 });
 Route::get('testimonials-reviews', [StaticPageController::class, 'getTestimonials']);
 Route::get('sitemap/brands', [BrandFilterController::class, 'brandsitemap']);
-Route::get('sitemap/brands/{abre}',           [BrandFilterController::class,'brandfilter']);
+Route::get('sitemap/brands/{abre}',           [BrandFilterController::class, 'brandfilter']);
 
 Route::get('terms', [StaticPageController::class, 'mainTerm']);
 Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBystateName']);
@@ -107,7 +117,7 @@ Route::get('validate-email', [CommonController::class, 'emailValidation']);
 Route::get('thanks-advice-form', function () {
     return view('thanks.advice-form');
 });
-Route::get('check',                          [MobileVerificationController::class,'verifySmsOTP']);
+Route::get('check',                          [MobileVerificationController::class, 'verifySmsOTP']);
 Route::get('property-loan', [StaticPageController::class, 'getPropertyLoanForm']);
 Route::get('getpincode', [CommonController::class, 'getPincodeDetails']);
 Route::get('get-city-list-landing-page', [CommonController::class, 'getCityListLandingPage']);
@@ -132,7 +142,7 @@ Route::get('mailermessage',                  [MailerController::class, 'thanksMe
 Route::get('cy_mails/unsubscribeme/',        [MailerController::class, 'unsub']);
 
 // post and get routes
-Route::post('multipleInvFreeinfo',            [ExpressInstaController::class,'expressInterestMultiple']); //reg inv multiple
+Route::post('multipleInvFreeinfo',            [ExpressInstaController::class, 'expressInterestMultiple']); //reg inv multiple
 Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);
 Route::post('subscribenews', [NewsLetterController::class, 'subscriptionFormsubmit']);
 Route::post('property-loan-submit', [StaticPageController::class, 'postPropertyLoanForm']);
@@ -489,7 +499,7 @@ Route::post('payment/success', [PaymentController::class, 'paymentSuccess']);
 Route::post('payment/failure', [PaymentController::class, 'getHdfcPgResponseFailed']);
 Route::post('payment/cancelled', [PaymentController::class, 'getHdfcPgResponseFailed']);
 Route::get('confirm/{id}', [CommonController::class, 'verifyEmail']); // Mail Verification
-Route::get('change-password/{id}',           [CommonController::class,'verifyEmail']);
+Route::get('change-password/{id}',           [CommonController::class, 'verifyEmail']);
 Route::get('newsletter/{code}', [NewsLetterController::class, 'subscriptionForm']);
 
 // Restaurant Routes
@@ -735,7 +745,7 @@ Route::get('rss', [FacebookArticleController::class, 'rss']); // Facebook Instan
 //Hindi language routes
 Route::group(['prefix' => 'hi'], function () {
     //Category Page Routes
-    Route::get('location/{city}', [BusinessListingController::class,'listingLocation']);
+    Route::get('location/{city}', [BusinessListingController::class, 'listingLocation']);
 
     Route::group(['prefix' => 'category'], function () {
         Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
@@ -959,15 +969,17 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
 });
 
-Route::get('location/{city}',              [BusinessListingController::class,'listingLocation']);
+Route::get('location/{city}',              [BusinessListingController::class, 'listingLocation']);
 // INSIGHTS ROUTES START HERE //
 Route::middleware('TrailingSlashRedirect')->group(function () {
     Route::get('/search/insights',                      [InsightsController::class, 'insightSearch']);
 
-    Route::group(['prefix'=>'insights'], function(){
+    Route::group(['prefix' => 'insights'], function () {
 
         Route::get('author/{slug}',                         [InsightsController::class, 'authordata']);
-        Route::get('thanks', function () { return view('insights.thanks');})->name('insights.thanks');
+        Route::get('thanks', function () {
+            return view('insights.thanks');
+        })->name('insights.thanks');
         Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
         Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
         Route::get('/',                             [InsightsController::class, 'insightshome']);
@@ -982,5 +994,7 @@ Route::middleware('TrailingSlashRedirect')->group(function () {
         Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
     });
 });
-Route::get('categoryall',       [StaticPageController::class,'categoryAll']);
-Route::get('search',                                 function() { return view('site.google-search-result');});
+Route::get('categoryall',       [StaticPageController::class, 'categoryAll']);
+Route::get('search',                                 function () {
+    return view('site.google-search-result');
+});
