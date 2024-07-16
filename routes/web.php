@@ -489,6 +489,7 @@ Route::post('payment/success', [PaymentController::class, 'paymentSuccess']);
 Route::post('payment/failure', [PaymentController::class, 'getHdfcPgResponseFailed']);
 Route::post('payment/cancelled', [PaymentController::class, 'getHdfcPgResponseFailed']);
 Route::get('confirm/{id}', [CommonController::class, 'verifyEmail']); // Mail Verification
+Route::get('change-password/{id}',           [CommonController::class,'verifyEmail']);
 Route::get('newsletter/{code}', [NewsLetterController::class, 'subscriptionForm']);
 
 // Restaurant Routes
