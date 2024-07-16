@@ -1,7 +1,4 @@
 <style type="text/css">
-
-
-
 </style>
 
 <div class="middleval" style="right: -305px;"  id="side-form">
@@ -47,15 +44,15 @@
                             <div class="frm-input">
                                 <div class="input-group">
                                     <span class="input-group-addon"><div class="usersprite"></div></span>
-                                    <input type="text" class="form-control" name="namefreeadvice" id="namefreeadvice" placeholder="Enter Name">
+                                    <input type="text" class="form-control" required name="namefreeadvice" id="namefreeadvice" placeholder="Enter Name">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon"><div class="emailsprite"></div></span>
-                                    <input type="text" name="emailfreeadvice" id="emailfreeadvice" class="form-control" placeholder="Enter E-mail">
+                                    <input type="text" name="emailfreeadvice" required id="emailfreeadvice" class="form-control" placeholder="Enter E-mail">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon"><div class="usersprite"></div></span>
-                                    <input type="text" class="form-control" maxlength="10" name="mobilefreeadvice" id="mobilefreeadvice" placeholder="Enter Mobile">
+                                    <input type="text" class="form-control" required maxlength="10" name="mobilefreeadvice" id="mobilefreeadvice" placeholder="Enter Mobile">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon"><img alt="pincode" src="{{ Config('constants.MainDomain') }}/images/pincode.png"></span>

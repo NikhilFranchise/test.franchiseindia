@@ -67,10 +67,10 @@ Route::get('campaign/franchisor/{id}', [CommonController::class, 'franAutoLogin'
 Route::get('campaign/deactivate/franchisor/{id}', [CommonController::class, 'franCampaignDeactivation']);
 Route::get('franchiseinternational', [InternationalController::class, 'getHomePage']); // International Page routes
 
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
+// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+//     \UniSharp\LaravelFilemanager\Lfm::routes();
 
-});
+// });
 Route::get('/', [NewHomePageController::class, 'homeNew']);
 Route::get('/home', function () {
     return redirect('/', 301);

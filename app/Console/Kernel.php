@@ -33,13 +33,11 @@ class Kernel extends ConsoleKernel
     /**
      * Register the commands for the application.
      */
-    // protected function commands(): void
-    // {
-    //     $this->commands([
-    //         Commands\RehashPasswords::class,
-    //     ]);
-    //     // $this->load(__DIR__.'/Commands');
+    protected function commands(): void
+    {
+       
+        $this->load(__DIR__.'/Commands');
 
-    //     require base_path('routes/console.php');
-    // }
+        require base_path('routes/console.php');
+    }
 }
