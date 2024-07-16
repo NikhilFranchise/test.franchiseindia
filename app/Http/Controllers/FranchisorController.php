@@ -26,14 +26,14 @@ use App\Models\UserActivity;
 use App\Models\UserRecord;
 use App\Models\BrandUpdateRequest;
 use App\Models\HomePremiumPageBrand;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Response;
+    use Illuminate\Support\Facades\Storage;
 
 class FranchisorController extends Controller
 {
@@ -2427,10 +2427,70 @@ class FranchisorController extends Controller
      * downloading the interests
      * @return mixed
      */
+    // public function allInterestToCsv()
+    // {
+    //     if (empty(request()->user()) || request()->user()->membership_type != 1)
+    //         return "";
+
+    //     $franchisorId = request()->user()->profile_str;
+    //     $expressedInterests = UserActivity::query()
+    //         ->where('franchisor_id', $franchisorId)
+    //         ->whereNotNull('investor_id')
+    //         ->where('investor_id', '!=', 'Anonymous')
+    //         ->orderBy('clickID', 'desc')
+    //         ->get();
+    //     $filename = "/tmp/express_interest.csv";
+    //     $handle = fopen($filename, 'w+');
+    //     fputcsv($handle, array('Name', 'Email', 'Available Capital', 'Phone', 'Address', 'State', 'City', 'application date'));
+
+    //     foreach ($expressedInterests as $expData) {
+    //         $address = "Not Visible";
+    //         $invAmt = Config('constants.investRangeInWords.' . $expData->investor->inv_amt);
+    //         $name = $expData->investor->userDetail->name;
+    //         $email = "Not Visible";
+    //         $mobile = "Not Visible";
+
+    //         $state = "Not Visible";
+    //         $city = "Not Visible";
+
+    //         if (request()->user()->membership_type == 1 && $expData->franchisor_visibility == 1) {
+    //             $address = "";
+    //             if (!empty($expData->investor->inv_address))
+    //                 $address .= $expData->investor->inv_address . ", ";
+    //             if (!empty($expData->investor->inv_city))
+    //                 $address .= $expData->investor->inv_city . ", ";
+    //             if (!empty($expData->investor->inv_state))
+    //                 $address .= $expData->investor->inv_state . ", ";
+    //             if (!empty($expData->investor->inv_pincode))
+    //                 $address .= "Pin-code:-" . $expData->investor->inv_pincode . ", ";
+    //             if (!empty($expData->investor->inv_country))
+    //                 $address .= $expData->investor->inv_country;
+
+    //             $email = $expData->investor->userDetail->email;
+    //             $mobile = $expData->investor->userDetail->mobile;
+
+    //             $state = $expData->investor->inv_state;
+    //             $city = $expData->investor->inv_city;
+    //         }
+
+    //         fputcsv($handle, array($name, $email, $invAmt, $mobile, $address, $state, $city, $expData->visit_date));
+    //     }
+
+    //     fclose($handle);
+
+    //     $headers = ['Content-Type' => 'text/csv'];
+
+    //     $this->recordLeadDownload($franchisorId, 2);
+
+    //     return Response::download($filename, 'ExpressInterest.csv', $headers);
+    // }
+
+
     public function allInterestToCsv()
     {
-        if (empty(request()->user()) || request()->user()->membership_type != 1)
+        if (empty(request()->user()) || request()->user()->membership_type != 1) {
             return "";
+        }
 
         $franchisorId = request()->user()->profile_str;
         $expressedInterests = UserActivity::query()
@@ -2439,9 +2499,17 @@ class FranchisorController extends Controller
             ->where('investor_id', '!=', 'Anonymous')
             ->orderBy('clickID', 'desc')
             ->get();
-        $filename = "/tmp/express_interest.csv";
-        $handle = fopen($filename, 'w+');
-        fputcsv($handle, array('Name', 'Email', 'Available Capital', 'Phone', 'Address', 'State', 'City', 'application date'));
+
+        $filename = 'express_interest.csv';
+        $filePath = storage_path('app/public/' . $filename);
+
+        // Ensure the directory exists
+        if (!file_exists(dirname($filePath))) {
+            mkdir(dirname($filePath), 0755, true);
+        }
+
+        $handle = fopen($filePath, 'w+');
+        fputcsv($handle, ['Name', 'Email', 'Available Capital', 'Phone', 'Address', 'State', 'City', 'Application Date']);
 
         foreach ($expressedInterests as $expData) {
             $address = "Not Visible";
@@ -2449,31 +2517,34 @@ class FranchisorController extends Controller
             $name = $expData->investor->userDetail->name;
             $email = "Not Visible";
             $mobile = "Not Visible";
-
             $state = "Not Visible";
             $city = "Not Visible";
 
             if (request()->user()->membership_type == 1 && $expData->franchisor_visibility == 1) {
                 $address = "";
-                if (!empty($expData->investor->inv_address))
+                if (!empty($expData->investor->inv_address)) {
                     $address .= $expData->investor->inv_address . ", ";
-                if (!empty($expData->investor->inv_city))
+                }
+                if (!empty($expData->investor->inv_city)) {
                     $address .= $expData->investor->inv_city . ", ";
-                if (!empty($expData->investor->inv_state))
+                }
+                if (!empty($expData->investor->inv_state)) {
                     $address .= $expData->investor->inv_state . ", ";
-                if (!empty($expData->investor->inv_pincode))
+                }
+                if (!empty($expData->investor->inv_pincode)) {
                     $address .= "Pin-code:-" . $expData->investor->inv_pincode . ", ";
-                if (!empty($expData->investor->inv_country))
+                }
+                if (!empty($expData->investor->inv_country)) {
                     $address .= $expData->investor->inv_country;
+                }
 
                 $email = $expData->investor->userDetail->email;
                 $mobile = $expData->investor->userDetail->mobile;
-
                 $state = $expData->investor->inv_state;
                 $city = $expData->investor->inv_city;
             }
 
-            fputcsv($handle, array($name, $email, $invAmt, $mobile, $address, $state, $city, $expData->visit_date));
+            fputcsv($handle, [$name, $email, $invAmt, $mobile, $address, $state, $city, $expData->visit_date]);
         }
 
         fclose($handle);
@@ -2482,8 +2553,9 @@ class FranchisorController extends Controller
 
         $this->recordLeadDownload($franchisorId, 2);
 
-        return Response::getFacadeRoot()->download($filename, 'ExpressInterest.csv', $headers);
+        return Response::download($filePath, $filename, $headers);
     }
+
 
     /**
      * my account view appearance

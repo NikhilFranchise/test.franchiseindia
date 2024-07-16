@@ -140,7 +140,8 @@ Route::get('dealers-india/search/{search}',  [DealersAndDistributorController::c
 Route::get('mailer',                         [MailerController::class, 'feedbackMailer']);
 Route::get('mailermessage',                  [MailerController::class, 'thanksMessage']);
 Route::get('cy_mails/unsubscribeme/',        [MailerController::class, 'unsub']);
-
+Route::get('all-insta-responce-csv',                [FranchisorController::class, 'allInstaResponse']); // Insta Responces interest csv copy
+Route::get('all-interests-csv',                     [FranchisorController::class, 'allInterestToCsv']);
 // post and get routes
 Route::post('multipleInvFreeinfo',            [ExpressInstaController::class, 'expressInterestMultiple']); //reg inv multiple
 Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);
