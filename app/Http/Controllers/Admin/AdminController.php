@@ -1904,12 +1904,15 @@ class AdminController extends Controller
         $associatedTags     = ContentTagsAssigned::query()->where('content_id', $newsId)->where('content_type', 2)->select('tag_id')->get();
 
         //fetching associated tags to a array
-        if (count($associatedTags) > 0) {
+        if ($associatedTags->count() > 0) {
             foreach ($associatedTags as $tags) {
                 $assocTags[]    = SeoTag::query()->where('tag_id', $tags->tag_id)->select('tag_id', 'name')->first();
             }
+            return view('admin/insights/edit-insights', compact('kicker', 'data', 'assocTags', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
+        }else{
+
+            return view('admin/insights/edit-insights', compact('kicker', 'data', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
         }
-        return view('admin/insights/edit-insights', compact('kicker', 'data', 'assocTags', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
     }
 
     public function updateInsightStatus(Request $request)
