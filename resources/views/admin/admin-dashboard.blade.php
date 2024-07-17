@@ -15,7 +15,9 @@
             <ul class="quick-actions">
                 <li class="bg_lb"> <a href="dashboard"> <i class="icon-dashboard"></i> <span
                             class="label label-important">0</span> My Dashboard </a> </li>
-                @if (session()->get('role') != 'ga' && session()->get('adminEmail') == 'techsupport@franchiseindia.net' && session()->get('adminEmail') == 'pganesh@franchiseindia.net')
+                @if (
+                    (session()->get('role') != 'ga' && session()->get('adminEmail') == 'techsupport@franchiseindia.net') ||
+                        (session()->get('role') != 'ga' && session()->get('adminEmail') == 'pganesh@franchiseindia.net'))
                     <li class="bg_ly"> <a href="list-author"> <i class="icon-th"></i>Authors</a> </li>
                     <li class="bg_lo"> <a href="list-article-interview"> <i class="icon-th"></i>Articles/Interviews</a>
                     </li>
