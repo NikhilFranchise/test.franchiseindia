@@ -13,6 +13,7 @@
                     <h1 class="myhead marleft">Payment Plans</h1>
                     <div class="bor-radius backwhite marleft">
                         <form class="form-horizontal"
+                        @csrf
                             action="{{ Config('constants.MainDomain') }}/franchisor/myaccount/upgrade-account" method="post"
                             enctype="multipart/form-data">
                             <div class="col-xs-12 col-sm-12 col-md-12 pad30 showbg">
@@ -176,7 +177,7 @@
         $('#silverplanmain').click(function() {
             $("#amount").prop("value", $('#membership_plan_month_sub_sub').val());
             //$('#membership_plan_month_master').val(119);
-            $('#membership_plan_month_master').val(120);
+        $('#membership_plan_month_master').val(120);
             $('#membership_plan_month_sub').val(116);
             document.getElementById("silverPlan").innerHTML = membershipPlanFranchisor[$(
                 '#membership_plan_month_sub_sub').val()];
