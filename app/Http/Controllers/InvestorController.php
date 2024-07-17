@@ -615,7 +615,7 @@ class InvestorController extends Controller
             if ($otpstatus == 1) {
                 $finalmobile = $request->input('mobile');
                 $userChk = UserAccount::query()->where('mobile', $finalmobile)->first();
-                if (count($userChk) == 0) {
+                if ($userChk == null) {
                     $finalmobile = $request->input('mobile');
                 } else {
                     session()->flash('errorMessage', 'Error! Mobile number already used');
