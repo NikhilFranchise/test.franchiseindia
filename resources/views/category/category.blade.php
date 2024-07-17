@@ -42,7 +42,6 @@
     $currentUrl = url()->current();
     $hindiUrl = str_replace('/business-opportunities/', '/hi/business-opportunities/', $currentUrl);
     ?>
-    {{-- @dd($hindiUrl); --}}
     {{-- <link href="{{ $hindiUrl }}"> --}}
     {{-- <link href="{{ str_replace( '/category/',  str_replace('/business-opportunities/',  url()->current())) }}"> --}}
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
