@@ -15,6 +15,8 @@
                         <form class="form-horizontal"
                         @csrf
                             action="{{ Config('constants.MainDomain') }}/franchisor/myaccount/upgrade-account" method="post"
+                            @csrf
+
                             enctype="multipart/form-data">
                             <div class="col-xs-12 col-sm-12 col-md-12 pad30 showbg">
                                 @if ($errors->any())
@@ -64,15 +66,14 @@
                                                 @if (Auth::user()->membership_type == 1) @if (isset($franData)) @if ($franData->membership_plan == 3) checked @endif
                                                 @endif @endif> Sub
                                             Category</label>
-                                        <!--<div class="priceshow"><span>Rs. <strong id="goldPlan">19999</strong></span>-->
+
                                         <div class="priceshow"><span>Rs. <strong id="goldPlan">143000</strong></span>
                                             <div class="txtgst">+18% GST</div>
                                             <div class="">
                                                 <select name="membership_plan_month" id="membership_plan_month_sub"
                                                     onclick="getPlanTotal(this.id);" onchange="getPlanTotal(this.id);"
                                                     class="form-control width110">
-                                                    <!--<option value=116>1 Month</option>
-                                                        <option value=117>3 Month</option>-->
+
                                                     <option value=123>6 Month</option>
                                                     <option value=118>12 Month</option>
                                                 </select>
@@ -93,6 +94,7 @@
                                     <div class="col-xs-12 col-sm-3 col-md-3 bor-radius row-no-padding boxheight boxwidth">
                                         <label class="pad15b5"><input type="radio" name="membership_plan"
                                                 id="platinumplanmain" value="4"
+
                                                 @if (Auth::user()->membership_type == 1) @if (isset($franData)) @if ($franData->membership_plan == 4) checked @endif
                                                 @endif @endif> Master
                                             Category</label>
@@ -200,11 +202,10 @@
 
         $('#platinumplanmain').click(function() {
             $("#amount").prop("value", $('#membership_plan_month_master').val());
-            //$('#membership_plan_month_sub').val(116);
             $('#membership_plan_month_sub').val(123);
             $('#membership_plan_month_sub_sub').val(113);
             document.getElementById("silverPlan").innerHTML = "9999";
-            // document.getElementById("goldPlan").innerHTML = "19999";
+
             document.getElementById("goldPlan").innerHTML = "143000";
             document.getElementById("platinumPlan").innerHTML = membershipPlanFranchisor[$(
                 '#membership_plan_month_master').val()];
@@ -216,13 +217,9 @@
             if (id == "membership_plan_month_sub_sub") {
                 $("#silverplanmain").prop("checked", true);
                 document.getElementById("silverPlan").innerHTML = membershipPlanFranchisor[$('#' + id).val()];
-                //document.getElementById("goldPlan").innerHTML = "19999";
                 document.getElementById("goldPlan").innerHTML = "143000";
-                //document.getElementById("platinumPlan").innerHTML = "39999";
                 document.getElementById("platinumPlan").innerHTML = "143000";
-                //$('#membership_plan_month_sub').val(116);
                 $('#membership_plan_month_sub').val(123);
-                //$('#membership_plan_month_master').val(119);
                 $('#membership_plan_month_master').val(120);
             }
 
@@ -230,20 +227,15 @@
                 $("#goldplanmain").prop("checked", true);
                 document.getElementById("silverPlan").innerHTML = "9999";
                 document.getElementById("goldPlan").innerHTML = membershipPlanFranchisor[$('#' + id).val()];
-                // document.getElementById("platinumPlan").innerHTML = "39999";
                 document.getElementById("platinumPlan").innerHTML = "143000";
-                //$('#membership_plan_month_master').val(119);
                 $('#membership_plan_month_master').val(120);
-                //$('#membership_plan_month_sub_sub').val(113);
                 $('#membership_plan_month_sub_sub').val(113);
             }
             if (id == "membership_plan_month_master") {
                 $("#platinumplanmain").prop("checked", true);
                 document.getElementById("silverPlan").innerHTML = "9999";
-                //document.getElementById("goldPlan").innerHTML = "19999";
                 document.getElementById("goldPlan").innerHTML = "143000";
                 document.getElementById("platinumPlan").innerHTML = membershipPlanFranchisor[$('#' + id).val()];
-                //$('#membership_plan_month_sub').val(116);
                 $('#membership_plan_month_sub').val(123);
                 $('#membership_plan_month_sub_sub').val(113);
             }

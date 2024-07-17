@@ -1601,42 +1601,88 @@ class AdminController extends Controller
      * @param $height
      * @param $width
      */
+    // private function thumbnailCreation($imageUrl, $type, $width, $height)
+    // {
+    //     //thumbnail creation
+    //     $sourcePhoto     = public_path($imageUrl);
+
+    //     if ($type == 'Gallery')
+    //         $sourcePhoto = $imageUrl;
+
+    //     if ($type != 'Gallery')
+    //         $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
+
+    //     $imageName       = pathinfo($sourcePhoto)['basename'];
+
+    //     $destinationPath = "uploads";
+
+    //     switch ($type) {
+    //         case 'Article':
+    //             $destinationPath = public_path('uploads/thumbnails/' . session()->get('role') . '/art/');
+    //             break;
+
+    //         case 'Interview':
+    //             $destinationPath = public_path('uploads/thumbnails/' . session()->get('role') . '/int/');
+    //             break;
+
+    //         case 'Gallery':
+    //             $destinationPath = public_path('uploads/thumbnails/ga');
+    //             break;
+
+    //         case 'News':
+    //             $destinationPath = public_path('uploads/thumbnails/news/' . session()->get('role') . '/');
+    //     }
+
+    //     try {
+    //         Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 80);
+    //     } catch (\Exception $e) {
+    //         $this->setLog('Thumbnail creation error ' . $e->getMessage());
+    //         die;
+    //     }
+    // }
     private function thumbnailCreation($imageUrl, $type, $width, $height)
     {
-        //thumbnail creation
-        $sourcePhoto     = public_path($imageUrl);
+        // Determine the source photo path
+        $sourcePhoto = public_path($imageUrl);
 
-        if ($type == 'Gallery')
+        if ($type == 'Gallery') {
             $sourcePhoto = $imageUrl;
+        } elseif ($type != 'Gallery') {
+            $sourcePhoto = config('constants.awsS3Url') . $imageUrl;
+        }
 
-        if ($type != 'Gallery')
-            $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
+        // Extract the image name
+        $imageName = pathinfo($sourcePhoto, PATHINFO_BASENAME);
 
-        $imageName       = pathinfo($sourcePhoto)['basename'];
-
-        $destinationPath = "uploads";
-
+        // Determine the destination path based on the type
         switch ($type) {
             case 'Article':
                 $destinationPath = public_path('uploads/thumbnails/' . session()->get('role') . '/art/');
                 break;
-
             case 'Interview':
                 $destinationPath = public_path('uploads/thumbnails/' . session()->get('role') . '/int/');
                 break;
-
             case 'Gallery':
                 $destinationPath = public_path('uploads/thumbnails/ga');
                 break;
-
             case 'News':
                 $destinationPath = public_path('uploads/thumbnails/news/' . session()->get('role') . '/');
+                break;
+            default:
+                $destinationPath = public_path('uploads/thumbnails/others/');
+                break;
+        }
+
+        // Create the destination directory if it doesn't exist
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0755, true);
         }
 
         try {
-            Image::getFacadeRoot()->make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 80);
+            // Create and save the thumbnail
+            Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 80);
         } catch (\Exception $e) {
-            $this->setLog('Thumbnail creation error ' . $e->getMessage());
+            $this->setLog('Thumbnail creation error: ' . $e->getMessage());
             die;
         }
     }
