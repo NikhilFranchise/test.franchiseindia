@@ -40,9 +40,10 @@
 @section('hindibrandUrls')
     <?php
     $currentUrl = url()->current();
-    $hindiUrl = str_replace('/business-opportunities/', '/category/', $currentUrl);
+    $hindiUrl = str_replace('/business-opportunities/', '/hi/business-opportunities/', $currentUrl);
     ?>
-    <link href="{{ $hindiUrl }}">
+    {{-- @dd($hindiUrl); --}}
+    {{-- <link href="{{ $hindiUrl }}"> --}}
     {{-- <link href="{{ str_replace( '/category/',  str_replace('/business-opportunities/',  url()->current())) }}"> --}}
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
