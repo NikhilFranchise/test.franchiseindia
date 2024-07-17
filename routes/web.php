@@ -5,7 +5,6 @@ use App\Http\Controllers\StaticPageController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\SiteFeedbackController;
 use App\Http\Controllers\CommonController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandFilterController;
 use App\Http\Controllers\MobileVerificationController;
 use App\Http\Controllers\InvestorController;
@@ -46,8 +45,6 @@ use App\Http\Controllers\InsightsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
 
 
 
@@ -64,14 +61,8 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 */
 
 Auth::routes();
-// Auth::routes(['verify' => true]);
 
-// Route::group(['namespace' => 'Auth'], function () {
-//     Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-//     Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-//     Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-//     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
-// });
+
 
 // Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
 //     \UniSharp\LaravelFilemanager\Lfm::routes();
