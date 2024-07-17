@@ -28,6 +28,8 @@ use App\Models\FranchisorBusinessDetail;
 use Illuminate\Support\Facades\Mail;
 use App\Models\ArticleInterviewCommentReply;
 use Intervention\Image\Facades\Image;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -1605,7 +1607,7 @@ class AdminController extends Controller
     {
         //thumbnail creation
         $sourcePhoto     = public_path($imageUrl);
-
+        dd($sourcePhoto);
         if ($type == 'Gallery')
             $sourcePhoto = $imageUrl;
 
@@ -1634,7 +1636,20 @@ class AdminController extends Controller
         }
 
         try {
-            Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 80);
+
+            // create image manager with desired driver
+            $manager = new ImageManager(new Driver());
+            // Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 80);
+            // read image from file system
+            $image = $manager->read($sourcePhoto);
+            dd($image);
+            // resize image proportionally to 300px width
+            $image->scale($width, $height);
+            // insert watermark
+            $image->place($destinationPath . '/' . $imageName, 80);
+            // save modified image in new format
+
+            $image->toPng()->save('images/foo.png');
         } catch (\Exception $e) {
             $this->setLog('Thumbnail creation error ' . $e->getMessage());
             die;
@@ -1778,7 +1793,7 @@ class AdminController extends Controller
             $imageUrl  = $this->uploadImage($newsImage, 'News', 0, 's3', '');
 
             //thumbnail creation
-            $this->thumbnailCreation($imageUrl, 'News', 247, 139);
+            // $this->thumbnailCreation($imageUrl, 'News', 247, 139);
         }
 
         //inserting into newslist table
@@ -1862,8 +1877,10 @@ class AdminController extends Controller
             foreach ($associatedTags as $tags) {
                 $assocTags[]    = SeoTag::query()->where('tag_id', $tags->tag_id)->select('tag_id', 'name')->first();
             }
+            return view('admin/insights/edit-insights', compact('kicker', 'data', 'assocTags', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
+        } else {
+            return view('admin/insights/edit-insights', compact('kicker', 'data', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
         }
-        return view('admin/insights/edit-insights', compact('kicker', 'data', 'assocTags', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
     }
 
     public function updateInsightStatus(Request $request)
@@ -1877,21 +1894,7 @@ class AdminController extends Controller
 
     public function updateInsights(Request $request)
     {
-        //dd($request->all());
-        // $this->validate($request, [
 
-        //     'insights_publisher' => 'required',
-        //     'insights_type' => 'required',
-        //     'insights_cat' => 'required',
-        //     // 'insights_subcat' => 'required',
-        //     'title' => 'required|max:255',
-        //     //'home_title' => 'required',
-        //     'sub_title' => 'required',
-        //     'content' => 'required',
-        //     //'brands' => 'required',
-        //    // 'associated_tags' => 'required',
-        //         // 'image' => 'required',
-        // ]);
         $rules = [
             'insights_publisher' => 'required',
             'insights_type' => 'required',
@@ -1901,7 +1904,6 @@ class AdminController extends Controller
             'content' => 'required',
             'image' => 'required',
         ];
-
         // Check if insights_type is Terms, then insights_cat is not required
         if ($request->insights_type === 'Terms') {
             $rules['insights_cat'] = 'nullable';
@@ -1918,12 +1920,14 @@ class AdminController extends Controller
         $role              = $request->session()->get('role');
         $brand             = !empty($request->brands) ? $this->stringyfyText($request->brands) : "";
         $title             = $request->title;
+        dd($role);
         if (!empty($request->slug)) {
             $slug              = Str::slug($request->slug);
         } else {
             $slug              = Str::slug($title);
         }
-        // dd($role);
+
+
         $kicker            = $request->kicker;
         $homeTitle         = $request->home_title;
         $subTitle          = $request->sub_title;
@@ -1932,20 +1936,9 @@ class AdminController extends Controller
         $cat_id            = $request->insights_cat;
         $subcat_id         = $request->insights_subcat;
         $imageUrl          = $request->old_image;
+        $author            = $request->insights_publisher;
+        // dd($author);
         $isInternational   = ($request->is_intl == 1) ? 1 : 0;
-
-        //inserting files
-        if ($request->hasFile('image')) {
-
-            //Uploading Image
-            $newsImage = $request->file('image');
-            $imageUrl  = $this->uploadImage($newsImage, 'News', 0, 's3', '');
-
-            //thumbnail creation
-            $this->thumbnailCreation($imageUrl, 'News', 247, 139);
-        }
-
-
         $update = [
             'title'         => $title,
             // 'kicker'        => $kicker,
@@ -1956,13 +1949,25 @@ class AdminController extends Controller
             'insight_type'  => $insight_type,
             'cat_id'       => $cat_id,
             'subcat_id'   => $subcat_id,
-            //
             'related_brand' => $brand,
             'slug'          => $slug,
             'is_intl'       => $isInternational,
             'updated_by'    => $request->session()->get('adminEmail'),
-            'author_id'     => request()->insights_publisher
+            'author_id'     => $author,
         ];
+        //inserting files
+        if ($request->hasFile('image')) {
+
+            //Uploading Image
+            $newsImage = $request->file('image');
+            $imageUrl  = $this->uploadImage($newsImage, 'News', 0, 's3', '');
+
+            //thumbnail creation
+            // $this->thumbnailCreation($imageUrl, 'News', 247, 139);
+        }
+
+
+
 
         if ($request->hasFile('image'))
             $update['image'] = $imageUrl;
