@@ -16,19 +16,7 @@ $title = str_replace("- Franchise India",$title1,$seoTitle);
 
 <meta name="description" content="@yield('seoDesc', 'Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.')" />
 <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india')" />
-{{-- <link href="@yield('canonicalUrl', Request::get('page') ? url()->full() : url()->full())" rel="canonical"> --}}
-
-@php
-   $canonicalUrl = url()->current();
-    $queryParams = request()->query();
-    dd($canonicalUrl);
-    $queryString = '';
-    if (!empty($queryParams)) {
-        $queryString = '?' . urldecode(http_build_query($queryParams));
-    }
-@endphp
-<link href="{{ $canonicalUrl . $queryString }}" rel="canonical">
-
+<link href="@yield('canonicalUrl', Request::get('page') ? url()->full() : url()->full())" rel="canonical">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <link rel="shortcut icon" href="https://www.franchiseindia.com/favicon.ico" type="image/x-icon" />
 <meta property="fb:pages" content="118224094883095" />
