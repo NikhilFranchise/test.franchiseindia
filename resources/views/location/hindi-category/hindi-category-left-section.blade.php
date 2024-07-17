@@ -86,7 +86,7 @@
                                         <li>
                                             <div class="radio">
                                                 <label>
-                                                    <a href="{{url('/location').'/'.$citySlug}}" > {{$trimmedCity}} </a>
+                                                    <a href="{{url('/hi/location').'/'.$citySlug}}" > {{$trimmedCity}} </a>
                                                 </label>
                                             </div>
                                         </li>
