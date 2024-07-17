@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\ContentTagsAssignedHindi;
 use App\Models\HindiContentRef;
 use App\Models\HindiNewsRef;
@@ -25,18 +23,18 @@ use App\Models\ContentSliderImage;
 use App\Models\ContentTagsAssigned;
 use App\Mail\CommentReplyMail;
 use App\Models\FranchisorBusinessDetail;
-use Illuminate\Support\Facades\Mail;
 use App\Models\ArticleInterviewCommentReply;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
-    //
-
     public function __construct()
     {
         $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
@@ -79,37 +77,25 @@ class AdminController extends Controller
      */
     public function loginCheck(Request $request)
     {
-        $email = $request->input('email');
-        $password = $request->input('password');
+        $email      = $request->email;
+        $password   = $request->password;
+        $admUser    = AdminUser::query()->where(['admin_email' => $email])->first();
 
-        Log::info('Login attempt with email: ' . $email);
+        if ($admUser->count() == 0)
+            return redirect('admin/login');
 
-        $admUser = AdminUser::where('admin_email', $email)->first();
-
-        if (!$admUser) {
-            Log::error('User not found for email: ' . $email);
-            return redirect()->back()->withErrors(['email' => 'User not found.']);
-        }
-
-        Log::info('User found: ' . $admUser->admin_email);
-
-        if (Hash::check($password, $admUser->admin_password)) {
-            Log::info('Password match for user: ' . $email);
-
+        //checking if hash exists in the entered password
+        if (Hash::getFacadeRoot()->check($password, $admUser->admin_password)) {
             session()->flush();
-
-            $request->session()->put('admin_name', $admUser->admin_name);
+            $adm_name = $admUser->admin_name;
+            $request->session()->put('admin_name', $adm_name);
             $request->session()->put('adminEmail', $email);
             $request->session()->put('role', $admUser->admin_dept);
             $request->session()->put('author_creation_capability', $admUser->can_create_author);
-
             return redirect('admin/dashboard');
-        } else {
-            Log::error('Password mismatch for user: ' . $email);
-            Log::info('Provided password: ' . $password);
-            Log::info('Stored hash: ' . $admUser->admin_password);
-            return redirect()->back()->withErrors(['password' => 'Invalid credentials.']);
         }
+
+        return redirect('admin/login');
     }
 
     /**
@@ -1601,88 +1587,45 @@ class AdminController extends Controller
      * @param $height
      * @param $width
      */
-    // private function thumbnailCreation($imageUrl, $type, $width, $height)
-    // {
-    //     //thumbnail creation
-    //     $sourcePhoto     = public_path($imageUrl);
-
-    //     if ($type == 'Gallery')
-    //         $sourcePhoto = $imageUrl;
-
-    //     if ($type != 'Gallery')
-    //         $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
-
-    //     $imageName       = pathinfo($sourcePhoto)['basename'];
-
-    //     $destinationPath = "uploads";
-
-    //     switch ($type) {
-    //         case 'Article':
-    //             $destinationPath = public_path('uploads/thumbnails/' . session()->get('role') . '/art/');
-    //             break;
-
-    //         case 'Interview':
-    //             $destinationPath = public_path('uploads/thumbnails/' . session()->get('role') . '/int/');
-    //             break;
-
-    //         case 'Gallery':
-    //             $destinationPath = public_path('uploads/thumbnails/ga');
-    //             break;
-
-    //         case 'News':
-    //             $destinationPath = public_path('uploads/thumbnails/news/' . session()->get('role') . '/');
-    //     }
-
-    //     try {
-    //         Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 80);
-    //     } catch (\Exception $e) {
-    //         $this->setLog('Thumbnail creation error ' . $e->getMessage());
-    //         die;
-    //     }
-    // }
     private function thumbnailCreation($imageUrl, $type, $width, $height)
     {
-        // Determine the source photo path
-        $sourcePhoto = public_path($imageUrl);
+        //thumbnail creation
+        $sourcePhoto     = public_path($imageUrl);
 
-        if ($type == 'Gallery') {
+        if ($type == 'Gallery')
             $sourcePhoto = $imageUrl;
-        } elseif ($type != 'Gallery') {
-            $sourcePhoto = config('constants.awsS3Url') . $imageUrl;
-        }
 
-        // Extract the image name
-        $imageName = pathinfo($sourcePhoto, PATHINFO_BASENAME);
+        if ($type != 'Gallery')
+            $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
 
-        // Determine the destination path based on the type
+        $imageName       = pathinfo($sourcePhoto)['basename'];
+
+        $destinationPath = "uploads";
+
         switch ($type) {
             case 'Article':
                 $destinationPath = public_path('uploads/thumbnails/' . session()->get('role') . '/art/');
                 break;
+
             case 'Interview':
                 $destinationPath = public_path('uploads/thumbnails/' . session()->get('role') . '/int/');
                 break;
+
             case 'Gallery':
                 $destinationPath = public_path('uploads/thumbnails/ga');
                 break;
+
             case 'News':
                 $destinationPath = public_path('uploads/thumbnails/news/' . session()->get('role') . '/');
-                break;
-            default:
-                $destinationPath = public_path('uploads/thumbnails/others/');
-                break;
-        }
 
-        // Create the destination directory if it doesn't exist
-        if (!file_exists($destinationPath)) {
-            mkdir($destinationPath, 0755, true);
         }
 
         try {
-            // Create and save the thumbnail
-            Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 80);
+           $image = Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath.'/'.$imageName, 80);
+           //dd($image);
+
         } catch (\Exception $e) {
-            $this->setLog('Thumbnail creation error: ' . $e->getMessage());
+            $this->setLog('Thumbnail creation error ' . $e->getMessage());
             die;
         }
     }
@@ -1768,40 +1711,17 @@ class AdminController extends Controller
 
     public function createInsights(Request $request)
     {   //dd($request->all());
-        // $this->validate($request, [
+        $this->validate($request, [
 
-        //     'insights_publisher' => 'required',
-        //     'insights_type' => 'required',
-        //     'insights_cat' => 'required',
-        //     // 'insights_subcat' => 'required',
-        //     'title' => 'required|max:255',
-        //     'sub_title' => 'required',
-        //     'content' => 'required',
-        //     'image' => 'required',
-        // ]);
-        $rules = [
             'insights_publisher' => 'required',
             'insights_type' => 'required',
             'insights_cat' => 'required',
+            // 'insights_subcat' => 'required',
             'title' => 'required|max:255',
             'sub_title' => 'required',
             'content' => 'required',
             'image' => 'required',
-        ];
-
-        // Check if insights_type is Terms, then insights_cat is not required
-        if ($request->insights_type === 'Terms') {
-            $rules['insights_cat'] = 'nullable';
-            $rules['content'] = 'nullable';
-        } else {
-            $rules['insights_cat'] = 'required';
-            $rules['title'] = 'required';
-            $rules['sub_title'] = 'required';
-            $rules['image'] = 'required';
-            $rules['content'] = 'required';
-        }
-
-        $this->validate($request, $rules);
+        ]);
         $imageUrl          = "";
         $role              = $request->session()->get('role');
         $brand             = !empty($request->brands) ? $this->stringyfyText($request->brands) : "";
@@ -1816,7 +1736,7 @@ class AdminController extends Controller
         $subcat_id         = $request->insights_subcat;
         $desc              = $request->input('content');
         $isInternational   = ($request->is_intl == 1) ? 1 : 0;
-
+        // dd('hello');
         if ($request->hasFile('image')) {
 
             //Uploading Image
@@ -1825,6 +1745,7 @@ class AdminController extends Controller
 
             //thumbnail creation
             $this->thumbnailCreation($imageUrl, 'News', 247, 139);
+            // dd('image');
         }
 
         //inserting into newslist table
@@ -1904,16 +1825,16 @@ class AdminController extends Controller
         $associatedTags     = ContentTagsAssigned::query()->where('content_id', $newsId)->where('content_type', 2)->select('tag_id')->get();
 
         //fetching associated tags to a array
-        if ($associatedTags->count() > 0) {
+        if (count($associatedTags) > 0) {
             foreach ($associatedTags as $tags) {
                 $assocTags[]    = SeoTag::query()->where('tag_id', $tags->tag_id)->select('tag_id', 'name')->first();
             }
             return view('admin/insights/edit-insights', compact('kicker', 'data', 'assocTags', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
-        }else{
-
+    }else{
             return view('admin/insights/edit-insights', compact('kicker', 'data', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
         }
     }
+
 
     public function updateInsightStatus(Request $request)
     {
@@ -1927,43 +1848,20 @@ class AdminController extends Controller
     public function updateInsights(Request $request)
     {
         //dd($request->all());
-        // $this->validate($request, [
+        $this->validate($request, [
 
-        //     'insights_publisher' => 'required',
-        //     'insights_type' => 'required',
-        //     'insights_cat' => 'required',
-        //     // 'insights_subcat' => 'required',
-        //     'title' => 'required|max:255',
-        //     //'home_title' => 'required',
-        //     'sub_title' => 'required',
-        //     'content' => 'required',
-        //     //'brands' => 'required',
-        //    // 'associated_tags' => 'required',
-        //         // 'image' => 'required',
-        // ]);
-        $rules = [
             'insights_publisher' => 'required',
             'insights_type' => 'required',
             'insights_cat' => 'required',
+            // 'insights_subcat' => 'required',
             'title' => 'required|max:255',
+            //'home_title' => 'required',
             'sub_title' => 'required',
             'content' => 'required',
-            'image' => 'required',
-        ];
-
-        // Check if insights_type is Terms, then insights_cat is not required
-        if ($request->insights_type === 'Terms') {
-            $rules['insights_cat'] = 'nullable';
-            // $rules['image'] = 'nullable';
-            $rules['content'] = 'nullable';
-        } else {
-            $rules['insights_cat'] = 'required';
-            $rules['title'] = 'required';
-            $rules['sub_title'] = 'required';
-            // $rules['image'] = 'required';
-            $rules['content'] = 'required';
-        }
-        $this->validate($request, $rules);
+            //'brands' => 'required',
+            // 'associated_tags' => 'required',
+            // 'image' => 'required',
+        ]);
         $role              = $request->session()->get('role');
         $brand             = !empty($request->brands) ? $this->stringyfyText($request->brands) : "";
         $title             = $request->title;

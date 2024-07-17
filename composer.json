@@ -7,7 +7,7 @@
     "require": {
         "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
-        "intervention/image": "^3.7",
+        "intervention/image": "^2.3",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.15",
@@ -36,9 +36,14 @@
             "Database\\Seeders\\": "database/seeders/"
         }
     },
+    "suggest": {
+        "ext-gd": "to use GD library based image processing.",
+        "ext-imagick": "to use Imagick based image processing."
+    },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Unisharp\\Laravelfilemanager\\": "src/"
         }
     },
     "scripts": {
@@ -58,7 +63,13 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "providers": [
+                "Unisharp\\Laravelfilemanager\\LaravelFilemanagerServiceProvider",
+                "Intervention\\Image\\ImageServiceProvider"
+            ],
+            "aliases": {
+                "Image": "Intervention\\Image\\Facades\\Image"
+            }
         }
     },
     "config": {

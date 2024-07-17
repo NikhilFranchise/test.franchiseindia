@@ -212,7 +212,7 @@ return [
 
         Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
         // Intervention\Image\ImageServiceProvider::class,
-
+        Intervention\Image\ImageServiceProviderLaravelRecent::class,
     ])->toArray(),
 
     /*
@@ -262,7 +262,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-        // 'Image' => Intervention\Image\Facades\Image::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ])->toArray(),
 
 ];
