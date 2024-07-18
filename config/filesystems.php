@@ -29,7 +29,7 @@ return [
     | Supported Drivers: "local", "ftp", "sftp", "s3"
     |
     */
-    
+
     'disks' => [
 
         'local' => [
@@ -47,7 +47,11 @@ return [
         // ],
         'public' => [
             'driver' => 'local',
-            'root'   => public_path() . '/uploads'
+            'root' => storage_path('app/public'),
+            // 'root'   => public_path() . '/uploads'
+            'url' => '/storage',
+            'visibility' => 'public',
+            'throw' => false,
         ],
 
         's3' => [
@@ -56,8 +60,10 @@ return [
             'secret' => 'zK5niUebSv0NQmwuRH9WRThMKiI0yH4LLYQpSLB3', //env('AWS_SECRET'),
             'region' => 'ap-south-1', //env('AWS_REGION'),
             'bucket' => 'franchiseindia',
-            'options' => ['CacheControl' => 'max-age=31536000',
-                          'Expires'      => gmdate("D, d M Y H:i:s T", strtotime("+1 years"))],
+            'options' => [
+                'CacheControl' => 'max-age=31536000',
+                'Expires'      => gmdate("D, d M Y H:i:s T", strtotime("+1 years"))
+            ],
         ],
 
 
