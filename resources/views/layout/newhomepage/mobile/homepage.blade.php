@@ -1678,22 +1678,22 @@
     </div>
     <div class="overlay"></div>
     <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="{{ url('newhomepage/assets/vendor/jquery/js/jquery-3.3.1.slim.min.js') }}" defer></script>
+    <script src="{{ url('newhomepage/assets/vendor/jquery/js/jquery-3.3.1.slim.min.js') }}"></script>
     <!-- Popper.JS -->
     <!-- <script src="./assets/vendor/popper/js/popper.min.js"></script> -->
     <!-- Bootstrap JS -->
-    <script src="{{ url('newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js') }}" defer></script>
+    <script src="{{ url('newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <!-- jQuery Custom Scroller CDN -->
-    <script src="{{ url('newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js') }}" defer></script>
+    <script src="{{ url('newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <!-- Font Awesome JS -->
-    <script defer src="{{ url('newhomepage/assets/vendor/fontawesome/js/solid.js') }}" defer></script>
-    <script defer src="{{ url('newhomepage/assets/vendor/fontawesome/js/fontawesome.js') }}" defer></script>
+    <script defer src="{{ url('newhomepage/assets/vendor/fontawesome/js/solid.js') }}"></script>
+    <script defer src="{{ url('newhomepage/assets/vendor/fontawesome/js/fontawesome.js') }}"></script>
     <!-- swiper@6.2.0 JS -->
-    <script src="{{ url('newhomepage/assets/vendor/swiper/js/swiper-bundle.min.js') }}" defer></script>
+    <script src="{{ url('newhomepage/assets/vendor/swiper/js/swiper-bundle.min.js') }}"></script>
     <!-- Owl carousel -->
-    <script src="{{ url('newhomepage/assets/vendor/owl.carousel/owl.carousel.min.js') }}" defer></script>
+    <script src="{{ url('newhomepage/assets/vendor/owl.carousel/owl.carousel.min.js') }}"></script>
     <!-- Custom JS -->
-    <script src="{{ url('newhomepage/assets/js/app.mobile.js') }}" defer></script>
+    <script src="{{ url('newhomepage/assets/js/app.mobile.js') }}"></script>
 </body>
 
 </html>
