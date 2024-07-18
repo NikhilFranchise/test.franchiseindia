@@ -1621,6 +1621,9 @@ class AdminController extends Controller
         }
 
         try {
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
            $image = Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath.'/'.$imageName, 80);
            //dd($image);
 
