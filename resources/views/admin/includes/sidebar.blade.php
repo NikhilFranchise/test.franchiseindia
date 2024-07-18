@@ -35,7 +35,7 @@
                 </ul>
             </li>
         @endif
-        @if (session()->get('adminEmail') == 'techsupport@franchiseindia.net')
+        @if (session()->get('adminEmail') == 'techsupport@franchiseindia.net' || session()->get('adminEmail') == 'pganesh@franchiseindia.net')
             <li class="submenu @yield('AA')"> <a href="#"><i class="icon icon-th-list"></i>
                     <span>Article/Interview</span></a>
                 <ul>
