@@ -1617,15 +1617,14 @@ class AdminController extends Controller
 
             case 'News':
                 $destinationPath = public_path('uploads/thumbnails/news/' . session()->get('role') . '/');
-
         }
 
         try {
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0777, true);
             }
-           $image = Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath.'/'.$imageName, 80);
-           //dd($image);
+            $image = Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 80);
+            //dd($image);
 
         } catch (\Exception $e) {
             $this->setLog('Thumbnail creation error ' . $e->getMessage());
@@ -1826,15 +1825,13 @@ class AdminController extends Controller
         }
         // dd($company);
         $associatedTags     = ContentTagsAssigned::query()->where('content_id', $newsId)->where('content_type', 2)->select('tag_id')->get();
-
+        $assocTags = [];
         //fetching associated tags to a array
-        if (count($associatedTags) > 0) {
+        if ($associatedTags != null) {
             foreach ($associatedTags as $tags) {
                 $assocTags[]    = SeoTag::query()->where('tag_id', $tags->tag_id)->select('tag_id', 'name')->first();
             }
             return view('admin/insights/edit-insights', compact('kicker', 'data', 'assocTags', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
-    }else{
-            return view('admin/insights/edit-insights', compact('kicker', 'data', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
         }
     }
 
