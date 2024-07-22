@@ -1789,7 +1789,8 @@ class FranchisorController extends Controller
             $channelType = $request->get('channel_type');
             $tradeInvestment = $request->get('trade_investment');
             $tradeMargin = $request->get('trade_margin');
-            $channelTypeCount = $channelType->count();
+            // $channelTypeCount = $channelType->count();
+            $channelTypeCount = is_array($channelType) ? count($channelType) : 0;
 
             if (isset($tradeInvestment[0]) && !empty($tradeInvestment[0])) {
                 $unitInvMin = Config('constants.InvestRange.' . $tradeInvestment[0] . '.min');
