@@ -512,7 +512,7 @@
                                 </div>
                             </div>
                         @endif
-                        @if ($tradeCount != null && $tradeCount->count() != 0)
+                        @if ($tradeCount != null)
                             <div class="row row-no-margin labeshow">
                                 <div class="col-xs-12 col-sm-3 col-md-5 row-no-padding">Are you looking for Trade Partners
                                     (Dealers,
