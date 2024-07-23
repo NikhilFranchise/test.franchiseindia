@@ -46,11 +46,18 @@ class NewsLetterController extends Controller
             ]);
             if (!empty($email))
                 Mail::to($email)->send(new NewsLetterSubscribe($randValue));
-        } else if ($checkEmail->status == "P") {
+        } 
+        else if ($checkEmail->status == "P") {
             $news = 'pending';
-            $randValue = $checkEmail->verify_code; // Get the existing verify_code
 
-            Mail::to($email)->send(new NewsLetterSubscribe($randValue));
+            $verifyCode = FiNewsLetter::query()
+                ->where('email', $email)
+                ->where('site_type', $siteType)
+                ->orderBy('nid', 'DESC')
+                ->value('verify_code');
+
+            // dd($verifyCode);
+            Mail::to($email)->send(new NewsLetterSubscribe($verifyCode));
 
             return view('newsletter/subscribe')->with(compact('news'));
 
