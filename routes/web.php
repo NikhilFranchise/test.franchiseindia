@@ -64,9 +64,9 @@ Auth::routes();
 
 
 
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
-});
+// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+//     \UniSharp\LaravelFilemanager\Lfm::routes();
+// });
 Route::get('campaign/franchisor/{id}', [CommonController::class, 'franAutoLogin']);
 Route::get('campaign/deactivate/franchisor/{id}', [CommonController::class, 'franCampaignDeactivation']);
 Route::get('franchiseinternational', [InternationalController::class, 'getHomePage']); // International Page routes
@@ -90,6 +90,7 @@ Route::get('/hi', [NewHomePageController::class, 'hindiHomePage']); //checck
 Route::get('about', [StaticPageController::class, 'aboutus']);
 Route::get('contact', [ContactUsController::class, 'contactUsForm']);
 Route::get('feedback', [SiteFeedbackController::class, 'feedbackForm']);
+
 Route::get('testimonials', function () {
     return redirect('testimonials-reviews', 301);
 });
@@ -140,6 +141,7 @@ Route::post('subscribenews', [NewsLetterController::class, 'subscriptionFormsubm
 Route::post('property-loan-submit', [StaticPageController::class, 'postPropertyLoanForm']);
 Route::post('contact-submit', [ContactUsController::class, 'contact']);
 Route::post('feedback', [FeedbackController::class, 'feedback']);
+Route::post('franchisor-feedback',            [FeedbackController::class, 'paidFranchisorFeedback']); // Paid Franchisor Feedback
 Route::post('freeadvice', [AdviceController::class, 'freeadvice']);
 Route::post('brandlikes', [BrandController::class, 'likes']);
 Route::post('brandratings', [BrandController::class, 'ratings']);
@@ -165,8 +167,7 @@ Route::post('wivote', [WellnessController::class, 'vote']);
 Route::post('wiviewresult', [WellnessController::class, 'viewResult']);
 Route::post('unsub', [MailerController::class, 'unsubMailer']); //Newsletter unsubscribe
 Route::post('inv-lead',                       [ExpressInstaController::class, 'invLead']);       // inv view cont & exp int & category page exp int
-Route::post('inv-lead-normal',                [ExpressInstaController::class, 'invNormalLead']); // paid inv not want to spent credit
-
+Route::post('inv-lead-normal',                [ExpressInstaController::class, 'invNormalLead']); // paid inv not want
 //Payment Routes
 Route::get('payment', [PaymentController::class, 'payment']);
 
@@ -490,6 +491,7 @@ Route::post('paymentsubmit', [PaymentController::class, 'paymentHdfcPayuPg']);
 Route::post('payment/success', [PaymentController::class, 'paymentSuccess']);
 Route::post('payment/failure', [PaymentController::class, 'getHdfcPgResponseFailed']);
 Route::post('payment/cancelled', [PaymentController::class, 'getHdfcPgResponseFailed']);
+// Route::post('payment/cancelled', function() { return view('thanks.paymentfailed');});
 Route::get('confirm/{id}', [CommonController::class, 'verifyEmail']); // Mail Verification
 Route::get('change-password/{id}',           [CommonController::class, 'verifyEmail']);
 Route::get('newsletter/{code}', [NewsLetterController::class, 'subscriptionForm']);
@@ -810,14 +812,16 @@ Route::group(['prefix' => 'hi'], function () {
     });
 
     Route::get('/', [NewHomePageController::class, 'hindiHomePage']);               // Hindi Home Page
+    // Article Hindi Home
     Route::get('content', function () {
         return redirect('https://www.opportunityindia.com/hindi', 301);
-    });         // Article Hindi Home
-    Route::get('premiumbrand', [HomepageController::class, 'hindiHome']);                // Hindi Premium Brand Page
-    Route::get('brands/{profileName}', [BrandController::class, 'brandDetails']);                // Hindi brand url
+    });
     Route::get('content/{kicker}/{kickerId}', function ($kicker) {
         return redirect('https://www.opportunityindia.com/hindi/tag/' . $kicker, 301);
     });       // Hindi Kicker Url
+    Route::get('premiumbrand', [HomepageController::class, 'hindiHome']);                // Hindi Premium Brand Page
+    Route::get('brands/{profileName}', [BrandController::class, 'brandDetails']);                // Hindi brand url
+
     Route::get('{site}/{slug}.{id}', [ArticleController::class, 'getHindiContent']);          // Hindi Article Url
 
     Route::get('newcontent', [NewArticleController::class, 'articleHindiHome']);
@@ -826,6 +830,12 @@ Route::group(['prefix' => 'hi'], function () {
     Route::get('newcontent/{slug}.{id}', [NewArticleController::class, 'getHindiContent']);
     Route::get('next-article', [NewArticleController::class, 'getNextArticleHindiForRepeat']); // Hindi Repeat
     Route::get('video-and-podcast', [NewArticleController::class, 'getVideoAndPodcast']);
+});
+Route::get('content', function () {
+    return redirect('https://www.opportunityindia.com/', 301);
+});
+Route::get('content/{kicker}/{kickerId}', function ($kicker) {
+    return redirect('https://www.opportunityindia.com/tag/' . $kicker, 301);
 });
 
 
