@@ -20,7 +20,10 @@ class VerifyCsrfToken extends Middleware
         'invsuccess',
         'invcancelled',
         'book/payment',
-        'unsub'
+        'unsub',
+        'payment/cancelled',
+        'payment/success',
+
       
         
     ];

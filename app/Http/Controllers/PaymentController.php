@@ -513,7 +513,6 @@ class PaymentController extends Controller
         $merchant_data = $tid . "&" . $merchant_id . "&" . $order_id . "&" . $amount . "&" . $currency . "&" . $redirect_url . "&" . $cancel_url . "&" . $language . "&" . $billing_name . "&" . $billing_address . "&" . $billing_city . "&" . $billing_state . "&" . $billing_zip . "&" . $billing_country . "&" . $billing_tel . "&" . $billing_email . "&" . $payment_option . "&" . $card_type;
         $encrypted_data = $this->encrypt($merchant_data, Config('hdfcpgnew.workingKey')); // Method for encrypting the data.
         $access_code_new = Config('hdfcpgnew.accessCode');
-
         return view('payment.payment-request')->with(compact('encrypted_data', 'access_code_new'));
     }
 
