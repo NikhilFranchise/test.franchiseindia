@@ -167,7 +167,7 @@ Route::post('wivote', [WellnessController::class, 'vote']);
 Route::post('wiviewresult', [WellnessController::class, 'viewResult']);
 Route::post('unsub', [MailerController::class, 'unsubMailer']); //Newsletter unsubscribe
 Route::post('inv-lead',                       [ExpressInstaController::class, 'invLead']);       // inv view cont & exp int & category page exp int
-Route::post('inv-lead-normal',                [ExpressInstaController::class, 'invNormalLead']); // paid inv not want 
+Route::post('inv-lead-normal',                [ExpressInstaController::class, 'invNormalLead']); // paid inv not want
 //Payment Routes
 Route::get('payment', [PaymentController::class, 'payment']);
 
@@ -812,14 +812,16 @@ Route::group(['prefix' => 'hi'], function () {
     });
 
     Route::get('/', [NewHomePageController::class, 'hindiHomePage']);               // Hindi Home Page
+    // Article Hindi Home
     Route::get('content', function () {
         return redirect('https://www.opportunityindia.com/hindi', 301);
-    });         // Article Hindi Home
-    Route::get('premiumbrand', [HomepageController::class, 'hindiHome']);                // Hindi Premium Brand Page
-    Route::get('brands/{profileName}', [BrandController::class, 'brandDetails']);                // Hindi brand url
+    });
     Route::get('content/{kicker}/{kickerId}', function ($kicker) {
         return redirect('https://www.opportunityindia.com/hindi/tag/' . $kicker, 301);
     });       // Hindi Kicker Url
+    Route::get('premiumbrand', [HomepageController::class, 'hindiHome']);                // Hindi Premium Brand Page
+    Route::get('brands/{profileName}', [BrandController::class, 'brandDetails']);                // Hindi brand url
+
     Route::get('{site}/{slug}.{id}', [ArticleController::class, 'getHindiContent']);          // Hindi Article Url
 
     Route::get('newcontent', [NewArticleController::class, 'articleHindiHome']);
@@ -828,6 +830,12 @@ Route::group(['prefix' => 'hi'], function () {
     Route::get('newcontent/{slug}.{id}', [NewArticleController::class, 'getHindiContent']);
     Route::get('next-article', [NewArticleController::class, 'getNextArticleHindiForRepeat']); // Hindi Repeat
     Route::get('video-and-podcast', [NewArticleController::class, 'getVideoAndPodcast']);
+});
+Route::get('content', function () {
+    return redirect('https://www.opportunityindia.com/', 301);
+});
+Route::get('content/{kicker}/{kickerId}', function ($kicker) {
+    return redirect('https://www.opportunityindia.com/tag/' . $kicker, 301);
 });
 
 
