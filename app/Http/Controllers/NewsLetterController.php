@@ -48,6 +48,8 @@ class NewsLetterController extends Controller
                 Mail::to($email)->send(new NewsLetterSubscribe($randValue));
         } else if ($checkEmail->status == "P") {
             $news = 'pending';
+            Mail::to($email)->send(new NewsLetterSubscribe($randValue));
+
             return view('newsletter/subscribe')->with(compact('news'));
 
         } else if ($checkEmail->status == "U") {
