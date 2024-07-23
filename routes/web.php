@@ -831,7 +831,12 @@ Route::group(['prefix' => 'hi'], function () {
     Route::get('next-article', [NewArticleController::class, 'getNextArticleHindiForRepeat']); // Hindi Repeat
     Route::get('video-and-podcast', [NewArticleController::class, 'getVideoAndPodcast']);
 });
-
+Route::get('content', function () {
+    return redirect('https://www.opportunityindia.com/', 301);
+});
+Route::get('content/{kicker}/{kickerId}', function ($kicker) {
+    return redirect('https://www.opportunityindia.com/tag/' . $kicker, 301);
+});
 
 
 //Magazine Routes
