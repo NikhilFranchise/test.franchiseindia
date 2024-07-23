@@ -67,9 +67,7 @@
                             <div class="priclist">
                                 <div class="priclistinner">
                                     <div class="pritxtn">Free Listing</div>
-                                    <form class="form-horizontal" id="fran-form" name="form_franchisor"
-                                        action="{{ url('advertise-with-us-payment') }}" method="POST" role="form"
-                                        enctype="multipart/form-data">
+                                    <form class="form-horizontal" id="fran-form" name="form_franchisor"  action="{{ url('advertise-with-us-payment') }}" method="POST" role="form"  enctype="multipart/form-data">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="ftyblk">
                                             <div class="rinr cent"><i class="fas fa-rupee-sign"></i>
@@ -90,9 +88,7 @@
 
                                 <div class="priclistinner">
                                     <div class="pritxtn">Sub Category</div>
-                                    <form class="form-horizontal" name="form_franchisor"
-                                        action="{{ url('advertise-with-us-payment') }}" method="POST" role="form"
-                                        enctype="multipart/form-data">
+                                    <form class="form-horizontal" name="form_franchisor" action="{{ url('advertise-with-us-payment') }}" method="POST" role="form" enctype="multipart/form-data">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="ftyblk">
 

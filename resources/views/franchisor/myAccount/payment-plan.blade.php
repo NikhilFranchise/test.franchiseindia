@@ -12,12 +12,8 @@
                 <div class="col-xs-12 col-sm-10 col-md-10 formsection myaccright">
                     <h1 class="myhead marleft">Payment Plans</h1>
                     <div class="bor-radius backwhite marleft">
-                        <form class="form-horizontal"
-                        @csrf
-                            action="{{ Config('constants.MainDomain') }}/franchisor/myaccount/upgrade-account" method="post"
+                        <form class="form-horizontal" action="{{ Config('constants.MainDomain') }}/franchisor/myaccount/upgrade-account" method="post"  enctype="multipart/form-data">
                             @csrf
-
-                            enctype="multipart/form-data">
                             <div class="col-xs-12 col-sm-12 col-md-12 pad30 showbg">
                                 @if ($errors->any())
                                     <h4>{{ $errors->first() }}</h4>
