@@ -6,7 +6,7 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\SiteFeedbackController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\BrandFilterController;
-use App\Http\Controllers\MobileVerificationController;
+use App\Http\Controllers\MobileVerificationController; 
 use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\AdviceController;
 use App\Http\Controllers\FranchisorController;
@@ -841,8 +841,10 @@ Route::group(['prefix' => 'magazine'], function () {
         return redirect('/magazine', 301);
     });
 });
-
-
+// Route::get('/content/{kicker}',    [ArticleController::class,'articleKickersPage']);
+Route::get('content/{kicker}', function ($kicker) {
+    return redirect('https://www.opportunityindia.com/article' .'-'. $kicker, 301);
+}); 
 // Gallery Articles Section
 Route::group(['prefix' => 'gallery'], function () {
     Route::get('/', [GalleryController::class, 'galleryArticleHome']);

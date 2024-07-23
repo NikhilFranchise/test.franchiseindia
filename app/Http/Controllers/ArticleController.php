@@ -26,6 +26,7 @@ class ArticleController extends Controller
      */
     public function articleKickersPage(Request $request)
     {
+        // dd($request);
         //fetch kicker and replace '-' with ' '
         $kickerContentArr = [];
         $brand            = new BrandController;
