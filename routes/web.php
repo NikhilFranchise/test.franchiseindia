@@ -90,6 +90,7 @@ Route::get('/hi', [NewHomePageController::class, 'hindiHomePage']); //checck
 Route::get('about', [StaticPageController::class, 'aboutus']);
 Route::get('contact', [ContactUsController::class, 'contactUsForm']);
 Route::get('feedback', [SiteFeedbackController::class, 'feedbackForm']);
+
 Route::get('testimonials', function () {
     return redirect('testimonials-reviews', 301);
 });
@@ -140,6 +141,7 @@ Route::post('subscribenews', [NewsLetterController::class, 'subscriptionFormsubm
 Route::post('property-loan-submit', [StaticPageController::class, 'postPropertyLoanForm']);
 Route::post('contact-submit', [ContactUsController::class, 'contact']);
 Route::post('feedback', [FeedbackController::class, 'feedback']);
+Route::post('franchisor-feedback',            [FeedbackController::class, 'paidFranchisorFeedback']); // Paid Franchisor Feedback
 Route::post('freeadvice', [AdviceController::class, 'freeadvice']);
 Route::post('brandlikes', [BrandController::class, 'likes']);
 Route::post('brandratings', [BrandController::class, 'ratings']);
@@ -165,8 +167,7 @@ Route::post('wivote', [WellnessController::class, 'vote']);
 Route::post('wiviewresult', [WellnessController::class, 'viewResult']);
 Route::post('unsub', [MailerController::class, 'unsubMailer']); //Newsletter unsubscribe
 Route::post('inv-lead',                       [ExpressInstaController::class, 'invLead']);       // inv view cont & exp int & category page exp int
-Route::post('inv-lead-normal',                [ExpressInstaController::class, 'invNormalLead']); // paid inv not want to spent credit
-
+Route::post('inv-lead-normal',                [ExpressInstaController::class, 'invNormalLead']); // paid inv not want 
 //Payment Routes
 Route::get('payment', [PaymentController::class, 'payment']);
 

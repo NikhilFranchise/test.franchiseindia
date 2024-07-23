@@ -833,11 +833,15 @@
                                         <select name="ind_cat" id="getSubCategoryData" class="form-control myselectclass"
                                             onchange="getSubCatCategory(this.value)">
                                             <option value="">---- Select Sector ----</option>
-                                            @foreach (Config('constants.subCategoryArr.' . $franData->ind_main_cat) as $index => $value)
-                                                <option value="{{ $index }}"
-                                                    @if ($index == $franData->ind_cat) selected @endif>
-                                                    {{ $value }}</option>
-                                            @endforeach
+                                            @if (is_array(Config('constants.subCategoryArr.' . $franData->ind_main_cat)))
+                                                @foreach (Config('constants.subCategoryArr.' . $franData->ind_main_cat) as $index => $value)
+                                                    <option value="{{ $index }}"
+                                                        @if ($index == $franData->ind_cat) selected @endif>
+                                                        {{ $value }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+
                                         </select>
                                     </div>
                                 </div>
@@ -854,11 +858,13 @@
                                         <select name="ind_sub_cat" id="getSubCatCategoryData"
                                             class="form-control myselectclass">
                                             <option value="">---- Select Service / Product ----</option>
-                                            @foreach (Config('constants.subSubCategoryArr.' . $franData->ind_cat) as $index => $value)
-                                                <option value="{{ $index }}"
-                                                    @if ($index == $franData->ind_sub_cat) selected @endif>
-                                                    {{ $value }}</option>
-                                            @endforeach
+                                            @if (is_array(Config('constants.subSubCategoryArr.' . $franData->ind_cat)))
+                                                @foreach (Config('constants.subSubCategoryArr.' . $franData->ind_cat) as $index => $value)
+                                                    <option value="{{ $index }}"
+                                                        @if ($index == $franData->ind_sub_cat) selected @endif>
+                                                        {{ $value }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
@@ -1175,19 +1181,19 @@
                 $("#outletCountText").html("No Of Dealerships/Distributorships");
                 $('select[name="channel_type[]"]').html(
                     " @foreach (Config('constants.dealerAndDistributorChannels') as $index => $value) <option value='{{ $index }}'>{{ $value }}</option> @endforeach "
-                    );
+                );
             } else if (selectedBusinessTypeValue == '0') {
                 $("#no_fran_outlets").find("option:first").html("Select No Of Channel Partners");
                 $("#outletCountText").html("No Of Channel Partners");
                 $('select[name="channel_type[]"]').html(
                     " @foreach (Config('constants.tradePartnerChannels') as $index => $value) <option value='{{ $index }}'>{{ $value }}</option>  @endforeach "
-                    );
+                );
             } else {
                 $("#no_fran_outlets").find("option:first").html("Select No Of Outlets");
                 $("#outletCountText").html("No Of Current Outlets");
                 $('select[name="channel_type[]"]').html(
                     " @foreach (Config('constants.dealerAndDistributorChannels') as $index => $value) <option value='{{ $index }}'>{{ $value }}</option> @endforeach "
-                    );
+                );
             }
         }
         var tPCount = 2;

@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Response;
-    use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage;
 
 class FranchisorController extends Controller
 {
@@ -1789,7 +1789,8 @@ class FranchisorController extends Controller
             $channelType = $request->get('channel_type');
             $tradeInvestment = $request->get('trade_investment');
             $tradeMargin = $request->get('trade_margin');
-            $channelTypeCount = count($channelType);
+            // $channelTypeCount = $channelType->count();
+            $channelTypeCount = is_array($channelType) ? count($channelType) : 0;
 
             if (isset($tradeInvestment[0]) && !empty($tradeInvestment[0])) {
                 $unitInvMin = Config('constants.InvestRange.' . $tradeInvestment[0] . '.min');
@@ -2482,10 +2483,8 @@ class FranchisorController extends Controller
 
     //     $this->recordLeadDownload($franchisorId, 2);
 
-    //     return Response::download($filename, 'ExpressInterest.csv', $headers);
+    //     return Response::getFacadeRoot()->download($filename, 'ExpressInterest.csv', $headers);
     // }
-
-
     public function allInterestToCsv()
     {
         if (empty(request()->user()) || request()->user()->membership_type != 1) {
@@ -2555,7 +2554,6 @@ class FranchisorController extends Controller
 
         return Response::download($filePath, $filename, $headers);
     }
-
 
     /**
      * my account view appearance
