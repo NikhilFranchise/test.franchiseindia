@@ -71,7 +71,7 @@ class NewsLetterController extends Controller
     {
         $data = FiNewsLetter::query()->where('verify_code', request()->code)->orderby('nid', 'DESC')->first();
         // dd($data);
-        if ($data->count() == 0 || $data === null ) {
+        if (  $data == null ) {
             $news = "wrong";
             return view('newsletter/subscribe')->with(compact('news'));
         }
