@@ -48,6 +48,12 @@ class NewsLetterController extends Controller
                 Mail::to($email)->send(new NewsLetterSubscribe($randValue));
         } else if ($checkEmail->status == "P") {
             $news = 'pending';
+            $randValue = $checkEmail->verify_code; // Get the existing verify_code
+
+            Mail::to($email)->send(new NewsLetterSubscribe($randValue));
+
+            return view('newsletter/subscribe')->with(compact('news'));
+
         } else if ($checkEmail->status == "U") {
             $news   = 'againsubscribe';
             FiNewsLetter::query()->where('email', $email)->where('site_type', $siteType)->update(['verify_code' => $randValue]);
@@ -67,7 +73,7 @@ class NewsLetterController extends Controller
     {
         $data = FiNewsLetter::query()->where('verify_code', request()->code)->orderby('nid', 'DESC')->first();
         // dd($data);
-        if ($data->count() == 0 || $data === null ) {
+        if (  $data == null ) {
             $news = "wrong";
             return view('newsletter/subscribe')->with(compact('news'));
         }
