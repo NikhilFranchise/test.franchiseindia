@@ -998,7 +998,7 @@
         <div class=""><h2>Past Events</h2> </div>
         <div class="height40"></div>
         <ul class="eventlist" style="clear:both;">
-            @foreach($closed as $clos)
+            @foreach(array_reverse($closed) as $clos)
             <li class="column fro others">
                 <a href="{{$clos['url']}}" target="_blank">
                     <div class="imgblk">
@@ -2679,7 +2679,7 @@
                     </div>
                 </div>
                 <div class="eventcontentblk">
-                    <div class="eventhdk" style="line-height: 25px; font-size:18px;">INDIA’S LARGEST BRAND LICENSING & MERCHANDISING
+                    <div class="eventhdk" style="line-height: 25px; font-size:18px;">INDIAï¿½S LARGEST BRAND LICENSING & MERCHANDISING
                     </div>
                     <div class="venuedate">28th August 2020 - 1000 HRS IST
                         <span>  </span></div>
@@ -4964,7 +4964,7 @@
                 <div class="eventcontentblk">
                     <div class="eventhdk" style="line-height: 25px; font-size:19px;">Re-Imagine, Re-Engineer and Re-Purpose
                     </div>
-                    <div class="venuedate"> 15th May 2020 | 03:30 PM – 04:30 PM IST
+                    <div class="venuedate"> 15th May 2020 | 03:30 PM ï¿½ 04:30 PM IST
                         <span>Virtual Conference  </span></div>
                     <a href="https://www.restaurantindia.in/realestate-webinar/" target="_blank" class="btn btn-default eventbtn" style="background:rgba(220,51,34,0.7);">Registration Closed</a>
                 </div>
@@ -5034,7 +5034,7 @@
                     <div class="eventhdk" style="line-height: 25px; font-size:19px;">B2B Marketing In Unprecedented Times
 
                     </div>
-                    <div class="venuedate"> 20-May-2020 | 11:30 AM – 02:00 PM IST
+                    <div class="venuedate"> 20-May-2020 | 11:30 AM ï¿½ 02:00 PM IST
                         <span>Virtual Conference  </span></div>
                     <a href="https://www.entrepreneurindia.com/b2b-marketing/" target="_blank" class="btn btn-default eventbtn" style="background:rgba(220,51,34,0.7);">Registration Closed</a>
                 </div>
