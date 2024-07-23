@@ -48,6 +48,7 @@ class NewsLetterController extends Controller
                 Mail::to($email)->send(new NewsLetterSubscribe($randValue));
         } else if ($checkEmail->status == "P") {
             $news = 'pending';
+            
         } else if ($checkEmail->status == "U") {
             $news   = 'againsubscribe';
             FiNewsLetter::query()->where('email', $email)->where('site_type', $siteType)->update(['verify_code' => $randValue]);
