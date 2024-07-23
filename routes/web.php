@@ -64,9 +64,9 @@ Auth::routes();
 
 
 
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
-});
+// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+//     \UniSharp\LaravelFilemanager\Lfm::routes();
+// });
 Route::get('campaign/franchisor/{id}', [CommonController::class, 'franAutoLogin']);
 Route::get('campaign/deactivate/franchisor/{id}', [CommonController::class, 'franCampaignDeactivation']);
 Route::get('franchiseinternational', [InternationalController::class, 'getHomePage']); // International Page routes
@@ -490,6 +490,7 @@ Route::post('paymentsubmit', [PaymentController::class, 'paymentHdfcPayuPg']);
 Route::post('payment/success', [PaymentController::class, 'paymentSuccess']);
 Route::post('payment/failure', [PaymentController::class, 'getHdfcPgResponseFailed']);
 Route::post('payment/cancelled', [PaymentController::class, 'getHdfcPgResponseFailed']);
+// Route::post('payment/cancelled', function() { return view('thanks.paymentfailed');});
 Route::get('confirm/{id}', [CommonController::class, 'verifyEmail']); // Mail Verification
 Route::get('change-password/{id}',           [CommonController::class, 'verifyEmail']);
 Route::get('newsletter/{code}', [NewsLetterController::class, 'subscriptionForm']);
