@@ -437,7 +437,7 @@
     </nav>
 @else
     @if (Auth::check())
-        @if (Auth::user()->profile_type == config('constants.ProfileType.Investor'))
+        {{--  @if (Auth::user()->profile_type == config('constants.ProfileType.Investor'))
             <nav id="sidebar-login" class="c-menu c-menu--slide-right myaccount sidemy is-active">
                 <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding lbt">
                     <div class="wel-list-re" id="dismiss-login"> <span class="c-menu__close"><img
@@ -520,7 +520,7 @@
                     </div>
                 </div>
             </nav>
-        @endif
+        @endif  --}}
         {{--  @if (Auth::user()->profile_type == config('constants.ProfileType.Franchisor'))
             <nav id="sidebar-login" class="c-menu c-menu--slide-right myaccount sidemy is-active">
                 <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding lbt">
