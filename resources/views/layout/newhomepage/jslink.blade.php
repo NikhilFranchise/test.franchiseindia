@@ -19,7 +19,7 @@
 @endnotmobile
 @tablet
 
-<script src="{{url('newhomepage/assets/js/app.mobile.js')}}"></script>
+<script src="{{url('newhomepage/assets/js/app.mobile.js')}}" defer></script>
 @endtablet
 @mobile
 
