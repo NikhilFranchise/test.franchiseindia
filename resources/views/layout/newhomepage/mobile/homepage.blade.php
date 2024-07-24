@@ -1693,7 +1693,7 @@
     <!-- Owl carousel -->
     <script src="{{ url('newhomepage/assets/vendor/owl.carousel/owl.carousel.min.js') }}"></script>
     <!-- Custom JS -->
-    <script src="{{ url('newhomepage/assets/js/app.mobile.js') }}"></script>
+    <script src="{{ url('newhomepage/assets/js/app.mobile.js') }}" defer></script>
 </body>
 
 </html>

@@ -23,7 +23,7 @@
 @endtablet
 @mobile
 
-<script src="{{url('newhomepage/assets/js/app.mobile.js')}}"></script>
+<script src="{{url('newhomepage/assets/js/app.mobile.js')}}" defer></script>
 @endmobile
 
 <script type="text/javascript" src="{{url('awesomplete/awesomplete.js') }}"></script>
