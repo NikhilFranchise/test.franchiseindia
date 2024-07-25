@@ -807,19 +807,18 @@ class FranchisorController extends Controller
             // Convert the image to WebP format
             $webpImage = (string) $image->encode('webp', 90);
               // Check the MIME type and dimensions
-        $mimeType = $image->mime();  // Should be 'image/webp'
-        $width = $image->width();
-        $height = $image->height();
+        // $mimeType = $image->mime();  // Should be 'image/webp'
+        // $width = $image->width();
+        // $height = $image->height();
 
-        // Output the information
-        dd([
-            'mimeType' => $mimeType,
-            'width' => $width,
-            'height' => $height,
-            'binaryLength' => strlen($webpImage),
-        ]);
+        // // Output the information
+        // dd([
+        //     'mimeType' => $mimeType,
+        //     'width' => $width,
+        //     'height' => $height,
+        //     'binaryLength' => strlen($webpImage),
+        // ]);
 
-            dd($webpImage);
             // Generate the storage path for the WebP image
             $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.webp';
             // Upload the WebP image to the storage disk
