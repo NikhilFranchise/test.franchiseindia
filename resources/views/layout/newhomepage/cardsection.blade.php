@@ -72,6 +72,7 @@
                                 <h4>{{ Request::segment(1) == 'hi' ? 'हमारे विशेषज्ञों से पूछें' : 'Ask our Experts' }}
                                 </h4>
                                 <form id="homepage" name="homepage" method="post">
+                                    @csrf
                                     <div class="raido-main-section">
                                         <ul class="radio-main">
                                             <li>
