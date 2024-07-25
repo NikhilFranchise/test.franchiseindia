@@ -1,10 +1,11 @@
 <style>
     .error-border {
-    border: 2px solid red;
-}
-.error-placeholder::placeholder {
-    color: red;
-}
+        border: 2px solid red;
+    }
+
+    .error-placeholder::placeholder {
+        color: red;
+    }
 </style>
 <section class="card-section section-30" id="card-section">
     <div class="container">
@@ -25,7 +26,7 @@
                                                     Registration)</span>
                                             @endif
                                             <i class="fas fa-chevron-right float-right
-                                  icon-bar-main-fihl"
+                                                icon-bar-main-fihl"
                                                 aria-hidden="true"></i>
                                         </a>
                                     </div>
@@ -41,7 +42,7 @@
                                                     Registration)</span>
                                             @endif
                                             <i class="fas fa-chevron-right float-right
-                                  icon-bar-main-fihl"
+                                                icon-bar-main-fihl"
                                                 aria-hidden="true"></i>
                                         </a>
                                     </div>
@@ -71,7 +72,6 @@
                                 <h4>{{ Request::segment(1) == 'hi' ? 'हमारे विशेषज्ञों से पूछें' : 'Ask our Experts' }}
                                 </h4>
                                 <form id="homepage" name="homepage" method="post">
-                                    <input type="hidden" name="_token" id="csrf_token" value="{{ csrf_token() }}">
                                     <div class="raido-main-section">
                                         <ul class="radio-main">
                                             <li>
@@ -98,13 +98,9 @@
                                                     alt="email-icon">
                                             </div>
                                         </span>
-                                        <input type="email" class="form-control blur" required name="emailfreeadvice"
-                                            id="emailfreeadvice" class="form-control" required
+                                        <input type="email" class="form-control blur" required=""
+                                            name="emailfreeadvice" id="emailfreeadvice" class="form-control"
                                             placeholder="{{ Request::segment(1) == 'hi' ? 'ईमेल दर्ज करें' : 'Enter Email' }}">
-                                        {{--  <span id="emailError" class="error-message"
-                                            style="color: red; display: none;">Email is required</span>  --}}
-
-
                                     </div>
                                     <div class="input-group mb-15">
                                         <span class="input-group-addon">
@@ -116,17 +112,16 @@
                                         <input type="text" class="form-control blur" maxlength="10"
                                             name="mobilefreeadvice" id="mobilefreeadvice"
                                             placeholder="{{ Request::segment(1) == 'hi' ? 'मोबाइल नंबर दर्ज करें' : 'Enter Mobile No' }}"
-                                            required>
-                                        {{--  <span id="mobileError" class="error-message"
-                                            style="color: red; display: none;">Mobile is required</span>  --}}
+                                            required="">
                                     </div>
                                     <div id="askMsg" style="display:none;">
                                         <div class="green">
                                             {{ Request::segment(1) == 'hi' ? 'नि: शुल्क सलाह के लिए जानकारी जमा करने के लिए धन्यवाद!' : 'Thank You for Submitting information for Free Advice!' }}
                                         </div>
                                     </div>
-                                    <button type="button" class="btn
-                               btn-main"
+                                    <button type="button"
+                                        class="btn
+                                             btn-main"
                                         id="btnhome">Submit</button>
                                 </form>
                             </div>
