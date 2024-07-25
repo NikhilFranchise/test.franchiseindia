@@ -54,7 +54,7 @@ class ExpressInstaController extends Controller
                 'visibility' => 0,
                 'visit_date' => date('Y-m-d'),
                 'franchisor_visibility' => ($franData->membership_type == 1 ? 1 : 0),
-                'franchisor_visibility_date' => ($franData->membership_type == 1 ? date('Y-m-d H:i:s') : "")
+                'franchisor_visibility_date' => ($franData->membership_type == 1 ? date('Y-m-d H:i:s') : null)
             ]);
         }
 
@@ -575,7 +575,7 @@ class ExpressInstaController extends Controller
                         'franchisor_id' => $franId,
                         'pincode' => $pincode,
                         'visibility' => ($franchisorDetail->membership_type == 1 ? 1 : 0),
-                        'visibility_date' => ($franchisorDetail->membership_type == 1 ? date('Y-m-d H:i:s') : "")
+                        'visibility_date' => ($franchisorDetail->membership_type == 1 ? date('Y-m-d H:i:s') : null)
                     ]);
 
                     if ($needLoan == 1) {

@@ -276,6 +276,8 @@ Route::group(['prefix' => 'franchisor'], function () {
         Route::post('updateprofessionaldetails', [FranchisorController::class, 'updateProfessionalDetails']);
         Route::post('updatepropertydetails', [FranchisorController::class, 'updatePropertyDetails']);
         Route::post('updatetrainingaggrementdetails', [FranchisorController::class, 'updateTrainingAgreement']);
+        Route::post('updateappearance',               [FranchisorController::class,'editAppearance']);
+        Route::post('deleteimage',                    [FranchisorController::class,'deleteSliderImage']);
     });
 });
 

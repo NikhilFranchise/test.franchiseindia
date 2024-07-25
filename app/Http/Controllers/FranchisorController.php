@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class FranchisorController extends Controller
 {
@@ -801,8 +802,31 @@ class FranchisorController extends Controller
         if ($request->hasFile('company_logo')) {
             $companyLogo = $request->file('company_logo');
             $extension = $request->file('company_logo')->getClientOriginalExtension();
-            $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.' . $extension;
-            Storage::disk('s3')->put($companyLogoPath, file_get_contents($companyLogo), 'public');
+            // Create an instance of Image from the uploaded file
+            $image = Image::make($companyLogo);
+            // Convert the image to WebP format
+            $webpImage = (string) $image->encode('webp', 90);
+              // Check the MIME type and dimensions
+        $mimeType = $image->mime();  // Should be 'image/webp'
+        $width = $image->width();
+        $height = $image->height();
+
+        // Output the information
+        dd([
+            'mimeType' => $mimeType,
+            'width' => $width,
+            'height' => $height,
+            'binaryLength' => strlen($webpImage),
+        ]);
+
+            dd($webpImage);
+            // Generate the storage path for the WebP image
+            $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.webp';
+            // Upload the WebP image to the storage disk
+            Storage::disk('s3')->put($companyLogoPath, $webpImage, 'public');
+
+            // $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.' . $extension;
+            // Storage::disk('s3')->put($companyLogoPath, file_get_contents($companyLogo), 'public');
             // $companyLogo->storeAs('public', $companyLogoPath);
             $url = Storage::disk('s3')->url($companyLogoPath);
             // $url = asset('storage/' . $companyLogoPath);

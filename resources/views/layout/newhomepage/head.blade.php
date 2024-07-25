@@ -24,7 +24,8 @@
 <!-- Bootstrap CSS CDN -->
 <link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2') }}">
 <!-- Scrollbar Custom CSS -->
-<link rel="stylesheet"  href="{{ url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2') }}">
+<link rel="stylesheet"
+    href="{{ url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2') }}">
 <!-- swiper@6.2.0 CSS -->
 <link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/swiper/css/swiper-bundle.min.css?ver=2.2') }}">
 <!-- owl.carousel -->
