@@ -1002,3 +1002,28 @@ Route::get('categoryall',       [StaticPageController::class, 'categoryAll']);
 Route::get('search',                                 function () {
     return view('site.google-search-result');
 });
+
+Route::get('/content/{slug}', function ($slug) {
+    // Split the slug by the last dot (.)
+    $parts = explode('.', $slug);
+
+    // Extract the article title and id
+    $title = implode('-', array_slice($parts, 0, -1));
+    $id = end($parts);
+
+    // Redirect to the new domain
+    return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
+});
+
+Route::get('/wellness/{slug}', function ($slug) {
+    // Split the slug by the last dot (.)
+    $parts = explode('.', $slug);
+
+    // Extract the article title and id
+    $title = implode('-', array_slice($parts, 0, -1));
+    $id = end($parts);
+
+    // Redirect to the new domain
+    return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
+});
+

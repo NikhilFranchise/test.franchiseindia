@@ -1,9 +1,3 @@
-<style type="text/css">
-
-
-
-</style>
-
 <div class="middleval" style="right: -305px;" id="side-form">
     <div class="bothbtnmi">
         <div class="vttbl-cell">
