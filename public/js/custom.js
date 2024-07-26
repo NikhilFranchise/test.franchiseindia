@@ -145,7 +145,7 @@ $(document).ready(function() {
             data:{email : $(this).val()},
             success:function(data){
                 if(data != 0){
-                    // x.parent().append("<span style='color: red;'>You have an account associated with us already. Please login and apply.</span>");
+
                     alert("Your Investor account is already associated with us. Please login into your account and apply easily with one click.");
                 }
             }
