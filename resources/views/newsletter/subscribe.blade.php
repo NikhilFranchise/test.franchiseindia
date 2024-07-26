@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.master') 
 @section('content')
     <!-- more article section start here -->
     <div class="container mostpopu arttilist">

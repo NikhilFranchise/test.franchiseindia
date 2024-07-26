@@ -23,6 +23,7 @@ class VerifyCsrfToken extends Middleware
         'unsub',
         'payment/cancelled',
         'payment/success',
+        'franchisor-feedback',
 
       
         

@@ -817,6 +817,7 @@ Route::group(['prefix' => 'hi'], function () {
         return redirect('https://www.opportunityindia.com/hindi', 301);
     });
     Route::get('content/{kicker}/{kickerId}', function ($kicker) {
+        // dd('yes');
         return redirect('https://www.opportunityindia.com/hindi/tag/' . $kicker, 301);
     });       // Hindi Kicker Url
     Route::get('premiumbrand', [HomepageController::class, 'hindiHome']);                // Hindi Premium Brand Page
@@ -831,11 +832,39 @@ Route::group(['prefix' => 'hi'], function () {
     Route::get('next-article', [NewArticleController::class, 'getNextArticleHindiForRepeat']); // Hindi Repeat
     Route::get('video-and-podcast', [NewArticleController::class, 'getVideoAndPodcast']);
 });
-Route::get('content', function () {
-    return redirect('https://www.opportunityindia.com/', 301);
+
+// Route::get('content/{kicker}',   function(Request $request){
+//     dd('yes');
+// });
+
+// [ArticleController::class,'articleKickersPage']);
+// Route::get('content/women-entrepreneurs',     [ArticleController::class,'check']);
+
+
+
+
+Route::get('/content/{slug}', function ($slug) {
+    // Split the slug by the last dot (.)
+    $parts = explode('.', $slug);
+
+    // Extract the article title and id
+    $title = implode('-', array_slice($parts, 0, -1));
+    $id = end($parts);
+
+    // Redirect to the new domain
+    return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
-Route::get('content/{kicker}/{kickerId}', function ($kicker) {
-    return redirect('https://www.opportunityindia.com/tag/' . $kicker, 301);
+
+Route::get('/wellness/{slug}', function ($slug) {
+    // Split the slug by the last dot (.)
+    $parts = explode('.', $slug);
+
+    // Extract the article title and id
+    $title = implode('-', array_slice($parts, 0, -1));
+    $id = end($parts);
+
+    // Redirect to the new domain
+    return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
 
 
@@ -852,9 +881,9 @@ Route::group(['prefix' => 'magazine'], function () {
     });
 });
 // Route::get('/content/{kicker}',    [ArticleController::class,'articleKickersPage']);
-Route::get('content/{kicker}', function ($kicker) {
-    return redirect('https://www.opportunityindia.com/article' .'-'. $kicker, 301);
-}); 
+// Route::get('content/{kicker}', function ($kicker) {
+//     return redirect('https://www.opportunityindia.com/article' .'-'. $kicker, 301);
+// }); 
 // Gallery Articles Section
 Route::group(['prefix' => 'gallery'], function () {
     Route::get('/', [GalleryController::class, 'galleryArticleHome']);

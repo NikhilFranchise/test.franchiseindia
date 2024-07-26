@@ -1,5 +1,7 @@
-<div class="container">
-        <div class="company-profile scriteria">
+
+<div class="back-bg-home ">
+    <div class="container" style="padding: 25px">
+        <div class="company-profile">
             <h2 class="catbheading">
                 Understanding the Top 100 Franchise Selection Criteria:
             </h2>
@@ -118,6 +120,5 @@
             </p>
         </div>
     </div>
-
-
+</div>
 
