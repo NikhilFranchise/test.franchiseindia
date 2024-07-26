@@ -81,7 +81,7 @@ class AdminController extends Controller
         $password   = $request->password;
         $admUser    = AdminUser::query()->where(['admin_email' => $email])->first();
 
-        if ($admUser->count() == 0)
+        if ($admUser == null)
             return redirect('admin/login');
 
         //checking if hash exists in the entered password

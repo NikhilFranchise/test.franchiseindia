@@ -36,7 +36,7 @@
 
     <div class="wrapper">
         <!-- Sidebar  -->
-        {{--  @include('layout.newhomepage.sidemenu')  --}}
+        @include('layout.newhomepage.sidemenu')
 
         <!-- Sidebar End -->
         <!-- Desktop Section Start-->
@@ -50,19 +50,24 @@
                         <div class="container">
                             <h1 class="headin">More Visibility, More Business</h1>
                             <div class="ctxt">Choose the perfect plan for you, 100% satisfaction guaranteed</div>
+
+
                             <div class=""
                                 style="text-align:center;margin-top: 45px; margin-bottom:30px; color: #000;font-size: 17px;font-weight: 400;clear: both;">
                                 Chat on <a
                                     href="https://api.whatsapp.com/send?phone=919312650021&amp;text=Hello,%20I%20am%20interested%20in%20knowing%20more%20about ?%20https://www.franchiseindia.com/"
-                                    target="_blank"><img
+                                    target="_blank"><img style="width:2%"
                                         src="https://www.franchiseindia.com/newhomepage/assets/img/whatappsicon.svg"
-                                        style="height: 25px" class="sts"></a></div>
+                                        class="sts"></a></div>
+
+
+
+
+
                             <div class="priclist">
                                 <div class="priclistinner">
                                     <div class="pritxtn">Free Listing</div>
-                                    <form class="form-horizontal" id="fran-form" name="form_franchisor"
-                                        action="{{ url('advertise-with-us-payment') }}" method="POST" role="form"
-                                        enctype="multipart/form-data">
+                                    <form class="form-horizontal" id="fran-form" name="form_franchisor"  action="{{ url('advertise-with-us-payment') }}" method="POST" role="form"  enctype="multipart/form-data">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="ftyblk">
                                             <div class="rinr cent"><i class="fas fa-rupee-sign"></i>
@@ -83,30 +88,14 @@
 
                                 <div class="priclistinner">
                                     <div class="pritxtn">Sub Category</div>
-                                    <form class="form-horizontal" name="form_franchisor"
-                                        action="{{ url('advertise-with-us-payment') }}" method="POST" role="form"
-                                        enctype="multipart/form-data">
+                                    <form class="form-horizontal" name="form_franchisor" action="{{ url('advertise-with-us-payment') }}" method="POST" role="form" enctype="multipart/form-data">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="ftyblk">
-                                            <!-- <div class="rinr">
-                                            <div class="radio-item">
-                                                <input type="radio" id="ritema" name="memberplan" id="price1" value="116">
-                                                <label for="ritema"></label>
-                                            </div>
-                                            <i class="fas fa-rupee-sign"></i>
-                                            <span class="pf1">19,999</span><span class="pf2">/ 1 Month</span>
-                                        </div> -->
-                                            <!-- <div class="rinr otherp">
-                                            <div class="radio-item">
-                                                <input type="radio" id="ritema2" name="memberplan"  value="117" >
-                                                <label for="ritema2"></label>
-                                            </div>
-                                            <i class="fas fa-rupee-sign"></i>
-                                            <span class="pf1">59,997</span><span class="pf2"> <del class="dll">97,500</del> / 3 Months</span>
-                                        </div> -->
+
                                             <div class="rinr otherp">
                                                 <div class="radio-item">
-                                                    <input type="radio" id="ritema2" name="memberplan" value="123">
+                                                    <input type="radio" id="ritema2" name="memberplan"
+                                                        value="123">
                                                     <label for="ritema2"></label>
                                                 </div>
                                                 <i class="fas fa-rupee-sign"></i>
@@ -116,8 +105,8 @@
                                             </div>
                                             <div class="rinr otherp">
                                                 <div class="radio-item">
-                                                    <input type="radio" id="ritema3" name="memberplan" value="118"
-                                                        checked>
+                                                    <input type="radio" id="ritema3" name="memberplan"
+                                                        value="118" checked>
                                                     <label for="ritema3"></label>
                                                 </div>
                                                 <i class="fas fa-rupee-sign"></i>
@@ -129,8 +118,8 @@
                                         <input class="btncir" type="submit" value="Buy Now">
                                     </form>
                                     <ul class="listp">
-                                        <li>Get Priority over other business listings under - <strong>Sub Category</strong>
-                                        </li>
+                                        <li>Get Priority over other business listings under - <strong>Sub
+                                                Category</strong></li>
                                         <li>Visibility & Reach - 70%</li>
                                     </ul>
                                 </div>
@@ -142,14 +131,7 @@
                                         enctype="multipart/form-data">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <div class="ftyblk">
-                                            <!-- <div class="rinr">
-                                            <div class="radio-item">
-                                                <input type="radio" id="ritema4" name="memberplan" value="119">
-                                                <label for="ritema4"></label>
-                                            </div>
-                                            <i class="fas fa-rupee-sign"></i>
-                                            <span class="pf1">39,999</span><span class="pf2">/ 1 Month</span>
-                                        </div> -->
+
                                             <div class="rinr otherp">
                                                 <div class="radio-item">
                                                     <input type="radio" id="ritema5" name="memberplan"
@@ -158,7 +140,7 @@
                                                 </div>
                                                 <i class="fas fa-rupee-sign"></i>
                                                 <span class="pf1">1,43,000</span><span class="pf2"><!--<del class="dll">
-             1,43,000</del>--> / 3 Months</span>
+     1,43,000</del>--> / 3 Months</span>
                                             </div>
                                             <div class="rinr otherp">
                                                 <div class="radio-item">
@@ -168,7 +150,7 @@
                                                 </div>
                                                 <i class="fas fa-rupee-sign"></i>
                                                 <span class="pf1">2,27,500</span><span class="pf2"><!--<del class="dll">
-             2,27,500</del>--> / 6 Months</span>
+     2,27,500</del>--> / 6 Months</span>
                                             </div>
                                             <div class="rinr otherp">
                                                 <div class="radio-item">
@@ -199,20 +181,24 @@
                                 <div class="feblk_head"> Know What’s Included with Each Plan </div>
                                 <ul class="priceplan">
                                     <li>
-                                        <div class="reghead tleft">Get Priority over other business listings under</div>
-                                        <div class="iconblk htset tleft">Get Instant Update over Phone, Email and SMS</div>
+                                        <div class="reghead tleft">Get Priority over other business listings under
+                                        </div>
+                                        <div class="iconblk htset tleft">Get Instant Update over Phone, Email and SMS
+                                        </div>
 
                                         <div class="iconblk htset tleft">Make your business discoverable with detailed
                                             business information</div>
-                                        <div class="iconblk htset tleft">Add your brand images to Increase your visibility
-                                            and business enquiries</div>
-                                        <div class="iconblk htset tleft">Boost on Search by Category, Location & Investment
-                                        </div>
+                                        <div class="iconblk htset tleft">Add your brand images to Increase your
+                                            visibility and business enquiries</div>
+                                        <div class="iconblk htset tleft">Boost on Search by Category, Location &
+                                            Investment</div>
                                         <div class="iconblk htset tleft">Showcase your logo with company listing</div>
                                         <div class="iconblk htset tleft">Get access to “My Account” dashboard to track
                                             views and responses instantly</div>
-                                        <div class="iconblk htset tleft">Thousands of Investors Can View Your Profile</div>
-                                        <div class="iconblk htset tleft">Local, National And International Exposure</div>
+                                        <div class="iconblk htset tleft">Thousands of Investors Can View Your Profile
+                                        </div>
+                                        <div class="iconblk htset tleft">Local, National And International Exposure
+                                        </div>
                                         <div class="iconblk htset tleft">Generating more and better business inquiries
                                         </div>
                                         <div class="iconblk htset tleft">Visibility & Reach</div>
@@ -242,19 +228,7 @@
                                         <div class="iconblk htset"> </div>
 
                                     </li>
-                                    <!-- <li>
-                                        <div class="reghead">Sub -Sub Category</div>
-                                        <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                        <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                        <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                        <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                        <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                        <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                        <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                        <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                        <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                        <div class="iconblk htset"> <div class="pvalue">40%</div></div>
-                                    </li> -->
+
                                     <li>
                                         <div class="reghead">Sub Category</div>
                                         <div class="iconblk htset">
@@ -339,8 +313,9 @@
                 @include('layout.newhomepage.footer')
 
             </div>
-        </div>
+    </div>
     @enddesktop
+    
     <!-- Desktop Section End-->
 
     <!-- Tablet Section Start-->
@@ -375,51 +350,7 @@
                                         </strong></li>
                                 </ul>
                             </div>
-                            <!--            <div class="priclistinner">
-                                <div class="pritxtn">Super Saver</div>
-                                <form class="form-horizontal" id="fran-form" name="form_franchisor" action="{{ url('advertise-with-us-payment') }}" method="POST" role="form" enctype="multipart/form-data">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                    <div class="ftyblk">
-                                        <div class="rinr">
-                                            <div class="radio-item">
-                                                <input type="radio" id="ritema7" name="memberplan" id="price1" value="113" checked>
-                                                <label for="ritema7"></label>
-                                            </div>
-                                            <i class="fas fa-rupee-sign"></i>
-                                            <span class="pf1">9,999</span><span class="pf2">/ 1 Month</span>
-                                        </div>
-                                        <div class="rinr otherp">
-                                            <div class="radio-item">
-                                                <input type="radio" id="ritema8" name="memberplan" id="price2" value="114" >
-                                                <label for="ritema8"></label>
-                                            </div>
-                                            <i class="fas fa-rupee-sign"></i>
-                                            <span class="pf1">29,997 </span><span class="pf2"><del class="dll"> 58,500</del> / 3 Months</span>
-                                        </div>
-                                        <div class="rinr otherp">
-                                            <div class="radio-item">
-                                                <input type="radio" id="ritema8" name="memberplan" id="price2" value="122" >
-                                                <label for="ritema8"></label>
-                                            </div>
-                                            <i class="fas fa-rupee-sign"></i>
-                                            <span class="pf1">59,994 </span><span class="pf2"><del class="dll"> 1,17,000</del> / 6 Months</span>
-                                        </div>
-                                        <div class="rinr otherp">
-                                            <div class="radio-item">
-                                                <input type="radio" id="ritema9" name="memberplan"  value="115">
-                                                <label for="ritema9"></label>
-                                            </div>
-                                            <i class="fas fa-rupee-sign"></i>
-                                            <span class="pf1">1,19,988</span><span class="pf2"><del class="dll"> 2,34,000</del> / 1 Year</span>
-                                        </div>
-                                    </div>
-                                    <input class="btncir active" type="submit" value="Buy Now">
-                                </form>
-                                <ul class="listp">
-                                    <li>Get Priority over other business listings under - <strong>Sub - Sub Category</strong></li>
-                                    <li>Visibility & Reach - 40%</li>
-                                </ul>
-                            </div> -->
+                            
 
                             <div class="priclistinner">
                                 <div class="pritxtn">Sub Category</div>
@@ -428,25 +359,11 @@
                                     enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="ftyblk">
-                                        <!--  <div class="rinr">
-                                            <div class="radio-item">
-                                                <input type="radio" id="ritema" name="memberplan" id="price1" value="116">
-                                                <label for="ritema"></label>
-                                            </div>
-                                            <i class="fas fa-rupee-sign"></i>
-                                            <span class="pf1">19,999</span><span class="pf2">/ 1 Month</span>
-                                        </div> -->
-                                        <!--  <div class="rinr otherp">
-                                            <div class="radio-item">
-                                                <input type="radio" id="ritema2" name="memberplan"  value="117" >
-                                                <label for="ritema2"></label>
-                                            </div>
-                                            <i class="fas fa-rupee-sign"></i>
-                                            <span class="pf1">59,997</span><span class="pf2"> <del class="dll">97,500</del> / 3 Months</span>
-                                        </div> -->
+                                        
                                         <div class="rinr otherp">
                                             <div class="radio-item">
-                                                <input type="radio" id="ritema2" name="memberplan" value="123">
+                                                <input type="radio" id="ritema2" name="memberplan"
+                                                    value="123">
                                                 <label for="ritema2"></label>
                                             </div>
                                             <i class="fas fa-rupee-sign"></i>
@@ -455,8 +372,8 @@
                                         </div>
                                         <div class="rinr otherp">
                                             <div class="radio-item">
-                                                <input type="radio" id="ritema3" name="memberplan" value="118"
-                                                    checked>
+                                                <input type="radio" id="ritema3" name="memberplan"
+                                                    value="118" checked>
                                                 <label for="ritema3"></label>
                                             </div>
                                             <i class="fas fa-rupee-sign"></i>
@@ -467,7 +384,8 @@
                                     <input class="btncir" type="submit" value="Buy Now">
                                 </form>
                                 <ul class="listp">
-                                    <li>Get Priority over other business listings under - <strong>Sub Category</strong></li>
+                                    <li>Get Priority over other business listings under - <strong>Sub Category</strong>
+                                    </li>
                                     <li>Visibility & Reach - 70%</li>
                                 </ul>
                             </div>
@@ -479,17 +397,11 @@
                                     enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="ftyblk">
-                                        <!-- <div class="rinr">
-                                            <div class="radio-item">
-                                                <input type="radio" id="ritema4" name="memberplan" value="119">
-                                                <label for="ritema4"></label>
-                                            </div>
-                                            <i class="fas fa-rupee-sign"></i>
-                                            <span class="pf1">39,999</span><span class="pf2">/ 1 Month</span>
-                                        </div> -->
+                                        
                                         <div class="rinr otherp">
                                             <div class="radio-item">
-                                                <input type="radio" id="ritema5" name="memberplan" value="120">
+                                                <input type="radio" id="ritema5" name="memberplan"
+                                                    value="120">
                                                 <label for="ritema5"></label>
                                             </div>
                                             <i class="fas fa-rupee-sign"></i>
@@ -499,7 +411,8 @@
                                         </div>
                                         <div class="rinr otherp">
                                             <div class="radio-item">
-                                                <input type="radio" id="ritema6" name="memberplan" value="124">
+                                                <input type="radio" id="ritema6" name="memberplan"
+                                                    value="124">
                                                 <label for="ritema6"></label>
                                             </div>
                                             <i class="fas fa-rupee-sign"></i>
@@ -509,8 +422,8 @@
                                         </div>
                                         <div class="rinr otherp">
                                             <div class="radio-item">
-                                                <input type="radio" id="ritema7" name="memberplan" value="121"
-                                                    checked>
+                                                <input type="radio" id="ritema7" name="memberplan"
+                                                    value="121" checked>
                                                 <label for="ritema7"></label>
                                             </div>
                                             <i class="fas fa-rupee-sign"></i>
@@ -538,18 +451,19 @@
                                     <div class="reghead tleft">Get Priority over other business listings under</div>
                                     <div class="iconblk htset tleft">Get Instant Update over Phone, Email and SMS</div>
 
-                                    <div class="iconblk htset tleft">Make your business discoverable with detailed business
-                                        information</div>
-                                    <div class="iconblk htset tleft">Add your brand images to Increase your visibility and
-                                        business enquiries</div>
+                                    <div class="iconblk htset tleft">Make your business discoverable with detailed
+                                        business information</div>
+                                    <div class="iconblk htset tleft">Add your brand images to Increase your visibility
+                                        and business enquiries</div>
                                     <div class="iconblk htset tleft">Boost on Search by Category, Location & Investment
                                     </div>
                                     <div class="iconblk htset tleft">Showcase your logo with company listing</div>
-                                    <div class="iconblk htset tleft">Get access to “My Account” dashboard to track views
-                                        and responses instantly</div>
+                                    <div class="iconblk htset tleft">Get access to “My Account” dashboard to track
+                                        views and responses instantly</div>
                                     <div class="iconblk htset tleft">Thousands of Investors Can View Your Profile</div>
                                     <div class="iconblk htset tleft">Local, National And International Exposure</div>
-                                    <div class="iconblk htset tleft">Generating more and better business inquiries</div>
+                                    <div class="iconblk htset tleft">Generating more and better business inquiries
+                                    </div>
                                     <div class="iconblk htset tleft">Visibility & Reach</div>
 
                                 </li>
@@ -577,19 +491,7 @@
                                     <div class="iconblk htset"> </div>
 
                                 </li>
-                                <!--   <li>
-                                    <div class="reghead">Sub -Sub Category</div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"> <div class="pvalue">40%</div></div>
-                                </li> -->
+
                                 <li>
                                     <div class="reghead">Sub Category</div>
                                     <div class="iconblk htset">
@@ -675,7 +577,8 @@
 
         </div>
         </div>
-    @endtablet
+        @endtablet
+    
     <!-- Tablet Section End -->
     <!-- mobile section start -->
     @mobile
@@ -708,51 +611,7 @@
                                         </strong></li>
                                 </ul>
                             </div>
-                            <!--    <div class="priclistinner">
-                                <div class="pritxtn">Super Saver</div>
-                                <form class="form-horizontal" id="fran-form" name="form_franchisor" action="{{ url('advertise-with-us-payment') }}" method="POST" role="form" enctype="multipart/form-data">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <div class="ftyblk">
-                                    <div class="rinr">
-                                        <div class="radio-item">
-                                            <input type="radio" id="ritema7" name="memberplan" id="price1" value="113" checked>
-                                            <label for="ritema7"></label>
-                                        </div>
-                                        <i class="fas fa-rupee-sign"></i>
-                                        <span class="pf1">9,999</span><span class="pf2">/ 1 Month</span>
-                                    </div>
-                                    <div class="rinr otherp">
-                                        <div class="radio-item">
-                                            <input type="radio" id="ritema8" name="memberplan" id="price2" value="114" >
-                                            <label for="ritema8"></label>
-                                        </div>
-                                        <i class="fas fa-rupee-sign"></i>
-                                        <span class="pf1">29,997 </span><span class="pf2"><del class="dll"> 58,500</del> / 3 Months</span>
-                                    </div>
-                                    <div class="rinr otherp">
-                                        <div class="radio-item">
-                                            <input type="radio" id="ritema81" name="memberplan" id="price2" value="122" >
-                                            <label for="ritema81"></label>
-                                        </div>
-                                        <i class="fas fa-rupee-sign"></i>
-                                        <span class="pf1">59,994 </span><span class="pf2"><del class="dll"> 1,17,000</del> /6 Months</span>
-                                    </div>
-                                    <div class="rinr otherp">
-                                        <div class="radio-item">
-                                            <input type="radio" id="ritema9" name="memberplan"  value="115">
-                                            <label for="ritema9"></label>
-                                        </div>
-                                        <i class="fas fa-rupee-sign"></i>
-                                        <span class="pf1">1,19,988</span><span class="pf2"><del class="dll"> 2,34,000</del> / 1 Year</span>
-                                    </div>
-                                </div>
-                                <input class="btncir active" type="submit" value="Buy Now">
-                                </form>
-                                <ul class="listp">
-                                    <li>Get Priority over other business listings under - <strong>Sub - Sub Category</strong></li>
-                                    <li>Visibility & Reach - 40%</li>
-                                </ul>
-                            </div> -->
+
 
                             <div class="priclistinner">
                                 <div class="pritxtn">Sub Category</div>
@@ -761,26 +620,11 @@
                                     enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="ftyblk">
-                                        <!--  <div class="rinr">
-                                        <div class="radio-item">
-                                            <input type="radio" id="ritema" name="memberplan" id="price1" value="116">
-                                            <label for="ritema"></label>
-                                        </div>
-                                        <i class="fas fa-rupee-sign"></i>
-                                        <span class="pf1">19,999</span><span class="pf2">/ 1 Month</span>
-                                    </div>
-                                    <div class="rinr otherp">
-                                        <div class="radio-item">
-                                            <input type="radio" id="ritema2" name="memberplan" id="price2" value="117" >
-                                            <label for="ritema2"></label>
-                                        </div>
-                                        <i class="fas fa-rupee-sign"></i>
-                                        <span class="pf1">59,997</span><span class="pf2"> <del class="dll">97,500</del> / 3 Months</span>
-                                    </div> -->
+
                                         <div class="rinr otherp">
                                             <div class="radio-item">
-                                                <input type="radio" id="ritema21" name="memberplan" id="price2"
-                                                    value="123">
+                                                <input type="radio" id="ritema21" name="memberplan"
+                                                    id="price2" value="123">
                                                 <label for="ritema21"></label>
                                             </div>
                                             <i class="fas fa-rupee-sign"></i>
@@ -789,8 +633,8 @@
                                         </div>
                                         <div class="rinr otherp">
                                             <div class="radio-item">
-                                                <input type="radio" id="ritema3" name="memberplan" value="118"
-                                                    checked>
+                                                <input type="radio" id="ritema3" name="memberplan"
+                                                    value="118" checked>
                                                 <label for="ritema3"></label>
                                             </div>
                                             <i class="fas fa-rupee-sign"></i>
@@ -801,7 +645,8 @@
                                     <input class="btncir" type="submit" value="Buy Now">
                                 </form>
                                 <ul class="listp">
-                                    <li>Get Priority over other business listings under - <strong>Sub Category</strong></li>
+                                    <li>Get Priority over other business listings under - <strong>Sub Category</strong>
+                                    </li>
                                     <li>Visibility & Reach - 70%</li>
                                 </ul>
                             </div>
@@ -813,18 +658,11 @@
                                     enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="ftyblk">
-                                        <!--  <div class="rinr">
-                                        <div class="radio-item">
-                                            <input type="radio" id="ritema4" name="memberplan" id="price1" value="119">
-                                            <label for="ritema4"></label>
-                                        </div>
-                                        <i class="fas fa-rupee-sign"></i>
-                                        <span class="pf1">39,999</span><span class="pf2">/ 1 Month</span>
-                                    </div> -->
+
                                         <div class="rinr otherp">
                                             <div class="radio-item">
-                                                <input type="radio" id="ritema5" name="memberplan" id="price2"
-                                                    value="120">
+                                                <input type="radio" id="ritema5" name="memberplan"
+                                                    id="price2" value="120">
                                                 <label for="ritema5"></label>
                                             </div>
                                             <i class="fas fa-rupee-sign"></i>
@@ -834,8 +672,8 @@
                                         </div>
                                         <div class="rinr otherp">
                                             <div class="radio-item">
-                                                <input type="radio" id="ritema51" name="memberplan" id="price2"
-                                                    value="124">
+                                                <input type="radio" id="ritema51" name="memberplan"
+                                                    id="price2" value="124">
                                                 <label for="ritema51"></label>
                                             </div>
                                             <i class="fas fa-rupee-sign"></i>
@@ -845,8 +683,8 @@
                                         </div>
                                         <div class="rinr otherp">
                                             <div class="radio-item">
-                                                <input type="radio" id="ritema6" name="memberplan" value="121"
-                                                    checked>
+                                                <input type="radio" id="ritema6" name="memberplan"
+                                                    value="121" checked>
                                                 <label for="ritema6"></label>
                                             </div>
                                             <i class="fas fa-rupee-sign"></i>
@@ -878,18 +716,19 @@
                                     <div class="reghead tleft">Get Priority over other business listings under</div>
                                     <div class="iconblk htset tleft">Get Instant Update over Phone, Email and SMS</div>
 
-                                    <div class="iconblk htset tleft">Make your business discoverable with detailed business
-                                        information</div>
-                                    <div class="iconblk htset tleft">Add your brand images to Increase your visibility and
-                                        business enquiries</div>
+                                    <div class="iconblk htset tleft">Make your business discoverable with detailed
+                                        business information</div>
+                                    <div class="iconblk htset tleft">Add your brand images to Increase your visibility
+                                        and business enquiries</div>
                                     <div class="iconblk htset tleft">Boost on Search by Category, Location & Investment
                                     </div>
                                     <div class="iconblk htset tleft">Showcase your logo with company listing</div>
-                                    <div class="iconblk htset tleft">Get access to “My Account” dashboard to track views
-                                        and responses instantly</div>
+                                    <div class="iconblk htset tleft">Get access to “My Account” dashboard to track
+                                        views and responses instantly</div>
                                     <div class="iconblk htset tleft">Thousands of Investors Can View Your Profile</div>
                                     <div class="iconblk htset tleft">Local, National And International Exposure</div>
-                                    <div class="iconblk htset tleft">Generating more and better business inquiries</div>
+                                    <div class="iconblk htset tleft">Generating more and better business inquiries
+                                    </div>
                                     <div class="iconblk htset tleft">Visibility & Reach</div>
 
                                 </li>
@@ -918,30 +757,6 @@
 
 
                                 </li>
-
-
-
-
-
-                                <!--
-                                <li>
-                                    <div class="reghead">Sub -Sub Category</div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"><div class="pvalue"><i class="fas fa-check"></i></div></div>
-                                    <div class="iconblk htset"> <div class="pvalue">40%</div></div>
-                                </li>
-         -->
-
-
-
-
                                 <li>
                                     <div class="reghead">Sub Category</div>
                                     <div class="iconblk htset">
@@ -1027,8 +842,8 @@
 
         </div>
         </div>
-    @endmobile
-
+        @endmobile
+    
     <!-- mobile section end -->
     <div class="overlay"></div>
     <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>

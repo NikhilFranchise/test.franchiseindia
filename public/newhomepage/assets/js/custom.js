@@ -57,7 +57,7 @@ $(document).ready(function() {
     $("#btnhome").click(function() {
         var mobile = $('#mobilefreeadvice').val().trim();
         var email = $('#emailfreeadvice').val().trim();
-        var csrf_token = $('#csrf_token').val().trim();
+        var csrf_token = $("input[name='_token']").val();
         var hasError = false;
 
         // Reset error states

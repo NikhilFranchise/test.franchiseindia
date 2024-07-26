@@ -57,7 +57,7 @@
                                 placeholder="Enter Mobile">
                             <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
                                 style="display:none">edit</span>
-                            <span class="vrfy" onclick="validateMobileWider()" id="validate-mobile-contact1"
+                            <span class="vrfy" onclick="validateMobileWider()" id="validate-mobile-contact"
                                 style="display:none">VERIFY</span>
                             <span id="success-mobile-wider" class="showhideright" style="display:none"><i
                                     class="fa fa-check fa-lg" aria-hidden="true"></i></span>

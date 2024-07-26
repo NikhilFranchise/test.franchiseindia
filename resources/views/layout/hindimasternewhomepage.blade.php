@@ -2639,10 +2639,10 @@
         <script src="{{ url('newhomepage/assets/js/app.js') }}"></script>
     @endnotmobile
     @tablet
-        <script src="{{ url('newhomepage/assets/js/app.mobile.js') }}"></script>
+        <script src="{{ url('newhomepage/assets/js/app.mobile.js') }}" defer></script>
     @endtablet
     @mobile
-        <script src="{{ url('newhomepage/assets/js/app.mobile.js') }}"></script>
+        <script src="{{ url('newhomepage/assets/js/app.mobile.js') }}" defer></script>
     @endmobile
     <script type="text/javascript" src="{{ url('awesomplete/awesomplete.js') }}"></script>
     <script>
