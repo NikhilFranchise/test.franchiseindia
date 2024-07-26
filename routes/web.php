@@ -248,6 +248,8 @@ Route::post('advertise-with-us-payment', [FranchisorController::class, 'advertis
 Route::group(['prefix' => 'franchisor'], function () {
     Route::get('verifyotp', [CommonController::class, 'vrifyOtp']);
     Route::get('checkmobilestatus', [CommonController::class, 'verifyMobile']);
+    Route::get('international-registration',     function() { return view('franchisor/register/international-franchisor-registraion'); } );
+    Route::post('franchisor_registration',[FranchisorController::class,'postFranchisor']);
 
     Route::group(['prefix' => 'myaccount'], function () {
         Route::get('dashboard', [FranchisorController::class, 'viewDashboard']);
