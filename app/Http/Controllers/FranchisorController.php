@@ -827,7 +827,7 @@ class FranchisorController extends Controller
             // $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.' . $extension;
             // Storage::disk('s3')->put($companyLogoPath, file_get_contents($companyLogo), 'public');
             // $companyLogo->storeAs('public', $companyLogoPath);
-            $url = Storage::disk('s3')->url($companyLogoPath);
+            $url = Storage::getFacadeRoot()->disk('s3')->url($companyLogoPath);
             // $url = asset('storage/' . $companyLogoPath);
         }
 
