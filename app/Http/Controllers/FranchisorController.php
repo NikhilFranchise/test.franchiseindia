@@ -1019,7 +1019,7 @@ class FranchisorController extends Controller
         //Logo uploading
         if ($request->hasFile('company_logo')) {
             $companyLogo = $request->file('company_logo');
-            $extension = Request::getFacadeRoot()->file('company_logo')->getClientOriginalExtension();
+            $extension = $companyLogo->getClientOriginalExtension();
             $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.' . $extension;
             Storage::getFacadeRoot()->disk('s3')->put($companyLogoPath, file_get_contents($companyLogo), 'public');
             $url = Storage::getFacadeRoot()->disk('s3')->url($companyLogoPath);
@@ -1043,8 +1043,14 @@ class FranchisorController extends Controller
             return redirect()->back();
         }
 
+        // dd($_POST['outlet_locations']);
         //step 2 data insertion
-        $outletLocations = @implode(',', $_POST['outlet_locations']);
+        if (isset($_POST['outlet_locations'])) {
+            $outletLocations = implode(',', $_POST['outlet_locations']);
+        } else {
+            // Handle the case where 'outlet_locations' is not set
+            $outletLocations = ''; // or some other default value or error handling
+        }
         $marketingMaterial = $request->input('marketting_material');
         if ($request->input('marketting_material') == "Yes") {
             $marketingMaterial = @implode(',', $_POST['marketting_materials']);
