@@ -512,6 +512,8 @@ use Illuminate\Support\Str;
                                         <div><a href="{{Config('constants.MainDomain')}}/investor/create" class="btn btn-large btn-default btn-gry btn-prop"> आज एक बिजनेस शुरू करें <span>(निवेशक पंजीकरण) </span> </a></div>
                                         <br>
                                         <div><a href="{{Config('constants.MainDomain')}}/franchisor/registration/step/1" class="btn btn-large btn-default btn-gry btn-prop"  >चैनल पार्टनर नियुक्त करें <span> (फ़्रैंचाइज़र पंजीकरण) </span></a></div>
+                                        <br>
+                                        <div><a href="{{Config('constants.MainDomain')}}/franchisor/international-registration" class="btn btn-large btn-default btn-gry btn-prop"  >चैनल पार्टनर नियुक्त करें <span> (अंतरराष्ट्रीय फ़्रैंचाइज़र पंजीकरण) </span></a></div>
                                     </div>
                                 </div>
                             </form>

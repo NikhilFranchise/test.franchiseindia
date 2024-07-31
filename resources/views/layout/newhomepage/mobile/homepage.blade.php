@@ -119,6 +119,14 @@
                                                         Registration) </span></a>
                                             </div>
                                             <br>
+                                            <div><a href="https://www.franchiseindia.com/franchisor/international-registration"
+                                                    class="btn btn-large btn-default
+                                       btn-gry btn-prop">Appoint
+                                                    Channel
+                                                    Partners <br /><span> (International Franchisor
+                                                        Registration) </span></a>
+                                            </div>
+                                            <br>
                                             <div><a target="_blank"
                                                     href="https://www.franchiseindia.com/property-loan"
                                                     class="btn btn- large

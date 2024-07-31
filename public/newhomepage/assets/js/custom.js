@@ -13,48 +13,63 @@ $("#exampleFormControlSelect2").change(function () {
 });
 
 $(document).ready(function () {
-    $("#btnhome1").click(function () {
+    $("#btnhome1").click(function (event) {
+        event.preventDefault(); // Prevent form submission
+        // console.log('hello');
+
         var type = $("input[name='optionsRadios1']:checked").val();
-        var name = document.getElementById("namefreeadvice1").value;
-        var email = document.getElementById("emailfreeadvice1").value;
-        var mobile = document.getElementById("mobilefreeadvice1").value;
-        var details = document.getElementById("detailsfreeadvice1").value;
-        var pincode = document.getElementById("pincodefreeadvice1").value;
-        var is_newsletter = 1;
-        if (name != "" && email != "" && mobile != "") {
-            $.ajax({
-                type: "post",
-                url: "/freeadvice-home",
-                data: {
+        var name = $("#namefreeadvice1").val();
+        var email = $("#emailfreeadvice1").val();
+        var mobile = $("#mobilefreeadvice1").val();
+        var details = $("#detailsfreeadvice1").val();
+        var pincode = $("#pincodefreeadvice1").val();
+        var is_newsletter = $("#is_newsletterfreeadvice1").is(":checked") ? 1 : 0;
+        var csrf_token = $("input[name='_token']").val();
+
+        var hasError = false;
+
+        if (name && email && mobile) {
+            if (!hasError) {
+                var data = {
+                    _token: csrf_token,
                     optionsRadios: type,
                     name: name,
                     pincode: pincode,
                     email: email,
                     mobile: mobile,
                     details: details,
-                    is_newsletter: is_newsletter,
-                },
-                beforeSend: function () {
-                    //console.log('i am here33');
-                },
-                success: function (data) {
-                    //alert('success');
-                    window.location = "/thanks-advice-form";
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    // alert('test');
+                    is_newsletter: is_newsletter
+                };
 
-                    window.location = "/thanks-advice-form";
-                },
-            });
+                $.ajax({
+                    type: 'POST',
+                    url: '/freeadvice-home',
+                    data: data,
+                    beforeSend: function () {
+                        $('#btnhome1').val('Please wait...');
+                        // console.log('i am here33');
+                    },
+                    success: function (response) {
+                        // alert('Success');
+                        window.location = "/thanks-advice-form";
+                    },
+                    error: function (xhr, status, error) {
+                        alert('An error occurred: ' + error);
+                    },
+                    complete: function () {
+                        $('#btnhome1').val('Ask Our Experts');
+                    }
+                });
+            }
         } else {
             $("#errMsg1").show();
         }
     });
 });
 
-$(document).ready(function() {
-    $("#btnhome").click(function() {
+
+$(document).ready(function () {
+    $("#btnhome").click(function () {
         var mobile = $('#mobilefreeadvice').val().trim();
         var email = $('#emailfreeadvice').val().trim();
         var csrf_token = $("input[name='_token']").val();
@@ -91,14 +106,14 @@ $(document).ready(function() {
                 type: 'POST',
                 url: '/freeadvice',
                 data: data,
-                beforeSend: function() {
+                beforeSend: function () {
                     $('#btnhome').html('Please wait..');
                 },
-                success: function(data) {
+                success: function (data) {
                     // Assuming the server returns a URL to redirect to
                     window.location.href = data.redirect_url || "/thanks-advice-form";
                 },
-                error: function(xhr, textStatus, errorThrown) {
+                error: function (xhr, textStatus, errorThrown) {
                     console.error('Error:', errorThrown);
                     // Handle error condition, e.g., display an error message
                     alert('Error occurred. Please try again.');

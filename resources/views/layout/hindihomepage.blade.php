@@ -69,7 +69,7 @@
 		<!-- TOP DEALERSHIP OPPORTUNITIES START -->
 		@include('layout.newhomepage.top_dealership_opportunities')
 		<!-- TOP DEALERSHIP OPPORTUNITIES END -->
-		
+
 		<!-- BUSINESS FOR SALE OPPORTUNITIES START -->
 		@include('layout.newhomepage.business_for_sale_opportunities')
 		<!-- BUSINESS FOR SALE OPPORTUNITIES END -->
@@ -150,11 +150,11 @@
     @include('layout.newhomepage.bestfranchiseopportunity')
 
     <!-- Best Franchise Opportunity ends -->
-	
+
 	<!-- TOP DEALERSHIP OPPORTUNITIES START -->
 	@include('layout.newhomepage.top_dealership_opportunities')
 	<!-- TOP DEALERSHIP OPPORTUNITIES END -->
-	
+
 	<!-- BUSINESS FOR SALE OPPORTUNITIES START -->
 	@include('layout.newhomepage.business_for_sale_opportunities')
 	<!-- BUSINESS FOR SALE OPPORTUNITIES END -->
@@ -167,7 +167,7 @@
     @include('layout.newhomepage.topinternational')
 
     <!-- Top International Opportunities ends -->
-	
+
 	<!-- HIGH GROWTH POTENTIAL STARTUPS OPPORTUNITIES START -->
 	@include('layout.newhomepage.high_growth_potential_startups_opportunities')
 	<!-- HIGH GROWTH POTENTIAL STARTUPS OPPORTUNITIES END -->
@@ -228,15 +228,15 @@
     @include('layout.newhomepage.mobile.bfo')
 
     <!-- Best Franchise Opportunity ends -->
-	
+
 	<!-- TOP DEALERSHIP OPPORTUNITIES START -->
 	@include('layout.newhomepage.top_dealership_opportunities')
 	<!-- TOP DEALERSHIP OPPORTUNITIES END -->
-	
+
 	<!-- BUSINESS FOR SALE OPPORTUNITIES START -->
 	@include('layout.newhomepage.business_for_sale_opportunities')
 	<!-- BUSINESS FOR SALE OPPORTUNITIES END -->
-	
+
         <!-- Upcoming Events starts -->
     @include('layout.newhomepage.mobile.upcomingevents')
 
@@ -250,11 +250,11 @@
     @include('layout.newhomepage.mobile.topinternational')
 
     <!-- Top International Opportunities ends -->
-	
+
 	<!-- HIGH GROWTH POTENTIAL STARTUPS OPPORTUNITIES START -->
 	@include('layout.newhomepage.high_growth_potential_startups_opportunities')
 	<!-- HIGH GROWTH POTENTIAL STARTUPS OPPORTUNITIES END -->
-	
+
         <!-- Top Franchise Opportunities starts -->
     @include('layout.newhomepage.mobile.tfo')
 
@@ -539,7 +539,7 @@
 </script>
 
 
-<script>
+{{--  <script>
     (function () {
   const second = 1000,
         minute = second * 60,
@@ -555,15 +555,15 @@
       nextYear = yyyy + 1,
       dayMonth = "08/21/",
       birthday = dayMonth + yyyy;
-  
+
   today = mm + "/" + dd + "/" + yyyy;
   if (today > birthday) {
     birthday = dayMonth + nextYear;
   }
   //end
-  
+
   const countDown = new Date(birthday).getTime(),
-      x = setInterval(function() {    
+      x = setInterval(function() {
 
         const now = new Date().getTime(),
               distance = countDown - now;
@@ -583,13 +583,13 @@
         //seconds
       }, 0)
   }());
-</script>
+</script>  --}}
 <script>
 $(document).ready(function () {
     $("#myclose").click(function () {
         $(".topmost").hide();
     });
 });
-</script> 
+</script>
 </body>
 </html>

@@ -89,7 +89,7 @@
 
     gtag('config', 'G-8MKFEZLR18');
 </script>
-{{-- 
+{{--
 <script type="text/javascript">
     (function(c, l, a, r, i, t, y) {
         c[a] = c[a] || function() {

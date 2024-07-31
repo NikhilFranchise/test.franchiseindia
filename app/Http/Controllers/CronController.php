@@ -208,7 +208,7 @@ class CronController extends Controller
 
         $logMessage = $startMessage . ' End Time : ' . date('Y-m-d H:i:s');
 
-        //Log file generation 
+        //Log file generation
         $this->generateLog($fileName, $logMessage);
     }
 
@@ -338,7 +338,7 @@ class CronController extends Controller
 
         $logMessage = $startMessage . '  Franchisor Ids : ' . $franchisors . 'End Time : ' . date('Y-m-d H:i:s');
 
-        //Log file generation 
+        //Log file generation
         $this->generateLog($fileName, $logMessage);
     }
 
@@ -395,7 +395,7 @@ class CronController extends Controller
             ->where('membership_type' ,0)
             ->update([
                 'membership_plan' => 100,
-                'membership_weightage' => 0,
+                // 'membership_weightage' => 0,
                 'membership_weightage_backup' => 0,
                 'is_fixed_brand' => 0
             ]);
@@ -953,7 +953,7 @@ class CronController extends Controller
             if($singleRecord->franchisor->step_completed == 6)
                 $stepSixCompleted++;
         }
-        
+
         $data = "<----Franchisors All Time Data---->".PHP_EOL.
                 "Franchisors Count(Active) = ".UserAccount::query()->where('profile_type', 1)->where('profile_status', 1)->count().PHP_EOL.
                 "Franchisors Count(Not Active) = ".UserAccount::query()->where('profile_type', 1)->where('profile_status', '!=',1)->count().PHP_EOL.
@@ -988,7 +988,7 @@ class CronController extends Controller
                 "BOS Registration       = ".count($oneWeekRegistration->where('profile_type', 2)->where('reg_source', Config('constants.leadSource.BOS'))).PHP_EOL.
                 "Instant Apply Reg.     = ".count($oneWeekRegistration->where('profile_type', 2)->where('reg_source', Config('constants.leadSource.FiInstantApply'))).PHP_EOL.
                 "MAGAZINE(Online) Reg.  = ".count($oneWeekRegistration->where('profile_type', 2)->where('reg_source', Config('constants.leadSource.MAGAZINE'))).PHP_EOL;
-           
+
         Mail::getFacadeRoot()->raw($data, function ($message){
             $message->subject('Weekly Registration Report - Franchiseindia.com');
             $message->to(['service@franchiseindia.net', 'ashita@franchiseindia.com']);

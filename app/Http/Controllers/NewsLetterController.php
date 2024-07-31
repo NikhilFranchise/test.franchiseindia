@@ -46,7 +46,7 @@ class NewsLetterController extends Controller
             ]);
             if (!empty($email))
                 Mail::to($email)->send(new NewsLetterSubscribe($randValue));
-        } 
+        }
         else if ($checkEmail->status == "P") {
             $news = 'pending';
 
@@ -105,7 +105,7 @@ class NewsLetterController extends Controller
                 <mailinglist>' . $site . '</mailinglist>
                 <format>html</format>
                 <confirmed>yes</confirmed>
-                <customfields>                                
+                <customfields>
                 </customfields>
                 </details>
                 </xmlrequest>

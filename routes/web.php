@@ -64,14 +64,14 @@ Auth::routes();
 
 
 
-// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
-//     \UniSharp\LaravelFilemanager\Lfm::routes();
-// });
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
 Route::get('campaign/franchisor/{id}', [CommonController::class, 'franAutoLogin']);
 Route::get('campaign/deactivate/franchisor/{id}', [CommonController::class, 'franCampaignDeactivation']);
 Route::get('franchiseinternational', [InternationalController::class, 'getHomePage']); // International Page routes
 
-
+Route::post('freeadvice-home', [AdviceController::class, 'freeadviceHome']);
 Route::get('/', [NewHomePageController::class, 'homeNew']);
 Route::get('/home', function () {
     return redirect('/', 301);
@@ -143,6 +143,7 @@ Route::post('contact-submit', [ContactUsController::class, 'contact']);
 Route::post('feedback', [FeedbackController::class, 'feedback']);
 Route::post('franchisor-feedback',            [FeedbackController::class, 'paidFranchisorFeedback']); // Paid Franchisor Feedback
 Route::post('freeadvice', [AdviceController::class, 'freeadvice']);
+
 Route::post('brandlikes', [BrandController::class, 'likes']);
 Route::post('brandratings', [BrandController::class, 'ratings']);
 Route::post('brandcontactinfo', [ExpressInstaController::class, 'brandInfo']);     //guest

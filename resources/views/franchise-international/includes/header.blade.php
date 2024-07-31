@@ -501,6 +501,10 @@
                                             <div><a href="{{ Config('constants.MainDomain') }}/franchisor/registration/step/1"
                                                     class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel
                                                     Partners <span> (Franchisor Registration) </span> </a></div>
+                                            <br>
+                                            <div><a href="{{ Config('constants.MainDomain') }}/franchisor/international-registration"
+                                                    class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel
+                                                    Partners <span> (International Franchisor Registration) </span> </a></div>
                                         </center>
                                     </div>
                                 </form>

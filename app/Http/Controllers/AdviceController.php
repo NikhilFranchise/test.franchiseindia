@@ -83,7 +83,7 @@ class AdviceController extends Controller
             'mobile' => 'required_without:mobilefreeadvice|min:10',
             'mobilefreeadvice' => 'required_without:mobile|min:10',
             'name' => 'required_without:namefreeadvice|min:2',
-            'namefreeadvice' => 'required_without:name|min:2',            
+            'namefreeadvice' => 'required_without:name|min:2',
         ];
 
         // Create validator instance
@@ -152,7 +152,7 @@ class AdviceController extends Controller
 
     public function freeadviceHome(Request $request)
     {
-
+        // dd($request->all());
         $user = $request->optionsRadios;
         $name = $request->name;
         $pincode = $request->pincode;
