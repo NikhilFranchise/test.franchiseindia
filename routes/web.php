@@ -388,8 +388,6 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('Tanclean-Franchise',                         function () {
         return redirect('business-opportunities/all/all', 301);
     });
-
-
     Route::get('/',                                       function () {
         return redirect('business-opportunities/all/all', 301);
     });
@@ -430,7 +428,6 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('uttarakhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('himachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('jammu-and-kashmir.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-
     // Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
     // Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
     // Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
@@ -438,7 +435,6 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     // Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
     // Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListing']);
     // Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
-
     Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
@@ -446,14 +442,8 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListingnormalization']);
     Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
-
-
-
-
     Route::get('/lowcost', [BusinessListingController::class, 'searchBusinessListing'])
         ->defaults('lowcost', 'lowcost');
-
-
     Route::get('{code}/all/all', function () {
         return redirect('business-opportunities/all/all', 301);
     });
@@ -461,10 +451,6 @@ Route::group(['prefix' => 'business-opportunities'], function () {
         return redirect('business-opportunities/all/all', 301);
     });
 });
-
-
-
-
 // /Category Page Routes
 Route::group(['prefix' => 'category'], function () {
     Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
@@ -487,7 +473,6 @@ Route::post('payment/cancelled', [PaymentController::class, 'getHdfcPgResponseFa
 Route::get('confirm/{id}', [CommonController::class, 'verifyEmail']); // Mail Verification
 Route::get('change-password/{id}',           [CommonController::class, 'verifyEmail']);
 Route::get('newsletter/{code}', [NewsLetterController::class, 'subscriptionForm']);
-
 // Restaurant Routes
 Route::group(['prefix' => 'restaurant'], function () {
     Route::get('/', [RestaurantController::class, 'articleRestaurant']);
@@ -508,12 +493,7 @@ Route::group(['prefix' => 'restaurant'], function () {
     Route::get('newsletter/subscriptionForm', [NewsLetterController::class, 'newsletterForm']);
     Route::get('newsletter/newsub', [NewsLetterController::class, 'newsletterSub']);
     Route::get('{content_id}', [ArticleController::class, 'commonInner']);
-    // Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);     // Newsletter signup
-
 });
-
-
-
 //for books
 Route::group(['prefix' => 'book'], function () {
     //Get routes
@@ -527,7 +507,6 @@ Route::group(['prefix' => 'book'], function () {
 Route::get('amp/{path}', function ($path) {
     return redirect('/' . $path, 301);
 })->where('path', '.*');
-
 // Please do not open amp pages
 
 // Route::group(['prefix' => 'amp'], function () {
@@ -675,9 +654,6 @@ Route::get('amp/{path}', function ($path) {
 //     Route::get('brands/{profileName}', [BrandController::class, 'ampBrandDetails']);                // Eng AMP brand url  working
 //     Route::get('{contentSite}/{title}.{id}', [AmpArticleController::class, 'ampCreate']);
 // });
-
-
-
 //Education routes
 Route::group(['prefix' => 'education'], function () {
     //Route::get('/',                          'EducationController@articleEducation');
@@ -696,9 +672,6 @@ Route::group(['prefix' => 'education'], function () {
 
     // Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);     // Newsletter signup
 });
-
-
-
 //Entrepreneur routes
 Route::group(['prefix' => 'entrepreneur'], function () {
     Route::get('/', [ArticleController::class, 'articleHome']);
@@ -720,14 +693,9 @@ Route::group(['prefix' => 'entrepreneur'], function () {
         return redirect(Config('constants.MainDomain') . '/content', 301);
     });
 });
-
 Route::get('event', [EventController::class, 'event']);
-
 //Rss Route
 Route::get('rss', [FacebookArticleController::class, 'rss']); // Facebook Instant Articles RSS feed route
-
-
-
 //Hindi language routes
 Route::group(['prefix' => 'hi'], function () {
     //Category Page Routes
@@ -741,11 +709,6 @@ Route::group(['prefix' => 'hi'], function () {
             return redirect('business-opportunities/all/all', 301);
         });
     });
-
-
-
-
-
     //Directory Page Routes
     Route::group(['prefix' => 'business-opportunities'], function () {
         // Route::get('dealers-and-distributors.m5',      'DealersAndDistributorController@getHomePage'); // International Page routes
@@ -792,17 +755,14 @@ Route::group(['prefix' => 'hi'], function () {
         Route::get('uttarakhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('himachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('jammu-and-kashmir.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-
         Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
-
         Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListing']);
         Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
     });
-
     Route::get('/', [NewHomePageController::class, 'hindiHomePage']);               // Hindi Home Page
     // Article Hindi Home
     Route::get('content', function () {
@@ -813,9 +773,7 @@ Route::group(['prefix' => 'hi'], function () {
     });       // Hindi Kicker Url
     Route::get('premiumbrand', [HomepageController::class, 'hindiHome']);                // Hindi Premium Brand Page
     Route::get('brands/{profileName}', [BrandController::class, 'brandDetails']);                // Hindi brand url
-
     Route::get('{site}/{slug}.{id}', [ArticleController::class, 'getHindiContent']);          // Hindi Article Url
-
     Route::get('newcontent', [NewArticleController::class, 'articleHindiHome']);
     Route::get('newcontent/author/{author}', [NewArticleController::class, 'getAuthorHindiDetails']); // Hindi Author url
     Route::get('newcontent/{kicker}/{kickerId}', [NewArticleController::class, 'getHindiKickerList']);
@@ -829,8 +787,6 @@ Route::get('content', function () {
 Route::get('content/{kicker}/{kickerId}', function ($kicker) {
     return redirect('https://www.opportunityindia.com/tag/' . $kicker, 301);
 });
-
-
 //Magazine Routes
 Route::group(['prefix' => 'magazine'], function () {
     Route::get('/', [MagazineController::class, 'magazineListHome']);
@@ -843,8 +799,6 @@ Route::group(['prefix' => 'magazine'], function () {
         return redirect('/magazine', 301);
     });
 });
-
-
 // Gallery Articles Section
 Route::group(['prefix' => 'gallery'], function () {
     Route::get('/', [GalleryController::class, 'galleryArticleHome']);
@@ -852,12 +806,7 @@ Route::group(['prefix' => 'gallery'], function () {
     Route::get('{kicker}/{kicker_id}', [GalleryController::class, 'galleryArticleKickersPage']);
 });
 
-
-
-
-
 //Admin Panel Post Routes
-
 Route::post('updateauthorstatus',             [AdminController::class, 'updateAuthorStatus']);
 Route::post('updatearticalinterviewstatus',   [AdminController::class, 'updateArticalInterviewStatus']);
 Route::post('updatenewsstatus',               [AdminController::class, 'updateNewsStatus']);
@@ -879,11 +828,6 @@ Route::get('searchmagazine',                  [AdminController::class, 'searchMa
 Route::get('articleinterviewcommentsearch',   [AdminController::class, 'searchArticleInterviewComment']);
 Route::get('newscommentsearch',               [AdminController::class, 'searchNewsComment']);
 Route::get('admin-logout',                    [AdminController::class, 'logout']);
-
-
-
-
-
 //admin panel routes
 Route::group(['prefix' => 'admin'], function () {
     //Get routes
@@ -916,7 +860,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('get-kickers',                          [AdminController::class, 'getHindiKickers']);
     Route::get('kickers/list/{type}',                  [AdminController::class, 'getKickersList']);
     Route::get('{type}/hindi/{contentId}',             [AdminController::class, 'getCreateHindiArticleNewsForm']);
-
     //Post routes
     Route::post('update-magazine-comment',             [AdminController::class, 'updateMagazineComment']);
     Route::post('update-mag-comment-status',           [AdminController::class, 'setMagazineCommentStatus']);
@@ -967,9 +910,7 @@ Route::get('location/{city}',              [BusinessListingController::class, 'l
 // INSIGHTS ROUTES START HERE //
 Route::middleware('TrailingSlashRedirect')->group(function () {
     Route::get('/search/insights',                      [InsightsController::class, 'insightSearch']);
-
     Route::group(['prefix' => 'insights'], function () {
-
         Route::get('author/{slug}',                         [InsightsController::class, 'authordata']);
         Route::get('thanks', function () {
             return view('insights.thanks');
@@ -992,27 +933,21 @@ Route::get('categoryall',       [StaticPageController::class, 'categoryAll']);
 Route::get('search',                                 function () {
     return view('site.google-search-result');
 });
-
 Route::get('/content/{slug}', function ($slug) {
     // Split the slug by the last dot (.)
     $parts = explode('.', $slug);
-
     // Extract the article title and id
     $title = implode('-', array_slice($parts, 0, -1));
     $id = end($parts);
-
     // Redirect to the new domain
     return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
-
 Route::get('/wellness/{slug}', function ($slug) {
     // Split the slug by the last dot (.)
     $parts = explode('.', $slug);
-
     // Extract the article title and id
     $title = implode('-', array_slice($parts, 0, -1));
     $id = end($parts);
-
     // Redirect to the new domain
     return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
