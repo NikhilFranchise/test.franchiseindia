@@ -70,8 +70,6 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], funct
 Route::get('campaign/franchisor/{id}', [CommonController::class, 'franAutoLogin']);
 Route::get('campaign/deactivate/franchisor/{id}', [CommonController::class, 'franCampaignDeactivation']);
 Route::get('franchiseinternational', [InternationalController::class, 'getHomePage']); // International Page routes
-
-Route::post('freeadvice-home', [AdviceController::class, 'freeadviceHome']);
 Route::get('/', [NewHomePageController::class, 'homeNew']);
 Route::get('/home', function () {
     return redirect('/', 301);
@@ -85,19 +83,16 @@ Route::get('/contact/site', function () {
 Route::get('pagenotfound', function () {
     return view('static.404');
 }); //404 ERROR PAGE
-
 Route::get('/hi', [NewHomePageController::class, 'hindiHomePage']); //checck
 Route::get('about', [StaticPageController::class, 'aboutus']);
 Route::get('contact', [ContactUsController::class, 'contactUsForm']);
 Route::get('feedback', [SiteFeedbackController::class, 'feedbackForm']);
-
 Route::get('testimonials', function () {
     return redirect('testimonials-reviews', 301);
 });
 Route::get('testimonials-reviews', [StaticPageController::class, 'getTestimonials']);
 Route::get('sitemap/brands', [BrandFilterController::class, 'brandsitemap']);
 Route::get('sitemap/brands/{abre}',           [BrandFilterController::class, 'brandfilter']);
-
 Route::get('terms', [StaticPageController::class, 'mainTerm']);
 Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBystateName']);
 Route::get('invester-verifyformmobilenumber', [MobileVerificationController::class, 'investerverifyMobile']);
@@ -143,7 +138,7 @@ Route::post('contact-submit', [ContactUsController::class, 'contact']);
 Route::post('feedback', [FeedbackController::class, 'feedback']);
 Route::post('franchisor-feedback',            [FeedbackController::class, 'paidFranchisorFeedback']); // Paid Franchisor Feedback
 Route::post('freeadvice', [AdviceController::class, 'freeadvice']);
-
+Route::post('freeadvice-home', [AdviceController::class, 'freeadviceHome']);
 Route::post('brandlikes', [BrandController::class, 'likes']);
 Route::post('brandratings', [BrandController::class, 'ratings']);
 Route::post('brandcontactinfo', [ExpressInstaController::class, 'brandInfo']);     //guest
@@ -171,7 +166,6 @@ Route::post('inv-lead',                       [ExpressInstaController::class, 'i
 Route::post('inv-lead-normal',                [ExpressInstaController::class, 'invNormalLead']); // paid inv not want
 //Payment Routes
 Route::get('payment', [PaymentController::class, 'payment']);
-
 Route::group(['prefix' => 'investor'], function () {
     Route::get('plan', [InvestorController::class, 'campaignPlan']);
     Route::get('create-new', [InvestorController::class, 'campaignNewRegistration']);
@@ -186,7 +180,6 @@ Route::group(['prefix' => 'investor'], function () {
     Route::get('quickregistration', function () {
         return view('investor/register/investor-quick-registration');
     });
-
     // post routes of investor
     Route::post('inv-plan', [InvestorController::class, 'upgradeInvestor']);
     Route::post('register', [InvestorController::class, 'createInvestor']);
@@ -215,7 +208,6 @@ Route::group(['prefix' => 'investor'], function () {
         Route::get('advertisewithus', function () {
             return view('investor/myAccount/advertisewithus');
         });
-
         //Post routes
         Route::post('updatepersonaldetails', [InvestorController::class, 'updatePersonalDetails']);
         Route::post('updatepropertydetails', [InvestorController::class, 'updatePropertyDetails']);
@@ -251,7 +243,6 @@ Route::group(['prefix' => 'franchisor'], function () {
     Route::get('checkmobilestatus', [CommonController::class, 'verifyMobile']);
     Route::get('international-registration',     function() { return view('franchisor/register/international-franchisor-registraion'); } );
     Route::post('franchisor_registration',[FranchisorController::class,'postFranchisor']);
-
     Route::group(['prefix' => 'myaccount'], function () {
         Route::get('dashboard', [FranchisorController::class, 'viewDashboard']);
         Route::get('view-profile', [FranchisorController::class, 'viewProfile']);
@@ -272,7 +263,6 @@ Route::group(['prefix' => 'franchisor'], function () {
         Route::get('changepassword', function () {
             return view('franchisor/myAccount/changepassword');
         });
-
         Route::post('updatepassword', [FranchisorController::class, 'updatePassword']);
         Route::post('fran-photochange', [FranchisorController::class, 'franPhotoUpload'])->name('fran.photochange');
         Route::post('updatebusinessdetails', [FranchisorController::class, 'updateBusinessDetails']);
@@ -283,7 +273,6 @@ Route::group(['prefix' => 'franchisor'], function () {
         Route::post('deleteimage',                    [FranchisorController::class,'deleteSliderImage']);
     });
 });
-
 // FranchisorPayment Routes
 Route::post('franpaymentsubmit', [FranPaymentController::class, 'paymentHdfcPayuPg']);
 Route::post('franfailed', [FranPaymentController::class, 'paymentFailure']);
@@ -292,8 +281,6 @@ Route::post('francancelled', [FranPaymentController::class, 'paymentCancelled'])
 Route::post('franfailedmyaccount', [FranPaymentController::class, 'paymentFailureMyAccount']);
 Route::post('fransuccessmysccount', [FranPaymentController::class, 'paymentSuccessMyAccount']);
 Route::post('francancelledmyaccount', [FranPaymentController::class, 'paymentCancelledMyAccount']);
-
-
 Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('dealers-and-distributors.m5',         function () {
         return redirect('https://dealer.franchiseindia.com/', 301);
