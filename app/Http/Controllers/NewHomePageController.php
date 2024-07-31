@@ -17,7 +17,7 @@ class NewHomePageController extends Controller
 	{
 
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
-		
+
 
 		$ch = curl_init('https://www.opportunityindia.com/api/article/hindiapidata');
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
@@ -77,7 +77,7 @@ class NewHomePageController extends Controller
 
 
 		} else {
-			//   $slug = str_slug($title); 
+			//   $slug = str_slug($title);
 			$slug = Str::slug($title);
 
 		}

@@ -12,7 +12,7 @@
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 @php
-                    $brandLogo3 = $brands->where('brand_section', 3)->where('page_type', $pageType)->take(8)->shuffle();
+                    $brandLogo3 = $brands->where('brand_section', 3)->where('page_type', $pageType)->take(12)->shuffle();
                 @endphp
 
                 @foreach($brandLogo3 as $logoDetail)
