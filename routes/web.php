@@ -104,6 +104,7 @@ Route::get('validate-email', [CommonController::class, 'emailValidation']);
 Route::get('thanks-advice-form', function () {
     return view('thanks.advice-form');
 });
+Route::get('cat-brand-images',               [BusinessListingController::class, 'getbrandSliderImages']); // Business Listing Page Gallery section
 Route::get('check',                          [MobileVerificationController::class, 'verifySmsOTP']);
 Route::get('property-loan', [StaticPageController::class, 'getPropertyLoanForm']);
 Route::get('getpincode', [CommonController::class, 'getPincodeDetails']);
@@ -241,8 +242,10 @@ Route::post('advertise-with-us-payment', [FranchisorController::class, 'advertis
 Route::group(['prefix' => 'franchisor'], function () {
     Route::get('verifyotp', [CommonController::class, 'vrifyOtp']);
     Route::get('checkmobilestatus', [CommonController::class, 'verifyMobile']);
-    Route::get('international-registration',     function() { return view('franchisor/register/international-franchisor-registraion'); } );
-    Route::post('franchisor_registration',[FranchisorController::class,'postFranchisor']);
+    Route::get('international-registration',     function () {
+        return view('franchisor/register/international-franchisor-registraion');
+    });
+    Route::post('franchisor_registration', [FranchisorController::class, 'postFranchisor']);
     Route::group(['prefix' => 'myaccount'], function () {
         Route::get('dashboard', [FranchisorController::class, 'viewDashboard']);
         Route::get('view-profile', [FranchisorController::class, 'viewProfile']);
@@ -269,8 +272,8 @@ Route::group(['prefix' => 'franchisor'], function () {
         Route::post('updateprofessionaldetails', [FranchisorController::class, 'updateProfessionalDetails']);
         Route::post('updatepropertydetails', [FranchisorController::class, 'updatePropertyDetails']);
         Route::post('updatetrainingaggrementdetails', [FranchisorController::class, 'updateTrainingAgreement']);
-        Route::post('updateappearance',               [FranchisorController::class,'editAppearance']);
-        Route::post('deleteimage',                    [FranchisorController::class,'deleteSliderImage']);
+        Route::post('updateappearance',               [FranchisorController::class, 'editAppearance']);
+        Route::post('deleteimage',                    [FranchisorController::class, 'deleteSliderImage']);
     });
 });
 // FranchisorPayment Routes
@@ -951,4 +954,3 @@ Route::get('/wellness/{slug}', function ($slug) {
     // Redirect to the new domain
     return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
-
