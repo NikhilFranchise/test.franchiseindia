@@ -2075,7 +2075,7 @@
     <div class="overlay"></div>
     <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
     @include('layout.newhomepage.jslink')
-    <script>
+    {{--  <script>
         $(document).ready(function() {
             function selectMax(selectmaxheaderval) {
                 let amountConfigArr = {
@@ -2098,7 +2098,30 @@
                     maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
             }
         });
+    </script>  --}}
+    <script>
+        $(document).ready(function() {
+            function selectMax(selectmaxheaderval) {
+                let amountConfigArr = @json(Config('constants.investRangeInWordsSingle'));
+                let maxAmount = $('#maxAmount');
+                let getSlugAmount = @json(Config('constants.InvestRange'));
+                maxAmount.html("");
+                selectmaxheaderval = parseInt(selectmaxheaderval);
+                $.each(amountConfigArr, function(key, value) {
+                    if (key > selectmaxheaderval) {
+                        $('#maxAmount').append($("<option></option>").attr({
+                            "value": key,
+                            "slug": getSlugAmount[key]['min']
+                        }).text(value));
+                    }
+                });
+                if (selectmaxheaderval === 21) {
+                    maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
+                }
+            }
+        });
     </script>
+
     <script>
         function setCookie() {
             document.cookie = "accept_cookie=ok";
