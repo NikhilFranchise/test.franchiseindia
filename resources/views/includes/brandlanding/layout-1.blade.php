@@ -259,7 +259,7 @@
                                         @if (!empty(Cookie::get('franRate' . $franDetails->franchisor_id)))
                                             <a data-toggle="#" data-target="#myRating" id="rateButton">Rated</a>
                                         @else
-                                            <a data-toggle="modal" data-target="#myRating" id="rateButton"><i
+                                            <a data-toggle="modal" onclick="ratebtn()" id="rateButton"><i
                                                     class="fa fa-star-half-o" aria-hidden="true"></i> Rate</a>
                                         @endif
                                     </li>

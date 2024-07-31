@@ -172,7 +172,7 @@
                         @if(!empty(Cookie::get('franRate'.$franDetails->franchisor_id)))
                             <a data-toggle="#" data-target="#myRating" id="rateButton">Rated</a>
                         @else
-                            <a data-toggle="modal" data-target="#myRating"  id="rateButton"><i class="fa fa-star-half-o" aria-hidden="true"></i> Rate</a>
+                            <a data-toggle="modal" onclick="ratebtn()"id="rateButton"><i class="fa fa-star-half-o" aria-hidden="true"></i> Rate</a>
                         @endif
                     </li>
                     <li><a data-toggle="modal" data-target="#mysocial" id="seo_shareButton"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</a></li>

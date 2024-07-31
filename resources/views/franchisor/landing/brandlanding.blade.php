@@ -392,6 +392,8 @@
         @include('includes/brandlanding/lead-popup')
     @endif
 
+    @include('includes.login-modal');
+
     <script type="text/javascript">
         //action on submit your interest
         $('#expbtn').on('click', function() {
@@ -832,9 +834,28 @@
             @endif
         });
 
+        @php
+        $a = Auth::check() ? 1 : 0;
+        @endphp
+
         //like count
         function likebtn(franId) {
-            var like_id = franId;
+            // console.log('like');
+            var phpVar = @json($a);
+            //  console.log(phpVar);
+            if(phpVar == 0){
+                // alert('user not logged in');
+                $('#login-pnl').modal('show'); 
+                $('#login-pnl').on('shown.bs.modal', function () {
+                        // Activate the "Login" tab
+                        $('#loginactive').tab('show');
+                    });
+
+
+            }
+            else if(phpVar == 1){
+            //   alert('user logged in');
+              var like_id = franId;
             $.ajax({
                 type: 'POST',
                 url: '/brandlikes',
@@ -848,6 +869,8 @@
                     $("#likeButton").html("Liked");
                 }
             });
+            }
+         
         }
 
         $('#newemail').on('keyup', function() {
@@ -868,5 +891,25 @@
                 }
             })
         })
+
+        function ratebtn(){
+            // console.log('yes');
+            var phpVar = @json($a);
+            //  console.log(phpVar);
+            if(phpVar == 0){
+                // alert('user not logged in');
+                $('#login-pnl').modal('show'); 
+                $('#login-pnl').on('shown.bs.modal', function () {
+                        // Activate the "Login" tab
+                        $('#loginactive').tab('show');
+                    });
+
+
+            }
+            else if(phpVar == 1){
+                $('#myRating').modal('show'); 
+            }
+
+        }
     </script>
 @endsection
