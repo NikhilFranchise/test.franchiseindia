@@ -1910,7 +1910,7 @@ class BusinessListingController extends Controller
                 ->groupBy('franchisor_id','image_type_slider2')
                 ->havingRaw('count > 3')
                 ->get();
-                dd($franImageData);
+                // dd($franImageData);
             // $franImageData   = FranchisorSliderImage::query()->select('franchisor_id', 'image_type_slider2', DB::raw('COUNT(franchisor_id) as count'))
             //     ->where('image_type_slider2', '!=', '')
             //     ->whereIn('franchisor_id', $imageFranchisor)
