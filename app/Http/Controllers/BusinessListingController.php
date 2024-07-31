@@ -1897,31 +1897,30 @@ class BusinessListingController extends Controller
         if (!empty($brandResults)) {
             $paidFranchisors = collect($brandResults->toArray()['data']);
             $imageFranchisor = $paidFranchisors->where('membership_type', 1)->pluck('franchisor_id');
-            $sliderCheck     = FranchisorSliderTenure::query()
+            $sliderCheck = FranchisorSliderTenure::query()
                 ->select('franchisor_id')
                 ->where('status', 1)
                 ->where('end_date', '>=', date('Y-m-d H:i:s'))
                 ->get()->pluck('franchisor_id');
-                $franImageData   = FranchisorSliderImage::query()->select('franchisor_id', 'image_type_slider2', DB::raw('COUNT(franchisor_id) as count'))
-                ->where('image_type_slider2', '!=', '')
-                ->whereIn('franchisor_id', $imageFranchisor)
-                ->whereIn('franchisor_id', $sliderCheck)
-                ->where('status', 1)
-                ->groupBy('franchisor_id','image_type_slider2')
-                ->havingRaw('count > 3')
-                ->get();
-                // dd($franImageData);
-            // $franImageData   = FranchisorSliderImage::query()->select('franchisor_id', 'image_type_slider2', DB::raw('COUNT(franchisor_id) as count'))
+                $franImageData = FranchisorSliderImage::query()
+        ->select('franchisor_id', DB::raw('MAX(image_type_slider2) as image_type_slider2'), DB::raw('COUNT(franchisor_id) as count'))
+        ->where('image_type_slider2', '!=', '')
+        ->whereIn('franchisor_id', $imageFranchisor)
+        ->whereIn('franchisor_id', $sliderCheck)
+        ->where('status', 1)
+        ->groupBy('franchisor_id')
+        ->havingRaw('count > 3')
+        ->get();
+        // dd($franImageData);
+            // $franImageData = FranchisorSliderImage::query()
+            //     ->select('franchisor_id', 'image_type_slider2', DB::raw('COUNT(franchisor_id) as count'))
             //     ->where('image_type_slider2', '!=', '')
             //     ->whereIn('franchisor_id', $imageFranchisor)
             //     ->whereIn('franchisor_id', $sliderCheck)
             //     ->where('status', 1)
-            //     // ->groupBy('franchisor_id')
-            //     ->groupBy('franchisor_id', 'image_type_slider2') // Include image_type_slider2 in the GROUP BY clause
-
-            //     ->havingRaw('count > 3')
+            //     ->groupBy('franchisor_id')  // Added image_type_slider2 to groupBy clause
+            //     ->havingRaw('count < 3')
             //     ->get();
-            
 
         }
 
