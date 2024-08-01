@@ -23,8 +23,8 @@
                         <div class="brand-image-section">
                             <div class="brand-main-section">
                                 <a href="https://www.dealerindia.com/manufacturer/Xboom-India-2149" target="_blank">
-                                    <img src="https://img.franchiseindia.com/brands/logo/2096111403.png" alt=""
-                                        loading="lazy" /></a>
+                                    <img src="https://www.franchiseindia.com/images/top-dealership/boom.webp" alt=""
+                                    loading="lazy" /></a>
                             </div>
                         </div>
                         <div class="card-body-section">
@@ -73,8 +73,8 @@
                         <div class="brand-image-section">
                             <div class="brand-main-section">
                                 <a href="https://www.dealerindia.com/manufacturer/mini-metro-ev-llp-29320056"
-                                    target="_blank"><img src="https://img.franchiseindia.com/brands/logo/647963586.jpg"
-                                        alt="" loading="lazy" /></a>
+                                target="_blank"><img src="https://www.franchiseindia.com/images/top-dealership/mini.webp"
+                                    alt="" loading="lazy" /></a>
                             </div>
                         </div>
                         <div class="card-body-section">
@@ -123,9 +123,9 @@
                         <div class="brand-image-section">
                             <div class="brand-main-section">
                                 <a href="https://www.dealerindia.com/manufacturer/reclinersindia-pvt-ltd-29320694"
-                                    target="_blank"> <img
-                                        src="https://img.franchiseindia.com/brands/logo/logo_29320689.jpg"
-                                        class="" alt="" loading="lazy" /></a>
+                                target="_blank"> <img
+                                    src="https://www.franchiseindia.com/images/top-dealership/recliners.webp"
+                                    class="" alt="" loading="lazy" /></a>
                             </div>
                         </div>
                         <div class="card-body-section">
@@ -174,10 +174,10 @@
                         <div class="brand-image-section">
                             <div class="brand-main-section">
                                 <a href="https://www.dealerindia.com/manufacturer/drivex-mobility-pvt-ltd-29320732"
-                                    target="_blank">
-                                    <img src="https://img.franchiseindia.com/brands/logo/813255149.jpg" class=""
-                                        alt="" loading="lazy" />
-                                </a>
+                                target="_blank">
+                                <img src="https://www.franchiseindia.com/images/top-dealership/drive.webp" class=""
+                                    alt="" loading="lazy" />
+                            </a>
                             </div>
                         </div>
                         <div class="card-body-section">

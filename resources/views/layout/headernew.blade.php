@@ -134,7 +134,8 @@
                                 <span class="input-group-addon">
                                     <div class="usersprite"></div>
                                 </span>
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                @csrf
+                                {{--  <input type="hidden" name="_token" value="{{ csrf_token() }}">  --}}
                                 <input id="email" type="email" class="form-control" name="email"
                                     placeholder="Enter Email-Id" value="" required>
                             </div>
@@ -154,7 +155,8 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane" id="login">
                             <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                @csrf
+                                {{--  <input type="hidden" name="_token" value="{{ csrf_token() }}">  --}}
                                 <div class="frm-pnl">
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -201,6 +203,8 @@
                                         <div><a href="{{ Config('constants.MainDomain') }}/franchisor/registration/step/1"
                                                 class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel
                                                 Partners <span> (Franchisor Registration) </span></a></div>
+                                        <br>
+                                        <div><a href="{{ Config('constants.MainDomain') }}/franchisor/international-registration" class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel Partners <span> (International Franchisor Registration) </span></a></div>
                                         <br />
                                         <div><a target="_blank"
                                                 href="{{ Config('constants.MainDomain') }}/property-loan"

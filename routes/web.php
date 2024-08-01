@@ -64,14 +64,12 @@ Auth::routes();
 
 
 
-// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
-//     \UniSharp\LaravelFilemanager\Lfm::routes();
-// });
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
 Route::get('campaign/franchisor/{id}', [CommonController::class, 'franAutoLogin']);
 Route::get('campaign/deactivate/franchisor/{id}', [CommonController::class, 'franCampaignDeactivation']);
 Route::get('franchiseinternational', [InternationalController::class, 'getHomePage']); // International Page routes
-
-
 Route::get('/', [NewHomePageController::class, 'homeNew']);
 Route::get('/home', function () {
     return redirect('/', 301);
@@ -85,19 +83,16 @@ Route::get('/contact/site', function () {
 Route::get('pagenotfound', function () {
     return view('static.404');
 }); //404 ERROR PAGE
-
 Route::get('/hi', [NewHomePageController::class, 'hindiHomePage']); //checck
 Route::get('about', [StaticPageController::class, 'aboutus']);
 Route::get('contact', [ContactUsController::class, 'contactUsForm']);
 Route::get('feedback', [SiteFeedbackController::class, 'feedbackForm']);
-
 Route::get('testimonials', function () {
     return redirect('testimonials-reviews', 301);
 });
 Route::get('testimonials-reviews', [StaticPageController::class, 'getTestimonials']);
 Route::get('sitemap/brands', [BrandFilterController::class, 'brandsitemap']);
 Route::get('sitemap/brands/{abre}',           [BrandFilterController::class, 'brandfilter']);
-
 Route::get('terms', [StaticPageController::class, 'mainTerm']);
 Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBystateName']);
 Route::get('invester-verifyformmobilenumber', [MobileVerificationController::class, 'investerverifyMobile']);
@@ -109,6 +104,7 @@ Route::get('validate-email', [CommonController::class, 'emailValidation']);
 Route::get('thanks-advice-form', function () {
     return view('thanks.advice-form');
 });
+Route::get('cat-brand-images',               [BusinessListingController::class, 'getbrandSliderImages']); // Business Listing Page Gallery section
 Route::get('check',                          [MobileVerificationController::class, 'verifySmsOTP']);
 Route::get('property-loan', [StaticPageController::class, 'getPropertyLoanForm']);
 Route::get('getpincode', [CommonController::class, 'getPincodeDetails']);
@@ -143,6 +139,7 @@ Route::post('contact-submit', [ContactUsController::class, 'contact']);
 Route::post('feedback', [FeedbackController::class, 'feedback']);
 Route::post('franchisor-feedback',            [FeedbackController::class, 'paidFranchisorFeedback']); // Paid Franchisor Feedback
 Route::post('freeadvice', [AdviceController::class, 'freeadvice']);
+Route::post('freeadvice-home', [AdviceController::class, 'freeadviceHome']);
 Route::post('brandlikes', [BrandController::class, 'likes']);
 Route::post('brandratings', [BrandController::class, 'ratings']);
 Route::post('brandcontactinfo', [ExpressInstaController::class, 'brandInfo']);     //guest
@@ -170,7 +167,6 @@ Route::post('inv-lead',                       [ExpressInstaController::class, 'i
 Route::post('inv-lead-normal',                [ExpressInstaController::class, 'invNormalLead']); // paid inv not want
 //Payment Routes
 Route::get('payment', [PaymentController::class, 'payment']);
-
 Route::group(['prefix' => 'investor'], function () {
     Route::get('plan', [InvestorController::class, 'campaignPlan']);
     Route::get('create-new', [InvestorController::class, 'campaignNewRegistration']);
@@ -185,7 +181,6 @@ Route::group(['prefix' => 'investor'], function () {
     Route::get('quickregistration', function () {
         return view('investor/register/investor-quick-registration');
     });
-
     // post routes of investor
     Route::post('inv-plan', [InvestorController::class, 'upgradeInvestor']);
     Route::post('register', [InvestorController::class, 'createInvestor']);
@@ -214,7 +209,6 @@ Route::group(['prefix' => 'investor'], function () {
         Route::get('advertisewithus', function () {
             return view('investor/myAccount/advertisewithus');
         });
-
         //Post routes
         Route::post('updatepersonaldetails', [InvestorController::class, 'updatePersonalDetails']);
         Route::post('updatepropertydetails', [InvestorController::class, 'updatePropertyDetails']);
@@ -248,7 +242,10 @@ Route::post('advertise-with-us-payment', [FranchisorController::class, 'advertis
 Route::group(['prefix' => 'franchisor'], function () {
     Route::get('verifyotp', [CommonController::class, 'vrifyOtp']);
     Route::get('checkmobilestatus', [CommonController::class, 'verifyMobile']);
-
+    Route::get('international-registration',     function () {
+        return view('franchisor/register/international-franchisor-registraion');
+    });
+    Route::post('franchisor_registration', [FranchisorController::class, 'postFranchisor']);
     Route::group(['prefix' => 'myaccount'], function () {
         Route::get('dashboard', [FranchisorController::class, 'viewDashboard']);
         Route::get('view-profile', [FranchisorController::class, 'viewProfile']);
@@ -269,18 +266,16 @@ Route::group(['prefix' => 'franchisor'], function () {
         Route::get('changepassword', function () {
             return view('franchisor/myAccount/changepassword');
         });
-
         Route::post('updatepassword', [FranchisorController::class, 'updatePassword']);
         Route::post('fran-photochange', [FranchisorController::class, 'franPhotoUpload'])->name('fran.photochange');
         Route::post('updatebusinessdetails', [FranchisorController::class, 'updateBusinessDetails']);
         Route::post('updateprofessionaldetails', [FranchisorController::class, 'updateProfessionalDetails']);
         Route::post('updatepropertydetails', [FranchisorController::class, 'updatePropertyDetails']);
         Route::post('updatetrainingaggrementdetails', [FranchisorController::class, 'updateTrainingAgreement']);
-        Route::post('updateappearance',               [FranchisorController::class,'editAppearance']);
-        Route::post('deleteimage',                    [FranchisorController::class,'deleteSliderImage']);
+        Route::post('updateappearance',               [FranchisorController::class, 'editAppearance']);
+        Route::post('deleteimage',                    [FranchisorController::class, 'deleteSliderImage']);
     });
 });
-
 // FranchisorPayment Routes
 Route::post('franpaymentsubmit', [FranPaymentController::class, 'paymentHdfcPayuPg']);
 Route::post('franfailed', [FranPaymentController::class, 'paymentFailure']);
@@ -289,8 +284,6 @@ Route::post('francancelled', [FranPaymentController::class, 'paymentCancelled'])
 Route::post('franfailedmyaccount', [FranPaymentController::class, 'paymentFailureMyAccount']);
 Route::post('fransuccessmysccount', [FranPaymentController::class, 'paymentSuccessMyAccount']);
 Route::post('francancelledmyaccount', [FranPaymentController::class, 'paymentCancelledMyAccount']);
-
-
 Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('dealers-and-distributors.m5',         function () {
         return redirect('https://dealer.franchiseindia.com/', 301);
@@ -398,8 +391,6 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('Tanclean-Franchise',                         function () {
         return redirect('business-opportunities/all/all', 301);
     });
-
-
     Route::get('/',                                       function () {
         return redirect('business-opportunities/all/all', 301);
     });
@@ -440,7 +431,6 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('uttarakhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('himachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('jammu-and-kashmir.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-
     // Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
     // Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
     // Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
@@ -448,7 +438,6 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     // Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
     // Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListing']);
     // Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
-
     Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
@@ -456,14 +445,8 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListingnormalization']);
     Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
-
-
-
-
     Route::get('/lowcost', [BusinessListingController::class, 'searchBusinessListing'])
         ->defaults('lowcost', 'lowcost');
-
-
     Route::get('{code}/all/all', function () {
         return redirect('business-opportunities/all/all', 301);
     });
@@ -471,10 +454,6 @@ Route::group(['prefix' => 'business-opportunities'], function () {
         return redirect('business-opportunities/all/all', 301);
     });
 });
-
-
-
-
 // /Category Page Routes
 Route::group(['prefix' => 'category'], function () {
     Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
@@ -497,7 +476,6 @@ Route::post('payment/cancelled', [PaymentController::class, 'getHdfcPgResponseFa
 Route::get('confirm/{id}', [CommonController::class, 'verifyEmail']); // Mail Verification
 Route::get('change-password/{id}',           [CommonController::class, 'verifyEmail']);
 Route::get('newsletter/{code}', [NewsLetterController::class, 'subscriptionForm']);
-
 // Restaurant Routes
 Route::group(['prefix' => 'restaurant'], function () {
     Route::get('/', [RestaurantController::class, 'articleRestaurant']);
@@ -518,12 +496,7 @@ Route::group(['prefix' => 'restaurant'], function () {
     Route::get('newsletter/subscriptionForm', [NewsLetterController::class, 'newsletterForm']);
     Route::get('newsletter/newsub', [NewsLetterController::class, 'newsletterSub']);
     Route::get('{content_id}', [ArticleController::class, 'commonInner']);
-    // Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);     // Newsletter signup
-
 });
-
-
-
 //for books
 Route::group(['prefix' => 'book'], function () {
     //Get routes
@@ -537,7 +510,6 @@ Route::group(['prefix' => 'book'], function () {
 Route::get('amp/{path}', function ($path) {
     return redirect('/' . $path, 301);
 })->where('path', '.*');
-
 // Please do not open amp pages
 
 // Route::group(['prefix' => 'amp'], function () {
@@ -685,9 +657,6 @@ Route::get('amp/{path}', function ($path) {
 //     Route::get('brands/{profileName}', [BrandController::class, 'ampBrandDetails']);                // Eng AMP brand url  working
 //     Route::get('{contentSite}/{title}.{id}', [AmpArticleController::class, 'ampCreate']);
 // });
-
-
-
 //Education routes
 Route::group(['prefix' => 'education'], function () {
     //Route::get('/',                          'EducationController@articleEducation');
@@ -706,9 +675,6 @@ Route::group(['prefix' => 'education'], function () {
 
     // Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);     // Newsletter signup
 });
-
-
-
 //Entrepreneur routes
 Route::group(['prefix' => 'entrepreneur'], function () {
     Route::get('/', [ArticleController::class, 'articleHome']);
@@ -730,14 +696,9 @@ Route::group(['prefix' => 'entrepreneur'], function () {
         return redirect(Config('constants.MainDomain') . '/content', 301);
     });
 });
-
 Route::get('event', [EventController::class, 'event']);
-
 //Rss Route
 Route::get('rss', [FacebookArticleController::class, 'rss']); // Facebook Instant Articles RSS feed route
-
-
-
 //Hindi language routes
 Route::group(['prefix' => 'hi'], function () {
     //Category Page Routes
@@ -751,11 +712,6 @@ Route::group(['prefix' => 'hi'], function () {
             return redirect('business-opportunities/all/all', 301);
         });
     });
-
-
-
-
-
     //Directory Page Routes
     Route::group(['prefix' => 'business-opportunities'], function () {
         // Route::get('dealers-and-distributors.m5',      'DealersAndDistributorController@getHomePage'); // International Page routes
@@ -802,17 +758,14 @@ Route::group(['prefix' => 'hi'], function () {
         Route::get('uttarakhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('himachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('jammu-and-kashmir.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-
         Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
-
         Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListing']);
         Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
     });
-
     Route::get('/', [NewHomePageController::class, 'hindiHomePage']);               // Hindi Home Page
     // Article Hindi Home
     Route::get('content', function () {
@@ -824,9 +777,7 @@ Route::group(['prefix' => 'hi'], function () {
     });       // Hindi Kicker Url
     Route::get('premiumbrand', [HomepageController::class, 'hindiHome']);                // Hindi Premium Brand Page
     Route::get('brands/{profileName}', [BrandController::class, 'brandDetails']);                // Hindi brand url
-
     Route::get('{site}/{slug}.{id}', [ArticleController::class, 'getHindiContent']);          // Hindi Article Url
-
     Route::get('newcontent', [NewArticleController::class, 'articleHindiHome']);
     Route::get('newcontent/author/{author}', [NewArticleController::class, 'getAuthorHindiDetails']); // Hindi Author url
     Route::get('newcontent/{kicker}/{kickerId}', [NewArticleController::class, 'getHindiKickerList']);
@@ -868,8 +819,6 @@ Route::get('/wellness/{slug}', function ($slug) {
     // Redirect to the new domain
     return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
-
-
 //Magazine Routes
 Route::group(['prefix' => 'magazine'], function () {
     Route::get('/', [MagazineController::class, 'magazineListHome']);
@@ -893,12 +842,7 @@ Route::group(['prefix' => 'gallery'], function () {
     Route::get('{kicker}/{kicker_id}', [GalleryController::class, 'galleryArticleKickersPage']);
 });
 
-
-
-
-
 //Admin Panel Post Routes
-
 Route::post('updateauthorstatus',             [AdminController::class, 'updateAuthorStatus']);
 Route::post('updatearticalinterviewstatus',   [AdminController::class, 'updateArticalInterviewStatus']);
 Route::post('updatenewsstatus',               [AdminController::class, 'updateNewsStatus']);
@@ -920,11 +864,6 @@ Route::get('searchmagazine',                  [AdminController::class, 'searchMa
 Route::get('articleinterviewcommentsearch',   [AdminController::class, 'searchArticleInterviewComment']);
 Route::get('newscommentsearch',               [AdminController::class, 'searchNewsComment']);
 Route::get('admin-logout',                    [AdminController::class, 'logout']);
-
-
-
-
-
 //admin panel routes
 Route::group(['prefix' => 'admin'], function () {
     //Get routes
@@ -957,7 +896,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('get-kickers',                          [AdminController::class, 'getHindiKickers']);
     Route::get('kickers/list/{type}',                  [AdminController::class, 'getKickersList']);
     Route::get('{type}/hindi/{contentId}',             [AdminController::class, 'getCreateHindiArticleNewsForm']);
-
     //Post routes
     Route::post('update-magazine-comment',             [AdminController::class, 'updateMagazineComment']);
     Route::post('update-mag-comment-status',           [AdminController::class, 'setMagazineCommentStatus']);
@@ -1008,9 +946,7 @@ Route::get('location/{city}',              [BusinessListingController::class, 'l
 // INSIGHTS ROUTES START HERE //
 Route::middleware('TrailingSlashRedirect')->group(function () {
     Route::get('/search/insights',                      [InsightsController::class, 'insightSearch']);
-
     Route::group(['prefix' => 'insights'], function () {
-
         Route::get('author/{slug}',                         [InsightsController::class, 'authordata']);
         Route::get('thanks', function () {
             return view('insights.thanks');
@@ -1033,27 +969,21 @@ Route::get('categoryall',       [StaticPageController::class, 'categoryAll']);
 Route::get('search',                                 function () {
     return view('site.google-search-result');
 });
-
 Route::get('/content/{slug}', function ($slug) {
     // Split the slug by the last dot (.)
     $parts = explode('.', $slug);
-
     // Extract the article title and id
     $title = implode('-', array_slice($parts, 0, -1));
     $id = end($parts);
-
     // Redirect to the new domain
     return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
-
 Route::get('/wellness/{slug}', function ($slug) {
     // Split the slug by the last dot (.)
     $parts = explode('.', $slug);
-
     // Extract the article title and id
     $title = implode('-', array_slice($parts, 0, -1));
     $id = end($parts);
-
     // Redirect to the new domain
     return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });

@@ -315,7 +315,7 @@
             </div>
     </div>
     @enddesktop
-    
+
     <!-- Desktop Section End-->
 
     <!-- Tablet Section Start-->
@@ -350,7 +350,7 @@
                                         </strong></li>
                                 </ul>
                             </div>
-                            
+
 
                             <div class="priclistinner">
                                 <div class="pritxtn">Sub Category</div>
@@ -359,7 +359,7 @@
                                     enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="ftyblk">
-                                        
+
                                         <div class="rinr otherp">
                                             <div class="radio-item">
                                                 <input type="radio" id="ritema2" name="memberplan"
@@ -397,7 +397,7 @@
                                     enctype="multipart/form-data">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="ftyblk">
-                                        
+
                                         <div class="rinr otherp">
                                             <div class="radio-item">
                                                 <input type="radio" id="ritema5" name="memberplan"
@@ -578,7 +578,7 @@
         </div>
         </div>
         @endtablet
-    
+
     <!-- Tablet Section End -->
     <!-- mobile section start -->
     @mobile
@@ -843,13 +843,13 @@
         </div>
         </div>
         @endmobile
-    
+
     <!-- mobile section end -->
     <div class="overlay"></div>
     <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
     @include('layout.newhomepage.jslink')
 
-    <script>
+    {{--  <script>
         $(document).ready(function() {
             function selectMax(selectmaxheaderval) {
                 let amountConfigArr = {
@@ -872,7 +872,30 @@
                     maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
             }
         });
+    </script>  --}}
+    <script>
+        $(document).ready(function() {
+            function selectMax(selectmaxheaderval) {
+                let amountConfigArr = @json(Config('constants.investRangeInWordsSingle'));
+                let maxAmount = $('#maxAmount');
+                let getSlugAmount = @json(Config('constants.InvestRange'));
+                maxAmount.html("");
+                selectmaxheaderval = parseInt(selectmaxheaderval);
+                $.each(amountConfigArr, function(key, value) {
+                    if (key > selectmaxheaderval) {
+                        $('#maxAmount').append($("<option></option>").attr({
+                            "value": key,
+                            "slug": getSlugAmount[key]['min']
+                        }).text(value));
+                    }
+                });
+                if (selectmaxheaderval === 21) {
+                    maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
+                }
+            }
+        });
     </script>
+
     <script>
         function setCookie() {
             document.cookie = "accept_cookie=ok";

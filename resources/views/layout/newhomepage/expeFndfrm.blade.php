@@ -16,6 +16,7 @@
                         </div>
                         <div class="frm-container" id="askForm">
                             <form id="homepage" name="homepage" method="post">
+                                @csrf
                                 <h2 class="ttl">मुफ्त सलाह - हमारे विशेषज्ञों से पूछें</h2>
                                 <div id="errMsg1" style="display:none;">
                                     <font color="red"> कृपया फॉर्म भरे! </font>
@@ -119,6 +120,7 @@
                         </div>
                         <div class="frm-container" id="askForm">
                             <form id="homepage" name="homepage" method="post">
+                                @csrf
                                 <h2 class="ttl">Free Advice - Ask Our Experts</h2>
                                 <div id="errMsg1" style="display:none;">
                                     <font color="red"> Please Fill The form! </font>
@@ -126,11 +128,11 @@
                                 <div class="frm-type">
                                     <div class="radio">
                                         <label><input type="radio" name="optionsRadios1" id="optionsRadios3"
-                                                checked="" value="franchisor"> Expand My Brand </label>
+                                                checked="" value="franchisor">Expand My Brand</label>
                                     </div>
                                     <div class="radio">
                                         <label><input type="radio" name="optionsRadios1" id="optionsRadios1"
-                                                value="investor"> Buy a Franchise</label>
+                                                value="investor">Buy a Franchise</label>
                                     </div>
 
                                 </div>

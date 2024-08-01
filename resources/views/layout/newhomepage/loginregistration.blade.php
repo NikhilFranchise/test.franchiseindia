@@ -21,7 +21,8 @@
                                     <span class="input-group-addon">
                                         <div class="usersprite"></div>
                                     </span>
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    @csrf
+                                    {{--  <input type="hidden" name="_token" value="{{ csrf_token() }}">  --}}
                                     <input id="email" type="email"
                                         class="form-control
                                  blur" name="email"
@@ -46,7 +47,8 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane" id="login">
                                 <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    @csrf
+                                    {{--  <input type="hidden" name="_token" value="{{ csrf_token() }}">  --}}
                                     <div class="frm-pnl">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -77,7 +79,7 @@
                                     <div class="popleft">
                                         <span>या साइन इन करें</span>
                                         <ul class="socl">
-                                            
+
                                             <li><a href="{{config('constants.MainDomain')}}/auth/google"><img
                                                         src="{{ url('newhomepage/assets/img/google.svg') }}"
                                                         alt="google" class="" /></a></li>
@@ -102,7 +104,13 @@
                                                     class="btn btn-large btn-default
                                        btn-gry btn-prop">चैनल
                                                     पार्टनर नियुक्त करें <br /><span> (फ्रैंचाइज़र
-                                                        रजिस्ट्रेशन)</span></a>
+                                                        पंजीकरण)</span></a>
+                                            </div>
+                                            <br>
+                                            <div><a href="{{ Config('constants.MainDomain') }}/franchisor/international-registration"
+                                                    class="btn btn-large btn-default
+                                       btn-gry btn-prop">चैनल
+                                                    पार्टनर नियुक्त करें <br /><span> (अंतरराष्ट्रीय फ्रैंचाइज़र पंजीकरण)</span></a>
                                             </div>
                                             <br>
                                             <div><a target="_blank"
@@ -157,7 +165,8 @@
                                     <span class="input-group-addon">
                                         <div class="usersprite"></div>
                                     </span>
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    @csrf
+                                    {{--  <input type="hidden" name="_token" value="{{ csrf_token() }}">  --}}
                                     <input id="email" type="email"
                                         class="form-control
                                  blur" name="email"
@@ -182,7 +191,8 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane" id="login">
                                 <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    @csrf
+                                    {{--  <input type="hidden" name="_token" value="{{ csrf_token() }}">  --}}
                                     <div class="frm-pnl">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -214,7 +224,7 @@
                                     <div class="popleft">
                                         <span>or Sign in With</span>
                                         <ul class="socl">
-                                            
+
                                             <li><a href="{{config('constants.MainDomain')}}/auth/google"><img
                                                         src="{{ url('newhomepage/assets/img/google.svg') }}"
                                                         alt="google" class="" /></a></li>
@@ -242,6 +252,13 @@
                                                     Channel
                                                     Partners <br /><span> (Franchisor
                                                         Registration) </span></a>
+                                            </div>
+                                            <br>
+                                            <div><a href="{{ Config('constants.MainDomain') }}/franchisor/international-registration"
+                                                    class="btn btn-large btn-default
+                                       btn-gry btn-prop">Appoint
+                                                    Channel
+                                                    Partners <br /><span> (International Franchisor Registration) </span></a>
                                             </div>
                                             <br>
                                             <div><a target="_blank"

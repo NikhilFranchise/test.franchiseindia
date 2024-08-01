@@ -318,7 +318,13 @@
                                         <div><a href="https://www.franchiseindia.com/franchisor/registration/step/1"
                                                 class="btn btn-large btn-default
                                        btn-gry btn-prop">चैनल
-                                                पार्टनर नियुक्त करें <br /><span> (फ्रैंचाइज़ी पंजीकरण) </span></a>
+                                                पार्टनर नियुक्त करें <br /><span> (फ्रेंचाइज़र पंजीकरण) </span></a>
+                                        </div>
+                                        <br>
+                                        <div><a href="https://www.franchiseindia.com/franchisor/international-registration"
+                                                class="btn btn-large btn-default
+                                       btn-gry btn-prop">चैनल
+                                                पार्टनर नियुक्त करें <br /><span> (अंतरराष्ट्रीय फ्रेंचाइज़र पंजीकरण) </span></a>
                                         </div>
                                         <br>
                                         <div><a target="_blank" href="https://www.franchiseindia.com/property-loan"

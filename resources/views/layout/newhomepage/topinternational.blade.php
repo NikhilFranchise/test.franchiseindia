@@ -3,7 +3,7 @@
     $TopInternationalOpportunities = [
         '0' => [
             'url' => 'https://www.franchiseindia.com/brands/pitman-training.88775',
-            'image' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/pitman-training_1.gif',
+            'image' => 'https://www.franchiseindia.com/images/top-international/pitman.webp',
             'category' => 'Other Online Education',
             'title' => 'Pitman Training',
             'description' => 'Pitman Training is an extensive network of career training & professional development',
@@ -12,7 +12,7 @@
 
         '1' => [
             'url' => 'https://www.franchiseindia.com/brands/figaros-pizza.73238',
-            'image' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/figaros-pizza_1.jpg',
+            'image' => 'https://www.franchiseindia.com/images/top-international/figaros.webp',
             'category' => 'FINE DINE RESTAURANTS',
             'title' => "Figaro's Italian Pizza",
             'description' => "Figaro's Pizza is an American multinational quick service restaurant",
@@ -20,7 +20,7 @@
         ],
         '2' => [
             'url' => 'https://www.franchiseindia.com/brands/business-kids.77135',
-            'image' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/business-kids_3.png',
+            'image' => 'https://www.franchiseindia.com/images/top-international/businesskids.webp',
             'category' => 'CAREER COUNSELING',
             'title' => 'Business Kids/ Business Teens',
             'description' =>
@@ -30,10 +30,10 @@
         '3' => [
             'url' => 'https://www.franglobal.com/engage-and-grow/',
             'image' =>
-                'https://www.franchiseindia.com/franchiseinternational/images/banners/homepage/engage_199x81.png',
+                'https://www.franchiseindia.com/images/top-international/engage.webp',
             'category' => 'Education',
-            'title' => 'Engage &amp; Grow',
-            'description' => 'Become A Certified Engage &amp; Grow Franchise in your Region &amp; Grow Your Business',
+            'title' => 'Engage & Grow',
+            'description' => 'Become A Certified Engage & Grow Franchise in your Region and Grow Your Business',
             'bgcolor' => '15,117,189',
         ],
     ];

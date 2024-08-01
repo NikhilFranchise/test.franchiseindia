@@ -46,7 +46,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group">
                             <select class="form-control blur" id="city-wider" name="infocity">
-                                <option value="">Select City for Franchise</option>
+                                <option value="">Select City For Franchise</option>
                             </select>
                         </div>
                     </div>
