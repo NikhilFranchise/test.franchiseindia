@@ -1058,3 +1058,7 @@ Route::get('/wellness/{slug}', function ($slug) {
     return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
 
+Route::get('reload-captcha', [AdviceController::class, 'reloadCaptcha']);
+
+Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('form.submit');
+

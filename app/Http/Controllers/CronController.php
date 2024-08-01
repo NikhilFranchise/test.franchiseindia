@@ -395,7 +395,7 @@ class CronController extends Controller
             ->where('membership_type' ,0)
             ->update([
                 'membership_plan' => 100,
-                'membership_weightage' => 0,
+                // 'membership_weightage' => 0,
                 'membership_weightage_backup' => 0,
                 'is_fixed_brand' => 0
             ]);
