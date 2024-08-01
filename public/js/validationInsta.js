@@ -198,7 +198,7 @@ function getMobileStatus(value) {
 
 // Function to verify mobile
 function veryfie() {
-    var keyword = $('#txtPhone').val();
+    var keyword = $('#txtPhone').val(); 
     $.ajax({
         type: 'get',
         url: '/verify',
