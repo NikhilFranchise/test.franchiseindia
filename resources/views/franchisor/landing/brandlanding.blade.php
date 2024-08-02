@@ -392,7 +392,7 @@
         @include('includes/brandlanding/lead-popup')
     @endif
 
-    @include('includes.login-modal');
+    {{-- @include('includes.login-modal'); --}}
 
     <script type="text/javascript">
         //action on submit your interest
@@ -846,10 +846,10 @@
             if(phpVar == 0){
                 // alert('user not logged in');
                 $('#login-pnl').modal('show'); 
-                $('#login-pnl').on('shown.bs.modal', function () {
-                        // Activate the "Login" tab
-                        $('#loginactive').tab('show');
-                    });
+                // $('#login-pnl').on('shown.bs.modal', function () {
+                //         // Activate the "Login" tab
+                //         $('#loginactive').tab('show');
+                //     });
 
 
             }
@@ -899,10 +899,10 @@
             if(phpVar == 0){
                 // alert('user not logged in');
                 $('#login-pnl').modal('show'); 
-                $('#login-pnl').on('shown.bs.modal', function () {
-                        // Activate the "Login" tab
-                        $('#loginactive').tab('show');
-                    });
+                // $('#login-pnl').on('shown.bs.modal', function () {
+                //         // Activate the "Login" tab
+                //         $('#loginactive').tab('show');
+                //     });
 
 
             }

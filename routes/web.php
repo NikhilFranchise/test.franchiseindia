@@ -6,7 +6,7 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\SiteFeedbackController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\BrandFilterController;
-use App\Http\Controllers\MobileVerificationController;
+use App\Http\Controllers\MobileVerificationController; 
 use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\AdviceController;
 use App\Http\Controllers\FranchisorController;
@@ -98,7 +98,7 @@ Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBysta
 Route::get('invester-verifyformmobilenumber', [MobileVerificationController::class, 'investerverifyMobile']);
 Route::get('/user/check-mobile-status', [CommonController::class, 'verifyMobile']);
 Route::get('verifyformmobilenumber', [MobileVerificationController::class, 'verifyMobile']);
-Route::get('verify', [MobileVerificationController::class, 'verifyMobile']);
+Route::get('verify', [MobileVerificationController::class, 'verifyMobile']); 
 Route::get('/user/investor-mobile-verify', [CommonController::class, 'investormobileverify']);
 Route::get('validate-email', [CommonController::class, 'emailValidation']);
 Route::get('thanks-advice-form', function () {
@@ -772,6 +772,7 @@ Route::group(['prefix' => 'hi'], function () {
         return redirect('https://www.opportunityindia.com/hindi', 301);
     });
     Route::get('content/{kicker}/{kickerId}', function ($kicker) {
+        // dd('yes');
         return redirect('https://www.opportunityindia.com/hindi/tag/' . $kicker, 301);
     });       // Hindi Kicker Url
     Route::get('premiumbrand', [HomepageController::class, 'hindiHome']);                // Hindi Premium Brand Page
@@ -784,11 +785,39 @@ Route::group(['prefix' => 'hi'], function () {
     Route::get('next-article', [NewArticleController::class, 'getNextArticleHindiForRepeat']); // Hindi Repeat
     Route::get('video-and-podcast', [NewArticleController::class, 'getVideoAndPodcast']);
 });
-Route::get('content', function () {
-    return redirect('https://www.opportunityindia.com/', 301);
+
+// Route::get('content/{kicker}',   function(Request $request){
+//     dd('yes');
+// });
+
+// [ArticleController::class,'articleKickersPage']);
+// Route::get('content/women-entrepreneurs',     [ArticleController::class,'check']);
+
+
+
+
+Route::get('/content/{slug}', function ($slug) {
+    // Split the slug by the last dot (.)
+    $parts = explode('.', $slug);
+
+    // Extract the article title and id
+    $title = implode('-', array_slice($parts, 0, -1));
+    $id = end($parts);
+
+    // Redirect to the new domain
+    return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
-Route::get('content/{kicker}/{kickerId}', function ($kicker) {
-    return redirect('https://www.opportunityindia.com/tag/' . $kicker, 301);
+
+Route::get('/wellness/{slug}', function ($slug) {
+    // Split the slug by the last dot (.)
+    $parts = explode('.', $slug);
+
+    // Extract the article title and id
+    $title = implode('-', array_slice($parts, 0, -1));
+    $id = end($parts);
+
+    // Redirect to the new domain
+    return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
 //Magazine Routes
 Route::group(['prefix' => 'magazine'], function () {
@@ -802,6 +831,10 @@ Route::group(['prefix' => 'magazine'], function () {
         return redirect('/magazine', 301);
     });
 });
+// Route::get('/content/{kicker}',    [ArticleController::class,'articleKickersPage']);
+// Route::get('content/{kicker}', function ($kicker) {
+//     return redirect('https://www.opportunityindia.com/article' .'-'. $kicker, 301);
+// }); 
 // Gallery Articles Section
 Route::group(['prefix' => 'gallery'], function () {
     Route::get('/', [GalleryController::class, 'galleryArticleHome']);
@@ -954,3 +987,8 @@ Route::get('/wellness/{slug}', function ($slug) {
     // Redirect to the new domain
     return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
+
+Route::get('reload-captcha', [AdviceController::class, 'reloadCaptcha']);
+
+Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('form.submit');
+

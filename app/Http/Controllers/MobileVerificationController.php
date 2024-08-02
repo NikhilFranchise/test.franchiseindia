@@ -11,7 +11,7 @@ class MobileVerificationController extends Controller
    /**
      * @return \Illuminate\Http\JsonResponse|string
      */
-    public function verifyMobile()
+    public function verifyMobile() 
     {
         $mobileNo = request()->mobile;
         

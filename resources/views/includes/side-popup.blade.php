@@ -22,8 +22,18 @@
                             </div>
                         </div>
                         <div class="frm-container" id="askForm">
-                            <form id="homepage" name="homepage" method="post"
-                                action="{{ Config('constants.MainDomain') }}/freeadvice">
+
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div><br />
+                            @endif
+                            <form id="homepagefree" name="homepage" method="post"
+                            action="{{ route('form.submit') }}">
                                 @csrf
                                 <h2 class="ttl">Free Advice - Ask Our Experts</h2>
                                 <div id="errMsg" style="display:none;"><span style="color: red; ">Please select one
@@ -53,6 +63,7 @@
                                         </span>
                                         <input type="text" class="form-control" name="namefreeadvice"
                                             id="namefreeadvice" placeholder="Enter Name">
+                                            <span class="error-message" id="namefreeadvice-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -60,6 +71,7 @@
                                         </span>
                                         <input type="text" name="emailfreeadvice" id="emailfreeadvice"
                                             class="form-control" placeholder="Enter E-mail">
+                                            <span class="error-message" id="emailfreeadvice-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -67,18 +79,36 @@
                                         </span>
                                         <input type="text" class="form-control" maxlength="10"
                                             name="mobilefreeadvice" id="mobilefreeadvice" placeholder="Enter Mobile">
+                                            <span class="error-message" id="mobilefreeadvice-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><img alt="pincode"
                                                 src="{{ Config('constants.MainDomain') }}/images/pincode.png"></span>
                                         <input type="text" name="pincodefreeadvice" id="pincodefreeadvice"
                                             class="form-control" placeholder="Enter Pincode">
+                                            <span class="error-message" id="pincodefreeadvice-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon height80">
                                             <div class="addreesssprite"></div>
                                         </span>
                                         <textarea class="form-control height80" name="detailsfreeadvice" id="detailsfreeadvice" placeholder="Enter Details"></textarea>
+                                        <span class="error-message" id="detailsfreeadvice-error"></span>
+                                    </div>
+
+                                    <div class="form-group mt-4 mb-4">
+                                        <div class="captcha">
+                                            <span>{!! captcha_img() !!}</span>
+                                            <button type="button" class="btn btn-danger" class="reload" id="reload">
+                                                &#x21bb;
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <input id="captcha" type="text" class="form-control"
+                                            placeholder="Enter Captcha" name="captcha">
+                                            <span class="error-message" id="captcha-error"></span>
                                     </div>
                                     <div class="checkbox rm-prop">
                                         <label>
@@ -98,6 +128,8 @@
                                     </div>
                                 </div>
                             </form>
+
+
                         </div>
                     </div>
                 </div>
@@ -121,15 +153,6 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        /* if (screen.height <= 768)
-             $("#side-form").css('top', '5px'); */
-
-
-
-
-
-        /* $("#tryyyy").css('box-shadow', 'none');*/
-
         $('.sidebtn').click(function() {
             let sideBlock = $("#side-form");
             if (sideBlock.css('right') === '-305px') {
@@ -162,3 +185,99 @@
         });
     });
 </script>
+<script type="text/javascript">
+    $('#reload').click(function() {
+        // console.log('called');
+        var endpoint = '/reload-captcha';
+        var baseUrl = '{{ Config('constants.MainDomain') }}';
+        // console.log(baseUrl);
+        // Construct the full URL
+        var fullUrl = baseUrl + endpoint;
+        $.ajax({
+            type: 'GET',
+            url: fullUrl,
+            success: function(data) {
+                // console.log('yes');
+                $(".captcha span").html(data.captcha);
+            }
+        });
+    });
+</script>
+
+{{-- <script>
+    $(document).ready(function() {
+        
+        $('#homepagefree').on('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+            // Get form data
+            // console.log('freeadvice');
+            var formData = $(this).serialize();
+// console.log(formData);
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                success: function(response) {
+                    console.log('success');
+                    $('#response').html('<p>Form submitted successfully!</p>');
+                },
+                error: function(xhr) {
+                    var errors = xhr.responseJSON.errors;
+                    var errorHtml = '<ul>';
+                    $.each(errors, function(key, error) {
+                        errorHtml += '<li>' + error[0] + '</li>';
+                    });
+                    errorHtml += '</ul>';
+                    $('#response').html('<p>There were some errors:</p>' + errorHtml);
+                }
+            });
+        });
+    });
+</script> --}}
+
+<script>
+    $(document).ready(function() {
+        $('#homepagefree').on('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Get form data
+            var formData = $(this).serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                success: function(response) {
+                    $('#response').html('<p>Form submitted successfully!</p>');
+                    window.location = "/thanks-advice-form";
+
+                    // Clear previous error messages
+                    $('.error-message').text('');
+                },
+                error: function(xhr) {
+                    // Clear previous error messages
+                    $('.error-message').text('');
+
+                    var errors = xhr.responseJSON.errors;
+
+                    $.each(errors, function(key, errorMessages) {
+                        // Display error messages
+                        $('#' + key + '-error').text(errorMessages[0]);
+                    });
+
+                    // Optionally, you can handle global errors
+                    if (xhr.responseJSON.message) {
+                        $('#response').html('<p>' + xhr.responseJSON.message + '</p>');
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    .error-message {
+        color: red;
+        font-size: 0.875em;
+    }
+</style>

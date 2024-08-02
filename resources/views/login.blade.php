@@ -9,7 +9,8 @@
             <div class="leftpanel">
                 <div class="loghead">Login</div>
                 <form class="form-horizontal" method="post" action="{{route('franchise.login.submit')}}">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+@csrf
+                    {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
 
                     @if (session()->has('loginFailed'))
                         <div class="alert alert-info">{{ session()->get('loginFailed') }}</div>

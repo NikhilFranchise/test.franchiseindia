@@ -73,6 +73,7 @@ class AdviceController extends Controller
 
     public function freeadvice(Request $request)
     {
+        // dd('yes');
         // Display all request data for debugging
         // dd($request->all());
 
@@ -89,10 +90,23 @@ class AdviceController extends Controller
         // Create validator instance
         $validator = Validator::make($request->all(), $rules);
 
+       
+
         // Check for validation failures
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+
+        // $request->validate([
+        //     'namefreeadvice' => 'required',
+        //     'emailfreeadvice' => 'required|email',
+        //     'mobilefreeadvice' => 'required',
+        //     'captcha' => 'required|captcha',
+        //     'pincodefreeadvice' => 'required',
+        //     'detailsfreeadvice' => 'required',
+        //     'is_newsletterfreeadvice' => 'required',
+
+        // ]);
 
         // Process the request data
         $user = $request->optionsRadios;
@@ -136,7 +150,7 @@ class AdviceController extends Controller
         }
 
         // Send email
-        Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
+        // Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
 
         // Subscribe to newsletter if requested
         if ($newsLetter == 1) {
@@ -153,13 +167,34 @@ class AdviceController extends Controller
     public function freeadviceHome(Request $request)
     {
         // dd($request->all());
+          $request->validate([
+            'namefreeadvice' => 'required',
+            'emailfreeadvice' => 'required|email',
+            'mobilefreeadvice' => 'required',
+            'captcha' => 'required|captcha',
+            'pincodefreeadvice' => 'required',
+            'detailsfreeadvice' => 'required',
+            'is_newsletterfreeadvice' => 'required',
+
+        ]);
+
+        // $user = $request->optionsRadios;
+        // $name = $request->name;
+        // $pincode = $request->pincode;
+        // $email = $request->email;
+        // $mobile = $request->mobile;
+        // $details = $request->details;
+        // $newsLetter = $request->is_newsletter;
+        // $city = "";
+        // $state = "";
+        // $ip = $request->ip();
         $user = $request->optionsRadios;
-        $name = $request->name;
-        $pincode = $request->pincode;
-        $email = $request->email;
-        $mobile = $request->mobile;
-        $details = $request->details;
-        $newsLetter = $request->is_newsletter;
+        $name = $request->name ?? $request->namefreeadvice;
+        $email = $request->email ?? $request->emailfreeadvice;
+        $mobile = $request->mobile ?? $request->mobilefreeadvice;
+        $pincode = $request->pincode ?? $request->pincodefreeadvice;
+        $details = $request->details ?? $request->detailsfreeadvice;
+        $newsLetter = $request->is_newsletter ?? $request->is_newsletterfreeadvice;
         $city = "";
         $state = "";
         $ip = $request->ip();
@@ -184,16 +219,24 @@ class AdviceController extends Controller
             'ip' => $ip,
             'reg_source' => !empty(Cookie::get('campaignSource')) ? Cookie::get('campaignSource') : ""
         ]);
-        return response()->json($users);
+        // return response()->json($users);
         //If insertion fails
         if (!$users)
             return response()->json('Insertion failed..!');
 
-        Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
+        // Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
 
         if ($newsLetter == 1)
             NewsLetterController::createNewsLetter($request->input('email'), "fi");
 
         return response()->json('true');
+        // if ($request->expectsJson()) {
+        //     return redirect('thanks-advice-form');
+        // }
+    }
+    public function reloadCaptcha()
+    {
+        // dd('yes');
+        return response()->json(['captcha'=> captcha_img()]);
     }
 }

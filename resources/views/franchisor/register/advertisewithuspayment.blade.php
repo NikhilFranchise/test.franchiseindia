@@ -10,7 +10,7 @@
     </style>
 </head>
 
-<body>
+<body> 
     {{-- @php --}}
     {{-- $pageType = (request()->segment(1) == 'premiumbrand' || request()->segment(2) == 'premiumbrand') ? 2 : 1; --}}
     {{-- $franData = \App\FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first(); --}}
