@@ -21,6 +21,18 @@
     <link href="@yield('prev')" rel="prev">
     <link href="@yield('next')" rel="next">
 @endif
+
+<!-- Bootstrap CSS CDN -->
+<link rel="preload" href="{{ url('newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2') }}" as="style">
+<!-- Scrollbar Custom CSS -->
+<link rel="preload"
+    href="{{ url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2') }}" as="style">
+<!-- swiper@6.2.0 CSS -->
+<link rel="preload" href="{{ url('newhomepage/assets/vendor/swiper/css/swiper-bundle.min.css?ver=2.2') }}" as="style">
+<!-- owl.carousel -->
+<link rel="preload" href="{{ url('newhomepage/assets/vendor/owl.carousel/assets/owl.carousel.min.css?ver=2.2') }}" as="style" >
+<!-- Our Custom CSS -->
+
 <!-- Bootstrap CSS CDN -->
 <link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2') }}">
 <!-- Scrollbar Custom CSS -->
@@ -29,8 +41,21 @@
 <!-- swiper@6.2.0 CSS -->
 <link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/swiper/css/swiper-bundle.min.css?ver=2.2') }}">
 <!-- owl.carousel -->
-<link href="{{ url('newhomepage/assets/vendor/owl.carousel/assets/owl.carousel.min.css?ver=2.2') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/owl.carousel/assets/owl.carousel.min.css?ver=2.2') }}" >
 <!-- Our Custom CSS -->
+
+
+
+{{-- <!-- Bootstrap CSS CDN -->
+<link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2') }}">
+<!-- Scrollbar Custom CSS -->
+<link rel="stylesheet"
+    href="{{ url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2') }}">
+<!-- swiper@6.2.0 CSS -->
+<link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/swiper/css/swiper-bundle.min.css?ver=2.2') }}">
+<!-- owl.carousel -->
+<link href="{{ url('newhomepage/assets/vendor/owl.carousel/assets/owl.carousel.min.css?ver=2.2') }}" rel="stylesheet">
+<!-- Our Custom CSS --> --}}
 
 @mobile
     <link rel="stylesheet" href="{{ url('newhomepage/assets/css/style-mobile-new.css?ver=12.8') }}">
