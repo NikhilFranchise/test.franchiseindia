@@ -5,7 +5,7 @@
     @include('layout.newhomepage.header')
 @endnotmobile
 <!-- Modal -->
-<div class="modal fade lg-panel formsection" id="login-pnl" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+<div class="modal fade lg-panel formsection" id="login-pnl1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">

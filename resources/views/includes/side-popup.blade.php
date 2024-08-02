@@ -234,9 +234,18 @@
         });
     });
 </script> --}}
-
 <script>
     $(document).ready(function() {
+        // Define custom error messages
+        var customErrorMessages = {
+            namefreeadvice: "Please provide your name.",
+            emailfreeadvice: "Your email address is required.",
+            mobilefreeadvice: "Mobile number is necessary.",
+            captcha: "Please solve the captcha.",
+            pincodefreeadvice: "Pincode is required.",
+            detailsfreeadvice: "Additional details are needed."
+        };
+
         $('#homepagefree').on('submit', function(e) {
             e.preventDefault(); // Prevent the default form submission
 
@@ -251,21 +260,29 @@
                     $('#response').html('<p>Form submitted successfully!</p>');
                     window.location = "/thanks-advice-form";
 
-                    // Clear previous error messages
+                    // Clear previous error messages and placeholders
                     $('.error-message').text('');
+                    $('input').attr('placeholder', '');
                 },
                 error: function(xhr) {
-                    // Clear previous error messages
+                    // Clear previous error messages and placeholders
                     $('.error-message').text('');
+                    $('input').attr('placeholder', '');
 
                     var errors = xhr.responseJSON.errors;
-
                     $.each(errors, function(key, errorMessages) {
-                        // Display error messages
-                        $('#' + key + '-error').text(errorMessages[0]);
+                        // Use custom error messages if available
+                        var customMessage = customErrorMessages[key] || errorMessages[0];
+                        
+                        // Update the error message next to the field
+                        $('#' + key + '-error').text(customMessage);
+                        
+                        // Optionally, update the error message inside the input field
+                        // Uncomment if you want to use placeholder for errors
+                        // $('#' + key).attr('placeholder', customMessage);
                     });
 
-                    // Optionally, you can handle global errors
+                    // Optionally, handle global errors
                     if (xhr.responseJSON.message) {
                         $('#response').html('<p>' + xhr.responseJSON.message + '</p>');
                     }
