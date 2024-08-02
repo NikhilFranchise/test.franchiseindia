@@ -31,17 +31,49 @@
  </noscript>
  <link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2') }}" media="print" onload="this.media='all'">
 {{-- <link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2') }}"> --}}
+
 <!-- Scrollbar Custom CSS -->
-<link rel="stylesheet"
-    href="{{ url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2') }}">
+<link rel="preload" href="{{ url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2') }}" as="style">
+<noscript>
+    <link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2') }}">
+</noscript>
+<link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2') }}" media="print" onload="this.media='all'">
+{{-- <link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2') }}"> --}}
+
+
 <!-- swiper@6.2.0 CSS -->
+<link rel="preload" href="{{ url('newhomepage/assets/vendor/swiper/css/swiper-bundle.min.css?ver=2.2') }}" as="style">
+<noscript>
 <link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/swiper/css/swiper-bundle.min.css?ver=2.2') }}">
+</noscript>
+<link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/swiper/css/swiper-bundle.min.css?ver=2.2') }}" media="print" onload="this.media='all'">
+
+
+{{-- <link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/swiper/css/swiper-bundle.min.css?ver=2.2') }}"> --}}
+
+
+
 <!-- owl.carousel -->
-<link href="{{ url('newhomepage/assets/vendor/owl.carousel/assets/owl.carousel.min.css?ver=2.2') }}" rel="stylesheet">
+<link rel="preload" href="{{ url('newhomepage/assets/vendor/owl.carousel/assets/owl.carousel.min.css?ver=2.2') }}"  as="style">
+<noscript>
+<link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/owl.carousel/assets/owl.carousel.min.css?ver=2.2') }}" >
+</noscript>
+<link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/owl.carousel/assets/owl.carousel.min.css?ver=2.2') }}"  media="print" onload="this.media='all'">
+
+{{-- <link href="{{ url('newhomepage/assets/vendor/owl.carousel/assets/owl.carousel.min.css?ver=2.2') }}" rel="stylesheet"> --}}
 <!-- Our Custom CSS -->
 
+
 @mobile
-    <link rel="stylesheet" href="{{ url('newhomepage/assets/css/style-mobile-new.css?ver=12.8') }}">
+<link rel="preload" href="{{ url('newhomepage/assets/css/style-mobile-new.css?ver=12.8') }}" as="style">
+<noscript>
+<link rel="stylesheet" href="{{ url('newhomepage/assets/css/style-mobile-new.css?ver=12.8') }}">
+</noscript>
+<link rel="stylesheet" href="{{ url('newhomepage/assets/css/style-mobile-new.css?ver=12.8') }}" media="print" onload="this.media='all'">
+
+
+
+    {{-- <link rel="stylesheet" href="{{ url('newhomepage/assets/css/style-mobile-new.css?ver=12.8') }}"> --}}
 
     @include('layout.newhomepage.topsearch')
 @endmobile
