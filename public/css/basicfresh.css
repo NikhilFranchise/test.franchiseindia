@@ -24,7 +24,10 @@ ol,ul,ul li{list-style-type:none}
 .login-p-home,.sideline,.sidelinenew{border-bottom:1px solid #dfdfdf}
 .c-button:focus,.c-menu__close:focus,a:focus{outline:0}
 .form-control {    border: 1px solid #ccc!important;    font-size: 12px!important;}
-.formsection .form-control {    padding: 14px 12px 14px!important;}
+.formsection .form-control {    padding: 10px 12px 10px!important;}
+#tryyyy .formsection {margin-bottom: 0px;}
+#askForm .frm-input{padding:0px 20px 20px 20px;}
+.rm-prop label{font-size: 13px;}
 @media only screen and (min-width:1px) and (max-width:767px) {
     .testimonial .mdfrd{margin-left:0}
 }
@@ -1044,7 +1047,7 @@ a:focus{outline-offset:0;color:#333}
 .what-new .formsection{padding-left:0!important;padding-right:0!important}
 .what-new .frm-input{padding:15px 30px}
 .what-new .frm-input .input-group{padding-bottom:10px}
-.height80{height:80px!important}
+.height80{height:40px!important}
 .what-new .formsection .form-control{padding:9px 12px}
 .what-new .formsection .input-group-addon{padding:4px 12px}
 .what-new .rm-prop{margin-top:0}
@@ -2509,7 +2512,7 @@ ul.tobbxslider li img{width:449px;height:253px}
     .articlesection .artiaut{padding-bottom:20px}
     .articlesection .abigima{width:100%}
     .resmodfidevice{margin-top:20px}
-	.articlesection .articontent iframe { width:100%!important; }
+    .articlesection .articontent iframe { width:100%!important; }
     .articlesection .articontent{padding-right:10px}
     .articlesection .articontent > img{width:100%!important;height:auto!important;border-color:#dfdfdf!important;margin:0!important}
     ul.sib li{width:62px}
@@ -2696,7 +2699,7 @@ ul.tobbxslider li img{width:449px;height:253px}
     #modalGetFree .requested-frm{padding:20px 40px 10px}
     #modalGetFree .modal-title{font-size:16px}
     #modalGetFree .modal-footer{padding:20px}
-    .ttl-brnd-list a{font-size:15px;display:block;width:180px;margin:5px auto}
+    .ttl-brnd-list a{font-size:15px!important;display:block;width:180px;margin:5px auto!important;}
     .myaccount .formsection .width165{width:121px}
     .myaccount .formsection .width148 .form-control.myselectclass4,.myaccount .formsection .wwidth148 .form-control.myselectclass4{padding:11px 12px 12px}
     .myaccount .formsection .padd-lft-rht .width115,.myaccount .formsection .padd-lft-rht .wwidth115{width:77px}
@@ -3553,6 +3556,7 @@ a.dbspac span{top:-5px!important;line-height:15px}
 .myaccount .bgimgship .investviewleft span{display:block;color:#333}
 .myaccount .bgimgship .investviewleft .btn-default.btnupg{background:#333;color:#fff;padding:6px 14px;font-size:12px;border:1px solid #dfdfdf;margin-top:3px}
 @media only screen and (min-width:1px) and (max-width:767px) {
+    .cateblock .catbtn{float: left;}
     .formsection.investbyuser .sidehead span.showfaqmob{display:block;top:-9px;margin-right:0}
     .formsection.investbyuser .sidehead span.showfaqdesk{display:none}
     .formsection.investbyuser .pricesection .boxwidth,.formsection.investbyuser .pricesection .boxwidth:nth-child(4){width:100%;float:none;margin:30px auto}
@@ -4238,13 +4242,15 @@ div.btnblkf .btn-default.btn-red:hover{background:#f22406;color:#fff}
 .sideslideform{display:table}
 #tryyyy{background:#fff;width:305px;border-radius:10px 0 0 10px;z-index:1;float:left;position:relative}
 .sideslideform .ttl{color:#333;font-family:"Open Sans Light","serif";font-size:18px;text-align:center;text-transform:uppercase;padding:1px 0 5px}
-.sideslideform .frm-type{background-color:#f3f3f3;padding:5px 30px 5px 35px;margin-bottom:30px}
+.sideslideform .frm-type{background-color: #f3f3f3;padding: 5px 20px 5px 20px;margin-bottom: 10px;display: flex;align-items: baseline;}
+.sideslideform .frm-type .radio:first-child{margin-right: 20px;}
+.sideslideform .radio{margin-top: 3px;margin-bottom: 3px;font-size:13px;}
 .sideslideform .formsection.leftrightzero{padding:0!important}
-.sideslideform .frm-input{padding-left:30px;padding-right:30px}
-.sideslideform .input-group{margin-bottom:10px}
-.sideslideform .formsection .input-group-addon{padding:5px 12px}
+.sideslideform .frm-input{padding-left:20px;padding-right:20px}
+.sideslideform .input-group{margin-bottom:0px}
+.sideslideform .formsection .input-group-addon{padding:3px 12px}
 .sideslideform .formsection .form-control{padding:10px 12px}
-.sideslideform .formsection .btn-default.btn-red{padding:8px 15px;font-family:"Open Sans Regular","serif";font-size:14px;margin:5px auto 0}
+.sideslideform .formsection .btn-default.btn-red{padding:8px 15px;font-family:"Open Sans Regular","serif";font-size:12px;margin:5px auto 0}
 .sideslideform .formsection .checkbox label,.sideslideform .formsection .radio label{text-indent:-20px}
 #tt-img-control{float:left;background:transparent url(https://www.franchiseindia.com/images/advicebtn.png);height:145px;width:44px;position:relative;margin-top:220px;cursor:pointer}
 .middleval{min-height:100%;height:100%;position:fixed;top:0;right:0;background:transparent;z-index:2}
@@ -4483,6 +4489,7 @@ ul.sidebt li.fi{height:160px}
 .row.hm-section {    padding-top: 105px;}
 
 }
-@media only screen and (min-width:1024px) and (max-width:1300px) {
-.sideslideform .frm-container{height:350px;overflow:auto;}
+@media only screen and (min-width:900px) and (max-width:1700px) {
+.middleval{top:55px;}
+#tryyyy .frm-container{height: 500px;overflow: auto;}
 }
