@@ -32,8 +32,7 @@
                                     </ul>
                                 </div><br />
                             @endif
-                            <form id="homepagefree" name="homepage" method="post"
-                            action="{{ route('form.submit') }}">
+                            <form id="homepagefree" name="homepage" method="post" action="{{ route('form.submit') }}">
                                 @csrf
                                 <h2 class="ttl">Free Advice - Ask Our Experts</h2>
                                 <div id="errMsg" style="display:none;"><span style="color: red; ">Please select one
@@ -63,7 +62,7 @@
                                         </span>
                                         <input type="text" class="form-control" name="namefreeadvice"
                                             id="namefreeadvice" placeholder="Enter Name">
-                                            <span class="error-message" id="namefreeadvice-error"></span>
+                                        <span class="error-message" id="namefreeadvice-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -71,7 +70,7 @@
                                         </span>
                                         <input type="text" name="emailfreeadvice" id="emailfreeadvice"
                                             class="form-control" placeholder="Enter E-mail">
-                                            <span class="error-message" id="emailfreeadvice-error"></span>
+                                        <span class="error-message" id="emailfreeadvice-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -79,14 +78,14 @@
                                         </span>
                                         <input type="text" class="form-control" maxlength="10"
                                             name="mobilefreeadvice" id="mobilefreeadvice" placeholder="Enter Mobile">
-                                            <span class="error-message" id="mobilefreeadvice-error"></span>
+                                        <span class="error-message" id="mobilefreeadvice-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><img alt="pincode"
                                                 src="{{ Config('constants.MainDomain') }}/images/pincode.png"></span>
                                         <input type="text" name="pincodefreeadvice" id="pincodefreeadvice"
                                             class="form-control" placeholder="Enter Pincode">
-                                            <span class="error-message" id="pincodefreeadvice-error"></span>
+                                        <span class="error-message" id="pincodefreeadvice-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon height80">
@@ -108,7 +107,7 @@
                                     <div class="form-group mb-4">
                                         <input id="captcha" type="text" class="form-control"
                                             placeholder="Enter Captcha" name="captcha">
-                                            <span class="error-message" id="captcha-error"></span>
+                                        <span class="error-message" id="captcha-error"></span>
                                     </div>
                                     <div class="checkbox rm-prop">
                                         <label>
@@ -184,8 +183,7 @@
             }
         });
     });
-</script>
-<script type="text/javascript">
+
     $('#reload').click(function() {
         // console.log('called');
         var endpoint = '/reload-captcha';
@@ -202,40 +200,8 @@
             }
         });
     });
-</script>
 
-{{-- <script>
-    $(document).ready(function() {
-        
-        $('#homepagefree').on('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
-            // Get form data
-            // console.log('freeadvice');
-            var formData = $(this).serialize();
-// console.log(formData);
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: formData,
-                success: function(response) {
-                    console.log('success');
-                    $('#response').html('<p>Form submitted successfully!</p>');
-                },
-                error: function(xhr) {
-                    var errors = xhr.responseJSON.errors;
-                    var errorHtml = '<ul>';
-                    $.each(errors, function(key, error) {
-                        errorHtml += '<li>' + error[0] + '</li>';
-                    });
-                    errorHtml += '</ul>';
-                    $('#response').html('<p>There were some errors:</p>' + errorHtml);
-                }
-            });
-        });
-    });
-</script> --}}
-<script>
-    $(document).ready(function() {
+    {{--  $(document).ready(function() {
         // Define custom error messages
         var customErrorMessages = {
             namefreeadvice: "Please provide your name.",
@@ -248,6 +214,7 @@
 
         $('#homepagefree').on('submit', function(e) {
             e.preventDefault(); // Prevent the default form submission
+
 
             // Get form data
             var formData = $(this).serialize();
@@ -273,10 +240,10 @@
                     $.each(errors, function(key, errorMessages) {
                         // Use custom error messages if available
                         var customMessage = customErrorMessages[key] || errorMessages[0];
-                        
+
                         // Update the error message next to the field
                         $('#' + key + '-error').text(customMessage);
-                        
+
                         // Optionally, update the error message inside the input field
                         // Uncomment if you want to use placeholder for errors
                         // $('#' + key).attr('placeholder', customMessage);
@@ -289,12 +256,90 @@
                 }
             });
         });
+    });  --}}
+
+    $(document).ready(function() {
+        // Define custom error messages
+        var customErrorMessages = {
+            namefreeadvice: "Please provide your name.",
+            emailfreeadvice: "Your email address is required.",
+            mobilefreeadvice: "Mobile number is necessary.",
+            captcha: "Please solve the captcha.",
+            pincodefreeadvice: "Pincode is required.",
+            detailsfreeadvice: "Additional details are needed."
+        };
+
+        $('#homepagefree').on('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Clear previous error messages
+            $('.error-message').text('');
+            $('input, textarea').removeClass('input-error').attr('placeholder', '');
+
+            // Perform client-side validation
+            var hasError = false;
+            $('#homepagefree input, #homepagefree textarea').each(function() {
+                var inputName = $(this).attr('name');
+                var inputValue = $(this).val();
+
+                if (inputName in customErrorMessages && !inputValue.trim()) {
+                    hasError = true;
+                    $(this).addClass('input-error').attr('placeholder', customErrorMessages[inputName]);
+                }
+            });
+
+            if (hasError) {
+                // If there's a validation error, do not proceed with the AJAX call
+                return;
+            }
+
+            // Get form data
+            var formData = $(this).serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                success: function(response) {
+                    $('#response').html('<p>Form submitted successfully!</p>');
+                    window.location = "/thanks-advice-form";
+
+                    // Clear previous error messages and placeholders
+                    $('.error-message').text('');
+                    $('input, textarea').removeClass('input-error').attr('placeholder', '');
+                },
+                error: function(xhr) {
+                    // Clear previous error messages and placeholders
+                    $('.error-message').text('');
+                    $('input, textarea').removeClass('input-error').attr('placeholder', '');
+
+                    var errors = xhr.responseJSON.errors;
+                    $.each(errors, function(key, errorMessages) {
+                        // Use custom error messages if available
+                        var customMessage = customErrorMessages[key] || errorMessages[0];
+
+                        // Update the error message inside the input field
+                        $('#' + key).addClass('input-error').attr('placeholder', customMessage);
+                    });
+
+                    // Optionally, handle global errors
+                    if (xhr.responseJSON.message) {
+                        $('#response').html('<p>' + xhr.responseJSON.message + '</p>');
+                    }
+                }
+            });
+        });
     });
+
 </script>
 
 <style>
-    .error-message {
-        color: red;
-        font-size: 0.875em;
-    }
+  .input-error {
+    border-color: red;
+}
+
+/* Placeholder styles */
+.input-error::placeholder {
+    color: red;
+}
 </style>
