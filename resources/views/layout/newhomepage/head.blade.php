@@ -22,7 +22,7 @@
     <link href="@yield('next')" rel="next">
 @endif
 <!-- Bootstrap CSS CDN -->
-<link rel="stylesheet" href="{{ url('newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2') }}">
+<link rel="preload" href="{{ url('newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2') }}" as="style">
 <!-- Scrollbar Custom CSS -->
 <link rel="stylesheet"
     href="{{ url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2') }}">
