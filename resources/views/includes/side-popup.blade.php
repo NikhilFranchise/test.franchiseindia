@@ -202,39 +202,7 @@
             }
         });
     });
-</script>
 
-{{-- <script>
-    $(document).ready(function() {
-        
-        $('#homepagefree').on('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
-            // Get form data
-            // console.log('freeadvice');
-            var formData = $(this).serialize();
-// console.log(formData);
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: formData,
-                success: function(response) {
-                    console.log('success');
-                    $('#response').html('<p>Form submitted successfully!</p>');
-                },
-                error: function(xhr) {
-                    var errors = xhr.responseJSON.errors;
-                    var errorHtml = '<ul>';
-                    $.each(errors, function(key, error) {
-                        errorHtml += '<li>' + error[0] + '</li>';
-                    });
-                    errorHtml += '</ul>';
-                    $('#response').html('<p>There were some errors:</p>' + errorHtml);
-                }
-            });
-        });
-    });
-</script> --}}
-<script>
     $(document).ready(function() {
         // Define custom error messages
         var customErrorMessages = {

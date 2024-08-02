@@ -904,7 +904,6 @@
                 //         $('#loginactive').tab('show');
                 //     });
 
-
             }
             else if(phpVar == 1){
                 $('#myRating').modal('show'); 
