@@ -4,15 +4,17 @@
 
             <div class="sideslideform">
                 <div class="sideinout">
+                    {{-- @dd(request()->segment(2)); --}}
                     @if (request()->segment(2) == 'business-opportunities' ||
                             request()->segment(1) == 'business-opportunities' ||
-                            request()->segment(2) == 'brands' ||
-                            request()->segment(1) == 'brands' ||
+                            // request()->segment(2) == 'brands' ||
+                            // request()->segment(1) == 'brands' ||
                             request()->segment(2) == 'searchby' ||
                             request()->segment(3) == 'searchby')
                         <div class="comparebtn" id="seo_comparebtn"></div>
-                    @endif
                     <div class="sidebtn" id="seo_sidebtn"></div>
+
+                    @endif
                 </div>
                 <!--<div id="tt-img-control"></div>-->
                 <div id="tryyyy">
@@ -34,6 +36,7 @@
                             @endif
                             <form id="homepagefree" name="homepage" method="post" action="{{ route('form.submit') }}">
                                 @csrf
+
                                 <h2 class="ttl">Free Advice - Ask Our Experts</h2>
                                 <div id="errMsg" style="display:none;"><span style="color: red; ">Please select one
                                         option..!</span></div>
@@ -200,8 +203,40 @@
             }
         });
     });
+</script>
 
-    {{--  $(document).ready(function() {
+{{-- <script>
+    $(document).ready(function() {
+        
+        $('#homepagefree').on('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+            // Get form data
+            // console.log('freeadvice');
+            var formData = $(this).serialize();
+// console.log(formData);
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: formData,
+                success: function(response) {
+                    console.log('success');
+                    $('#response').html('<p>Form submitted successfully!</p>');
+                },
+                error: function(xhr) {
+                    var errors = xhr.responseJSON.errors;
+                    var errorHtml = '<ul>';
+                    $.each(errors, function(key, error) {
+                        errorHtml += '<li>' + error[0] + '</li>';
+                    });
+                    errorHtml += '</ul>';
+                    $('#response').html('<p>There were some errors:</p>' + errorHtml);
+                }
+            });
+        });
+    });
+</script> --}}
+<script>
+    $(document).ready(function() {
         // Define custom error messages
         var customErrorMessages = {
             namefreeadvice: "Please provide your name.",
@@ -256,7 +291,7 @@
                 }
             });
         });
-    });  --}}
+    });  
 
     $(document).ready(function() {
         // Define custom error messages

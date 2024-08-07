@@ -96,7 +96,6 @@
 
         <!-- Featured Franchise Companies ends -->
             <!-- News section starts -->
-
         {{-- @include('layout.newhomepage.newssection') --}}
 
         <!-- News section ends -->
