@@ -96,7 +96,8 @@
 
         <!-- Featured Franchise Companies ends -->
             <!-- News section starts -->
-        @include('layout.newhomepage.newssection')
+
+        {{-- @include('layout.newhomepage.newssection') --}}
 
         <!-- News section ends -->
             <!-- Testimonial section starts -->
@@ -176,7 +177,7 @@
 
     <!-- Featured Franchise Companies ends -->
         <!-- News section starts -->
-    @include('layout.newhomepage.newssection')
+    {{-- @include('layout.newhomepage.newssection') --}}
 
     <!-- News section ends -->
         <!-- Testimonial section starts -->
@@ -255,7 +256,7 @@
 
     <!-- Featured Franchise Companies ends -->
         <!-- News section starts -->
-    @include('layout.newhomepage.mobile.newssection')
+    {{-- @include('layout.newhomepage.mobile.newssection') --}}
 
     <!-- News section ends -->
         <!-- Testimonial section starts -->

@@ -19,7 +19,7 @@
 @section('englishUrl', $engUrl)
 
 @section('hindibrandUrls')
-    <link href="{{ str_replace('/hi/', '/amp/hi/', $hindiUrl) }}" rel="amphtml">
+    {{-- <link href="{{ str_replace('/hi/', '/amp/hi/', $hindiUrl) }}" rel="amphtml"> --}}
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
 @endsection
@@ -492,7 +492,8 @@
                                 @if (count($brandResults) == 0)
                                     <div class="noresults">कोई परिणाम नहीं मिला</div>
                                 @endif
-                                {!! $brandResults->appends($params)->render() !!}
+                                {{--  {!! $brandResults->appends($params)->render() !!}--}}
+								 {!! $brandResults->appends($params)->links('vendor.pagination.custom') !!}
                             </div>
                         </div>
                     </div>

@@ -118,7 +118,15 @@ class BusinessListingController extends Controller
 
         $count           = request()->segment(1) == 'amp' ? 20 : 21;
         $brandResults    = $franData->paginate($count);
-
+        $currentPage = $brandResults->currentPage();
+        $lastPage = $brandResults->lastPage();
+    
+        // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
+        if ($currentPage > $lastPage) {
+            // Get the current URL without query parameters
+            $parentUrl = url()->current();
+            return redirect($parentUrl);
+        }
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
         $mc    = $mainCatId;
         $sc    = $subCatId;
@@ -760,6 +768,15 @@ class BusinessListingController extends Controller
 
         $count           = request()->segment(1) == 'amp' ? 20 : 21;
         $brandResults    = $franData->paginate($count);
+        $currentPage = $brandResults->currentPage();
+        $lastPage = $brandResults->lastPage();
+    
+        // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
+        if ($currentPage > $lastPage) {
+            // Get the current URL without query parameters
+            $parentUrl = url()->current();
+            return redirect($parentUrl);
+        }
 
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
 
@@ -953,6 +970,15 @@ class BusinessListingController extends Controller
         $count = request()->segment(1) == 'amp' ? 20 : 21;
 
         $brandResults = $franData->orderby('membership_weightage', 'desc')->paginate($count);
+        $currentPage = $brandResults->currentPage();
+        $lastPage = $brandResults->lastPage();
+    
+        // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
+        if ($currentPage > $lastPage) {
+            // Get the current URL without query parameters
+            $parentUrl = url()->current();
+            return redirect($parentUrl);
+        }
         $franImageData   = [];
         if (!empty($brandResults)) {
             $paidFranchisors = collect($brandResults->toArray()['data']);
@@ -1625,6 +1651,16 @@ class BusinessListingController extends Controller
 
         $count           = request()->segment(1) == 'amp' ? 20 : 21;
         $brandResults    = $franData->paginate($count);
+        $currentPage = $brandResults->currentPage();
+        $lastPage = $brandResults->lastPage();
+    
+        // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
+        if ($currentPage > $lastPage) {
+            // Get the current URL without query parameters
+            $parentUrl = url()->current();
+            return redirect($parentUrl);
+        }
+
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
 
         $mc    = $mainCatId;
@@ -1891,8 +1927,20 @@ class BusinessListingController extends Controller
         }
 
         $count = request()->segment(1) == 'amp' ? 20 : 21;
-
         $brandResults = $franData->orderby('membership_weightage', 'desc')->paginate($count);
+          // Get the current page and last page
+        $currentPage = $brandResults->currentPage();
+        $lastPage = $brandResults->lastPage();
+    
+        // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
+        if ($currentPage > $lastPage) {
+            // Get the current URL without query parameters
+            $parentUrl = url()->current();
+            return redirect($parentUrl);
+        }
+
+        // dd($brandResults);
+
         $franImageData   = [];
         if (!empty($brandResults)) {
             $paidFranchisors = collect($brandResults->toArray()['data']);
