@@ -17,15 +17,20 @@
                         <div class="frm-pnl">
                             <form class="form-horizontal" method="POST"
                                 action="https://www.franchiseindia.com/password/email">
-                                @csrf
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <div class="usersprite"></div>
                                     </span>
-                                    <input id="email" type="email" class="form-control blur" name="email"
+                                    @csrf
+                                    {{--  <input type="hidden" name="_token" value="{{ csrf_token() }}">  --}}
+                                    <input id="email" type="email"
+                                        class="form-control
+                                 blur" name="email"
                                         placeholder="ईमेल-आईडी दर्ज करें" value="" required="">
                                 </div>
-                                <button type="submit" class="btn btn-default btn-gry btn-prop">पासवर्ड
+                                <button type="submit"
+                                    class="btn btn-default btn-gry
+                              btn-prop">पासवर्ड
                                     रीसेट</button> <span class="pipe">|</span> <a class="frg-link" href="#"
                                     onclick="lg_panel()">लॉग इन</a>
                             </form>
@@ -43,46 +48,27 @@
                             <div role="tabpanel" class="tab-pane" id="login">
                                 <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
                                     @csrf
+                                    {{--  <input type="hidden" name="_token" value="{{ csrf_token() }}">  --}}
                                     <div class="frm-pnl">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="usersprite"></div>
                                             </span>
-                                            <input type="text" class="form-control blur" name="email_or_mobile"
-                                                id="email_or_mobile" placeholder="ईमेल-आईडी या मोबाइल नंबर दर्ज करें"
-                                                onkeyup="checkInputType()">
-
-                                            <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
-                                                style="display:none">Edit</span>
-                                            <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
-                                                style="display:none">Get OTP</span>
-                                            <div style="display:none; color:red;" id="mismatch-mob">यह मोबाइल नंबर
-                                                पंजीकृत नहीं है|</div>
+                                            <input type="email"
+                                                class="form-control
+                                       blur"
+                                                required="" name="email" placeholder="ईमेल-आईडी दर्ज करें">
                                         </div>
-                                        <div class="input-group" id="password_group">
+                                        <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
                                             </span>
-                                            <input type="password" name="password" class="form-control blur"
-                                                placeholder="पासवर्ड दर्ज करें">
-
+                                            <input type="password" required="" name="password"
+                                                class="form-control blur" placeholder="पासवर्ड दर्ज करें">
                                         </div>
-                                        <div class="input-group" id="otp-block-wider" style="display: none;">
-                                            <span class="input-group-addon">
-                                                <div class="otpsprite"></div>
-                                            </span>
-                                            <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
-                                                class="form-control blur" placeholder="Enter OTP">
-
-                                            <div style="display:none; color:red;" id="mismatch-otp">Mismatch OTP</div>
-                                            <span class="vrfy" id="resend_otp" onclick="resendOTP()"
-                                                style="display:none">Resend
-                                                OTP</span>
-                                            <span class="vrfy" id="otp_timer"></span>
-                                        </div>
-                                        <button type="submit" id="sign_in_btn"
+                                        <button type="submit"
                                             class="btn btn-default
-                              btn-gry btn-prop">साइन
+                                    btn-gry btn-prop">साइन
                                             इन </button>
                                         <span class="pipe">|</span> <a class="frg-link" href="#"
                                             onClick="frg_panel()">पासवर्ड भूल गए</a>
@@ -93,14 +79,14 @@
                                     <div class="popleft">
                                         <span>या साइन इन करें</span>
                                         <ul class="socl">
+
                                             <li><a href="{{ config('constants.MainDomain') }}/auth/google"><img
                                                         src="{{ url('newhomepage/assets/img/google.svg') }}"
                                                         alt="google" class="" /></a></li>
                                         </ul>
                                     </div>
                                     <div class="popright">नया उपयोगकर्ता <a href="#" id="loginselect1">यहाँ
-                                            क्लिक करें</a>
-                                    </div>
+                                            क्लिक करें</a></div>
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane active" id="register">
@@ -109,21 +95,21 @@
                                         <div style="text-align:center">
                                             <div><a href="{{ Config('constants.MainDomain') }}/investor/create"
                                                     class="btn btn-large btn-default
-                                 btn-gry btn-prop">आज
+                                       btn-gry btn-prop">आज
                                                     ही बिजनेस शुरू करें <br /><span>(इन्वेस्टर
                                                         पंजीकरण) </span> </a>
                                             </div>
                                             <br>
                                             <div><a href="{{ Config('constants.MainDomain') }}/franchisor/registration/step/1"
                                                     class="btn btn-large btn-default
-                                 btn-gry btn-prop">चैनल
+                                       btn-gry btn-prop">चैनल
                                                     पार्टनर नियुक्त करें <br /><span> (फ्रैंचाइज़र
                                                         पंजीकरण)</span></a>
                                             </div>
                                             <br>
                                             <div><a href="{{ Config('constants.MainDomain') }}/franchisor/international-registration"
                                                     class="btn btn-large btn-default
-                                 btn-gry btn-prop">चैनल
+                                       btn-gry btn-prop">चैनल
                                                     पार्टनर नियुक्त करें <br /><span> (अंतरराष्ट्रीय फ्रैंचाइज़र
                                                         पंजीकरण)</span></a>
                                             </div>
@@ -131,7 +117,7 @@
                                             <div><a target="_blank"
                                                     href="{{ Config('constants.MainDomain') }}/property-loan"
                                                     class="btn btn- large
-                                 btn-default btn-gry btn-prop">संपत्ति
+                                       btn-default btn-gry btn-prop">संपत्ति
                                                     के खिलाफ ऋण </a>
                                             </div>
                                         </div>
@@ -176,15 +162,19 @@
                         <div class="frm-pnl">
                             <form class="form-horizontal" method="POST"
                                 action="{{ Config('constants.MainDomain') }}/password/email">
-                                @csrf
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <div class="usersprite"></div>
                                     </span>
-                                    <input id="email" type="email" class="form-control blur" name="email"
+                                    @csrf
+                                    <input id="email" type="email"
+                                        class="form-control
+                                 blur" name="email"
                                         placeholder="Enter Email-Id" value="" required="">
                                 </div>
-                                <button type="submit" class="btn btn-default btn-gry btn-prop">Reset
+                                <button type="submit"
+                                    class="btn btn-default btn-gry
+                              btn-prop">Reset
                                     Password</button> <span class="pipe">|</span> <a class="frg-link"
                                     href="#" onclick="lg_panel()">Login</a>
                             </form>
@@ -202,48 +192,28 @@
                             <div role="tabpanel" class="tab-pane" id="login">
                                 <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
                                     @csrf
+                                    {{--  <input type="hidden" name="_token" value="{{ csrf_token() }}">  --}}
                                     <div class="frm-pnl">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="usersprite"></div>
                                             </span>
-
-                                            <input type="text" class="form-control blur" required=""
-                                                name="email_or_mobile" id="email_or_mobile"
-                                                placeholder="Enter Your User ID or Mobile Number"
-                                                onkeyup="checkInputType()">
-
-                                            <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
-                                                style="display:none">Edit</span>
-                                            <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
-                                                style="display:none">Get OTP</span>
-                                            <div style="display:none; color:red;" id="mismatch-mob">This mobile number
-                                                is not registered</div>
+                                            <input type="email"
+                                                class="form-control
+                                       blur"
+                                                required="" name="email" placeholder="Enter Your User ID">
                                         </div>
-                                        <div class="input-group" id="password_group">
+                                        <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
                                             </span>
-                                            <input type="password" name="password" class="form-control blur"
-                                                placeholder="Enter Your Password">
+                                            <input type="password" required="" name="password"
+                                                class="form-control blur" placeholder="Enter Your Password">
                                         </div>
-
-                                        <div class="input-group" id="otp-block-wider" style="display: none;">
-                                            <span class="input-group-addon">
-                                                <div class="otpsprite"></div>
-                                            </span>
-                                            <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
-                                                class="form-control blur" placeholder="Enter OTP">
-
-                                            <div style="display:none; color:red;" id="mismatch-otp">Mismatch OTP</div>
-                                            <span class="vrfy" id="resend_otp" onclick="resendOTP()"
-                                                style="display:none">Resend
-                                                OTP</span>
-                                            <span class="vrfy" id="otp_timer"></span>
-                                        </div>
-
-                                        <button type="submit" id="sign_in_btn"
-                                            class="btn btn-default btn-gry btn-prop">SIGN IN</button>
+                                        <button type="submit"
+                                            class="btn btn-default
+                                    btn-gry btn-prop">SIGN
+                                            IN</button>
                                         <span class="pipe">|</span> <a class="frg-link" href="#"
                                             onClick="frg_panel()">Forgot
                                             Password</a>
@@ -254,6 +224,7 @@
                                     <div class="popleft">
                                         <span>or Sign in With</span>
                                         <ul class="socl">
+
                                             <li><a href="{{ config('constants.MainDomain') }}/auth/google"><img
                                                         src="{{ url('newhomepage/assets/img/google.svg') }}"
                                                         alt="google" class="" /></a></li>
@@ -269,7 +240,7 @@
                                         <div style="text-align:center">
                                             <div><a href="{{ Config('constants.MainDomain') }}/investor/create"
                                                     class="btn btn-large btn-default
-                                 btn-gry btn-prop">
+                                       btn-gry btn-prop">
                                                     Start A Business
                                                     Today <br /><span>(Investor
                                                         Registration) </span> </a>
@@ -277,7 +248,7 @@
                                             <br>
                                             <div><a href="{{ Config('constants.MainDomain') }}/franchisor/registration/step/1"
                                                     class="btn btn-large btn-default
-                                 btn-gry btn-prop">Appoint
+                                       btn-gry btn-prop">Appoint
                                                     Channel
                                                     Partners <br /><span> (Franchisor
                                                         Registration) </span></a>
@@ -285,7 +256,7 @@
                                             <br>
                                             <div><a href="{{ Config('constants.MainDomain') }}/franchisor/international-registration"
                                                     class="btn btn-large btn-default
-                                 btn-gry btn-prop">Appoint
+                                       btn-gry btn-prop">Appoint
                                                     Channel
                                                     Partners <br /><span> (International Franchisor Registration)
                                                     </span></a>
@@ -294,7 +265,7 @@
                                             <div><a target="_blank"
                                                     href="{{ Config('constants.MainDomain') }}/property-loan"
                                                     class="btn btn- large
-                                 btn-default btn-gry btn-prop">Loan
+                                       btn-default btn-gry btn-prop">Loan
                                                     Against Property </a>
                                             </div>
                                         </div>
@@ -324,98 +295,3 @@
         </div>
     </div>
 @endif
-<script>
-    var otpInterval;
-
-    function checkInputType() {
-        var input = $('#email_or_mobile').val();
-        var isEmail = validateEmail(input);
-
-        if (isEmail) {
-            $('#password_group').show();
-            $('#get_otp_btn').hide();
-            $('#sign_in_btn').prop('disabled', false);
-        } else if (validateMobile(input)) {
-            $('#password_group').hide();
-            $('#get_otp_btn').show();
-            $('#sign_in_btn').prop('disabled', true);
-        } else {
-            $('#password_group').show();
-            $('#get_otp_btn').hide();
-            $('#sign_in_btn').prop('disabled', false);
-        }
-    }
-
-    function validateEmail(email) {
-        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-    function validateMobile(mobile) {
-        var re = /^\d{10}$/;
-        return re.test(mobile);
-    }
-
-    function validateLoginMobileOTP() {
-        var mobile = $('#email_or_mobile').val();
-        $.ajax({
-            type: 'get',
-            url: '/login_verify_mobile',
-            data: {
-                mobile: mobile
-            },
-            success: function(data) {
-                if (data.data == 0) {
-                    $("#mismatch-mob").show();
-                    $("#email_or_mobile").prop("readonly", true);
-                    $("#sign_in_btn").prop("disabled", true);
-                    $("#edit-mobile-wider").show();
-                    $("#otp-block-wider").hide();
-                    $("#get_otp_btn").hide();
-                } else {
-                    $("#mismatch-mob").hide();
-                    $("#sign_in_btn").prop("disabled", false);
-                    $("#edit-mobile-wider").show();
-                    $("#otp-block-wider").show();
-                    $("#get_otp_btn").hide();
-                    startOTPTimer();
-                }
-            }
-        });
-    }
-
-    function editMobileWider() {
-        $("#email_or_mobile").prop("readonly", false);
-        $("#edit-mobile-wider").hide();
-        $("#otp-block-wider").hide();
-        $("#sign_in_btn").prop("disabled", true);
-        clearInterval(otpInterval);
-        $('#otp_timer').hide();
-        $('#resend_otp').hide();
-    }
-
-    function startOTPTimer() {
-        var timer = 60;
-        $('#resend_otp').hide();
-        $('#otp_timer').show();
-
-        otpInterval = setInterval(function() {
-            if (timer > 0) {
-                timer--;
-                $('#otp_timer').text(timer + 's');
-            } else {
-                clearInterval(otpInterval);
-                $('#otp_timer').hide();
-                $('#resend_otp').show();
-                $("#sign_in_btn").prop("disabled", true);
-            }
-        }, 1000);
-    }
-
-    function resendOTP() {
-        clearInterval(otpInterval);
-        var mobile = $('#email_or_mobile').val();
-        startOTPTimer();
-        validateLoginMobileOTP();
-    }
-</script>
