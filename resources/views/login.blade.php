@@ -30,7 +30,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="form-group" id="password_group">
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="input-group">
@@ -185,4 +184,4 @@
             validateLoginMobileOTP();
         }
     </script>
-    @endsection
+@endsection
