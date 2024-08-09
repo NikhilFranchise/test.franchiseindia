@@ -1897,7 +1897,8 @@ class BusinessListingController extends Controller
             'unit_inv_max',
             'is_hindi',
             'business_desc_hindi',
-            'free_logo_visibility'
+            'free_logo_visibility',
+            'brand_verified'
         )
             ->where('profile_status',  1);
 
