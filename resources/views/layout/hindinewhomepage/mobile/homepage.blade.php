@@ -764,7 +764,7 @@
                                                         <h3>Lorem Ipsum is simply dummy text
                                                         </h3>
                                                         <p>of the printing and typesetting industry. Lorem
-                                                            Ipsum has been the industry's
+                                                            Ipsum has been the industry&apos;s
                                                         </p>
                                                         <div class="d-flex author-section">
                                                             <div class="author-info-lf">
@@ -892,7 +892,7 @@
                                                         <h3>Lorem Ipsum is simply dummy text
                                                         </h3>
                                                         <p>of the printing and typesetting industry. Lorem
-                                                            Ipsum has been the industry's
+                                                            Ipsum has been the industry&apos;s
                                                         </p>
                                                         <div class="d-flex author-section">
                                                             <div class="author-info-lf">
