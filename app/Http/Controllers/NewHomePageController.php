@@ -18,13 +18,6 @@ class NewHomePageController extends Controller
 
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
-		// $ch = curl_init('https://www.opportunityindia.com/api/article/hindiapidata');
-		// curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		// curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-		// $result = curl_exec($ch);
-		// curl_close($ch);
-
 		$ch = curl_init('https://www.opportunityindia.com/api/article/hindiapidata');
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -50,8 +43,6 @@ class NewHomePageController extends Controller
 
 		$articles = json_decode($result, true);
 		// Initialize Guzzle client
-
-
 
 		return view('layout.masternewhomepage')->with(compact('articles', 'brands'));
 

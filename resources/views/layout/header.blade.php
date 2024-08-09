@@ -475,20 +475,50 @@ use Illuminate\Support\Str;
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane" id="login">
-                            <form method="post" action="{{Config('constants.MainDomain')}}/loginform">
-                                {{--  <input type="hidden" name="_token" value="{{ csrf_token() }}">  --}}
+                            <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
                                 @csrf
                                 <div class="frm-pnl">
                                     <div class="input-group">
-                                        <span class="input-group-addon"><div class="usersprite"></div></span>
-                                        <input type="email" class="form-control" required name="email" placeholder="अपना यूज़र आईडी दर्ज करें">
+                                        <span class="input-group-addon">
+                                            <div class="usersprite"></div>
+                                        </span>
+                                        <input type="text" class="form-control blur" name="email_or_mobile"
+                                            id="email_or_mobile" placeholder="ईमेल-आईडी या मोबाइल नंबर दर्ज करें"
+                                            onkeyup="checkInputType()">
+
+                                        <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
+                                            style="display:none">Edit</span>
+                                        <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
+                                            style="display:none">Get OTP</span>
+                                        <div style="display:none; color:red;" id="mismatch-mob">यह मोबाइल नंबर
+                                            पंजीकृत नहीं है|</div>
                                     </div>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><div class="pwdsprite"></div></span>
-                                        <input type="password" required name="password" class="form-control" placeholder="अपना पासवर्ड डालें">
+                                    <div class="input-group" id="password_group">
+                                        <span class="input-group-addon">
+                                            <div class="pwdsprite"></div>
+                                        </span>
+                                        <input type="password" name="password" class="form-control blur"
+                                            placeholder="पासवर्ड दर्ज करें">
+
                                     </div>
-                                    <button type="submit" class="btn btn-default btn-gry btn-prop">सिग्न इन </button>
-                                    <span class="pipe">|</span> <a class="frg-link" href="#" onclick="frg_panel()"> फॉरगॉट  पासवर्ड </a>
+                                    <div class="input-group" id="otp-block-wider" style="display: none;">
+                                        <span class="input-group-addon">
+                                            <div class="otpsprite"></div>
+                                        </span>
+                                        <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
+                                            class="form-control blur" placeholder="Enter OTP">
+
+                                        <div style="display:none; color:red;" id="mismatch-otp">Mismatch OTP</div>
+                                        <span class="vrfy" id="resend_otp" onclick="resendOTP()"
+                                            style="display:none">Resend
+                                            OTP</span>
+                                        <span class="vrfy" id="otp_timer"></span>
+                                    </div>
+                                    <button type="submit" id="sign_in_btn"
+                                        class="btn btn-default btn-gry btn-prop">साइन
+                                        इन </button>
+                                    <span class="pipe">|</span> <a class="frg-link" href="#"
+                                        onClick="frg_panel()">पासवर्ड भूल गए</a>
                                 </div>
                             </form>
 
