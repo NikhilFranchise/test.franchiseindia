@@ -35,6 +35,7 @@ class BrandController extends Controller
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
         $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
+        // dd($franDetails);
         // dd($franDetails->userActivity);
         //OI Redirection Start
         if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
