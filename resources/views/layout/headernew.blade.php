@@ -172,7 +172,7 @@
                                         <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
                                             style="display:none">Get OTP</span>
                                         <div style="display:none; color:red;" id="mismatch-mob">This mobile number
-                                            is not registered</div>
+                                            is not registered.</div>
                                     </div>
                                     <div class="input-group" id="password_group">
                                         <span class="input-group-addon">
@@ -265,7 +265,7 @@
         <span id="clickshowbtn" class="show-cat-search">Search Business Opportunities <i class="fa fa-minus-square-o" aria-hidden="true"></i></span>
     </div> -->
     <script language="javascript">
-
+        /*<![CDATA[*/
         if (screen.width < 767) {
             $(document).ready(function() {
                 setTimeout(function() {
@@ -284,11 +284,11 @@
                     $('#clickshowbtn').hide();
                 });
             });
-        }
+        } /*]]>*/
     </script>
 @endif
 <script language="javascript">
-
+    /*<![CDATA[*/
     function selectMax(selectmaxheaderval) {
         let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
         let maxAmount = $('#maxAmount');
@@ -390,8 +390,9 @@
                 $("#headercity").html(data);
             }
         });
-    }
-
+    } /*]]>*/
+</script>
+<script>
     $(function() {
         // bind change event to select
         $('#language-changer').on('change', function() {
@@ -464,8 +465,10 @@
     }
 
     function editMobileWider() {
+        {{--  alert('hello');  --}}
         $("#email_or_mobile").prop("readonly", false);
         $("#edit-mobile-wider").hide();
+        $("#mismatch-mob").hide();
         $("#otp-block-wider").hide();
         $("#sign_in_btn").prop("disabled", true);
         clearInterval(otpInterval);
@@ -498,3 +501,4 @@
         validateLoginMobileOTP();
     }
 </script>
+

@@ -260,7 +260,33 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane" id="login">
-
+                            {{--  <form method="post" action="https://www.franchiseindia.com/loginform">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <div class="frm-pnl">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <div class="usersprite"></div>
+                                        </span>
+                                        <input type="email"
+                                            class="form-control
+                                       blur"
+                                            required="" name="email" placeholder="अपनी उपयोगकर्ता आईडी दर्ज करें |">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <div class="pwdsprite"></div>
+                                        </span>
+                                        <input type="password" required="" name="password" class="form-control blur"
+                                            placeholder="अपना पासवर्ड डालें">
+                                    </div>
+                                    <button type="submit"
+                                        class="btn btn-default
+                                    btn-gry btn-prop">साइन
+                                        इन</button>
+                                    <span class="pipe">|</span> <a class="frg-link" href="#"
+                                        onclick="frg_panel()">पासवर्ड भूल गए</a>
+                                </div>
+                            </form>  --}}
                             <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
                                 @csrf
                                 <div class="frm-pnl">
@@ -438,12 +464,16 @@
         $('#searchoptnew').click(function() {
             $('.searchblknew').show(400);
             $('.searchspace').hide(400);
+
+            // $('.searchblknew').show("slide", {direction: "right"}, 1000);
+            // $('.searchspace').hide("slide", {direction: "right"}, 1000);
         });
 
         $('#closegsearch').click(function() {
             $('.searchspace').show(400);
             $('.searchblknew').hide(400);
-
+            //$('.searchspace').show("slide", {direction: "right"}, 1000);
+            //$('.searchblknew').hide("slide", {direction: "right"}, 1000);
         });
 
         if (screen.width > 1199 && screen.height <= 768)
@@ -628,4 +658,3 @@
         validateLoginMobileOTP();
     }
 </script>
-

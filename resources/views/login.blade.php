@@ -89,7 +89,7 @@
         </div>
 
     </div>
-    <script>
+    {{--  <script>
         var otpInterval;
 
         function checkInputType() {
@@ -183,5 +183,5 @@
             startOTPTimer();
             validateLoginMobileOTP();
         }
-    </script>
+    </script>  --}}
 @endsection
