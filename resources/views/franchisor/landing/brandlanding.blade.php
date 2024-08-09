@@ -65,7 +65,8 @@
     @endif
     @include('includes.breadcrumb')
     {{-- @if (count($images) < 4 || $franDetails->membership_type != 1) --}}
-    @if ($images->count() < 4)
+    {{--  @dd($images->count());  --}}
+    @if (empty($images) || $images->count() < 4)
         @include('includes.brandlanding.layout-1')
     @elseif($franDetails->page_layout_type == '1')
         @include('includes.brandlanding.layout-1')
