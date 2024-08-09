@@ -401,7 +401,7 @@
 
                                 @include('category.free-brand')
 
-                                @php
+                                @php 
                                     $banner++;
                                     $shortBox++;
                                 @endphp
