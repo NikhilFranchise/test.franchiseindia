@@ -60,9 +60,9 @@
                                                 style="display:none">Edit</span>
                                             <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
                                                 style="display:none">Get OTP</span>
-                                            <div style="display:none; color:red;" id="mismatch-mob">यह मोबाइल नंबर
+                                            </div>
+                                            <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">यह मोबाइल नंबर
                                                 पंजीकृत नहीं है|</div>
-                                        </div>
                                         <div class="input-group" id="password_group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
@@ -225,9 +225,9 @@
                                                 style="display:none">Edit</span>
                                             <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
                                                 style="display:none">Get OTP</span>
-                                            <div style="display:none; color:red;" id="mismatch-mob">This mobile number
+                                            </div>
+                                            <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">This mobile number
                                                 is not registered</div>
-                                        </div>
                                         <div class="input-group" id="password_group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
@@ -236,12 +236,12 @@
                                                 placeholder="Enter Your Password">
                                         </div>
 
-                                        <div class="input-group" id="otp-block-wider" style="display: none;">
-                                            <span class="input-group-addon">
+                                        <div class="input-group" id="otp-block-wider" style="display: none;width:100%;">
+                                            {{--  <span class="input-group-addon">
                                                 <div class="otpsprite"></div>
-                                            </span>
+                                            </span>  --}}
                                             <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
-                                                class="form-control blur" placeholder="Enter OTP">
+                                                class="form-control blur" placeholder="Enter OTP" style="width:100%;">
 
                                             <div style="display:none; color:red;" id="mismatch-otp">Mismatch OTP</div>
                                             <span class="vrfy" id="resend_otp" onclick="resendOTP()"
@@ -333,99 +333,3 @@
         </div>
     </div>
 @endif
-<script>
-    var otpInterval;
-
-    function checkInputType() {
-        var input = $('#email_or_mobile').val();
-        var isEmail = validateEmail(input);
-
-        if (isEmail) {
-            $('#password_group').show();
-            $('#get_otp_btn').hide();
-            $('#sign_in_btn').prop('disabled', false);
-        } else if (validateMobile(input)) {
-            $('#password_group').hide();
-            $('#get_otp_btn').show();
-            $('#sign_in_btn').prop('disabled', true);
-        } else {
-            $('#password_group').show();
-            $('#get_otp_btn').hide();
-            $('#sign_in_btn').prop('disabled', false);
-        }
-    }
-
-    function validateEmail(email) {
-        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-    function validateMobile(mobile) {
-        var re = /^\d{10}$/;
-        return re.test(mobile);
-    }
-
-    function validateLoginMobileOTP() {
-        var mobile = $('#email_or_mobile').val();
-        $.ajax({
-            type: 'get',
-            url: '/login_verify_mobile',
-            data: {
-                mobile: mobile
-            },
-            success: function(data) {
-                if (data.data == 0) {
-                    $("#mismatch-mob").show();
-                    $("#email_or_mobile").prop("readonly", true);
-                    $("#sign_in_btn").prop("disabled", true);
-                    $("#edit-mobile-wider").show();
-                    $("#otp-block-wider").hide();
-                    $("#get_otp_btn").hide();
-                } else {
-                    $("#mismatch-mob").hide();
-                    $("#sign_in_btn").prop("disabled", false);
-                    $("#edit-mobile-wider").show();
-                    $("#otp-block-wider").show();
-                    $("#get_otp_btn").hide();
-                    startOTPTimer();
-                }
-            }
-        });
-    }
-
-    function editMobileWider() {
-        $("#email_or_mobile").prop("readonly", false);
-        $("#edit-mobile-wider").hide();
-        $("#mismatch-mob").hide();
-        $("#otp-block-wider").hide();
-        $("#sign_in_btn").prop("disabled", true);
-        clearInterval(otpInterval);
-        $('#otp_timer').hide();
-        $('#resend_otp').hide();
-    }
-
-    function startOTPTimer() {
-        var timer = 60;
-        $('#resend_otp').hide();
-        $('#otp_timer').show();
-
-        otpInterval = setInterval(function() {
-            if (timer > 0) {
-                timer--;
-                $('#otp_timer').text(timer + 's');
-            } else {
-                clearInterval(otpInterval);
-                $('#otp_timer').hide();
-                $('#resend_otp').show();
-                $("#sign_in_btn").prop("disabled", true);
-            }
-        }, 1000);
-    }
-
-    function resendOTP() {
-        clearInterval(otpInterval);
-        var mobile = $('#email_or_mobile').val();
-        startOTPTimer();
-        validateLoginMobileOTP();
-    }
-</script>

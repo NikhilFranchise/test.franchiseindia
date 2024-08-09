@@ -171,7 +171,7 @@
                                             style="display:none">Edit</span>
                                         <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
                                             style="display:none">Get OTP</span>
-                                        <div style="display:none; color:red;" id="mismatch-mob">This mobile number
+                                        <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">This mobile number
                                             is not registered.</div>
                                     </div>
                                     <div class="input-group" id="password_group">
@@ -404,7 +404,7 @@
         });
     });
 </script>
-<script>
+{{--  <script>
     var otpInterval;
 
     function checkInputType() {
@@ -454,6 +454,7 @@
                     $("#get_otp_btn").hide();
                 } else {
                     $("#mismatch-mob").hide();
+                    $("#email_or_mobile").prop("readonly", true);
                     $("#sign_in_btn").prop("disabled", false);
                     $("#edit-mobile-wider").show();
                     $("#otp-block-wider").show();
@@ -465,7 +466,7 @@
     }
 
     function editMobileWider() {
-        {{--  alert('hello');  --}}
+        alert('hello');
         $("#email_or_mobile").prop("readonly", false);
         $("#edit-mobile-wider").hide();
         $("#mismatch-mob").hide();
@@ -500,5 +501,5 @@
         startOTPTimer();
         validateLoginMobileOTP();
     }
-</script>
+</script>  --}}
 

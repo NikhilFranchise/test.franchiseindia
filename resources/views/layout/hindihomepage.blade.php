@@ -594,8 +594,7 @@
                 interval: false
             });
         });
-    </script>
-    <script>
+
         $(function() {
             // bind change event to select
             $('#language-changer').on('change', function() {
@@ -606,61 +605,111 @@
                 return false;
             });
         });
-    </script>
 
-
-    {{--  <script>
-    (function () {
-  const second = 1000,
-        minute = second * 60,
-        hour = minute * 60,
-        day = hour * 24;
-
-  //I'm adding this section so I don't have to keep updating this pen every year :-)
-  //remove this if you don't need it
-  let today = new Date(),
-      dd = String(today.getDate()).padStart(2, "0"),
-      mm = String(today.getMonth() + 1).padStart(2, "0"),
-      yyyy = today.getFullYear(),
-      nextYear = yyyy + 1,
-      dayMonth = "08/21/",
-      birthday = dayMonth + yyyy;
-
-  today = mm + "/" + dd + "/" + yyyy;
-  if (today > birthday) {
-    birthday = dayMonth + nextYear;
-  }
-  //end
-
-  const countDown = new Date(birthday).getTime(),
-      x = setInterval(function() {
-
-        const now = new Date().getTime(),
-              distance = countDown - now;
-
-        document.getElementById("days").innerText = Math.floor(distance / (day)),
-          document.getElementById("hours").innerText = Math.floor((distance % (day)) / (hour)),
-          document.getElementById("minutes").innerText = Math.floor((distance % (hour)) / (minute)),
-          document.getElementById("seconds").innerText = Math.floor((distance % (minute)) / second);
-
-        //do something later when date is reached
-        if (distance < 0) {
-          document.getElementById("headline").innerText = "It's my birthday!";
-          document.getElementById("countdown").style.display = "none";
-          document.getElementById("content").style.display = "block";
-          clearInterval(x);
-        }
-        //seconds
-      }, 0)
-  }());
-</script>  --}}
-    <script>
         $(document).ready(function() {
             $("#myclose").click(function() {
                 $(".topmost").hide();
             });
         });
+
+        var otpInterval;
+
+        function checkInputType() {
+            var input = $('#email_or_mobile').val();
+            var isEmail = validateEmail(input);
+
+            if (isEmail) {
+                $('#password_group').show();
+                $('#get_otp_btn').hide();
+                $('#sign_in_btn').prop('disabled', false);
+            } else if (validateMobile(input)) {
+                $('#password_group').hide();
+                $('#get_otp_btn').show();
+                $('#sign_in_btn').prop('disabled', true);
+            } else {
+                $('#password_group').show();
+                $('#get_otp_btn').hide();
+                $('#sign_in_btn').prop('disabled', false);
+            }
+        }
+
+        function validateEmail(email) {
+            var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validateMobile(mobile) {
+            var re = /^\d{10}$/;
+            return re.test(mobile);
+        }
+
+        function validateLoginMobileOTP() {
+            var mobile = $('#email_or_mobile').val();
+            $.ajax({
+                type: 'get',
+                url: '/login_verify_mobile',
+                data: {
+                    mobile: mobile
+                },
+                success: function(data) {
+                    if (data.data == 0) {
+                        $("#mismatch-mob").show();
+                        $("#email_or_mobile").prop("readonly", true);
+                        $("#sign_in_btn").prop("disabled", true);
+                        $("#edit-mobile-wider").show();
+                        $("#otp-block-wider").hide();
+                        $("#get_otp_btn").hide();
+                    } else {
+                        $("#email_or_mobile").prop("readonly", true);
+                        $("#mismatch-mob").hide();
+                        $("#sign_in_btn").prop("disabled", false);
+                        $("#edit-mobile-wider").show();
+                        $("#otp-block-wider").show();
+                        $("#get_otp_btn").hide();
+                        startOTPTimer();
+                    }
+                }
+            });
+        }
+
+        function editMobileWider() {
+            alert('hello');
+            $("#email_or_mobile").prop("readonly", false);
+            $("#edit-mobile-wider").hide();
+            $("#mismatch-mob").hide();
+            $("#otp-block-wider").hide();
+            $("#sign_in_btn").prop("disabled", true);
+            clearInterval(otpInterval);
+            $('#otp_timer').hide();
+            $('#resend_otp').hide();
+        }
+
+        function startOTPTimer() {
+            var timer = 60;
+            $('#resend_otp').hide();
+            $('#otp_timer').show();
+
+            otpInterval = setInterval(function() {
+                if (timer > 0) {
+                    timer--;
+                    $('#otp_timer').text(timer + 's');
+                } else {
+                    clearInterval(otpInterval);
+                    $('#otp_timer').hide();
+                    $('#resend_otp').show();
+                    $("#sign_in_btn").prop("disabled", true);
+                }
+            }, 1000);
+        }
+
+        function resendOTP() {
+            clearInterval(otpInterval);
+            var mobile = $('#email_or_mobile').val();
+            startOTPTimer();
+            validateLoginMobileOTP();
+        }
     </script>
+
 </body>
 
 </html>

@@ -654,7 +654,7 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane" id="login">
-                            <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
+                            {{--  <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
                                 @csrf
                                 <div class="frm-pnl">
                                     <div class="input-group">
@@ -699,7 +699,7 @@
                                     <span class="pipe">|</span> <a class="frg-link" href="#"
                                         onClick="frg_panel()">पासवर्ड भूल गए</a>
                                 </div>
-                            </form>
+                            </form>  --}}
 
                             <div class="popfi">
                                 <div class="signpop"></div>

@@ -260,33 +260,7 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane" id="login">
-                            {{--  <form method="post" action="https://www.franchiseindia.com/loginform">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <div class="frm-pnl">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <div class="usersprite"></div>
-                                        </span>
-                                        <input type="email"
-                                            class="form-control
-                                       blur"
-                                            required="" name="email" placeholder="अपनी उपयोगकर्ता आईडी दर्ज करें |">
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <div class="pwdsprite"></div>
-                                        </span>
-                                        <input type="password" required="" name="password" class="form-control blur"
-                                            placeholder="अपना पासवर्ड डालें">
-                                    </div>
-                                    <button type="submit"
-                                        class="btn btn-default
-                                    btn-gry btn-prop">साइन
-                                        इन</button>
-                                    <span class="pipe">|</span> <a class="frg-link" href="#"
-                                        onclick="frg_panel()">पासवर्ड भूल गए</a>
-                                </div>
-                            </form>  --}}
+
                             <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
                                 @csrf
                                 <div class="frm-pnl">
@@ -302,9 +276,9 @@
                                             style="display:none">Edit</span>
                                         <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
                                             style="display:none">Get OTP</span>
-                                        <div style="display:none; color:red;" id="mismatch-mob">यह मोबाइल नंबर
-                                            पंजीकृत नहीं है|</div>
-                                    </div>
+                                        </div>
+                                        <div style="display:none; color:red;" class="login-pnl-error" id="mismatch-mob">यह मोबाइल नंबर
+                                        पंजीकृत नहीं है|</div>
                                     <div class="input-group" id="password_group">
                                         <span class="input-group-addon">
                                             <div class="pwdsprite"></div>
@@ -562,7 +536,7 @@
         });
     }
 </script>
-<script>
+{{--  <script>
     var otpInterval;
 
     function checkInputType() {
@@ -657,4 +631,4 @@
         startOTPTimer();
         validateLoginMobileOTP();
     }
-</script>
+</script>  --}}
