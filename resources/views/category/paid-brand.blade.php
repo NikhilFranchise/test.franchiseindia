@@ -22,7 +22,7 @@
 
         <div class="catlist">
             <a href="{{ $brandUrl }}" id="brandnamecategory{{ $brandResult->franchisor_id }}" target="_blank">
-                {{ $brandResult->company_name }}
+                {{ $brandResult->company_name }} and verified = {{$brandResult->brand_verified}} and type = {{$brandResult->membership_type}}
             </a>
         </div>
 
