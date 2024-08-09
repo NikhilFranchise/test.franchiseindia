@@ -2,7 +2,7 @@
     <div class="bothbtnmi">
         <div class="vttbl-cell">
 
-            <div class="sideslideform">
+            <div class="sideslideform"> 
                 <div class="sideinout">
                     {{-- @dd(request()->segment(2)); --}}
                     @if (request()->segment(2) == 'business-opportunities' ||
