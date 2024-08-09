@@ -32,6 +32,8 @@
                 display: block;
                 margin: 4px 0px 5px 0px;
             }
+            .formsection .form-control {
+                padding: 14px 12px;}
         </style>
         <div class="row loginpanel">
             <div class="leftpanel">
