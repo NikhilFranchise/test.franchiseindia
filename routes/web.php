@@ -6,7 +6,7 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\SiteFeedbackController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\BrandFilterController;
-use App\Http\Controllers\MobileVerificationController; 
+use App\Http\Controllers\MobileVerificationController;
 use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\AdviceController;
 use App\Http\Controllers\FranchisorController;
@@ -99,6 +99,7 @@ Route::get('invester-verifyformmobilenumber', [MobileVerificationController::cla
 Route::get('/user/check-mobile-status', [CommonController::class, 'verifyMobile']);
 Route::get('verifyformmobilenumber', [MobileVerificationController::class, 'verifyMobile']);
 Route::get('verify', [MobileVerificationController::class, 'verifyMobile']);
+Route::get('login_verify_mobile', [MobileVerificationController::class, 'verifyLoginMobile']);
 Route::get('/user/investor-mobile-verify', [CommonController::class, 'investormobileverify']);
 Route::get('validate-email', [CommonController::class, 'emailValidation']);
 Route::get('thanks-advice-form', function () {
@@ -172,6 +173,7 @@ Route::group(['prefix' => 'investor'], function () {
     Route::get('create-new', [InvestorController::class, 'campaignNewRegistration']);
     Route::get('verifyotp', [CommonController::class, 'vrifyOtp']);
     Route::get('verify-otp', [CommonController::class, 'investervrifyOtp']);
+    // Route::post('login/verify-otp', [LoginController::class, 'loginwithotp']);
     Route::get('checkmobilestatus', [CommonController::class, 'verifyMobile']);
     // Route::get('registration', [InvestorController::class, 'viewInvestorRegistrationForm']); not working on live site
     Route::get('campaign/create', [InvestorController::class, 'rviewInvQuickRegForm']);
@@ -834,7 +836,7 @@ Route::group(['prefix' => 'magazine'], function () {
 // Route::get('/content/{kicker}',    [ArticleController::class,'articleKickersPage']);
 // Route::get('content/{kicker}', function ($kicker) {
 //     return redirect('https://www.opportunityindia.com/article' .'-'. $kicker, 301);
-// }); 
+// });
 // Gallery Articles Section
 Route::group(['prefix' => 'gallery'], function () {
     Route::get('/', [GalleryController::class, 'galleryArticleHome']);
