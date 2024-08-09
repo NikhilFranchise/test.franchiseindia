@@ -3,7 +3,6 @@
       <input type="checkbox" id="compare{{ $loop->index }}" class="brandCompareCheckbox" name="compareCheckbox" onClick="getBrandsForComparison()"  value="{{$brandResult->franchisor_id}}" >
       <label for="compare{{ $loop->index }}"><span></span></label>
     </div>
-
     <div class="business-list hvr-effect">
         <div class="business-list-ttl">
             {{$SubCatName}}

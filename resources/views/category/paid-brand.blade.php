@@ -5,18 +5,24 @@
         <label for="compare{{ $loop->index }}"><span></span></label>
     </div>
 
-    <div class="padfb15">
+    <div class="padfb15"> 
         <a href="{{ $brandUrl }}" target="_blank">
             <div class="catimgmobile">
                 <img src="{{ $brandImagepath }}" alt="{{ $brandResult->company_name }}" />
             </div>
         </a>
 
-        <div class="catlisthead">{{ $SubCatName }}</div>
+        <div class="catlisthead">{{ $SubCatName }}</div> 
+        {{-- @dd($brandResult->verified); --}}
+        @if($brandResult->brand_verified == 1)
+        <div style="text-align: right;">
+            <img src="https://thumbs.dreamstime.com/b/verified-vector-stamp-isolated-white-background-41827520.jpg" style="height: 50px;">
+        </div>
+        @endif
 
         <div class="catlist">
             <a href="{{ $brandUrl }}" id="brandnamecategory{{ $brandResult->franchisor_id }}" target="_blank">
-                {{ $brandResult->company_name }}
+                {{ $brandResult->company_name }} and verified = {{$brandResult->brand_verified}} and type = {{$brandResult->membership_type}}
             </a>
         </div>
 

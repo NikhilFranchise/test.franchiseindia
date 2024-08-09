@@ -201,6 +201,7 @@ class BusinessListingController extends Controller
      */
     public function searchBusinessListing(Request $request)
     {
+        // dd('yes');
         $searchTerm = $request->route('searchTerm');
         $categoryIds = $request->route('categoryIds');
         $locationIds = $request->route('locationIds');
@@ -652,7 +653,7 @@ class BusinessListingController extends Controller
             $catName = (request()->segment(1) == 'hi') ? 'बिज़नेस  ओप्पोर्तुनिटीज़' : 'Business Opportunities';
 
         // Fetch Brand Data
-        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility');
+        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified');
 
         $franData->where('profile_status', 1);
 
@@ -779,7 +780,7 @@ class BusinessListingController extends Controller
         }
 
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
-
+        // dd($shuffledResults);
         $mc    = $mainCatId;
         $sc    = $subCatId;
         $ssc   = request()->ssc;
@@ -1662,6 +1663,8 @@ class BusinessListingController extends Controller
         }
 
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
+    
+        
 
         $mc    = $mainCatId;
         $sc    = $subCatId;
@@ -1727,6 +1730,7 @@ class BusinessListingController extends Controller
     }
     public function getBusinessListingnormalization(Request $request)
     {
+        // dd('yes');
 
         // Fetch the request parameters
         $catParam      = request()->category_param;
@@ -1893,7 +1897,8 @@ class BusinessListingController extends Controller
             'unit_inv_max',
             'is_hindi',
             'business_desc_hindi',
-            'free_logo_visibility'
+            'free_logo_visibility',
+            'brand_verified'
         )
             ->where('profile_status',  1);
 

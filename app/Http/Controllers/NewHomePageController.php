@@ -17,14 +17,6 @@ class NewHomePageController extends Controller
 	{
 
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
-		$articles = [];
-
-		// $ch = curl_init('https://www.opportunityindia.com/api/article/hindiapidata');
-		// curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		// curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-		// $result = curl_exec($ch);
-		// curl_close($ch);
 
 		$ch = curl_init('https://www.opportunityindia.com/api/article/hindiapidata');
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
@@ -33,6 +25,16 @@ class NewHomePageController extends Controller
 		$result = curl_exec($ch);
 		curl_close($ch);
 
+<<<<<<< HEAD
+		$ch = curl_init('https://www.opportunityindia.com/api/article/hindiapidata');
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+		$result = curl_exec($ch);
+		curl_close($ch);
+
+=======
+>>>>>>> fd6c1c9a68c4126f52c0051479b8caffdbf3ca44
 		$articles = json_decode($result, true);
 
 		return view('layout.hindihomepage')->with(compact('articles', 'brands'));
@@ -51,7 +53,10 @@ class NewHomePageController extends Controller
 
 		$articles = json_decode($result, true);
 		// Initialize Guzzle client
+<<<<<<< HEAD
 		
+=======
+>>>>>>> fd6c1c9a68c4126f52c0051479b8caffdbf3ca44
 
 		return view('layout.masternewhomepage')->with(compact('articles', 'brands'));
 

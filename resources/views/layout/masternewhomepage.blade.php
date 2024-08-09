@@ -532,6 +532,104 @@ src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1"
         });
     });
 </script>
+<script>
+    var otpInterval;
+
+    function checkInputType() {
+        var input = $('#email_or_mobile').val();
+        var isEmail = validateEmail(input);
+
+        if (isEmail) {
+            $('#password_group').show();
+            $('#get_otp_btn').hide();
+            $('#sign_in_btn').prop('disabled', false);
+        } else if (validateMobile(input)) {
+            $('#password_group').hide();
+            $('#get_otp_btn').show();
+            $('#sign_in_btn').prop('disabled', true);
+        } else {
+            $('#password_group').show();
+            $('#get_otp_btn').hide();
+            $('#sign_in_btn').prop('disabled', false);
+        }
+    }
+
+    function validateEmail(email) {
+        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function validateMobile(mobile) {
+        var re = /^\d{10}$/;
+        return re.test(mobile);
+    }
+
+    function validateLoginMobileOTP() {
+        var mobile = $('#email_or_mobile').val();
+        $.ajax({
+            type: 'get',
+            url: '/login_verify_mobile',
+            data: {
+                mobile: mobile
+            },
+            success: function(data) {
+                if (data.data == 0) {
+                    $("#mismatch-mob").show();
+                    $("#email_or_mobile").prop("readonly", true);
+                    $("#sign_in_btn").prop("disabled", true);
+                    $("#edit-mobile-wider").show();
+                    $("#otp-block-wider").hide();
+                    $("#get_otp_btn").hide();
+                } else {
+                    $("#email_or_mobile").prop("readonly", true);
+                    $("#mismatch-mob").hide();
+                    $("#sign_in_btn").prop("disabled", false);
+                    $("#edit-mobile-wider").show();
+                    $("#otp-block-wider").show();
+                    $("#get_otp_btn").hide();
+                    startOTPTimer();
+                }
+            }
+        });
+    }
+
+    function editMobileWider() {
+        {{--  alert('hello');  --}}
+        $("#email_or_mobile").prop("readonly", false);
+        $("#edit-mobile-wider").hide();
+        $("#mismatch-mob").hide();
+        $("#otp-block-wider").hide();
+        $("#sign_in_btn").prop("disabled", true);
+        clearInterval(otpInterval);
+        $('#otp_timer').hide();
+        $('#resend_otp').hide();
+    }
+
+    function startOTPTimer() {
+        var timer = 60;
+        $('#resend_otp').hide();
+        $('#otp_timer').show();
+
+        otpInterval = setInterval(function() {
+            if (timer > 0) {
+                timer--;
+                $('#otp_timer').text(timer + 's');
+            } else {
+                clearInterval(otpInterval);
+                $('#otp_timer').hide();
+                $('#resend_otp').show();
+                $("#sign_in_btn").prop("disabled", true);
+            }
+        }, 1000);
+    }
+
+    function resendOTP() {
+        clearInterval(otpInterval);
+        var mobile = $('#email_or_mobile').val();
+        startOTPTimer();
+        validateLoginMobileOTP();
+    }
+</script>
 
 </body>
 </html>

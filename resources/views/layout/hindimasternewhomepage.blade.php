@@ -101,30 +101,29 @@
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane" id="login">
-                                <form method="post" action="https://www.franchiseindia.com/loginform">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
+                                    @csrf
+
                                     <div class="frm-pnl">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="usersprite"></div>
                                             </span>
-                                            <input type="email"
-                                                class="form-control
-                                       blur"
-                                                required="" name="email"
-                                                placeholder="अपनी उपयोगकर्ता आईडी दर्ज करें">
+                                            <input type="email" class="form-control
+                                         blur"
+                                                required="" name="email" placeholder="ईमेल-आईडी दर्ज करें">
                                         </div>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
                                             </span>
-                                            <input type="password" required="" name="password"
-                                                class="form-control blur" placeholder="अपना पासवर्ड डालें">
+                                            <input type="password" required="" name="password" class="form-control blur"
+                                                placeholder="पासवर्ड दर्ज करें">
                                         </div>
                                         <button type="submit"
                                             class="btn btn-default
-                                    btn-gry btn-prop">साइन
-                                            इन</button>
+                                      btn-gry btn-prop">साइन
+                                            इन </button>
                                         <span class="pipe">|</span> <a class="frg-link" href="#"
                                             onClick="frg_panel()">पासवर्ड भूल गए</a>
                                     </div>
