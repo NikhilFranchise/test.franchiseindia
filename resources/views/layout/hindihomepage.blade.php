@@ -684,7 +684,7 @@
         }
 
         function startOTPTimer() {
-            var timer = 60;
+            var timer = 10;
             $('#resend_otp').hide();
             $('#otp_timer').show();
 
