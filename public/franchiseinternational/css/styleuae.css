@@ -790,6 +790,10 @@ a:focus{outline:0;outline-offset:0;color:#333333;}
 #login-pnl .frm-pnl .input-group{margin-bottom:15px;}
 #login-pnl .checkbox-inline, #login-pnl .radio-inline, #login-pnl .checkbox label, #login-pnl .radio label{padding-left:0;}
 #login-pnl .frg-link, #login-pnl .pipe{font-family:"Open Sans Light", "serif";font-size:16px;color:#006699;}
+.login-pnl-error{color: red;
+    font-size: 13px;
+    display: block;
+    margin: -10px 0px 7px 0px;}
 #login-pnl .vrfy{font-family:"Open Sans Light", "serif";background:#333333;border-radius:3px;font-size:14px;color:#fff;padding:7px 14px;width: 110px;cursor:pointer;position:absolute;right:7px;top:7px;margin:0 auto;z-index:99999;text-align:center;}
 #login-pnl .modal-footer{background-color:#f3f3f3;border-top:1px solid #dbdbdb;padding:26px 30px;text-align:left;}
 #login-pnl .modal-footer .footer-ttl, #login-pnl .frgt-pwd .ttl{font-family:"Open Sans Bold", "serif";color:#333333;padding-bottom:10px;font-size:16px;}
