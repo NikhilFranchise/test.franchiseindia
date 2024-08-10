@@ -605,7 +605,7 @@ src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1"
     }
 
     function startOTPTimer() {
-        var timer = 10;
+        var timer = 60;
         $('#resend_otp').hide();
         $('#otp_timer').show();
 
