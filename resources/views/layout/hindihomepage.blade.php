@@ -673,7 +673,6 @@
         }
 
         function editMobileWider() {
-            alert('hello');
             $("#email_or_mobile").prop("readonly", false);
             $("#edit-mobile-wider").hide();
             $("#mismatch-mob").hide();
@@ -692,7 +691,7 @@
             otpInterval = setInterval(function() {
                 if (timer > 0) {
                     timer--;
-                    $('#otp_timer').text(timer + 's');
+                    $('#otp_timer').text(timer + 'sec');
                 } else {
                     clearInterval(otpInterval);
                     $('#otp_timer').hide();

@@ -389,7 +389,7 @@ var otpInterval;
         otpInterval = setInterval(function() {
             if (timer > 0) {
                 timer--;
-                $('#otp_timer').text(timer + 's');
+                $('#otp_timer').text(timer + 'sec');
             } else {
                 clearInterval(otpInterval);
                 $('#otp_timer').hide();

@@ -57,9 +57,9 @@
                                                 onkeyup="checkInputType()">
 
                                             <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
-                                                style="display:none">Edit</span>
+                                                style="display:none">एडिट</span>
                                             <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
-                                                style="display:none">Get OTP</span>
+                                                style="display:none">ओटीपी भेजें</span>
                                             </div>
                                             <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">यह मोबाइल नंबर
                                                 पंजीकृत नहीं है|</div>
@@ -71,17 +71,15 @@
                                                 placeholder="पासवर्ड दर्ज करें">
 
                                         </div>
-                                        <div class="input-group" id="otp-block-wider" style="display: none;">
-                                            <span class="input-group-addon">
+                                        <div class="input-group" id="otp-block-wider" style="display: none;width:100%;">
+                                            {{--  <span class="input-group-addon">
                                                 <div class="otpsprite"></div>
-                                            </span>
+                                            </span>  --}}
                                             <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
-                                                class="form-control blur" placeholder="Enter OTP">
+                                                class="form-control blur" placeholder="ओटीपी दर्ज करें">
 
-                                            <div style="display:none; color:red;" id="mismatch-otp">Mismatch OTP</div>
                                             <span class="vrfy" id="resend_otp" onclick="resendOTP()"
-                                                style="display:none">Resend
-                                                OTP</span>
+                                                style="display:none">ओटीपी पुनः भेजें</span>
                                             <span class="vrfy" id="otp_timer"></span>
                                         </div>
                                         <button type="submit" id="sign_in_btn"
@@ -227,7 +225,7 @@
                                                 style="display:none">Get OTP</span>
                                             </div>
                                             <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">This mobile number
-                                                is not registered</div>
+                                                is not registered.</div>
                                         <div class="input-group" id="password_group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
@@ -237,13 +235,8 @@
                                         </div>
 
                                         <div class="input-group" id="otp-block-wider" style="display: none;width:100%;">
-                                            {{--  <span class="input-group-addon">
-                                                <div class="otpsprite"></div>
-                                            </span>  --}}
                                             <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
                                                 class="form-control blur" placeholder="Enter OTP" style="width:100%;">
-
-                                            <div style="display:none; color:red;" id="mismatch-otp">Mismatch OTP</div>
                                             <span class="vrfy" id="resend_otp" onclick="resendOTP()"
                                                 style="display:none">Resend
                                                 OTP</span>

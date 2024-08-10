@@ -594,7 +594,6 @@ src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1"
     }
 
     function editMobileWider() {
-        {{--  alert('hello');  --}}
         $("#email_or_mobile").prop("readonly", false);
         $("#edit-mobile-wider").hide();
         $("#mismatch-mob").hide();
@@ -613,7 +612,7 @@ src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1"
         otpInterval = setInterval(function() {
             if (timer > 0) {
                 timer--;
-                $('#otp_timer').text(timer + 's');
+                $('#otp_timer').text(timer + 'sec');
             } else {
                 clearInterval(otpInterval);
                 $('#otp_timer').hide();
