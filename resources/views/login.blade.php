@@ -26,29 +26,33 @@
                 text-align: center;
                 cursor: pointer;
             }
+
             .login-pnl-error1 {
                 color: red;
                 font-size: 13px;
                 display: block;
                 margin: 4px 0px 5px 0px;
             }
+
             .formsection .form-control {
-                padding: 14px 12px;}
+                padding: 14px 12px;
+            }
         </style>
         <div class="row loginpanel">
             <div class="leftpanel">
                 <div class="loghead">Login</div>
-                <form class="form-horizontal" method="post" action="{{ route('franchise.login.submit') }}">
+                @if ($errors->has('loginFailed'))
+                    <div class="alert alert-danger">{{ $errors->first('loginFailed') }}</div>
+                @endif
+                <form class="form-horizontal" method="post" action="{{ Config('constants.MainDomain') }}/loginform">
                     @csrf
-                    @if ($errors->has('loginFailed'))
-                        <div class="alert alert-danger">{{ $errors->first('loginFailed') }}</div>
-                    @endif
+
                     <div class="form-group">
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="input-group">
                                 <span class="input-group-addon"><img src="{{ URL::asset('images/user.png') }}"></span>
                                 <input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                    name="email_or_mobile1" id="email_or_mobile1"
+                                    name="email_or_mobile" id="email_or_mobile1"
                                     placeholder="Enter Your User ID or Mobile Number" required onkeyup="checkInputType1()">
                                 <span class="vrfy" onclick="editMobileWider1()" id="edit-mobile-wider1"
                                     style="display:none">Edit</span>
@@ -74,7 +78,6 @@
                                 <span class="input-group-addon"><img src="{{ URL::asset('images/pwd.png') }}"></span>
                                 <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
                                     class="form-control blur" placeholder="Enter OTP">
-                                <div style="display:none; color:red;" id="mismatch-otp1">Mismatch OTP</div>
                                 <span class="vrfy" id="resend_otp1" onclick="resendOTP1()" style="display:none">Resend
                                     OTP</span>
                                 <span class="vrfy" id="otp_timer1"></span>
@@ -198,7 +201,7 @@
             otpInterval = setInterval(function() {
                 if (timer > 0) {
                     timer--;
-                    $('#otp_timer1').text(timer + 's');
+                    $('#otp_timer1').text(timer + 'sec');
                 } else {
                     clearInterval(otpInterval);
                     $('#otp_timer1').hide();

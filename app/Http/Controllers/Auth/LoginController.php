@@ -348,9 +348,9 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $input = $request->all();
-
         // Determine if the input is an email or mobile number
         $loginField = filter_var($request->input('email_or_mobile'), FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+        // dd($input);
 
         // Validation
         if ($loginField == 'email') {

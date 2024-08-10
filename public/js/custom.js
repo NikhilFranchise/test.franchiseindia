@@ -382,14 +382,14 @@ var otpInterval;
     }
 
     function startOTPTimer() {
-        var timer = 60;
+        var timer = 10;
         $('#resend_otp').hide();
         $('#otp_timer').show();
 
         otpInterval = setInterval(function() {
             if (timer > 0) {
                 timer--;
-                $('#otp_timer').text(timer + 's');
+                $('#otp_timer').text(timer + 'sec');
             } else {
                 clearInterval(otpInterval);
                 $('#otp_timer').hide();

@@ -654,7 +654,7 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane" id="login">
-                            {{--  <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
+                            <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
                                 @csrf
                                 <div class="frm-pnl">
                                     <div class="input-group">
@@ -666,9 +666,9 @@
                                             onkeyup="checkInputType()">
 
                                         <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
-                                            style="display:none">Edit</span>
+                                            style="display:none">एडिट</span>
                                         <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
-                                            style="display:none">Get OTP</span>
+                                            style="display:none">ओटीपी भेजें</span>
                                         <div style="display:none; color:red;" id="mismatch-mob">यह मोबाइल नंबर
                                             पंजीकृत नहीं है|</div>
                                     </div>
@@ -680,17 +680,12 @@
                                             placeholder="पासवर्ड दर्ज करें">
 
                                     </div>
-                                    <div class="input-group" id="otp-block-wider" style="display: none;">
-                                        <span class="input-group-addon">
-                                            <div class="otpsprite"></div>
-                                        </span>
+                                    <div class="input-group" id="otp-block-wider" style="display: none;width:100%;">
                                         <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
-                                            class="form-control blur" placeholder="Enter OTP">
+                                            class="form-control blur" placeholder="ओटीपी दर्ज करें">
 
-                                        <div style="display:none; color:red;" id="mismatch-otp">Mismatch OTP</div>
                                         <span class="vrfy" id="resend_otp" onclick="resendOTP()"
-                                            style="display:none">Resend
-                                            OTP</span>
+                                            style="display:none">ओटीपी पुनः भेजें</span>
                                         <span class="vrfy" id="otp_timer"></span>
                                     </div>
                                     <button type="submit" id="sign_in_btn"
@@ -699,7 +694,7 @@
                                     <span class="pipe">|</span> <a class="frg-link" href="#"
                                         onClick="frg_panel()">पासवर्ड भूल गए</a>
                                 </div>
-                            </form>  --}}
+                            </form>
 
                             <div class="popfi">
                                 <div class="signpop"></div>
