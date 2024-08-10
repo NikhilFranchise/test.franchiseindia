@@ -78,7 +78,6 @@
                                 <span class="input-group-addon"><img src="{{ URL::asset('images/pwd.png') }}"></span>
                                 <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
                                     class="form-control blur" placeholder="Enter OTP">
-                                <div style="display:none; color:red;" id="mismatch-otp1">Mismatch OTP</div>
                                 <span class="vrfy" id="resend_otp1" onclick="resendOTP1()" style="display:none">Resend
                                     OTP</span>
                                 <span class="vrfy" id="otp_timer1"></span>

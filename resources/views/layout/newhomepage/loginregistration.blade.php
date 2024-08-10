@@ -72,9 +72,6 @@
 
                                         </div>
                                         <div class="input-group" id="otp-block-wider" style="display: none;width:100%;">
-                                            {{--  <span class="input-group-addon">
-                                                <div class="otpsprite"></div>
-                                            </span>  --}}
                                             <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
                                                 class="form-control blur" placeholder="ओटीपी दर्ज करें">
 

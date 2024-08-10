@@ -171,9 +171,9 @@
                                             style="display:none">Edit</span>
                                         <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
                                             style="display:none">Get OTP</span>
+                                        </div>
                                         <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">This mobile number
-                                            is not registered.</div>
-                                    </div>
+                                        is not registered.</div>
                                     <div class="input-group" id="password_group">
                                         <span class="input-group-addon">
                                             <div class="pwdsprite"></div>
@@ -182,14 +182,11 @@
                                             placeholder="Enter Your Password">
                                     </div>
 
-                                    <div class="input-group" id="otp-block-wider" style="display: none;">
-                                        <span class="input-group-addon">
-                                            <div class="otpsprite"></div>
-                                        </span>
+                                    <div class="input-group" id="otp-block-wider" style="display: none;width:100%;">
+
                                         <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
                                             class="form-control blur" placeholder="Enter OTP">
 
-                                        <div style="display:none; color:red;" id="mismatch-otp">Mismatch OTP</div>
                                         <span class="vrfy" id="resend_otp" onclick="resendOTP()"
                                             style="display:none">Resend
                                             OTP</span>
