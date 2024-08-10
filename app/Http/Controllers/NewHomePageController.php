@@ -24,17 +24,6 @@ class NewHomePageController extends Controller
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 		$result = curl_exec($ch);
 		curl_close($ch);
-
-<<<<<<< HEAD
-		$ch = curl_init('https://www.opportunityindia.com/api/article/hindiapidata');
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-		$result = curl_exec($ch);
-		curl_close($ch);
-
-=======
->>>>>>> fd6c1c9a68c4126f52c0051479b8caffdbf3ca44
 		$articles = json_decode($result, true);
 
 		return view('layout.hindihomepage')->with(compact('articles', 'brands'));
@@ -52,12 +41,7 @@ class NewHomePageController extends Controller
 		curl_close($ch);
 
 		$articles = json_decode($result, true);
-		// Initialize Guzzle client
-<<<<<<< HEAD
-		
-=======
->>>>>>> fd6c1c9a68c4126f52c0051479b8caffdbf3ca44
-
+	
 		return view('layout.masternewhomepage')->with(compact('articles', 'brands'));
 
 	}
