@@ -39,8 +39,8 @@
     @else
         <div class="margintop20"></div>
     @endif
-
-    @if (count($images) < 4 || $franDetails->membership_type != 1)
+    @if (empty($images) || $images->count() < 4)
+    {{-- @if (count($images) < 4 || $franDetails->membership_type != 1) --}}
         @include('includes.brandlanding.hindi.layout-1')
     @elseif($franDetails->page_layout_type == '1')
         @include('includes.brandlanding.hindi.layout-1')

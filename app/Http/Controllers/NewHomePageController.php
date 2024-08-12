@@ -24,7 +24,6 @@ class NewHomePageController extends Controller
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 		$result = curl_exec($ch);
 		curl_close($ch);
-
 		$articles = json_decode($result, true);
 
 		return view('layout.hindihomepage')->with(compact('articles', 'brands'));
@@ -42,8 +41,7 @@ class NewHomePageController extends Controller
 		curl_close($ch);
 
 		$articles = json_decode($result, true);
-		// Initialize Guzzle client
-
+	
 		return view('layout.masternewhomepage')->with(compact('articles', 'brands'));
 
 	}

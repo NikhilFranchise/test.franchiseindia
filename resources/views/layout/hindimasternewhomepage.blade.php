@@ -103,46 +103,26 @@
                             <div role="tabpanel" class="tab-pane" id="login">
                                 <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
                                     @csrf
+
                                     <div class="frm-pnl">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="usersprite"></div>
                                             </span>
-                                            <input type="text" class="form-control blur" name="email_or_mobile"
-                                                id="email_or_mobile" placeholder="ईमेल-आईडी या मोबाइल नंबर दर्ज करें"
-                                                onkeyup="checkInputType()">
-
-                                            <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
-                                                style="display:none">Edit</span>
-                                            <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
-                                                style="display:none">Get OTP</span>
-                                            <div style="display:none; color:red;" id="mismatch-mob">यह मोबाइल नंबर
-                                                पंजीकृत नहीं है|</div>
+                                            <input type="email" class="form-control
+                                         blur"
+                                                required="" name="email" placeholder="ईमेल-आईडी दर्ज करें">
                                         </div>
-                                        <div class="input-group" id="password_group">
+                                        <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
                                             </span>
-                                            <input type="password" name="password" class="form-control blur"
+                                            <input type="password" required="" name="password" class="form-control blur"
                                                 placeholder="पासवर्ड दर्ज करें">
-
                                         </div>
-                                        <div class="input-group" id="otp-block-wider" style="display: none;">
-                                            <span class="input-group-addon">
-                                                <div class="otpsprite"></div>
-                                            </span>
-                                            <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
-                                                class="form-control blur" placeholder="Enter OTP">
-
-                                            <div style="display:none; color:red;" id="mismatch-otp">Mismatch OTP</div>
-                                            <span class="vrfy" id="resend_otp" onclick="resendOTP()"
-                                                style="display:none">Resend
-                                                OTP</span>
-                                            <span class="vrfy" id="otp_timer"></span>
-                                        </div>
-                                        <button type="submit" id="sign_in_btn"
+                                        <button type="submit"
                                             class="btn btn-default
-                              btn-gry btn-prop">साइन
+                                      btn-gry btn-prop">साइन
                                             इन </button>
                                         <span class="pipe">|</span> <a class="frg-link" href="#"
                                             onClick="frg_panel()">पासवर्ड भूल गए</a>
@@ -3182,101 +3162,6 @@
 
             }
         });
-    </script>
-    <script>
-        var otpInterval;
-
-        function checkInputType() {
-            var input = $('#email_or_mobile').val();
-            var isEmail = validateEmail(input);
-
-            if (isEmail) {
-                $('#password_group').show();
-                $('#get_otp_btn').hide();
-                $('#sign_in_btn').prop('disabled', false);
-            } else if (validateMobile(input)) {
-                $('#password_group').hide();
-                $('#get_otp_btn').show();
-                $('#sign_in_btn').prop('disabled', true);
-            } else {
-                $('#password_group').show();
-                $('#get_otp_btn').hide();
-                $('#sign_in_btn').prop('disabled', false);
-            }
-        }
-
-        function validateEmail(email) {
-            var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-
-        function validateMobile(mobile) {
-            var re = /^\d{10}$/;
-            return re.test(mobile);
-        }
-
-        function validateLoginMobileOTP() {
-            var mobile = $('#email_or_mobile').val();
-            $.ajax({
-                type: 'get',
-                url: '/login_verify_mobile',
-                data: {
-                    mobile: mobile
-                },
-                success: function(data) {
-                    if (data.data == 0) {
-                        $("#mismatch-mob").show();
-                        $("#email_or_mobile").prop("readonly", true);
-                        $("#sign_in_btn").prop("disabled", true);
-                        $("#edit-mobile-wider").show();
-                        $("#otp-block-wider").hide();
-                        $("#get_otp_btn").hide();
-                    } else {
-                        $("#mismatch-mob").hide();
-                        $("#sign_in_btn").prop("disabled", false);
-                        $("#edit-mobile-wider").show();
-                        $("#otp-block-wider").show();
-                        $("#get_otp_btn").hide();
-                        startOTPTimer();
-                    }
-                }
-            });
-        }
-
-        function editMobileWider() {
-            $("#email_or_mobile").prop("readonly", false);
-            $("#edit-mobile-wider").hide();
-            $("#otp-block-wider").hide();
-            $("#sign_in_btn").prop("disabled", true);
-            clearInterval(otpInterval);
-            $('#otp_timer').hide();
-            $('#resend_otp').hide();
-        }
-
-        function startOTPTimer() {
-            var timer = 60;
-            $('#resend_otp').hide();
-            $('#otp_timer').show();
-
-            otpInterval = setInterval(function() {
-                if (timer > 0) {
-                    timer--;
-                    $('#otp_timer').text(timer + 's');
-                } else {
-                    clearInterval(otpInterval);
-                    $('#otp_timer').hide();
-                    $('#resend_otp').show();
-                    $("#sign_in_btn").prop("disabled", true);
-                }
-            }, 1000);
-        }
-
-        function resendOTP() {
-            clearInterval(otpInterval);
-            var mobile = $('#email_or_mobile').val();
-            startOTPTimer();
-            validateLoginMobileOTP();
-        }
     </script>
 </body>
 

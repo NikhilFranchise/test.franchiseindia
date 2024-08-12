@@ -24,13 +24,16 @@ ol,ul,ul li{list-style-type:none}
 .login-p-home,.sideline,.sidelinenew{border-bottom:1px solid #dfdfdf}
 .c-button:focus,.c-menu__close:focus,a:focus{outline:0}
 .form-control {    border: 1px solid #ccc!important;    font-size: 12px!important;}
-.formsection .form-control {    padding: 10px 12px 10px!important;}
+#tryyyy .formsection .form-control {    padding: 10px 12px 10px!important;}
+#login-pnl .formsection .form-control, #lg-pnl .frm-pnl .form-control {    padding: 15px 12px 15px!important;}
 #tryyyy .formsection {margin-bottom: 0px;}
 #askForm .frm-input{padding:0px 20px 20px 20px;}
 .rm-prop label{font-size: 13px;}
 @media only screen and (min-width:1px) and (max-width:767px) {
     .testimonial .mdfrd{margin-left:0}
 }
+
+
 .busheadmebu{float:none;font-family:'Open Sans Bold',serif;font-size:16px;color:#333; margin:10px 0 8px 15px; font-weight:400;padding:0px;line-height:22px}
 .busheadmebu.marmodfy{ margin-left: -8px;     width: 275px;}
 .busheadmebu.marmodfy .gsc-input-box { border:0!important;}

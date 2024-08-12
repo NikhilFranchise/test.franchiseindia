@@ -456,44 +456,41 @@
                                             <span class="input-group-addon">
                                                 <div class="usersprite"></div>
                                             </span>
-                                            <input type="text" class="form-control blur" name="email_or_mobile"
-                                                id="email_or_mobile" placeholder="ईमेल-आईडी या मोबाइल नंबर दर्ज करें"
+
+                                            <input type="text" class="form-control blur" required=""
+                                                name="email_or_mobile" id="email_or_mobile"
+                                                placeholder="Enter Your User ID or Mobile Number"
                                                 onkeyup="checkInputType()">
 
                                             <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
                                                 style="display:none">Edit</span>
                                             <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
                                                 style="display:none">Get OTP</span>
-                                            <div style="display:none; color:red;" id="mismatch-mob">यह मोबाइल नंबर
-                                                पंजीकृत नहीं है|</div>
-                                        </div>
+                                            </div>
+                                            <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">This mobile number
+                                                is not registered.</div>
                                         <div class="input-group" id="password_group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
                                             </span>
                                             <input type="password" name="password" class="form-control blur"
-                                                placeholder="पासवर्ड दर्ज करें">
-
+                                                placeholder="Enter Your Password">
                                         </div>
-                                        <div class="input-group" id="otp-block-wider" style="display: none;">
-                                            <span class="input-group-addon">
-                                                <div class="otpsprite"></div>
-                                            </span>
-                                            <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
-                                                class="form-control blur" placeholder="Enter OTP">
 
-                                            <div style="display:none; color:red;" id="mismatch-otp">Mismatch OTP</div>
+                                        <div class="input-group" id="otp-block-wider" style="display: none;width:100%;">
+                                            <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
+                                                class="form-control blur" placeholder="Enter OTP" style="width:100%;">
                                             <span class="vrfy" id="resend_otp" onclick="resendOTP()"
                                                 style="display:none">Resend
                                                 OTP</span>
                                             <span class="vrfy" id="otp_timer"></span>
                                         </div>
+
                                         <button type="submit" id="sign_in_btn"
-                                            class="btn btn-default
-                              btn-gry btn-prop">साइन
-                                            इन </button>
+                                            class="btn btn-default btn-gry btn-prop">SIGN IN</button>
                                         <span class="pipe">|</span> <a class="frg-link" href="#"
-                                            onClick="frg_panel()">पासवर्ड भूल गए</a>
+                                            onClick="frg_panel()">Forgot
+                                            Password</a>
                                     </div>
                                 </form>
                                 <div class="popfi">

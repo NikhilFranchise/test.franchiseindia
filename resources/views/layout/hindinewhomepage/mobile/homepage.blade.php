@@ -52,51 +52,30 @@
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane" id="login">
-
-                                <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
-                                    @csrf
+                                <form method="post" action="https://www.franchiseindia.com/loginform">
+                                    <input type="hidden" name="_token"
+                                        value="RnGCk3ic8eNkg7IcHOyt0vibE3K7AoKNHs8bpxQC">
                                     <div class="frm-pnl">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="usersprite"></div>
                                             </span>
-
-                                            <input type="text" class="form-control blur" required=""
-                                                name="email_or_mobile" id="email_or_mobile"
-                                                placeholder="Enter Your User ID or Mobile Number"
-                                                onkeyup="checkInputType()">
-
-                                            <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
-                                                style="display:none">Edit</span>
-                                            <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
-                                                style="display:none">Get OTP</span>
-                                            <div style="display:none; color:red;" id="mismatch-mob">This mobile number
-                                                is not registered</div>
+                                            <input type="email"
+                                                class="form-control
+                                       blur"
+                                                required="" name="email" placeholder="Enter Your User ID">
                                         </div>
-                                        <div class="input-group" id="password_group">
+                                        <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
                                             </span>
-                                            <input type="password" name="password" class="form-control blur"
-                                                placeholder="Enter Your Password">
+                                            <input type="password" required="" name="password"
+                                                class="form-control blur" placeholder="Enter Your Password">
                                         </div>
-
-                                        <div class="input-group" id="otp-block-wider" style="display: none;">
-                                            <span class="input-group-addon">
-                                                <div class="otpsprite"></div>
-                                            </span>
-                                            <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
-                                                class="form-control blur" placeholder="Enter OTP">
-
-                                            <div style="display:none; color:red;" id="mismatch-otp">Mismatch OTP</div>
-                                            <span class="vrfy" id="resend_otp" onclick="resendOTP()"
-                                                style="display:none">Resend
-                                                OTP</span>
-                                            <span class="vrfy" id="otp_timer"></span>
-                                        </div>
-
-                                        <button type="submit" id="sign_in_btn"
-                                            class="btn btn-default btn-gry btn-prop">SIGN IN</button>
+                                        <button type="submit"
+                                            class="btn btn-default
+                                    btn-gry btn-prop">SIGN
+                                            IN</button>
                                         <span class="pipe">|</span> <a class="frg-link" href="#"
                                             onClick="frg_panel()">Forgot
                                             Password</a>
@@ -563,7 +542,7 @@
                                                 </p>
                                                 <h2>Ice-Cream Lab</h2>
                                                 <div class="card-info-summry">
-                                                    Lorem Ipsum has been the industry&apos;s standard dummy
+                                                    Lorem Ipsum has been the industry's standard dummy
                                                     text ever since the
                                                     1500s.
                                                 </div>
@@ -764,7 +743,7 @@
                                                         <h3>Lorem Ipsum is simply dummy text
                                                         </h3>
                                                         <p>of the printing and typesetting industry. Lorem
-                                                            Ipsum has been the industry&apos;s
+                                                            Ipsum has been the industry's
                                                         </p>
                                                         <div class="d-flex author-section">
                                                             <div class="author-info-lf">
@@ -892,7 +871,7 @@
                                                         <h3>Lorem Ipsum is simply dummy text
                                                         </h3>
                                                         <p>of the printing and typesetting industry. Lorem
-                                                            Ipsum has been the industry&apos;s
+                                                            Ipsum has been the industry's
                                                         </p>
                                                         <div class="d-flex author-section">
                                                             <div class="author-info-lf">

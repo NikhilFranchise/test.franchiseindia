@@ -144,7 +144,7 @@
 <link rel="preload" href="{{ url('js/js.cookie.min.js')}}" as="script">
 {{--  <link rel="preload" href="{{ url('js/validationInsta.js?ver='.date('d'))}}" as="script">  --}}
 <link rel="preload" href="{{ url('js/bootstrap.min.js')}}" as="script">
-<link rel="preload" href="{{ url('js/custom.js?ver='.date('d'))}}" as="script">
+{{--  <link rel="preload" href="{{ url('js/custom.js?ver='.date('d'))}}" as="script">  --}}
 <link rel="preload" href="{{ url('js/lozad.min.js')}}" as="script">
 <link rel="preload" href="{{ url('js/bootstrap-typeahead.js')}}" as="script">
 @desktop
