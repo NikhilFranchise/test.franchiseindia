@@ -28,7 +28,7 @@ class NewHomePageController extends Controller
 		// $result = curl_exec($ch);
 		// curl_close($ch);
 		// $articles = json_decode($result, true);
-		$filePath = public_path('data/articlehindi.json');
+		$filePath = public_path('oidata/articlehindi.json');
 
 		// Read the data back from the JSON file
 		if (file_exists($filePath)) {
@@ -58,7 +58,7 @@ class NewHomePageController extends Controller
 
 		
 			// Define the path where the JSON file is stored
-			$filePath = public_path('data/articles.json');
+			$filePath = public_path('oidata/articles.json');
 
 			// Read the data back from the JSON file
 			if (file_exists($filePath)) {
