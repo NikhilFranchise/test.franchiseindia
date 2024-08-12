@@ -24,6 +24,7 @@ class VerifyCsrfToken extends Middleware
         'payment/cancelled',
         'payment/success',
         'franchisor-feedback',
+        'reload-captcha',
 
       
         
