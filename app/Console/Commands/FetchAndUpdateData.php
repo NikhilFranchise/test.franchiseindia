@@ -43,8 +43,16 @@ class FetchAndUpdateData extends Command
                 $data['last_updated'] = $timestamp;
 
                 // Ensure the 'data' directory exists
-                if (!file_exists(dirname($filePath))) {
-                    mkdir(dirname($filePath), 0755, true);
+                // if (!file_exists(dirname($filePath))) {
+                //     mkdir(dirname($filePath), 0755, true);
+                // }
+                
+                 // Ensure the 'data' directory exists
+                 $filePath = public_path($filePath);
+                 $dir = dirname($filePath);
+ 
+                if (!file_exists($dir)) {
+                    mkdir($dir, 0755, true);
                 }
 
                 // Prepare JSON data with timestamp comment
