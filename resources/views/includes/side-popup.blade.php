@@ -63,7 +63,7 @@
                                         </span>
                                         <input type="text" class="form-control" name="namefreeadvice"
                                             id="namefreeadvice" placeholder="Enter Name">
-                                        <span class="error-message" id="namefreeadvice-error"></span>
+                                        <span style="font-size: 10px" class="error-message" id="namefreeadvice-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -71,7 +71,7 @@
                                         </span>
                                         <input type="text" name="emailfreeadvice" id="emailfreeadvice"
                                             class="form-control" placeholder="Enter E-mail">
-                                        <span class="error-message" id="emailfreeadvice-error"></span>
+                                        <span style="font-size: 10px" class="error-message" id="emailfreeadvice-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -79,21 +79,21 @@
                                         </span>
                                         <input type="text" class="form-control" maxlength="10"
                                             name="mobilefreeadvice" id="mobilefreeadvice" placeholder="Enter Mobile">
-                                        <span class="error-message" id="mobilefreeadvice-error"></span>
+                                        <span style="font-size: 10px" class="error-message" id="mobilefreeadvice-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><img alt="pincode"
                                                 src="{{ Config('constants.MainDomain') }}/images/pincode.png"></span>
                                         <input type="text" name="pincodefreeadvice" id="pincodefreeadvice"
                                             class="form-control" placeholder="Enter Pincode">
-                                        <span class="error-message" id="pincodefreeadvice-error"></span>
+                                        <span style="font-size: 10px" class="error-message" id="pincodefreeadvice-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon height80">
                                             <div class="addreesssprite"></div>
                                         </span>
                                         <textarea class="form-control height80" name="detailsfreeadvice" id="detailsfreeadvice" placeholder="Enter Details"></textarea>
-                                        <span class="error-message" id="detailsfreeadvice-error"></span>
+                                        <span style="font-size: 10px" class="error-message" id="detailsfreeadvice-error"></span>
                                     </div>
 
                                     <div class="form-group mt-4 mb-4">
@@ -108,7 +108,7 @@
                                     <div class="form-group mb-4">
                                         <input id="captcha" type="text" class="form-control"
                                             placeholder="Enter Captcha" name="captcha">
-                                        <span class="error-message" id="captcha-error"></span>
+                                        <span style="font-size: 10px" class="error-message" id="captcha-error"></span>
                                     </div>
                                     <div class="checkbox rm-prop">
                                         <label>
@@ -219,12 +219,12 @@
 
                 // Clear previous error messages and placeholders
                 $('.error-message').text('');
-                $('input').attr('placeholder', '');
+                // $('input').attr('placeholder', '');
             },
             error: function(xhr) {
                 // Clear previous error messages and placeholders
                 $('.error-message').text('');
-                $('input').attr('placeholder', '');
+                // $('input').attr('placeholder', '');
 
                 var errors = xhr.responseJSON.errors;
 
@@ -233,12 +233,12 @@
                     if (key === 'captcha' && errorMessages[0] === 'validation.captcha') {
                         var customMessage = 'Invalid captcha value.';
                         $('#' + key + '-error').text(customMessage);
-                        $('#' + key).attr('placeholder', customMessage);
+                        // $('#' + key).attr('placeholder', customMessage);
                     } else {
                         // Use the error messages provided by the server response
                         var errorMessage = errorMessages[0];
                         $('#' + key + '-error').text(errorMessage);
-                        $('#' + key).attr('placeholder', errorMessage);
+                        // $('#' + key).attr('placeholder', errorMessage);
                     }
                 });
 
@@ -256,12 +256,18 @@
 </script>
 
 <style>
-  .input-error {
-    border-color: red;
+  /* styles.css */
+
+.error-message {
+    color: red; /* Text color for error messages */
+    font-size: 0.875em; /* Optional: Adjust font size */
+    margin-top: 0.25em; /* Optional: Space above error messages */
+    display: block; /* Display error messages as block elements */
 }
 
-/* Placeholder styles */
-.input-error::placeholder {
-    color: red;
+/* Additional styles for form controls, if needed */
+.input-group {
+    margin-bottom: 1em;
 }
+
 </style>
