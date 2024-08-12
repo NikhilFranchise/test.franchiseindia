@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
         $schedule->call('\App\Http\Controllers\CronController@insertLeads')->hourly()->between('7:00', '23:00')->timezone('Asia/Kolkata');
 
         //OI NEWS DATA
-        $schedule->command('data:update')->everyTwoMinutes();
+        $schedule->command('data:update')->hourly();
     }
 
     /**
