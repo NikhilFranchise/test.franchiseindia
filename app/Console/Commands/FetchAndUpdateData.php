@@ -16,8 +16,8 @@ class FetchAndUpdateData extends Command
     }
     public function handle()
     {
-        $this->fetchAndUpdate('https://www.opportunityindia.com/api/article/apidata', 'data/articles.json');
-        $this->fetchAndUpdate('https://www.opportunityindia.com/api/article/hindiapidata', 'data/articlehindi.json');
+        $this->fetchAndUpdate('https://www.opportunityindia.com/api/article/apidata', 'oidata/articles.json');
+        $this->fetchAndUpdate('https://www.opportunityindia.com/api/article/hindiapidata', 'oidata/articlehindi.json');
       
     }
 
