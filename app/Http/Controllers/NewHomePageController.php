@@ -44,7 +44,7 @@ class NewHomePageController extends Controller
 	public function homeNew()
 	{
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
-	
+
 		//  // Define the path where the JSON file is stored
 		//  $filePath = public_path('data/articles.json');
 
@@ -56,7 +56,7 @@ class NewHomePageController extends Controller
 		//  }
 		// //  dd($articles);
 
-		
+
 			// Define the path where the JSON file is stored
 			$filePath = public_path('oidata/articles.json');
 
