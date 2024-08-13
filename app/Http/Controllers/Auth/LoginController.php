@@ -262,8 +262,9 @@ class LoginController extends Controller
             }
 
             if ($userData->profile_status != 1) {
-                session()->put('loginFailed', 'Dear User, Your profile is not active. Please contact admin to activate your profile');
-                return redirect('fibl/login');
+                return redirect('fibl/login')->withErrors(['loginFailed' => 'Dear User, Your profile is not active. Please contact admin to activate your profile']);
+                // session()->put('loginFailed', 'Dear User, Your profile is not active. Please contact admin to activate your profile');
+                // return redirect('fibl/login');
             }
 
             // if($request->password == 'KHBIUB*^211*YIjbkijbclkd%wf' || $mbox) {
@@ -285,8 +286,8 @@ class LoginController extends Controller
             }
         }
 
-        session()->put('loginFailed', 'The user ID or password is incorrect. Kindly re-enter.');
-        return redirect('fibl/login');
+        // session()->put('loginFailed', 'The user ID or password is incorrect. Kindly re-enter.');
+        return redirect('fibl/login')->withErrors(['loginFailed' => 'The user ID or password is incorrect. Kindly re-enter.']);
     }
 
     /**
@@ -301,49 +302,6 @@ class LoginController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    // public function login(Request $request)
-    // {
-    //     dd($request->all());
-    //     // $this->validate($request, array(
-    //     //     'email' => 'required|email',
-    //     //     'password' => 'required'
-    //     // ));
-    //     $this->validate($request, [
-    //         'email' => 'required_without:mobile|email',
-    //         'mobile' => 'required_without:email|digits:10',
-    //         'password' => 'required_without:otp',
-    //         'otp' => 'required_without:password',
-    //     ]);
-    //     if($request->email_or_mobile == )
-    //     $userData = UserAccount::query()->select('profile_status', 'membership_type', 'profile_type', 'profile_str')->where('email', $request->email)->first();
-    //     // dd($request);
-    //     if ($userData != null) {
-
-    //         if ($userData->profile_status == 2) {
-    //             session()->put('loginFailed', 'Dear User, Your Email verification is pending, kindly check your mail inbox for verification mail');
-    //             return redirect('/login');
-    //         }
-
-    //         if ($userData->profile_status == 3 && $userData->profile_type == 1) {
-    //             session()->put('loginFailed', 'Dear franchisor, Your moderation process is pending');
-    //             return redirect('/login');
-    //         }
-    //     } else {
-    //         session()->put('loginFailed', 'Oops! The email-ID entered is incorrect');
-    //         return redirect('/login');
-    //     }
-
-    //     $type = $this->commonLogin($request->email, $request->password);
-    //     if ($type == 1)
-    //         return redirect('franchisor/myaccount/dashboard');
-    //     if ($type == 2)
-    //         // return redirect('/');
-
-    //         return redirect()->back(); // Redirects to the previous URL
-
-    //     session()->put('loginFailed', 'Oops! The password entered is incorrect.');
-    //     return redirect('/login');
-    // }
 
     public function login(Request $request)
     {
