@@ -14,13 +14,14 @@ use Illuminate\Support\Facades\Cookie;
 class ContactUsController extends Controller
 {
     public function contactUsForm()
-    {
+    { 
         return view('site/contact');
     }
 
     public function contact(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+    // dd($request);
+        $validator =  $request->validate([
             'name' => 'required|max:30',
             'email' => 'required|email|max:255',
             'mobile' => 'required|min:10|max:10',
@@ -29,6 +30,8 @@ class ContactUsController extends Controller
             'contreason' => 'required',
             'country' => 'required',
             'city' => 'required|min:3',
+            'captcha' => 'required|captcha',
+            
         ]);
 
         if ($validator->fails()) {
@@ -88,12 +91,18 @@ class ContactUsController extends Controller
                     break;
             }
 
-            if ($mailTo) {
-                Mail::to($mailTo)->bcc($mailBcc)->send(new ContactUsMail($details));
-            }
+            // if ($mailTo) {
+            //     Mail::to($mailTo)->bcc($mailBcc)->send(new ContactUsMail($details));
+            // }
         }
         $message = $contactData ? "Contact form submitted successfully..." : "Contact form submission failed...";
 
         return view('thanks.thanks', compact('message'));
+    }
+
+    public function reloadCaptcha()
+    {
+        // dd('yes');
+        return response()->json(['captcha'=> captcha_img()]);
     }
 }
