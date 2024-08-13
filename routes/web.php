@@ -989,8 +989,10 @@ Route::get('/wellness/{slug}', function ($slug) {
     // Redirect to the new domain
     return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
-
+ 
 Route::get('reload-captcha', [AdviceController::class, 'reloadCaptcha']);
+Route::get('reload-captcha-contact', [ContactUsController::class, 'reloadCaptcha']);
 
 Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('form.submit');
+
 
