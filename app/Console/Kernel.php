@@ -28,6 +28,8 @@ class Kernel extends ConsoleKernel
         //$schedule->call('\App\Http\Controllers\CronController@leadVisibilityCron')->dailyAt('10:19')->timezone('Asia/Kolkata');
         $schedule->call('\App\Http\Controllers\CronController@insertLeads')->hourly()->between('7:00', '23:00')->timezone('Asia/Kolkata');
 
+        //OI NEWS DATA
+        $schedule->command('data:update')->hourly();
     }
 
     /**
@@ -35,7 +37,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands(): void
     {
-       
+
         $this->load(__DIR__.'/Commands');
 
         require base_path('routes/console.php');
