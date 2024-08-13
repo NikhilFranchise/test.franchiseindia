@@ -1,5 +1,6 @@
 <hr>
 @mobile
+@if(!empty($mc) && $mc == 2)
 <div class="row row-no-margin padtb20 catbannertop">
     <div class="dfp_320X100" style='display:block;'>
 		@if(!empty($mc) && $mc == 2)
@@ -11,4 +12,13 @@
         @endif
     </div>
 </div>
+@endif
+@if(!empty($sc) && $sc == 342)
+<div class="row row-no-margin padtb20 catbannertop">
+    <div class="dfp_320X100" style='display:block;'>
+		<div style="width: 100%;"><a href="https://www.franchiseindia.com/brands/pikpart-smart-garage-4-wheeler.95803"><img src="https://www.franchiseindia.com/images/banner/pikpart-320X100.jpg" style="width:100%;" alt="What a Sandwich"></a></div>                        
+
+    </div>
+</div>
+@endif
 @endmobile
