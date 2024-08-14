@@ -122,6 +122,7 @@ class NewHomePageController extends Controller
 		return view('layout.hindihomepage')->with(compact('articles', 'brands','brandstfo','brandslft','brandstbo',	'brandsffc'));
 	}
 
+<<<<<<< HEAD
 		public function homeNew(Request $request)
 		{
 			$cacheKeys = [
@@ -150,6 +151,26 @@ class NewHomePageController extends Controller
 					->get()
 					->shuffle();
 					return $data;
+=======
+	public function homeNew()
+	{
+		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
+
+		//  // Define the path where the JSON file is stored
+		//  $filePath = public_path('data/articles.json');
+
+		//  // Check if the file exists and read the data from the JSON file
+		//  if (file_exists($filePath)) {
+		// 	 $articles = json_decode(file_get_contents($filePath), true);
+		//  } else {
+		// 	 $articles = []; // Provide a default value if the file doesn't exist
+		//  }
+		// //  dd($articles);
+
+
+			// Define the path where the JSON file is stored
+			$filePath = public_path('oidata/articles.json');
+>>>>>>> c22968b68a10757a622628c22bac545f5d29476c
 
 			});
 
