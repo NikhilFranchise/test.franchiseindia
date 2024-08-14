@@ -8,11 +8,11 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            @php
+            {{-- @php
                 $brandLogo3 = $brands->where('brand_section', 3)->where('page_type', $pageType)->take(12)->shuffle();
-            @endphp
+            @endphp --}}
 
-            @foreach ($brandLogo3 as $logoDetail)
+            @foreach ($brandstbo as $logoDetail)
                 @php
                     $brandUrl = Config('constants.MainDomain') . $logoDetail['brand_link'];
                 @endphp
