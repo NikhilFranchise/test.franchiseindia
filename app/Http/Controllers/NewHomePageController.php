@@ -19,7 +19,6 @@ class NewHomePageController extends Controller
 {
 	public function hindiHomePage()
 	{
-		
 
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
@@ -30,7 +29,7 @@ class NewHomePageController extends Controller
 			'brandsffc' => 'brandsffc_cache',
 		];
 		// Define cache expiration time in seconds
-		$cacheExpiration = 90; // You can adjust this as needed
+		$cacheExpiration = 3600; // You can adjust this as needed
 	
 		// Check if the 'brandslft' data exists in the cache
 		$isBrandslftCached = Cache::has($cacheKeys['brandslft']);
@@ -48,7 +47,7 @@ class NewHomePageController extends Controller
 				->take(4)
 				->get()
 				->shuffle();
-				return $data;
+			return $data;
 
 		});
 
@@ -69,7 +68,7 @@ class NewHomePageController extends Controller
 		
 	
 		$brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
-			return HomePremiumPageBrand::query()
+			$data =  HomePremiumPageBrand::query()
 				->where('status', 1)
 				->where('brand_section', 3)
 				->where('page_type', 1)
@@ -77,11 +76,13 @@ class NewHomePageController extends Controller
 				->take(12)
 				->get()
 				->shuffle();
+			return $data;
+
 		});
 		$cacheDatatbo = Cache::get($cacheKeys['brandstbo']);
 
 		$brandstfo = Cache::remember($cacheKeys['brandstfo'], $cacheExpiration, function () {
-			return HomePremiumPageBrand::query()
+			$data =  HomePremiumPageBrand::query()
 				->where('status', 1)
 				->where('brand_section', 4)
 				->where('page_type', 1)
@@ -89,17 +90,21 @@ class NewHomePageController extends Controller
 				->take(25)
 				->get()
 				->shuffle();
+			return $data;
+
 		});
 		$cacheDatatfo = Cache::get($cacheKeys['brandstfo']);
 
 		$brandsffc = Cache::remember($cacheKeys['brandsffc'], $cacheExpiration, function () {
-			return HomePremiumPageBrand::query()
+			$data =  HomePremiumPageBrand::query()
 				->where('status', 1)
 				->where('brand_section', 5)
 				->orderBy('inventory_backup', 'ASC')
 				->take(48)
 				->get()
 				->shuffle();
+			return $data;
+
 		});
 		$cacheDataffc = Cache::get($cacheKeys['brandsffc']);
 
@@ -131,7 +136,7 @@ class NewHomePageController extends Controller
 				'brandsffc' => 'brandsffc_cache',
 			];
 			// Define cache expiration time in seconds
-			$cacheExpiration = 90; // You can adjust this as needed
+			$cacheExpiration = 3600; // You can adjust this as needed
 		
 			// Check if the 'brandslft' data exists in the cache
 			$isBrandslftCached = Cache::has($cacheKeys['brandslft']);
@@ -149,7 +154,7 @@ class NewHomePageController extends Controller
 					->take(4)
 					->get()
 					->shuffle();
-					return $data;
+				return $data;
 
 			});
 
@@ -170,7 +175,7 @@ class NewHomePageController extends Controller
 			
 		
 			$brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
-				return HomePremiumPageBrand::query()
+				$data = HomePremiumPageBrand::query()
 					->where('status', 1)
 					->where('brand_section', 3)
 					->where('page_type', 1)
@@ -178,11 +183,12 @@ class NewHomePageController extends Controller
 					->take(12)
 					->get()
 					->shuffle();
+				return $data;
 			});
 			$cacheDatatbo = Cache::get($cacheKeys['brandstbo']);
 
 			$brandstfo = Cache::remember($cacheKeys['brandstfo'], $cacheExpiration, function () {
-				return HomePremiumPageBrand::query()
+				$data =	HomePremiumPageBrand::query()
 					->where('status', 1)
 					->where('brand_section', 4)
 					->where('page_type', 1)
@@ -190,17 +196,21 @@ class NewHomePageController extends Controller
 					->take(25)
 					->get()
 					->shuffle();
+				return $data;
+
 			});
 			$cacheDatatfo = Cache::get($cacheKeys['brandstfo']);
 
 			$brandsffc = Cache::remember($cacheKeys['brandsffc'], $cacheExpiration, function () {
-				return HomePremiumPageBrand::query()
+				$data =  HomePremiumPageBrand::query()
 					->where('status', 1)
 					->where('brand_section', 5)
 					->orderBy('inventory_backup', 'ASC')
 					->take(48)
 					->get()
 					->shuffle();
+				return $data;
+
 			});
 			$cacheDataffc = Cache::get($cacheKeys['brandsffc']);
 
