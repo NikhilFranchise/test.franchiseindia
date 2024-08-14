@@ -252,13 +252,13 @@ class LoginController extends Controller
                 return $check;
 
             if ($userData->profile_status == 2) {
-                session()->put('loginFailed', 'Dear User, Your Email verification is pending, kindly check your mail inbox for verification mail');
-                return redirect('fibl/login');
+                // session()->put('loginFailed', '');
+                return redirect('fibl/login')->withErrors(['loginFailed' => 'Dear User, Your Email verification is pending, kindly check your mail inbox for verification mail']);
             }
 
             if ($userData->profile_status == 3 && $userData->profile_type == 1) {
-                session()->put('loginFailed', 'Dear franchisor, Your moderation process is pending');
-                return redirect('fibl/login');
+                // session()->put('loginFailed', 'Dear franchisor, Your moderation process is pending');
+                return redirect('fibl/login')->withErrors(['loginFailed' => 'Dear franchisor, Your moderation process is pending']);
             }
 
             if ($userData->profile_status != 1) {
@@ -273,15 +273,15 @@ class LoginController extends Controller
                 if (Auth::getFacadeRoot()->login(User::query()->find($userData->user_id))) {
                     $this->recordLoginTime();
                     session()->flash('userloggedin', 1);
-                    if (request()->user()->profile_type == 2) {
-                        InvestorController::setPercentage();
-                        return redirect()->to('/');
-                    } else {
+                    // if (request()->user()->profile_type == 2) {
+                    //     InvestorController::setPercentage();
+                    //     return redirect()->to('/');
+                    // } else {
                         FranchisorController::franPercentage();
                         $franData = FranchisorBusinessDetail::query()->select('company_name')->where('franchisor_id', Auth::user()->profile_str)->first();
                         session()->put('name', $franData->company_name);
                         return redirect('franchisor/myaccount/dashboard');
-                    }
+                    //}
                 }
             }
         }
