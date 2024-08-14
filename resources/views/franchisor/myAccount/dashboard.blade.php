@@ -42,7 +42,7 @@
                                         @if ($leadcount > $basic_count)
                                             @php
                                                   $ded = $leadcount - $basic_count; // Calculate the difference
-                                                
+
                                             @endphp
                                         @endif
                                         @if ($i < $ded)
@@ -134,6 +134,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @dd($expressedInterests);
                                     @foreach ($expressedInterests as $expData)
                                         @php
                                             $name = $expData->investor->userDetail->name;
