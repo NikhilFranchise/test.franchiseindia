@@ -130,6 +130,30 @@ class NewHomePageController extends Controller
 		$isBrandslftCached = Cache::has($cacheKeys['brandslft']);
 		// dd($isBrandslftCached);
 		// dd($request->all());
+
+		$startTime = microtime(true);
+
+		$brandslft = HomePremiumPageBrand::query()
+			->where('status', 1)
+			->where('brand_section', 2)
+			->where('page_type', 1)
+			->orderBy('inventory_backup', 'ASC')
+			->take(4)
+			->get()
+			->shuffle();
+
+
+ // End measuring time
+ $endTime = microtime(true);
+
+ // Calculate the execution time in seconds with milliseconds precision
+ $executionTimeWithCache = number_format($endTime - $startTime, 6) . ' seconds';
+
+ // Return the execution time for debugging purposes
+ dd('Execution time without Redis cache: lft ' . $executionTimeWithCache);
+
+
+
 	
 		// Retrieve cached data or fetch and cache if not available
 		$brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
