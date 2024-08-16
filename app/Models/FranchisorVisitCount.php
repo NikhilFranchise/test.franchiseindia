@@ -9,5 +9,5 @@ class FranchisorVisitCount extends Model
 {
     use HasFactory;
     protected $table = 'franchisor_visits'; // Set the table name
-    protected $fillable = ['franchisor_id', 'total']; 
+    protected $fillable = ['franchisor_id', 'total','record_count']; 
 }
