@@ -133,16 +133,24 @@ class NewHomePageController extends Controller
 		$startTime = microtime(true);
 
 		// Retrieve cached data or fetch and cache if not available
-		$brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
-			return HomePremiumPageBrand::query()
-				->where('status', 1)
-				->where('brand_section', 2)
-				->where('page_type', 1)
-				->orderBy('inventory_backup', 'ASC')
-				->take(4)
-				->get()
-				->shuffle();
-		});
+		// $brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
+		// 	return HomePremiumPageBrand::query()
+		// 		->where('status', 1)
+		// 		->where('brand_section', 2)
+		// 		->where('page_type', 1)
+		// 		->orderBy('inventory_backup', 'ASC')
+		// 		->take(4)
+		// 		->get()
+		// 		->shuffle();
+		// });
+		$brandslft = HomePremiumPageBrand::query()
+			->where('status', 1)
+			->where('brand_section', 2)
+			->where('page_type', 1)
+			->orderBy('inventory_backup', 'ASC')
+			->take(4)
+			->get()
+			->shuffle();
    // End measuring time
    $endTime = microtime(true);
 
