@@ -16,6 +16,8 @@ use App\Mail\confirmed;
 use App\Models\MobileVerification;
 use App\Mail\AdvertiseMail;
 use App\Models\FranchisorLocState;
+use App\Models\UniqueVisit;
+use App\Models\FranchisorVisitCount;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
@@ -31,6 +33,12 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
+
+
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -973,4 +981,33 @@ class CommonController extends Controller
         return strtolower($content_title1);
         //return str_replace('\'', '', $title);
     }
+ 
+public function brand_total_count()
+{
+    $date = Carbon::now();
+    $formattedDate = $date->format('Y-m-d'); // Updated to 'Y-m-d' for consistency
+
+    // Fetch the count of unique visits grouped by franchisor_id
+    $brand_count = UniqueVisit::select('franchisor_id', DB::raw('COUNT(*) AS visit_count'))
+        ->groupBy('franchisor_id')
+        ->whereDate('date', $formattedDate) // Ensures comparison with date only
+        ->get();
+
+    // Prepare data for bulk insertion
+    $dataToInsert = $brand_count->map(function ($item) use ($formattedDate) {
+        return [
+            'franchisor_id' => $item->franchisor_id,
+            'total' => $item->visit_count,
+            'record_date' => $formattedDate
+        ];
+    })->toArray();
+
+    // Insert data into the franchisor_visits table
+    FranchisorVisitCount::insert($dataToInsert);
+
+    // Confirm successful insertion
+    dd('Data inserted successfully.');
+}
+
+
 }
