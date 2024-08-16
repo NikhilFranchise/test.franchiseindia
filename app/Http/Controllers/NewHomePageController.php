@@ -130,35 +130,19 @@ class NewHomePageController extends Controller
 		$isBrandslftCached = Cache::has($cacheKeys['brandslft']);
 		// dd($isBrandslftCached);
 		// dd($request->all());
-		$startTime = microtime(true);
-		$brandsffc = Cache::remember($cacheKeys['brandsffc'], $cacheExpiration, function () {
+	
+		// Retrieve cached data or fetch and cache if not available
+		$brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
 			return HomePremiumPageBrand::query()
 				->where('status', 1)
-				->where('brand_section', 5)
+				->where('brand_section', 2)
+				->where('page_type', 1)
 				->orderBy('inventory_backup', 'ASC')
-				->take(48)
+				->take(4)
 				->get()
 				->shuffle();
 		});
-		// Retrieve cached data or fetch and cache if not available
-		// $brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
-		// 	return HomePremiumPageBrand::query()
-		// 		->where('status', 1)
-		// 		->where('brand_section', 2)
-		// 		->where('page_type', 1)
-		// 		->orderBy('inventory_backup', 'ASC')
-		// 		->take(4)
-		// 		->get()
-		// 		->shuffle();
-		// });
-   // End measuring time
-   $endTime = microtime(true);
 
-   // Calculate the execution time in seconds with milliseconds precision
-   $executionTimeWithCache = number_format($endTime - $startTime, 6) . ' seconds';
-
-   // Return the execution time for debugging purposes
-   dd('Execution time with Redis cache tfo: ' . $executionTimeWithCache);
 		// dd($cacheDatalft);
 		// dd([
 		// 	'is_brandslft_cached' => $isBrandslftCached,
