@@ -131,16 +131,14 @@ class NewHomePageController extends Controller
 		// dd($isBrandslftCached);
 		// dd($request->all());
 		$startTime = microtime(true);
-		$brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
-			return HomePremiumPageBrand::query()
-				->where('status', 1)
-				->where('brand_section', 3)
-				->where('page_type', 1)
-				->orderBy('inventory_backup', 'ASC')
-				->take(12)
-				->get()
-				->shuffle();
-		});
+		$brandstbo = HomePremiumPageBrand::query()
+			->where('status', 1)
+			->where('brand_section', 3)
+			->where('page_type', 1)
+			->orderBy('inventory_backup', 'ASC')
+			->take(12)
+			->get()
+			->shuffle();
 
 		// Retrieve cached data or fetch and cache if not available
 		// $brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
@@ -175,16 +173,16 @@ class NewHomePageController extends Controller
 		// 		->shuffle(),
 		// ]);
 
-		// $brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
-		// 	return HomePremiumPageBrand::query()
-		// 		->where('status', 1)
-		// 		->where('brand_section', 3)
-		// 		->where('page_type', 1)
-		// 		->orderBy('inventory_backup', 'ASC')
-		// 		->take(12)
-		// 		->get()
-		// 		->shuffle();
-		// });
+		$brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
+			return HomePremiumPageBrand::query()
+				->where('status', 1)
+				->where('brand_section', 3)
+				->where('page_type', 1)
+				->orderBy('inventory_backup', 'ASC')
+				->take(12)
+				->get()
+				->shuffle();
+		});
 
 		$brandstfo = Cache::remember($cacheKeys['brandstfo'], $cacheExpiration, function () {
 			return	HomePremiumPageBrand::query()
