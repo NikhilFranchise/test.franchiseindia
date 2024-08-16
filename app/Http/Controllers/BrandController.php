@@ -86,6 +86,7 @@ class BrandController extends Controller
 
         // Insert into unique visits table if there is no entry
         $uniqVisitsCheck = $franDetails->uniqueVisit;
+        // dd($uniqVisitsCheck);
 
         if (!empty($uniqVisitsCheck))
             $uniqVisitsCheck = $uniqVisitsCheck->where('ip', $request->ip())->where('date', date('Y-m-d'))->first();
