@@ -38,8 +38,10 @@
 
 
             <ul class="top-franchise">
-                @foreach ($brands->where('brand_section', 4)->where('page_type', $pageType)->take(25)->shuffle() as $logoDetail)
-                    @php
+                {{-- @foreach ($brands->where('brand_section', 4)->where('page_type', $pageType)->take(25)->shuffle() as $logoDetail) --}}
+                @foreach($brandstfo as $logoDetail)
+
+                   @php
                         $brandUrl = Config('constants.MainDomain') . $logoDetail['brand_link'];
                         if (
                             isset($hindiFrans) &&

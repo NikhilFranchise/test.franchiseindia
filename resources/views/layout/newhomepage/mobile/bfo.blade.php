@@ -12,10 +12,12 @@
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 @php
-                    $brandLogo3 = $brands->where('brand_section', 3)->where('page_type', $pageType)->take(12)->shuffle();
+                    // $brandLogo3 = $brands->where('brand_section', 3)->where('page_type', $pageType)->take(12)->shuffle();
                 @endphp
 
-                @foreach($brandLogo3 as $logoDetail)
+                {{-- @foreach($brandLogo3 as $logoDetail) --}}
+                @foreach ($brandstbo as $logoDetail)
+
                     @php
                         $brandUrl = Config('constants.MainDomain').$logoDetail['brand_link'];
                     $cat_url = "/business-opportunities/".strtolower(str_replace(' ', '-', $logoDetail['brand_category'])).".m". $logoDetail['brand_category_id'];
