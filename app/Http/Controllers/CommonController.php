@@ -981,29 +981,33 @@ class CommonController extends Controller
         return strtolower($content_title1);
         //return str_replace('\'', '', $title);
     }
-    public function brand_total_count()
-    {
-        $date = Carbon::now();
-        $formattedDate = $date->format('y m d');
-    
-        // Fetch the count of unique visits grouped by franchisor_id
-        $brand_count = UniqueVisit::select('franchisor_id', DB::raw('COUNT(*) AS visit_count'))
-            ->groupBy('franchisor_id')
-            ->get();
-    
-        // Debug the fetched data
-        // dd($brand_count);
-    
-        // Iterate over the fetched data and insert into the franchisor_visits table
-        foreach ($brand_count as $item) {
-            FranchisorVisitCount::create([
-                'franchisor_id' => $item->franchisor_id,
-                'total' => $item->visit_count
-            ]);
-        }
-    
-        // Confirm successful insertion
-        dd('Data inserted successfully.');
-    }
-    
+ 
+public function brand_total_count()
+{
+    $date = Carbon::now();
+    $formattedDate = $date->format('Y-m-d'); // Updated to 'Y-m-d' for consistency
+
+    // Fetch the count of unique visits grouped by franchisor_id
+    $brand_count = UniqueVisit::select('franchisor_id', DB::raw('COUNT(*) AS visit_count'))
+        ->groupBy('franchisor_id')
+        ->whereDate('date', $formattedDate) // Ensures comparison with date only
+        ->get();
+
+    // Prepare data for bulk insertion
+    $dataToInsert = $brand_count->map(function ($item) use ($formattedDate) {
+        return [
+            'franchisor_id' => $item->franchisor_id,
+            'total' => $item->visit_count,
+            'record_date' => $formattedDate
+        ];
+    })->toArray();
+
+    // Insert data into the franchisor_visits table
+    FranchisorVisitCount::insert($dataToInsert);
+
+    // Confirm successful insertion
+    dd('Data inserted successfully.');
+}
+
+
 }

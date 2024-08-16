@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('franchisor_id');
             $table->integer('total');
+            $table->text('record_count')->nullable();
             $table->timestamps();
         });
     }
