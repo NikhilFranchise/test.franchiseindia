@@ -150,7 +150,7 @@ class NewHomePageController extends Controller
    $executionTimeWithCache = number_format($endTime - $startTime, 6) . ' seconds';
 
    // Return the execution time for debugging purposes
-   dd('Execution time with Redis cache: ' . $executionTimeWithCache);
+   dd('Execution time with Redis cache lft: ' . $executionTimeWithCache);
 		// dd($cacheDatalft);
 		// dd([
 		// 	'is_brandslft_cached' => $isBrandslftCached,
@@ -176,7 +176,6 @@ class NewHomePageController extends Controller
 				->shuffle();
 		});
 
-		$startTime = microtime(true);
 		$brandstfo = Cache::remember($cacheKeys['brandstfo'], $cacheExpiration, function () {
 			return	HomePremiumPageBrand::query()
 				->where('status', 1)
@@ -188,13 +187,7 @@ class NewHomePageController extends Controller
 				->shuffle();
 		});
 
-		$endTime = microtime(true);
 
-		// Calculate the execution time in seconds with milliseconds precision
-		$executionTimeWithCache = number_format($endTime - $startTime, 6) . ' seconds';
-	
-		// Return the execution time for debugging purposes
-		dd('Execution time with Redis cache: ' . $executionTimeWithCache);
 		$brandsffc = Cache::remember($cacheKeys['brandsffc'], $cacheExpiration, function () {
 			return HomePremiumPageBrand::query()
 				->where('status', 1)
