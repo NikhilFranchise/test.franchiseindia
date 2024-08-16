@@ -30,13 +30,13 @@ class NewHomePageController extends Controller
 		];
 		// Define cache expiration time in seconds
 		$cacheExpiration = 3600; // You can adjust this as needed
-	
+
 		// Check if the 'brandslft' data exists in the cache
 		$isBrandslftCached = Cache::has($cacheKeys['brandslft']);
 		// dd($isBrandslftCached);
 		// dd($request->all());
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
-		
+
 		// Retrieve cached data or fetch and cache if not available
 		$brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
 			return HomePremiumPageBrand::query()
@@ -47,24 +47,23 @@ class NewHomePageController extends Controller
 				->take(4)
 				->get()
 				->shuffle();
-
 		});
 
 		// dd($cacheDatalft);
-// dd([
-// 	'is_brandslft_cached' => $isBrandslftCached,
-// 	'cache_data' => $cacheData,
-// 	'database_data' => HomePremiumPageBrand::query()
-// 		->where('status', 1)
-// 		->where('brand_section', 2)
-// 		->where('page_type', 1)
-// 		->orderBy('inventory_backup', 'ASC')
-// 		->take(2)
-// 		->get()
-// 		->shuffle(),
-// ]);
-		
-	
+		// dd([
+		// 	'is_brandslft_cached' => $isBrandslftCached,
+		// 	'cache_data' => $cacheData,
+		// 	'database_data' => HomePremiumPageBrand::query()
+		// 		->where('status', 1)
+		// 		->where('brand_section', 2)
+		// 		->where('page_type', 1)
+		// 		->orderBy('inventory_backup', 'ASC')
+		// 		->take(2)
+		// 		->get()
+		// 		->shuffle(),
+		// ]);
+
+
 		$brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
 			return HomePremiumPageBrand::query()
 				->where('status', 1)
@@ -74,7 +73,6 @@ class NewHomePageController extends Controller
 				->take(12)
 				->get()
 				->shuffle();
-
 		});
 
 		$brandstfo = Cache::remember($cacheKeys['brandstfo'], $cacheExpiration, function () {
@@ -86,7 +84,6 @@ class NewHomePageController extends Controller
 				->take(25)
 				->get()
 				->shuffle();
-
 		});
 
 		$brandsffc = Cache::remember($cacheKeys['brandsffc'], $cacheExpiration, function () {
@@ -97,7 +94,6 @@ class NewHomePageController extends Controller
 				->take(48)
 				->get()
 				->shuffle();
-
 		});
 
 		// $ch = curl_init('https://www.opportunityindia.com/api/article/hindiapidata');
@@ -116,135 +112,146 @@ class NewHomePageController extends Controller
 		} else {
 			$articles = []; // Default to an empty array if the file does not exist
 		}
-		return view('layout.hindihomepage')->with(compact('articles', 'brands','brandstfo','brandslft','brandstbo',	'brandsffc'));
+		return view('layout.hindihomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc'));
 	}
 
-		public function homeNew(Request $request)
-		{
-			$cacheKeys = [
-				'brandslft' => 'brandslft_cache',
-				'brandstbo' => 'brandstbo_cache',
-				'brandstfo' => 'brandstfo_cache',
-				'brandsffc' => 'brandsffc_cache',
-			];
-			// Define cache expiration time in seconds
-			$cacheExpiration = 3600; // You can adjust this as needed
-		
-			// Check if the 'brandslft' data exists in the cache
-			$isBrandslftCached = Cache::has($cacheKeys['brandslft']);
-			// dd($isBrandslftCached);
-			// dd($request->all());
-			$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
-			
-			// Retrieve cached data or fetch and cache if not available
-			$brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
-				return HomePremiumPageBrand::query()
-					->where('status', 1)
-					->where('brand_section', 2)
-					->where('page_type', 1)
-					->orderBy('inventory_backup', 'ASC')
-					->take(4)
-					->get()
-					->shuffle();
+	public function homeNew(Request $request)
+	{
+		$cacheKeys = [
+			'brandslft' => 'brandslft_cache',
+			'brandstbo' => 'brandstbo_cache',
+			'brandstfo' => 'brandstfo_cache',
+			'brandsffc' => 'brandsffc_cache',
+		];
+		// Define cache expiration time in seconds
+		$cacheExpiration = 3600; // You can adjust this as needed
 
-			});
+		// Check if the 'brandslft' data exists in the cache
+		$isBrandslftCached = Cache::has($cacheKeys['brandslft']);
+		// dd($isBrandslftCached);
+		// dd($request->all());
+		$startTime = microtime(true);
 
-			// dd($cacheDatalft);
-	// dd([
-	// 	'is_brandslft_cached' => $isBrandslftCached,
-	// 	'cache_data' => $cacheData,
-	// 	'database_data' => HomePremiumPageBrand::query()
-	// 		->where('status', 1)
-	// 		->where('brand_section', 2)
-	// 		->where('page_type', 1)
-	// 		->orderBy('inventory_backup', 'ASC')
-	// 		->take(2)
-	// 		->get()
-	// 		->shuffle(),
-	// ]);
-			
-		
-			$brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
-				return HomePremiumPageBrand::query()
-					->where('status', 1)
-					->where('brand_section', 3)
-					->where('page_type', 1)
-					->orderBy('inventory_backup', 'ASC')
-					->take(12)
-					->get()
-					->shuffle();
-			});
+		// Retrieve cached data or fetch and cache if not available
+		$brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
+			return HomePremiumPageBrand::query()
+				->where('status', 1)
+				->where('brand_section', 2)
+				->where('page_type', 1)
+				->orderBy('inventory_backup', 'ASC')
+				->take(4)
+				->get()
+				->shuffle();
+		});
+   // End measuring time
+   $endTime = microtime(true);
 
-			$brandstfo = Cache::remember($cacheKeys['brandstfo'], $cacheExpiration, function () {
-				return	HomePremiumPageBrand::query()
-					->where('status', 1)
-					->where('brand_section', 4)
-					->where('page_type', 1)
-					->orderBy('inventory_backup', 'ASC')
-					->take(25)
-					->get()
-					->shuffle();
+   // Calculate the execution time in seconds with milliseconds precision
+   $executionTimeWithCache = number_format($endTime - $startTime, 6) . ' seconds';
 
-			});
+   // Return the execution time for debugging purposes
+   dd('Execution time with Redis cache: ' . $executionTimeWithCache);
+		// dd($cacheDatalft);
+		// dd([
+		// 	'is_brandslft_cached' => $isBrandslftCached,
+		// 	'cache_data' => $cacheData,
+		// 	'database_data' => HomePremiumPageBrand::query()
+		// 		->where('status', 1)
+		// 		->where('brand_section', 2)
+		// 		->where('page_type', 1)
+		// 		->orderBy('inventory_backup', 'ASC')
+		// 		->take(2)
+		// 		->get()
+		// 		->shuffle(),
+		// ]);
 
-			$brandsffc = Cache::remember($cacheKeys['brandsffc'], $cacheExpiration, function () {
-				return HomePremiumPageBrand::query()
-					->where('status', 1)
-					->where('brand_section', 5)
-					->orderBy('inventory_backup', 'ASC')
-					->take(48)
-					->get()
-					->shuffle();
+		$brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
+			return HomePremiumPageBrand::query()
+				->where('status', 1)
+				->where('brand_section', 3)
+				->where('page_type', 1)
+				->orderBy('inventory_backup', 'ASC')
+				->take(12)
+				->get()
+				->shuffle();
+		});
 
-			});
+		$startTime = microtime(true);
+		$brandstfo = Cache::remember($cacheKeys['brandstfo'], $cacheExpiration, function () {
+			return	HomePremiumPageBrand::query()
+				->where('status', 1)
+				->where('brand_section', 4)
+				->where('page_type', 1)
+				->orderBy('inventory_backup', 'ASC')
+				->take(25)
+				->get()
+				->shuffle();
+		});
 
-			// $brandslft = HomePremiumPageBrand::query()
-			// 	->where('status', 1)
-			// 	->where('brand_section', 2)
-			// 	->where('page_type', 1)
-			// 	->orderBy('inventory_backup', 'ASC')
-			// 	->take(4)
-			// 	->get()
-			// 	->shuffle();
-			// $brandstbo = HomePremiumPageBrand::query()
-			// 	->where('status', 1)
-			// 	->where('brand_section', 3)
-			// 	->where('page_type', 1)
-			// 	->orderBy('inventory_backup', 'ASC')
-			// 	->take(12)
-			// 	->get()
-			// 	->shuffle();
-			// $brandstfo = HomePremiumPageBrand::query()
-			// 	->where('status', 1)
-			// 	->where('brand_section', 4)
-			// 	->where('page_type', 1)
-			// 	->orderBy('inventory_backup', 'ASC')
-			// 	->take(25)
-			// 	->get()
-			// 	->shuffle();
-			// 	$brandsffc = HomePremiumPageBrand::query()
-			// 	->where('status', 1)
-			// 	->where('brand_section', 5)
-			// 	->orderBy('inventory_backup', 'ASC')
-			// 	->take(48)
-			// 	->get()
-			// 	->shuffle();
-			
-				// Define the path where the JSON file is stored
-				$filePath = public_path('oidata/articles.json');
+		$endTime = microtime(true);
 
-				// Read the data back from the JSON file
-				if (file_exists($filePath)) {
-					$storedData = json_decode(file_get_contents($filePath), true);
-					$articles = $storedData['data'] ?? [];
-				} else {
-					$articles = []; // Default to an empty array if the file does not exist
-				}
+		// Calculate the execution time in seconds with milliseconds precision
+		$executionTimeWithCache = number_format($endTime - $startTime, 6) . ' seconds';
+	
+		// Return the execution time for debugging purposes
+		dd('Execution time with Redis cache: ' . $executionTimeWithCache);
+		$brandsffc = Cache::remember($cacheKeys['brandsffc'], $cacheExpiration, function () {
+			return HomePremiumPageBrand::query()
+				->where('status', 1)
+				->where('brand_section', 5)
+				->orderBy('inventory_backup', 'ASC')
+				->take(48)
+				->get()
+				->shuffle();
+		});
 
+		// $brandslft = HomePremiumPageBrand::query()
+		// 	->where('status', 1)
+		// 	->where('brand_section', 2)
+		// 	->where('page_type', 1)
+		// 	->orderBy('inventory_backup', 'ASC')
+		// 	->take(4)
+		// 	->get()
+		// 	->shuffle();
+		// $brandstbo = HomePremiumPageBrand::query()
+		// 	->where('status', 1)
+		// 	->where('brand_section', 3)
+		// 	->where('page_type', 1)
+		// 	->orderBy('inventory_backup', 'ASC')
+		// 	->take(12)
+		// 	->get()
+		// 	->shuffle();
+		// $brandstfo = HomePremiumPageBrand::query()
+		// 	->where('status', 1)
+		// 	->where('brand_section', 4)
+		// 	->where('page_type', 1)
+		// 	->orderBy('inventory_backup', 'ASC')
+		// 	->take(25)
+		// 	->get()
+		// 	->shuffle();
+		// $brandsffc = HomePremiumPageBrand::query()
+		// ->where('status', 1)
+		// ->where('brand_section', 5)
+		// ->orderBy('inventory_backup', 'ASC')
+		// ->take(48)
+		// ->get()
+		// ->shuffle();
 
-			return view('layout.masternewhomepage')->with(compact('articles', 'brands','brandstfo','brandslft','brandstbo',	'brandsffc'));
+		// Define the path where the JSON file is stored
+		$filePath = public_path('oidata/articles.json');
 
+		// Read the data back from the JSON file
+		if (file_exists($filePath)) {
+			$storedData = json_decode(file_get_contents($filePath), true);
+			$articles = $storedData['data'] ?? [];
+		} else {
+			$articles = []; // Default to an empty array if the file does not exist
 		}
+		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
+
+
+		return view('layout.masternewhomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc'));
+	}
 
 	public static function getSlug($title, $id)
 	{
@@ -255,7 +262,6 @@ class NewHomePageController extends Controller
 			$rep = preg_replace("/[:?]/", "", $title);
 			$slug = preg_replace("/[\s]/", '-', $rep);
 			$url .= "hindi/";
-
 		} else {
 			//   $slug = str_slug($title);
 			$slug = Str::slug($title);
@@ -269,7 +275,6 @@ class NewHomePageController extends Controller
 		if (request()->segment(1) == 'hi') {
 
 			$url = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/opp/article/hindi/images/' . $url;
-
 		} else {
 			$url = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/opp/article/english/images/' . $url;
 		}
@@ -283,7 +288,6 @@ class NewHomePageController extends Controller
 		if (request()->segment(1) == 'hi') {
 
 			$url = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/opp/article/hindi/images/295X165/' . $url;
-
 		} else {
 			$url = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/opp/article/english/images/295X165/' . $url;
 		}
@@ -291,7 +295,8 @@ class NewHomePageController extends Controller
 
 		return $url;
 	}
-	public function top100(){
-        return view('static.top-100-franchisors');
-    }
+	public function top100()
+	{
+		return view('static.top-100-franchisors');
+	}
 }
