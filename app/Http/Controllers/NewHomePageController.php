@@ -39,7 +39,7 @@ class NewHomePageController extends Controller
 		
 		// Retrieve cached data or fetch and cache if not available
 		$brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
-			$data = HomePremiumPageBrand::query()
+			return HomePremiumPageBrand::query()
 				->where('status', 1)
 				->where('brand_section', 2)
 				->where('page_type', 1)
@@ -47,11 +47,9 @@ class NewHomePageController extends Controller
 				->take(4)
 				->get()
 				->shuffle();
-			return $data;
 
 		});
 
-		$cacheDatalft = Cache::get($cacheKeys['brandslft']);
 		// dd($cacheDatalft);
 // dd([
 // 	'is_brandslft_cached' => $isBrandslftCached,
@@ -68,7 +66,7 @@ class NewHomePageController extends Controller
 		
 	
 		$brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
-			$data =  HomePremiumPageBrand::query()
+			return HomePremiumPageBrand::query()
 				->where('status', 1)
 				->where('brand_section', 3)
 				->where('page_type', 1)
@@ -76,13 +74,11 @@ class NewHomePageController extends Controller
 				->take(12)
 				->get()
 				->shuffle();
-			return $data;
 
 		});
-		$cacheDatatbo = Cache::get($cacheKeys['brandstbo']);
 
 		$brandstfo = Cache::remember($cacheKeys['brandstfo'], $cacheExpiration, function () {
-			$data =  HomePremiumPageBrand::query()
+			return  HomePremiumPageBrand::query()
 				->where('status', 1)
 				->where('brand_section', 4)
 				->where('page_type', 1)
@@ -90,23 +86,19 @@ class NewHomePageController extends Controller
 				->take(25)
 				->get()
 				->shuffle();
-			return $data;
 
 		});
-		$cacheDatatfo = Cache::get($cacheKeys['brandstfo']);
 
 		$brandsffc = Cache::remember($cacheKeys['brandsffc'], $cacheExpiration, function () {
-			$data =  HomePremiumPageBrand::query()
+			return  HomePremiumPageBrand::query()
 				->where('status', 1)
 				->where('brand_section', 5)
 				->orderBy('inventory_backup', 'ASC')
 				->take(48)
 				->get()
 				->shuffle();
-			return $data;
 
 		});
-		$cacheDataffc = Cache::get($cacheKeys['brandsffc']);
 
 		// $ch = curl_init('https://www.opportunityindia.com/api/article/hindiapidata');
 		// curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
@@ -146,7 +138,7 @@ class NewHomePageController extends Controller
 			
 			// Retrieve cached data or fetch and cache if not available
 			$brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
-				$data = HomePremiumPageBrand::query()
+				return HomePremiumPageBrand::query()
 					->where('status', 1)
 					->where('brand_section', 2)
 					->where('page_type', 1)
@@ -154,11 +146,9 @@ class NewHomePageController extends Controller
 					->take(4)
 					->get()
 					->shuffle();
-				return $data;
 
 			});
 
-			$cacheDatalft = Cache::get($cacheKeys['brandslft']);
 			// dd($cacheDatalft);
 	// dd([
 	// 	'is_brandslft_cached' => $isBrandslftCached,
@@ -175,7 +165,7 @@ class NewHomePageController extends Controller
 			
 		
 			$brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
-				$data = HomePremiumPageBrand::query()
+				return HomePremiumPageBrand::query()
 					->where('status', 1)
 					->where('brand_section', 3)
 					->where('page_type', 1)
@@ -183,12 +173,10 @@ class NewHomePageController extends Controller
 					->take(12)
 					->get()
 					->shuffle();
-				return $data;
 			});
-			$cacheDatatbo = Cache::get($cacheKeys['brandstbo']);
 
 			$brandstfo = Cache::remember($cacheKeys['brandstfo'], $cacheExpiration, function () {
-				$data =	HomePremiumPageBrand::query()
+				return	HomePremiumPageBrand::query()
 					->where('status', 1)
 					->where('brand_section', 4)
 					->where('page_type', 1)
@@ -196,23 +184,19 @@ class NewHomePageController extends Controller
 					->take(25)
 					->get()
 					->shuffle();
-				return $data;
 
 			});
-			$cacheDatatfo = Cache::get($cacheKeys['brandstfo']);
 
 			$brandsffc = Cache::remember($cacheKeys['brandsffc'], $cacheExpiration, function () {
-				$data =  HomePremiumPageBrand::query()
+				return HomePremiumPageBrand::query()
 					->where('status', 1)
 					->where('brand_section', 5)
 					->orderBy('inventory_backup', 'ASC')
 					->take(48)
 					->get()
 					->shuffle();
-				return $data;
 
 			});
-			$cacheDataffc = Cache::get($cacheKeys['brandsffc']);
 
 			// $brandslft = HomePremiumPageBrand::query()
 			// 	->where('status', 1)
