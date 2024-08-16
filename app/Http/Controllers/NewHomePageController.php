@@ -131,13 +131,12 @@ class NewHomePageController extends Controller
 		// dd($isBrandslftCached);
 		// dd($request->all());
 		$startTime = microtime(true);
-		$brandstfo = Cache::remember($cacheKeys['brandstfo'], $cacheExpiration, function () {
-			return	HomePremiumPageBrand::query()
+		$brandsffc = Cache::remember($cacheKeys['brandsffc'], $cacheExpiration, function () {
+			return HomePremiumPageBrand::query()
 				->where('status', 1)
-				->where('brand_section', 4)
-				->where('page_type', 1)
+				->where('brand_section', 5)
 				->orderBy('inventory_backup', 'ASC')
-				->take(25)
+				->take(48)
 				->get()
 				->shuffle();
 		});
