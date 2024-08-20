@@ -156,7 +156,7 @@
 
                 <div class="form-group">
                     <label class="col-xs-12 col-sm-4 col-md-4 com4mod control-label mandatory">Captcha</label>
-                    <span >{!! captcha_img() !!}</span>
+                    <span id="captcha-image">{!! captcha_img() !!}</span>
                     <button type="button" class="btn btn-danger" class="reload_captcha" id="reload_captcha">
                         &#x21bb;
                     </button> 
@@ -338,17 +338,15 @@
     });
 
     // Reload captcha when button is clicked
-    $('#reload_captcha').click(function() {
+ $('#reload_captcha').click(function() {
         $.ajax({
             url: '{{ url('reload-captcha') }}',
             type: 'GET',
             success: function(data) {
-                $('span').html(data.captcha); // Update captcha image
+                $('#captcha-image').html(data.captcha); // Update CAPTCHA image
             }
         });
     });
-});
-
 
     </script>
 @endsection
