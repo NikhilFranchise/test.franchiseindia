@@ -663,7 +663,7 @@ input[type=text].trrr{background:#fff;color:#666;float:left;height:35px;padding:
 .cateblock .catlistinfo.rm-elmnt{border:0;margin-left:0;padding-right:15px;padding-left:15px}
 .cateblock .catbtn input[type=checkbox]{display:none}
 .cateblock .catbtn input[type=checkbox]+label{color:#000;font-family:Arial,sans-serif;font-size:14px}
-.cateblock .catbtn input[type=checkbox]+label span{display:inline-block;width:170px;height:34px;margin:-1px 4px 0 0;vertical-align:middle;background:url(https://stgfi.franchiseindia.com/images/brand-btn.png) left top no-repeat;cursor:pointer}
+.cateblock .catbtn input[type=checkbox]+label span{display:inline-block;width:170px;height:34px;margin:-1px 4px 0 0;vertical-align:middle;background:url(https://www.franchiseindia.com/images/brand-btn.png) left top no-repeat;cursor:pointer}
 .cateblock .catbtn input[type=checkbox]:checked+label span{background-position:0 -36px}
 .cateblock .catlistinfo:hover{-webkit-box-shadow:0 0 15px 0 rgba(0,0,0,.2);-moz-box-shadow:0 0 15px 0 rgba(0,0,0,.2);box-shadow:0 0 15px 0 rgba(0,0,0,.2)}
 .cateblock .sidedtc{font-family:Open Sans Bold,serif;font-size:16px;color:#333;text-transform:uppercase;background-color:#fbfbfb;border-top-right-radius:3px;border-top-left-radius:3px}
