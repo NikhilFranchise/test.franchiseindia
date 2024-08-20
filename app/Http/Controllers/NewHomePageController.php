@@ -27,6 +27,7 @@ class NewHomePageController extends Controller
 			'brandstbo' => 'brandstbo_cache',
 			'brandstfo' => 'brandstfo_cache',
 			'brandsffc' => 'brandsffc_cache',
+			'articles_data_cache'=>'articles_data_cache',
 		];
 		// Define cache expiration time in seconds
 		$cacheExpiration = 3600; // You can adjust this as needed
@@ -106,12 +107,23 @@ class NewHomePageController extends Controller
 		$filePath = public_path('oidata/articlehindi.json');
 
 		// Read the data back from the JSON file
-		if (file_exists($filePath)) {
-			$storedData = json_decode(file_get_contents($filePath), true);
-			$articles = $storedData['data'] ?? [];
-		} else {
-			$articles = []; // Default to an empty array if the file does not exist
-		}
+		// if (file_exists($filePath)) {
+		// 	$storedData = json_decode(file_get_contents($filePath), true);
+		// 	$articles = $storedData['data'] ?? [];
+		// } else {
+		// 	$articles = []; // Default to an empty array if the file does not exist
+		// }
+		$articles = Cache::remember($cacheKeys['articles_data_cache'], $cacheExpiration, function () use ($filePath) {
+			// If the data is not in Redis, read it from the file
+			if (file_exists($filePath)) {
+				$storedData = json_decode(file_get_contents($filePath), true);
+				return $storedData['data'] ?? []; // Return the data or an empty array if not found
+			} else {
+				return []; // Default to an empty array if the file does not exist
+			}
+		});
+		// dd($articles);
+
 		return view('layout.hindihomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc'));
 	}
 
@@ -122,7 +134,9 @@ class NewHomePageController extends Controller
 			'brandstbo' => 'brandstbo_cache',
 			'brandstfo' => 'brandstfo_cache',
 			'brandsffc' => 'brandsffc_cache',
+			'articles_data_cache_english'=>'articles_data_cache_english'
 		];
+
 		// Define cache expiration time in seconds
 		$cacheExpiration = 3600; // You can adjust this as needed
 
@@ -224,14 +238,26 @@ class NewHomePageController extends Controller
 
 		// Define the path where the JSON file is stored
 		$filePath = public_path('oidata/articles.json');
-
+		
 		// Read the data back from the JSON file
-		if (file_exists($filePath)) {
-			$storedData = json_decode(file_get_contents($filePath), true);
-			$articles = $storedData['data'] ?? [];
-		} else {
-			$articles = []; // Default to an empty array if the file does not exist
-		}
+		$articles = Cache::remember($cacheKeys['articles_data_cache_english'], $cacheExpiration, function () use ($filePath) {
+			// If the data is not in Redis, read it from the file
+			if (file_exists($filePath)) {
+				$storedData = json_decode(file_get_contents($filePath), true);
+				return $storedData['data'] ?? []; // Return the data or an empty array if not found
+			} else {
+				return []; // Default to an empty array if the file does not exist
+			}
+		});
+		
+		// dd($articles);
+		// if (file_exists($filePath)) {
+		// 	$storedData = json_decode(file_get_contents($filePath), true);
+		// 	$articles = $storedData['data'] ?? [];
+		// 	dd($articles);
+		// } else {
+		// 	$articles = []; // Default to an empty array if the file does not exist
+		// }
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
 
