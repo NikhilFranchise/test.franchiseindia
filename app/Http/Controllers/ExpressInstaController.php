@@ -523,6 +523,7 @@ class ExpressInstaController extends Controller
     public function freeInfo(Request $request)
     {
 
+        // dd($request);
         $companyName = "";
         $successCount = 1;
         $failedCount = 1;
