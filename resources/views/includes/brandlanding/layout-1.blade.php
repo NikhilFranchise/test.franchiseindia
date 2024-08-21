@@ -39,11 +39,11 @@
                             <h1 class="ttl">{{ $franDetails->company_name }} Franchise Cost – How to get, Contact,
                                 Apply, Fee</h1>
                         </div>
-                        @if($franDetails->brand_verified == 1)
+                        {{-- @if($franDetails->brand_verified == 1)
                         <div style="text-align: right;">
                         <img src="https://thumbs.dreamstime.com/b/verified-vector-stamp-isolated-white-background-41827520.jpg" style="height: 50px;">
                         </div>
-                    @endif
+                    @endif --}}
                         <!-- /Business Title -->
 
                         <!-- Tab Panel Start Here -->
