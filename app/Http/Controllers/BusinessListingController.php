@@ -1931,9 +1931,9 @@ class BusinessListingController extends Controller
             $mainCatId = $cid[1];
             // dd($mainCatId);
         }
-
         $count = request()->segment(1) == 'amp' ? 20 : 21;
         $brandResults = $franData->orderby('membership_weightage', 'desc')->paginate($count);
+
           // Get the current page and last page
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
