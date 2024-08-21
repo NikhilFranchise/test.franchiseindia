@@ -18,14 +18,14 @@ use App\Models\LeadDownload;
 use App\Mail\confirmed;
 use App\Mail\international;
 use App\Mail\UpgradeNotice;
-use App\Mail\FranchisorPaymentSachin;
+// use App\Mail\FranchisorPaymentSachin;
 use App\Models\OnlinePayment;
 use App\Models\ProfileMembership;
 use App\Models\UserAccount;
 use App\Models\UserActivity;
 use App\Models\UserRecord;
 use App\Models\BrandUpdateRequest;
-use App\Models\HomePremiumPageBrand;
+// use App\Models\HomePremiumPageBrand;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -1891,14 +1891,14 @@ class FranchisorController extends Controller
         // dd($invesRange);
 
 
-        if ($franchisorId != null) {
-            HomePremiumPageBrand::query()->where('fihl_id', $franchisorId)->update([
-                'brand_heading' => $request->input('brand_name'),
-                'investment_range' => $invesRange,
-                'investment_range_new' => $invesRange,
-                'franchise_outlets' => $request->input('no_fran_outlets'),
-            ]);
-        }
+        // if ($franchisorId != null) {
+        //     HomePremiumPageBrand::query()->where('fihl_id', $franchisorId)->update([
+        //         'brand_heading' => $request->input('brand_name'),
+        //         'investment_range' => $invesRange,
+        //         'investment_range_new' => $invesRange,
+        //         'franchise_outlets' => $request->input('no_fran_outlets'),
+        //     ]);
+        // }
 
         $this->recordUpdateTime();
 

@@ -532,7 +532,7 @@ ul.fromstaticlist li span{color:#f22406}
 .formsection .form-control:focus{border-color:#ccc;background:#fbfbfb;-webkit-box-shadow:inset 0 5px 5px 0 rgba(0,0,0,.05);-moz-box-shadow:inset 0 5px 5px 0 rgba(0,0,0,.05);box-shadow:inset 0 5px 5px 0 rgba(0,0,0,.05)}
 .input-group span.error,input.error,select.error,textarea.error{border:1px solid red!important}
 .input-group span.error{color:red;background:red}
-label.error{color:red}
+label.error{color: red!important;}
 .frm-sec label.error{display:none!important}
 .formsection input[type=radio],.formsection input[type=checkbox]{margin:0 4px 0 0;position:relative;top:2px}
 ul.inter li,ul.natio li{line-height:20px;margin-bottom:7px}
