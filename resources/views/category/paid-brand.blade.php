@@ -12,17 +12,31 @@
             </div>
         </a>
 
-        <div class="catlisthead">{{ $SubCatName }}</div> 
-        {{-- @dd($brandResult->verified); --}}
-        @if($brandResult->brand_verified == 1)
-        <div style="text-align: right;">
-            <img src="https://thumbs.dreamstime.com/b/verified-vector-stamp-isolated-white-background-41827520.jpg" style="height: 50px;">
+        <div class="catlisthead">
+            {{ $SubCatName }}
+            @if($brandResult->brand_verified == 1)
+        <div class="brand-verify">
+            <i class="fa fa-check"></i> Verified
         </div>
         @endif
+            </div> 
+        {{-- @dd($brandResult->verified); --}}
+        <style>
+            .brand-verify{    display: inline-block;
+    float: right;
+    border: 1px solid #209f0c;
+    border-radius: 4px;
+    padding: 3px 9px;
+    font-size: 11px;
+    color: #03931b;
+    font-weight: bold;}
+    .brand-verify .fa{font-size: 11px;margin-right: 3px;}
+    @media screen and (max-width:768px){.brand-verify{position: absolute;right: 15px;top:15px;}}
+            </style>
 
         <div class="catlist">
             <a href="{{ $brandUrl }}" id="brandnamecategory{{ $brandResult->franchisor_id }}" target="_blank">
-                {{ $brandResult->company_name }} and verified = {{$brandResult->brand_verified}} and type = {{$brandResult->membership_type}}
+                {{ $brandResult->company_name }} 
             </a>
         </div>
 
