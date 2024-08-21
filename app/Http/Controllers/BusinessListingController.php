@@ -1903,7 +1903,6 @@ class BusinessListingController extends Controller
         )
             ->where('profile_status',  1);
 
-
         if ($cid[0] == 'ssc') {
             //$franData->where('ind_sub_cat', $cid[1])->orderby('membership_type', 'desc');
             $franData->where('ind_sub_cat', $cid[1]);
@@ -1931,9 +1930,11 @@ class BusinessListingController extends Controller
             $mainCatId = $cid[1];
             // dd($mainCatId);
         }
-
         $count = request()->segment(1) == 'amp' ? 20 : 21;
         $brandResults = $franData->orderby('membership_weightage', 'desc')->paginate($count);
+        // dd($brandResults);
+// dd($brandResults->pluck('profile_name'));
+
           // Get the current page and last page
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();

@@ -53,7 +53,7 @@ class DealersAndDistributorController extends Controller
             ->leftJoin('category_final', 'category_final.catid', '=', 'franchisor_business_details.ind_sub_cat');
 
         $result = CategoryFinal::query()
-            ->select("catname as name")
+            ->select("catname as name") 
             ->where('category_final.catname', 'LIKE', "%".request()->search."%")
             ->union($companies)
             ->take(20)
