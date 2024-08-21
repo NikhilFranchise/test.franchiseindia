@@ -136,30 +136,32 @@
                                 <tbody>
                                     @if (!empty($expressedInterests))
                                         @foreach ($expressedInterests as $expData)
-                                            @php
-                                                $name = $expData->investor->userDetail->name;
+                                            @if (!is_null($expData->investor) && !is_null($expData->investor->userDetail))
+                                                @php
+                                                    $name = $expData->investor->userDetail->name;
 
-                                                $email = 'Not visible';
-                                                $mobile = 'Not visible';
-                                                if (
-                                                    request()->user()->membership_type == 1 &&
-                                                    $expData->franchisor_visibility == 1
-                                                ) {
-                                                    $email = $expData->investor->userDetail->email;
-                                                    $mobile = $expData->investor->userDetail->mobile;
-                                                }
-                                            @endphp
-                                            <tr class="extrl">
-                                                <td>
-                                                    <div class="fra-title">{{ $name }}</div>
-                                                </td>
-                                                <td>
-                                                    <div class="fra-title">{{ $email }}</div>
-                                                </td>
-                                                <td>
-                                                    <div class="fra-title">{{ $mobile }}</div>
-                                                </td>
-                                            </tr>
+                                                    $email = 'Not visible';
+                                                    $mobile = 'Not visible';
+                                                    if (
+                                                        request()->user()->membership_type == 1 &&
+                                                        $expData->franchisor_visibility == 1
+                                                    ) {
+                                                        $email = $expData->investor->userDetail->email;
+                                                        $mobile = $expData->investor->userDetail->mobile;
+                                                    }
+                                                @endphp
+                                                <tr class="extrl">
+                                                    <td>
+                                                        <div class="fra-title">{{ $name }}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="fra-title">{{ $email }}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="fra-title">{{ $mobile }}</div>
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     @endif
                                 </tbody>

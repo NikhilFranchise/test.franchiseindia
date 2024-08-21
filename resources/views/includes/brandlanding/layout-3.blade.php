@@ -6,6 +6,7 @@
     <div class="centblknew" id="landfixoptiongalley">
         <div class="row  bg-white landing glysec">
             <div class="normal">
+                
                 <div class="col-xs-12 col-sm-3 col-md-2 mdy-width pad-top">
                     <div class="brand-logo">
                         @php
@@ -40,6 +41,8 @@
                         <img src="{{ $img }}" alt="{{ $franDetails->company_name }}" />
                     </div>
                 </div>
+
+                <div class="brand-verify-two"><i class="fa fa-check"></i> Verified</div>
 
                 <div class="col-xs-12 col-sm-10 col-md-10 mdy-width">
                     <div class="row">
