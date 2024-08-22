@@ -8,7 +8,9 @@
             <div class="row  bg-white landing bop2">
                 <div class="row">
                     <div class="normal">
+                        @if($franDetails->brand_verified == 1)
                         <div class="brand-verify-two"><i class="fa fa-search"></i> Verified</div>
+                        @endif
                         <div class="col-xs-12 col-sm-3 col-md-2 mdy-width pad-top">
                             @php
                                 $eligibility = 0;
@@ -35,13 +37,7 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <h1 class="ttl">{{$franDetails->company_name}} Franchise Cost – How to get, Contact, Apply, Fee</h1>
-                                        @if($franDetails->brand_verified == 1)
-                                            <div style="text-align: right;">
-                                            <img src="https://thumbs.dreamstime.com/b/verified-vector-stamp-isolated-white-background-41827520.jpg" style="height: 50px;">
-                                            </div>
-                                        @endif
-
-
+                                      
                                     <div class="sub-ttl">{{Config('constants.subSubCategoryArr.'.$franDetails->ind_cat.'.'.$franDetails->ind_sub_cat)}}</div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
