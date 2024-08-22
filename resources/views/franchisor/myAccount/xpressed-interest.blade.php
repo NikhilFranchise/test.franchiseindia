@@ -39,7 +39,7 @@
                                     @php
                                         $address = "Not Visible";
                                         // $invAmt  = Config('constants.investRangeInWords.'.$expData->investor->inv_amt);
-                                        $invAmt = $expData->investor ? Config('constants.investRangeInWords.' . $expData->investor->inv_amt) : nul;
+                                        $invAmt = $expData->investor ? Config('constants.investRangeInWords.' . $expData->investor->inv_amt) : null;
                                         $name    = $expData->investor ? ($expData->investor->userDetail->name) : null;
                                         $email   = "xxxxx@gmail.com";
                                         $mobile  = "99xxxxxxxx";
