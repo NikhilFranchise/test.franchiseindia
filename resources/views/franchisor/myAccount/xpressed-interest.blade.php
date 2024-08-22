@@ -38,8 +38,9 @@
                                 @foreach ($expressedInterests as $expData)
                                     @php
                                         $address = "Not Visible";
-                                        $invAmt  = Config('constants.investRangeInWords.'.$expData->investor->inv_amt);
-                                        $name    = $expData->investor->userDetail->name;
+                                        // $invAmt  = Config('constants.investRangeInWords.'.$expData->investor->inv_amt);
+                                        $invAmt = $expData->investor ? Config('constants.investRangeInWords.' . $expData->investor->inv_amt) : null;
+                                        $name    = $expData->investor ? ($expData->investor->userDetail->name) : null;
                                         $email   = "xxxxx@gmail.com";
                                         $mobile  = "99xxxxxxxx";
                                         $address = "xxxxxxxx,Pin-code:-xxxxxx";
@@ -57,8 +58,8 @@
                                             if(!empty($expData->investor->inv_country))
                                                 $address .= $expData->investor->inv_country;
 
-                                            $email  = $expData->investor->userDetail->email;
-                                            $mobile = $expData->investor->userDetail->mobile;
+                                            $email  =$expData->investor ? ($expData->investor->userDetail->email) : null;
+                                            $mobile = $expData->investor ? ($expData->investor->userDetail->mobile) : null;
                                         }
                                     @endphp
                                     <tr class="extrl">
