@@ -1616,7 +1616,6 @@ class FranchisorController extends Controller
             ->orderBy('clickID', 'desc')
             ->take(5)
             ->get();
-        // dd($expressedInterests);
 
         $expressInterestCount = UserActivity::query()
             ->where('franchisor_id', $franchisorId)
@@ -2522,13 +2521,13 @@ class FranchisorController extends Controller
         }
 
         $franchisorId = request()->user()->profile_str;
-        $expressedInterests = UserActivity::query()
+        $expressedInterests = UserActivity::with(['investor.userDetail'])
             ->where('franchisor_id', $franchisorId)
             ->whereNotNull('investor_id')
             ->where('investor_id', '!=', 'Anonymous')
             ->orderBy('clickID', 'desc')
             ->get();
-
+        // dd($expressedInterests);
         $filename = 'express_interest.csv';
         $filePath = storage_path('app/public/' . $filename);
 
@@ -2538,12 +2537,15 @@ class FranchisorController extends Controller
         }
 
         $handle = fopen($filePath, 'w+');
+        fwrite($handle, "\xEF\xBB\xBF");
         fputcsv($handle, ['Name', 'Email', 'Available Capital', 'Phone', 'Address', 'State', 'City', 'Application Date']);
 
         foreach ($expressedInterests as $expData) {
+            $investor = $expData->investor;
+            $userDetail = $investor->userDetail;
             $address = "Not Visible";
-            $invAmt = Config('constants.investRangeInWords.' . $expData->investor->inv_amt);
-            $name = $expData->investor->userDetail->name;
+            $invAmt = Config('constants.investRangeInWords.' . $investor->inv_amt);
+            $name = $userDetail->name;
             $email = "Not Visible";
             $mobile = "Not Visible";
             $state = "Not Visible";
@@ -2551,29 +2553,31 @@ class FranchisorController extends Controller
 
             if (request()->user()->membership_type == 1 && $expData->franchisor_visibility == 1) {
                 $address = "";
-                if (!empty($expData->investor->inv_address)) {
-                    $address .= $expData->investor->inv_address . ", ";
+                if (!empty($investor->inv_address)) {
+                    $address .= $investor->inv_address . ", ";
                 }
-                if (!empty($expData->investor->inv_city)) {
-                    $address .= $expData->investor->inv_city . ", ";
+                if (!empty($investor->inv_city)) {
+                    $address .= $investor->inv_city . ", ";
                 }
-                if (!empty($expData->investor->inv_state)) {
-                    $address .= $expData->investor->inv_state . ", ";
+                if (!empty($investor->inv_state)) {
+                    $address .= $investor->inv_state . ", ";
                 }
-                if (!empty($expData->investor->inv_pincode)) {
-                    $address .= "Pin-code:-" . $expData->investor->inv_pincode . ", ";
+                if (!empty($investor->inv_pincode)) {
+                    $address .= "Pin-code:-" . $investor->inv_pincode . ", ";
                 }
-                if (!empty($expData->investor->inv_country)) {
-                    $address .= $expData->investor->inv_country;
+                if (!empty($investor->inv_country)) {
+                    $address .= $investor->inv_country;
                 }
 
-                $email = $expData->investor->userDetail->email;
-                $mobile = $expData->investor->userDetail->mobile;
-                $state = $expData->investor->inv_state;
-                $city = $expData->investor->inv_city;
+                $email = $userDetail->email;
+                $mobile = $userDetail->mobile;
+                $state = $investor->inv_state;
+                $city = $investor->inv_city;
             }
-
-            fputcsv($handle, [$name, $email, $invAmt, $mobile, $address, $state, $city, $expData->visit_date]);
+            $visitDate = date('d-M-Y', strtotime($expData->visit_date));
+            $visitDate = '' . $visitDate . '"'; // Enclose the date in double quotes
+            // dd($visitDate);
+            fputcsv($handle, [$name, $email, $invAmt, $mobile, $address, $state, $city, $visitDate]);
         }
 
         fclose($handle);
