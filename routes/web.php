@@ -61,7 +61,15 @@ use App\Http\Controllers\Admin\AdminController;
 */
 
 Auth::routes();
+Route::get('/test-memcached-session', function () {
+    // Store a value in the session
+    session(['memcached_test' => 'Memcached is working!']);
 
+    // Retrieve the value from the session
+    $value = session('memcached_test');
+
+    return response()->json(['session_value' => $value]);
+});
 
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
