@@ -6,10 +6,35 @@
     </div>
 
     <div class="padfb15">
-        <a href="{{ $brandUrl }}" target="_blank">
+        <a href="{{ $brandUrl }}" target="_blank"> 
             <div class="catimgmobile"><img src="{{ $brandImagepath }}" alt="{{ $brandResult->company_name }}" /></div>
         </a>
-        <div class="catlisthead hindi">{{ $SubCatName }}</div>
+ 
+ 
+        <div class="catlisthead hindi">
+            {{ $SubCatName }}
+            @if($brandResult->brand_verified == 1)
+        <div class="brand-verify">
+            <i class="fa fa-check"></i> Verified
+        </div>
+        @endif
+            </div> 
+        {{-- @dd($brandResult->verified); --}}
+        <style>
+            .brand-verify{    display: inline-block;
+    float: right;
+    border: 1px solid #209f0c;
+    border-radius: 4px;
+    padding: 3px 9px;
+    font-size: 11px;
+    color: #03931b;
+    font-weight: bold;}
+    .brand-verify .fa{font-size: 11px;margin-right: 3px;}
+    @media screen and (max-width:768px){.brand-verify{position: absolute;right: 15px;top:15px;}}
+            </style>
+
+
+        {{-- <div class="catlisthead hindi">{{ $SubCatName }}</div> --}}
         <div class="catlist"><a href="{{ $brandUrl }}" target="_blank"
                 id="brandnamecategory{{ $brandResult->franchisor_id }}">{{ $brandResult->company_name }}</a></div>
         <span style="display: none" id="brandinvestment{{ $brandResult->franchisor_id }}">INR {{ $minValue }} -

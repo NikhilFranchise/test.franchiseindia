@@ -41,8 +41,10 @@
                         <img src="{{ $img }}" alt="{{ $franDetails->company_name }}" />
                     </div>
                 </div>
-
-                <div class="brand-verify-two"><i class="fa fa-check"></i> Verified</div>
+                @if($franDetails->brand_verified == 1)
+                <div class="brand-verify-two"><i class="fa fa-search"></i> Verified</div>
+                @endif
+                {{-- <div class="brand-verify-two"><i class="fa fa-check"></i> Verified</div> --}}
 
                 <div class="col-xs-12 col-sm-10 col-md-10 mdy-width">
                     <div class="row">
