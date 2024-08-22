@@ -67,11 +67,11 @@
                                     </ul>
                                 </div>
                                 
-                @if($franDetails->brand_verified == 1)
+                {{-- @if($franDetails->brand_verified == 1)
                 <div style="text-align: right;">
                 <img src="https://thumbs.dreamstime.com/b/verified-vector-stamp-isolated-white-background-41827520.jpg" style="height: 50px;">
                 </div>
-            @endif
+            @endif --}}
                                 <div class="rht-pnl">
                                     @if (!Auth::user() || (Auth::user() && Auth::user()->profile_type == Config('constants.ProfileType.Investor')))
                                         @if (!empty($checkData['message']) && $eligibility != 1)

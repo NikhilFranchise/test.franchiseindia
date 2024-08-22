@@ -30,6 +30,9 @@
                         <img src="{{ $img }}" alt="{{$franDetails->company_name}}"/>
                     </div>
                 </div>
+                @if($franDetails->brand_verified == 1)
+                <div class="brand-verify-two"><i class="fa fa-search"></i> Verified</div>
+                @endif
                 <div class="col-xs-12 col-sm-10 col-md-10 mdy-width">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 galleymar">
@@ -368,7 +371,7 @@
                     @endif
 
                     @if(!Auth::check() || Auth::user()->profile_type == Config('constants.ProfileType.Franchisor'))
-                        <div class="insta-apply" id="show-m">
+                        <div class="insta-apply" id="show-m"> 
                             <div class="ttl" id="instahead">Insta Apply</div>
                             <div id="instaMsg" style="display:none;" class="green">
                                 <div class="bigth">धन्यवाद!</div>
