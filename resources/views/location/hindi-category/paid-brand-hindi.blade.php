@@ -6,7 +6,15 @@
 
     <div class="padfb15">
         <a href="{{ $brandUrl }}" target="_blank"><div class="catimgmobile"><img src="{{$brandImagepath}}" alt="{{$brandResult->company_name}}" /></div></a>
-        <div class="catlisthead hindi">{{$SubCatName}}</div>
+        {{-- <div class="catlisthead hindi">{{$SubCatName}}</div> --}}
+        <div class="catlisthead hindi">
+            {{ $SubCatName }}
+            @if($brandResult->brand_verified == 1)
+        <div class="brand-verify">
+            <i class="fa fa-check"></i> Verified
+        </div>
+        @endif
+            </div> 
         <div class="catlist"><a href="{{ $brandUrl }}" target="_blank" id="brandnamecategory{{$brandResult->franchisor_id}}">{{$brandResult->company_name}}</a></div>
         <span style="display: none" id="brandinvestment{{$brandResult->franchisor_id}}">INR {{ $minValue  }} - {{ $maxValue }}</span>
     </div>

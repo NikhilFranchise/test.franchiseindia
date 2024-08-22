@@ -90,7 +90,10 @@
                                     @endif
                                 </div>
 
+                                @if($franDetails->brand_verified == 1)
                                 <div class="brand-verify-detail"><i class="fa fa-check"></i> Verified</div>
+
+                                 @endif
                                 
                             </div>
                         </div>
