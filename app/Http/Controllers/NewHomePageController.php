@@ -20,7 +20,6 @@ class NewHomePageController extends Controller
 	public function hindiHomePage()
 	{
 
-		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
 		$cacheKeys = [
 			'brandslft' => 'brandslft_cache',
@@ -36,7 +35,6 @@ class NewHomePageController extends Controller
 		$isBrandslftCached = Cache::has($cacheKeys['brandslft']);
 		// dd($isBrandslftCached);
 		// dd($request->all());
-		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
 		// Retrieve cached data or fetch and cache if not available
 		$brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
@@ -123,6 +121,7 @@ class NewHomePageController extends Controller
 			}
 		});
 		// dd($articles);
+		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
 		return view('layout.hindihomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc'));
 	}
