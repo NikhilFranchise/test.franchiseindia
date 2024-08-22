@@ -806,18 +806,18 @@ class FranchisorController extends Controller
             $image = Image::make($companyLogo);
             // Convert the image to WebP format
             $webpImage = (string) $image->encode('webp', 90);
-              // Check the MIME type and dimensions
-        // $mimeType = $image->mime();  // Should be 'image/webp'
-        // $width = $image->width();
-        // $height = $image->height();
+            // Check the MIME type and dimensions
+            // $mimeType = $image->mime();  // Should be 'image/webp'
+            // $width = $image->width();
+            // $height = $image->height();
 
-        // // Output the information
-        // dd([
-        //     'mimeType' => $mimeType,
-        //     'width' => $width,
-        //     'height' => $height,
-        //     'binaryLength' => strlen($webpImage),
-        // ]);
+            // // Output the information
+            // dd([
+            //     'mimeType' => $mimeType,
+            //     'width' => $width,
+            //     'height' => $height,
+            //     'binaryLength' => strlen($webpImage),
+            // ]);
 
             // Generate the storage path for the WebP image
             $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.webp';
@@ -2360,13 +2360,14 @@ class FranchisorController extends Controller
      */
     public function expressInterest()
     {
-        $expressedInterests = UserActivity::query()
+        $expressedInterests = UserActivity::with(['investor.userDetail'])
             ->where('franchisor_id', request()->user()->profile_str)
             ->whereNotNull('investor_id')
             ->where('investor_id', '!=', 'Anonymous')
             ->orderBy('clickID', 'desc')
             ->paginate(15);
 
+        // dd($expressedInterests);
         //Pass data to view
         return view('franchisor.myAccount.xpressed-interest', compact('expressedInterests'));
     }
