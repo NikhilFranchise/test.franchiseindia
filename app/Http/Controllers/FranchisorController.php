@@ -1616,7 +1616,7 @@ class FranchisorController extends Controller
             ->orderBy('clickID', 'desc')
             ->take(5)
             ->get();
-        dd($expressedInterests);
+        // dd($expressedInterests);
 
         $expressInterestCount = UserActivity::query()
             ->where('franchisor_id', $franchisorId)
