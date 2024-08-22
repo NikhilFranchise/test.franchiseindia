@@ -144,7 +144,7 @@
                                 <div class="alert alert-info">{{ session()->get('Success') }}</div>
                             @endif
                             @if (session()->has('failed'))
-                                <div class="alert alert-info">{{ session()->get('failed') }}</div>
+                                <div class="alert alert-danger">{{ session()->get('failed') }}</div>
                             @endif
                             @if ($franData->business_desc_update != '')
                                 <div class="alert alert-info">Your business description changes has been submitted to the
