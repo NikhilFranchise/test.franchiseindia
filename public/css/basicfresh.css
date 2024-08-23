@@ -1,8 +1,10 @@
 /* Brand verify css  21 Aug 2024 */
-.brand-verify{position: absolute;right: 15px;top: 15px;color: #3ea14c;border: 1px solid #89cb9d;border-radius: 4px;padding: 3px 9px;font-size: 11px;font-weight: bold;}
-.brand-verify .fa{font-size: 11px;margin-right:3px;}
+.brand-verify{font-family: Open Sans Bold, serif;position: absolute;right: 15px;top: 15px;
+    color: #3ea14c;border: 1px solid #89cb9d;border-radius: 4px;padding: 3px 9px;font-size: 12px!important;font-weight: bold;}
+.brand-verify .fa{font-size: 12px!important;margin-right:3px!important;}
 .normal{position: relative;}
-.brand-verify-detail-mobile{display:none;color: #3ea14c;border: 1px solid #89cb9d;border-radius: 4px;padding: 7px 15px;font-size: 11px;font-weight: bold;}
+.brand-verify-detail-mobile{font-family: Open Sans Bold, serif;display:none;color: #3ea14c;
+    border: 1px solid #89cb9d;border-radius: 4px;padding: 7px 15px;font-size: 12px!important;font-weight: bold;}
 
 .brand-verify-two{
     position: absolute;
@@ -12,16 +14,19 @@
     border: 1px solid #89cb9d;
     border-radius: 4px;
     padding: 7px 15px;
-    font-size: 11px;
-    font-weight: bold;
+    font-size: 12px!important;
+    font-family: Open Sans Bold, serif;
     z-index: 2;
 }
-.brand-verify-detail{display:block;position: absolute;right: 170px;top: 11px;color: #3ea14c;border: 1px solid #89cb9d;border-radius: 4px;padding: 7px 15px;font-size: 11px;font-weight: bold;}
-.brand-verify-detail .fa{font-size: 11px;margin-right: 3px;}
+.brand-verify-two .fa{font-size: 12px!important;margin-right:3px!important;}
+.brand-verify-detail{font-family: Open Sans Bold, serif;display:block;position: absolute;right: 170px;
+    top: 11px;color: #3ea14c;border: 1px solid #89cb9d;border-radius: 4px;padding: 7px 15px;
+    font-size: 12px!important;font-weight: bold;}
+.brand-verify-detail .fa{font-size: 12px!important;margin-right:3px!important;}
 @media screen and (min-width:1024px) and (max-width:1198px){
 .brand-verify-detail{right: 36px;top: -40px;padding: 7px 30px;display: block;}
 .landing h1.ttl{width:90%;}
-.brand-verify-two{right: 12px;top: 0px;padding: 6px 33px;display: block;}
+.brand-verify-two{right: 12px;top: -5px;padding: 8px 26px;display: block;}
 }
 @media screen and (min-width:993px) and (max-width:1023px){
 .brand-verify-detail{right: 122px;top: 10px;padding: 6px 10px;display: block;}
@@ -33,11 +38,11 @@
 }
 
 @media screen and (max-width:767px){
-.brand-verify-detail-mobile{display: block; width: 75px; margin: 5px auto 0px auto;padding: 5px 10px 4px 10px;}
+.brand-verify-detail-mobile{display: block; width: 90px; margin: 5px auto 0px auto;padding: 5px 10px 4px 10px;}
 .brand-verify-detail{display: none;}
 .brand-verify-two{position: unset;
     display: block;
-    width: 75px;
+    width: 90px;
     margin: 0px auto 10px auto;
     padding: 3px 10px;}
 }
