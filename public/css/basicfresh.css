@@ -1,16 +1,16 @@
-/* Brand verify css  21 Aug 2024 */
+/* Brand verify css  21 Aug 2024 */ 
 .brand-verify{font-family: Open Sans Bold, serif;position: absolute;right: 15px;top: 15px;
-    color: #3ea14c;border: 1px solid #89cb9d;border-radius: 4px;padding: 3px 9px;font-size: 12px!important;font-weight: bold;}
+    color: #fff !important; background-color:green;  border: 1px solid #89cb9d;border-radius: 4px;padding: 3px 9px;font-size: 12px!important;font-weight: bold;}
 .brand-verify .fa{font-size: 12px!important;margin-right:3px!important;}
 .normal{position: relative;}
-.brand-verify-detail-mobile{font-family: Open Sans Bold, serif;display:none;color: #3ea14c;
+.brand-verify-detail-mobile{font-family: Open Sans Bold, serif;display:none;color: #fff; background-color: green;
     border: 1px solid #89cb9d;border-radius: 4px;padding: 7px 15px;font-size: 12px!important;font-weight: bold;}
 
 .brand-verify-two{
     position: absolute;
     right: 148px;
     top: 36px;
-    color: #3ea14c;
+    color: #fff; background-color: green;
     border: 1px solid #89cb9d;
     border-radius: 4px;
     padding: 7px 15px;
@@ -20,7 +20,7 @@
 }
 .brand-verify-two .fa{font-size: 12px!important;margin-right:3px!important;}
 .brand-verify-detail{font-family: Open Sans Bold, serif;display:block;position: absolute;right: 170px;
-    top: 11px;color: #3ea14c;border: 1px solid #89cb9d;border-radius: 4px;padding: 7px 15px;
+    top: 11px;color: #fff; background-color: green; border: 1px solid #89cb9d;border-radius: 4px;padding: 7px 15px;
     font-size: 12px!important;font-weight: bold;}
 .brand-verify-detail .fa{font-size: 12px!important;margin-right:3px!important;}
 @media screen and (min-width:1024px) and (max-width:1198px){

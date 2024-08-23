@@ -293,10 +293,10 @@ Education</a>
          <ul class="footerlinks">
                       <li><a href="/">Home</a></li>
                       <li><a href="https://www.franchiseindia.com/about" target="_blank">About Us</a></li>
-                      <li><a href="https://www.franchiseindia.com/site/contact/" target="_blank">Contact
+                      <li><a href="https://www.franchiseindia.com/contact/" target="_blank">Contact
                               Us</a>
                       </li>
-                      <li><a href="https://www.franchiseindia.com/site/feedback/" target="_blank">Feedback</a></li>
+                      <li><a href="https://www.franchiseindia.com/feedback/" target="_blank">Feedback</a></li>
                       <li><a href="https://news.franchiseindia.com/" target="_blank">News</a></li>
                       <li><a href="https://www.franchiseindia.com/testimonials" target="_blank">Testimonials</a></li>
                       <li><a href="https://www.franchiseindia.com/terms" target="_blank">Terms</a></li>

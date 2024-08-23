@@ -27,7 +27,9 @@
                         }
                     @endphp
                     <div class="brand-logo"><img src="{{ $img }}" alt="{{ $franDetails->company_name }}" /></div>
+                    @if($franDetails->brand_verified == 1)
                     <div class="brand-verify-detail-mobile"><i class="fa fa-check"></i> Verified</div>
+                    @endif
                 </div>
                 <div class="col-xs-12 col-sm-10 col-md-10 mdy-width">
                     <div class="row">
