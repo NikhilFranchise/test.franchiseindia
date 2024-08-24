@@ -225,7 +225,7 @@
                 <div class="col-sm-8 col-md-9 headmodfiy">
                     <ul class="sublink">
                         <li><a href="{{ Config('constants.MainDomain') }}/content/">What's New</a></li>
-                        <li><a href="https://news.franchiseindia.com/">News</a></li>
+                        <li><a href="https://www.opportunityindia.com">News</a></li>
                         <li><a href="https://video.franchiseindia.com/">Videos</a></li>
                         <li><a href="{{ Config('constants.MainDomain') }}/advertise-with-us-payment/">Advertise</a>
                         </li>

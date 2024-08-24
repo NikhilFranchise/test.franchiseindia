@@ -533,13 +533,13 @@
                     <li><a href="{{Config('constants.MainDomain')}}/contact/" target="_blank">Contact
                             Us</a>
                     </li>
-                    <li><a href="{{Config('constants.MainDomain')}}/site/feedback/" target="_blank">Feedback</a></li>
+                    <li><a href="{{Config('constants.MainDomain')}}/feedback/" target="_blank">Feedback</a></li>
                     <li><a href="{{Config('constants.MainDomain')}}/sitemap/brands" target="_blank">Brands</a></li>
                     <li><a href="https://opportunityindia.com/" target="_blank">News</a></li>
                     <li><a href="{{Config('constants.MainDomain')}}/testimonials" target="_blank">Testimonials</a></li>
                     <li><a href="{{Config('constants.MainDomain')}}/terms" target="_blank">Terms</a></li>
-                    <li><a href="{{Config('constants.MainDomain')}}/sitemap" target="_blank">Sitemap</a></li>
-                </ul>
+                    <li><a href="{{Config('constants.MainDomain')}}/sitemap.xml" target="_blank">Sitemap</a></li>
+                </ul> 
             </div>
         </div>
     </div>
