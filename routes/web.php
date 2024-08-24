@@ -105,6 +105,15 @@ Route::get('validate-email', [CommonController::class, 'emailValidation']);
 Route::get('thanks-advice-form', function () {
     return view('thanks.advice-form');
 });
+Route::get('/ipo', function(){
+    return view('static.ipo');
+});
+Route::get('/policies', function(){
+    return view('static.policies');
+});
+Route::get('/corporate-governance', function(){
+    return view('static.corporate-governance');
+});
 Route::get('cat-brand-images',               [BusinessListingController::class, 'getbrandSliderImages']); // Business Listing Page Gallery section
 Route::get('check',                          [MobileVerificationController::class, 'verifySmsOTP']);
 Route::get('property-loan', [StaticPageController::class, 'getPropertyLoanForm']);
@@ -989,7 +998,7 @@ Route::get('/wellness/{slug}', function ($slug) {
     // Redirect to the new domain
     return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
- 
+
 Route::get('reload-captcha', [AdviceController::class, 'reloadCaptcha']);
 Route::get('reload-captcha-contact', [ContactUsController::class, 'reloadCaptcha']);
 

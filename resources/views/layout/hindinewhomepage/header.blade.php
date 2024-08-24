@@ -9,44 +9,46 @@
     $class = '';
     $regName = 'पंजीकृत करें';
     $regUrl = '#';
-    $modelWindow = "data-toggle=modal data-target=#login-pnl";
+    $modelWindow = 'data-toggle=modal data-target=#login-pnl';
     $barndStick = 0;
     $googleSearchTop = 0;
     $gcodeurl = 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-    if(request()->segment(1) === 'brands' || (request()->segment(1) === 'hi' && request()->segment(2) === 'brands'))
+    if (request()->segment(1) === 'brands' || (request()->segment(1) === 'hi' && request()->segment(2) === 'brands')) {
         $barndStick = 1;
+    }
     $eduUrlSelected = '';
     $wellUrlSelected = '';
     $dotUrlSelected = '';
-    $logo = "logo-black.svg";
-    $menuicon = "menu-icon.png";
-    $logoClass = "logo";
-    $mainUrl = "";
+    $logo = 'logo-black.svg';
+    $menuicon = 'menu-icon.png';
+    $logoClass = 'logo';
+    $mainUrl = '';
     $webtitleUrl = request()->segment(1);
-    $mangecls = "";
-    if ($webtitleUrl == 'content')
+    $mangecls = '';
+    if ($webtitleUrl == 'content') {
         $dotUrlSelected = 'class=dropactive';
+    }
     if ($webtitleUrl == 'education') {
         $eduUrlSelected = 'class=dropactive';
-        $logo = "education-logo-black.svg";
-        $menuicon = "menu-iconei.png";
-        $logoClass = "logo wiei";
-        $mainUrl = "education";
-        $mangecls = "wiei";
+        $logo = 'education-logo-black.svg';
+        $menuicon = 'menu-iconei.png';
+        $logoClass = 'logo wiei';
+        $mainUrl = 'education';
+        $mangecls = 'wiei';
     }
     if ($webtitleUrl == 'wellness') {
         $wellUrlSelected = 'class=dropactive';
-        $logo = "wellness-logo-black.svg";
-        $menuicon = "menu-iconwi.png";
-        $logoClass = "logo wiei";
-        $mainUrl = "wellness";
-        $mangecls = "wiei";
+        $logo = 'wellness-logo-black.svg';
+        $menuicon = 'menu-iconwi.png';
+        $logoClass = 'logo wiei';
+        $mainUrl = 'wellness';
+        $mangecls = 'wiei';
     }
 @endphp
 <header class="header" id="header">
-        <!--<div class="topmost">
+    <!--<div class="topmost">
             <marquee>
-Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a href="https://www.franchiseindia.com/expo/?id=dotcom" target="_blank">Book your ticket</a>   
+Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a href="https://www.franchiseindia.com/expo/?id=dotcom" target="_blank">Book your ticket</a>
 </marquee>
 <a id="myclose">x</a>
         </div>-->
@@ -61,42 +63,62 @@ Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a
                                     <a href="https://www.businessex.com/"> मौजूदा व्यापार को बेचें / खरीदें</a>
                                 </li>
                                 <li>
-                                    <a href="https://www.franchiseindia.com/#expandFranchise">अपने फ्रैंचाइज़ी का विस्तार करें</a>
+                                    <a href="https://www.franchiseindia.com/#expandFranchise">अपने फ्रैंचाइज़ी का
+                                        विस्तार करें</a>
                                 </li>
 
                                 <li>
-                                    <a href="https://www.franchiseindia.com/advertise-with-us-payment" target="_blank">विज्ञापन दें</a>
+                                    <a href="https://www.franchiseindia.com/advertise-with-us-payment"
+                                        target="_blank">विज्ञापन दें</a>
                                 </li>
-                                   <li>
-                                        <a href="https://www.franchiseindia.com/property-loan/" target="_blank">संपत्ति के खिलाफ ऋण </a>
-                                    </li>                                 
-
+                                <li>
+                                    <a href="https://www.franchiseindia.com/property-loan/" target="_blank">संपत्ति के
+                                        खिलाफ ऋण </a>
+                                </li>
+                                <li class="top-investors">
+                                    <div class="dropdown policydropdown">
+                                        <button class="btn dropdown-toggle" type="button" id="btnDropdownDemo"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            style="">इन्वेस्टर <i class="fa fa-caret-down"></i></button>
+                                        <div class="dropdown-menu policydropdownmenu" aria-labelledby="btnDropdownDemo">
+                                            <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/ipo"
+                                                target="_blank">आईपीओ</a>
+                                            <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/policies"
+                                                target="_blank">नीतियों</a>
+                                            <a class="dropdown-item"
+                                                href="{{ Config('constants.MainDomain') }}/corporate-governance"
+                                                target="_blank">निगम से संबंधित शासन प्रणाली</a>
+                                        </div>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                         @notmobile
-                        @if($__env->yieldContent('hindiUrl'))
-                            <div class="p-2 ml-auto">
-                                <div class="input-group
+                            @if ($__env->yieldContent('hindiUrl'))
+                                <div class="p-2 ml-auto">
+                                    <div class="input-group
                                           input-group-custom">
-                                          <span class="input-group-addon
+                                        <span
+                                            class="input-group-addon
                                              input-group-prepend-custom"
-                                                id="basic-addon1">
-                                             <img
-                                                     src="{{url('newhomepage/assets/img/language-icon.svg')}}"
-                                                     alt="">
-                                          </span>
-                                    <div class="form-group form-group-sm">
-                                        <select class="form-control
+                                            id="basic-addon1">
+                                            <img src="{{ url('newhomepage/assets/img/language-icon.svg') }}" alt="">
+                                        </span>
+                                        <div class="form-group form-group-sm">
+                                            <select
+                                                class="form-control
                                                 form-control-custom-main"
                                                 id="language-changer">
-                                            <option hidden>Language</option>
-                                            <option value="@yield('englishUrl')" @if($engUrl == Request::url()) selected @endif>EN - English</option>
-                                            <option value="@yield('hindiUrl')" @if($hindiUrl == Request::url()) selected @endif>HI - Hindi</option>
-                                        </select>
+                                                <option hidden>Language</option>
+                                                <option value="@yield('englishUrl')"
+                                                    @if ($engUrl == Request::url()) selected @endif>EN - English</option>
+                                                <option value="@yield('hindiUrl')"
+                                                    @if ($hindiUrl == Request::url()) selected @endif>HI - Hindi</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endif
+                            @endif
                         @endnotmobile
                     </div>
 
@@ -111,53 +133,49 @@ Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a
                 <div class="col-md-12">
                     <div class="d-flex p-30">
                         <div class="p-2">
-                            <div id="sidebarCollapse"
-                                 class="menu-bar">
-                                <img src="{{url('newhomepage/assets/img/menu-icon.svg')}}"
-                                             alt="Franchise Menu Icon" />
-                                          <span>मेन्यू</span>
-                                       </div>
-                                    </div>
+                            <div id="sidebarCollapse" class="menu-bar">
+                                <img src="{{ url('newhomepage/assets/img/menu-icon.svg') }}"
+                                    alt="Franchise Menu Icon" />
+                                <span>मेन्यू</span>
+                            </div>
+                        </div>
 
-                                    <!--<div class="logo"> <a href="{{url('')}}"><img
-                                             src="{{url('newhomepage/assets/img/Logo.svg')}}" alt=" Franchiseindia Logo"></a></div>-->
+                        <!--<div class="logo"> <a href="{{ url('') }}"><img
+                                             src="{{ url('newhomepage/assets/img/Logo.svg') }}" alt=" Franchiseindia Logo"></a></div>-->
 
-                                              <div class="logo"> <a href="{{url('')}}"><img
-                                             src="https://www.franchiseindia.com/images/filogob.png" alt=" Franchiseindia Logo"></a></div>
+                        <div class="logo"> <a href="{{ url('') }}"><img
+                                    src="https://www.franchiseindia.com/images/filogob.png"
+                                    alt=" Franchiseindia Logo"></a></div>
 
-                                    <div class="d-flex">
-                                       <!-- <span
+                        <div class="d-flex">
+                            <!-- <span
                                        id="search" class="search show
                                           slide-right"> -->
-                                       <span class="search" id="search">
-                                          <div class="p-2" data-toggle="modal"
-                                             data-target="#search-main">
-                                             <img src="{{url('newhomepage/assets/img/Search.svg')}}"
-                                     alt="Search"><span>खोज</span>
-                            </div>
+                            <span class="search" id="search">
+                                <div class="p-2" data-toggle="modal" data-target="#search-main">
+                                    <img src="{{ url('newhomepage/assets/img/Search.svg') }}"
+                                        alt="Search"><span>खोज</span>
+                                </div>
                             </span>
                             <span class="login-text-right text-right
                                           d-main">
-                                          <span>
-                                             <img src="{{url('newhomepage/assets/img/Login.svg')}}"
-                                              alt="Franchiseindia Login"/>
-                                          </span>
-                                          <ul class="login-main-section">
-                                           @if (Auth::check())
-                                                  <li><a href="{{url('investor/myaccount/dashboard')}}">मेरा खाता</a></li>
-                                                  <li><a href="{{url('logoutprofile')}}"> लॉग आउट</a></li>
-                                              @endif
-                                              @if (!Auth::check())
-                                                  <li><a href="#"
-                                                         data-toggle="modal"
-                                                         data-target="#login-pnl"
-                                                         id="mobilereg">रजिस्टर</a></li>
-                                                  <li><a href="#" data-toggle="modal"
-                                                         data-target="#login-pnl"
-                                                         id="loginselect">लॉग इनं</a></li>
-                                              @endif
-                                       </ul>
-                                       </span>
+                                <span>
+                                    <img src="{{ url('newhomepage/assets/img/Login.svg') }}"
+                                        alt="Franchiseindia Login" />
+                                </span>
+                                <ul class="login-main-section">
+                                    @if (Auth::check())
+                                        <li><a href="{{ url('investor/myaccount/dashboard') }}">मेरा खाता</a></li>
+                                        <li><a href="{{ url('logoutprofile') }}"> लॉग आउट</a></li>
+                                    @endif
+                                    @if (!Auth::check())
+                                        <li><a href="#" data-toggle="modal" data-target="#login-pnl"
+                                                id="mobilereg">रजिस्टर</a></li>
+                                        <li><a href="#" data-toggle="modal" data-target="#login-pnl"
+                                                id="loginselect">लॉग इनं</a></li>
+                                    @endif
+                                </ul>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -166,9 +184,9 @@ Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a
     </div>
 </header>
 <script>
-    $(function(){
+    $(function() {
         // bind change event to select
-        $('#language-changer').on('change', function () {
+        $('#language-changer').on('change', function() {
             var url = $(this).val(); // get selected value
             if (url) { // require a URL
                 window.location = url; // redirect
@@ -177,11 +195,11 @@ Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a
         });
     });
 </script>
-{{--<script>--}}
-    {{--function getSubCategoryHeader1(value){$.ajax({type:'GET',url:'{{url('/hindi-get-sub-cat')}}',data:{categoryID:value},success:function(data){$("#getSubCategoryDataHeader1").html(data);}});}--}}
-    {{--function getSubCatCategoryHeader1(value){$.ajax({type:'GET',url:'{{url('getsubcatcategory')}}',data:{subcategoryID:value},success:function(data){$("#getSubCatCategoryDataHeader1").html(data);}});}--}}
+{{-- <script> --}}
+{{-- function getSubCategoryHeader1(value){$.ajax({type:'GET',url:'{{url('/hindi-get-sub-cat')}}',data:{categoryID:value},success:function(data){$("#getSubCategoryDataHeader1").html(data);}});} --}}
+{{-- function getSubCatCategoryHeader1(value){$.ajax({type:'GET',url:'{{url('getsubcatcategory')}}',data:{subcategoryID:value},success:function(data){$("#getSubCatCategoryDataHeader1").html(data);}});} --}}
 
-    {{--function submitCategory1(){var subSubCat=$('#getSubCatCategoryDataHeader1').val();var subCat=$('#getSubCategoryDataHeader1').val();var mainCat=$('#getMainCategoryDataHeader1').val();var url='{{url('business-opportunities')}}/';if(subSubCat){url=url+$('option:selected',$('#getSubCatCategoryDataHeader1')).attr('slug')+'.ssc'+subSubCat+"?catTab=1";}else if(subCat){url=url+$('option:selected',$('#getSubCategoryDataHeader1')).attr('slug')+'.sc'+subCat+"?catTab=1";}else if(mainCat&&typeof $('option:selected',$('#getMainCategoryDataHeader1')).attr('slug')!=="undefined"){url=url+$('option:selected',$('#getMainCategoryDataHeader1')).attr('slug')+'.m'+mainCat+"?catTab=1";}else{url=url+'all/all';}--}}
-        {{--window.open(url, '_blank');return false;}--}}
+{{-- function submitCategory1(){var subSubCat=$('#getSubCatCategoryDataHeader1').val();var subCat=$('#getSubCategoryDataHeader1').val();var mainCat=$('#getMainCategoryDataHeader1').val();var url='{{url('business-opportunities')}}/';if(subSubCat){url=url+$('option:selected',$('#getSubCatCategoryDataHeader1')).attr('slug')+'.ssc'+subSubCat+"?catTab=1";}else if(subCat){url=url+$('option:selected',$('#getSubCategoryDataHeader1')).attr('slug')+'.sc'+subCat+"?catTab=1";}else if(mainCat&&typeof $('option:selected',$('#getMainCategoryDataHeader1')).attr('slug')!=="undefined"){url=url+$('option:selected',$('#getMainCategoryDataHeader1')).attr('slug')+'.m'+mainCat+"?catTab=1";}else{url=url+'all/all';} --}}
+{{-- window.open(url, '_blank');return false;} --}}
 
-{{--</script>--}}
+{{-- </script> --}}

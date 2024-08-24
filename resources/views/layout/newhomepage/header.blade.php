@@ -47,7 +47,7 @@
     <header class="header" id="header">
       <!--<div class="topmost">
             <marquee>
-Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a href="https://www.franchiseindia.com/expo/?id=dotcom" target="_blank">Book your ticket</a>   
+Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a href="https://www.franchiseindia.com/expo/?id=dotcom" target="_blank">Book your ticket</a>
 </marquee>
 <a id="myclose">x</a>
         </div>-->
@@ -77,9 +77,19 @@ Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a
                                     <li>
                                         <a href="https://www.restaurantindia.in/" target="_blank">रेस्टोरेंट इंडिया</a>
                                     </li>
-    <li>
+                                    <li>
                                         <a href="https://www.franchiseindia.com/property-loan/" target="_blank">संपत्ती के बदले कर्ज </a>
-                                    </li>                                 
+                                    </li>
+                                    <li class="top-investors">
+                                        <div class="dropdown policydropdown">
+                                            <button class="btn dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="">इन्वेस्टर <i class="fa fa-caret-down"></i></button>
+                                            <div class="dropdown-menu policydropdownmenu" aria-labelledby="btnDropdownDemo">
+                                               <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/ipo" target="_blank">आईपीओ</a>
+                                               <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/policies" target="_blank">नीतियों</a>
+                                               <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/corporate-governance" target="_blank">निगम से संबंधित शासन प्रणाली</a>
+                                            </div>
+                                        </div>
+                                    </li>
 
                                 </ul>
                             </div>
@@ -152,7 +162,7 @@ Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a
                                           d-main">
                                           <span>
                                              <img src="{{url('newhomepage/assets/img/Login.svg')}}" alt="Franchiseindia Logo"/>
-                                             
+
                                           </span>
                                           <ul class="login-main-section">
                                            @if (Auth::check())
@@ -181,7 +191,7 @@ Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a
     <header class="header" id="header">
             <!--<div class="topmost">
             <marquee>
-Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a href="https://www.franchiseindia.com/expo/?id=dotcom" target="_blank">Book your ticket</a>   
+Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a href="https://www.franchiseindia.com/expo/?id=dotcom" target="_blank">Book your ticket</a>
 </marquee>
 <a id="myclose">x</a>
         </div>-->
@@ -212,10 +222,19 @@ Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a
                                     <li>
                                         <a href="https://www.restaurantindia.in/" target="_blank">Restaurant India</a>
                                     </li>
-<li>
+                                    <li>
                                         <a href="https://www.franchiseindia.com/property-loan/" target="_blank">Loan Against Property </a>
                                     </li>
-
+                                    <li class="top-investors">
+                                        <div class="dropdown policydropdown">
+                                            <button class="btn dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="">Investor <i class="fa fa-caret-down"></i></button>
+                                            <div class="dropdown-menu policydropdownmenu" aria-labelledby="btnDropdownDemo">
+                                               <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/ipo" target="_blank">IPO</a>
+                                               <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/policies" target="_blank">Policies</a>
+                                               <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/corporate-governance" target="_blank">Corporate Governance</a>
+                                            </div>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                             @notmobile
