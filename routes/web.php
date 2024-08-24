@@ -62,6 +62,16 @@ use App\Http\Controllers\Admin\AdminController;
 
 Auth::routes();
 
+Route::get('content/{kicker}', function ($kicker) {
+    // Dump the value to see what is being captured
+    // dd($kicker);
+
+    return redirect('https://www.opportunityindia.com/english/tag/' . $kicker, 301);
+});
+Route::get('hi/content/{kicker}', function ($kicker) {
+
+    return redirect('https://www.opportunityindia.com/hindi/tag/' . $kicker, 301);
+});
 
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
