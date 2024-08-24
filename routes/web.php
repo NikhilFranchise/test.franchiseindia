@@ -45,6 +45,7 @@ use App\Http\Controllers\InsightsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\InsightSitemapController;
 
 
 
@@ -965,6 +966,21 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::get('location/{city}',              [BusinessListingController::class, 'listingLocation']);
 // INSIGHTS ROUTES START HERE //
+Route::get('insights/sitemap.xml', function(){
+    return response()->view('insights.sitemaps.sitemap')->header('Content-type','text/xml');
+});
+Route::group(['prefix'=>'insights'], function(){
+    Route::get('news.xml',                      [InsightSitemapController::class,'newssitemap']);
+    Route::get('article.xml',                   [InsightSitemapController::class,'articlesitemap'])->name('article.xml');
+    Route::get('interview.xml',                 [InsightSitemapController::class,'interviewsitemap'])->name('interview.xml');
+    Route::get('event.xml',                     [InsightSitemapController::class,'eventsitemap'])->name('event.xml');
+    Route::get('report.xml',                    [InsightSitemapController::class,'reportsitemap'])->name('report.xml');
+    Route::get('categories.xml',                [InsightSitemapController::class,'categorysitemap'])->name('categories.xml');
+    Route::get('subcategories.xml',             [InsightSitemapController::class,'subcategorysitemap'])->name('subcategories.xml');
+    Route::get('kickers.xml',                   [InsightSitemapController::class,'kickersitemap']);
+    Route::get('tags.xml',                      [InsightSitemapController::class,'tagsitemap'])->name('tags.xml');
+
+    });
 Route::middleware('TrailingSlashRedirect')->group(function () {
     Route::get('/search/insights',                      [InsightsController::class, 'insightSearch']);
     Route::group(['prefix' => 'insights'], function () {
