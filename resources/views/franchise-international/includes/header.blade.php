@@ -224,7 +224,7 @@
                 <div class="col-sm-4 col-md-2 bdn mrg-mdy txt-center">Hotline: 1800 102 2007</div>
                 <div class="col-sm-8 col-md-9 headmodfiy">
                     <ul class="sublink">
-                        <li><a href="{{ Config('constants.MainDomain') }}/content/">What's New</a></li>
+                        <li><a href="{{ Config('constants.MainDomain') }}/insights/">What's New</a></li>
                         <li><a href="https://www.opportunityindia.com">News</a></li>
                         <li><a href="https://video.franchiseindia.com/">Videos</a></li>
                         <li><a href="{{ Config('constants.MainDomain') }}/advertise-with-us-payment/">Advertise</a>
@@ -241,16 +241,16 @@
                                 <li class="dropactive"><a target="_blank"
                                         href="{{ Config('constants.MainDomain') }}/" rel="nofollow"
                                         class="dotcom"></a></li>
-                                <li><a href="https://retail.franchiseindia.com/" rel="nofollow" target="_blank"
+                                <li><a href="https://indianretailer.com/" rel="nofollow" target="_blank"
                                         class="irin"> </a></li>
                                 <li><a href="https://www.entrepreneur.com/" rel="nofollow" target="_blank"
                                         class="entin"> </a></li>
                                 <li><a href="{{ Config('constants.MainDomain') }}/restaurant" class="riin"> </a>
                                 </li>
-                                <li><a href="{{ Config('constants.MainDomain') }}/wellness" class="wiin"> </a></li>
-                                <li><a href="{{ Config('constants.MainDomain') }}/education" class="eiin"></a></li>
+                                <li><a href="https://www.opportunityindia.com/english/tag/wellness" class="wiin"> </a></li>
+                                <li><a href="https://www.opportunityindia.com/english/tag/education" class="eiin"></a></li>
                                 <li><a href="https://www.licenseindia.com/" target="_blank" class="liin"></a></li>
-                                <li><a href="https://www.franchiseindia.com/dealers-distributor" class="dealerin"></a>
+                                <li><a href="https://www.dealerindia.com" class="dealerin"></a>
                                 </li>
                             </ul>
                         </div>
