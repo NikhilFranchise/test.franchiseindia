@@ -243,6 +243,22 @@
         @endmobile
 
         <li>&nbsp;</li>
+        @mobile
+            <li class="top-investors">
+                <div class="dropdown policydropdown">
+                    <button class="btn dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" style="">इन्वेस्टर <i
+                            class="fa fa-caret-down"></i></button>
+                    <div class="dropdown-menu policydropdownmenu" aria-labelledby="btnDropdownDemo">
+                        <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/ipo" target="_blank">आईपीओ</a>
+                        <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/policies"
+                            target="_blank">नीतियों</a>
+                        <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/corporate-governance"
+                            target="_blank">निगम से संबंधित शासन प्रणाली</a>
+                    </div>
+                </div>
+            </li>
+        @endmobile
         <li><a target="_blank" href="{{ Config('constants.MainDomain') }}/hi">घरेलू ब्रांड</a></li>
         <li><a target="_blank" href="{{ Config('constants.MainDomain') }}/hi/premiumbrand">प्रीमियम ब्रांड</a></li>
         <li><a target="_blank" href="{{ Config('constants.MainDomain') }}/international">अंतर्राष्ट्रीय ब्रांड</a>
@@ -303,7 +319,7 @@
                     के अवसर</a></li>
         </ol>
 
-        
+
     </div>
 
 
