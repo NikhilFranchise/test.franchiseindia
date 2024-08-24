@@ -1,6 +1,6 @@
-@section('seoTitle', 'Terms and Obligations Franchise India Holding Ltd. - Franchise India')
+@section('seoTitle', 'Policies - Franchise India')
 @section('seoDesc', 'Please read the following terms, email newsletter Subscription and membership obligations carefully before using this web site.')
-@section('seoKeywords', 'terms and obligations Franchise India Holding Ltd., franchise business opportunities, franchise for sale, retail franchise, 
+@section('seoKeywords', 'terms and obligations Franchise India Holding Ltd., franchise business opportunities, franchise for sale, retail franchise,
 					franchise investment, small business franchise, franchise business for sale')
 
 @extends('layout.master')
@@ -9,7 +9,7 @@
 <div class="container formsection margintop60 staicp">
 <div class="row">
 <div class="col-xs-12 col-sm-12 col-md-12">
-<h1>Terms & Policies</h1>
+<h1>Policies</h1>
 <ul class="page-list">
 <li><a href="https://www.franchiseindia.com/pdf/policies/Archival-Policy.pdf" style="text-decoration:underline;" target="_blank">Archival Policy</a></li>
 <li><a href="https://www.franchiseindia.com/pdf/policies/code-of-conduct.pdf" style="text-decoration:underline;" target="_blank">Code of conduct</a></li>

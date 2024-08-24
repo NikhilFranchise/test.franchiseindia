@@ -1,4 +1,4 @@
-@php
+{{--  @php
     $videos1 = array(
     0 => array(
     'url' => 'https://www.youtube.com/watch?v=vGfVj_kF0oY',
@@ -65,7 +65,60 @@
     'date' => 'Apr 26, 2024'
     )
     );
+@endphp  --}}
+@php
+    $videos1 = array(
+    0 => array(
+    'url' => 'https://www.youtube.com/watch?v=kQ7q9S-eK6o',
+    'imageurl' => 'https://i.ytimg.com/vi/kQ7q9S-eK6o/mqdefault.jpg',
+    'title' => 'Establish Your Career with Exclusive Business Opportunity | Franchise India',
+    'description' => "Hear from franchise industry expert, Mr. Gaurav Marya, Chairman, Franchise India about three exciting business opportunities as 'Independent Franchise Consultant'.",
+    'views' => '194',
+    'date' => 'Apr 1, 2024'
+    ),
+    1 => array(
+    'url' => 'https://www.youtube.com/watch?v=Shmk4GOSa5Q',
+    'imageurl' => 'https://i.ytimg.com/vi/Shmk4GOSa5Q/mqdefault.jpg',
+    'title' => 'Build Your Own Brand with Franchise India Become an Independent Franchise Consultant!',
+    'description' => 'Embark on a rewarding journey as an Independent Franchise Consultant and achieve unparalleled success.',
+    'views' => '134',
+    'date' => 'Apr 25, 2024'
+    ),
+    2 => array(
+    'url' => 'https://www.youtube.com/watch?v=NjtzKJquQhI',
+    'imageurl' => 'https://i.ytimg.com/vi/NjtzKJquQhI/mqdefault.jpg',
+    'title' => 'Three Things to Look before Investing in an Early Stage Startup | Gaurav Marya | Franchise India',
+    'description' => 'Franchise Guru Mr. Gaurav Marya speaks on What Points you should look before investing in an Early Stage Startup .',
+    'views' => '691',
+    'date' => 'Sep 25, 2023'
+    ),
+    3 => array(
+    'url' => 'https://www.youtube.com/watch?v=vGfVj_kF0oY',
+    'imageurl' => 'https://i.ytimg.com/vi/vGfVj_kF0oY/mqdefault.jpg',
+    'title' => '3 kinds of ROI that any business can get! | Gaurav Marya | Franchise India',
+    'description' => 'Gaurav Marya emphasizes the significance of Return on Investment (ROI), Return on Involvement (ROI), and Return on Intelligence (ROI) as the pillars of sustainable business success.',
+    'views' => '440',
+    'date' => 'May 3, 2024'
+    ),
+    4 => array(
+    'url' => 'https://www.youtube.com/watch?v=KrfswZwOgPY',
+    'imageurl' => 'https://i.ytimg.com/vi/KrfswZwOgPY/mqdefault.jpg',
+    'title' => 'Three Life Changing Business Opportunities | Franchise India',
+    'description' => "Hear from a franchise industry expert, Mr. Gaurav Marya, Chairman, Franchise India about 3 life changing business opportunities as 'Independent Franchise Consultant'.",
+    'views' => '627',
+    'date' => 'Apr 2, 2024'
+    ),
+    5 => array(
+    'url' => 'https://www.youtube.com/watch?v=ombouemcGlM',
+    'imageurl' => 'https://i.ytimg.com/vi/ombouemcGlM/mqdefault.jpg',
+    'title' => 'Become a Successful Professional in Thriving 4 Trillion Industry',
+    'description' => 'Independent Franchise Consultant (IFC) Training Program has been specifically designed to train individuals to become a Business Broker or to leverage your existing business network and become a successful Entrepreneur.',
+    'views' => '111',
+    'date' => 'Apr 1, 2024'
+    )
+    );
 @endphp
+
 <section class="video-event">
     <div class="container">
         <div class="padset">
@@ -80,7 +133,7 @@
                         <li data-target="#myCarouselvideo" data-slide-to="0" class="active"></li>
                         <li data-target="#myCarouselvideo" data-slide-to="1"></li>
                         <li data-target="#myCarouselvideo" data-slide-to="2"></li>
-                        <li data-target="#myCarouselvideo" data-slide-to="3"></li>
+                        {{--  <li data-target="#myCarouselvideo" data-slide-to="3"></li>  --}}
                     </ol>
                     <!-- Wrapper for slides -->
                     {{-- <div class="carousel-inner">
@@ -180,7 +233,7 @@
                 </div>
                 <!--  -->
                 <div class="swiper-container">
-                    <div class="swiper-wrapper">                       
+                    <div class="swiper-wrapper">
 
 
 
@@ -204,7 +257,7 @@
                                             </div>
                                         </div>
                                     </div>
-</div> 
+</div>
 
 
  <div class="swiper-slide">
@@ -273,7 +326,7 @@
                                             </div>
                                         </div>
                                     </div>
-</div> 
+</div>
 
 
  <div class="swiper-slide">
@@ -295,7 +348,7 @@
                                             </div>
                                         </div>
                                     </div>
-</div> 
+</div>
 
 
  <div class="swiper-slide">
@@ -317,7 +370,7 @@
                                             </div>
                                         </div>
                                     </div>
-</div> 
+</div>
 
  <div class="swiper-slide">
                                  <div class="eshowblk">
@@ -427,7 +480,7 @@
                                             </div>
                                         </div>
                                     </div>
-</div> 
+</div>
 
 
  <div class="swiper-slide">
@@ -449,7 +502,7 @@
                                             </div>
                                         </div>
                                     </div>
-</div> 
+</div>
  -->
 
 
@@ -516,7 +569,7 @@
                                             </div>
                                         </div>
                                     </div>
-</div> 
+</div>
 
 
  <div class="swiper-slide">
@@ -583,7 +636,7 @@
                                             </div>
                                         </div>
                                     </div>
-</div> 
+</div>
 
 
 <div class="swiper-slide">
@@ -605,7 +658,7 @@
                                             </div>
                                         </div>
                                     </div>
-</div> 
+</div>
 
 
 <div class="swiper-slide">
@@ -627,7 +680,7 @@
                                             </div>
                                         </div>
                                     </div>
-</div> 
+</div>
 
 
  <div class="swiper-slide">
@@ -649,7 +702,7 @@
                                             </div>
                                         </div>
                                     </div>
-</div> 
+</div>
 
 
  <div class="swiper-slide">
@@ -671,9 +724,9 @@
                                             </div>
                                         </div>
                                     </div>
-</div> 
+</div>
 
-                          
+
                     </div>
                     <!-- Add Pagination -->
                     <div class="swiper-pagination"></div>
