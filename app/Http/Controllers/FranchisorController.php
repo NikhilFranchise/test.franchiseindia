@@ -1848,7 +1848,7 @@ class FranchisorController extends Controller
 
         //updating the database
         $updateBusiness = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->update([
-            //'company_name' => $request->input('company_name'),
+            'company_name' => $request->input('company_name'),
             'ceo_name' => $request->input('ceo_name'),
             'ceo_email' => $request->input('ceo_email'),
             'ceo_mobile' => $request->input('ceo_mobile'),

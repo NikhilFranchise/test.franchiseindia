@@ -45,6 +45,7 @@ use App\Http\Controllers\InsightsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\InsightSitemapController;
 
 
 
@@ -62,6 +63,16 @@ use App\Http\Controllers\Admin\AdminController;
 
 Auth::routes();
 
+Route::get('content/{kicker}', function ($kicker) {
+    // Dump the value to see what is being captured
+    // dd($kicker);
+
+    return redirect('https://www.opportunityindia.com/english/tag/' . $kicker, 301);
+});
+Route::get('hi/content/{kicker}', function ($kicker) {
+
+    return redirect('https://www.opportunityindia.com/hindi/tag/' . $kicker, 301);
+});
 
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
@@ -104,6 +115,15 @@ Route::get('/user/investor-mobile-verify', [CommonController::class, 'investormo
 Route::get('validate-email', [CommonController::class, 'emailValidation']);
 Route::get('thanks-advice-form', function () {
     return view('thanks.advice-form');
+});
+Route::get('/ipo', function(){
+    return view('static.ipo');
+});
+Route::get('/policies', function(){
+    return view('static.policies');
+});
+Route::get('/corporate-governance', function(){
+    return view('static.corporate-governance');
 });
 Route::get('cat-brand-images',               [BusinessListingController::class, 'getbrandSliderImages']); // Business Listing Page Gallery section
 Route::get('check',                          [MobileVerificationController::class, 'verifySmsOTP']);
@@ -946,6 +966,21 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::get('location/{city}',              [BusinessListingController::class, 'listingLocation']);
 // INSIGHTS ROUTES START HERE //
+Route::get('insights/sitemap.xml', function(){
+    return response()->view('insights.sitemaps.sitemap')->header('Content-type','text/xml');
+});
+Route::group(['prefix'=>'insights'], function(){
+    Route::get('news.xml',                      [InsightSitemapController::class,'newssitemap']);
+    Route::get('article.xml',                   [InsightSitemapController::class,'articlesitemap'])->name('article.xml');
+    Route::get('interview.xml',                 [InsightSitemapController::class,'interviewsitemap'])->name('interview.xml');
+    Route::get('event.xml',                     [InsightSitemapController::class,'eventsitemap'])->name('event.xml');
+    Route::get('report.xml',                    [InsightSitemapController::class,'reportsitemap'])->name('report.xml');
+    Route::get('categories.xml',                [InsightSitemapController::class,'categorysitemap'])->name('categories.xml');
+    Route::get('subcategories.xml',             [InsightSitemapController::class,'subcategorysitemap'])->name('subcategories.xml');
+    Route::get('kickers.xml',                   [InsightSitemapController::class,'kickersitemap']);
+    Route::get('tags.xml',                      [InsightSitemapController::class,'tagsitemap'])->name('tags.xml');
+
+    });
 Route::middleware('TrailingSlashRedirect')->group(function () {
     Route::get('/search/insights',                      [InsightsController::class, 'insightSearch']);
     Route::group(['prefix' => 'insights'], function () {
@@ -989,7 +1024,7 @@ Route::get('/wellness/{slug}', function ($slug) {
     // Redirect to the new domain
     return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
 });
- 
+
 Route::get('reload-captcha', [AdviceController::class, 'reloadCaptcha']);
 Route::get('reload-captcha-contact', [ContactUsController::class, 'reloadCaptcha']);
 

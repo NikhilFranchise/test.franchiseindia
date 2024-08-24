@@ -1,4 +1,18 @@
-/* Brand verify css  21 Aug 2024 */ 
+/* IPO Policies Corporate CSS 23 Aug 2024 */
+.corporates h2{font-size: 22px;font-weight: normal;color: #333;margin: 25px 0px 15px 0px;line-height: 31px;}
+.corporates h3{font-size: 17px;font-weight: normal;color: #333;margin:32px 0px 10px 0px;line-height: 28px;}
+.corporates table{border-color: #6a6a6a;border-collapse: collapse;color: #333;font-weight: 300;font-size: 14px;}
+.corporates table td{padding: 3px 10px;font-size: 13px;}
+.corporates table th{font-weight: 500;padding: 6px 10px;}
+li.top-investors{height: 20px;}
+.policydropdown:hover .policydropdownmenu{display: block;}
+.policydropdown .btn{background: top;border: none;padding: 0px;color: #101010;font-weight: 300;font-size: 13px;}
+.policydropdownmenu{background: #f5f5f5;border: none;padding: 10px;box-shadow: none;top: 18px;border-radius: 0px;}
+.policydropdownmenu a{font-size: 12px;display: block;margin-bottom: 4px;}
+/* IPO Policies Corporate CSS 23 Aug 2024 */
+
+
+/* Brand verify css  21 Aug 2024 */
 .brand-verify{font-family: Open Sans Bold, serif;position: absolute;right: 15px;top: 15px;
     color: #fff !important; background-color:#0cb70c;  border: 1px solid #89cb9d;border-radius: 4px;padding: 3px 9px;font-size: 12px!important;font-weight: bold;}
 .brand-verify .fa{font-size: 12px!important;margin-right:3px!important;}
@@ -40,12 +54,16 @@
 @media screen and (max-width:767px){
 .brand-verify-detail-mobile{display: block; width: 90px; margin: 5px auto 0px auto;padding: 5px 10px 4px 10px;}
 .brand-verify-detail{display: none;}
+li.top-investors{height: auto;}
 .brand-verify-two{position: unset;
     display: block;
     width: 90px;
     margin: 0px auto 10px auto;
     padding: 3px 10px;}
 }
+.corporates h2{font-size: 17px;line-height: 24px;}
+.corporates h3{font-size: 16px;}
+.corporates table th {font-size: 13px;line-height: 18px;}
 /* Brand verify css  21 Aug 2024 */
 
 ol,ul,ul li{list-style-type:none}
@@ -74,16 +92,10 @@ ol,ul,ul li{list-style-type:none}
 .login-p-home,.sideline,.sidelinenew{border-bottom:1px solid #dfdfdf}
 .c-button:focus,.c-menu__close:focus,a:focus{outline:0}
 .form-control {    border: 1px solid #ccc!important;    font-size: 12px!important;}
-#tryyyy .formsection .form-control {    padding: 10px 12px 10px!important;}
-#login-pnl .formsection .form-control, #lg-pnl .frm-pnl .form-control {    padding: 15px 12px 15px!important;}
-#tryyyy .formsection {margin-bottom: 0px;}
-#askForm .frm-input{padding:0px 20px 20px 20px;}
-.rm-prop label{font-size: 13px;}
+.formsection .form-control {    padding: 14px 12px 14px!important;}
 @media only screen and (min-width:1px) and (max-width:767px) {
     .testimonial .mdfrd{margin-left:0}
 }
-
-
 .busheadmebu{float:none;font-family:'Open Sans Bold',serif;font-size:16px;color:#333; margin:10px 0 8px 15px; font-weight:400;padding:0px;line-height:22px}
 .busheadmebu.marmodfy{ margin-left: -8px;     width: 275px;}
 .busheadmebu.marmodfy .gsc-input-box { border:0!important;}
@@ -582,7 +594,7 @@ ul.fromstaticlist li span{color:#f22406}
 .formsection .form-control:focus{border-color:#ccc;background:#fbfbfb;-webkit-box-shadow:inset 0 5px 5px 0 rgba(0,0,0,.05);-moz-box-shadow:inset 0 5px 5px 0 rgba(0,0,0,.05);box-shadow:inset 0 5px 5px 0 rgba(0,0,0,.05)}
 .input-group span.error,input.error,select.error,textarea.error{border:1px solid red!important}
 .input-group span.error{color:red;background:red}
-label.error{color: red!important;}
+label.error{color:red !important}
 .frm-sec label.error{display:none!important}
 .formsection input[type=radio],.formsection input[type=checkbox]{margin:0 4px 0 0;position:relative;top:2px}
 ul.inter li,ul.natio li{line-height:20px;margin-bottom:7px}
@@ -1100,7 +1112,7 @@ a:focus{outline-offset:0;color:#333}
 .what-new .formsection{padding-left:0!important;padding-right:0!important}
 .what-new .frm-input{padding:15px 30px}
 .what-new .frm-input .input-group{padding-bottom:10px}
-.height80{height:40px!important}
+.height80{height:80px!important}
 .what-new .formsection .form-control{padding:9px 12px}
 .what-new .formsection .input-group-addon{padding:4px 12px}
 .what-new .rm-prop{margin-top:0}
@@ -1265,7 +1277,7 @@ a:focus{outline-offset:0;color:#333}
 .myaccount .exyab .table>thead>tr>th.widthper29{width:29%}
 .myaccount .exyab .table>thead>tr>th.widthper15{width:15%}
 .myaccount .exyab .table>thead>tr>th.widthper20{width:20%}
-.myaccount .exyab .table>tbody>tr>td{border-top:0;border-bottom:1px dotted #ccc;word-break:break-all;padding:10px;text-transform:capitalize}
+.myaccount .exyab .table>tbody>tr>td{border-top:0;border-bottom:1px dotted #ccc;word-break:break-all;padding:10px;}
 .myaccount .exyab .table>tbody>tr>td.widthper16{width:16%}
 .myaccount .exyab .table>tbody>tr>td.widthper12{width:12%}
 .myaccount .exyab .table>tbody>tr>td.widthper20{width:20%}
@@ -4295,15 +4307,13 @@ div.btnblkf .btn-default.btn-red:hover{background:#f22406;color:#fff}
 .sideslideform{display:table}
 #tryyyy{background:#fff;width:305px;border-radius:10px 0 0 10px;z-index:1;float:left;position:relative}
 .sideslideform .ttl{color:#333;font-family:"Open Sans Light","serif";font-size:18px;text-align:center;text-transform:uppercase;padding:1px 0 5px}
-.sideslideform .frm-type{background-color: #f3f3f3;padding: 5px 20px 5px 20px;margin-bottom: 10px;display: flex;align-items: baseline;}
-.sideslideform .frm-type .radio:first-child{margin-right: 20px;}
-.sideslideform .radio{margin-top: 3px;margin-bottom: 3px;font-size:13px;}
+.sideslideform .frm-type{background-color:#f3f3f3;padding:5px 30px 5px 35px;margin-bottom:30px}
 .sideslideform .formsection.leftrightzero{padding:0!important}
-.sideslideform .frm-input{padding-left:20px;padding-right:20px}
-.sideslideform .input-group{margin-bottom:0px}
-.sideslideform .formsection .input-group-addon{padding:3px 12px}
+.sideslideform .frm-input{padding-left:30px;padding-right:30px}
+.sideslideform .input-group{margin-bottom:10px}
+.sideslideform .formsection .input-group-addon{padding:5px 12px}
 .sideslideform .formsection .form-control{padding:10px 12px}
-.sideslideform .formsection .btn-default.btn-red{padding:8px 15px;font-family:"Open Sans Regular","serif";font-size:12px;margin:5px auto 0}
+.sideslideform .formsection .btn-default.btn-red{padding:8px 15px;font-family:"Open Sans Regular","serif";font-size:14px;margin:5px auto 0}
 .sideslideform .formsection .checkbox label,.sideslideform .formsection .radio label{text-indent:-20px}
 #tt-img-control{float:left;background:transparent url(https://www.franchiseindia.com/images/advicebtn.png);height:145px;width:44px;position:relative;margin-top:220px;cursor:pointer}
 .middleval{min-height:100%;height:100%;position:fixed;top:0;right:0;background:transparent;z-index:2}
@@ -4542,7 +4552,6 @@ ul.sidebt li.fi{height:160px}
 .row.hm-section {    padding-top: 105px;}
 
 }
-@media only screen and (min-width:900px) and (max-width:1700px) {
-.middleval{top:55px;}
-#tryyyy .frm-container{height: 500px;overflow: auto;}
+@media only screen and (min-width:1024px) and (max-width:1300px) {
+.sideslideform .frm-container{height:350px;overflow:auto;}
 }
