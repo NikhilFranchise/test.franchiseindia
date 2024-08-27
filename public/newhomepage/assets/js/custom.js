@@ -73,23 +73,43 @@ $(document).ready(function () {
         var mobile = $('#mobilefreeadvice').val().trim();
         var email = $('#emailfreeadvice').val().trim();
         var csrf_token = $("input[name='_token']").val();
-        var hasError = false;
-
-        // Reset error states
-        $('#mobilefreeadvice').removeClass('error-border').attr('placeholder', 'Enter Mobile');
-        $('#emailfreeadvice').removeClass('error-border').attr('placeholder', 'Enter Email');
+            // Clear previous error messages
+        $('#mobile-error').text('');
+        $('#email-error').text('');
+        $('#mobilefreeadvice').removeClass('input-error');
+        $('#emailfreeadvice').removeClass('input-error');
+        // Basic validation
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var mobileRegex = /^\d{10}$/;
+        var isValid = true;
 
         if (mobile === '') {
-            $('#mobilefreeadvice').addClass('error-border error-placeholder').attr('placeholder', 'Mobile is required').val('');
-            hasError = true;
+            $('#mobile-error').text('Mobile number is required.');
+            $('#mobilefreeadvice').addClass('input-error').focus();
+            isValid = false;
+        } else if (!/^\d+$/.test(mobile)) {
+            $('#mobile-error').text('Mobile number must be numeric.');
+            $('#mobilefreeadvice').addClass('input-error').focus();
+            isValid = false;
+        } else if (!mobileRegex.test(mobile)) {
+            $('#mobile-error').text('Please enter a valid 10-digit mobile number.');
+            $('#mobilefreeadvice').addClass('input-error').focus();
+            isValid = false;
         }
 
         if (email === '') {
-            $('#emailfreeadvice').addClass('error-border error-placeholder').attr('placeholder', 'Email is required').val('');
-            hasError = true;
+            $('#email-error').text('Email is required.');
+            $('#emailfreeadvice').addClass('input-error').focus();
+            isValid = false;
+        } else if (!emailRegex.test(email)) {
+            $('#email-error').text('Please enter a valid email address.');
+            $('#emailfreeadvice').addClass('input-error').focus();
+            isValid = false;
         }
 
-        if (!hasError) {
+        if (!isValid) {
+            return; // Stop the form submission if validation fails
+        }
             var type = $("input[name='optionsRadios']:checked").val();
             var data = {
                 _token: csrf_token, // Add CSRF token
@@ -119,7 +139,7 @@ $(document).ready(function () {
                     alert('Error occurred. Please try again.');
                 }
             });
-        }
+
     });
 });
 
