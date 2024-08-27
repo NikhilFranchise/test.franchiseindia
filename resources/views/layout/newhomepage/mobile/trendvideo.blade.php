@@ -1,7 +1,7 @@
-@php
+{{-- @php
     $videos1 = [
         0 => [
-            'url' => 'https://www.youtube.com/watch?v=NjtzKJquQhI',
+            'url' => 'https://www.youtube.com/watch?v=x',
             'imageurl' => 'https://i.ytimg.com/vi/NjtzKJquQhI/mqdefault.jpg',
             'title' =>
                 'Three Things to Look before Investing in an Early Stage Startup | Gaurav Marya | Franchise India',
@@ -61,7 +61,7 @@
             'date' => 'Apr 25, 2023',
         ],
     ];
-@endphp
+@endphp --}}
 <!-- Trending Events starts -->
 <section class="upcomingevents section-30" id="upcomingevents">
     <div class="container">
@@ -75,6 +75,17 @@
         <!-- Swiper -->
         <div class="swiper-container">
             <div class="swiper-wrapper">
+                @php
+                $videos1 = $videos; 
+                $videos1 = array_filter($videos, function ($video) {
+                              return is_array($video) && isset($video['priority']);
+                          });
+
+                usort($videos1, function ($a, $b) {
+                      return $a['priority'] <=> $b['priority'];
+                  });
+                // @dd($videos1); 
+              @endphp
                 @foreach ($videos1 as $video)
                     <div class="swiper-slide">
                         <div class="swiper-slide-events-main">

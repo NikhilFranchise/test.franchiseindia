@@ -18,6 +18,7 @@ class FetchAndUpdateData extends Command
     {
         $this->fetchAndUpdate('https://www.opportunityindia.com/api/article/apidata', 'oidata/articles.json');
         $this->fetchAndUpdate('https://www.opportunityindia.com/api/article/hindiapidata', 'oidata/articlehindi.json');
+       
 
     }
 
@@ -63,4 +64,8 @@ class FetchAndUpdateData extends Command
             }
         }
     }
+
+
+    
+
 }
