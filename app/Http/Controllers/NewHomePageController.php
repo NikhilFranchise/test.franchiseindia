@@ -253,7 +253,7 @@ class NewHomePageController extends Controller
 			}
 		});
 		
-		$youtubeApiKey = 'AIzaSyCB2nVhCCrLyMmHhAdIuGVBOyV_ywUATUA';
+				$youtubeApiKey = 'AIzaSyCB2nVhCCrLyMmHhAdIuGVBOyV_ywUATUA';
 				$videos = Cache::remember($cacheKeys['fivideo'], $cacheExpiration, function () use ($youtubeApiKey) {
 					$videosData = [];
 
