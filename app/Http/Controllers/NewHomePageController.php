@@ -293,7 +293,7 @@ class NewHomePageController extends Controller
 					return $videosData;
 				});
 
-		// dd($videos);
+		dd($videos);
 		
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
