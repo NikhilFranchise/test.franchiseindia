@@ -486,6 +486,8 @@ Route::group(['prefix' => 'category'], function () {
     });
 });
 Route::get('sitemapgenerate', [SitemapController::class, 'sitemap']); // Sitemap Generator route
+Route::get('sitemap',   [StaticPageController::class,'siteMap']);
+Route::get('sitemap/content/{year}/{month}', [StaticPageController::class,'getArticleList']);
 Route::post('invsuccess', [PaymentController::class, 'investorPaymentSuccess']);        // Investor Payment success routes
 Route::post('bookpaymentsubmit', [PaymentController::class, 'bookPayment']);                   // Books & Reports Payment section routes
 Route::post('payment/booksuccess', [PaymentController::class, 'bookPaymentSuccess']);            // Books & Reports Payment section routes
