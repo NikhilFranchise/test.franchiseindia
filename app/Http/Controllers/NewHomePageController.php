@@ -114,8 +114,9 @@ class NewHomePageController extends Controller
 		
 		$youtubeApiKey = 'AIzaSyCB2nVhCCrLyMmHhAdIuGVBOyV_ywUATUA';
 		$videos = Cache::remember($cacheKeys['fivideohi'], $cacheExpiration, function () use ($youtubeApiKey) {
+		
 			$videosData = [];
-
+		
 			// Fetch all videos with the required fields
 			$videos = Videos::query()
 				->select('fih_id as id', 'fih_title as title', 'fih_url as url', 'fih_imageurl as imageurl', 
@@ -123,34 +124,34 @@ class NewHomePageController extends Controller
 						'fih_status as priority')
 				->orderBy('fih_date', 'ASC')
 				->get();
-
+		
 			// Extract video IDs and make a bulk API call to get view counts
 			$videoIds = $videos->map(function($vdo) {
 				return $this->extractYouTubeVideoId($vdo->url);
 			})->filter()->toArray();
-
+		
+			// Get view counts for all videos in one API call
 			$videoViewCounts = $this->getYouTubeVideoViewCount($videoIds, $youtubeApiKey);
-
 			foreach ($videos as $vdo) {
 				$videoId = $this->extractYouTubeVideoId($vdo->url);
+				// dd($videoId);
 				if ($videoId && isset($videoViewCounts[$videoId])) {
 					$viewCount = $videoViewCounts[$videoId];
-					if ($vdo->views != $viewCount) {
-						// Update the view count in the database only if it has changed
-						$vdo->views = $viewCount;
-						$vdo->save();
+
+					if ($vdo->fih_views != $viewCount) {
+						// Update the view count in the database
+						Videos::query()->where('fih_url', $vdo->url)
+							->update(['fih_views' => $viewCount]);
 					}
 				}
-
-				// Format the date
-				$vdo->date = date('M d, Y', strtotime($vdo->date));
-
-				// Add the formatted video data to the result array
+	
 				$videosData[] = $vdo->toArray();
 			}
-
+			// dd($vdo->save());
+		
 			return $videosData;
 		});
+
 		// dd($videos);
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
@@ -253,47 +254,46 @@ class NewHomePageController extends Controller
 			}
 		});
 		
-				$youtubeApiKey = 'AIzaSyCB2nVhCCrLyMmHhAdIuGVBOyV_ywUATUA';
-				$videos = Cache::remember($cacheKeys['fivideo'], $cacheExpiration, function () use ($youtubeApiKey) {
-					$videosData = [];
+		$youtubeApiKey = 'AIzaSyCB2nVhCCrLyMmHhAdIuGVBOyV_ywUATUA';
+		$videos = Cache::remember($cacheKeys['fivideo'], $cacheExpiration, function () use ($youtubeApiKey) {
+		
+			$videosData = [];
+		
+			// Fetch all videos with the required fields
+			$videos = Videos::query()
+				->select('fih_id as id', 'fih_title as title', 'fih_url as url', 'fih_imageurl as imageurl', 
+						'fih_date as date', 'fih_description as description', 'fih_views as views', 
+						'fih_status as priority')
+				->orderBy('fih_date', 'ASC')
+				->get();
+		
+			// Extract video IDs and make a bulk API call to get view counts
+			$videoIds = $videos->map(function($vdo) {
+				return $this->extractYouTubeVideoId($vdo->url);
+			})->filter()->toArray();
+		
+			// Get view counts for all videos in one API call
+			$videoViewCounts = $this->getYouTubeVideoViewCount($videoIds, $youtubeApiKey);
+			foreach ($videos as $vdo) {
+				$videoId = $this->extractYouTubeVideoId($vdo->url);
+				// dd($videoId);
+				if ($videoId && isset($videoViewCounts[$videoId])) {
+					$viewCount = $videoViewCounts[$videoId];
 
-					// Fetch all videos with the required fields
-					$videos = Videos::query()
-						->select('fih_id as id', 'fih_title as title', 'fih_url as url', 'fih_imageurl as imageurl', 
-								'fih_date as date', 'fih_description as description', 'fih_views as views', 
-								'fih_status as priority')
-						->orderBy('fih_date', 'ASC')
-						->get();
-
-					// Extract video IDs and make a bulk API call to get view counts
-					$videoIds = $videos->map(function($vdo) {
-						return $this->extractYouTubeVideoId($vdo->url);
-					})->filter()->toArray();
-
-					$videoViewCounts = $this->getYouTubeVideoViewCount($videoIds, $youtubeApiKey);
-
-					foreach ($videos as $vdo) {
-						$videoId = $this->extractYouTubeVideoId($vdo->url);
-						if ($videoId && isset($videoViewCounts[$videoId])) {
-							$viewCount = $videoViewCounts[$videoId];
-							if ($vdo->views != $viewCount) {
-								// Update the view count in the database only if it has changed
-								$vdo->views = $viewCount;
-								$vdo->save();
-							}
-						}
-
-						// Format the date
-						$vdo->date = date('M d, Y', strtotime($vdo->date));
-
-						// Add the formatted video data to the result array
-						$videosData[] = $vdo->toArray();
+					if ($vdo->fih_views != $viewCount) {
+						// Update the view count in the database
+						Videos::query()->where('fih_url', $vdo->url)
+							->update(['fih_views' => $viewCount]);
 					}
+				}
+	
+				$videosData[] = $vdo->toArray();
+			}
+			// dd($vdo->save());
+		
+			return $videosData;
+		});
 
-					return $videosData;
-				});
-
-		dd($videos);
 		
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
@@ -301,27 +301,29 @@ class NewHomePageController extends Controller
 	}
 
 
-	private function extractYouTubeVideoId($url)
-    {
-        preg_match('/[\\?\\&]v=([^\\?\\&]+)/', $url, $matches);
-        return $matches[1] ?? null;
-    }
+	private function extractYouTubeVideoId($url) {
+		preg_match('/v=([^\&\?\/]+)/', $url, $matches);
+		return $matches[1] ?? null;
+	}
+	
     
-    private function getYouTubeVideoViewCount(array  $videoId, $apiKey)
-    { 
-		if (empty($videoIds)) {
-        return [];
-		}
-		$videoIdsStr = implode(',', $videoIds);
-        $url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id={$videoId}&key={$apiKey}";
-        $response = json_decode(file_get_contents($url), true);
+	private function getYouTubeVideoViewCount(array $videoIds, $apiKey) {
+		$ids = implode(',', $videoIds);
+		$url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id={$ids}&key={$apiKey}";
+	
+		$response = file_get_contents($url);
+		$data = json_decode($response, true);
+	
 		$viewCounts = [];
-		foreach ($response['items'] as $item) {
-			$viewCounts[$item['id']] = $item['statistics']['viewCount'] ?? null;
+		if (isset($data['items'])) {
+			foreach ($data['items'] as $item) {
+				$viewCounts[$item['id']] = $item['statistics']['viewCount'];
+			}
 		}
 	
 		return $viewCounts;
-    }
+	}
+	
 	public static function getSlug($title, $id)
 	{
 
