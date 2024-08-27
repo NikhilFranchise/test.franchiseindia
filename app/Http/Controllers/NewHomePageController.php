@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FranchisorBusinessDetail;
+use App\Models\Videos;
 use App\Models\HomePremiumPageBrand;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +28,8 @@ class NewHomePageController extends Controller
 			'brandstfo' => 'brandstfo_cache',
 			'brandsffc' => 'brandsffc_cache',
 			'articles_data_cache'=>'articles_data_cache',
+			'fivideohi' => 'fivideohi',
+
 		];
 		// Define cache expiration time in seconds
 		$cacheExpiration = 3600; // You can adjust this as needed
@@ -95,22 +98,10 @@ class NewHomePageController extends Controller
 				->shuffle();
 		});
 
-		// $ch = curl_init('https://www.opportunityindia.com/api/article/hindiapidata');
-		// curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		// curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-		// $result = curl_exec($ch);
-		// curl_close($ch);
-		// $articles = json_decode($result, true);
+	
 		$filePath = public_path('oidata/articlehindi.json');
 
-		// Read the data back from the JSON file
-		// if (file_exists($filePath)) {
-		// 	$storedData = json_decode(file_get_contents($filePath), true);
-		// 	$articles = $storedData['data'] ?? [];
-		// } else {
-		// 	$articles = []; // Default to an empty array if the file does not exist
-		// }
+	
 		$articles = Cache::remember($cacheKeys['articles_data_cache'], $cacheExpiration, function () use ($filePath) {
 			// If the data is not in Redis, read it from the file
 			if (file_exists($filePath)) {
@@ -120,10 +111,52 @@ class NewHomePageController extends Controller
 				return []; // Default to an empty array if the file does not exist
 			}
 		});
-		// dd($articles);
+		
+		$youtubeApiKey = 'AIzaSyCB2nVhCCrLyMmHhAdIuGVBOyV_ywUATUA';
+		$videos = Cache::remember($cacheKeys['fivideohi'], $cacheExpiration, function () use ($youtubeApiKey) {
+			$videosData = [];
+
+			// Fetch all videos with the required fields
+			$videos = Videos::query()
+				->select('fih_id as id', 'fih_title as title', 'fih_url as url', 'fih_imageurl as imageurl', 
+						'fih_date as date', 'fih_description as description', 'fih_views as views', 
+						'fih_status as priority')
+				->orderBy('fih_date', 'ASC')
+				->get();
+
+			// Extract video IDs and make a bulk API call to get view counts
+			$videoIds = $videos->map(function($vdo) {
+				return $this->extractYouTubeVideoId($vdo->url);
+			})->filter()->toArray();
+
+			$videoViewCounts = $this->getYouTubeVideoViewCount($videoIds, $youtubeApiKey);
+
+			foreach ($videos as $vdo) {
+				$videoId = $this->extractYouTubeVideoId($vdo->url);
+				if ($videoId && isset($videoViewCounts[$videoId])) {
+					$viewCount = $videoViewCounts[$videoId];
+					if ($vdo->views != $viewCount) {
+						// Update the view count in the database only if it has changed
+						$vdo->views = $viewCount;
+						$vdo->save();
+					}
+				}
+
+				// Format the date
+				$vdo->date = date('M d, Y', strtotime($vdo->date));
+
+				// Add the formatted video data to the result array
+				$videosData[] = $vdo->toArray();
+			}
+
+			return $videosData;
+		});
+		// dd($videos);
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
-		return view('layout.hindihomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc'));
+	
+
+		return view('layout.hindihomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
 	}
 
 	public function homeNew(Request $request)
@@ -133,7 +166,8 @@ class NewHomePageController extends Controller
 			'brandstbo' => 'brandstbo_cache',
 			'brandstfo' => 'brandstfo_cache',
 			'brandsffc' => 'brandsffc_cache',
-			'articles_data_cache_english'=>'articles_data_cache_english'
+			'articles_data_cache_english'=>'articles_data_cache_english',
+			'fivideo' => 'fivideo',
 		];
 
 		// Define cache expiration time in seconds
@@ -203,37 +237,7 @@ class NewHomePageController extends Controller
 				->shuffle();
 		});
 
-		// $brandslft = HomePremiumPageBrand::query()
-		// 	->where('status', 1)
-		// 	->where('brand_section', 2)
-		// 	->where('page_type', 1)
-		// 	->orderBy('inventory_backup', 'ASC')
-		// 	->take(4)
-		// 	->get()
-		// 	->shuffle();
-		// $brandstbo = HomePremiumPageBrand::query()
-		// 	->where('status', 1)
-		// 	->where('brand_section', 3)
-		// 	->where('page_type', 1)
-		// 	->orderBy('inventory_backup', 'ASC')
-		// 	->take(12)
-		// 	->get()
-		// 	->shuffle();
-		// $brandstfo = HomePremiumPageBrand::query()
-		// 	->where('status', 1)
-		// 	->where('brand_section', 4)
-		// 	->where('page_type', 1)
-		// 	->orderBy('inventory_backup', 'ASC')
-		// 	->take(25)
-		// 	->get()
-		// 	->shuffle();
-		// $brandsffc = HomePremiumPageBrand::query()
-		// ->where('status', 1)
-		// ->where('brand_section', 5)
-		// ->orderBy('inventory_backup', 'ASC')
-		// ->take(48)
-		// ->get()
-		// ->shuffle();
+		
 
 		// Define the path where the JSON file is stored
 		$filePath = public_path('oidata/articles.json');
@@ -249,20 +253,75 @@ class NewHomePageController extends Controller
 			}
 		});
 		
-		// dd($articles);
-		// if (file_exists($filePath)) {
-		// 	$storedData = json_decode(file_get_contents($filePath), true);
-		// 	$articles = $storedData['data'] ?? [];
-		// 	dd($articles);
-		// } else {
-		// 	$articles = []; // Default to an empty array if the file does not exist
-		// }
+		$youtubeApiKey = 'AIzaSyCB2nVhCCrLyMmHhAdIuGVBOyV_ywUATUA';
+				$videos = Cache::remember($cacheKeys['fivideo'], $cacheExpiration, function () use ($youtubeApiKey) {
+					$videosData = [];
+
+					// Fetch all videos with the required fields
+					$videos = Videos::query()
+						->select('fih_id as id', 'fih_title as title', 'fih_url as url', 'fih_imageurl as imageurl', 
+								'fih_date as date', 'fih_description as description', 'fih_views as views', 
+								'fih_status as priority')
+						->orderBy('fih_date', 'ASC')
+						->get();
+
+					// Extract video IDs and make a bulk API call to get view counts
+					$videoIds = $videos->map(function($vdo) {
+						return $this->extractYouTubeVideoId($vdo->url);
+					})->filter()->toArray();
+
+					$videoViewCounts = $this->getYouTubeVideoViewCount($videoIds, $youtubeApiKey);
+
+					foreach ($videos as $vdo) {
+						$videoId = $this->extractYouTubeVideoId($vdo->url);
+						if ($videoId && isset($videoViewCounts[$videoId])) {
+							$viewCount = $videoViewCounts[$videoId];
+							if ($vdo->views != $viewCount) {
+								// Update the view count in the database only if it has changed
+								$vdo->views = $viewCount;
+								$vdo->save();
+							}
+						}
+
+						// Format the date
+						$vdo->date = date('M d, Y', strtotime($vdo->date));
+
+						// Add the formatted video data to the result array
+						$videosData[] = $vdo->toArray();
+					}
+
+					return $videosData;
+				});
+
+		// dd($videos);
+		
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
-
-		return view('layout.masternewhomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc'));
+		return view('layout.masternewhomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
 	}
 
+
+	private function extractYouTubeVideoId($url)
+    {
+        preg_match('/[\\?\\&]v=([^\\?\\&]+)/', $url, $matches);
+        return $matches[1] ?? null;
+    }
+    
+    private function getYouTubeVideoViewCount(array  $videoId, $apiKey)
+    { 
+		if (empty($videoIds)) {
+        return [];
+		}
+		$videoIdsStr = implode(',', $videoIds);
+        $url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id={$videoId}&key={$apiKey}";
+        $response = json_decode(file_get_contents($url), true);
+		$viewCounts = [];
+		foreach ($response['items'] as $item) {
+			$viewCounts[$item['id']] = $item['statistics']['viewCount'] ?? null;
+		}
+	
+		return $viewCounts;
+    }
 	public static function getSlug($title, $id)
 	{
 
