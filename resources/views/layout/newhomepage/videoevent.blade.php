@@ -1,4 +1,3 @@
-
 <section class="video-event">
     <div class="container">
         <div class="padset">
@@ -54,7 +53,10 @@
                                         <h2><a href="{{ $videos1[$firstVideoIndex]['url'] }}"
                                                 target="_blank">{{ $videos1[$firstVideoIndex]['title'] }}</a></h2>
                                         <div class="videtxt">
-                                            {{ $videos1[$firstVideoIndex]['description'] }}
+                                            {{-- {{ $videos1[$firstVideoIndex]['description'] }} --}}
+                                            {{-- {{ $videos1[$firstVideoIndex]['description'] }} --}}
+                                            {{strip_tags(Str::limit($videos1[$firstVideoIndex]['description'], 200,'...')) }}
+
                                         </div>
                                         <div class="showview">{{ $videos1[$firstVideoIndex]['views'] }}
                                             {{ Request::segment(1) == 'hi' ? 'विचारों' : 'Views' }}
@@ -83,7 +85,9 @@
                                             <h2><a href="{{ $videos1[$secondVideoIndex]['url'] }}"
                                                     target="_blank">{{ $videos1[$secondVideoIndex]['title'] }}</a></h2>
                                             <div class="videtxt">
-                                                {{ $videos1[$secondVideoIndex]['description'] }}
+                                                {{-- {{ $videos1[$secondVideoIndex]['description'] }} --}}
+                                                {{strip_tags(Str::limit($videos1[$secondVideoIndex]['description'], 200,'...')) }}
+
                                             </div>
                                             <div class="showview">{{ $videos1[$secondVideoIndex]['views'] }}
                                                 {{ Request::segment(1) == 'hi' ? 'विचारों' : 'Views' }}

@@ -41,7 +41,10 @@
                                 <div class="videcontent">
                                     <h2><a href="{{ $video['url'] }}" target="_blank">{{ $video['title'] }}</a> </h2>
                                     <div class="videtxt">
-                                        {{ $video['description'] }}</div>
+                                        {{-- {{ $video['description'] }} --}}
+                                        {{strip_tags(Str::limit($video['description'], 150,'...')) }}
+
+                                    </div>
                                     <div class="showview">{{ $video['views'] }} Views <span>{{ $video['date'] }}</span>
                                     </div>
                                 </div>
