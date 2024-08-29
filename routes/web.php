@@ -46,7 +46,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\InsightSitemapController;
-
+use Illuminate\Support\Facades\Artisan;
 
 
 
@@ -89,7 +89,7 @@ Route::get('content/{slug_and_id}', function ($slug_and_id) {
         $id = $parts[1];
         return redirect("https://www.opportunityindia.com/article/{$slug}-{$id}", 301);
     }
-    
+
     // Handle invalid format
     abort(404);
 })->where('slug_and_id', '.*');

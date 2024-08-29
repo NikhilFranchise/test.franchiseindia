@@ -788,7 +788,7 @@
             });
 
             $("#mobile").keyup(function() {
-                console.log(this.value);
+                //console.log(this.value);
                 getMobileStatusInvestor(this.value);
             });
         });
@@ -950,11 +950,11 @@
 
 
         function getMobileStatusInvestor(value) {
-            console.log('function enter');
+            //console.log('function enter');
             if ($('#successmobile').css('display') != "block") {
                 if (value.length > 9) {
                     if ($.isNumeric(value)) {
-                        console.log('number verified');
+                        //console.log('number verified');
                         $.ajax({
                             type: 'get',
                             url: '/user/investor-mobile-verify',
@@ -962,7 +962,7 @@
                                 mobile: value
                             },
                             success: function(response) {
-                                console.log(response);
+                                //console.log(response);
                                 if (response == 0) {
                                     $('#validatemobile').css('display', 'block');
                                     $('#save1').attr('disabled', true);
@@ -1007,7 +1007,7 @@
         }
 
         function validatemobile() {
-            console.log('validatemobile');
+            //console.log('validatemobile');
             $('#mobile').attr('readonly', true);
             $('#editmobile').css('display', 'block');
             $('#validatemobile').css('display', 'none');
@@ -1015,7 +1015,7 @@
             $('#save1').attr('disabled', true);
 
             var keyword = document.getElementById('mobile').value;
-            console.log(keyword);
+            //console.log(keyword);
             $.ajax({
                 type: 'get',
                 url: '/invester-verifyformmobilenumber',
@@ -1023,7 +1023,7 @@
                     mobile: keyword
                 },
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
                     if (data == 'numexists') {
                         $('#successmobile').css('display', 'block');
                         $('#save1').attr('disabled', false);
@@ -1037,7 +1037,7 @@
         }
 
         function verify() {
-            console.log('verify');
+            //console.log('verify');
             var otp = document.getElementById('otp').value;
             var mobile = document.getElementById('mobile').value;
             $.ajax({
@@ -1050,7 +1050,7 @@
                 crossDomain: true,
                 success: function(data) {
 
-                    console.log(data);
+                    //console.log(data);
                     if (data == 0) {
                         $('#mismatch').css('display', 'block');
                     } else {
