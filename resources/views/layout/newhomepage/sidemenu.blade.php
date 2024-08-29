@@ -764,7 +764,7 @@
                                                     ),
                                                     true,
                                                 );
-                                            @endphp
+                                            @endphp 
                                             @if (is_array($sscJson) && in_array($key2, $sscJson))
                                                 <li>
                                                     <a target="_blank"

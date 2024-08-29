@@ -178,7 +178,7 @@ class NewHomePageController extends Controller
 		$isBrandslftCached = Cache::has($cacheKeys['brandslft']);
 		// dd($isBrandslftCached);
 		// dd($request->all());
-	
+	 
 		// Retrieve cached data or fetch and cache if not available
 		$brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
 			return HomePremiumPageBrand::query()
@@ -190,7 +190,7 @@ class NewHomePageController extends Controller
 				->get()
 				->shuffle();
 		});
-
+        // dd($brandslft);
 		// dd($cacheDatalft);
 		// dd([
 		// 	'is_brandslft_cached' => $isBrandslftCached,

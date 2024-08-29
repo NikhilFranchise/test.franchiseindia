@@ -68,6 +68,11 @@ $(document).ready(function () {
 });
 
 
+<<<<<<< HEAD
+
+
+
+=======
 $(document).ready(function () {
     $("#btnhome").click(function () {
         var mobile = $('#mobilefreeadvice').val().trim();
@@ -142,6 +147,7 @@ $(document).ready(function () {
 
     });
 });
+>>>>>>> 8e8f1a3d5f1c18900b8636d06166d5ddc4a989d6
 
 
 function frg_panel() {

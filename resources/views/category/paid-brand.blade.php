@@ -26,7 +26,7 @@
     float: right;
     border: 1px solid #209f0c;
     border-radius: 4px;
-    padding: 3px 9px;
+    padding: 1px 9px;
     font-size: 11px;
     color: #03931b;
     font-weight: bold;}
