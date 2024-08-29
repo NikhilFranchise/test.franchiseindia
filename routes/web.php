@@ -46,12 +46,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\InsightSitemapController;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Artisan;
-=======
 use App\Http\Controllers\cvwhomepage;
 
->>>>>>> 1d6c14f57eeec07790dfcc283a783cd074d8ab93
 
 
 
