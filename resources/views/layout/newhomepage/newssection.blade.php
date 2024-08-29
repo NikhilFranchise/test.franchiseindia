@@ -5,7 +5,7 @@
                 class="modified-col col-xs-12 col-sm-12
                               col-md-6
                               col-xl-6
-                              col-lg-6">
+                              col-lg-6"> 
                 <div class="section-ptb">
                     <h2>{{ Request::segment(1) == 'hi' ? 'फ्रैंचाइज के बारे में गहन जानकारियां और खबरें' : 'Franchise Insights and News' }}
                     </h2>

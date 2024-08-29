@@ -46,6 +46,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\InsightSitemapController;
+use App\Http\Controllers\cvwhomepage;
 
 
 
@@ -1008,7 +1009,9 @@ Route::get('search',                                 function () {
 });
 Route::get('/content/{slug}', function ($slug) {
     // Split the slug by the last dot (.)
+    // dd('yes');
     $parts = explode('.', $slug);
+
     // Extract the article title and id
     $title = implode('-', array_slice($parts, 0, -1));
     $id = end($parts);
@@ -1032,3 +1035,6 @@ Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('
 Route::get('/brand-total-count',[CommonController::class,'brand_total_count']);
 
 
+// new homepage for cvw routes nikhil raman 26 aug 2024
+Route::get('/cvwhome', [cvwhomepage::class,'first']);
+Route::get('/cvwhome/hi', [cvwhomepage::class,'hindifirst']);

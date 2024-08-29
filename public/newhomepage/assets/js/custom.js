@@ -68,60 +68,9 @@ $(document).ready(function () {
 });
 
 
-$(document).ready(function () {
-    $("#btnhome").click(function () {
-        var mobile = $('#mobilefreeadvice').val().trim();
-        var email = $('#emailfreeadvice').val().trim();
-        var csrf_token = $("input[name='_token']").val();
-        var hasError = false;
 
-        // Reset error states
-        $('#mobilefreeadvice').removeClass('error-border').attr('placeholder', 'Enter Mobile');
-        $('#emailfreeadvice').removeClass('error-border').attr('placeholder', 'Enter Email');
 
-        if (mobile === '') {
-            $('#mobilefreeadvice').addClass('error-border error-placeholder').attr('placeholder', 'Mobile is required').val('');
-            hasError = true;
-        }
 
-        if (email === '') {
-            $('#emailfreeadvice').addClass('error-border error-placeholder').attr('placeholder', 'Email is required').val('');
-            hasError = true;
-        }
-
-        if (!hasError) {
-            var type = $("input[name='optionsRadios']:checked").val();
-            var data = {
-                _token: csrf_token, // Add CSRF token
-                optionsRadios: type,
-                name: '--',
-                pincode: '000000',
-                email: email,
-                mobile: mobile,
-                details: '--',
-                is_newsletter: 1
-            };
-
-            $.ajax({
-                type: 'POST',
-                url: '/freeadvice',
-                data: data,
-                beforeSend: function () {
-                    $('#btnhome').html('Please wait..');
-                },
-                success: function (data) {
-                    // Assuming the server returns a URL to redirect to
-                    window.location.href = data.redirect_url || "/thanks-advice-form";
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    console.error('Error:', errorThrown);
-                    // Handle error condition, e.g., display an error message
-                    alert('Error occurred. Please try again.');
-                }
-            });
-        }
-    });
-});
 
 
 function frg_panel() {

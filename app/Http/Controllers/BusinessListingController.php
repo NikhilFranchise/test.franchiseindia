@@ -353,7 +353,7 @@ class BusinessListingController extends Controller
             $in = 'इन';
             $locName = 'इंडिया';
         }
-        if (!empty(request()->loc) && count(request()->loc) == 1) {
+        if (!empty(request()->loc) || count(request()->loc) == 1) {
             $locName = Config('location.stateArr.' . request()->loc[0]);
             if ((request()->segment(1) == 'hi')) {
                 $locName = Config('location.hindiStatesArr.' . $locName);
@@ -385,7 +385,7 @@ class BusinessListingController extends Controller
             $catArr = $seoClass->select('catname', 'parent_id', 'seoTitle', 'description', 'keywords')
                 ->where('catid', $catId)
                 ->first();
-            if (!empty(request()->loc) && count(request()->loc) == 1 && !empty($fTypeName) && !empty($catArr)) {
+            if (!empty(request()->loc) || count(request()->loc) == 1 && !empty($fTypeName) && !empty($catArr)) {
                 $seoTitle = "$catArr->catname $businessOpp $fTypeName $in $locName - Franchise India";
                 $seoDesc = "Franchise India provides $catArr->catname franchise opportunities '. $fTypeName .', business opportunities, business ideas. Buy $catArr->catname Franchise in $locName with affordable range.";
 

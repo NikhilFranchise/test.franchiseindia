@@ -253,7 +253,7 @@ Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a
                                         <div class="form-group form-group-sm">
                                             <select class="form-control
                                                 form-control-custom-main"
-                                                    id="language-changer">
+                                                    id="language-changer"> 
                                                 <option hidden>Language</option>
                                                 <option value="@yield('englishUrl')" @if($engUrl == Request::url()) selected @endif>EN - English</option>
                                                 <option value="@yield('hindiUrl')" @if($hindiUrl == Request::url()) selected @endif>HI - Hindi</option>
