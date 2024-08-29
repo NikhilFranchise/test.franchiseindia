@@ -64,6 +64,38 @@ use App\Http\Controllers\cvwhomepage;
 
 Auth::routes();
 
+Route::get('clear-cache', function () {
+    // Run the artisan commands
+    Artisan::call('optimize:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('route:clear');
+
+    return response()->json(['message' => 'Cache cleared successfully.']);
+});
+
+Route::get('content/{slug_and_id}', function ($slug_and_id) {
+    // Check if the slug_and_id contains a dot or a dash and split accordingly
+    if (strpos($slug_and_id, '.') !== false) {
+        // Split by dot
+        $parts = explode('.', $slug_and_id, 2);
+    } else {
+        // Split by dash
+        $parts = explode('-', $slug_and_id, 2);
+    }
+
+    // Validate that we have exactly two parts
+    if (count($parts) === 2) {
+        $slug = $parts[0];
+        $id = $parts[1];
+        return redirect("https://www.opportunityindia.com/article/{$slug}-{$id}", 301);
+    }
+    
+    // Handle invalid format
+    abort(404);
+})->where('slug_and_id', '.*');
+
+
 Route::get('content/{kicker}', function ($kicker) {
     // Dump the value to see what is being captured
     // dd($kicker);
@@ -487,6 +519,8 @@ Route::group(['prefix' => 'category'], function () {
     });
 });
 Route::get('sitemapgenerate', [SitemapController::class, 'sitemap']); // Sitemap Generator route
+Route::get('sitemap',   [StaticPageController::class,'siteMap']);
+Route::get('sitemap/content/{year}/{month}', [StaticPageController::class,'getArticleList']);
 Route::post('invsuccess', [PaymentController::class, 'investorPaymentSuccess']);        // Investor Payment success routes
 Route::post('bookpaymentsubmit', [PaymentController::class, 'bookPayment']);                   // Books & Reports Payment section routes
 Route::post('payment/booksuccess', [PaymentController::class, 'bookPaymentSuccess']);            // Books & Reports Payment section routes
@@ -720,6 +754,7 @@ Route::group(['prefix' => 'entrepreneur'], function () {
     });
 });
 Route::get('event', [EventController::class, 'event']);
+
 //Rss Route
 Route::get('rss', [FacebookArticleController::class, 'rss']); // Facebook Instant Articles RSS feed route
 //Hindi language routes

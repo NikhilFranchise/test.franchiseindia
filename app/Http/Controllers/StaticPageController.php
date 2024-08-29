@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\PropertyLoan;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Carbon;
+use App\Models\ContentList;
+use Illuminate\Support\Facades\DB;
 
 class StaticPageController extends Controller
 {
@@ -88,7 +90,8 @@ class StaticPageController extends Controller
             $alphabeticalKickers[$kickerRange] = $kickerSpecificRange;
         }
 
-        return view('static.sitemapnew', compact('years', 'allData', 'kickers', 'alphabeticalKickers'));
+        // return view('static.sitemapnew', compact('years', 'allData', 'kickers', 'alphabeticalKickers'));
+        return view('static.sitemapnew', compact('years', 'allData', 'alphabeticalKickers'));
     }
 
 

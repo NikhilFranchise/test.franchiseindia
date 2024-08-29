@@ -68,9 +68,86 @@ $(document).ready(function () {
 });
 
 
+<<<<<<< HEAD
 
 
 
+=======
+$(document).ready(function () {
+    $("#btnhome").click(function () {
+        var mobile = $('#mobilefreeadvice').val().trim();
+        var email = $('#emailfreeadvice').val().trim();
+        var csrf_token = $("input[name='_token']").val();
+            // Clear previous error messages
+        $('#mobile-error').text('');
+        $('#email-error').text('');
+        $('#mobilefreeadvice').removeClass('input-error');
+        $('#emailfreeadvice').removeClass('input-error');
+        // Basic validation
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var mobileRegex = /^\d{10}$/;
+        var isValid = true;
+
+        if (mobile === '') {
+            $('#mobile-error').text('Mobile number is required.');
+            $('#mobilefreeadvice').addClass('input-error').focus();
+            isValid = false;
+        } else if (!/^\d+$/.test(mobile)) {
+            $('#mobile-error').text('Mobile number must be numeric.');
+            $('#mobilefreeadvice').addClass('input-error').focus();
+            isValid = false;
+        } else if (!mobileRegex.test(mobile)) {
+            $('#mobile-error').text('Please enter a valid 10-digit mobile number.');
+            $('#mobilefreeadvice').addClass('input-error').focus();
+            isValid = false;
+        }
+
+        if (email === '') {
+            $('#email-error').text('Email is required.');
+            $('#emailfreeadvice').addClass('input-error').focus();
+            isValid = false;
+        } else if (!emailRegex.test(email)) {
+            $('#email-error').text('Please enter a valid email address.');
+            $('#emailfreeadvice').addClass('input-error').focus();
+            isValid = false;
+        }
+
+        if (!isValid) {
+            return; // Stop the form submission if validation fails
+        }
+            var type = $("input[name='optionsRadios']:checked").val();
+            var data = {
+                _token: csrf_token, // Add CSRF token
+                optionsRadios: type,
+                name: '--',
+                pincode: '000000',
+                email: email,
+                mobile: mobile,
+                details: '--',
+                is_newsletter: 1
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '/freeadvice',
+                data: data,
+                beforeSend: function () {
+                    $('#btnhome').html('Please wait..');
+                },
+                success: function (data) {
+                    // Assuming the server returns a URL to redirect to
+                    window.location.href = data.redirect_url || "/thanks-advice-form";
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                    // Handle error condition, e.g., display an error message
+                    alert('Error occurred. Please try again.');
+                }
+            });
+
+    });
+});
+>>>>>>> 8e8f1a3d5f1c18900b8636d06166d5ddc4a989d6
 
 
 function frg_panel() {
