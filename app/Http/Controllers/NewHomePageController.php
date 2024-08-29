@@ -155,13 +155,7 @@ class NewHomePageController extends Controller
 		// dd($videos);
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
-<<<<<<< HEAD
 		return view('cvw.homepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc'));
-=======
-	
-
-		return view('layout.hindihomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
->>>>>>> 8e8f1a3d5f1c18900b8636d06166d5ddc4a989d6
 	}
 
 	public function homeNew(Request $request)
@@ -301,12 +295,8 @@ class NewHomePageController extends Controller
 		
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
-<<<<<<< HEAD
 
 		return view('cvw.homepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc'));
-=======
-		return view('layout.masternewhomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
->>>>>>> 8e8f1a3d5f1c18900b8636d06166d5ddc4a989d6
 	}
 
 
