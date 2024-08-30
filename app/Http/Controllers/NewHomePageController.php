@@ -310,22 +310,47 @@ class NewHomePageController extends Controller
 	}
 	
     
+	// private function getYouTubeVideoViewCount(array $videoIds, $apiKey) {
+	// 	$ids = implode(',', $videoIds);
+	// 	$url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id={$ids}&key={$apiKey}";
+	
+	// 	$response = file_get_contents($url);
+	// 	$data = json_decode($response, true);
+	
+	// 	$viewCounts = [];
+	// 	if (isset($data['items'])) {
+	// 		foreach ($data['items'] as $item) {
+	// 			$viewCounts[$item['id']] = $item['statistics']['viewCount'];
+	// 		}
+	// 	}
+	
+	// 	return $viewCounts;
+	// }
+
 	private function getYouTubeVideoViewCount(array $videoIds, $apiKey) {
-		$ids = implode(',', $videoIds);
-		$url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id={$ids}&key={$apiKey}";
+		// Generate a unique cache key based on the video IDs a
+		$cacheKey = 'youtube_video_view_count_' . md5(implode(',', $videoIds));
+		$cacheExpiration = 60 * 60; // Cache expiration time in seconds (1 hour)
 	
-		$response = file_get_contents($url);
-		$data = json_decode($response, true);
+		// Attempt to retrieve the view counts from cache
+		return Cache::remember($cacheKey, $cacheExpiration, function () use ($videoIds, $apiKey) {
+			$ids = implode(',', $videoIds);
+			$url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id={$ids}&key={$apiKey}";
 	
-		$viewCounts = [];
-		if (isset($data['items'])) {
-			foreach ($data['items'] as $item) {
-				$viewCounts[$item['id']] = $item['statistics']['viewCount'];
+			$response = file_get_contents($url);
+			$data = json_decode($response, true);
+	
+			$viewCounts = [];
+			if (isset($data['items'])) {
+				foreach ($data['items'] as $item) {
+					$viewCounts[$item['id']] = $item['statistics']['viewCount'];
+				}
 			}
-		}
 	
-		return $viewCounts;
+			return $viewCounts;
+		});
 	}
+	
 	
 	public static function getSlug($title, $id)
 	{
