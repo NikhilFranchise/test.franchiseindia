@@ -589,11 +589,23 @@ function getSubCategoryHeader1(value) {
             maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
     }
 
+    function changelanguage(url){
+        // console.log('language clled');
+        var url = $(this).val(); // get selected value
+                if (url) { // require a URL
+                    console.log(url);
+                    window.location = url; // redirect
+                }
+                return false;
+    }
+
     $(function() {
             // bind change event to select
-            $('#language-changer').on('change', function() {
+            console.log('language');
+            $('#language-changer1').on('change', function() {
                 var url = $(this).val(); // get selected value
                 if (url) { // require a URL
+                    console.log(url);
                     window.location = url; // redirect
                 }
                 return false;

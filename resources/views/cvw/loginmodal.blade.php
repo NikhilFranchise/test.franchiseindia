@@ -108,10 +108,16 @@ aria-labelledby="exampleModalLabel">
                         <form class="form-horizontal" id="registration">
                             <div class="frm-pnl">
                                 <div style="text-align:center">
-                                    <div><a href="https://www.franchiseindia.com/investor/create" class="btn btn-large btn-default btn-gry btn-prop">Start A Business Today<br><span>(Investor Registration)</span></a></div><br>
-                                    <div><a href="https://www.franchiseindia.com/franchisor/registration/step/1" class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel Partners<br><span>(Franchisor Registration)</span></a></div><br>
-                                    <div><a href="https://www.franchiseindia.com/franchisor/international-registration" class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel Partners<br><span>(International Franchisor Registration)</span></a></div><br>
-                                    <div><a target="_blank" href="https://www.franchiseindia.com/property-loan" class="btn btn- large btn-default btn-gry btn-prop">Loan Against Property</a></div>
+                                    <div><a href="https://www.franchiseindia.com/investor/create" class="btn btn-large btn-default btn-gry btn-prop">  व्यापार की शुरुआत
+                                        आज <br /><span>(इन्वेस्टर
+                                            पंजीकरण) </span> </a></div><br>
+                                    <div><a href="https://www.franchiseindia.com/franchisor/registration/step/1" class="btn btn-large btn-default btn-gry btn-prop">चैनल
+                                        पार्टनर नियुक्त करें <br /><span> (फ्रेंचाइज़र पंजीकरण)
+                                        </span></a></div><br>
+                                    <div><a href="https://www.franchiseindia.com/franchisor/international-registration" class="btn btn-large btn-default btn-gry btn-prop">चैनल पार्टनर नियुक्त करें
+                                        <br><span>(अंतर्राष्ट्रीय फ्रेंचाइज़र पंजीकरण)</span></a></div><br>
+                                    <div><a target="_blank" href="https://www.franchiseindia.com/property-loan" class="btn btn- large btn-default btn-gry btn-prop">संपत्ति
+                                        के खिलाफ ऋण</a></div>
                                 </div>
                             </div>
                         </form>
