@@ -19,166 +19,182 @@ class SitemapController extends Controller
             $siteMapInitializer = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">";
             $siteMapTerminator  = "</urlset>";
 
-            /* Brands Site map Generation start */
-            $siteMapData  = '';
-            //$brands      = FranchisorBusinessDetail::query()->where('profile_status', 1)->orderBy('fran_detail_id', 'desc')->get();
-            $brands      = FranchisorBusinessDetail::query()->where('profile_status', 1)->where('ind_main_cat', '!=', 5)->orderBy('fran_detail_id', 'desc')->get();
+            $saveSitemap = function ($sitemapContent, $filename) use ($siteMapInitializer, $siteMapTerminator) {
+                $sitemapFullContent = $siteMapInitializer . $sitemapContent . $siteMapTerminator;
+                file_put_contents(public_path($filename), $sitemapFullContent);
+            };
+
+            // Brands Sitemap
+            $brands = FranchisorBusinessDetail::query()
+                ->where('profile_status', 1)
+                ->where('ind_main_cat', '!=', 5)
+                ->orderBy('fran_detail_id', 'desc')
+                ->get();
+            $siteMapBrands = '';
+            $fileIndex = 1;
+            $totalUrls = 0;
+            $brandsFiles = [];
+            $latestUpdatedAt = null;
             foreach ($brands as $brand) {
-                $siteMapData .= "<url>
-                                <loc>https://www.franchiseindia.com/brands/" . str_replace('&', '&amp;', $brand->profile_name) . "." . $brand->fran_detail_id . "</loc>
-                                <lastmod>" . date('Y-m-d', strtotime($brand->updated_at)) . "</lastmod>
-                            </url>";
+                $siteMapBrands .= "<url>
+                 <loc>https://www.franchiseindia.com/brands/" . str_replace('&', '&amp;', $brand->profile_name) . "." . $brand->fran_detail_id . "</loc>
+                 <lastmod>" . date('Y-m-d', strtotime($brand->updated_at)) . "</lastmod>
+             </url>";
+                // Track the latest `updated_at` timestamp
+                if ($latestUpdatedAt === null || strtotime($brand->updated_at) > strtotime($latestUpdatedAt)) {
+                    $latestUpdatedAt = $brand->updated_at;
+                }
+                $totalUrls++;
+                if ($totalUrls >= 5000) {
+                    $filename = "sitemap_brands_{$fileIndex}.xml";
+                    $saveSitemap($siteMapBrands, $filename);
+                    $brandsFiles[] = $filename;
+                    $siteMapBrands = '';
+                    $fileIndex++;
+                    $totalUrls = 0;
+                }
             }
-
+            // Check if there are leftover URLs and create the last sitemap file
+            if ($totalUrls > 0) {
+                $filename = "sitemap_brands_{$fileIndex}.xml";
+                $saveSitemap($siteMapBrands, $filename);
+                $brandsFiles[] = $filename;
+            }
+            // Generate the Brands Sitemap Index (sitemap_brands.xml)
+            if (count($brandsFiles) > 0) {
+                $siteMapBrandsIndexData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+                foreach ($brandsFiles as $file) {
+                    $siteMapBrandsIndexData .= "    <sitemap>\n";
+                    $siteMapBrandsIndexData .= "        <loc>" . url($file) . "</loc>\n";
+                    $siteMapBrandsIndexData .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
+                    $siteMapBrandsIndexData .= "    </sitemap>\n";
+                }
+                $siteMapBrandsIndexData .= "</sitemapindex>";
+                file_put_contents(public_path("sitemap_brands.xml"), $siteMapBrandsIndexData);
+            }
             //changes by GP 12-August-2024
-            file_put_contents(public_path("sitemap_brands.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            //changes by GP 12-August-2024
 
-            //Storage::getFacadeRoot()->put("sitemap_brands.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
             /* Brands Site map Generation End */
 
-            /* Articles Site map Generation Start */
-            $siteMapData = "";
-            $articles    = ContentList::query()->where('site_type', 'fi')->where('status', 1)->orderBy('content_id', 'desc')->get();
-            foreach ($articles as $article) {
-                $siteMapData .= "<url>
-                                <loc>
-                                https://www.franchiseindia.com/content/" . str_replace('&', '&amp;', $article->slug) . "." . $article->content_id . "</loc>
-                                <lastmod>" . substr($article->created_at, 0, 10) . "</lastmod>
-                            </url>";
-            }
-            //changes by GP 12-August-2024
-            file_put_contents(public_path("sitemap_articles.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
 
-            //changes by GP 12-August-2024
+            // /* Education Articles Site map Generation Start */
+            // $siteMapData = '<url>
+            //                     <loc>https://www.franchiseindia.com/education/</loc>
+            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
+            //                 </url>
+            //                 <url>
+            //                 <loc>https://www.franchiseindia.com/education/about</loc>
+            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
+            //                 </url>
+            //                 <url>
+            //                 <loc>https://www.franchiseindia.com/education/contact/</loc>
+            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
+            //                 </url>
+            //                 <url>
+            //                     <loc>https://www.franchiseindia.com/education/feedback/</loc>
+            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
+            //                 </url>
+            //                 <url>
+            //                     <loc>https://www.franchiseindia.com/education/terms</loc>
+            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
+            //                 </url>';
+            // $eduArticles     = ContentList::query()->where('site_type', 'edu')->where('status', 1)->orderBy('content_id', 'desc')->get();
 
-            //Storage::getFacadeRoot()->put("sitemap_articles.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
+            // foreach ($eduArticles as $article) {
+            //     $siteMapData .= "<url>
+            //                         <loc>
+            //                         https://www.franchiseindia.com/education/" . str_replace('&', '&amp;', $article->slug) . "." . $article->content_id . "</loc>
+            //                         <lastmod>" . substr($article->created_at, 0, 10) . "</lastmod>
+            //                     </url>";
+            // }
 
-            /* Articles Site map Generation End */
+            // //changes by GP 12-August-2024
+            // file_put_contents(public_path("sitemap_educontent.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
+            // //changes by GP 12-August-2024
 
-            /* Education Articles Site map Generation Start */
-            $siteMapData = '<url>
-                                <loc>https://www.franchiseindia.com/education/</loc>
-                                <lastmod>' . date('Y-m-d') . '</lastmod>
-                            </url>
-                            <url>
-                            <loc>https://www.franchiseindia.com/education/about</loc>
-                                <lastmod>' . date('Y-m-d') . '</lastmod>
-                            </url>
-                            <url>
-                            <loc>https://www.franchiseindia.com/education/contact/</loc>
-                                <lastmod>' . date('Y-m-d') . '</lastmod>
-                            </url>
-                            <url>
-                                <loc>https://www.franchiseindia.com/education/feedback/</loc>
-                                <lastmod>' . date('Y-m-d') . '</lastmod>
-                            </url>
-                            <url>
-                                <loc>https://www.franchiseindia.com/education/terms</loc>
-                                <lastmod>' . date('Y-m-d') . '</lastmod>
-                            </url>';
-            $eduArticles     = ContentList::query()->where('site_type', 'edu')->where('status', 1)->orderBy('content_id', 'desc')->get();
 
-            foreach ($eduArticles as $article) {
-                $siteMapData .= "<url>
-                                    <loc>
-                                    https://www.franchiseindia.com/education/" . str_replace('&', '&amp;', $article->slug) . "." . $article->content_id . "</loc>
-                                    <lastmod>" . substr($article->created_at, 0, 10) . "</lastmod>
-                                </url>";
-            }
+            // /* Wellness Articles Site map Generation Start */
+            // $siteMapData = '<url>
+            //                     <loc>https://www.franchiseindia.com/wellness/</loc>
+            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
+            //                 </url>
+            //                 <url>
+            //                 <loc>https://www.franchiseindia.com/wellness/about</loc>
+            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
+            //                 </url>
+            //                 <url>
+            //                 <loc>https://www.franchiseindia.com/wellness/contact/</loc>
+            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
+            //                 </url>
+            //                 <url>
+            //                     <loc>https://www.franchiseindia.com/wellness/feedback/</loc>
+            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
+            //                 </url>
+            //                 <url>
+            //                     <loc>https://www.franchiseindia.com/wellness/terms</loc>
+            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
+            //                 </url>';
+            // $wellArticles     = ContentList::query()->where('site_type', 'wi')->where('status', 1)->orderBy('content_id', 'desc')->get();
 
-            //changes by GP 12-August-2024
-            file_put_contents(public_path("sitemap_educontent.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            //changes by GP 12-August-2024
+            // foreach ($wellArticles as $article) {
+            //     $siteMapData .= "<url>
+            //                         <loc>
+            //                         https://www.franchiseindia.com/wellness/" . str_replace('&', '&amp;', $article->slug) . "." . $article->content_id . "</loc>
+            //                         <lastmod>" . substr($article->created_at, 0, 10) . "</lastmod>
+            //                     </url>";
+            // }
+            // //changes by GP 12-August-2024
+            // file_put_contents(public_path("sitemap_wellness.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
+            // //changes by GP 12-August-2024
 
-            //Storage::getFacadeRoot()->put("sitemap_educontent.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
+            // /* Wellness Articles Site map Generation End */
 
-            /* Wellness Articles Site map Generation Start */
-            $siteMapData = '<url>
-                                <loc>https://www.franchiseindia.com/wellness/</loc>
-                                <lastmod>' . date('Y-m-d') . '</lastmod>
-                            </url>
-                            <url>
-                            <loc>https://www.franchiseindia.com/wellness/about</loc>
-                                <lastmod>' . date('Y-m-d') . '</lastmod>
-                            </url>
-                            <url>
-                            <loc>https://www.franchiseindia.com/wellness/contact/</loc>
-                                <lastmod>' . date('Y-m-d') . '</lastmod>
-                            </url>
-                            <url>
-                                <loc>https://www.franchiseindia.com/wellness/feedback/</loc>
-                                <lastmod>' . date('Y-m-d') . '</lastmod>
-                            </url>
-                            <url>
-                                <loc>https://www.franchiseindia.com/wellness/terms</loc>
-                                <lastmod>' . date('Y-m-d') . '</lastmod>
-                            </url>';
-            $wellArticles     = ContentList::query()->where('site_type', 'wi')->where('status', 1)->orderBy('content_id', 'desc')->get();
+            // /* Article Kickers Site map Generation Start */
+            // $siteMapData = "";
+            // $kickers     = array_unique(ContentList::query()->select('kicker')->where('kicker', '!=', '')->where('status', 1)->get()->pluck('kicker')->toArray());
+            // foreach ($kickers as $kicker) {
+            //     $siteMapData .= "<url>
+            //                     <loc>https://www.franchiseindia.com/content/" . str_replace('&', '&amp;', Str::slug($kicker)) . "</loc>
+            //                     <lastmod>" . date('Y-m-d') . "</lastmod>
+            //                 </url>";
+            // }
+            // //changes by GP 12-August-2024
+            // file_put_contents(public_path("sitemap_kicker.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
+            // //changes by GP 12-August-2024
 
-            foreach ($wellArticles as $article) {
-                $siteMapData .= "<url>
-                                    <loc>
-                                    https://www.franchiseindia.com/wellness/" . str_replace('&', '&amp;', $article->slug) . "." . $article->content_id . "</loc>
-                                    <lastmod>" . substr($article->created_at, 0, 10) . "</lastmod>
-                                </url>";
-            }
-            //changes by GP 12-August-2024
-            file_put_contents(public_path("sitemap_wellness.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            //changes by GP 12-August-2024
+            //  /* Article Kickers Site map Generation End */
 
-            //Storage::getFacadeRoot()->put("sitemap_wellness.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            /* Wellness Articles Site map Generation End */
+            // /* Hindi Article Kickers Site map Generation Start */
+            // $siteMapData  = '';
+            // $kickers     = SeoTagHindi::query()->get();
+            // foreach ($kickers as $kicker) {
+            //     $siteMapData .= "<url>
+            //                     <loc>https://www.franchiseindia.com/hi/content/" . $kicker->name . "/" . $kicker->tag_id . "</loc>
+            //                     <lastmod>" . date('Y-m-d') . "</lastmod>
+            //                 </url>";
+            // }
+            // //changes by GP 12-August-2024
+            // file_put_contents(public_path("sitemap_hindi_kicker.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
+            // //changes by GP 12-August-2024
 
-            /* Article Kickers Site map Generation Start */
-            $siteMapData = "";
-            $kickers     = array_unique(ContentList::query()->select('kicker')->where('kicker', '!=', '')->where('status', 1)->get()->pluck('kicker')->toArray());
-            foreach ($kickers as $kicker) {
-                $siteMapData .= "<url>
-                                <loc>https://www.franchiseindia.com/content/" . str_replace('&', '&amp;', Str::slug($kicker)) . "</loc>
-                                <lastmod>" . date('Y-m-d') . "</lastmod>
-                            </url>";
-            }
-            //changes by GP 12-August-2024
-            file_put_contents(public_path("sitemap_kicker.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            //changes by GP 12-August-2024
+            // /*Hindi Article Kickers Site map Generation End */
 
-             //Storage::getFacadeRoot()->put("sitemap_kicker.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            /* Article Kickers Site map Generation End */
+            // /* Hindi Articles Site map Generation Start */
+            // $siteMapData  = '';
+            // $hiArticles     = ContentList::query()->where('is_hindi', 1)->where('status', 1)->orderBy('content_id', 'desc')->get();
 
-            /* Hindi Article Kickers Site map Generation Start */
-            $siteMapData  = '';
-            $kickers     = SeoTagHindi::query()->get();
-            foreach ($kickers as $kicker) {
-                $siteMapData .= "<url>
-                                <loc>https://www.franchiseindia.com/hi/content/" . $kicker->name . "/" . $kicker->tag_id . "</loc>
-                                <lastmod>" . date('Y-m-d') . "</lastmod>
-                            </url>";
-            }
-            //changes by GP 12-August-2024
-            file_put_contents(public_path("sitemap_hindi_kicker.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            //changes by GP 12-August-2024
+            // foreach ($hiArticles as $article) {
+            //     $siteMapData .= "<url>
+            //                     <loc>
+            //                     https://www.franchiseindia.com/hi/" . Config('constants.articleArr.' . $article->site_type) . "/" . str_replace('&', '&amp;', $article->slug) . "." . $article->content_id . "</loc>
+            //                     <lastmod>" . substr($article->created_at, 0, 10) . "</lastmod>
+            //                 </url>";
+            // }
+            // //changes by GP 12-August-2024
+            // file_put_contents(public_path("sitemap_hindi_content.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
+            // //changes by GP 12-August-2024
 
-            //Storage::getFacadeRoot()->put("sitemap_hindi_kicker.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            /*Hindi Article Kickers Site map Generation End */
-
-            /* Hindi Articles Site map Generation Start */
-            $siteMapData  = '';
-            $hiArticles     = ContentList::query()->where('is_hindi', 1)->where('status', 1)->orderBy('content_id', 'desc')->get();
-
-            foreach ($hiArticles as $article) {
-                $siteMapData .= "<url>
-                                <loc>
-                                https://www.franchiseindia.com/hi/" . Config('constants.articleArr.' . $article->site_type) . "/" . str_replace('&', '&amp;', $article->slug) . "." . $article->content_id . "</loc>
-                                <lastmod>" . substr($article->created_at, 0, 10) . "</lastmod>
-                            </url>";
-            }
-            //changes by GP 12-August-2024
-            file_put_contents(public_path("sitemap_hindi_content.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            //changes by GP 12-August-2024
-
-             //Storage::getFacadeRoot()->put("sitemap_hindi_content.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            /* Restaurant Articles Site map Generation End */
+            //  /* Restaurant Articles Site map Generation End */
 
 
 
@@ -232,13 +248,11 @@ class SitemapController extends Controller
                             <loc>https://www.franchiseindia.com/business-opportunities/" . $category . ".m" . $key . "</loc>
                             <lastmod>" . date('Y-m-d') . "</lastmod>
                         </url>";
-
-
                 foreach ($locations as $key1 => $location) {
                     $siteMapData .= "<url>
-                            <loc>https://www.franchiseindia.com/business-opportunities/" . $category . "-in-" . Str::slug($location) . "/mc-" . $key . "/loc-" . $key1 . "</loc>
-                            <lastmod>" . date('Y-m-d') . "</lastmod>
-                        </url>";
+                                    <loc>https://www.franchiseindia.com/business-opportunities/" . $category . "-in-" . Str::slug($location) . "/mc-" . $key . "/loc-" . $key1 . "</loc>
+                                    <lastmod>" . date('Y-m-d') . "</lastmod>
+                                </url>";
                 }
 
                 foreach ($range as $key2 => $price) {
@@ -246,18 +260,18 @@ class SitemapController extends Controller
                     $range1  = Config('constants.InvestRange');
                     foreach ($range1 as $key3 => $price2) {
                         $siteMapData .= "<url>
-                            <loc>https://www.franchiseindia.com/business-opportunities/" . $category . "-in-india/mc-" . $key . "/range-" . $price['min'] . "-" . $price2['max'] . "</loc>
-                            <lastmod>" . date('Y-m-d') . "</lastmod>
-                        </url>";
+                                    <loc>https://www.franchiseindia.com/business-opportunities/" . $category . "-in-india/mc-" . $key . "/range-" . $price['min'] . "-" . $price2['max'] . "</loc>
+                                    <lastmod>" . date('Y-m-d') . "</lastmod>
+                                </url>";
                     }
                 }
             }
+
 
             //changes by GP 12-August-2024
             file_put_contents(public_path("sitemap_category.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
             //changes by GP 12-August-2024
 
-            //Storage::getFacadeRoot()->put("sitemap_category.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
             /* Category page Site map Generation End */
 
 
@@ -272,9 +286,8 @@ class SitemapController extends Controller
             file_put_contents(public_path("sitemap_category_location.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
             //changes by GP 12-August-2024
 
-            //Storage::getFacadeRoot()->put("sitemap_category_location.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
 
-            $siteMapData = "";
+            $siteMapData = ""; 
             foreach ($subCategories as $key => $category) {
                 $siteMapData .= "<url>
                                 <loc>https://www.franchiseindia.com/business-opportunities/" . $category . ".sc" . $key . "</loc>
@@ -302,7 +315,6 @@ class SitemapController extends Controller
             file_put_contents(public_path("sitemap_scategory_price_location.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
             //changes by GP 12-August-2024
 
-            //Storage::getFacadeRoot()->put("sitemap_scategory_price_location.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
 
             $siteMapData = "";
             $subCount    = 0;
@@ -324,7 +336,6 @@ class SitemapController extends Controller
                         file_put_contents(public_path("sitemap_sscategory_price_location_" . $subCount . ".xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
                         //changes by GP 12-August-2024
 
-                         //Storage::getFacadeRoot()->put("sitemap_sscategory_price_location_" . $subCount . ".xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
                         $siteMapData = "";
                     }
                 }
@@ -344,7 +355,6 @@ class SitemapController extends Controller
                                 file_put_contents(public_path("sitemap_sscategory_price_location_" . $subCount . ".xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
                                 //changes by GP 12-August-2024
 
-                                //Storage::getFacadeRoot()->put("sitemap_sscategory_price_location_" . $subCount . ".xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
                                 $siteMapData = "";
                             }
                         }
@@ -355,7 +365,6 @@ class SitemapController extends Controller
                         //changes by GP 12-August-2024
                         file_put_contents(public_path("sitemap_sscategory_price_location_" . $subCount . ".xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
                         //changes by GP 12-August-2024
-                        //Storage::getFacadeRoot()->put("sitemap_sscategory_price_location_" . $subCount . ".xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
                         $siteMapData = "";
                     }
                 }
@@ -365,14 +374,12 @@ class SitemapController extends Controller
                     //changes by GP 12-August-2024
                     file_put_contents(public_path("sitemap_sscategory_price_location_" . $subCount . ".xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
                     //changes by GP 12-August-2024
-                    //Storage::getFacadeRoot()->put("sitemap_sscategory_price_location_" . $subCount . ".xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
                     $siteMapData = "";
                 }
             }
             //changes by GP 12-August-2024
             file_put_contents(public_path("sitemap_sscategory_price_location.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
             //changes by GP 12-August-2024
-             //Storage::getFacadeRoot()->put("sitemap_sscategory_price_location.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
             /* Category page Site map Generation End */
 
 
@@ -443,7 +450,6 @@ class SitemapController extends Controller
             file_put_contents(public_path("sitemap_hi_category.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
             //changes by GP 12-August-2024
 
-             //Storage::getFacadeRoot()->put("sitemap_hi_category.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
             /* Category page Site map Generation End */
 
             $siteMapData = "";
@@ -457,7 +463,6 @@ class SitemapController extends Controller
             file_put_contents(public_path("sitemap_hi_category_location.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
             //changes by GP 12-August-2024
 
-             //Storage::getFacadeRoot()->put("sitemap_hi_category_location.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
 
             $siteMapData = "";
             foreach ($subCategories as $key => $category) {
@@ -486,7 +491,6 @@ class SitemapController extends Controller
             file_put_contents(public_path("sitemap_hi_scategory_price_location.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
             //changes by GP 12-August-2024
 
-             //Storage::getFacadeRoot()->put("sitemap_hi_scategory_price_location.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
 
             $siteMapData = "";
             $subCount    = 0;
@@ -507,7 +511,6 @@ class SitemapController extends Controller
                         file_put_contents(public_path("sitemap_hi_sscategory_price_location_" . $subCount . ".xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
                         //changes by GP 12-August-2024
 
-                        //Storage::getFacadeRoot()->put("sitemap_hi_sscategory_price_location_" . $subCount . ".xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
                         $siteMapData = "";
                     }
                 }
@@ -525,7 +528,6 @@ class SitemapController extends Controller
                                 file_put_contents(public_path("sitemap_hi_sscategory_price_location_" . $subCount . ".xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
                                 //changes by GP 12-August-2024
 
-                                //Storage::getFacadeRoot()->put("sitemap_hi_sscategory_price_location_" . $subCount . ".xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
                                 $siteMapData = "";
                             }
                         }
@@ -535,7 +537,6 @@ class SitemapController extends Controller
                         //changes by GP 12-August-2024
                         file_put_contents(public_path("sitemap_hi_sscategory_price_location_" . $subCount . ".xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
                         //changes by GP 12-August-2024
-                        //Storage::getFacadeRoot()->put("sitemap_hi_sscategory_price_location_" . $subCount . ".xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
                         $siteMapData = "";
                     }
                 }
@@ -546,7 +547,6 @@ class SitemapController extends Controller
                     file_put_contents(public_path("sitemap_hi_sscategory_price_location_" . $subCount . ".xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
                     //changes by GP 12-August-2024
 
-                    //Storage::getFacadeRoot()->put("sitemap_hi_sscategory_price_location_" . $subCount . ".xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
                     $siteMapData = "";
                 }
             }
@@ -554,7 +554,6 @@ class SitemapController extends Controller
             file_put_contents(public_path("sitemap_hi_sscategory_price_location.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
             //changes by GP 12-August-2024
 
-            //Storage::getFacadeRoot()->put("sitemap_hi_sscategory_price_location.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
             /* Category page Site map Generation End */
 
             /* Top City Site map Generation Start */
@@ -571,8 +570,213 @@ class SitemapController extends Controller
             file_put_contents(public_path("sitemap_cities.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
             //changes by GP 12-August-2024
 
-            //Storage::getFacadeRoot()->put("sitemap_cities.xml", $siteMapInitializer . $siteMapData . $siteMapTerminator);
+
             /* Top City Site map Generation End */
+            /* Articles Site map Generation Start */
+            $siteMapData = "";
+            $articles    = ContentList::query()->where('site_type', 'fi')->where('status', 1)->orderBy('content_id', 'desc')->get();
+            foreach ($articles as $article) {
+                $siteMapData .= "<url>
+                                <loc>
+                                https://www.franchiseindia.com/content/" . str_replace('&', '&amp;', $article->slug) . "." . $article->content_id . "</loc>
+                                <lastmod>" . substr($article->created_at, 0, 10) . "</lastmod>
+                            </url>";
+            }
+            //changes by GP 12-August-2024
+            file_put_contents(public_path("sitemap_articles.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
+
+            //changes by GP 12-August-2024
+
+
+            /* Articles Site map Generation End */
+
+
+            /* static url here */
+            $siteMapData = "<url>
+    <loc>https://www.franchiseindia.com/</loc>
+
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/about</loc>
+    <lastmod>2013-08-06</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/contact/</loc>
+    <lastmod>2017-08-06</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/feedback/</loc>
+    <lastmod>2017-08-06</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/event</loc>
+    <lastmod>2013-08-06</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/sitemap</loc>
+    <lastmod>2013-08-06</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/international/</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/premiumbrand/</loc>
+    <lastmod>2017-10-23</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/advertise/</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/investor/create/</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/franchisorregistration/</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/terms</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/fro_event/</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=srs</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=tc</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=fc</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=tango</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=syor</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=salon2014</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=salon2013</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=education2013</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=eretail2013</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=franchise2012</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=salon2012</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=restaurant2012</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=educaton2012</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=realestate2011</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=education2011</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=food2011</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=smallbusiness</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=fashionlifestyle</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=educaton2009</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>
+  <url>
+    <loc>https://www.franchiseindia.com/book/view?id=food2009</loc>
+    <lastmod>2016-01-27</lastmod>
+  </url>";
+
+            file_put_contents(public_path("sitemap_static.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
+            /* static url here */
+            // Generate the main sitemap index file (links to sitemap_category.xml)
+            $siteMapIndexData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+            $siteMapIndexData .= "    <sitemap>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_brands.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_category.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_articles.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_hi_category.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('entrepreneur_sitemap.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_magazine.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_sscategory_price_location_60000.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_sscategory_price_location_50000.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_sscategory_price_location_40000.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_sscategory_price_location_30000.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_sscategory_price_location_20000.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_sscategory_price_location_10000.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_sscategory_price_location.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_scategory_price_location.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_hi_sscategory_price_location_60000.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_hi_sscategory_price_location_50000.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_hi_sscategory_price_location_40000.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_hi_sscategory_price_location_30000.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_hi_sscategory_price_location_20000.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_hi_sscategory_price_location_10000.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_hi_sscategory_price_location.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_hi_scategory_price_location.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_hi_category_location.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_category_location.xml') . "</loc>\n";
+            // $siteMapIndexData .= "<loc>" . url('sitemap_location.xml') . "</loc>\n";
+            // $siteMapIndexData .= "<loc>" . url('sitemap_master_categories.xml') . "</loc>\n";
+            // $siteMapIndexData .= "<loc>" . url('sitemap_articles.xml') . "</loc>\n";
+            // $siteMapIndexData .= "<loc>" . url('sitemap_articles.xml') . "</loc>\n";
+            // $siteMapIndexData .= "<loc>" . url('sitemap_articles.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/news.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/article.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/interview.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/report.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/event.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/categories.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/subcategories.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/tags.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_static.xml') . "</loc>\n";
+
+            $siteMapIndexData .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";
+            $siteMapIndexData .= "    </sitemap>\n";
+            $siteMapIndexData .= "</sitemapindex>";
+            file_put_contents(public_path("sitemap.xml"), $siteMapIndexData);
 
             return "Sitemaps generated successfully!";
         } catch (\Exception $e) {

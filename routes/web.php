@@ -46,6 +46,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\InsightSitemapController;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\cvwhomepage;
 
 
@@ -64,14 +65,14 @@ use App\Http\Controllers\cvwhomepage;
 
 Auth::routes();
 
-Route::get('clear-cache', function () {
+Route::get('optimize', function () {
     // Run the artisan commands
     Artisan::call('optimize:clear');
     Artisan::call('cache:clear');
     Artisan::call('config:clear');
     Artisan::call('route:clear');
 
-    return response()->json(['message' => 'Cache cleared successfully.']);
+    return 'Application optimized successfully.';
 });
 
 Route::get('content/{slug_and_id}', function ($slug_and_id) {
@@ -90,7 +91,7 @@ Route::get('content/{slug_and_id}', function ($slug_and_id) {
         $id = $parts[1];
         return redirect("https://www.opportunityindia.com/article/{$slug}-{$id}", 301);
     }
-    
+
     // Handle invalid format
     abort(404);
 })->where('slug_and_id', '.*');
