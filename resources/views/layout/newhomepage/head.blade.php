@@ -34,7 +34,7 @@
 
 @mobile
     <link rel="stylesheet" href="{{ url('newhomepage/assets/css/style-mobile-new.css?ver=12.8') }}">
-
+    <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
     @include('layout.newhomepage.topsearch')
 @endmobile
 @desktop

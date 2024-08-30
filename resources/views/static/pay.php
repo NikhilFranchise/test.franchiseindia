@@ -12,7 +12,7 @@
 
 
 <h4 class="static-subheadnew">General</h4>
-<p class="static-txt-ter" style="margin-bottom:25px;">The domain name <a href="https://www.franchiseindia.com/" target="_blank">www.franchiseindia.com</a> (the "Site") is owned and presented by Franchise India Holdings Limited ("Company"/"we"/"us"/"our"which shall mean to include its affiliated, subsidiaries and associated companies and successors and assigns). These terms and conditions of the Site("Terms") govern use of the Site and are a binding contract between Company, the Site owner and you, the user. By accessing, browsing and/or using the Site, you acknowledge that you have read, understood and agree to be bound by these Terms and Conditions. The services that are being provided by Company vide the Site are subject to the conditions as mentioned herein.</p>
+<p class="static-txt-ter">The domain name <a href="https://www.franchiseindia.com/" target="_blank">www.franchiseindia.com</a> (the "Site") is owned and presented by Franchise India Holdings Limited ("Company"/"we"/"us"/"our"which shall mean to include its affiliated, subsidiaries and associated companies and successors and assigns). These terms and conditions of the Site("Terms") govern use of the Site and are a binding contract between Company, the Site owner and you, the user. By accessing, browsing and/or using the Site, you acknowledge that you have read, understood and agree to be bound by these Terms and Conditions. The services that are being provided by Company vide the Site are subject to the conditions as mentioned herein.</p>
 
 
 <h4 class="static-subheadnew">Disclaimer Notice:</h4>

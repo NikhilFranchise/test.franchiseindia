@@ -45,6 +45,9 @@
         $mangecls = 'wiei';
     }
 @endphp
+
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+
 <div class="modal modal-cust fade" id="search-main" tabindex="-1" aria-labelledby="search-mainLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-cust">
         <div class="modal-content modal-content-cust">
@@ -59,7 +62,7 @@
                             <input type="text"
                                 class="form-control
                                     form-control-search-custom"
-                                name="text" placeholder="Search for business opportunities"
+                                name="text" placeholder="Search For Business Opportunities"
                                 id="dealer-bar-search-top" aria-describedby="basic-addon2">
                             <span
                                 class="input-group-addon
@@ -168,9 +171,8 @@
                                                 <select
                                                     class="form-control
                                           form-control-search-main-custom"
-                                                    name="mc" id="getMainCategoryDataHeaderLoc"
-                                                    required="required">
-                                                    <option value="" hidden>Select Industry</option>
+                                                    name="mc" id="getMainCategoryDataHeaderLoc">
+                                                    <option hidden>Select Industry</option>
                                                     @foreach ($catArr as $index => $value)
                                                         <option value="{{ $index }}"
                                                             slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
@@ -190,15 +192,13 @@
                                                 <select
                                                     class="form-control
                                           form-control-search-main-custom"
-                                                    name="loc" id="stateHeader" required
-                                                    onchange="getcity(this.value)">
+                                                    name="loc" id="stateHeader" onchange="getcity(this.value)"
+                                                    required="required">
                                                     <option value="" hidden>Select State</option>
-                                                    @foreach ($states as $index => $value)
-                                                        <option value="{{ $index }}"
-                                                            slug="{{ strtolower(Str::slug($value)) }}"
-                                                            @if (isset($loc[0]) && $loc[0] == $index) selected @endif>
-                                                            {!! $value !!}</option>
-                                                    @endforeach
+                                                    {{-- @foreach ($states as $index => $value)
+
+                                                    <option value="{{ $index }}" slug="{{strtolower(str_slug($value))}}" @if (isset($loc[0]) && $loc[0] == $index) selected @endif>{!! $value !!}</option>
+                                                @endforeach --}}
                                                 </select>
                                             </div>
                                         </div>
@@ -245,8 +245,7 @@
                                        form-group-search-section-li">
                                                 <select name="mc" id="getMainCategoryDataHeaderInv"
                                                     class="form-control
-                                          form-control-search-main-custom"
-                                                    required="required">
+                                          form-control-search-main-custom">
                                                     <option value="" hidden>Select Industry</option>
                                                     @foreach ($catArr as $index => $value)
                                                         <option value="{{ $index }}"
@@ -269,7 +268,7 @@
                                           form-control-search-main-custom"
                                                     id="minAmount" required="required"
                                                     onchange="selectMax(this.value)">
-                                                    <option hidden>Select Min Investment</option>
+                                                    <option value="" hidden>Select Min Investment</option>
                                                     @foreach (Config('constants.investRangeInWordsSingle') as $index => $value)
                                                         <option
                                                             slug="{{ Config('constants.InvestRange')[$index]['min'] }}"
@@ -290,7 +289,7 @@
                                                 <select name="max_cost"
                                                     class="form-control
                                           form-control-search-main-custom"
-                                                    id="maxAmount" required="required">
+                                                    id="maxAmount">
                                                     <option value="" hidden> Select Max Investment </option>
 
                                                 </select>
@@ -319,12 +318,8 @@
         </div>
     </div>
 </div>
-</div>
-<!-- Modal -->
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
-
 <script type="text/javascript">
-    if (screen.width < 767) {
+    if (screen.width > 1) {
         $(document).ready(function() {
             setTimeout(function() {
                 $("#searchblk").slideUp(800);
@@ -449,5 +444,5 @@
         $('.dropdown-toggle').click(function() {
             $('.searchoption').hide(400);
         });
-    });
+    }); 
 </script>

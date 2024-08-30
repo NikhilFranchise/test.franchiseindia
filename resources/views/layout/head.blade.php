@@ -108,7 +108,9 @@
 @if($ampFlag == 1)
     <link href="{{$ampUrl}}" rel="amphtml">
 @endif
-{{-- <link rel="preload" href="{{ url('js/jquery-3.1.1.min.js') }}" as="script"> --}}
+
+ <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+ <script src="{{ url('js/validationInsta.js?ver='.date('d'))}}"></script>
 <!-- Scrollbar Custom CSS -->
 <link rel="stylesheet" href="{{url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css')}}" >
 
@@ -120,7 +122,7 @@
 <link rel="preload" href="{{ url('wle_tracker.js')}}" as="script">
 <link rel="preload" href="{{ url('js/bootstrap-filestyle.min.js')}}" as="script">
 <link rel="preload" href="{{ url('js/js.cookie.min.js')}}" as="script">
-<link rel="preload" href="{{ url('js/validationInsta.js?ver='.date('d'))}}" as="script">
+
 <link rel="preload" href="{{ url('js/bootstrap.min.js')}}" as="script">
 <link rel="preload" href="{{ url('js/custom.js?ver='.date('d'))}}" as="script">
 <link rel="preload" href="{{ url('js/lozad.min.js')}}" as="script">

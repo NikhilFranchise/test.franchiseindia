@@ -3,25 +3,28 @@
 @section('seoKeywords', 'Franchise India Top 100 Franchisees, Top 100 Franchisees')
 @extends('layout.master')
 @section('content')
-    <style>
+<style>
   /* 5 OCT 2023 CSS ADD */
-  .yeartab li.active{border-bottom: 1px solid #f00;}
+.yeartab li.active{border-bottom: 1px solid #f00;}
+.yeartab li:hover{background-color: #3E3E3E;border-radius: 4px;border-bottom: 1px solid #f00;}
+.yeartab li:hover a{color:#ffffff!important;}
+.scriteria{border: 1px solid #E9ECF4;padding: 10px 25px 25px 25px;border-radius: 4px;background: #ffffff;margin-bottom: 25px;}
+.scriteria ul li{margin-bottom: 10px;}
 .moblink{display: none;}
 a.desklink{background-color: #000000; padding: 14px 20px;border-radius: 5px; font-weight: normal;display: block;font-size: 13px; color:#ffffff;
 text-align: center;}
+.staicp h1{font-size: 33px;line-height: 41px;}
 a.desklink:hover{color: #ffffff;}
 .middleval{display: none;}
 .top-hundred h2{color: #333333;font-size: 26px;} 
 .top-hundred p{color: #333333;font-size: 16px;line-height: 24px;}
 .top-hundred-tab h3{color: #333333;font-size: 20px;font-weight: bold;margin-bottom: 11px;}
-.top-hundred a{color:#ED1C25;font-size: 17px;text-decoration: underline;cursor: pointer;}
+.top-hundred a{color:#ED1C25;font-size: 16px;text-decoration: underline;cursor: pointer;}
 .top-hundred a:hover{color:#ED1C25;text-decoration: underline;cursor: pointer;}
-.top-hundred-tab{border: 1px solid #E9ECF4;padding:0px 20px 20px 20px;border-radius: 4px;background: #ffffff;margin-top: 20px;
-margin-bottom: 20px;}
+.top-hundred-tab{border: 1px solid #E9ECF4;padding:0px 20px 20px 20px;border-radius: 4px;background: #ffffff;margin-top: 20px;margin-bottom: 20px;}
 .nav-tabs>li{text-align: center;}
 .nav-tabs>li span{line-height: 18px;font-size: 14px;padding-top: 7px;display: block;}
-.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover, .nav-tabs>li>a{
-	background-color: transparent!important;border: 0px!important;color: #333333!important;}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover, .nav-tabs>li>a{background-color: transparent!important;border: 0px!important;color: #333333!important;}
 .nav-tabs>li>a{margin-right: 0px!important;}	
 .nav-tabs{display: flex;justify-content: space-between;	}
 .nav>li>a>img{max-width: none;display: block;margin: 0px auto 4px auto;}
@@ -45,7 +48,7 @@ a.load_more:hover, a.load_more:visited, a.load_more:focus{color: #ffffff;}
 table tr.active { display: table-row; }
 .top-modal-head{color: #333333;font-size: 20px;font-weight: bold;margin-bottom: 15px;}
 ul.topp{list-style: none;padding-left: 0px;}
-ul.topp li{color: #333333;font-size: 15px;margin-bottom: 5px;position: relative;padding-left: 24px;background-image: url(images/top100/bullets.png);
+ul.topp li{color: #333333;font-size: 15px;margin-bottom: 5px;position: relative;padding-left: 24px;background-image: url(https://www.franchiseindia.com/images/top100/bullets.png);
     background-repeat: no-repeat;background-position: left;}
 #topFranchise .close {position: absolute;right: 7px;top: 4px;background-color: transparent;border-radius: 50px;z-index: 999;height: 33px;width: 33px;opacity: 1;color: #585858;box-shadow: none;
 }
@@ -57,44 +60,42 @@ ul.topp li{color: #333333;font-size: 15px;margin-bottom: 5px;position: relative;
 .yeartab li{margin-bottom: 20px;background: #ffffff;padding: 4px 25px;}
 .yeartab li a{color:#333333;font-weight: bold;font-size: 20px;cursor: pointer;}
 .yeartab{display: block!important;}
-.yeartab li.active::after{border-radius: 10px 20px 20px 5px;width: 20px;position: absolute;
-	padding-left: 40px; bottom: 0px;left: 50px;bottom: 10px;display: block;}
+.yeartab li.active::after{border-radius: 10px 20px 20px 5px;width: 20px;position: absolute;padding-left: 40px; bottom: 0px;left: 50px;bottom: 10px;display: block;}
 @media screen and (min-width:1000px) and (max-width:1199px){
 .nav-tabs>li>a span{display: none;}	
 
 }
 @media screen and (max-width:767px){
+.top-table th{font-size: 16px;}
+.nav-tabs > li.active > a:hover{color:#ffffff!important;font-weight: bold;}
+.staicp h1 {font-size: 22px;line-height: 33px;}
+.scriteria .catbheading, .scriteria h2.catbheading{font-size: 18px;line-height: 27px;margin-bottom: 0px;}
 .moblink{display: none;}
-.yeartab{margin-top:-60px;}
+.top-hundred a{font-size: 15px;}
+.tbrands .nav > li > a{padding: 5px 10px;}
 .top-hundred h2{font-size:20px;}
 a.desklink{display: none;}
 .top-table td:nth-child(2) img{margin-right: 10px; width: 47%;float: left;}
-	.top-table{margin-bottom: -1px!important;}
-	.top-hundred{padding: 0px 20px}
-	.top-hundred-tab .nav-tabs{padding-left: 0px;}
-	.top-hundred-tab h3{font-size: 17px;}
-	.yeartab li{padding: 2px 4px;margin-bottom: 0px;}
-	.yeartab .nav > li > a, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover{padding: 10px 10px!important;}
-	.yeartab li.active{padding: 2px 4px;font-weight: normal;}
-	.yeartab li.active a{font-size: 14px;font-weight: normal;}
-	.yeartab li.focus{padding: 2px 4px;font-weight: normal;}
-	.yeartab li.focus a{font-size: 14px;font-weight: normal;}
-	.yeartab li.active a, .yeartab li.active a:focus, .yeartab li.active a:visited{font-size: 14px;}
-	.yeartab li a{font-size: 14px;font-weight: normal;}
-	.tab-content{padding: 10px;}
+.top-table{margin-bottom: -1px!important;}
+.top-hundred{padding: 0px 5px}
+.top-hundred-tab .nav-tabs{padding-left: 0px;}
+.top-hundred-tab h3{font-size: 17px;line-height: 22px;}
+.yeartab li{padding: 2px 4px;margin-bottom: 0px;}
+.yeartab .nav > li > a, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover{padding: 5px 10px!important;}
+.yeartab li.active{padding: 2px 4px;font-weight: normal;}
+.yeartab li.active a{font-size: 14px;font-weight: normal;}
+.yeartab li.focus{padding: 2px 4px;font-weight: normal;}
+.yeartab li.focus a{font-size: 14px;font-weight: normal;}
+.yeartab li.active a, .yeartab li.active a:focus, .yeartab li.active a:visited{font-size: 15px;}
+.yeartab li a{font-size: 15px;font-weight: normal;}
+.tab-content{padding: 10px;}
 .top-table td:nth-child(1){width:1%;    padding-left: 10px;}
-.yeartab{display: flex!important;}
-.top-table td:nth-child(2) {
-    width: 62%;font-size: 13px;
-    padding: 20px 10px 20px 0px!important;
-}
+.yeartab{display: flex!important;margin:0px 13px;}
+.top-table td:nth-child(2) {width: 62%;font-size: 13px;padding: 20px 10px 20px 0px!important;}
 .top-table td:nth-child(3), .top-table th:nth-child(3), .top-table td:nth-child(4), .top-table th:nth-child(4){display: none;}
 .nav-tabs {display: flex;overflow-x: auto;white-space: nowrap;overflow-y: hidden;}
 .top-table td img{width: auto;}
-.top-table td:nth-child(5) {
-    width: 10%;
-    padding: 0px 0px 0px 0px!important;
-}
+.top-table td:nth-child(5) {width: 10%;padding: 0px 0px 0px 0px!important;}
 #topFranchise .modal-dialog{width: 96%;margin-left: auto;margin-right: auto;}
 }
 
@@ -102,13 +103,14 @@ a.desklink{display: none;}
     </style>
 
 
-<div class="container formsection marginTB45 staicp">
+<div class="container formsection marginTB45 staicp tbrands">
 <div class="row">
 <div class="col-xs-12 col-sm-12 col-md-12 p-3">
 
 
 <ul class="nav nav-tabs yeartab" role="tablist">
-<li role="presentation" class="active"><a role="tab" data-toggle="tab" href="#year2023">2023</a></li>
+<li role="presentation" class="active"><a role="tab" data-toggle="tab" href="#year2024">2024</a></li>
+<li role="presentation"><a role="tab" data-toggle="tab" href="#year2023">2023</a></li>
 <li role="presentation"><a role="tab" data-toggle="tab" href="#year2022">2022</a></li>
 <li role="presentation"><a role="tab" data-toggle="tab" href="#year2021">2021</a></li>
 <li role="presentation"><a role="tab" data-toggle="tab" href="#year2020">2020</a></li>
@@ -120,9 +122,3917 @@ a.desklink{display: none;}
 
 <!-- Year Tab Content -->
 <div class="tab-content">
+
+<!-- Year 2024 -->
+
+<div id="year2024" role="tabpanel" class="tab-pane active">
+
+<div class="top-hundred">    
+<br>
+<h1>Top 100 Franchise/Franchisor 2024</h1>
+<p>Revealing brand impact, consumer value, and dynamic opportunities. Explore trends in Indian franchises, including global giants and emerging innovators. Rankings consider financial strength, expansion, growth rate, and success, reflecting a distinct identity, robust planning, support, innovation, and cultural sensitivity. This analysis assists franchisees and franchisors alike, offering insights into the franchise sector that underpin thriving business ventures.</p>
+<a data-target="#topFranchise" data-toggle="modal">Understand Selection Criteria</a>
+</div>
+
+<!-- Top 100 franchises -->
+<div class="top-hundred-tab">
+<h3>Browse Top 100 franchises by category</h3>  
+<ul class="nav nav-tabs" role="tablist">
+<li role="presentation" class="active"><a role="tab" data-toggle="tab" href="#all9"><img src="{{ url('images/top100/brands.svg') }}" alt=""> <span>All</span></a></li>
+<li role="presentation"><a role="tab" data-toggle="tab" href="#automotive9"><img src="{{ url('images/top100/automotive.svg') }}" alt=""> <span>Automotive</span></a></li>
+<li role="presentation"><a role="tab" data-toggle="tab" href="#beauty9"><img src="{{ url('images/top100/beauty.svg') }}" alt=""> <span>Beauty &<br> Health</span></a></li>
+<li role="presentation"><a role="tab" data-toggle="tab" href="#business9"><img src="{{ url('images/top100/business.svg') }}" alt=""> <span>Business<br> Services</span></a></li>
+<li role="presentation"><a role="tab" data-toggle="tab" href="#dealers9"><img src="{{ url('images/top100/dealers.svg') }}" alt=""> <span>Dealers &<br> Distributors</span></a></li>
+<li role="presentation"><a role="tab" data-toggle="tab" href="#education9"><img src="{{ url('images/top100/education.svg') }}" alt=""> <span>Education</span></a></li>
+<li role="presentation"><a role="tab" data-toggle="tab" href="#fashion9"><img src="{{ url('images/top100/fashion.svg') }}" alt=""> <span>Fashion</span></a></li>
+<li role="presentation"><a role="tab" data-toggle="tab" href="#food9"><img src="{{ url('images/top100/food.svg') }}" alt=""> <span>Food And<br> Beverage</span></a></li>
+<li role="presentation"><a role="tab" data-toggle="tab" href="#hotel9"><img src="{{ url('images/top100/hotel.svg') }}" alt=""> <span>Hotel, Travel<br> & Tourism</span></a></li>
+<li role="presentation"><a role="tab" data-toggle="tab" href="#retail9"><img src="{{ url('images/top100/retail.svg') }}" alt=""> <span>Retail</span></a></li>
+</ul>
+</div>
+<!-- Top 100 franchises -->
+
+<!-- Tab Content -->
+<div class="tab-content">
+
+<!-- All -->
+<div id="all9" role="tabpanel" class="tab-pane active">
+  <table class="table-striped table-responsive top-table">
+    <tr>
+    <th>Rank</th>
+    <th>Franchise Name</th>
+    <th>Category</th>
+    <th>Investment Range</th>
+    <th>&nbsp;</th>
+</tr>
+
+<tr>
+    <td>1</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/AmulScoopingParlours.14860">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/AmulScoopingParlours_1.jpg" alt="Amul"> Amul</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 2 Lac - 5 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ice-creams-yogurt-parlors.ssc436" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ice-creams-yogurt-parlors.ssc436" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>2</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/barista.75327">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/barista_1.jpg" alt="Barista"> Barista </a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>3</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/BaskinRobbins-India.18449">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/BaskinRobbins-India_1.gif" alt="Baskin Robbins"> Baskin Robbins </a></td>
+    <td>Food and Beverage </td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ice-creams-yogurt-parlors.ssc436" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ice-creams-yogurt-parlors.ssc436" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>4</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/bata.70810">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/bata_1.jpg" alt="Bata"> Bata</a></td>
+    <td>Fashion</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fashion-accessories.ssc248" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fashion-accessories.ssc248" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>5</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/croma.58113">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/croma_1.gif" alt="Croma"> Croma </a></td>
+    <td>Retail</td>
+    <td>Rs. 2 Cr - 5 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/consumer-electronics.ssc177" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/consumer-electronics.ssc177" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>6</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/LPLF.12738">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/LPLF_1.gif" alt="Dr Lal PathLabs"> Dr Lal PathLabs</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 2 Lac - 5 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pathological-labs.ssc51" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pathological-labs.ssc51" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>7</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/DTDC-Express.17643">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/DTDC-Express_1.gif" alt="DTDC Courier"> DTDC Courier</a> </td>
+    <td>Business Services    </td>
+    <td>Rs. 2 Lac - 5 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/courier-delivery.ssc127" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/courier-delivery.ssc127" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>8</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/eurokids.68461">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/eurokids_2.jpg" alt="EuroKids"> EuroKids</a></td>
+    <td>Education</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/preschools.ssc85" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/preschools.ssc85" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>9</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Ferns-N-Petals.28">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Ferns-N-Petals_1.jpg" alt="Ferns 'N' Petals"> Ferns 'N' Petals </a></td>
+    <td>Retail</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/florists.ssc207" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/florists.ssc207" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>10</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/FirstCry.5683">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/FirstCry_1.gif" alt="First Cry"> First Cry</a></td>
+    <td>Fashion</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/kids-wear.ssc225" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/kids-wear.ssc225" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>11</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Jockey-India.231">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Jockey-India_1.gif" alt="Jockey India"> Jockey India</a></td>
+    <td>Fashion</td>
+    <td>Rs. 50 Lac - 1 Cr    </td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/lingerie-innerwear.ssc232" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/lingerie-innerwear.ssc232" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>12</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/kotak.gif" alt="Kotak Securities"> Kotak Securities</a></td>
+    <td>Business Services</td>
+    <td>Rs. 2 Lac - 5 Lac </td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/finance-advisors-and-brokers.ssc137" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/finance-advisors-and-brokers.ssc137" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>13</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Lenskart1.16842">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Lenskart1_1.jpg" alt="Lenskart"> Lenskart </a></td>
+    <td>Fashion</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/opticianseye-wear.ssc246" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/opticianseye-wear.ssc246" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>14</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Levis-Strauss-India.886">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Levis-Strauss-India_1.jpg" alt="Levis"> Levis</a></td>
+    <td>Fashion</td>
+    <td>Rs. 50 Lac - 1 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>15</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Liberty-Shoes.9246">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Liberty-Shoes_1.jpg" alt="Liberty Shoes"> Liberty Shoes</a></td>
+    <td>Fashion</td>
+    <td>Rs. 20 Lac - 30 Lac </td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/sports.ssc236" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/sports.ssc236" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>16</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/louis-philippe.91613">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/louis-philippe_1.gif" alt="Louis Philippe"> Louis Philippe</a></td>
+    <td>Fashion</td>
+    <td>Rs. 50 Lac - 1 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>17</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/MMTFranchise.5938">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/MMTFranchise_1.gif" alt="MakeMyTrip"> MakeMyTrip</a></td>
+    <td>Hotel and Resorts</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>18</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/nescafe.90746">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/nescafe_1.jpg" alt="Nescafe"> Nescafe</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>19</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/siyaram.7664">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/siyaram_2.jpg" alt="Siyaram Silk"> Siyaram Silk </a></td>
+    <td>Retail</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mens-clothing.ssc558" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mens-clothing.ssc558" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>20</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/tanishq.gif" alt="Tanishq"> Tanishq</a></td>
+    <td>Retail</td>
+    <td>Rs. 1.5 Cr. Onwards</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>21</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/titan-eyeplus-chennai.65048">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/titan-eyeplus-chennai_1.gif" alt="Titan Eye Plus"> Titan Eye Plus </a></td>
+    <td>Retail</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fashion-accessories-men.ssc562" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fashion-accessories-men.ssc562" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>22</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Prestige-Smart-Kitchen.2219">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Prestige-Smart-Kitchen_1.jpg" alt="TTK Prestige"> TTK Prestige </a></td>
+    <td>Retail</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/kitchen.ssc212" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/kitchen.ssc212" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>23</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/manyavar.97335">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/manyavar_1.gif" alt="Manyavar"> Manyavar</a></td>
+    <td>Retail</td>
+    <td>Rs. 40 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ethnic-stores.ssc229" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ethnic-stores.ssc229" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>24</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/uspolo.gif" alt="U.S. Polo"> U.S. Polo</a></td>
+        <td>Retail</td>
+        <td>Rs. 30 Lac - 50 Lac</td>  
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>25</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/wbytcns.gif" alt="W by TCNS"> W by TCNS</a></td>
+        <td>Retail</td>
+        <td>Rs. 30 Lac - 50 Lac</td>    
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-wear.ssc227" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-wear.ssc227" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>26</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/zudio.85046">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/zudio_1.jpg" alt="Zudio"> Zudio</a></td>
+    <td>Fashion</td>
+    <td>Rs. 2 Cr - 5 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>27</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/la-pinoz-pizza.85043">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/la-pinoz-pizza_1.jpg" alt="La Pino’z Pizza"> La Pino’z Pizza</a>
+    </td>
+    <td>Food and Beverage</td>
+    <td>Rs. 50Lac - 1 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pizzeria.ssc724" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pizzeria.ssc724" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>28</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/the-arvind-store.29949">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/the-arvind-store_1.gif" alt="The Arvind Store"> The Arvind Store</a></td>
+        <td>Fashion</td>
+        <td>Rs. 50Lac - 1 Cr</td>
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/departmentalunisex.ssc228" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/departmentalunisex.ssc228" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>29</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/nayara.gif" alt="Nayara energy"> Nayara Energy</a></td>
+    <td>Dealers and Distributors</td>
+    <td>Rs. 50Lac - 1 Cr</td>  
+    <td>
+  
+    <a target="_blank" href="https://www.dealerindia.com/dir/energy-saving-products-devices" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.dealerindia.com/dir/energy-saving-products-devices" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>30</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/maggi-hotspot.90744">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/maggi-hotspot_1.jpg" alt="Maggi Hotspot"> Maggi Hotspot</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 5Lac - 10Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/express-food-joints-drive-through.ssc429" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/express-food-joints-drive-through.ssc429" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>31</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/westside.91799">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/westside_1.gif" alt="Westside"> Westside</a></td>
+    <td>Fashion</td>
+    <td>Rs. 1 Cr. - 2 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/departmentalunisex.ssc228" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/departmentalunisex.ssc228" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>32</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Vakrangee-Limited.18832">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/vakrangee(199x81).gif" alt="Vakrangee Limited"> Vakrangee Limited</a></td>
+    <td>Retail</td>
+    <td>Rs. 5Lac - 10Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/superstores.ssc186" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/superstores.ssc186" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>33</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Naturals-Salons.14092">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/naturals199.gif" alt="Naturals Salon"> Naturals Salon</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>34</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/berger-paints.93087">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/berger-paints_1.jpg" alt="Berger Paints"> Berger Paints</a></td>
+    <td>Dealers and Distributors</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.dealerindia.com/dir/paints-allied-products" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.dealerindia.com/dir/paints-allied-products" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>35</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/van-heusen.91614">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/van-heusen_1.gif" alt="Van Heusen"> Van Heusen</a></td>
+    <td>Fashion</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>36</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/allen-solly.91653">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/allen-solly_1.gif" alt="Allen solly"> Allen solly</a></td>
+    <td>Fashion</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.dealerindia.com/dir/mens-wear" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.dealerindia.com/dir/mens-wear" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>37</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/peter-england.91654">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/peter-england_1.gif" alt="Peter England"> Peter England</a></td>
+    <td>Fashion</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>38</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/CAREER-LAUNCHER.19103">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/career(199x81).gif" alt="Career Launcher"> Career Launcher</a></td>
+    <td>Education</td>
+    <td>Rs. 5Lac - 10Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/competitive-exam-coaching-institute.ssc89
+" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/competitive-exam-coaching-institute.ssc89
+" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>39</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Lakme-Salon.9448">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Lakme-Salon_1.gif" alt="Lakme Salon"> Lakme Salon</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>40</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/apollo-diagnostics.66969">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/apollo-diagnostics_1.gif" alt="Apollo Diagnostics"> Apollo Diagnostics</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 2 Lac - 5 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pathological-labs.ssc51" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pathological-labs.ssc51" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>41</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/caratlane.gif" alt="Caratlane"> Caratlane</a></td>
+    <td>Retail</td>
+    <td>Rs. 60 Lac - 80 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>42</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/color-bar.58162">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/color-bar_1.jpg" alt="Colorbar"> Colorbar</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/cosmetics-beauty-product-stores.ssc49" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/cosmetics-beauty-product-stores.ssc49" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>43</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Khadim-India-Ltd.16722">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/khadim.gif" alt="Khadim India"> Khadim India</a></td>
+    <td>Fashion</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casuals.ssc235" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casuals.ssc235" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>44</td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/livspace-3367">
+        <img src="https://img.franchiseindia.com/brands/logo/livspace_1.jpg" alt="Livspace"> Livspace</a></td>
+    <td>Dealers and Distributors</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.dealerindia.com/dir/home-furniture" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.dealerindia.com/dir/home-furniture" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>45</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/mamagoto.gif" alt="Mamagoto"> Mamagoto</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 1.5 Cr. - 2 Cr.</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>46</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/pepperfry-private-limited.57134">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/pepperfry-private-limited_1.jpg" alt="Pepperfry"> Pepperfry</a></td>
+    <td>Retail</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/e-commerce-related.ssc223" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/e-commerce-related.ssc223" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>47</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/chai-garam.36959">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/chai-garam_1.png" alt="Chai Garam"> Chai Garam </a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>48</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/kalyan.gif" alt="Kalyan Jewellers"> Kalyan Jewellers</a></td>
+    <td>Retail</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>49</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/cultfit.gif" alt="Cultfit"> Cultfit</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 1 Cr - 2 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/gyms-and-fitness-centres.ssc52" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/gyms-and-fitness-centres.ssc52" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>50</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/lemontree.gif" alt="Lemon tree"> Lemon tree</a></td>
+    <td>Business Services</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+  </table>
+
+<table class="table-striped table-responsive top-table moretext9" style="display: none;">
+<tr>
+    <td>51</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/biggies.75490">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/biggies_1.jpg" alt="Biggies Burger"> Biggies Burger</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>52</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/burger-singh.37193">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/burger-singh_1.jpg" alt="Burger Singh"> Burger Singh</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>53</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/carzspa.33543">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/carzspa_2.jpg" alt="Carzspa"> Carzspa</a></td>
+    <td>Automotive</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/car-wash-ceramic-coating-detailing.ssc358" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/car-wash-ceramic-coating-detailing.ssc358" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>54</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/pigeon-gilma-black-decker-stovekarft.70884">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/pigeon-gilma-black-decker-stovekarft_1.jpg" alt="Stovekraft"> Stovekraft</a></td>
+    <td>Retail</td>
+    <td>Rs. 50 K - 2 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniturehome-decor-furnishing.ssc213" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniturehome-decor-furnishing.ssc213" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>55</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/crossword.gif" alt="Crossword"> Crossword</a></td>
+    <td>Retail</td>
+    <td>Rs. 30 Lac Onwards</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/book-stores.ssc197" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/book-stores.ssc197" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>56</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/mia-by-tanishq.92638">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/mia-by-tanishq_1.gif" alt="Mia by Tanishq"> Mia by Tanishq</a></td>
+    <td>Retail</td>
+    <td>Rs. 50Lakh - 1 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>57</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/ylg-salon.90954">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/ylg-salon_1.jpg" alt="YLG Salon"> YLG Salon</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>58</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Jumboking-Foods.13373">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Jumboking-Foods_1.jpg" alt="JUMBOKING FOODS"> JUMBOKING FOODS</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>59</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/houseofcandy.83502">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/houseofcandy_1.jpg" alt="House Of Candy"> House Of Candy</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-food-service.ssc84" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-food-service.ssc84" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>60</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/hitachi-payment-services-pvt-ltd.38217">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/hitachi-payment-services-pvt-ltd_1.jpg" alt="Hitachi Payment Services"> Hitachi Payment Services</a></td>
+    <td>Business Services</td>
+    <td>Rs. 2 Lakh - 5 Lakh</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/payment-solution-services.ssc554" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/payment-solution-services.ssc554" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>61</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/uclean.21731">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/uclean_2.jpg" alt="U Clean"> U Clean</a></td>
+    <td>Business Services</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/laundry-dry-cleaning.ssc150" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/laundry-dry-cleaning.ssc150" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>62</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/ather.gif" alt="Ather"> Ather</a></td>
+    <td>Dealers and Distributors</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.dealerindia.com/dir/electric-vehicles-parts" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.dealerindia.com/dir/electric-vehicles-parts" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>63</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/gocolors.gif" alt="Go Colors"> Go Colors</a></td>
+    <td>Retail</td>
+    <td>Rs. 40+ Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-wear.ssc227" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-wear.ssc227" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>64</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/senco.gif" alt="Sanco Gold"> Sanco Gold</a></td>
+    <td>Fashion</td>
+    <td>Rs. 2 Cr - 5 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>65</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/fortum-charge-drive-india.74327">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/fortum-charge-drive-india_1.jpg" alt="Glida"> Glida</a></td>
+    <td>Dealers and Distributors</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/electric-vehicles.ssc725" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/electric-vehicles.ssc725" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>66</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/blinkit.75501">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/blinkit_1.png" alt="Blinkit"> Blinkit</a></td>
+    <td>Retail</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/grocery-stores.ssc188" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/grocery-stores.ssc188" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>67</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/electricone.gif" alt="Electric One"> Electric One</a></td>
+    <td>Dealers and Distributors</td>
+    <td>Rs. 20 Lac - 60 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/electric-vehicles.ssc725" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/electric-vehicles.ssc725" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>68</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/amritsar-haveli.91745">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/amritsar-haveli_1.gif" alt="Amritsar Haveli"> Amritsar Haveli</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fine-dine-restaurants.ssc431" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fine-dine-restaurants.ssc431" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>69</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/delhivery.28935">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/delhivery_1.jpg" alt="Delhivery"> Delhivery</a></td>
+    <td>Business Services</td>
+    <td>Rs. 5Lac - 10Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/courier-delivery.ssc127" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/courier-delivery.ssc127" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>70</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/headsup.gif" alt="Heads up For Tails"> Heads up For Tails</a></td>
+    <td>Business Services</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pet-stores.ssc191" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pet-stores.ssc191" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>71</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/upGrad.gif" alt="upGrad"> upGrad</a></td>
+    <td>Education</td>
+    <td>Rs. 50 K - 2 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/after-school-activities.ssc87" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/after-school-activities.ssc87" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>72</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/masaba.gif" alt="House of Masaba"> House of Masaba</a></td>
+    <td>Retail</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ethnic-stores.ssc229" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ethnic-stores.ssc229" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>73</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/tyaani.gif" alt="Tyaani"> Tyaani</a></td>
+    <td>Retail</td>
+    <td>Rs. 4 Cr. Onwards</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>74</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/nykd-by-nykaa.78545">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/nykd-by-nykaa_1.gif" alt="Nykd By Nykaa"> Nykd By Nykaa</a></td>
+    <td>Retail</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-clothing.ssc560" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-clothing.ssc560" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>75</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/zorgers.65340">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/zorgers_2.jpg" alt="Zorgers"> Zorgers</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/clinics-nursing-homes.ssc56" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/clinics-nursing-homes.ssc56" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>76</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/yatra-online-ltd.96785">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/yatra-online-ltd_1.jpg" alt="Yatra"> Yatra</a></td>
+    <td>Hotel and Resorts</td>
+    <td>Rs. 5Lac - 10Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/online-travel-services.ssc146" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/online-travel-services.ssc146" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>77</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/venture-x.89713">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/venture-x_1.jpg" alt="Venture X"> Venture X</a></td>
+    <td>Business Services</td>
+    <td>Rs. 2 Cr. - 5 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/real-estate-sub.ssc267" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/real-estate-sub.ssc267" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>78</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/western-global-traders.93453">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/western-global-traders_1.gif" alt="WESTERN GLOBAL TRADERS "> WESTERN GLOBAL TRADERS </a></td>
+    <td>Business Services</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-financial.ssc142" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-financial.ssc142" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>79</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/melorra.86694">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/melorra_1.gif" alt="Melorra"> Melorra</a></td>
+    <td>Retail</td>
+    <td>Rs. 2 Cr - 5 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>80</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Home-Lane.18892">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Home-Lane_1.gif" alt="Home Lane"> Home Lane</a></td>
+    <td>Retail</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniturehome-decor-furnishing.ssc213" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniturehome-decor-furnishing.ssc213" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>81</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/zepto.86000">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/zepto_1.gif" alt="Zepto"> Zepto</a></td>
+    <td>Retail</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/superstores.ssc186" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/superstores.ssc186" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>82</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/22nd-parallel.89511">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/22nd-parallel_1.gif" alt="22nd Parallel"> 22nd Parallel</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casual-dine-restaurants.ssc432" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casual-dine-restaurants.ssc432" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>83</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/the-elefant.83621">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/the-elefant_1.jpg" alt="The Elefant"> The Elefant</a></td>
+    <td>Education</td>
+    <td>Rs. 5 Lac - 10 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mobile-application-services.ssc734" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mobile-application-services.ssc734" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>84</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/time-for-organics.93458">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/time-for-organics_1.jpg" alt="Time for Organics"> Time for Organics</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-food-service.ssc84" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-food-service.ssc84" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>85</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/pikpart-car-service-center.95803">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/pikpart-car-service-center_1.jpg" alt="Pikpart Smart Garage"> Pikpart Smart Garage </a></td>
+    <td>Automotive</td>
+    <td>Rs. 20 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/car-maintanance-repair-services.ssc353" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/car-maintanance-repair-services.ssc353" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>86</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/prakruthi.gif" alt="Prakruthi">Prakruthi</a></td>
+    <td>Retail</td>
+    <td>Rs. 5 Lac - 10 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/grocery-stores.ssc188" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/grocery-stores.ssc188" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>87</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/hippo.gif" alt="Hippo Stores">Hippo Stores</a></td>
+    <td>Retail</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/building-material-stores.ssc221" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/building-material-stores.ssc221" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>88</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/miniso.75793">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/miniso_1.gif" alt="Miniso"> Miniso</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 50Lakh - 1 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/cosmetics-beauty-product-stores.ssc49" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/cosmetics-beauty-product-stores.ssc49" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>89</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/puma.gif" alt="Puma"> Puma</a></td>
+    <td>Retail</td>
+    <td>Rs. 40 Lac - 60 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mens-footwear.ssc559" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mens-footwear.ssc559" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>90</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/anytime-fitness.51366">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/house-of-fitness-pvt-ltd_2.jpg" alt="Anytime Fitness"> Anytime Fitness</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 2Cr - 3 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/gyms-and-fitness-centres.ssc52" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/gyms-and-fitness-centres.ssc52" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>91</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/domino.gif" alt="Domino's Pizza"> Domino's Pizza</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 30 Lac - 35 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>92</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/reebok.gif" alt="Reebok"> Reebok</a></td>
+    <td>Retail</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casuals.ssc235" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casuals.ssc235" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>93</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/noodle.gif" alt="Noodle box"> Noodle box</a></td>
+    <td>Food and Beverage</td>
+    <td>$ 2M AUD</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>94</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/totalenergies.95952">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/totalenergies_1.jpg" alt="TotalEnergies"> TotalEnergies</a></td>
+    <td>Automotive</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/automobile-maintanance-related.ssc367" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/automobile-maintanance-related.ssc367" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>95</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/elle.gif" alt="Elle Décor Kitchens"> Elle Decor Kitchens</a></td>
+    <td>Retail</td>
+    <td>Rs. 40 Lakh - 2 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniture-home-decor-and-furnishing.ssc213" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniture-home-decor-and-furnishing.ssc213" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>96</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/carltonlondon.93590">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/carltonlondon_1.gif" alt="Carlton London"> Carlton London</a></td>
+    <td>Fashion</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-clothing.ssc233" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-clothing.ssc233" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>97</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/marriott.gif" alt="Marriott International"> Marriott International</a></td>
+    <td>Hotel and Resorts</td>
+    <td>Rs. 3714 - 5942 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>98</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/hyatt.gif" alt="Hyatt">Hyatt</a></td>
+    <td>Hotel and Resorts</td>
+    <td>Rs. 4 Cr. onwards</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>99</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/wyndham.gif" alt="Wyndham Hotels & Resorts"> Wyndham Hotels & Resorts</a></td>
+    <td>Hotel and Resorts</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>100</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/peets.77274">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/peets_1.jpg" alt="Peet’s Coffee"> Peet’s Coffee</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 10000 - 50 K</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+  </table>
+  <a class="load_more moreless-button9">Load more »</a>
+
+</div>
+<!-- All ends -->
+
+
+<!-- Automotive -->
+<div id="automotive9" role="tabpanel" class="tab-pane">
+  <table class="table-striped table-responsive top-table">
+    <tr>
+    <th>Ranks</th>
+    <th>Franchise Name</th>
+    <th>Category</th>
+    <th>Investment Range</th>
+    <th>&nbsp;</th>
+</tr>
+
+<tr>
+    <td>1</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/carzspa.33543">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/carzspa_2.jpg" alt="Carzspa"> Carzspa</a></td>
+    <td>Automotive</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/car-wash-ceramic-coating-detailing.ssc358" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/car-wash-ceramic-coating-detailing.ssc358" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>2</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/totalenergies.95952">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/totalenergies_1.jpg" alt="TotalEnergies"> TotalEnergies</a></td>
+    <td>Automotive</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/automobile-maintanance-related.ssc367" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/automobile-maintanance-related.ssc367" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>3</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/pikpart-car-service-center.95803">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/pikpart-car-service-center_1.jpg" alt="Pikpart Smart Garage"> Pikpart Smart Garage </a></td>
+    <td>Automotive</td>
+    <td>Rs. 20 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/car-maintanance-repair-services.ssc353" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/car-maintanance-repair-services.ssc353" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+
+  </table>
+</div>
+<!-- Automotive ends-->
+
+
+<!-- Beauty and Health -->
+<div id="beauty9" role="tabpanel" class="tab-pane">
+  <table class="table-striped table-responsive top-table">
+    <tr>
+    <th>Ranks</th>
+    <th>Franchise Name</th>
+    <th>Category</th>
+    <th>Investment Range</th>
+    <th>&nbsp;</th>
+</tr>
+
+<tr>
+    <td>1</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/LPLF.12738">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/LPLF_1.gif" alt="Dr Lal PathLabs"> Dr Lal PathLabs</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 2 Lac - 5 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pathological-labs.ssc51" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pathological-labs.ssc51" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>2</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Naturals-Salons.14092">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/naturals199.gif" alt="Naturals Salon"> Naturals Salon</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>3</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Lakme-Salon.9448">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Lakme-Salon_1.gif" alt="Lakme Salon"> Lakme Salon</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>4</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/apollo-diagnostics.66969">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/apollo-diagnostics_1.gif" alt="Apollo Diagnostics"> Apollo Diagnostics</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 2 Lac - 5 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pathological-labs.ssc51" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pathological-labs.ssc51" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>5</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/color-bar.58162">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/color-bar_1.jpg" alt="Colorbar"> Colorbar</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/cosmetics-beauty-product-stores.ssc49" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/cosmetics-beauty-product-stores.ssc49" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>6</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/cultfit.gif" alt="Cultfit"> Cultfit</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 1 Cr - 2 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/gyms-and-fitness-centres.ssc52" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/gyms-and-fitness-centres.ssc52" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>7</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/ylg-salon.90954">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/ylg-salon_1.jpg" alt="YLG Salon"> YLG Salon</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>8</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/zorgers.65340">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/zorgers_2.jpg" alt="Zorgers"> Zorgers</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/clinics-nursing-homes.ssc56" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/clinics-nursing-homes.ssc56" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>9</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/miniso.75793">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/miniso_1.gif" alt="Miniso"> Miniso</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 50Lakh - 1 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/cosmetics-beauty-product-stores.ssc49" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/cosmetics-beauty-product-stores.ssc49" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>10</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/anytime-fitness.51366">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/house-of-fitness-pvt-ltd_2.jpg" alt="Anytime Fitness"> Anytime Fitness</a></td>
+    <td>Beauty and Health</td>
+    <td>Rs. 2Cr - 3 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/gyms-and-fitness-centres.ssc52" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/gyms-and-fitness-centres.ssc52" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+
+  </table>
+</div>
+<!-- Beauty and Health ends-->
+
+
+<!-- Business Services -->
+<div id="business9" role="tabpanel" class="tab-pane">
+  <table class="table-striped table-responsive top-table">
+    <tr>
+    <th>Ranks</th>
+    <th>Franchise Name</th>
+    <th>Category</th>
+    <th>Investment Range</th>
+    <th>&nbsp;</th>
+</tr>
+
+<tr>
+    <td>1</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/DTDC-Express.17643">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/DTDC-Express_1.gif" alt="DTDC Courier"> DTDC Courier</a> </td>
+    <td>Business Services    </td>
+    <td>Rs. 2 Lac - 5 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/courier-delivery.ssc127" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/courier-delivery.ssc127" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>2</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/kotak.gif" alt="Kotak Securities"> Kotak Securities</a></td>
+    <td>Business Services</td>
+    <td>Rs. 2 Lac - 5 Lac </td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/finance-advisors-and-brokers.ssc137" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/finance-advisors-and-brokers.ssc137" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>3</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/lemontree.gif" alt="Lemon tree"> Lemon tree</a></td>
+    <td>Business Services</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>4</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/hitachi-payment-services-pvt-ltd.38217">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/hitachi-payment-services-pvt-ltd_1.jpg" alt="Hitachi Payment Services"> Hitachi Payment Services</a></td>
+    <td>Business Services</td>
+    <td>Rs. 2 Lakh - 5 Lakh</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/payment-solution-services.ssc554" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/payment-solution-services.ssc554" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>5</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/uclean.21731">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/uclean_2.jpg" alt="U Clean"> U Clean</a></td>
+    <td>Business Services</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/laundry-dry-cleaning.ssc150" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/laundry-dry-cleaning.ssc150" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>6</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/delhivery.28935">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/delhivery_1.jpg" alt="Delhivery"> Delhivery</a></td>
+    <td>Business Services</td>
+    <td>Rs. 5Lac - 10Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/courier-delivery.ssc127" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/courier-delivery.ssc127" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>7</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/headsup.gif" alt="Heads up For Tails"> Heads up For Tails</a></td>
+    <td>Business Services</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pet-stores.ssc191" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pet-stores.ssc191" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>8</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/venture-x.89713">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/venture-x_1.jpg" alt="Venture X"> Venture X</a></td>
+    <td>Business Services</td>
+    <td>Rs. 2 Cr. - 5 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/real-estate-sub.ssc267" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/real-estate-sub.ssc267" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>9</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/western-global-traders.93453">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/western-global-traders_1.gif" alt="WESTERN GLOBAL TRADERS "> WESTERN GLOBAL TRADERS </a></td>
+    <td>Business Services</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-financial.ssc142" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-financial.ssc142" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+
+  </table>
+</div>
+<!-- Business Services ends-->
+
+
+<!-- Dealers & Destributors Services -->
+<div id="dealers9" role="tabpanel" class="tab-pane">
+  <table class="table-striped table-responsive top-table">
+    <tr>
+    <th>Ranks</th>
+    <th>Franchise Name</th>
+    <th>Category</th>
+    <th>Investment Range</th>
+    <th>&nbsp;</th>
+</tr>
+
+<tr>
+    <td>1</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/nayara.gif" alt="Nayara energy"> Nayara Energy</a></td>
+    <td>Dealers and Distributors</td>
+    <td>Rs. 50Lac - 1 Cr</td>  
+    <td>
+  
+    <a target="_blank" href="https://www.dealerindia.com/dir/energy-saving-products-devices" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.dealerindia.com/dir/energy-saving-products-devices" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>2</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/berger-paints.93087">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/berger-paints_1.jpg" alt="Berger Paints"> Berger Paints</a></td>
+    <td>Dealers and Distributors</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.dealerindia.com/dir/paints-allied-products" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.dealerindia.com/dir/paints-allied-products" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>3</td>
+    <td><a target="_blank" href="https://www.dealerindia.com/manufacturer/livspace-3367">
+        <img src="https://img.franchiseindia.com/brands/logo/livspace_1.jpg" alt="Livspace"> Livspace</a></td>
+    <td>Dealers and Distributors</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.dealerindia.com/dir/home-furniture" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.dealerindia.com/dir/home-furniture" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>4</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/ather.gif" alt="Ather"> Ather</a></td>
+    <td>Dealers and Distributors</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.dealerindia.com/dir/electric-vehicles-parts" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.dealerindia.com/dir/electric-vehicles-parts" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>5</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/fortum-charge-drive-india.74327">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/fortum-charge-drive-india_1.jpg" alt="Glida"> Glida</a></td>
+    <td>Dealers and Distributors</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/electric-vehicles.ssc725" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/electric-vehicles.ssc725" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>6</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/electricone.gif" alt="Electric One"> Electric One</a></td>
+    <td>Dealers and Distributors</td>
+    <td>Rs. 20 Lac - 60 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/electric-vehicles.ssc725" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/electric-vehicles.ssc725" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+  </table>
+</div>
+<!-- Dealers & Destributors Services ends-->
+
+
+<!-- Education Services -->
+<div id="education9" role="tabpanel" class="tab-pane">
+  <table class="table-striped table-responsive top-table">
+    <tr>
+    <th>Ranks</th>
+    <th>Franchise Name</th>
+    <th>Category</th>
+    <th>Investment Range</th>
+    <th>&nbsp;</th>
+</tr>
+
+<tr>
+    <td>1</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/eurokids.68461">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/eurokids_2.jpg" alt="EuroKids"> EuroKids</a></td>
+    <td>Education</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/preschools.ssc85" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/preschools.ssc85" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>2</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/CAREER-LAUNCHER.19103">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/career(199x81).gif" alt="Career Launcher"> Career Launcher</a></td>
+    <td>Education</td>
+    <td>Rs. 5Lac - 10Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/competitive-exam-coaching-institute.ssc89
+" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/competitive-exam-coaching-institute.ssc89
+" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>3</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/upGrad.gif" alt="upGrad"> upGrad</a></td>
+    <td>Education</td>
+    <td>Rs. 50 K - 2 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/after-school-activities.ssc87" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/after-school-activities.ssc87" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>4</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/the-elefant.83621">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/the-elefant_1.jpg" alt="The Elefant"> The Elefant</a></td>
+    <td>Education</td>
+    <td>Rs. 5 Lac - 10 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mobile-application-services.ssc734" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mobile-application-services.ssc734" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+  </table>
+</div>
+<!-- Education ends-->
+
+
+<!-- Fashion -->
+<div id="fashion9" role="tabpanel" class="tab-pane">
+  <table class="table-striped table-responsive top-table">
+    <tr>
+    <th>Ranks</th>
+    <th>Franchise Name</th>
+    <th>Category</th>
+    <th>Investment Range</th>
+    <th>&nbsp;</th>
+</tr>
+
+<tr>
+    <td>1</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/bata.70810">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/bata_1.jpg" alt="Bata"> Bata</a></td>
+    <td>Fashion</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fashion-accessories.ssc248" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fashion-accessories.ssc248" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>2</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/FirstCry.5683">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/FirstCry_1.gif" alt="First Cry"> First Cry</a></td>
+    <td>Fashion</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/kids-wear.ssc225" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/kids-wear.ssc225" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>3</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Jockey-India.231">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Jockey-India_1.gif" alt="Jockey India"> Jockey India</a></td>
+    <td>Fashion</td>
+    <td>Rs. 50 Lac - 1 Cr    </td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/lingerie-innerwear.ssc232" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/lingerie-innerwear.ssc232" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>4</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Lenskart1.16842">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Lenskart1_1.jpg" alt="Lenskart"> Lenskart </a></td>
+    <td>Fashion</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/opticianseye-wear.ssc246" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/opticianseye-wear.ssc246" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>5</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Levis-Strauss-India.886">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Levis-Strauss-India_1.jpg" alt="Levis"> Levis</a></td>
+    <td>Fashion</td>
+    <td>Rs. 50 Lac - 1 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>6</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Liberty-Shoes.9246">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Liberty-Shoes_1.jpg" alt="Liberty Shoes"> Liberty Shoes</a></td>
+    <td>Fashion</td>
+    <td>Rs. 20 Lac - 30 Lac </td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/sports.ssc236" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/sports.ssc236" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>7</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/louis-philippe.91613">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/louis-philippe_1.gif" alt="Louis Philippe"> Louis Philippe</a></td>
+    <td>Fashion</td>
+    <td>Rs. 50 Lac - 1 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>8</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/zudio.85046">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/zudio_1.jpg" alt="Zudio"> Zudio</a></td>
+    <td>Fashion</td>
+    <td>Rs. 2 Cr - 5 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>9</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/the-arvind-store.29949">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/the-arvind-store_1.gif" alt="The Arvind Store"> The Arvind Store</a></td>
+        <td>Fashion</td>
+        <td>Rs. 50Lac - 1 Cr</td>
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/departmentalunisex.ssc228" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/departmentalunisex.ssc228" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>10</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/westside.91799">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/westside_1.gif" alt="Westside"> Westside</a></td>
+    <td>Fashion</td>
+    <td>Rs. 1 Cr. - 2 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/departmentalunisex.ssc228" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/departmentalunisex.ssc228" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+
+
+<tr>
+    <td>11</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/van-heusen.91614">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/van-heusen_1.gif" alt="Van Heusen"> Van Heusen</a></td>
+    <td>Fashion</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>12</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/allen-solly.91653">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/allen-solly_1.gif" alt="Allen solly"> Allen solly</a></td>
+    <td>Fashion</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.dealerindia.com/dir/mens-wear" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.dealerindia.com/dir/mens-wear" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>13</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/peter-england.91654">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/peter-england_1.gif" alt="Peter England"> Peter England</a></td>
+    <td>Fashion</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>14</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Khadim-India-Ltd.16722">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/khadim.gif" alt="Khadim India"> Khadim India</a></td>
+    <td>Fashion</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casuals.ssc235" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casuals.ssc235" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>15</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/senco.gif" alt="Sanco Gold"> Sanco Gold</a></td>
+    <td>Fashion</td>
+    <td>Rs. 2 Cr - 5 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>16</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/carltonlondon.93590">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/carltonlondon_1.gif" alt="Carlton London"> Carlton London</a></td>
+    <td>Fashion</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-clothing.ssc233" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-clothing.ssc233" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+
+  </table>
+</div>
+<!-- Fashion ends-->
+
+
+<!-- Food and Beverages -->
+<div id="food9" role="tabpanel" class="tab-pane">
+  <table class="table-striped table-responsive top-table">
+    <tr>
+    <th>Ranks</th>
+    <th>Franchise Name</th>
+    <th>Category</th>
+    <th>Investment Range</th>
+    <th>&nbsp;</th>
+</tr>
+
+<tr>
+    <td>1</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/AmulScoopingParlours.14860">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/AmulScoopingParlours_1.jpg" alt="Amul"> Amul</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 2 Lac - 5 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ice-creams-yogurt-parlors.ssc436" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ice-creams-yogurt-parlors.ssc436" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>2</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/barista.75327">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/barista_1.jpg" alt="Barista"> Barista </a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>3</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/BaskinRobbins-India.18449">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/BaskinRobbins-India_1.gif" alt="Baskin Robbins"> Baskin Robbins </a></td>
+    <td>Food and Beverage </td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ice-creams-yogurt-parlors.ssc436" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ice-creams-yogurt-parlors.ssc436" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>4</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/nescafe.90746">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/nescafe_1.jpg" alt="Nescafe"> Nescafe</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>5</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/la-pinoz-pizza.85043">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/la-pinoz-pizza_1.jpg" alt="La Pino’z Pizza"> La Pino’z Pizza</a>
+    </td>
+    <td>Food and Beverage</td>
+    <td>Rs. 50Lac - 1 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pizzeria.ssc724" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pizzeria.ssc724" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>6</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/maggi-hotspot.90744">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/maggi-hotspot_1.jpg" alt="Maggi Hotspot"> Maggi Hotspot</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 5Lac - 10Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/express-food-joints-drive-through.ssc429" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/express-food-joints-drive-through.ssc429" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>7</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/mamagoto.gif" alt="Mamagoto"> Mamagoto</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 1.5 Cr. - 2 Cr.</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>8</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/chai-garam.36959">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/chai-garam_1.png" alt="Chai Garam"> Chai Garam </a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>9</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/biggies.75490">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/biggies_1.jpg" alt="Biggies Burger"> Biggies Burger</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>10</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/burger-singh.37193">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/burger-singh_1.jpg" alt="Burger Singh"> Burger Singh</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>11</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Jumboking-Foods.13373">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Jumboking-Foods_1.jpg" alt="JUMBOKING FOODS"> JUMBOKING FOODS</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>12</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/houseofcandy.83502">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/houseofcandy_1.jpg" alt="House Of Candy"> House Of Candy</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-food-service.ssc84" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-food-service.ssc84" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>13</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/amritsar-haveli.91745">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/amritsar-haveli_1.gif" alt="Amritsar Haveli"> Amritsar Haveli</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fine-dine-restaurants.ssc431" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fine-dine-restaurants.ssc431" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>14</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/22nd-parallel.89511">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/22nd-parallel_1.gif" alt="22nd Parallel"> 22nd Parallel</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casual-dine-restaurants.ssc432" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casual-dine-restaurants.ssc432" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>15</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/time-for-organics.93458">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/time-for-organics_1.jpg" alt="Time for Organics"> Time for Organics</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-food-service.ssc84" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-food-service.ssc84" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>16</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/domino.gif" alt="Domino's Pizza"> Domino's Pizza</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 30 Lac - 35 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>17</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/noodle.gif" alt="Noodle box"> Noodle box</a></td>
+    <td>Food and Beverage</td>
+    <td>$ 2M AUD</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>18</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/peets.77274">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/peets_1.jpg" alt="Peet’s Coffee"> Peet’s Coffee</a></td>
+    <td>Food and Beverage</td>
+    <td>Rs. 10000 - 50 K</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+  </table>
+</div>
+<!-- Food and Beverages ends-->
+
+
+
+<!-- Hotel, Travel & Tourism -->
+<div id="hotel9" role="tabpanel" class="tab-pane">
+  <table class="table-striped table-responsive top-table">
+    <tr>
+    <th>Ranks</th>
+    <th>Franchise Name</th>
+    <th>Category</th>
+    <th>Investment Range</th>
+    <th>&nbsp;</th>
+</tr>
+
+<tr>
+    <td>1</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/MMTFranchise.5938">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/MMTFranchise_1.gif" alt="MakeMyTrip"> MakeMyTrip</a></td>
+    <td>Hotel and Resorts</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>2</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/yatra-online-ltd.96785">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/yatra-online-ltd_1.jpg" alt="Yatra"> Yatra</a></td>
+    <td>Hotel and Resorts</td>
+    <td>Rs. 5Lac - 10Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/online-travel-services.ssc146" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/online-travel-services.ssc146" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>3</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/marriott.gif" alt="Marriott International"> Marriott International</a></td>
+    <td>Hotel and Resorts</td>
+    <td>Rs. 3714 - 5942 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>4</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/hyatt.gif" alt="Hyatt">Hyatt</a></td>
+    <td>Hotel and Resorts</td>
+    <td>Rs. 4 Cr. onwards</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>5</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/wyndham.gif" alt="Wyndham Hotels &amp; Resorts"> Wyndham Hotels &amp; Resorts</a></td>
+    <td>Hotel and Resorts</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+  </table>
+</div>
+<!-- Hotel, Travel & Tourism ends-->
+
+
+<!-- Retail -->
+<div id="retail9" role="tabpanel" class="tab-pane">
+  <table class="table-striped table-responsive top-table">
+    <tr>
+    <th>Ranks</th>
+    <th>Franchise Name</th>
+    <th>Category</th>
+    <th>Investment Range</th>
+    <th>&nbsp;</th>
+</tr>
+
+<tr>
+    <td>1</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/croma.58113">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/croma_1.gif" alt="Croma"> Croma </a></td>
+    <td>Retail</td>
+    <td>Rs. 2 Cr - 5 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/consumer-electronics.ssc177" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/consumer-electronics.ssc177" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>2</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/siyaram.7664">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/siyaram_2.jpg" alt="Siyaram Silk"> Siyaram Silk </a></td>
+    <td>Retail</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mens-clothing.ssc558" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mens-clothing.ssc558" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>3</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/tanishq.gif" alt="Tanishq"> Tanishq</a></td>
+    <td>Retail</td>
+    <td>Rs. 1.5 Cr. Onwards</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>4</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/titan-eyeplus-chennai.65048">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/titan-eyeplus-chennai_1.gif" alt="Titan Eye Plus"> Titan Eye Plus </a></td>
+    <td>Retail</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fashion-accessories-men.ssc562" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fashion-accessories-men.ssc562" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>5</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Prestige-Smart-Kitchen.2219">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Prestige-Smart-Kitchen_1.jpg" alt="TTK Prestige"> TTK Prestige </a></td>
+    <td>Retail</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/kitchen.ssc212" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/kitchen.ssc212" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>6</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/manyavar.97335">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/manyavar_1.gif" alt="Manyavar"> Manyavar</a></td>
+    <td>Retail</td>
+    <td>Rs. 40 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ethnic-stores.ssc229" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ethnic-stores.ssc229" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>7</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/uspolo.gif" alt="U.S. Polo"> U.S. Polo</a></td>
+        <td>Retail</td>
+        <td>Rs. 30 Lac - 50 Lac</td>  
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>8</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/wbytcns.gif" alt="W by TCNS"> W by TCNS</a></td>
+        <td>Retail</td>
+        <td>Rs. 30 Lac - 50 Lac</td>    
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-wear.ssc227" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-wear.ssc227" class="moblink">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>9</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Vakrangee-Limited.18832">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/vakrangee(199x81).gif" alt="Vakrangee Limited"> Vakrangee Limited</a></td>
+    <td>Retail</td>
+    <td>Rs. 5Lac - 10Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/superstores.ssc186" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/superstores.ssc186" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>10</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/caratlane.gif" alt="Caratlane"> Caratlane</a></td>
+    <td>Retail</td>
+    <td>Rs. 60 Lac - 80 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>11</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/pepperfry-private-limited.57134">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/pepperfry-private-limited_1.jpg" alt="Pepperfry"> Pepperfry</a></td>
+    <td>Retail</td>
+    <td>Rs. 10 Lac - 20 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/e-commerce-related.ssc223" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/e-commerce-related.ssc223" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>12</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/kalyan.gif" alt="Kalyan Jewellers"> Kalyan Jewellers</a></td>
+    <td>Retail</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>13</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/pigeon-gilma-black-decker-stovekarft.70884">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/pigeon-gilma-black-decker-stovekarft_1.jpg" alt="Stovekraft"> Stovekraft</a></td>
+    <td>Retail</td>
+    <td>Rs. 50 K - 2 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniturehome-decor-furnishing.ssc213" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniturehome-decor-furnishing.ssc213" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>14</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/crossword.gif" alt="Crossword"> Crossword</a></td>
+    <td>Retail</td>
+    <td>Rs. 30 Lac Onwards</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/book-stores.ssc197" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/book-stores.ssc197" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>15</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/mia-by-tanishq.92638">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/mia-by-tanishq_1.gif" alt="Mia by Tanishq"> Mia by Tanishq</a></td>
+    <td>Retail</td>
+    <td>Rs. 50Lakh - 1 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>16</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/gocolors.gif" alt="Go Colors"> Go Colors</a></td>
+    <td>Retail</td>
+    <td>Rs. 40+ Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-wear.ssc227" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-wear.ssc227" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>17</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/blinkit.75501">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/blinkit_1.png" alt="Blinkit"> Blinkit</a></td>
+    <td>Retail</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/grocery-stores.ssc188" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/grocery-stores.ssc188" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>18</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/masaba.gif" alt="House of Masaba"> House of Masaba</a></td>
+    <td>Retail</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ethnic-stores.ssc229" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ethnic-stores.ssc229" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>19</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/tyaani.gif" alt="Tyaani"> Tyaani</a></td>
+    <td>Retail</td>
+    <td>Rs. 4 Cr. Onwards</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>20</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/nykd-by-nykaa.78545">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/nykd-by-nykaa_1.gif" alt="Nykd By Nykaa"> Nykd By Nykaa</a></td>
+    <td>Retail</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-clothing.ssc560" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-clothing.ssc560" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>21</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/melorra.86694">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/melorra_1.gif" alt="Melorra"> Melorra</a></td>
+    <td>Retail</td>
+    <td>Rs. 2 Cr - 5 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>22</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/Home-Lane.18892">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/Home-Lane_1.gif" alt="Home Lane"> Home Lane</a></td>
+    <td>Retail</td>
+    <td>Rs. 20 Lac - 30 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniturehome-decor-furnishing.ssc213" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniturehome-decor-furnishing.ssc213" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>23</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/zepto.86000">
+        <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/zepto_1.gif" alt="Zepto"> Zepto</a></td>
+    <td>Retail</td>
+    <td>Rs. 30 Lac - 50 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/superstores.ssc186" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/superstores.ssc186" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>24</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/prakruthi.gif" alt="Prakruthi">Prakruthi</a></td>
+    <td>Retail</td>
+    <td>Rs. 5 Lac - 10 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/grocery-stores.ssc188" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/grocery-stores.ssc188" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>25</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/hippo.gif" alt="Hippo Stores">Hippo Stores</a></td>
+    <td>Retail</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/building-material-stores.ssc221" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/building-material-stores.ssc221" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+<tr>
+    <td>26</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/puma.gif" alt="Puma"> Puma</a></td>
+    <td>Retail</td>
+    <td>Rs. 40 Lac - 60 Lac</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mens-footwear.ssc559" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mens-footwear.ssc559" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>27</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/reebok.gif" alt="Reebok"> Reebok</a></td>
+    <td>Retail</td>
+    <td>N/A</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casuals.ssc235" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casuals.ssc235" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+<tr>
+    <td>28</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
+        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/elle.gif" alt="Elle Décor Kitchens"> Elle Décor Kitchens</a></td>
+    <td>Retail</td>
+    <td>Rs. 40 Lakh - 2 Cr</td>   
+    <td>
+  
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniture-home-decor-and-furnishing.ssc213" class="desklink">
+        View more
+    </a>
+    <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniture-home-decor-and-furnishing.ssc213" class="moblink">
+        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+    </a>
+
+</td>
+</tr>
+
+
+  </table>
+</div>
+<!-- Retail ends-->
+
+
+<!-- tab closing div -->
+</div>
+
+<!-- final closing div -->
+</div>
+
+
+
+
+<!-- Year 2024 End-->
+
+
+
+
 <!-- Year 2023 -->
 
-<div id="year2023" role="tabpanel" class="tab-pane active">
+<div id="year2023" role="tabpanel" class="tab-pane">
 
 <div class="top-hundred">    
     <br>
@@ -136,7 +4046,7 @@ a.desklink{display: none;}
 <div class="top-hundred-tab">
 <h3>Browse Top 100 franchises by category</h3>  
 <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a role="tab" data-toggle="tab" href="#all"><img src="{{ url('images/top100/brands.svg') }}" alt=""> <span>All</span></a></li>
+<li role="presentation" class="active"><a role="tab" data-toggle="tab" href="#all"><img src="{{ url('images/top100/brands.svg') }}" alt=""> <span>All</span></a></li>
 <li role="presentation"><a role="tab" data-toggle="tab" href="#automotive1"><img src="{{ url('images/top100/automotive.svg') }}" alt=""> <span>Automotive</span></a></li>
 <li role="presentation"><a role="tab" data-toggle="tab" href="#beauty1"><img src="{{ url('images/top100/beauty.svg') }}" alt=""> <span>Beauty &<br> Health</span></a></li>
 <li role="presentation"><a role="tab" data-toggle="tab" href="#business1"><img src="{{ url('images/top100/business.svg') }}" alt=""> <span>Business<br> Services</span></a></li>
@@ -955,7 +4865,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>58</td>
-    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/MANYAVAR.gif" alt="MANYAVAR logo">MANYAVAR</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/manyavar.97335"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/manyavar_1.gif" alt="MANYAVAR logo">MANYAVAR</td>
     <td>Fashion</td>
     <td>Rs. 40 lac - 50 lac</td>   
     <td>
@@ -1212,8 +5122,8 @@ a.desklink{display: none;}
     <td> Hotel, Travel & Tourism</td>
     <td>Rs. 5 Lac - 10 Lac</td>   
     <td>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="desklink">View more</a>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="moblink">
+        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="desklink">View more</a>
+        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="moblink">
             <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
  </td>
@@ -1477,7 +5387,7 @@ a.desklink{display: none;}
 <a class="load_more moreless-button1">Load more »</a>
 </div>
 <!-- all -->
-@include('static.top100_seo_desc')
+
 <!-- Automotive -->
 <div id="automotive1" role="tabpanel" class="tab-pane ">
 <table class="table-striped table-responsive top-table">
@@ -2379,7 +6289,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>17</td>
-    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/MANYAVAR.gif" alt="MANYAVAR logo">MANYAVAR</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/manyavar.97335"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/manyavar_1.gif" alt="MANYAVAR logo">MANYAVAR</td>
     <td>Fashion</td>
     <td>Rs. 40 lac - 50 lac</td>   
     <td>
@@ -2717,10 +6627,10 @@ a.desklink{display: none;}
     <td> Hotel, Travel & Tourism</td>
     <td>Rs. 5 Lac - 10 Lac</td>   
     <td>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="desklink">
+        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="desklink">
             View more 
         </a>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="moblink">
+        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="moblink">
             <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
         </a>
 </td>
@@ -3795,7 +7705,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>54</td>
-    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/MANYAVAR.gif" alt="MANYAVAR logo"> MANYAVAR</a></td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/manyavar.97335"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/manyavar_1.gif" alt="MANYAVAR logo"> MANYAVAR</a></td>
     <td>Fashion</td>
     <td>Rs. 40 lac - 50 lac</td>   
     <td>
@@ -4449,7 +8359,7 @@ a.desklink{display: none;}
     <a class="load_more moreless-button2">Load more »</a>
     </div>
     <!-- all -->
-    @include('static.top100_seo_desc')
+    
 <!-- Automotive -->
 <div id="automotive2" role="tabpanel" class="tab-pane">
 <table class="table-striped table-responsive top-table">
@@ -5236,7 +9146,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>8</td>
-    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/MANYAVAR.gif" alt="MANYAVAR logo"> MANYAVAR</a></td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/manyavar.97335"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/manyavar_1.gif" alt="MANYAVAR logo"> MANYAVAR</a></td>
     <td>Fashion</td>
     <td>Rs. 40 lac - 50 lac</td>   
     <td>
@@ -7026,8 +10936,8 @@ a.desklink{display: none;}
     <td>Hotel, Travel & Tourism</td>
     <td>Rs. 10 lac - 20 lac</td>   
     <td>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="desklink">View more</a>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
+        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="desklink">View more</a>
+        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
     </td>
 </tr>
 
@@ -7313,7 +11223,7 @@ a.desklink{display: none;}
     <a class="load_more moreless-button3">Load more »</a>
     </div>
     <!-- a -->
-    @include('static.top100_seo_desc')
+    
 <!-- Automotive -->
 <div id="automotive3" role="tabpanel" class="tab-pane">
 <table class="table-striped table-responsive top-table">
@@ -8504,8 +12414,8 @@ a.desklink{display: none;}
     <td>Hotel, Travel & Tourism</td>
     <td>Rs. 10 lac - 20 lac</td>   
     <td>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="desklink">View more</a>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
+        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="desklink">View more</a>
+        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
     </td>
 </tr>
 
@@ -9509,7 +13419,7 @@ a.desklink{display: none;}
        </td>
 </tr><tr>
     <td>50</td>
-    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/MANYAVAR.gif" alt="MANYAVAR logo">MANYAVAR</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/manyavar.97335"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/manyavar_1.gif" alt="MANYAVAR logo">MANYAVAR</td>
     <td>Fashion</td>
     <td>Rs. 40 lac - 50 lac</td>   
     <td>
@@ -9995,8 +13905,8 @@ a.desklink{display: none;}
     <td>Hotel, Travel & Tourism</td>
     <td>Rs. 10 lac - 20 lac</td>   
     <td>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="desklink">View more</a>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
+        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="desklink">View more</a>
+        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
     </td>
 </tr>
 
@@ -10186,7 +14096,7 @@ a.desklink{display: none;}
         <a class="load_more moreless-button4">Load more »</a>
         </div>
         <!-- all -->
-        @include('static.top100_seo_desc')
+        
         
         <!-- Automotive -->
 <div id="automotive4" role="tabpanel" class="tab-pane ">
@@ -10198,20 +14108,7 @@ a.desklink{display: none;}
     <th>Investment Range</th>
     <th>&nbsp;</th>
 </tr>
-<tr>
-    <td>1</td>
-    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="{{ url('images/top100/brands/hero-elect.gif') }}" alt="Hero Electric logo">Hero Electric</a></td>
-    <td>Automotive</td>
-    <td>Rs. 40 Lac - 1 Cr.</td>   
-    <td>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/electric-two-wheelers.ssc350" class="desklink">
-            View more
-        </a>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/electric-two-wheelers.ssc350" class="moblink">
-            <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
-        </a>
-    </td>
-</tr>
+
 <tr>
     <td>2</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/mahindra-first-choice-services.29348"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/mahindra-first-choice-services_1.gif" alt="Mahindra First Choice Services Ltd.">Mahindra First Choice Services Ltd.</a></td>
@@ -10919,7 +14816,7 @@ a.desklink{display: none;}
 </tr>
 <tr>
     <td>5</td>
-    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/MANYAVAR.gif" alt="MANYAVAR logo">MANYAVAR</td>
+    <td><a target="_blank" href="https://www.franchiseindia.com/brands/manyavar.97335"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/manyavar_1.gif" alt="MANYAVAR logo">MANYAVAR</td>
     <td>Fashion</td>
     <td>Rs. 40 lac - 50 lac</td>   
     <td>
@@ -11427,8 +15324,8 @@ a.desklink{display: none;}
     <td>Hotel, Travel & Tourism</td>
     <td>Rs. 10 lac - 20 lac</td>   
     <td>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="desklink">View more</a>
-        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
+        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="desklink">View more</a>
+        <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
     </td>
 </tr></table>
 </table>
@@ -12560,7 +16457,7 @@ a.desklink{display: none;}
     </tr>
     <tr>
         <td>63</td>
-        <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/MANYAVAR.gif" alt="MANYAVAR logo">MANYAVAR</td>
+        <td><a target="_blank" href="https://www.franchiseindia.com/brands/manyavar.97335"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/manyavar_1.gif" alt="MANYAVAR logo">MANYAVAR</td>
         <td>Fashion</td>
         <td>Rs. 40 lac - 50 lac</td>   
         <td>
@@ -12800,10 +16697,10 @@ a.desklink{display: none;}
         <td>Hotel, Travel & Tourism</td>
         <td>Rs. 10 lac - 20 lac</td>   
         <td>
-             <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="desklink">
+             <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="desklink">
                     View more 
                 </a>
-                <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="moblink">
+                <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="moblink">
                     <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
                 </a>
         </td>
@@ -13093,7 +16990,7 @@ a.desklink{display: none;}
         </div>
         <!-- all -->
     
-        @include('static.top100_seo_desc')
+        
 
     <!-- Automotive -->
     <div id="automotive5" role="tabpanel" class="tab-pane">
@@ -14062,7 +17959,7 @@ a.desklink{display: none;}
     </tr>
     <tr>
         <td>15</td>
-        <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="https://www.franchiseindia.com/images/top-100-brand-logos/MANYAVAR.gif" alt="MANYAVAR logo">MANYAVAR</td>
+        <td><a target="_blank" href="https://www.franchiseindia.com/brands/manyavar.97335"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/manyavar_1.gif" alt="MANYAVAR logo">MANYAVAR</td>
         <td>Fashion</td>
         <td>Rs. 40 lac - 50 lac</td>   
         <td>
@@ -14332,10 +18229,10 @@ a.desklink{display: none;}
         <td>Hotel, Travel & Tourism</td>
         <td>Rs. 10 lac - 20 lac</td>   
         <td>
-             <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="desklink">
+             <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="desklink">
                     View more 
                 </a>
-                <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc144" class="moblink">
+                <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="moblink">
                     <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
                 </a>
         </td>
@@ -14640,8 +18537,15 @@ a.desklink{display: none;}
 
 <!-- Top 100 franchises -->
 </div>
+
+
 </div>
+
+
 </div>
+@include('static.top100_seo_desc')
+
+
 
 <script type="text/javascript">
 $('.moreless-button1').click(function() {
@@ -14680,6 +18584,8 @@ $('.moreless-button4').click(function() {
   }
 });
 
+
+
 $('.moreless-button5').click(function() {
   $('.moretext5').slideToggle();
   if ($('.moreless-button5').text() == "Load more »") {
@@ -14688,6 +18594,17 @@ $('.moreless-button5').click(function() {
     $(this).text("Load more »")
   }
 });
+
+
+$('.moreless-button9').click(function() {
+  $('.moretext9').slideToggle();
+  if ($('.moreless-button9').text() == "Load more »") {
+    $(this).text("Load less »")
+  } else {
+    $(this).text("Load more »")
+  }
+});
+
 </script>
 
 <div class="modal fade" id="topFranchise" tabindex="-1" role="dialog" aria-labelledby="topFranchise">
@@ -14725,5 +18642,4 @@ $('.moreless-button5').click(function() {
 </div>
 
     <!--form end here -->
-    <div class="height70"></div>
 @endsection

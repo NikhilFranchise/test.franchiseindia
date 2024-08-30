@@ -447,7 +447,7 @@
                 <div class="myline"></div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding">
-                <div class="upgrade-section">
+                <div class="upgrade-section ">
                     <a href="/investor/myaccount/payment" class=" sidebtn">Upgrade Account </a>
                     <div class="myline"></div>
                     <div class="parblk">
@@ -853,7 +853,7 @@
         </li>
         <li>
             <div class="contact-us-section">
-                Toll Free 1800 102 2007
+                Toll Free 1800 102 2007799
             </div>
         </li>
     </ul>

@@ -1,8 +1,5 @@
-
 @php
-use Illuminate\Support\Str;
-@endphp
-@php
+    use Illuminate\Support\Str;
     $catArr = Config('constants.CategoryArr');
     asort($catArr);
     $states = Config('location.stateArr');
@@ -48,7 +45,10 @@ use Illuminate\Support\Str;
         $mangecls = 'wiei';
     }
 @endphp
-<div class="modal modal-cust fade" id="search" tabindex="-1" aria-labelledby="search-mainLabel" aria-hidden="true">
+
+
+
+<div class="modal modal-cust fade" id="search-main" tabindex="-1" aria-labelledby="search-mainLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-cust">
         <div class="modal-content modal-content-cust">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -319,7 +319,7 @@ use Illuminate\Support\Str;
     </div>
 </div>
 <script type="text/javascript">
-    if (screen.width < 767) {
+    if (screen.width > 1) {
         $(document).ready(function() {
             setTimeout(function() {
                 $("#searchblk").slideUp(800);

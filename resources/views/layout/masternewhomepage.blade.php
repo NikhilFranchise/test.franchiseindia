@@ -204,10 +204,11 @@
 @mobile
 
 <div id="content">
+@include('layout.newhomepage.mobile.topsearch')
 @include('layout.newhomepage.mobile.header')
 
 <!-- HERO SECTION STARTS -->
-{{--@include('layout.newhomepage.mobile.herosection')--}}
+
 @include('layout.newhomepage.mobile.herosectionwithsearch')
 <!-- HERO SECTION EMDS -->
     <main class="main" id="main">
@@ -280,89 +281,35 @@
 
 <!-- mobile section end -->
 <div class="overlay"></div>
+
 <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
 @include('layout.newhomepage.jslink')
 
-<script>
-/*       $(window).scroll(function() {
 
-    if ($(this).scrollTop()>800)
-     {
-        $('.cookies-section').fadeIn();
-     }
-    else
-     {
-      $('.cookies-section').fadeOut();
-     }
- });*/
-</script>
 
 <script>
-    $(document).ready(function() {
-        function selectMax(selectmaxheaderval) {
-            let amountConfigArr = {
-            !!json_encode(Config('constants.investRangeInWordsSingle')) !!
-        }
-            ;
-            let maxAmount = $('#maxAmount');
-            let getSlugAmount = {
-            !!json_encode(Config('constants.InvestRange'))!!
-        }
-            ;
-            maxAmount.html("");
-            selectmaxheaderval = parseInt(selectmaxheaderval);
-            $.each(amountConfigArr, function (key, value) {
-                if (key > selectmaxheaderval)
-                    $('#maxAmount').append($("<option></option>").attr({
-                        "value": key,
-                        "slug": getSlugAmount[key]['min']
-                    }).text(value));
-            });
-            if (selectmaxheaderval === 21)
-                maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
-        }
-    });
-</script>
-
-<!-- <script>
-    $(function() {
-
-        checkCookie();
-
-});
-
-    function setCookie() {
-        const d = new Date();
-        d.setTime(d.getTime() + (7*24*60*60*1000));
-        let expires = "expires="+d.toUTCString();console.log(expires);
-        document.cookie = "username=cookie_user;"+ expires + ";path=/";
-    }
-
-
-    function getCookie(cname) {
-        let name = cname + "=";
-        let ca = document.cookie.split(';');
-        for(let i = 0; i < ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
+        $(document).ready(function() {
+            function selectMax(selectmaxheaderval) {
+                let amountConfigArr = '<?php echo json_encode(Config('constants.investRangeInWordsSingle')); ?>';
+               
+                let maxAmount = $('#maxAmount');
+                let getSlugAmount = '<?php  echo json_encode(Config('constants.InvestRange')); ?>';
+                maxAmount.html("");
+                selectmaxheaderval = parseInt(selectmaxheaderval);
+                $.each(amountConfigArr, function(key, value) {
+                    if (key > selectmaxheaderval)
+                        $('#maxAmount').append($("<option></option>").attr({
+                            "value": key,
+                            "slug": getSlugAmount[key]['min']
+                        }).text(value));
+                });
+                if (selectmaxheaderval === 21)
+                    maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
             }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
+        });
+    </script>
 
-    function checkCookie() {
-        let user = getCookie("username");
-        if (user != "") {
-            $('#cookie').modal('hide');
-        } else {
-            $('#cookie').modal('show');
-        }
-    }
-</script> -->
+
 <script>
     function setCookie() {
         document.cookie = "accept_cookie=ok";
@@ -590,6 +537,10 @@ src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1"
         });
     });
 </script>
+
+
+
+
 
 </body>
 </html>
