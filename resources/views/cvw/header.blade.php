@@ -1027,7 +1027,7 @@
                                 <div class="input-group input-group-custom"><span class="input-group-addon input-group-prepend-custom" id="basic-addon1"><img src="https://www.franchiseindia.com/newhomepage/assets/img/language-icon.svg" alt="language-icon" height="15" width="15"></span>
                                     <div class="form-group form-group-sm">
                                         <select class="form-control form-control-custom-main" id="language-changer">
-                                            {{-- <option hidden="">Language</option> --}}
+                                            <option hidden="">Language</option>
                                             <option value="@yield('englishUrl')" >EN - English</option>
                                             <option value="@yield('hindiUrl')" selected >HI - Hindi</option>
                                         </select>
