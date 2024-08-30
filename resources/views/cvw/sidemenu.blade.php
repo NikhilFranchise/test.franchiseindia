@@ -19,21 +19,21 @@
                 <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css">
             </div>
         </li>
-        <li>&nbsp;</li>
-        <li><a target="_blank" href="/">Domestic Brands</a></li>
-        <li><a target="_blank" href="/premiumbrand">Premium Brands</a></li>
-        <li><a target="_blank" href="/international">International</a></li>
+        <li>&nbsp;</li> 
+        <li><a target="_blank" href="/hi">घरेलू ब्रांड</a></li>
+        <li><a target="_blank" href="/hi/premiumbrand">प्रीमियम ब्रांड</a></li>
+        <li><a target="_blank" href="/international">अंतरराष्ट्रीय</a></li>
     </ul>
     <ul class="list-unstyled components border-bottom-1">
-        <li><a target="_blank" href="https://www.franchiseindia.com/insights">Franchise Insights</a></li>
-        <li><a target="_blank" href="https://www.opportunityindia.com/">News</a></li>
-        <li><a target="_blank" href="https://video.franchiseindia.com/">Video</a></li>
-        <li><a target="_blank" href="https://master.franchiseindia.com/magazine-subscribe/">Magazine</a></li>
-        <li><a href="https://www.franchiseindia.com/top-100-franchise" target="_blank">Top 100 Franchise</a></li>
-        <li><a href="https://www.franchiseindia.com/most-visitedbrands" target="_blank">Most Searched Franchise Brands</a></li>
+        <li><a target="_blank" href="https://www.franchiseindia.com/insights">फ्रेंचाइजी इनसाइट्स</a></li>
+        <li><a target="_blank" href="https://www.opportunityindia.com/hindi">समाचार</a></li>
+        <li><a target="_blank" href="https://video.franchiseindia.com/">वीडियो</a></li>
+        <li><a target="_blank" href="https://master.franchiseindia.com/magazine-subscribe/">पत्रिका</a></li>
+        {{-- <li><a href="https://www.franchiseindia.com/top-100-franchise" target="_blank">Top 100 Franchise</a></li>
+        <li><a href="https://www.franchiseindia.com/most-visitedbrands" target="_blank">Most Searched Franchise Brands</a></li> --}}
     </ul>
     <div class="categoryall-franchise border-bottom-1">
-        <div class="busheadmebu"><a target="_blank" href="/categoryall">Franchise Categories</a></div>
+        <div class="busheadmebu"><a target="_blank" href="/categoryall">फ्रेंचाइजी श्रेणियां</a></div>
         <ol class="tree">
             <li><label for="folder1"><a target="_blank" href="/business-opportunities/automotive.m8">Automotive</a></label><input type="checkbox" id="folder1">
                 <ol>
@@ -813,7 +813,7 @@
             <li><span class="shaicon"><div class="rightdimg"></div></span><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/lowcost">Low Cost Business Opportunities</a></li>
         </ol>
     </div>
-    <div class="busheadmebu martop">Our Group website</div>
+    <div class="busheadmebu martop">हमारे समूह की वेबसाइट</div>
     <ul class="list-unstyled components border-bottom-1">
         <li><a target="_blank" href="https://www.franchiseindia.com/" rel="nofollow">franchiseindia.com</a></li>
         <li><a target="_blank" href="https://www.entrepreneur.com/" rel="nofollow">entrepreneur.com</a></li>
@@ -834,21 +834,22 @@
         <li><a target="_blank" href="https://www.franchiseafrica.co/" rel="nofollow">franchiseafrica.co</a></li>
     </ul>
     <ul class="list-unstyled components border-bottom-1">
-        <li><a href="https://www.businessex.com/" target="_blank">Sell your Business</a></li>
-        <li><a href="https://www.licenseindia.com/" target="_blank">Buy a Brand License</a></li>
-        <li><a href="#expandFranchise" target="_blank">Expand Your Franchise</a></li>
-        <li><a href="https://www.franchiseindia.com/property-loan" target="_blank">Loan Against Property</a></li>
+        <li><a href="https://www.businessex.com/" target="_blank">अपना व्यवसाय बेचें</a></li>
+        <li><a href="https://www.licenseindia.com/" target="_blank">ब्रांड लाइसेंस खरीदें</a></li>
+        <li><a href="#expandFranchise" target="_blank">अपने फ्रेंचाइजी का विस्तार करें</a></li>
+        <li><a href="https://www.franchiseindia.com/property-loan" target="_blank">संपत्ति के खिलाफ ऋण</a></li>
     </ul>
     <ul class="list-unstyled components border-bottom-1">
-        <li><a href="https://www.franchiseindia.com/advertise-with-us-payment" target="_blank">Advertise With us</a></li>
-        <li><a href="https://master.franchiseindia.com/magazine-subscribe/" target="_blank">Subscribe Magazine</a></li>
-        <li><a href="https://www.franchiseindia.com/book" target="_blank">Reports &amp; Books</a></li>
-        <li><a href="https://www.franchiseindia.com/event/" target="_blank">Event</a></li>
+        <li><a href="https://www.franchiseindia.com/advertise-with-us-payment" target="_blank">हमारे साथ विज्ञापन</a></li>
+        <li><a href="https://master.franchiseindia.com/magazine-subscribe/" target="_blank">पत्रिका की सदस्यता लें</a></li>
+        <li><a href="https://www.franchiseindia.com/book" target="_blank">रिपोर्टों
+             &amp; पुस्तकें</a></li>
+        <li><a href="https://www.franchiseindia.com/event/" target="_blank">प्रतिस्पर्धा</a></li>
         <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a></li>
     </ul>
     <ul class="list-unstyled components">
-        <li><a href="https://www.franchiseindia.com/investor/create" target="_blank">Investor Signup</a></li>
-        <li><a href="https://www.franchiseindia.com/franchisor/registration/step/1" target="_blank">Franchisor Signup</a></li>
+        <li><a href="https://www.franchiseindia.com/investor/create" target="_blank">निवेशक साइनअप</a></li>
+        <li><a href="https://www.franchiseindia.com/franchisor/registration/step/1" target="_blank">फ्रेंचाइज़र साइनअप</a></li>
         <li>
             <div class="side-bar-social">
                 <ul class="sidebar-social">
@@ -863,14 +864,14 @@
         <li>
             <div class="main-link">
                 <ul class="main-link-section">
-                    <li><a href="https://www.franchiseindia.com/about" target="_blank">About us</a></li>
-                    <li><a href="https://www.franchiseindia.com/contact" target="_blank">Contact us</a></li>
-                    <li><a href="https://www.franchiseindia.com/feedback" target="_blank">Feedback</a></li>
+                    <li><a href="https://www.franchiseindia.com/about" target="_blank">हमारे बारे में</a></li>
+                    <li><a href="https://www.franchiseindia.com/contact" target="_blank">संपर्क करें</a></li>
+                    <li><a href="https://www.franchiseindia.com/feedback" target="_blank">प्रतिपुष्टि</a></li>
                 </ul>
             </div>
         </li>
         <li>
-            <div class="contact-us-section">Toll Free 1800 102 2007</div>
+            <div class="contact-us-section">टोल फ्री 1800 102 2007</div>
         </li>
     </ul>
     <div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal mCSB_scrollTools_vertical" style="display:block">
