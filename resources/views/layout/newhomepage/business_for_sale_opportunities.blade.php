@@ -31,7 +31,7 @@
                                 <div class="brand-main-section">
                                     <a href="https://www.businessex.com/business/looking-for-specialized-centralized-and-package-air-conditioning/mjzwdi"
                                         target="_blank"><img
-                                            src="https://media.businessex.com/business/pics/0312/1412051103.jpg"
+                                            src="https://www.franchiseindia.com/images/bexhome/1412051103.webp"
                                             class="img-responsive" alt=""></a>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                                 <div class="brand-main-section">
                                     <a href="https://www.businessex.com/business/looking-for-buyers-investors-for-an-online-vegan-ecommerce-business/lsstic"
                                         target="_blank"><img
-                                            src="https://media.businessex.com/business/pics/0906/346922596.jpg"
+                                            src="https://www.franchiseindia.com/images/bexhome/346922596.webp"
                                             class="img-responsive" alt=""></a>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                                 <div class="brand-main-section">
                                     <a href="https://www.businessex.com/business/seeking-buyers-for-marketing-and-communication-agency/mdk69z"
                                         target="_blank"><img
-                                            src="https://media.businessex.com/business/pics/0713/677175222.jpg"
+                                            src="https://www.franchiseindia.com/images/bexhome/677175222.webp"
                                             class="img-responsive" alt=""></a>
                                 </div>
                             </div>
@@ -185,7 +185,7 @@
                                 <div class="brand-main-section">
                                     <a href="https://www.businessex.com/business/looking-investor-for-pharma-distribution-business/ox9om1"
                                         target="_blank"><img
-                                            src="https://media.businessex.com/business/pics/1117/109411676.jpg"
+                                            src="https://www.franchiseindia.com/images/bexhome/109411676.webp"
                                             class="img-responsive" alt=""></a>
                                 </div>
                             </div>

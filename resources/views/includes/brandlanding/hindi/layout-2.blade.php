@@ -10,6 +10,9 @@
             <div class="row  bg-white landing bop2">
                 <div class="row">
                     <div class="normal">
+                        @if($franDetails->brand_verified == 1)
+                        <div class="brand-verify-two"><i class="fa fa-check"></i> Verified</div>
+                        @endif
                         <div class="col-xs-12 col-sm-3 col-md-2 mdy-width pad-top">
                             @php
                                 $eligibility = 0;

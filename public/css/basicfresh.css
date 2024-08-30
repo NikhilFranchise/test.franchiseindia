@@ -1,3 +1,71 @@
+/* IPO Policies Corporate CSS 23 Aug 2024 */
+.corporates h2{font-size: 22px;font-weight: normal;color: #333;margin: 25px 0px 15px 0px;line-height: 31px;}
+.corporates h3{font-size: 17px;font-weight: normal;color: #333;margin:32px 0px 10px 0px;line-height: 28px;}
+.corporates table{border-color: #6a6a6a;border-collapse: collapse;color: #333;font-weight: 300;font-size: 14px;}
+.corporates table td{padding: 3px 10px;font-size: 13px;}
+.corporates table th{font-weight: 500;padding: 6px 10px;}
+li.top-investors{height: 20px;}
+.policydropdown:hover .policydropdownmenu{display: block;}
+.policydropdown .btn{background: top;border: none;padding: 0px;color: #101010;font-weight: 300;font-size: 13px;}
+.policydropdownmenu{background: #f5f5f5;border: none;padding: 10px;box-shadow: none;top: 18px;border-radius: 0px;}
+.policydropdownmenu a{font-size: 12px;display: block;margin-bottom: 4px;}
+/* IPO Policies Corporate CSS 23 Aug 2024 */
+
+
+/* Brand verify css  21 Aug 2024 */
+.brand-verify{font-family: Open Sans Bold, serif;position: absolute;right: 15px;top: 15px;
+    color: #fff !important; background-color:#0cb70c;  border: 1px solid #89cb9d;border-radius: 4px;padding: 3px 9px;font-size: 12px!important;font-weight: bold;}
+.brand-verify .fa{font-size: 12px!important;margin-right:3px!important;}
+.normal{position: relative;}
+.brand-verify-detail-mobile{font-family: Open Sans Bold, serif;display:none;color: #fff; background-color: #0cb70c;
+    border: 1px solid #89cb9d;border-radius: 4px;padding: 7px 15px;font-size: 12px!important;font-weight: bold;}
+
+.brand-verify-two{
+    position: absolute;
+    right: 148px;
+    top: 36px;
+    color: #fff; background-color: #0cb70c;
+    border: 1px solid #89cb9d;
+    border-radius: 4px;
+    padding: 7px 15px;
+    font-size: 12px!important;
+    font-family: Open Sans Bold, serif;
+    z-index: 2;
+}
+.brand-verify-two .fa{font-size: 12px!important;margin-right:3px!important;}
+.brand-verify-detail{font-family: Open Sans Bold, serif;display:block;position: absolute;right: 170px;
+    top: 11px;color: #fff; background-color: #0cb70c; border: 1px solid #89cb9d;border-radius: 4px;padding: 7px 15px;
+    font-size: 12px!important;font-weight: bold;}
+.brand-verify-detail .fa{font-size: 12px!important;margin-right:3px!important;}
+@media screen and (min-width:1024px) and (max-width:1198px){
+.brand-verify-detail{right: 36px;top: -40px;padding: 7px 30px;display: block;}
+.landing h1.ttl{width:90%;}
+.brand-verify-two{right: 12px;top: -5px;padding: 8px 26px;display: block;}
+}
+@media screen and (min-width:993px) and (max-width:1023px){
+.brand-verify-detail{right: 122px;top: 10px;padding: 6px 10px;display: block;}
+.brand-verify-two{right: 100px;top: 35px;padding: 7px 13px;display: block;}
+}
+@media screen and (min-width:768px) and (max-width:992px){
+.brand-verify-detail{right: 36px;top: -27px;padding: 3px 8px;display: block;}
+.brand-verify-two{right: 10px;top: 0px;padding: 5px 15px;display: block;}
+}
+
+@media screen and (max-width:767px){
+.brand-verify-detail-mobile{display: block; width: 90px; margin: 5px auto 0px auto;padding: 5px 10px 4px 10px;}
+.brand-verify-detail{display: none;}
+li.top-investors{height: auto;}
+.brand-verify-two{position: unset;
+    display: block;
+    width: 90px;
+    margin: 0px auto 10px auto;
+    padding: 3px 10px;}
+}
+.corporates h2{font-size: 17px;line-height: 24px;}
+.corporates h3{font-size: 16px;}
+.corporates table th {font-size: 13px;line-height: 18px;}
+/* Brand verify css  21 Aug 2024 */
+
 ol,ul,ul li{list-style-type:none}
 .overin{position: fixed;z-index: 12;background-color: rgba(255, 255, 255, 0.5);width: 100%;height: 100vh;top: 0px;left: 0px;display:none;}
 .c-button,.c-menu__close,.myselectclass,.myselectclass2,.myselectclass3,.myselectclass4,.myselectclasscat,.myselectclasssearch,.myselectclassuni{-moz-appearance:none}
@@ -528,7 +596,7 @@ ul.fromstaticlist li span{color:#f22406}
 .formsection .form-control:focus{border-color:#ccc;background:#fbfbfb;-webkit-box-shadow:inset 0 5px 5px 0 rgba(0,0,0,.05);-moz-box-shadow:inset 0 5px 5px 0 rgba(0,0,0,.05);box-shadow:inset 0 5px 5px 0 rgba(0,0,0,.05)}
 .input-group span.error,input.error,select.error,textarea.error{border:1px solid red!important}
 .input-group span.error{color:red;background:red}
-label.error{color:red}
+label.error{color:red !important}
 .frm-sec label.error{display:none!important}
 .formsection input[type=radio],.formsection input[type=checkbox]{margin:0 4px 0 0;position:relative;top:2px}
 ul.inter li,ul.natio li{line-height:20px;margin-bottom:7px}
@@ -659,7 +727,7 @@ input[type=text].trrr{background:#fff;color:#666;float:left;height:35px;padding:
 .cateblock .catlistinfo.rm-elmnt{border:0;margin-left:0;padding-right:15px;padding-left:15px}
 .cateblock .catbtn input[type=checkbox]{display:none}
 .cateblock .catbtn input[type=checkbox]+label{color:#000;font-family:Arial,sans-serif;font-size:14px}
-.cateblock .catbtn input[type=checkbox]+label span{display:inline-block;width:170px;height:34px;margin:-1px 4px 0 0;vertical-align:middle;background:url(https://stgfi.franchiseindia.com/images/brand-btn.png) left top no-repeat;cursor:pointer}
+.cateblock .catbtn input[type=checkbox]+label span{display:inline-block;width:170px;height:34px;margin:-1px 4px 0 0;vertical-align:middle;background:url(https://www.franchiseindia.com/images/brand-btn.png) left top no-repeat;cursor:pointer}
 .cateblock .catbtn input[type=checkbox]:checked+label span{background-position:0 -36px}
 .cateblock .catlistinfo:hover{-webkit-box-shadow:0 0 15px 0 rgba(0,0,0,.2);-moz-box-shadow:0 0 15px 0 rgba(0,0,0,.2);box-shadow:0 0 15px 0 rgba(0,0,0,.2)}
 .cateblock .sidedtc{font-family:Open Sans Bold,serif;font-size:16px;color:#333;text-transform:uppercase;background-color:#fbfbfb;border-top-right-radius:3px;border-top-left-radius:3px}
@@ -1211,7 +1279,7 @@ a:focus{outline-offset:0;color:#333}
 .myaccount .exyab .table>thead>tr>th.widthper29{width:29%}
 .myaccount .exyab .table>thead>tr>th.widthper15{width:15%}
 .myaccount .exyab .table>thead>tr>th.widthper20{width:20%}
-.myaccount .exyab .table>tbody>tr>td{border-top:0;border-bottom:1px dotted #ccc;word-break:break-all;padding:10px;text-transform:capitalize}
+.myaccount .exyab .table>tbody>tr>td{border-top:0;border-bottom:1px dotted #ccc;word-break:break-all;padding:10px;}
 .myaccount .exyab .table>tbody>tr>td.widthper16{width:16%}
 .myaccount .exyab .table>tbody>tr>td.widthper12{width:12%}
 .myaccount .exyab .table>tbody>tr>td.widthper20{width:20%}
@@ -4488,5 +4556,5 @@ ul.sidebt li.fi{height:160px}
 
 }
 @media only screen and (min-width:1024px) and (max-width:1300px) {
-.middleval{top:70px;}
+.sideslideform .frm-container{height:350px;overflow:auto;}
 }

@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+
 class LoginController extends Controller
 {
     /*
@@ -57,7 +59,7 @@ class LoginController extends Controller
      */
     public function redirectToProvider($provider)
     {
-        if($provider != "linkedin")
+        if ($provider != "linkedin")
             return Socialite::getFacadeRoot()->driver($provider)->redirect();
 
         return abort(404);
@@ -77,12 +79,12 @@ class LoginController extends Controller
 
         $user  = Socialite::getFacadeRoot()->driver($provider)->stateless()->user();
 
-        if(empty($user)) {
+        if (empty($user)) {
             session()->flash('loginFailed', 'Please try again');
             return redirect('login');
         }
 
-        if($provider == "facebook") {
+        if ($provider == "facebook") {
             $email = isset($user->user['email']) ? $user->user['email'] : "";
             $socialName = $user->user['name'];
         } else {
@@ -90,14 +92,14 @@ class LoginController extends Controller
             $socialName = $user->name;
         }
 
-        if(empty($email)) {
+        if (empty($email)) {
             session()->flash('loginFailed', 'Please try again');
             return redirect('login');
         }
 
         $userData = User::query()->where('email', $email)->first();
 
-        if (count($userData) > 0) {
+        if ($userData != null) {
 
             $check = $this->checkProfile($userData);
 
@@ -131,8 +133,7 @@ class LoginController extends Controller
             }
         }
         /* Code here for Registration by social login
-        */
-        else{
+        */ else {
 
             // Generate the unique Investor ID
             $investorId = CommonController::profileUniqStr();
@@ -202,7 +203,7 @@ class LoginController extends Controller
 
             if (Auth::check()) {
                 //Mail sending to investor for confirmation
-                    Mail::getFacadeRoot()->to($email)->send(new autoInvestorRegistration($data));
+                Mail::getFacadeRoot()->to($email)->send(new autoInvestorRegistration($data));
 
                 session()->flash('userloggedin', 1);
                 InvestorController::setPercentage();
@@ -212,7 +213,7 @@ class LoginController extends Controller
         /* Code end for Registration by social login
         */
 
-        if(!empty(session()->pull('lastUrl')))
+        if (!empty(session()->pull('lastUrl')))
             BrandPopupLead::query()->firstOrCreate(['email_id' => $email]);
 
         session()->put('loginFailed', 'Oops! Please register your email address as it is currently not listed on FranchiseIndia.com.');
@@ -225,7 +226,7 @@ class LoginController extends Controller
      */
     public function fiblLogin(Request $request)
     {
-        if(empty($request->user()))
+        if (empty($request->user()))
             return view('fibl/login');
         else
             return redirect()->back();
@@ -239,14 +240,11 @@ class LoginController extends Controller
     {
         $admAuthHost = "{mail.franchiseindia.com:143/imap/notls}";
         $userData    = UserAccount::query()->where('profile_str', $request->fid)
-						->where('profile_type', 1)
-						->where('profile_status', 1)						
-						//->orWhere('email', 'fiblbrands@franchiseindia.in')
-						//->orWhere('email', 'info@opportunityindia.com')
-						//->orWhere('email', 'info@franglobal.com')												
-						->first();
-
-        if ($userData->count() > 0) {
+            ->where('profile_type', 1)
+            ->where('profile_status', 1)
+            ->first();
+        // dd($userData);
+        if ($userData != null) {
 
             $check = $this->checkProfile($userData);
 
@@ -254,64 +252,42 @@ class LoginController extends Controller
                 return $check;
 
             if ($userData->profile_status == 2) {
-                session()->put('loginFailed', 'Dear User, Your Email verification is pending, kindly check your mail inbox for verification mail');
-                return redirect('fibl/login');
+                // session()->put('loginFailed', '');
+                return redirect('fibl/login')->withErrors(['loginFailed' => 'Dear User, Your Email verification is pending, kindly check your mail inbox for verification mail']);
             }
 
             if ($userData->profile_status == 3 && $userData->profile_type == 1) {
-                session()->put('loginFailed', 'Dear franchisor, Your moderation process is pending');
-                return redirect('fibl/login');
+                // session()->put('loginFailed', 'Dear franchisor, Your moderation process is pending');
+                return redirect('fibl/login')->withErrors(['loginFailed' => 'Dear franchisor, Your moderation process is pending']);
             }
 
             if ($userData->profile_status != 1) {
-                session()->put('loginFailed', 'Dear User, Your profile is not active. Please contact admin to activate your profile');
-                return redirect('fibl/login');
+                return redirect('fibl/login')->withErrors(['loginFailed' => 'Dear User, Your profile is not active. Please contact admin to activate your profile']);
+                // session()->put('loginFailed', 'Dear User, Your profile is not active. Please contact admin to activate your profile');
+                // return redirect('fibl/login');
             }
 
- /*           $mbox = 0;
-            try {
-                if($mbox = imap_open( $admAuthHost, "fiblbrands@franchiseindia.in", $request->password ))
-                    $mbox = 1;
-            } catch (\Exception $e) {
-                echo $e->getMessage();
-            }
-			try {
-				if($mbox = imap_open( $admAuthHost, "info@opportunityindia.com", $request->password ))
-					$mbox = 1;
-			} catch (\Exception $e) {
-				echo $e->getMessage();
-			}
-            if($mbox == 0) {
-                try {
-                    if($mbox = imap_open( $admAuthHost, "info@franglobal.com", $request->password ))
-                        $mbox = 1;
-                } catch (\Exception $e) {
-                    echo $e->getMessage();
-                }
-            }*/
-
-           // if($request->password == 'KHBIUB*^211*YIjbkijbclkd%wf' || $mbox) {
-            if($request->password == 'Ki5LH,gb-Mkd%wfJU4@siBA0') {		   
+            // if($request->password == 'KHBIUB*^211*YIjbkijbclkd%wf' || $mbox) {
+            if ($request->password == 'Ki5LH,gb-Mkd%wfJU4@siBA0') {
 
                 if (Auth::getFacadeRoot()->login(User::query()->find($userData->user_id))) {
                     $this->recordLoginTime();
                     session()->flash('userloggedin', 1);
-                    if (request()->user()->profile_type == 2) {
-                        InvestorController::setPercentage();
-                        return redirect()->to('/');
-                    } else {
+                    // if (request()->user()->profile_type == 2) {
+                    //     InvestorController::setPercentage();
+                    //     return redirect()->to('/');
+                    // } else {
                         FranchisorController::franPercentage();
                         $franData = FranchisorBusinessDetail::query()->select('company_name')->where('franchisor_id', Auth::user()->profile_str)->first();
                         session()->put('name', $franData->company_name);
                         return redirect('franchisor/myaccount/dashboard');
-                    }
+                    //}
                 }
             }
-
         }
 
-        session()->put('loginFailed', 'The user ID or password is incorrect. Kindly re-enter.');
-        return redirect('fibl/login');
+        // session()->put('loginFailed', 'The user ID or password is incorrect. Kindly re-enter.');
+        return redirect('fibl/login')->withErrors(['loginFailed' => 'The user ID or password is incorrect. Kindly re-enter.']);
     }
 
     /**
@@ -326,40 +302,79 @@ class LoginController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
+
     public function login(Request $request)
     {
-        $this->validate($request, array(
-            'email' => 'required|email',
-            'password' => 'required'
-        ));
+        $input = $request->all();
+        // Determine if the input is an email or mobile number
+        $loginField = filter_var($request->input('email_or_mobile'), FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+        // dd($input);
 
-        $userData = UserAccount::query()->select('profile_status', 'membership_type', 'profile_type', 'profile_str')->where('email', $request->email)->first();
-
-        if ($userData->count() > 0) {
-
-            if ($userData->profile_status == 2) {
-                session()->put('loginFailed', 'Dear User, Your Email verification is pending, kindly check your mail inbox for verification mail');
-                return redirect('/login');
-            }
-
-            if ($userData->profile_status == 3 && $userData->profile_type == 1) {
-                session()->put('loginFailed', 'Dear franchisor, Your moderation process is pending');
-                return redirect('/login');
-            }
+        // Validation
+        if ($loginField == 'email') {
+            $request->validate([
+                'email_or_mobile' => 'required|email',
+                'password' => 'required',
+            ]);
         } else {
-            session()->put('loginFailed', 'Oops! The email-ID entered is incorrect');
-            return redirect('/login');
+            $request->validate([
+                'email_or_mobile' => 'required|digits:10',
+                'otp' => 'required|digits:4',
+            ]);
         }
 
-        $type = $this->commonLogin($request->email, $request->password);
-        if ($type == 1)
-            return redirect('franchisor/myaccount/dashboard');
-        if ($type == 2)
-            return redirect('/');
+        $userData = UserAccount::query()
+            ->select('user_id', 'profile_status', 'membership_type', 'profile_type', 'profile_str', 'loginotp_verification_code')
+            ->where($loginField, $request->input('email_or_mobile'))
+            ->first();
 
-        session()->put('loginFailed', 'Oops! The password entered is incorrect.');
-        return redirect('/login');
+        if (!$userData) {
+            return redirect('/login')->withErrors(['loginFailed' => 'Oops! The email-ID or mobile number entered is incorrect.']);
+        }
+
+        if ($userData->profile_status == 2) {
+            return redirect('/login')->withErrors(['loginFailed' => 'Dear User, Your Email verification is pending, kindly check your mail inbox for verification mail.']);
+        }
+
+        if ($userData->profile_status == 3 && $userData->profile_type == 1) {
+            return redirect('/login')->withErrors(['loginFailed' => 'Dear franchisor, Your moderation process is pending.']);
+        }
+
+        if ($loginField == 'email') {
+            if (Auth::attempt(['email' => $request->input('email_or_mobile'), 'password' => $request->input('password')])) {
+                if (request()->user()->profile_type == 2) {
+                    InvestorController::setPercentage();
+                    return redirect()->to('/');
+                } else {
+                    FranchisorController::franPercentage();
+                    return redirect()->intended('franchisor/myaccount/dashboard');
+                }
+            } else {
+                return redirect('/login')->withErrors(['loginFailed' => 'Oops! The password entered is incorrect.']);
+            }
+        }
+
+        if ($loginField == 'mobile') {
+            $storedOtp = $userData->loginotp_verification_code;
+
+            if ($request->input('otp') == $storedOtp) {
+                Auth::loginUsingId($userData->user_id);
+
+                if (request()->user()->profile_type == 2) {
+                    InvestorController::setPercentage();
+                    return redirect()->to('/');
+                } else {
+                    FranchisorController::franPercentage();
+                    return redirect()->intended('franchisor/myaccount/dashboard');
+                }
+            } else {
+                return redirect('/login')->withErrors(['loginFailed' => 'Oops! The OTP entered is incorrect.']);
+            }
+        }
+
+        return redirect()->back()->with('error', 'Login failed.');
     }
+
 
     /**
      * @param Request $request
@@ -395,11 +410,14 @@ class LoginController extends Controller
             return redirect()->back();
         }
 
-//        $this->commonLogin($request->email, $request->password);
+        //        $this->commonLogin($request->email, $request->password);
 
-        if (Auth::guard()->attempt(['email' => $request->email,
+        if (Auth::guard()->attempt(
+            [
+                'email' => $request->email,
                 'password' => $request->password,
-                'profile_status' => 1]
+                'profile_status' => 1
+            ]
         )) {
 
             $this->recordLoginTime();
@@ -425,7 +443,7 @@ class LoginController extends Controller
      */
     protected function commonLogin($userName, $password)
     {
-        if (Auth::guard()->attempt(['email' => $userName, 'password' => $password, 'profile_status' => 1] )) {
+        if (Auth::guard()->attempt(['email' => $userName, 'password' => $password, 'profile_status' => 1])) {
             $this->recordLoginTime();
             session()->flash('userloggedin', 1);
             if (request()->user()->profile_type == 2) {
@@ -463,7 +481,7 @@ class LoginController extends Controller
      */
     public function logoutProfile()
     {
-        if (!empty(request()->user())){
+        if (!empty(request()->user())) {
             UserRecord::query()->updateOrCreate([
                 'profile_str' => request()->user()->profile_str,
             ], [
@@ -476,6 +494,7 @@ class LoginController extends Controller
         return redirect('/');
     }
 
+
     /**
      * Update record timing capturing
      */
@@ -483,9 +502,8 @@ class LoginController extends Controller
     {
         UserRecord::query()->updateOrCreate([
             'profile_str'   => request()->user()->profile_str,
-        ],[
+        ], [
             'last_login_time' => date('Y-m-d H:i:s')
         ]);
     }
-
 }

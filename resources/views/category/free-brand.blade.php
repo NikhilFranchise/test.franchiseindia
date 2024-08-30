@@ -3,7 +3,6 @@
       <input type="checkbox" id="compare{{ $loop->index }}" class="brandCompareCheckbox" name="compareCheckbox" onClick="getBrandsForComparison()"  value="{{$brandResult->franchisor_id}}" >
       <label for="compare{{ $loop->index }}"><span></span></label>
     </div>
-
     <div class="business-list hvr-effect">
         <div class="business-list-ttl">
             {{$SubCatName}}
@@ -15,7 +14,7 @@
             </span>
         </div>
         <div class="business-list-bdy">
-            {{implode(' ', array_slice(explode(' ', substr(strip_tags($brandResult->business_desc),0,110)), 0, 10))}}
+            {!! implode(' ', array_slice(explode(' ', strip_tags($brandResult->business_desc)), 0, 10)) !!}
             @if($brandResult->franchisorLocState !== null && $brandResult->franchisorLocState->count() > 0)
                 <div class="subcat">
                     <div>Locations looking for expansion</div>

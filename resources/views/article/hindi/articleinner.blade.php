@@ -29,9 +29,10 @@
 @section('url',url()->current())
 @section('createTime', date('c', strtotime($article->hindi->created_at)))
 @section('updateTime', date('c', strtotime($article->hindi->updated_at)))
-@section('ampHindi')
+{{-- @section('ampHindi')
 <link href="{{str_replace( '/hi/', '/amp/hi/', url()->current())}}" rel="amphtml">
-@endsection
+@endsection --}}
+
 @section('content')
     @include("includes.addthis")
     <style type="text/css">

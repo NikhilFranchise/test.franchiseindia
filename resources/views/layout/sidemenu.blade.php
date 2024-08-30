@@ -182,6 +182,22 @@
         @endif
         @endmobile
         <li>&nbsp;</li>
+        @mobile
+        <li class="top-investors">
+            <div class="dropdown policydropdown">
+                <button class="btn dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" style="">Investor <i
+                        class="fa fa-caret-down"></i></button>
+                <div class="dropdown-menu policydropdownmenu" aria-labelledby="btnDropdownDemo">
+                    <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/ipo" target="_blank">IPO</a>
+                    <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/policies"
+                        target="_blank">Policies</a>
+                    <a class="dropdown-item" href="{{ Config('constants.MainDomain') }}/corporate-governance"
+                        target="_blank">Corporate Governance</a>
+                </div>
+            </div>
+        </li>
+        @endmobile
         <li>
             <a target="_blank" href="/">Domestic Brands</a>
         </li>
@@ -217,7 +233,7 @@
             asort($categoryArr);
             $i = 0;
         @endphp
-		
+
         <!--<ol class="tree">
             @foreach($categoryArr as $key => $value)
                 @php
@@ -275,7 +291,7 @@
                            ">{{$value}}</a>
                     </label> <input type="checkbox" id="folder1">
                     <ol>
-                        @foreach(Config('constants.subCategoryArr.'.$key) as $key1 => $value1) 
+                        @foreach(Config('constants.subCategoryArr.'.$key) as $key1 => $value1)
                             <li>
                                 <label for="subsubfolder1">
                                     <a target="_blank"
@@ -365,6 +381,7 @@
                 &amp; Books</a>
         </li>
         <li><a href="https://www.franchiseindia.com/event/" target="_blank">Event</a></li>
+        <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a></li>
     </ul>
     <ul class="list-unstyled components">
         <li><a href="https://www.franchiseindia.com/investor/create"
@@ -425,5 +442,8 @@
         </li>
     </ul>
 </nav>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d

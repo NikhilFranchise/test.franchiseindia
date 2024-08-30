@@ -300,7 +300,7 @@ use Illuminate\Support\Str;
         <div class="col-xs-12 col-sm-3 col-md-3 row-no-padding artirightpanel">
 
             <!--next article section start here-->
-            @if(count($nextArticle)!=0)
+            {{-- @if(count($nextArticle)!=0)
                 <div class="contiblk">
                     <div class="conh">
                         <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{Str::slug($nextArticle->title)}}.{{$nextArticle->content_id}}">Continue to next article</a>
@@ -333,7 +333,43 @@ use Illuminate\Support\Str;
                         </div>
                     </div>
                 </div>
-            @endif
+            @endif --}}
+
+            @if($nextArticle)
+    <div class="contiblk">
+        <div class="conh">
+            <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($nextArticle->title) }}.{{ $nextArticle->content_id }}">Continue to next article</a>
+            <i class="fa fa-angle-right fa-lg" aria-hidden="true"></i>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="rigtimg">
+                    <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($nextArticle->title) }}.{{ $nextArticle->content_id }}">
+                        <img src="{{ $nextArticle->image }}" alt="{{ $nextArticle->title }}" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-6 row-no-padding">
+                <div class="rightsubhead">
+                    <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($nextArticle->kicker) }}/{{ $nextArticle->kicker_id }}">
+                        {{ $nextArticle->kicker }}
+                    </a>
+                </div>
+                <div class="righttartsidetext">
+                    <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($nextArticle->title) }}.{{ $nextArticle->content_id }}">
+                        @if(empty($nextArticle->homeTitle))
+                            {{ substr($nextArticle->title, 0, 50) }}
+                        @else
+                            {{ substr($nextArticle->homeTitle, 0, 50) }}
+                        @endif
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
         <!--next article section end here-->
             <div class="sidearce"> @include("includes.banners.google_300X250")  </div>
             @include("includes.magazinesubscribe")
@@ -430,7 +466,43 @@ use Illuminate\Support\Str;
         <div class="sidearce"> @include("includes.banners.rightviewtaboola") </div>
 
         <!--next article section start here-->
-        @if(count($nextArticle)!=0)
+
+        @if($nextArticle)
+    <div class="contiblk">
+        <div class="conh">
+            <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($nextArticle->title) }}.{{ $nextArticle->content_id }}">Continue to next article</a>
+            <i class="fa fa-angle-right fa-lg" aria-hidden="true"></i>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="rigtimg">
+                    <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($nextArticle->title) }}.{{ $nextArticle->content_id }}">
+                        <img src="{{ $nextArticle->image }}" alt="{{ $nextArticle->title }}" />
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-6 row-no-padding">
+                <div class="rightsubhead">
+                    <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($nextArticle->kicker) }}/{{ $nextArticle->kicker_id }}">
+                        {{ $nextArticle->kicker }}
+                    </a>
+                </div>
+                <div class="righttartsidetext">
+                    <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($nextArticle->title) }}.{{ $nextArticle->content_id }}">
+                        @if(empty($nextArticle->homeTitle))
+                            {{ substr($nextArticle->title, 0, 50) }}
+                        @else
+                            {{ substr($nextArticle->homeTitle, 0, 50) }}
+                        @endif
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+        {{-- @if(count($nextArticle)!=0)
             <div class="contiblk">
                 <div class="conh"><a href="{{ Config::get('constants.MainDomain') }}/gallery/{{Str::slug($nextArticle->title)}}.{{$nextArticle->content_id}}">Continue to next article</a>
                     <i class="fa fa-angle-right fa-lg"  aria-hidden="true"></i></div>
@@ -461,7 +533,7 @@ use Illuminate\Support\Str;
                     </div>
                 </div>
             </div>
-        @endif
+        @endif --}}
     <!--next article section end here-->
     <div class="sidearce"> @include('includes.banners.google_300X250') </div>
 </div>
@@ -469,7 +541,77 @@ use Illuminate\Support\Str;
 </div>
 <!--new content end here -->
 </div>
-    @if(count($moreArticles) > 2)
+@if(count($moreArticles) > 2)
+    <div class="row marginborbtm articlebottom">
+        <div class="container">
+            <div class="mrehead">More Stories</div>
+            <div class="row marginbtm20 rigmarginmin">
+                @foreach($moreArticles as $article)
+                    @if($loop->index < 2)
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="img-txtlayout">
+                                <div class="img-valayout">
+                                    <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($article->title) }}.{{ $article->content_id }}">
+                                        <img src="{{ $article->image }}" alt="{{ $article->homeTitle }}" />
+                                    </a>
+                                </div>
+                                <span class="text-contentnewlayout">
+                                    <div class="text-rep-blk">
+                                        <div class="a-name-red">
+                                            <span>
+                                                <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($article->kicker) }}/{{ $article->kicker_id }}">
+                                                    {{ $article->kicker }}
+                                                </a>
+                                            </span>
+                                        </div>
+                                        <div class="show-an-txt">
+                                            <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($article->title) }}.{{ $article->content_id }}">
+                                                @if($article->homeTitle)
+                                                    {{ $article->title }}
+                                                @endif
+                                                {{ $article->homeTitle }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    @endif
+                    @if($loop->index == 1)
+                        </div>
+                        <!-- 4 slot article newsection start here -->
+                        <div class="row articlfotsction rigmarginmin">
+                    @endif
+                    @if($loop->index > 1 && $loop->index < 10)
+                        <div class="col-xs-12 col-sm-3 col-md-3 mdywinew">
+                            <div class="artifotbtmimg">
+                                <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($article->title) }}.{{ $article->content_id }}">
+                                    <img src="{{ $article->image }}" alt="{{ $article->title }}">
+                                </a>
+                            </div>
+                            <div class="artbtmsubhead">
+                                <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($article->kicker) }}/{{ $article->kicker_id }}">
+                                    {{ $article->kicker }}
+                                </a>
+                            </div>
+                            <div class="artbtmtext">
+                                <a href="{{ Config::get('constants.MainDomain') }}/gallery/{{ Str::slug($article->title) }}.{{ $article->content_id }}">
+                                    @if(empty($article->homeTitle))
+                                        {{ substr($article->title, 0, 50) }}
+                                    @else
+                                        {{ substr($article->homeTitle, 0, 50) }}..
+                                    @endif
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
+
+    {{-- @if(count($moreArticles) > 2)
     <div class="row marginborbtm articlebottom">
         <div class="container">
             <div class="mrehead">More Stories</div>
@@ -531,7 +673,7 @@ use Illuminate\Support\Str;
             </div>
         </div>
     </div>
-    @endif
+    @endif --}}
     <!--form end here -->
     <script>
         $(document).ready(function () {

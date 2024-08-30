@@ -26,7 +26,29 @@
 </title>
 <meta name="description" content="@yield('seoDesc', 'Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.')" />
 <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india')" />
-<link href="@yield('canonicalUrl', Request::get('page') ? url()->full() : url()->full())" rel="canonical">
+{{-- <link href="@yield('canonicalUrl', Request::get('page') ? url()->full() : url()->full())" rel="canonical"> --}}
+
+@php
+    $canonicalUrl = url()->current();
+    $queryParams = request()->query();
+    $queryString = '';
+
+    if (!empty($queryParams)) {
+        $queryString = '?';
+        foreach ($queryParams as $key => $value) {
+            if (is_null($value)) {
+                $queryString .= $key . '&';
+            } else {
+                $queryString .= $key . '=' . urlencode($value) . '&';
+            }
+        }
+        $queryString = rtrim($queryString, '&');
+    }
+@endphp
+<link href="{{ $canonicalUrl . $queryString }}" rel="canonical">
+
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <link rel="shortcut icon" href="https://www.franchiseindia.com/favicon.ico" type="image/x-icon" />
 <meta property="fb:pages" content="118224094883095" />
@@ -105,16 +127,21 @@
         }
     }
 @endphp
-@if($ampFlag == 1)
+{{-- @if($ampFlag == 1)
     <link href="{{$ampUrl}}" rel="amphtml">
+<<<<<<< HEAD
 @endif
 
  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
  <script src="{{ url('js/validationInsta.js?ver='.date('d'))}}"></script>
+=======
+@endif --}}
+{{-- <link rel="preload" href="{{ url('js/jquery-3.1.1.min.js') }}" as="script"> --}}
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 <!-- Scrollbar Custom CSS -->
 <link rel="stylesheet" href="{{url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css')}}" >
 
-<link rel="preload" href="{{ url('js/jquery.validate.min.js') }}" as="script">
+{{--  <link rel="preload" href="{{ url('js/jquery.validate.min.js') }}" as="script">  --}}
 <link rel="preload" href="{{ url('js/jquery.hint.js') }}" as="script">
 <link rel="preload" href="{{ url('js/jquery.bxslider.js') }}" as="script">
 <link rel="preload" href="//cdn.sendpulse.com/js/push/10b86845b3b698a88af195580a87545c_1.js" as="script">
@@ -122,9 +149,13 @@
 <link rel="preload" href="{{ url('wle_tracker.js')}}" as="script">
 <link rel="preload" href="{{ url('js/bootstrap-filestyle.min.js')}}" as="script">
 <link rel="preload" href="{{ url('js/js.cookie.min.js')}}" as="script">
+<<<<<<< HEAD
 
+=======
+{{--  <link rel="preload" href="{{ url('js/validationInsta.js?ver='.date('d'))}}" as="script">  --}}
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 <link rel="preload" href="{{ url('js/bootstrap.min.js')}}" as="script">
-<link rel="preload" href="{{ url('js/custom.js?ver='.date('d'))}}" as="script">
+{{--  <link rel="preload" href="{{ url('js/custom.js?ver='.date('d'))}}" as="script">  --}}
 <link rel="preload" href="{{ url('js/lozad.min.js')}}" as="script">
 <link rel="preload" href="{{ url('js/bootstrap-typeahead.js')}}" as="script">
 @desktop
@@ -227,10 +258,10 @@ $(document).ready(function(){
   gtag('config', 'G-8MKFEZLR18');
 </script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "gnbfg0nm67");
-</script>
+</script> --}}

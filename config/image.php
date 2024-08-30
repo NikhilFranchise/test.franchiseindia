@@ -16,6 +16,13 @@ return [
     |
     */
 
-    'driver' => \Intervention\Image\Drivers\Gd\Driver::class
+    // 'driver' => \Intervention\Image\Drivers\Gd\Driver::class,
+    'driver' => 'gd',
+
+    'options' => [
+        'autoOrientation' => true,
+        'decodeAnimation' => true,
+        'blendingColor' => 'ffffff',
+    ],
 
 ];

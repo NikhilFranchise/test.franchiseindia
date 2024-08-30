@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PropertyLoan;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
+use App\Models\ContentList;
+use Illuminate\Support\Facades\DB;
 
 class StaticPageController extends Controller
 {
@@ -86,7 +90,8 @@ class StaticPageController extends Controller
             $alphabeticalKickers[$kickerRange] = $kickerSpecificRange;
         }
 
-        return view('static.sitemapnew', compact('years', 'allData', 'kickers', 'alphabeticalKickers'));
+        // return view('static.sitemapnew', compact('years', 'allData', 'kickers', 'alphabeticalKickers'));
+        return view('static.sitemapnew', compact('years', 'allData', 'alphabeticalKickers'));
     }
 
 
@@ -187,8 +192,28 @@ class StaticPageController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function postPropertyLoanForm()
+    public function postPropertyLoanForm(Request $request)
+
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:30',
+            'email' => 'required|email|max:255',
+            'mobile' => 'required|min:10|max:10',
+            'address' => 'required',
+            'pincode' => 'required|min:6|max:6',
+            'city' => 'required|min:3',
+            'property_type' => 'required',
+                'property_size' => 'required',
+                'property_value' => 'required',
+                'income_range' => 'required',
+                'loan_range' => 'required',
+                'details' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $message = "Your details have been submitted successfully";
 
         $source = "DOTCOM";

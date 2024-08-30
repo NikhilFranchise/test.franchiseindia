@@ -107,7 +107,7 @@
                                                         <option value="{{ $index }}"
                                                             slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                             @if (isset($mc) && $index == $mc) selected @endif>
-                                                            {!! $value !!}</option>
+                                                            {{ $value }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -177,7 +177,7 @@
                                                         <option value="{{ $index }}"
                                                             slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                             @if (isset($mc) && $index == $mc) selected @endif>
-                                                            {!! $value !!}</option>
+                                                            {{ $value }}</option>
                                                     @endforeach
 
                                                 </select>
@@ -195,10 +195,19 @@
                                                     name="loc" id="stateHeader" onchange="getcity(this.value)"
                                                     required="required">
                                                     <option value="" hidden>Select State</option>
+<<<<<<< HEAD
                                                     {{-- @foreach ($states as $index => $value)
 
                                                     <option value="{{ $index }}" slug="{{strtolower(str_slug($value))}}" @if (isset($loc[0]) && $loc[0] == $index) selected @endif>{!! $value !!}</option>
                                                 @endforeach --}}
+=======
+                                                    @foreach ($states as $index => $value)
+                                                        <option value="{{ $index }}"
+                                                            slug="{{ strtolower(Str::slug($value)) }}"
+                                                            @if (isset($loc[0]) && $loc[0] == $index) selected @endif>
+                                                            {{ $value }}</option>
+                                                    @endforeach
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
                                                 </select>
                                             </div>
                                         </div>
@@ -233,7 +242,7 @@
                         </form>
                     </div>
                     <div id="investment" class="tab-pane tab-pane-main fade">
-                        <form name="invform" class="form-horizontal" method="get"
+                        <form name="invform" id="invform_desktop" class="form-horizontal" method="get"
                             action="{{ url('category/searchby') }}" onsubmit="return submitInvestment()">
                             <input type="hidden" name="invTab" value="1">
                             <div class="container-fluid">
@@ -274,7 +283,7 @@
                                                             slug="{{ Config('constants.InvestRange')[$index]['min'] }}"
                                                             @if (isset($minCost)) @if ($minCost == $index) selected @endif
                                                             @endif
-                                                            value="{{ $index }}">{!! $value !!}
+                                                            value="{{ $index }}">{{ $value }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -289,8 +298,13 @@
                                                 <select name="max_cost"
                                                     class="form-control
                                           form-control-search-main-custom"
+<<<<<<< HEAD
                                                     id="maxAmount">
                                                     <option value="" hidden> Select Max Investment </option>
+=======
+                                                    id="maxAmount" required="required">
+                                                    <option value="0"> Select Max Investment </option>
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 
                                                 </select>
 
@@ -305,7 +319,7 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            <a href="javascript:void(0)" onclick="invform.reset();">Clear All</a>
+                                            <a href="javascript:void(0)" onclick="customResetForm();">Clear All</a>
                                         </span>
                                     </div>
                                 </div>
@@ -318,6 +332,12 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
+=======
+</div>
+<!-- Modal -->
+{{--  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>  --}}
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 <script type="text/javascript">
     if (screen.width > 1) {
         $(document).ready(function() {
@@ -380,7 +400,16 @@
             maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
     }
 
+    document.addEventListener('DOMContentLoaded', function() {
+        var mainCategorySelect = document.getElementById('getMainCategoryDataHeader');
+        //console.log(mainCategorySelect);
+        if (mainCategorySelect.value) {
+            getSubCategoryHeader(mainCategorySelect.value);
+        }
+    });
+
     function getSubCategoryHeader(value) {
+
         $.ajax({
             type: 'GET',
             url: '{{ url('getsubcategory') }}',
@@ -388,6 +417,7 @@
                 categoryID: value
             },
             success: function(data) {
+                //console.log(data);
                 $("#getSubCategoryDataHeader").html(data);
             }
         });
@@ -444,5 +474,21 @@
         $('.dropdown-toggle').click(function() {
             $('.searchoption').hide(400);
         });
+<<<<<<< HEAD
     }); 
 </script>
+=======
+    });
+
+    function customResetForm() {
+    let form = document.getElementById('invform_desktop');
+
+    // Reset the form
+    form.reset();
+
+    // Reset maxAmount1 select element to its default state
+    let maxAmount1 = document.getElementById('maxAmount');
+    maxAmount1.innerHTML = '<option value="" hidden>Select Max Investment</option>';
+}
+</script>
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d

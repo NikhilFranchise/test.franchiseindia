@@ -268,17 +268,7 @@ use Illuminate\Support\Str;
     </div>
     @enddesktop
 
-    {{--@notmobile--}}
-    {{--<div class="catleftbanner300 catleftban">--}}
-        {{--@include("includes.banners.dfp_300X600")--}}
-    {{--</div>--}}
-    {{--<div class="catleftbanner300">--}}
-        {{--@include("includes.banners.google_300X600")--}}
-    {{--</div>--}}
-    {{--<div class="catleftyahoobanner300">--}}
-        {{--@include("includes.banners.yahoo_300X600")--}}
-    {{--</div>--}}
-    {{--@endnotmobile--}}
+   
 </div>
 <script language="javascript">/*<![CDATA[*/$(document).on('click','.cat-disable',function(event){event.preventDefault();var input=$(this).attr('id');input=input.replace("a","");$("#"+input).prop('checked','checked');$("#"+input).trigger('click');});$(document).on('click','.sub-cat-disable',function(event){event.preventDefault();var input=$(this).attr('id');input=input.replace("a","");$("#"+input).prop('checked','checked');$("#"+input).trigger('click');});$(document).on('click','.sub-sub-cat-disable',function(event){event.preventDefault();var input=$(this).attr('id');input=input.replace("a","");$("#"+input).trigger('click');});$(document).on('click','.states-link-disable',function(event){event.preventDefault();var input=$(this).attr('id');input=input.replace("a","");$("#"+input).trigger('click');});function getLocationType(){var location_str=[];$('input[name="state[]"]:checked').each(function(){location_str.push($(this).val());});return location_str;}
     function getFranchiseType(){return $("input:radio[name=franchise_type]:checked").val();}

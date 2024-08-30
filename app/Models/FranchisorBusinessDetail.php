@@ -1,80 +1,88 @@
 <?php
 
 namespace App\Models;
-use App\Models\FranchisorMultiUnit;
+
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\FranchisorMultiUnit;
+use App\Models\FranchisorLocState;
+use App\Models\FranchisorLike;
+use App\Models\FranchisorSliderImage;
+use App\Models\UserActivity;
+use App\Models\UniqueVisit;
+use App\Models\UserClick;
+use App\Models\UserAccount;
+;
 
 class FranchisorBusinessDetail extends Model
 {
     use HasFactory;
 
-
     protected $table      = 'franchisor_business_details';
     protected $primaryKey = 'fran_detail_id';
-    protected $guarded = []; // Allow all fields to be mass assignable
 
     /**
-     * Get the record associated with the multiunit.
+     * Get the record associated with the user of multiunit.
      */
-    public function multiUnit(): HasOne
+    public function multiUnit()
     {
         return $this->hasOne(FranchisorMultiUnit::class, 'franchisor_id', 'franchisor_id');
     }
 
     /**
-     * Get the records associated with the locations.
+     * Get the record associated with the user of location.
      */
-    public function franchisorLocStates(): HasOne
+    public function franchisorLocState()
     {
-        return $this->hasOne(FranchisorLocState::class, 'franchisor_id', 'franchisor_id');
+        return $this->hasMany(FranchisorLocState::class, 'franchisor_id', 'franchisor_id');
     }
 
     /**
-     * Get the record associated with the likes and rating.
+     * Get the record associated with the user of likes and rating.
      */
-    public function franchisorLike(): HasOne
+    public function franchisorLike()
     {
         return $this->hasOne(FranchisorLike::class, 'franchisor_id', 'franchisor_id');
     }
 
+
     /**
-     * Get the record associated with the slider images.
+     * Get the record associated with the user of Slider Images.
      */
-    public function franchisorSliderImage(): HasOne
+    public function franchisorSliderImage()
     {
         return $this->hasOne(FranchisorSliderImage::class, 'franchisor_id', 'franchisor_id');
     }
 
     /**
-     * Get the record associated with the interaction with investors.
+     * Get the record associated with the user of interaction with investor.
      */
-    public function userActivity(): HasOne
+    public function userActivity()
     {
         return $this->hasOne(UserActivity::class, 'franchisor_id', 'franchisor_id');
     }
 
     /**
-     * Get the record associated with the unique visits.
+     * Get the record associated with the user of unique visits.
      */
-    public function uniqueVisit(): HasOne
+    public function uniqueVisit()
     {
         return $this->hasOne(UniqueVisit::class, 'franchisor_id', 'franchisor_id');
     }
 
     /**
-     * Get the record associated with the user clicks.
+     * Get the record associated with the user of .
      */
-    public function userClick(): HasOne
+    public function userClick()
     {
         return $this->hasOne(UserClick::class, 'franchisor_id', 'franchisor_id');
     }
 
     /**
-     * Get the record associated with the user details.
+     * Get the record associated with the user of franchisor_id.
      */
-    public function userDetail(): HasOne
+    public function userDetail()
     {
         return $this->hasOne(UserAccount::class, 'profile_str', 'franchisor_id');
     }

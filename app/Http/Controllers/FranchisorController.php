@@ -18,21 +18,23 @@ use App\Models\LeadDownload;
 use App\Mail\confirmed;
 use App\Mail\international;
 use App\Mail\UpgradeNotice;
-use App\Mail\FranchisorPaymentSachin;
+// use App\Mail\FranchisorPaymentSachin;
 use App\Models\OnlinePayment;
 use App\Models\ProfileMembership;
 use App\Models\UserAccount;
 use App\Models\UserActivity;
 use App\Models\UserRecord;
 use App\Models\BrandUpdateRequest;
-use Illuminate\Support\Facades\Response;
+// use App\Models\HomePremiumPageBrand;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class FranchisorController extends Controller
 {
@@ -299,7 +301,7 @@ class FranchisorController extends Controller
         if ($request->input('looking_franchise') == config('constants.LookingFor.Franchisor')) {
 
             $lookingFranchise = 1;
-            // dd($request->get('franchise_partner_type'));
+
             $franchisePartner = $request->get('franchise_partner_type');
             $franchisePartnerCount = $franchisePartner != null;
             $franchisorPartnerType = $franchisePartnerCount == 2 ? 3 : ($franchisePartner[0] == "lookingFrUnit" ? 1 : 2);
@@ -376,7 +378,7 @@ class FranchisorController extends Controller
 
                 // If saving the record in FranchisorMultiUnit Model failed
                 if (!$insFranchisorMultiUnit) {
-                    DB::getFacadeRoot()->rollback();
+                    DB::rollback();
 
                     // Log the error
                     $msg = 'franchisor Registration Failed: FranchisorMultiUnit Model' . $franchisorId;
@@ -417,7 +419,7 @@ class FranchisorController extends Controller
 
                 // If saving the record in FranchisorTradePartner Model failed
                 if (!$insertFranTradePartner) {
-                    DB::getFacadeRoot()->rollback();
+                    DB::rollback();
                     // Log the error
                     $msg = 'franchisor Registration Failed: FranchisorTradePartner Model' . $franchisorId;
                     $this->generateLog($msg, $error);
@@ -728,6 +730,7 @@ class FranchisorController extends Controller
 
     public function advertisewithuspayment(Request $request)
     {
+        $franchisorId = $request->franchisorId;
 
         return view('franchisor.register.advertisewithuspayment', compact('franchisorId'));
     }
@@ -791,7 +794,7 @@ class FranchisorController extends Controller
     {
         //dd($request);
         $url = ''; //"no url";
-//        dd($request->memberplan);
+        //        dd($request->memberplan);
         $franchisorId = $request->franchisorId;
         $layout = $request->layout_type;
 
@@ -799,11 +802,33 @@ class FranchisorController extends Controller
         if ($request->hasFile('company_logo')) {
             $companyLogo = $request->file('company_logo');
             $extension = $request->file('company_logo')->getClientOriginalExtension();
-            $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.' . $extension;
+            // Create an instance of Image from the uploaded file
+            $image = Image::make($companyLogo);
+            // Convert the image to WebP format
+            $webpImage = (string) $image->encode('webp', 90);
+            // Check the MIME type and dimensions
+            // $mimeType = $image->mime();  // Should be 'image/webp'
+            // $width = $image->width();
+            // $height = $image->height();
+
+            // // Output the information
+            // dd([
+            //     'mimeType' => $mimeType,
+            //     'width' => $width,
+            //     'height' => $height,
+            //     'binaryLength' => strlen($webpImage),
+            // ]);
+
+            // Generate the storage path for the WebP image
+            $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.webp';
+            // Upload the WebP image to the storage disk
+            Storage::disk('s3')->put($companyLogoPath, $webpImage, 'public');
+
+            // $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.' . $extension;
             // Storage::disk('s3')->put($companyLogoPath, file_get_contents($companyLogo), 'public');
-            $companyLogo->storeAs('public', $companyLogoPath);
-            // $url = Storage::disk('s3')->url($companyLogoPath);
-            $url = asset('storage/' . $companyLogoPath);
+            // $companyLogo->storeAs('public', $companyLogoPath);
+            $url = Storage::getFacadeRoot()->disk('s3')->url($companyLogoPath);
+            // $url = asset('storage/' . $companyLogoPath);
         }
 
         FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)
@@ -979,12 +1004,11 @@ class FranchisorController extends Controller
 
             if ($regSource == "facebook2019")
                 $regSourceValue = "facebook";
-
         }
 
         //step 1 data insertion
         $useraccount->email = $request->input('email');
-        $useraccount->password = Hash::getFacadeRoot()->make($request->input('password'));
+        $useraccount->password = Hash::make($request->input('password'));
         $useraccount->mobile = $mobile;
         $useraccount->profile_type = config('constants.ProfileType.Franchisor');
         $useraccount->profile_status = config('constants.ProfileStatus.Pending');
@@ -995,7 +1019,7 @@ class FranchisorController extends Controller
         //Logo uploading
         if ($request->hasFile('company_logo')) {
             $companyLogo = $request->file('company_logo');
-            $extension = Request::getFacadeRoot()->file('company_logo')->getClientOriginalExtension();
+            $extension = $companyLogo->getClientOriginalExtension();
             $companyLogoPath = sprintf(config('constants.FranchisorCompanyLogo'), date('md')) . '/' . rand() . '.' . $extension;
             Storage::getFacadeRoot()->disk('s3')->put($companyLogoPath, file_get_contents($companyLogo), 'public');
             $url = Storage::getFacadeRoot()->disk('s3')->url($companyLogoPath);
@@ -1019,8 +1043,14 @@ class FranchisorController extends Controller
             return redirect()->back();
         }
 
+        // dd($_POST['outlet_locations']);
         //step 2 data insertion
-        $outletLocations = @implode(',', $_POST['outlet_locations']);
+        if (isset($_POST['outlet_locations'])) {
+            $outletLocations = implode(',', $_POST['outlet_locations']);
+        } else {
+            // Handle the case where 'outlet_locations' is not set
+            $outletLocations = ''; // or some other default value or error handling
+        }
         $marketingMaterial = $request->input('marketting_material');
         if ($request->input('marketting_material') == "Yes") {
             $marketingMaterial = @implode(',', $_POST['marketting_materials']);
@@ -1270,7 +1300,6 @@ class FranchisorController extends Controller
                     }
                 }
             }
-
         }
 
         //Inserting data into franchisor_loc_states for states for diffrent regions
@@ -1788,7 +1817,8 @@ class FranchisorController extends Controller
             $channelType = $request->get('channel_type');
             $tradeInvestment = $request->get('trade_investment');
             $tradeMargin = $request->get('trade_margin');
-            $channelTypeCount = count($channelType);
+            // $channelTypeCount = $channelType->count();
+            $channelTypeCount = is_array($channelType) ? count($channelType) : 0;
 
             if (isset($tradeInvestment[0]) && !empty($tradeInvestment[0])) {
                 $unitInvMin = Config('constants.InvestRange.' . $tradeInvestment[0] . '.min');
@@ -1814,12 +1844,11 @@ class FranchisorController extends Controller
                     return redirect()->back();
                 }
             }
-
         }
 
         //updating the database
         $updateBusiness = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->update([
-            //'company_name' => $request->input('company_name'),
+            'company_name' => $request->input('company_name'),
             'ceo_name' => $request->input('ceo_name'),
             'ceo_email' => $request->input('ceo_email'),
             'ceo_mobile' => $request->input('ceo_mobile'),
@@ -1853,6 +1882,22 @@ class FranchisorController extends Controller
             'unitinv_royalty' => $unitInvRoyalty,
             'business_desc_update' => $detail
         ]);
+        $invest = ($unitInvMin == 0) ? $unitInvestment : config('constants.investmentRangeFetch')[$unitInvMin];
+
+        // $investment = ($invest == 0) ? config('constants.investRangeInWords')[1] : config('constants.investRangeInWords')[$invest];
+
+        $invesRange = str_replace('Rs. ', '', str_replace('lakh', 'L', $invest));
+        // dd($invesRange);
+
+
+        // if ($franchisorId != null) {
+        //     HomePremiumPageBrand::query()->where('fihl_id', $franchisorId)->update([
+        //         'brand_heading' => $request->input('brand_name'),
+        //         'investment_range' => $invesRange,
+        //         'investment_range_new' => $invesRange,
+        //         'franchise_outlets' => $request->input('no_fran_outlets'),
+        //     ]);
+        // }
 
         $this->recordUpdateTime();
 
@@ -2030,9 +2075,13 @@ class FranchisorController extends Controller
                         'state' => $franchiseNorthStates[$statesCount]
                     ]);
 
+
+
+
+
                     // If saving the record in FranchisorLocState Model failed
                     if (!$insert) {
-                        DB::getFacadeRoot()->rollback();
+                        DB::rollback();
                         // Log the error
                         $msg = 'franchisor Registration Failed: FranchisorLocState Model' . $franchisorId;
                         $this->generateLog($msg, $error);
@@ -2043,6 +2092,15 @@ class FranchisorController extends Controller
 
                     $statesCount++;
                 }
+                $states = $franchiseNorthStates;
+                if (!is_array($states)) {
+                    $states = explode(',', $states);
+                }
+
+                FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->update([
+                    'expansion_location' => implode(',', $states),
+                    'expansion_loc_type' => $expansionLocType
+                ]);
             }
         }
 
@@ -2106,9 +2164,13 @@ class FranchisorController extends Controller
                                 'state' => $state
                             ]);
 
+
+
+
+
                             // If saving the record in FranchisorLocState Model failed
                             if (!$insert) {
-                                DB::getFacadeRoot()->rollback();
+                                DB::rollback();
                                 // Log the error
                                 $msg = 'franchisor Registration Failed: FranchisorLocState Model' . $franchisorId;
                                 $this->generateLog($msg, $error);
@@ -2121,7 +2183,17 @@ class FranchisorController extends Controller
                         }
                         $i++;
                     }
-                }
+
+                    if (!is_array($state)) {
+                        $states = explode(',', $state);
+                    }
+                    //print_r($states);
+
+                    FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->update([
+                        'expansion_location' => implode(',', $states),
+                        'expansion_loc_type' => $expansionLocType
+                    ]);
+                } //die;
             }
         }
 
@@ -2169,7 +2241,6 @@ class FranchisorController extends Controller
                 ];
 
                 $this->sendMailNotification('sachin@franchiseindia.com', new international($companyData));
-
             }
         }
 
@@ -2288,13 +2359,14 @@ class FranchisorController extends Controller
      */
     public function expressInterest()
     {
-        $expressedInterests = UserActivity::query()
+        $expressedInterests = UserActivity::with(['investor.userDetail'])
             ->where('franchisor_id', request()->user()->profile_str)
             ->whereNotNull('investor_id')
             ->where('investor_id', '!=', 'Anonymous')
             ->orderBy('clickID', 'desc')
             ->paginate(15);
 
+        // dd($expressedInterests);
         //Pass data to view
         return view('franchisor.myAccount.xpressed-interest', compact('expressedInterests'));
     }
@@ -2385,53 +2457,127 @@ class FranchisorController extends Controller
      * downloading the interests
      * @return mixed
      */
+    // public function allInterestToCsv()
+    // {
+    //     if (empty(request()->user()) || request()->user()->membership_type != 1)
+    //         return "";
+
+    //     $franchisorId = request()->user()->profile_str;
+    //     $expressedInterests = UserActivity::query()
+    //         ->where('franchisor_id', $franchisorId)
+    //         ->whereNotNull('investor_id')
+    //         ->where('investor_id', '!=', 'Anonymous')
+    //         ->orderBy('clickID', 'desc')
+    //         ->get();
+    //     $filename = "/tmp/express_interest.csv";
+    //     $handle = fopen($filename, 'w+');
+    //     fputcsv($handle, array('Name', 'Email', 'Available Capital', 'Phone', 'Address', 'State', 'City', 'application date'));
+
+    //     foreach ($expressedInterests as $expData) {
+    //         $address = "Not Visible";
+    //         $invAmt = Config('constants.investRangeInWords.' . $expData->investor->inv_amt);
+    //         $name = $expData->investor->userDetail->name;
+    //         $email = "Not Visible";
+    //         $mobile = "Not Visible";
+
+    //         $state = "Not Visible";
+    //         $city = "Not Visible";
+
+    //         if (request()->user()->membership_type == 1 && $expData->franchisor_visibility == 1) {
+    //             $address = "";
+    //             if (!empty($expData->investor->inv_address))
+    //                 $address .= $expData->investor->inv_address . ", ";
+    //             if (!empty($expData->investor->inv_city))
+    //                 $address .= $expData->investor->inv_city . ", ";
+    //             if (!empty($expData->investor->inv_state))
+    //                 $address .= $expData->investor->inv_state . ", ";
+    //             if (!empty($expData->investor->inv_pincode))
+    //                 $address .= "Pin-code:-" . $expData->investor->inv_pincode . ", ";
+    //             if (!empty($expData->investor->inv_country))
+    //                 $address .= $expData->investor->inv_country;
+
+    //             $email = $expData->investor->userDetail->email;
+    //             $mobile = $expData->investor->userDetail->mobile;
+
+    //             $state = $expData->investor->inv_state;
+    //             $city = $expData->investor->inv_city;
+    //         }
+
+    //         fputcsv($handle, array($name, $email, $invAmt, $mobile, $address, $state, $city, $expData->visit_date));
+    //     }
+
+    //     fclose($handle);
+
+    //     $headers = ['Content-Type' => 'text/csv'];
+
+    //     $this->recordLeadDownload($franchisorId, 2);
+
+    //     return Response::getFacadeRoot()->download($filename, 'ExpressInterest.csv', $headers);
+    // }
     public function allInterestToCsv()
     {
-        if (empty(request()->user()) || request()->user()->membership_type != 1)
+        if (empty(request()->user()) || request()->user()->membership_type != 1) {
             return "";
+        }
 
         $franchisorId = request()->user()->profile_str;
-        $expressedInterests = UserActivity::query()
+        $expressedInterests = UserActivity::with(['investor.userDetail'])
             ->where('franchisor_id', $franchisorId)
             ->whereNotNull('investor_id')
             ->where('investor_id', '!=', 'Anonymous')
             ->orderBy('clickID', 'desc')
             ->get();
-        $filename = "/tmp/express_interest.csv";
-        $handle = fopen($filename, 'w+');
-        fputcsv($handle, array('Name', 'Email', 'Available Capital', 'Phone', 'Address', 'State', 'City', 'application date'));
+        // dd($expressedInterests);
+        $filename = 'express_interest.csv';
+        $filePath = storage_path('app/public/' . $filename);
+
+        // Ensure the directory exists
+        if (!file_exists(dirname($filePath))) {
+            mkdir(dirname($filePath), 0755, true);
+        }
+
+        $handle = fopen($filePath, 'w+');
+        fwrite($handle, "\xEF\xBB\xBF");
+        fputcsv($handle, ['Name', 'Email', 'Available Capital', 'Phone', 'Address', 'State', 'City', 'Application Date']);
 
         foreach ($expressedInterests as $expData) {
+            $investor = $expData->investor;
+            $userDetail = $investor->userDetail;
             $address = "Not Visible";
-            $invAmt = Config('constants.investRangeInWords.' . $expData->investor->inv_amt);
-            $name = $expData->investor->userDetail->name;
+            $invAmt = Config('constants.investRangeInWords.' . $investor->inv_amt);
+            $name = $userDetail->name;
             $email = "Not Visible";
             $mobile = "Not Visible";
-
             $state = "Not Visible";
             $city = "Not Visible";
 
             if (request()->user()->membership_type == 1 && $expData->franchisor_visibility == 1) {
                 $address = "";
-                if (!empty($expData->investor->inv_address))
-                    $address .= $expData->investor->inv_address . ", ";
-                if (!empty($expData->investor->inv_city))
-                    $address .= $expData->investor->inv_city . ", ";
-                if (!empty($expData->investor->inv_state))
-                    $address .= $expData->investor->inv_state . ", ";
-                if (!empty($expData->investor->inv_pincode))
-                    $address .= "Pin-code:-" . $expData->investor->inv_pincode . ", ";
-                if (!empty($expData->investor->inv_country))
-                    $address .= $expData->investor->inv_country;
+                if (!empty($investor->inv_address)) {
+                    $address .= $investor->inv_address . ", ";
+                }
+                if (!empty($investor->inv_city)) {
+                    $address .= $investor->inv_city . ", ";
+                }
+                if (!empty($investor->inv_state)) {
+                    $address .= $investor->inv_state . ", ";
+                }
+                if (!empty($investor->inv_pincode)) {
+                    $address .= "Pin-code:-" . $investor->inv_pincode . ", ";
+                }
+                if (!empty($investor->inv_country)) {
+                    $address .= $investor->inv_country;
+                }
 
-                $email = $expData->investor->userDetail->email;
-                $mobile = $expData->investor->userDetail->mobile;
-
-                $state = $expData->investor->inv_state;
-                $city = $expData->investor->inv_city;
+                $email = $userDetail->email;
+                $mobile = $userDetail->mobile;
+                $state = $investor->inv_state;
+                $city = $investor->inv_city;
             }
-
-            fputcsv($handle, array($name, $email, $invAmt, $mobile, $address, $state, $city, $expData->visit_date));
+            $visitDate = date('d-M-Y', strtotime($expData->visit_date));
+            $visitDate = '' . $visitDate . '"'; // Enclose the date in double quotes
+            // dd($visitDate);
+            fputcsv($handle, [$name, $email, $invAmt, $mobile, $address, $state, $city, $visitDate]);
         }
 
         fclose($handle);
@@ -2440,7 +2586,7 @@ class FranchisorController extends Controller
 
         $this->recordLeadDownload($franchisorId, 2);
 
-        return Response::getFacadeRoot()->download($filename, 'ExpressInterest.csv', $headers);
+        return Response::download($filePath, $filename, $headers);
     }
 
     /**
@@ -2496,7 +2642,7 @@ class FranchisorController extends Controller
         if ($mail == 1) {
             $company = FranchisorBusinessDetail::query()->select('company_name')->where('franchisor_id', request()->user()->profile_str)->first()->company_name;
 
-            $data = " 
+            $data = "
                     FranchisorId                                       =   " . request()->user()->profile_str . "
                     Company Name                                       =   " . $company;
 

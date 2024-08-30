@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\InvestorDetails;
@@ -15,6 +16,8 @@ use App\Mail\confirmed;
 use App\Models\MobileVerification;
 use App\Mail\AdvertiseMail;
 use App\Models\FranchisorLocState;
+use App\Models\UniqueVisit;
+use App\Models\FranchisorVisitCount;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
@@ -30,6 +33,12 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
+
+
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -106,26 +115,26 @@ class CommonController extends Controller
      * Function to generate city list based upon Franchisor
      * @return string
      */
-    public function getCityListLandingPage()
+    public function getCityListLandingPage(Request $request)
     {
+
         $cities = '<option value="">Select City</option>';
 
-        if (empty(request()->franId) || empty(request()->state))
+        if (empty($request->franId) || empty($request->state))
             return $cities;
 
-        $city = Config('location.cityArr.' . request()->state);
-
+        $city = Config('location.cityArr.' . $request->state);
         $locationType = FranchisorBusinessDetail::query()->select('expansion_loc_type')
-            ->where('franchisor_id', request()->franId)->first()->expansion_loc_type;
-
+            ->where('franchisor_id', $request->franId)->first()->expansion_loc_type;
         if ($locationType == 2) {
-            $citiesType2 = FranchisorLocState::query()->where('franchisor_id', request()->franId)
-                ->where('state', Config('location.stateArr.' . request()->state))->get()->pluck('city');
+           $citiesType2 = FranchisorLocState::query()->where('franchisor_id', $request->franId)
+                ->where('state', Config('location.stateArr.' . $request->state))->get()->pluck('city');
 
-            if (!empty($citiesType2))
+            if (!empty($citiesType2)) {
                 $city = $citiesType2;
+            }
         }
-
+        // dd($city);
         foreach ($city as $index => $value) {
             $cities .= "<option value='" . $value . "'>$value</option>";
         }
@@ -205,7 +214,6 @@ class CommonController extends Controller
         } else {
             return response()->json(array('msg3' => "Pincode not found"), 200);
         }
-
     }
 
     /**
@@ -464,7 +472,7 @@ class CommonController extends Controller
         if ($profileData === null || $profileData->count() === 0) {
             return view('static.email-reject');
         }
-        
+
 
         $status = $profileData->profile_type != 1 ? Config('constants.ProfileStatus.Active') : Config('constants.ProfileStatus.Awaiting');
 
@@ -673,7 +681,6 @@ class CommonController extends Controller
             'code' => $code,
         ];
         Mail::getFacadeRoot()->to($email)->send(new confirmed($data));
-
     }
 
     /**
@@ -906,7 +913,6 @@ class CommonController extends Controller
         // dd($mobile);
         $check = UserAccount::query()->where('mobile', $mobile)->count();
         return $check;
-
     }
 
     public function investervrifyOtp()
@@ -958,7 +964,7 @@ class CommonController extends Controller
 
         //while (list($character, $replacement) = each($specialCharacters)) {
 
-        foreach ((Array) $specialCharacters as $character => $replacement) { //replaced above code as The each() function is deprecated in php7//
+        foreach ((array) $specialCharacters as $character => $replacement) { //replaced above code as The each() function is deprecated in php7//
 
             $string = str_replace($character, '-' . $replacement . '-', $string);
         }
@@ -975,5 +981,33 @@ class CommonController extends Controller
         return strtolower($content_title1);
         //return str_replace('\'', '', $title);
     }
+ 
+public function brand_total_count()
+{
+    $date = Carbon::now();
+    $formattedDate = $date->format('Y-m-d'); // Updated to 'Y-m-d' for consistency
+
+    // Fetch the count of unique visits grouped by franchisor_id
+    $brand_count = UniqueVisit::select('franchisor_id', DB::raw('COUNT(*) AS visit_count'))
+        ->groupBy('franchisor_id')
+        ->whereDate('date', $formattedDate) // Ensures comparison with date only
+        ->get();
+
+    // Prepare data for bulk insertion
+    $dataToInsert = $brand_count->map(function ($item) use ($formattedDate) {
+        return [
+            'franchisor_id' => $item->franchisor_id,
+            'total' => $item->visit_count,
+            'record_date' => $formattedDate
+        ];
+    })->toArray();
+
+    // Insert data into the franchisor_visits table
+    FranchisorVisitCount::insert($dataToInsert);
+
+    // Confirm successful insertion
+    dd('Data inserted successfully.');
+}
+
 
 }

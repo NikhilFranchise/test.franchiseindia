@@ -67,15 +67,15 @@
         @include('layout.newhomepage.bestfranchiseopportunity')
 
         <!-- Best Franchise Opportunity ends -->
-		
+
 		<!-- TOP DEALERSHIP OPPORTUNITIES START -->
 		@include('layout.newhomepage.top_dealership_opportunities')
 		<!-- TOP DEALERSHIP OPPORTUNITIES END -->
-		
+
 		<!-- BUSINESS FOR SALE OPPORTUNITIES START -->
 		@include('layout.newhomepage.business_for_sale_opportunities')
 		<!-- BUSINESS FOR SALE OPPORTUNITIES END -->
-		
+
             <!-- Upcoming Events starts -->
         {{--@include('layout.newhomepage.upcomingevents')--}}
         @include('layout.newhomepage.videoevent')
@@ -83,11 +83,11 @@
 		<!-- Top International Opportunities starts -->
         @include('layout.newhomepage.topinternational')
         <!-- Top International Opportunities ends -->
-		
+
 		<!-- HIGH GROWTH POTENTIAL STARTUPS OPPORTUNITIES START -->
 		@include('layout.newhomepage.high_growth_potential_startups_opportunities')
 		<!-- HIGH GROWTH POTENTIAL STARTUPS OPPORTUNITIES END -->
-		
+
 	    <!-- Top Franchise Opportunities starts -->
         @include('layout.newhomepage.tfo')
         <!-- Top Franchise Opportunities ends -->
@@ -145,15 +145,15 @@
     @include('layout.newhomepage.bestfranchiseopportunity')
 
     <!-- Best Franchise Opportunity ends -->
-	
+
 	<!-- TOP DEALERSHIP OPPORTUNITIES START -->
 	@include('layout.newhomepage.top_dealership_opportunities')
 	<!-- TOP DEALERSHIP OPPORTUNITIES END -->
-	
+
 	<!-- BUSINESS FOR SALE OPPORTUNITIES START -->
 	@include('layout.newhomepage.business_for_sale_opportunities')
 	<!-- BUSINESS FOR SALE OPPORTUNITIES END -->
-	
+
         <!-- Upcoming Events starts -->
     {{--@include('layout.newhomepage.upcomingevents')--}}
     @include('layout.newhomepage.videoevent')
@@ -166,7 +166,7 @@
 	<!-- HIGH GROWTH POTENTIAL STARTUPS OPPORTUNITIES START -->
 	@include('layout.newhomepage.high_growth_potential_startups_opportunities')
 	<!-- HIGH GROWTH POTENTIAL STARTUPS OPPORTUNITIES END -->
-	
+
         <!-- Top Franchise Opportunities starts -->
     @include('layout.newhomepage.tfo')
 
@@ -224,11 +224,11 @@
 	<!-- TOP DEALERSHIP OPPORTUNITIES START -->
 	@include('layout.newhomepage.top_dealership_opportunities')
 	<!-- TOP DEALERSHIP OPPORTUNITIES END -->
-	
+
 	<!-- BUSINESS FOR SALE OPPORTUNITIES START -->
 	@include('layout.newhomepage.business_for_sale_opportunities')
 	<!-- BUSINESS FOR SALE OPPORTUNITIES END -->
-	
+
         <!-- Upcoming Events starts -->
     @include('layout.newhomepage.mobile.upcomingevents')
 
@@ -281,6 +281,7 @@
 
 <!-- mobile section end -->
 <div class="overlay"></div>
+<<<<<<< HEAD
 
 <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
 @include('layout.newhomepage.jslink')
@@ -310,6 +311,33 @@
     </script>
 
 
+=======
+<script src="{{ url('/js/jquery-3.1.1.min.js') }}"></script>
+@include('layout.newhomepage.jslink')
+
+<script>
+    $(document).ready(function() {
+        function selectMax(selectmaxheaderval) {
+            let amountConfigArr = '<?php echo json_encode(Config('constants.investRangeInWordsSingle')); ?>';
+
+            let maxAmount = $('#maxAmount');
+            let getSlugAmount = '<?php echo json_encode(Config('constants.InvestRange')); ?>';
+
+            maxAmount.html("");
+            selectmaxheaderval = parseInt(selectmaxheaderval);
+            $.each(amountConfigArr, function (key, value) {
+                if (key > selectmaxheaderval)
+                    $('#maxAmount').append($("<option></option>").attr({
+                        "value": key,
+                        "slug": getSlugAmount[key]['min']
+                    }).text(value));
+            });
+            if (selectmaxheaderval === 21)
+                maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
+        }
+    });
+</script>
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 <script>
     function setCookie() {
         document.cookie = "accept_cookie=ok";
@@ -422,12 +450,12 @@
         if(!empty($query))
         $query = strtolower($query);
 		$southCodes = ['tamil nadu', 'telangana', 'kerala', 'pondicherry'];
-        $eastCodes = ['bihar', 'jharkhand', 'odisha', 'nepal', 'arunachal pradesh', 'assam', 'meghalaya', 'orissa', 'tripura'];		
+        $eastCodes = ['bihar', 'jharkhand', 'odisha', 'nepal', 'arunachal pradesh', 'assam', 'meghalaya', 'orissa', 'tripura'];
         $westCodes  = ['goa', 'gujarat',  'rajasthan'];
         $northCodes  = ['punjab', 'jammu and kashmir', 'jammu', 'kashmir', 'himachal pradesh', 'chandigarh', 'uttarakhand', 'uttar pradesh', 'delhi', 'haryana'];
 		$centerCodes = ['madhya pradesh', 'chhattisgarh', 'maharashtra'];
-        $indiaCodes  = ['andhra pradesh', 'kerala', 'lakshadweep', 'pondicherry', 'telangana', 'tamil nadu', 'tamilnadu', 'uttar pradesh', 'rajasthan', 'haryana'];		
-        $GreenTrends  =  ['west bengal', 'karnataka', 'andhra pradesh'];			
+        $indiaCodes  = ['andhra pradesh', 'kerala', 'lakshadweep', 'pondicherry', 'telangana', 'tamil nadu', 'tamilnadu', 'uttar pradesh', 'rajasthan', 'haryana'];
+        $GreenTrends  =  ['west bengal', 'karnataka', 'andhra pradesh'];
 
         App\Http\Controllers\CommonController::checkCampaignUrl();
     @endphp
@@ -436,54 +464,54 @@
 		@if(in_array($query, $southCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfranchiseexpohyderabad')
+                    @include('includes.banners.popupfrobengaluru')
                 @endif
             @else
-                @include('includes.banners.popupfranchiseexpohyderabad')
+                @include('includes.banners.popupfrobengaluru')
             @endif
 		@elseif(in_array($query, $eastCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfranchiseexpodelhi')
+                    @include('includes.banners.popupfranchiseexpokolkata')
                 @endif
             @else
-                @include('includes.banners.popupfranchiseexpodelhi')
+                @include('includes.banners.popupfranchiseexpokolkata')
             @endif
 
 		@elseif(in_array($query, $westCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfranchiseexpodelhi')
+                    @include('includes.banners.popupfroahmedabad')
                 @endif
             @else
-                @include('includes.banners.popupfranchiseexpodelhi')
+                @include('includes.banners.popupfroahmedabad')
             @endif
 
 		@elseif(in_array($query, $northCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfranchiseexpodelhi')
+                    @include('includes.banners.popupfrobengaluru')
                 @endif
             @else
-                @include('includes.banners.popupfranchiseexpodelhi')
+                @include('includes.banners.popupfrobengaluru')
             @endif
 
 		@elseif(in_array($query, $centerCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfranchiseexpodelhi')
+                    @include('includes.banners.popupfranchiseexpolucknow')
                 @endif
             @else
-                @include('includes.banners.popupfranchiseexpodelhi')
+                @include('includes.banners.popupfranchiseexpolucknow')
             @endif
 
 		@else
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfranchiseexpodelhi')
+                    @include('includes.banners.popupfrobengaluru')
 				@endif
 			@else
-		        @include('includes.banners.popupfranchiseexpodelhi')
+		        @include('includes.banners.popupfrobengaluru')
 			@endif
 		@endif
     @endif
@@ -536,6 +564,103 @@ src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1"
             return false;
         });
     });
+</script>
+<script>
+    var otpInterval;
+
+    function checkInputType() {
+        var input = $('#email_or_mobile').val();
+        var isEmail = validateEmail(input);
+
+        if (isEmail) {
+            $('#password_group').show();
+            $('#get_otp_btn').hide();
+            $('#sign_in_btn').prop('disabled', false);
+        } else if (validateMobile(input)) {
+            $('#password_group').hide();
+            $('#get_otp_btn').show();
+            $('#sign_in_btn').prop('disabled', true);
+        } else {
+            $('#password_group').show();
+            $('#get_otp_btn').hide();
+            $('#sign_in_btn').prop('disabled', false);
+        }
+    }
+
+    function validateEmail(email) {
+        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function validateMobile(mobile) {
+        var re = /^\d{10}$/;
+        return re.test(mobile);
+    }
+
+    function validateLoginMobileOTP() {
+        var mobile = $('#email_or_mobile').val();
+        $.ajax({
+            type: 'get',
+            url: '/login_verify_mobile',
+            data: {
+                mobile: mobile
+            },
+            success: function(data) {
+                if (data.data == 0) {
+                    $("#mismatch-mob").show();
+                    $("#email_or_mobile").prop("readonly", true);
+                    $("#sign_in_btn").prop("disabled", true);
+                    $("#edit-mobile-wider").show();
+                    $("#otp-block-wider").hide();
+                    $("#get_otp_btn").hide();
+                } else {
+                    $("#email_or_mobile").prop("readonly", true);
+                    $("#mismatch-mob").hide();
+                    $("#sign_in_btn").prop("disabled", false);
+                    $("#edit-mobile-wider").show();
+                    $("#otp-block-wider").show();
+                    $("#get_otp_btn").hide();
+                    startOTPTimer();
+                }
+            }
+        });
+    }
+
+    function editMobileWider() {
+        $("#email_or_mobile").prop("readonly", false);
+        $("#edit-mobile-wider").hide();
+        $("#mismatch-mob").hide();
+        $("#otp-block-wider").hide();
+        $("#sign_in_btn").prop("disabled", true);
+        clearInterval(otpInterval);
+        $('#otp_timer').hide();
+        $('#resend_otp').hide();
+    }
+
+    function startOTPTimer() {
+        var timer = 60;
+        $('#resend_otp').hide();
+        $('#otp_timer').show();
+
+        otpInterval = setInterval(function() {
+            if (timer > 0) {
+                timer--;
+                $('#otp_timer').text(timer + 'sec');
+            } else {
+                clearInterval(otpInterval);
+                $('#otp_timer').hide();
+                $('#resend_otp').show();
+                $("#sign_in_btn").prop("disabled", true);
+            }
+        }, 1000);
+    }
+
+    function resendOTP() {
+        clearInterval(otpInterval);
+        var mobile = $('#email_or_mobile').val();
+        startOTPTimer();
+        validateLoginMobileOTP();
+    }
 </script>
 
 

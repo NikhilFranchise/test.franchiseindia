@@ -13,7 +13,7 @@
 @section('englishUrl', $engUrl)
 
 @section('hindibrandUrls')
-    <link href="{{ url()->to('/amp/hi/content') }}" rel="amphtml">
+    {{-- <link href="{{ url()->to('/amp/hi/content') }}" rel="amphtml"> --}}
     <link rel="alternate" href="{{ Config('constants.MainDomain') }}/content" hreflang="en-IN" />
     <link rel="alternate" href="{{ Config('constants.MainDomain') }}/hi/content" hreflang="hi-IN" />
 @endsection

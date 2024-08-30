@@ -13,6 +13,7 @@ use App\Models\FranchisorSliderTenure;
 use App\Models\FranchisorLike;
 use App\Models\OiBrands;
 use App\Models\FranchisorBusinessDetail;
+use App\Models\InvestorDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 
@@ -25,7 +26,7 @@ class BrandController extends Controller
         // dd($request);
         $ratings = 0;
         $likesCnt = 0;
-        $brandUrlParam = $request->profileName;         // Fetch the request parameter        
+        $brandUrlParam = $request->profileName;         // Fetch the request parameter
         $brandParamsArr = explode('.', $brandUrlParam);  // Explode it by separator & fetch details from DB
         $images = [];
         $view = "brandlanding";
@@ -34,7 +35,8 @@ class BrandController extends Controller
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
         $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
-
+        // dd($franDetails);
+        // dd($franDetails->userActivity);
         //OI Redirection Start
         if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
             $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
@@ -63,6 +65,7 @@ class BrandController extends Controller
 
         $region = $franDetails->multiUnit;
         $stateList = (!empty($franDetails->franchisorLocState) ? $franDetails->franchisorLocState->toArray() : "");
+        // dd($region, $stateList);
         $likeTableData = $franDetails->franchisorLike;
         $pageLayout = $franDetails->page_layout_type;
 
@@ -83,6 +86,7 @@ class BrandController extends Controller
 
         // Insert into unique visits table if there is no entry
         $uniqVisitsCheck = $franDetails->uniqueVisit;
+        // dd($uniqVisitsCheck);
 
         if (!empty($uniqVisitsCheck))
             $uniqVisitsCheck = $uniqVisitsCheck->where('ip', $request->ip())->where('date', date('Y-m-d'))->first();
@@ -161,11 +165,21 @@ class BrandController extends Controller
         //for You may like
         $likeArticles = $this->getContentForBrandLanding(10, $franDetails, $isHindi);
 
-        if (request()->segment(1) == 'hi')
+        if (request()->segment(1) == 'hi') {
             $view = "brandlanding-hindi";
+        }
+        if (Auth::check()) {
+            $inv_credits =  InvestorDetails::select('investor_details.credit_limit', 'user_accounts.reg_source')
+                ->join('user_accounts', 'investor_details.investor_id', '=', 'user_accounts.profile_str')
+                ->where('investor_details.investor_id', request()->user()->profile_str)->where('user_accounts.reg_source', 'DelhiExpoPaid')
+                ->first();
 
-        // return the data to blade view
-        return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData'));
+            // return the investor data to blade view
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits'));
+        } else {
+            // return the data to blade view
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData'));
+        }
     }
 
     /**
@@ -297,7 +311,7 @@ class BrandController extends Controller
         $likesFranData = FranchisorLike::query()->select('blike')->where('franchisor_id', $franchisorId)->first();
 
         // If the record count is 0, create new entry by franchisor_id
-        if ($likesFranData->count() == 0) {
+        if ($likesFranData == null || $likesFranData->count() == 0) {
             $likesFranData = 0;
             FranchisorLike::query()->insert(['franchisor_id' => $franchisorId, 'blike' => 1]);
         } else {
@@ -362,7 +376,6 @@ class BrandController extends Controller
         Cookie::queue("franRate" . $franchisorId, 1, 43800);
 
         return response()->json(array('ratings' => $updatedRatings), 200);
-
     }
 
     /**
@@ -376,7 +389,6 @@ class BrandController extends Controller
             ->orderByRaw("RAND()")
             ->take($count)
             ->get();
-
     }
 
     /**
@@ -414,6 +426,7 @@ class BrandController extends Controller
 
             // Check whether logged in user already expressed interest
             $data = $franDetails->userActivity;
+
             if (!empty($data))
                 $data = $data->where('investor_id', Auth::user()->profile_str)
                     ->where('franchisor_id', $franDetails->franchisor_id)

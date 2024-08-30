@@ -21,7 +21,7 @@
                                     <span class="input-group-addon">
                                         <div class="usersprite"></div>
                                     </span>
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    @csrf
                                     <input id="email" type="email"
                                         class="form-control
                                  blur" name="email"
@@ -46,27 +46,42 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane" id="login">
                                 <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    @csrf
                                     <div class="frm-pnl">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="usersprite"></div>
                                             </span>
-                                            <input type="email"
-                                                class="form-control
-                                       blur"
-                                                required="" name="email" placeholder="ईमेल-आईडी दर्ज करें">
-                                        </div>
-                                        <div class="input-group">
+                                            <input type="text" class="form-control blur" name="email_or_mobile"
+                                                id="email_or_mobile" placeholder="ईमेल-आईडी या मोबाइल नंबर दर्ज करें"
+                                                onkeyup="checkInputType()">
+
+                                            <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
+                                                style="display:none">एडिट</span>
+                                            <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
+                                                style="display:none">ओटीपी भेजें</span>
+                                            </div>
+                                            <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">यह मोबाइल नंबर
+                                                पंजीकृत नहीं है|</div>
+                                        <div class="input-group" id="password_group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
                                             </span>
-                                            <input type="password" required="" name="password"
-                                                class="form-control blur" placeholder="पासवर्ड दर्ज करें">
+                                            <input type="password" name="password" class="form-control blur"
+                                                placeholder="पासवर्ड दर्ज करें">
+
                                         </div>
-                                        <button type="submit"
+                                        <div class="input-group" id="otp-block-wider" style="display: none;width:100%;">
+                                            <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
+                                                class="form-control blur" placeholder="ओटीपी दर्ज करें">
+
+                                            <span class="vrfy" id="resend_otp" onclick="resendOTP()"
+                                                style="display:none">ओटीपी पुनः भेजें</span>
+                                            <span class="vrfy" id="otp_timer"></span>
+                                        </div>
+                                        <button type="submit" id="sign_in_btn"
                                             class="btn btn-default
-                                    btn-gry btn-prop">साइन
+                              btn-gry btn-prop">साइन
                                             इन </button>
                                         <span class="pipe">|</span> <a class="frg-link" href="#"
                                             onClick="frg_panel()">पासवर्ड भूल गए</a>
@@ -77,8 +92,8 @@
                                     <div class="popleft">
                                         <span>या साइन इन करें</span>
                                         <ul class="socl">
-                                            
-                                            <li><a href="{{config('constants.MainDomain')}}/auth/google"><img
+
+                                            <li><a href="{{ config('constants.MainDomain') }}/auth/google"><img
                                                         src="{{ url('newhomepage/assets/img/google.svg') }}"
                                                         alt="google" class="" /></a></li>
                                         </ul>
@@ -102,7 +117,14 @@
                                                     class="btn btn-large btn-default
                                        btn-gry btn-prop">चैनल
                                                     पार्टनर नियुक्त करें <br /><span> (फ्रैंचाइज़र
-                                                        रजिस्ट्रेशन)</span></a>
+                                                        पंजीकरण)</span></a>
+                                            </div>
+                                            <br>
+                                            <div><a href="{{ Config('constants.MainDomain') }}/franchisor/international-registration"
+                                                    class="btn btn-large btn-default
+                                       btn-gry btn-prop">चैनल
+                                                    पार्टनर नियुक्त करें <br /><span> (अंतरराष्ट्रीय फ्रैंचाइज़र
+                                                        पंजीकरण)</span></a>
                                             </div>
                                             <br>
                                             <div><a target="_blank"
@@ -147,7 +169,7 @@
                         <div class="ttl">Forgot Password</div>
                         <div class="desc">
                             Enter your email address associated with your
-                            Franchiseindia account and we'll send you a link
+                            Franchiseindia account and we&apos;ll send you a link
                             to reset your password.
                         </div>
                         <div class="frm-pnl">
@@ -157,7 +179,7 @@
                                     <span class="input-group-addon">
                                         <div class="usersprite"></div>
                                     </span>
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    @csrf
                                     <input id="email" type="email"
                                         class="form-control
                                  blur" name="email"
@@ -183,28 +205,47 @@
                             <div role="tabpanel" class="tab-pane" id="login">
                                 <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
                                     @csrf
+<<<<<<< HEAD
                                     <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
+=======
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
                                     <div class="frm-pnl">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="usersprite"></div>
                                             </span>
-                                            <input type="email"
-                                                class="form-control
-                                       blur"
-                                                required="" name="email" placeholder="Enter Your User ID">
-                                        </div>
-                                        <div class="input-group">
+
+                                            <input type="text" class="form-control blur" required=""
+                                                name="email_or_mobile" id="email_or_mobile"
+                                                placeholder="Enter Your User ID or Mobile Number"
+                                                onkeyup="checkInputType()">
+
+                                            <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
+                                                style="display:none">Edit</span>
+                                            <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
+                                                style="display:none">Get OTP</span>
+                                            </div>
+                                            <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">This mobile number
+                                                is not registered.</div>
+                                        <div class="input-group" id="password_group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
                                             </span>
-                                            <input type="password" required="" name="password"
-                                                class="form-control blur" placeholder="Enter Your Password">
+                                            <input type="password" name="password" class="form-control blur"
+                                                placeholder="Enter Your Password">
                                         </div>
-                                        <button type="submit"
-                                            class="btn btn-default
-                                    btn-gry btn-prop">SIGN
-                                            IN</button>
+
+                                        <div class="input-group" id="otp-block-wider" style="display: none;width:100%;">
+                                            <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
+                                                class="form-control blur" placeholder="Enter OTP" style="width:100%;">
+                                            <span class="vrfy" id="resend_otp" onclick="resendOTP()"
+                                                style="display:none">Resend
+                                                OTP</span>
+                                            <span class="vrfy" id="otp_timer"></span>
+                                        </div>
+
+                                        <button type="submit" id="sign_in_btn"
+                                            class="btn btn-default btn-gry btn-prop">SIGN IN</button>
                                         <span class="pipe">|</span> <a class="frg-link" href="#"
                                             onClick="frg_panel()">Forgot
                                             Password</a>
@@ -215,8 +256,8 @@
                                     <div class="popleft">
                                         <span>or Sign in With</span>
                                         <ul class="socl">
-                                            
-                                            <li><a href="{{config('constants.MainDomain')}}/auth/google"><img
+
+                                            <li><a href="{{ config('constants.MainDomain') }}/auth/google"><img
                                                         src="{{ url('newhomepage/assets/img/google.svg') }}"
                                                         alt="google" class="" /></a></li>
                                         </ul>
@@ -243,6 +284,14 @@
                                                     Channel
                                                     Partners <br /><span> (Franchisor
                                                         Registration) </span></a>
+                                            </div>
+                                            <br>
+                                            <div><a href="{{ Config('constants.MainDomain') }}/franchisor/international-registration"
+                                                    class="btn btn-large btn-default
+                                       btn-gry btn-prop">Appoint
+                                                    Channel
+                                                    Partners <br /><span> (International Franchisor Registration)
+                                                    </span></a>
                                             </div>
                                             <br>
                                             <div><a target="_blank"

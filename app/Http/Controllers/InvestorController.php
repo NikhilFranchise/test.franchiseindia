@@ -93,7 +93,7 @@ class InvestorController extends Controller
             $amount = Config('constants.invPlanAmount.' . $request->input('invPlan'));
             // $chmop = array('OPTCRDC', 'OPTDBCRD', 'OPTEMI', 'OPTNBK');
             //if(!array_key_exists($mopt, $chmop)){
-            //$pmode = "OPTNBK";	
+            //$pmode = "OPTNBK";
             //}
             $amount = round($amount + (($amount * 18) / 100));
             // $mop  = config('constants.Charges.' . $pmode);
@@ -167,16 +167,13 @@ class InvestorController extends Controller
 
 
                 return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, '');
-
             }
-
         }
 
         session()->flash('loginFailed', 'The user ID or password is incorrect. Kindly re-enter.');
         $plan = $request->input('invPlan');
 
         return view('inv-campaign.investlogin_new', compact('plan', 'gst'));
-
     }
 
     /**
@@ -187,7 +184,6 @@ class InvestorController extends Controller
         $plan = request()->invPlan;
         $flag = 2;
         return view('investor/register/investor-quick-registration', compact('flag', 'plan'));
-
     }
 
     /**
@@ -266,7 +262,7 @@ class InvestorController extends Controller
         // Fetch values from the request
         $name = $request->input('invName');
         $email = $request->input('email');
-        $password = Hash::getFacadeRoot()->make($request->input('password'));
+        $password = Hash::make($request->input('password'));
         $address = $request->input('address');
         $country = config('location.countryName.' . $request->input('country'));
         $pincode = $request->input('pincode');
@@ -341,7 +337,7 @@ class InvestorController extends Controller
             }
         }
         // Begin the transaction
-        DB::getFacadeRoot()->beginTransaction();
+        DB::beginTransaction();
 
         // Insert into UserAccount Model
         $insertUser = UserAccount::query()->insert([
@@ -358,13 +354,13 @@ class InvestorController extends Controller
 
         // If saving the record in User Model failed
         if (!$insertUser) {
-            DB::getFacadeRoot()->rollback();
+            DB::rollBack();
 
             // Log the error
             $errorMsg = "Investor Registration Failed: UserAccount Model $email";
             $this->generateLog($errorMsg);
 
-            // Flash the error message in client window            
+            // Flash the error message in client window
             session()->flash('errorMessage', $error);
 
             // return back to the investor registration page
@@ -424,7 +420,7 @@ class InvestorController extends Controller
 
         // If saving the record in InvestorDetail Model failed
         if (!$insertInvestor) {
-            DB::getFacadeRoot()->rollback();
+            DB::rollBack();
             // Log the error
 
             // Log the error
@@ -443,7 +439,7 @@ class InvestorController extends Controller
 
             // If saving the record in InvestorDetail Model failed
             if (!$insertInvestorIndustryDetails) {
-                DB::getFacadeRoot()->rollback();
+                DB::rollBack();
 
                 // Log the error
                 $errorMsg = "Investor Registration Failed : InvestorIndustry Model  $email";
@@ -460,7 +456,7 @@ class InvestorController extends Controller
 
                 // If saving the record in InvestorDetail Model failed
                 if (!$insertInvestorIndustryDetails) {
-                    DB::getFacadeRoot()->rollback();
+                    DB::rollBack();
 
                     // Log the error
                     $errorMsg = "Investor Registration Failed : InvestorIndustryBusiness Model  $email";
@@ -470,11 +466,10 @@ class InvestorController extends Controller
                     return redirect('investor/create');
                 }
             }
-
         }
 
         // If we reach here, then data is valid and working. Commit the queries!
-        DB::getFacadeRoot()->commit();
+        DB::commit();
 
         //sending the email on registration
         $code = Str::random(16);
@@ -485,9 +480,9 @@ class InvestorController extends Controller
             'companyName' => $name,
             'code' => $code,
         ];
-
+        // dd($email);
         //Mail sending to investor for confirmation
-        Mail::getFacadeRoot()->to($email)->send(new confirmed($data));
+        Mail::to($email)->send(new confirmed($data));
 
         if (!empty($request->input('flag'))) {
 
@@ -502,8 +497,7 @@ class InvestorController extends Controller
                 $amount = Config('constants.invPlanAmount.' . $request->input('inv_plan'));
                 $membership = config('constants.invPlanDetails.' . $request->input('inv_plan'));
                 $planId = $request->input('inv_plan');
-                $detail = config('constants.invPlanDetails.' . $request->input('inv_plan'));
-                ;
+                $detail = config('constants.invPlanDetails.' . $request->input('inv_plan'));;
             }
 
             if ($request->input('inv_plan') == 401)
@@ -519,7 +513,6 @@ class InvestorController extends Controller
 
         //Return to plan page
         return view('investor.register.investor-plan', compact('investorId'));
-
     }
 
     /**
@@ -530,6 +523,7 @@ class InvestorController extends Controller
     public function upgradeInvestor(Request $request)
     {
 
+        // dd($request->all());
         if ($request->input('invPlan') == 401) {
             return view('includes/investor-thanks');
         } else {
@@ -542,18 +536,16 @@ class InvestorController extends Controller
             $amount = $amount + (($amount * 18) / 100);
             $mop = config('constants.Charges.' . $pmode);
             $amount = round($amount + $amount * ($mop) / 100);
+            // dd($amount);
 
 
             $investorId = $request->input('investorId');
             $membership = config('constants.invPlanDetails.' . $request->input('invPlan'));
             $planId = $request->input('invPlan');
-            $detail = config('constants.invPlanDetails.' . $request->input('invPlan'));
-
-            ;
+            $detail = config('constants.invPlanDetails.' . $request->input('invPlan'));;
             $gst = $request->gst_no;
 
             return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, $pmode);
-
         }
     }
 
@@ -587,7 +579,7 @@ class InvestorController extends Controller
         $investorId = $request->user()->profile_str;
         $personalData = UserAccount::query()->where('profile_str', $investorId)->select('name', 'mobile', 'title', 'reg_source')->first();
         $data = InvestorDetails::query()->where('investor_id', $investorId)->first();
-
+        //
         return view('investor/myAccount/personal-details', compact('data', 'personalData'));
     }
 
@@ -598,15 +590,16 @@ class InvestorController extends Controller
      */
     public function updatePersonalDetails(Request $request)
     {
-        $this->validate($request, [
-            'invName' => 'required|min:3',
-            'address' => 'required',
-            'country' => 'required',
-            'state' => 'required',
-            'city' => 'required',
-            'dob' => 'required',
-            'pincode' => 'required|numeric',
-        ]);
+        // dd(Cookie::get('invPercentage'));
+        // $this->validate($request, [
+        //     'invName' => 'required|min:3',
+        //     'address' => 'required',
+        //     'country' => 'required',
+        //     'state' => 'required',
+        //     'city' => 'required',
+        //     'dob' => 'required',
+        //     'pincode' => 'required|numeric',
+        // ]);
 
         $investorId = $request->user()->profile_str;
         $finalmobile = $request->input('chkmobile');
@@ -622,7 +615,7 @@ class InvestorController extends Controller
             if ($otpstatus == 1) {
                 $finalmobile = $request->input('mobile');
                 $userChk = UserAccount::query()->where('mobile', $finalmobile)->first();
-                if (count($userChk) == 0) {
+                if ($userChk == null) {
                     $finalmobile = $request->input('mobile');
                 } else {
                     session()->flash('errorMessage', 'Error! Mobile number already used');
@@ -636,15 +629,16 @@ class InvestorController extends Controller
         // Insert into UserAccount Model
         $updateUser = UserAccount::query()->where('profile_str', $investorId)->update(['name' => $name, 'title' => request()->title, 'mobile' => $finalmobile]);
 
+
         // If saving the record in User Model failed
         if (!$updateUser) {
-            DB::getFacadeRoot()->rollback();
+            DB::rollBack();
 
             // Log the error
             $errorMsg = "updation of investor personal details : UserAccount Model . $investorId";
             $this->generateLog($errorMsg);
 
-            // Flash the error message in client window            
+            // Flash the error message in client window
             session()->flash('errorMessage', "Update Failed");
 
             // return back to the investor registration page
@@ -675,6 +669,24 @@ class InvestorController extends Controller
         }
         $this->setPercentage();
         $this->recordUpdateTime();
+
+        //add event statement for event investors 14-06-2024
+        $profile_percentage = (Cookie::get('invPercentage'));
+        // dd($profile_percentage);
+        $credit_points = InvestorDetails::query()->where('investor_id', $request->user()->profile_str)->first();
+        if ($request->input('reg_source') == 'DelhiExpoPaid' && $profile_percentage > 59 && $profile_percentage < 100 && $credit_points->event_credit_status == 0) {
+
+            // dd($profile_percentage,$credit_points->total_credits,$credit_points->event_credit_status);
+            $credit_add = InvestorDetails::query()->where('investor_id', $investorId)->update(['total_credits' => 5, 'event_credit_status' => '1', 'credit_limit' => 5]);
+            // echo $credit_add;exit;
+        } else if ($request->input('reg_source') == 'DelhiExpoPaid'  && $profile_percentage == 100 &&               $credit_points->event_credit_status == 1) {
+            $newCreditLimit = $credit_points->credit_limit + 2;
+
+            $credit_add = InvestorDetails::query()->where('investor_id', $investorId)->update(['total_credits' => 7, 'event_credit_status' => '2', 'credit_limit' => $newCreditLimit]);
+            // dd($credit_add);
+
+        }
+        //add event statement for event investors 14-06-2024
         //redirecting to the same page with successful flash data
         session()->flash('Success', 'Successfully Updated');
         return redirect('/investor/myaccount/personaldetails');
@@ -747,7 +759,6 @@ class InvestorController extends Controller
                     return redirect('investor/create');
                 }
             }
-
         }
         $this->recordUpdateTime();
         $this->setPercentage();
@@ -805,7 +816,6 @@ class InvestorController extends Controller
         //redirecting to the same page with successful flash data
         session()->flash('Success', 'Successfully Updated');
         return redirect('/investor/myaccount/jobdetails');
-
     }
 
     /**
@@ -893,6 +903,7 @@ class InvestorController extends Controller
     public function showPropertyDetails(Request $request)
     {
         $data = InvestorDetails::query()->where('investor_id', $request->user()->profile_str)->first();
+        // dd($data);
         return view('investor/myAccount/property-details', compact('data'));
     }
 
@@ -903,16 +914,17 @@ class InvestorController extends Controller
      */
     public function updatePropertyDetails(Request $request)
     {
+        // dd($request->all());
         $investorId = $request->user()->profile_str;
         $update = InvestorDetails::query()->where('investor_id', $investorId)
             ->update([
                 'prop_address' => ($request->input('property_use') != 0 ? $request->input('prop_address') : ""),
                 'area_req_min' => ($request->input('property_use') != 0 ? $request->input('min_area') : 0),
                 'area_req_max' => ($request->input('property_use') != 0 ? $request->input('max_area') : 0),
-                'area_type' => $request->input('area_type'),
+                // 'area_type' => $request->input('area_type'),
                 'property_type' => $request->input('property_use'),
             ]);
-
+        // dd($update);
         if (!$update) {
             // Log the error
             $errorMsg = "updation of investor property details : InvestorDetail Model . $investorId";
@@ -930,7 +942,6 @@ class InvestorController extends Controller
         //redirecting to the same page with successful flash data
         session()->flash('Success', 'Successfully Updated');
         return redirect('/investor/myaccount/propertydetails');
-
     }
 
     /**
@@ -957,12 +968,12 @@ class InvestorController extends Controller
         $investorId = $request->user()->profile_str;
         $oldPassword = UserAccount::query()->where('profile_str', '=', $investorId)->select('password')->first();
 
-        if (!Hash::getFacadeRoot()->check($request->password, $oldPassword->password)) {
+        if (!Hash::check($request->password, $oldPassword->password)) {
             session()->flash('failed', 'Password did not match please try again with correct password');
             return redirect('investor/myaccount/changepassword');
         }
 
-        $update = UserAccount::query()->where('profile_str', $investorId)->update(['password' => Hash::getFacadeRoot()->make($request->new_password)]);
+        $update = UserAccount::query()->where('profile_str', $investorId)->update(['password' => Hash::make($request->new_password)]);
 
 
         if (!$update) {
@@ -970,7 +981,7 @@ class InvestorController extends Controller
             $errorMsg = "updation of investor password details : UserAccount Model . $investorId";
             $this->generateLog($errorMsg);
 
-            // Flash the error message in client window            
+            // Flash the error message in client window
             session()->flash('errorMessage', "update failed");
             session()->flash('failed', 'Update Failed');
 
@@ -1003,7 +1014,8 @@ class InvestorController extends Controller
         $viewedFranData = '';
         $expIntFranData = '';
         $investorId = $request->user()->profile_str;
-
+        $userAccountData = UserAccount::select('email', 'name', 'membership_type', 'membership_plan', 'profile_type', 'reg_source', 'profile_status')->where('profile_str', $investorId)->where('reg_source', 'DelhiExpoPaid')->first();
+        // dd($userAccountData);
         if ($request->user()->membership_type == 1) {
             $paymentDetail = PgInvestorPayment::query()->select('order_status', 'expiry_date')
                 ->where('investor_id', $investorId)
@@ -1070,7 +1082,7 @@ class InvestorController extends Controller
         $membershipDays = PgInvestorPayment::query()->where('investor_id', $investorId)->where('order_status', 1)->first();
 
 
-        return view('investor/myAccount/dashboard', compact('count', 'expIntBrands', 'expIntFranData', 'viewedBrands', 'viewedFranData', 'credits', 'membershipDays'));
+        return view('investor/myAccount/dashboard', compact('count', 'expIntBrands', 'expIntFranData', 'viewedBrands', 'viewedFranData', 'credits', 'membershipDays', 'userAccountData'));
     }
 
     /**
@@ -1129,6 +1141,7 @@ class InvestorController extends Controller
         $investorData = InvestorDetails::query()->where('investor_id', request()->user()->profile_str)->first();
         $industryData = InvestorIndustry::query()->where('investor_id', request()->user()->profile_str)->first();
         $userAccountData = UserAccount::query()->where('profile_str', request()->user()->profile_str)->first();
+
 
         if (!empty($industryData)) {
             $value = $value + 5;
@@ -1206,7 +1219,8 @@ class InvestorController extends Controller
         if (!empty(request()->user()->name))
             $value = $value + 5;
 
-        Cookie::getFacadeRoot()->queue($name, $value);
+        // dd($name,$value);
+        Cookie::queue($name, $value);
     }
 
     /**
@@ -1238,7 +1252,6 @@ class InvestorController extends Controller
         $gst = $request->gst_no;
 
         return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, '');
-
     }
 
     /**
@@ -1307,7 +1320,6 @@ class InvestorController extends Controller
         $gst = $request->gst_no;
 
         return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, '');
-
     }
 
     /**
@@ -1325,7 +1337,6 @@ class InvestorController extends Controller
         if (is_array($membership)) {
             $membership = $membership[0];
             $checkCampaign = 1;
-
         }
 
         $invData = InvestorDetails::query()->select('investor_id', 'inv_city', 'inv_state', 'inv_country', 'inv_address')->where('investor_id', $investorId)->first();
@@ -1354,7 +1365,7 @@ class InvestorController extends Controller
         $data = "<table> <tr> <td>Name : </td><td>" . $name . "</td></tr><tr> <td>Email : </td><td>" . $email . "</td></tr><tr> <td>Mobile No. : </td><td>" . $phone . "</td></tr><tr> <td>Investor Id : </td><td>" . $investorId . "</td></tr><tr> <td>Address : </td><td>" . $address . ", City: " . $city . ", State: " . $invData->inv_state . ", Country: " . $country . "</td></tr><tr> <td>Time Of Payment : </td><td>" . date('Y-m-d H:i:s') . "</td></tr></table>";
 
         // *******commented for testing**********
-        Mail::getFacadeRoot()->to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
+        Mail::to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
 
         // End of Email to Investor Acquisition team
 
@@ -1422,7 +1433,6 @@ class InvestorController extends Controller
         $access_code_new = Config('hdfcpgnew.accessCode');
         // dd($access_code_new);
         return view('payment.payment-request')->with(compact('encrypted_data', 'access_code_new'));
-
     }
 
     /**

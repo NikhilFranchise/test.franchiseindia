@@ -15,6 +15,7 @@ class InstaSubscribeController extends Controller
     //
     public function instasubsribe(Request $request)
     {
+        // dd($request->all());
         $this->validate($request, array(
             'email'   => 'required|email|max:255',
             'mobile'  => 'required|min:10|max:10'));

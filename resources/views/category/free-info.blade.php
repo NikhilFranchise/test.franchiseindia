@@ -1,9 +1,9 @@
 <div class="modal fade lg-panel" id="modalGetFree" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form method="post" action="{{ Config('constants.MainDomain')}}/getfreeinfo">
+            <form method="post" action="{{ Config('constants.MainDomain') }}/getfreeinfo">
+                @csrf
                 <input type="hidden" name="frandetailsid" id="freeinfovalue" value="">
-                <input type="hidden" name="_token" value="{{csrf_token()}}">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">You have requested information For Brands</h4>
@@ -11,7 +11,6 @@
                 <div class="modal-body">
                     <div class="business-list">
                         <div class="row" id="companyblockrequest">
-
                         </div>
                     </div>
                     <div class="requested-frm">
@@ -19,7 +18,7 @@
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <input type="text" name="infoname" class="form-control" placeholder="Enter Name" required>
-                                    <input type="hidden" name="lasturl" value="{{url()->current()}}">
+                                    <input type="hidden" name="lasturl" value="{{ url()->current() }}">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6">
@@ -27,7 +26,7 @@
                                     <select class="form-control" name="infostate" required onchange="getcityinfo(this.value)" id="statesforinfo">
                                         <option value="">Select State</option>
                                         @foreach(Config('location.stateArr') as $key => $value)
-                                            <option value={{$key}}>{{$value}}</option>
+                                            <option value="{{ $key }}">{{ $value }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -76,7 +75,7 @@
                                     </div>
                                 </div>
                             </div>
-
+            
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <div class="form-group txt-center">
                                     <div class="checkbox">
@@ -91,6 +90,7 @@
                     <button type="submit" class="btn btn-default btn-red" id="contactsubmit">Submit Request</button>
                 </div>
             </form>
+            
         </div>
     </div>
 </div>

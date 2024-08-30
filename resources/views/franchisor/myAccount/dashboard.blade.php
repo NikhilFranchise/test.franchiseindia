@@ -41,8 +41,8 @@
                                     @foreach ($insta->take(5) as $instaApply)
                                         @if ($leadcount > $basic_count)
                                             @php
-                                                  $ded = $leadcount - $basic_count; // Calculate the difference
-                                                
+                                                $ded = $leadcount - $basic_count; // Calculate the difference
+
                                             @endphp
                                         @endif
                                         @if ($i < $ded)
@@ -53,12 +53,12 @@
                                                 </td>
                                                 <td>
                                                     <div class="fra-title">
-                                                        {{ ($instaApply->visibility == 1) ? $instaApply->email : 'Not Visible' }}
+                                                        {{ $instaApply->visibility == 1 ? $instaApply->email : 'Not Visible' }}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="fra-title">
-                                                        {{ ($instaApply->visibility == 1) ? $instaApply->phone : 'Not Visible' }}
+                                                        {{ $instaApply->visibility == 1 ? $instaApply->phone : 'Not Visible' }}
                                                     </div>
                                                 </td>
                                             </tr>
@@ -73,12 +73,12 @@
                                                 </td>
                                                 <td>
                                                     <div class="fra-title">
-                                                        {{ ($franData->fleads_status == 1 || $instaApply->visibility == 1) ? $instaApply->email : 'Not Visible' }}
+                                                        {{ $franData->fleads_status == 1 || $instaApply->visibility == 1 ? $instaApply->email : 'Not Visible' }}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="fra-title">
-                                                        {{ ($franData->fleads_status == 1 || $instaApply->visibility == 1) ? $instaApply->phone : 'Not Visible' }}
+                                                        {{ $franData->fleads_status == 1 || $instaApply->visibility == 1 ? $instaApply->phone : 'Not Visible' }}
                                                     </div>
                                                 </td>
                                             </tr>
@@ -93,12 +93,12 @@
                                                 </td>
                                                 <td>
                                                     <div class="fra-title">
-                                                        {{ ($franData->fleads_status == 1 || $instaApply->visibility == 1) ? $instaApply->email : 'Not visible' }}
+                                                        {{ $franData->fleads_status == 1 || $instaApply->visibility == 1 ? $instaApply->email : 'Not visible' }}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="fra-title">
-                                                        {{ ($franData->fleads_status == 1 || $instaApply->visibility == 1) ? $instaApply->phone : 'Not visible' }}
+                                                        {{ $franData->fleads_status == 1 || $instaApply->visibility == 1 ? $instaApply->phone : 'Not visible' }}
                                                     </div>
                                                 </td>
                                             </tr>
@@ -134,31 +134,36 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($expressedInterests as $expData)
-                                        @php
-                                            $name = $expData->investor->userDetail->name;
-                                            $email = 'Not visible';
-                                            $mobile = 'Not visible';
-                                            if (
-                                                request()->user()->membership_type == 1 &&
-                                                $expData->franchisor_visibility == 1
-                                            ) {
-                                                $email = $expData->investor->userDetail->email;
-                                                $mobile = $expData->investor->userDetail->mobile;
-                                            }
-                                        @endphp
-                                        <tr class="extrl">
-                                            <td>
-                                                <div class="fra-title">{{ $name }}</div>
-                                            </td>
-                                            <td>
-                                                <div class="fra-title">{{ $email }}</div>
-                                            </td>
-                                            <td>
-                                                <div class="fra-title">{{ $mobile }}</div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    @if (!empty($expressedInterests))
+                                        @foreach ($expressedInterests as $expData)
+                                            @if (!is_null($expData->investor) && !is_null($expData->investor->userDetail))
+                                                @php
+                                                    $name = $expData->investor->userDetail->name;
+
+                                                    $email = 'Not visible';
+                                                    $mobile = 'Not visible';
+                                                    if (
+                                                        request()->user()->membership_type == 1 &&
+                                                        $expData->franchisor_visibility == 1
+                                                    ) {
+                                                        $email = $expData->investor->userDetail->email;
+                                                        $mobile = $expData->investor->userDetail->mobile;
+                                                    }
+                                                @endphp
+                                                <tr class="extrl">
+                                                    <td>
+                                                        <div class="fra-title">{{ $name }}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="fra-title">{{ $email }}</div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="fra-title">{{ $mobile }}</div>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

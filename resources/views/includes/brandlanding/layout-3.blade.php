@@ -6,6 +6,7 @@
     <div class="centblknew" id="landfixoptiongalley">
         <div class="row  bg-white landing glysec">
             <div class="normal">
+                
                 <div class="col-xs-12 col-sm-3 col-md-2 mdy-width pad-top">
                     <div class="brand-logo">
                         @php
@@ -16,8 +17,11 @@
                                 'abilityToApply' => 1,
                             ];
 
-                            if (Auth::check() && \Illuminate\Support\Facades\Auth::user()->profile_type == 2) {
-                                if (\Illuminate\Support\Facades\Auth::user()->membership_type == 1) {
+                            if (Auth::check() && Auth::user()->profile_type == 2) {
+                                if (
+                                    Auth::user()->membership_type == 1 ||
+                                    request()->user()->reg_source == 'DelhiExpoPaid' && $inv_credits->credit_limit > 0
+                                ) {
                                     $eligibility = 1;
                                 } else {
                                     $checkData = \App\Http\Controllers\CommonController::checkInvestorApplicationEligibility();
@@ -37,6 +41,10 @@
                         <img src="{{ $img }}" alt="{{ $franDetails->company_name }}" />
                     </div>
                 </div>
+                @if($franDetails->brand_verified == 1)
+                <div class="brand-verify-two"><i class="fa fa-check"></i> Verified</div>
+                @endif
+                {{-- <div class="brand-verify-two"><i class="fa fa-check"></i> Verified</div> --}}
 
                 <div class="col-xs-12 col-sm-10 col-md-10 mdy-width">
                     <div class="row">
@@ -58,6 +66,12 @@
                                                     class="hidemobileTerm">&amp; Term Details</span></a></li>
                                     </ul>
                                 </div>
+                                
+                {{-- @if($franDetails->brand_verified == 1)
+                <div style="text-align: right;">
+                <img src="https://thumbs.dreamstime.com/b/verified-vector-stamp-isolated-white-background-41827520.jpg" style="height: 50px;">
+                </div>
+            @endif --}}
                                 <div class="rht-pnl">
                                     @if (!Auth::user() || (Auth::user() && Auth::user()->profile_type == Config('constants.ProfileType.Investor')))
                                         @if (!empty($checkData['message']) && $eligibility != 1)
@@ -98,129 +112,230 @@
 
     <div class="container">
         @mobile
-        <style type="text/css">
-            #myCarouselmobile { display:none;}
-            @media only screen and (min-width:1px) and (max-width:767px) {
-                #myCarouselmobile { display:block;}
-                #desktopvisible { display:none;}
-                #myCarouselmobile .carousel-inner>.item { text-align:center;}
-                #myCarouselmobile .carousel-inner>.item>a>img, #myCarouselmobile .carousel-inner>.item>img {     margin: 0 auto;}
-                #myCarouselmobile .carousel-control.left { background-image: none;     }
-                #myCarouselmobile .carousel-control.right { background-image: none;     }
-                #myCarouselmobile .glyphicon-chevron-left:before, #myCarouselmobile .glyphicon-chevron-right:before {    color: #dc3322;}
-                #myCarouselmobile .carousel-control { text-shadow: none;   opacity: 0.8;}
-                #myCarouselmobile .carousel-indicators li {    border: 1px solid #dc3322;}
-                #myCarouselmobile .carousel-indicators .active { background-color: #dc3322;}
-                #myCarouselmobile .carousel-control .glyphicon-chevron-left, #myCarouselmobile .carousel-control .glyphicon-chevron-right, #myCarouselmobile .carousel-control .icon-next, #myCarouselmobile .carousel-control .icon-prev {top: 56%;}
-            }
-        </style>
-        <!--- start here -->
-        <div id="myCarouselmobile" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                @foreach ($images as $image)
-                    <li data-target="#myCarouselmobile" data-slide-to="{{ $loop->index }}" @if($loop->index == 0)  class="active" @endif></li>
-                @endforeach
-            </ol>
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-                @foreach ($images as $image)
-                    <div class="item @if($loop->index == 0)  active @endif">
-                        <img src="{{ $image->image_type_slider2 }}" alt="Yummerica Fries - 1">
-                    </div>
-                @endforeach
-            </div>
-            <!-- Left and right controls -->
-            <a class="left carousel-control" href="#myCarouselmobile" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#myCarouselmobile" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-        <!--- end here -->
-        @elsemobile
-        <div class="row" id="desktopvisible">
-            <div class="col-xs-12 col-sm-9 col-md-9 mdf">
-                @foreach ($images as $image)
-                    @if($loop->index == 0)
-                        <a href="#" data-toggle="modal" data-target="#myGallery">
-                            <img src="{{ $image->image_type_slider2 }}" alt="{{$franDetails->company_name}}" />
-                        </a>
-                    @endif
-                @endforeach
-                <div class="mortxt"><h1 class="txtshow"><span> {{Config('constants.subSubCategoryArr.'.$franDetails->ind_cat.'.'.$franDetails->ind_sub_cat)}}</span>
-                        {{$franDetails->company_name}} Franchise Cost – How to get, Contact, Apply, Fee</h1></div>
-            </div>
-            <div class="col-xs-12 col-sm-3 col-md-3 mdf">
-                <ul>
+            <style type="text/css">
+                #myCarouselmobile {
+                    display: none;
+                }
 
+                @media only screen and (min-width:1px) and (max-width:767px) {
+                    #myCarouselmobile {
+                        display: block;
+                    }
+
+                    #desktopvisible {
+                        display: none;
+                    }
+
+                    #myCarouselmobile .carousel-inner>.item {
+                        text-align: center;
+                    }
+
+                    #myCarouselmobile .carousel-inner>.item>a>img,
+                    #myCarouselmobile .carousel-inner>.item>img {
+                        margin: 0 auto;
+                    }
+
+                    #myCarouselmobile .carousel-control.left {
+                        background-image: none;
+                    }
+
+                    #myCarouselmobile .carousel-control.right {
+                        background-image: none;
+                    }
+
+                    #myCarouselmobile .glyphicon-chevron-left:before,
+                    #myCarouselmobile .glyphicon-chevron-right:before {
+                        color: #dc3322;
+                    }
+
+                    #myCarouselmobile .carousel-control {
+                        text-shadow: none;
+                        opacity: 0.8;
+                    }
+
+                    #myCarouselmobile .carousel-indicators li {
+                        border: 1px solid #dc3322;
+                    }
+
+                    #myCarouselmobile .carousel-indicators .active {
+                        background-color: #dc3322;
+                    }
+
+                    #myCarouselmobile .carousel-control .glyphicon-chevron-left,
+                    #myCarouselmobile .carousel-control .glyphicon-chevron-right,
+                    #myCarouselmobile .carousel-control .icon-next,
+                    #myCarouselmobile .carousel-control .icon-prev {
+                        top: 56%;
+                    }
+                }
+            </style>
+            <!--- start here -->
+            <div id="myCarouselmobile" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
                     @foreach ($images as $image)
-                        @if($loop->index > 0 && $loop->index < 3)
-                            <li><a href="#" data-toggle="modal" data-target="#myGallery"><img src="{{ $image->image_type_slider2 }}" alt="{{$franDetails->company_name}}" ></a></li>
+                        <li data-target="#myCarouselmobile" data-slide-to="{{ $loop->index }}"
+                            @if ($loop->index == 0) class="active" @endif></li>
+                    @endforeach
+                </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    @foreach ($images as $image)
+                        <div class="item @if ($loop->index == 0) active @endif">
+                            <img src="{{ $image->image_type_slider2 }}" alt="Yummerica Fries - 1">
+                        </div>
+                    @endforeach
+                </div>
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarouselmobile" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarouselmobile" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <!--- end here -->
+        @elsemobile
+            <div class="row" id="desktopvisible">
+                <div class="col-xs-12 col-sm-9 col-md-9 mdf">
+                    @foreach ($images as $image)
+                        @if ($loop->index == 0)
+                            <a href="#" data-toggle="modal" data-target="#myGallery">
+                                <img src="{{ $image->image_type_slider2 }}" alt="{{ $franDetails->company_name }}" />
+                            </a>
                         @endif
                     @endforeach
-
-                    <li class="ts">
-                        @if(count($images) > 4)
-                            <div class="mortxt">
-                                <div class="txtshow">
-                                    <a href="#" data-toggle="modal" data-target="#myGallery"><span>+</span> <br /> {{count($images) - 4}} More</a>
-                                </div>
-                            </div>
-                        @endif
+                    <div class="mortxt">
+                        <h1 class="txtshow"><span>
+                                {{ Config('constants.subSubCategoryArr.' . $franDetails->ind_cat . '.' . $franDetails->ind_sub_cat) }}</span>
+                            {{ $franDetails->company_name }} Franchise Cost – How to get, Contact, Apply, Fee</h1>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3 col-md-3 mdf">
+                    <ul>
 
                         @foreach ($images as $image)
-                            @if( $loop->index == 3 )
-                                <img src="{{ $image->image_type_slider2 }}" alt="{{$franDetails->company_name}}">
+                            @if ($loop->index > 0 && $loop->index < 3)
+                                <li><a href="#" data-toggle="modal" data-target="#myGallery"><img
+                                            src="{{ $image->image_type_slider2 }}"
+                                            alt="{{ $franDetails->company_name }}"></a></li>
                             @endif
                         @endforeach
-                    </li>
-                </ul>
+
+                        <li class="ts">
+                            @if (count($images) > 4)
+                                <div class="mortxt">
+                                    <div class="txtshow">
+                                        <a href="#" data-toggle="modal" data-target="#myGallery"><span>+</span> <br />
+                                            {{ count($images) - 4 }} More</a>
+                                    </div>
+                                </div>
+                            @endif
+
+                            @foreach ($images as $image)
+                                @if ($loop->index == 3)
+                                    <img src="{{ $image->image_type_slider2 }}" alt="{{ $franDetails->company_name }}">
+                                @endif
+                            @endforeach
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
         @endmobile
-   
+
         <div class="row">
             <div class="infobrand col-xs-12 col-sm-12 col-md-12">
                 <ul>
-                    @php
-                        $area = $franDetails->prop_area_min.' - '.$franDetails->prop_area_max.' Sq.ft';
-                        if(empty($franDetails->prop_area_max))
+                    {{-- @php
+                        $area = $franDetails->prop_area_min . ' - ' . $franDetails->prop_area_max . ' Sq.ft';
+                        if (empty($franDetails->prop_area_max)) {
                             $area = $franDetails->prop_area_min;
-                        if (is_numeric($franDetails->prop_area_min) && empty($franDetails->prop_area_max))
-                              $area = $franDetails->prop_area_min . ' Sq.ft';
-                        if (empty($franDetails->prop_area_min))
-                              $area = '-N/A-';
+                        }
+                        if (is_numeric($franDetails->prop_area_min) && empty($franDetails->prop_area_max)) {
+                            $area = $franDetails->prop_area_min . ' Sq.ft';
+                        }
+                        if (empty($franDetails->prop_area_min)) {
+                            $area = '-N/A-';
+                        }
 
                         $minValue = $franDetails->unit_inv_min;
-                        if($minValue < 100000 && $minValue > 10000)
-                           $minValue = substr(($minValue/1000),0,5).' K';
+                        if ($minValue < 100000 && $minValue > 10000) {
+                            $minValue = substr($minValue / 1000, 0, 5) . ' K';
+                        }
 
-                        if($minValue <= 9999999 && $minValue > 100000)
-                           $minValue = substr(($minValue/100000),0,5).' Lakh';
+                        if ($minValue <= 9999999 && $minValue > 100000) {
+                            $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
+                        }
 
-                        if($minValue > 9999999)
-                           $minValue = substr(($minValue/10000000),0,5).' Cr';
+                        if ($minValue > 9999999) {
+                            $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
+                        }
 
                         $maxValue = $franDetails->unit_inv_max;
-                        if($maxValue < 100000 && $maxValue > 10000)
-                           $maxValue = substr(($maxValue/1000),0,5).' K';
+                        if ($maxValue < 100000 && $maxValue > 10000) {
+                            $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
+                        }
 
-                        if($maxValue <= 9999999 && $maxValue > 100000)
-                           $maxValue = substr(($maxValue/100000),0,5).' Lakh';
+                        if ($maxValue <= 9999999 && $maxValue > 100000) {
+                            $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
+                        }
 
-                        if($maxValue > 9999999)
-                           $maxValue = substr(($maxValue/10000000),0,5).' Cr';
+                        if ($maxValue > 9999999) {
+                            $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
+                        }
+                    @endphp --}}
+                    @php
+                        $area = $franDetails->prop_area_min . ' - ' . $franDetails->prop_area_max . ' Sq.ft';
+                        if (empty($franDetails->prop_area_max)) {
+                            $area = $franDetails->prop_area_min;
+                        }
+                        if (is_numeric($franDetails->prop_area_min) && empty($franDetails->prop_area_max)) {
+                            $area = $franDetails->prop_area_min . ' Sq.ft';
+                        }
+                        if (empty($franDetails->prop_area_min)) {
+                            $area = '-N/A-';
+                        }
+
+                        $minValue = $franDetails->unit_inv_min;
+                        if (is_numeric($minValue)) {
+                            if ($minValue < 100000 && $minValue > 10000) {
+                                $minValue = substr($minValue / 1000, 0, 5) . ' K';
+                            } elseif ($minValue <= 9999999 && $minValue > 100000) {
+                                $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
+                            } elseif ($minValue > 9999999) {
+                                $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
+                            }
+                        }
+
+                        $maxValue = $franDetails->unit_inv_max;
+                        if (is_numeric($maxValue)) {
+                            if ($maxValue < 100000 && $maxValue > 10000) {
+                                $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
+                            } elseif ($maxValue <= 9999999 && $maxValue > 100000) {
+                                $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
+                            } elseif ($maxValue > 9999999) {
+                                $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
+                            }
+                        }
                     @endphp
-                    <li><div>{{ $area }}</div>Area Req </li>
-                    <li><div>
-                            INR {{ $minValue  }} - {{ $maxValue }}
-                        </div>Investment Size </li>
-                    <li><div>{{ $franDetails->no_fran_outlets ?: '- NA -' }}</div> {{ $franDetails->looking_tradepartner == 1 || $franDetails->ind_main_cat == 5 ? "No. Of Dealer/Distributor" : "No. Of Franchise Outlets" }}</li>
-                    <li><div>{{ $franDetails->operations_start_year }}</div> Establishment Year </li>
+
+                    <li>
+                        <div>{{ $area }}</div>Area Req
+                    </li>
+                    <li>
+                        <div>
+                            INR {{ $minValue }} - {{ $maxValue }}
+                        </div>Investment Size
+                    </li>
+                    <li>
+                        <div>{{ $franDetails->no_fran_outlets ?: '- NA -' }}</div>
+                        {{ $franDetails->looking_tradepartner == 1 || $franDetails->ind_main_cat == 5 ? 'No. Of Dealer/Distributor' : 'No. Of Franchise Outlets' }}
+                    </li>
+                    <li>
+                        <div>{{ $franDetails->operations_start_year }}</div> Establishment Year
+                    </li>
                 </ul>
             </div>
         </div>
@@ -294,7 +409,7 @@
                                         @if (!empty(Cookie::get('franRate' . $franDetails->franchisor_id)))
                                             <a data-toggle="#" data-target="#myRating" id="rateButton">Rated</a>
                                         @else
-                                            <a data-toggle="modal" data-target="#myRating" id="rateButton"><i
+                                            <a data-toggle="modal" onclick="ratebtn()"  id="rateButton"><i
                                                     class="fa fa-star-half-o" aria-hidden="true"></i> Rate</a>
                                         @endif
                                     </li>
@@ -480,7 +595,7 @@
                                                 href="{{ Config('constants.MainDomain') }}/terms"
                                                 target="_blank">Terms & Conditions</a></label>
                                     </div>
-                                    <div class="submit-btn" id="sub" style="float: none;">
+                                    <div class="submit-btn" id="sub1" style="float: none;">
                                         <input type="submit" id="btninsta" class="btn btn-default btn-red"
                                             value="Apply Now">
                                     </div>
@@ -526,7 +641,7 @@
                                 </script>
                             </div>
                         </div>
-                    {{-- @endif --}}
+                        {{-- @endif --}}
                     @enddesktop
 
                 </div>

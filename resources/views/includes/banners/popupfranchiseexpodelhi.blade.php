@@ -64,7 +64,7 @@ input:focus {
         height:266px;
         width: 600px;
         margin: 0 auto;
-        background: url("https://ds120o7vl8cz9.cloudfront.net/images/popup/fro-expo-delhi-footer.jpg") no-repeat center top;
+        background: url("https://www.franchiseindia.com/images/popup/fro-expo-delhi-footer.jpg") no-repeat center top;
     }
 
 
@@ -127,7 +127,7 @@ input:focus {
 
 
 .headtag { height: 284px; overflow: hidden; width: 600px;
-background: url("https://ds120o7vl8cz9.cloudfront.net/images/popup/fro-expo-delhi-header.jpg") no-repeat center top;
+background: url("https://www.franchiseindia.com/images/popup/fro-expo-delhi-header.jpg") no-repeat center top;
 overflow: hidden;
 
 }
@@ -153,7 +153,7 @@ overflow: hidden;
 
                    
                         <div class="boxblk">
-<form id="msform" action="https://master.franchiseindia.com/expo/register_update.php" name="msform1" method="post">
+<form id="msform" action="https://www.franchiseindia.com/expo/register_update.php" name="msform1" method="post">
 <input type="hidden" value="Insta-Registration" id="ref" name="ref">
 <input id="src" name="src" type="hidden" value="Popup"> 
 <input type="hidden" value="Attend Registration" name="reg_type" id="reg_type">

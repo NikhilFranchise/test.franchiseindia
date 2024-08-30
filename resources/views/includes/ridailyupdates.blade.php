@@ -2,6 +2,7 @@
     <div class="bor-radius backgrey pad20 ovfl">
         <div class="arthads">Daily Updates</div>
         <form id="daily-update" method="post" action="{{ url('newslettersignup') }}">
+            @csrf
             <div class="form-group posl">
                 <input type="hidden" name="site_type" value="fi">
                 <input type="text" class="form-control" name="email" placeholder="Enter your Email Id">

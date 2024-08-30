@@ -18,7 +18,7 @@
 @section('englishUrl', $engUrl)
 
 @section('hindibrandUrls')
-    <link href="{{$hindiUrl}}" rel="amphtml">
+    {{-- <link href="{{$hindiUrl}}" rel="amphtml"> --}}
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
 @endsection-->
@@ -54,7 +54,7 @@
                         @endphp
                         @foreach($shuffledResults as $brandResult)
                         <!-- category list section start here-->
-                            @php
+                            {{-- @php
                                 $brandUrl       = sprintf(Config('constants.brandPagePattern'), Config('constants.MainDomain'), $brandResult->profile_name, $brandResult->fran_detail_id);
                                 $is_premium     = 0;
                                 $imgCount       = 0;
@@ -121,7 +121,72 @@
                                         $rate = round( $rate, 1);
                                     }
                                 }
-                            @endphp
+                            @endphp --}}
+
+                            <?php
+    $brandUrl       = sprintf(Config('constants.brandPagePattern'), Config('constants.MainDomain'), $brandResult->profile_name, $brandResult->fran_detail_id);
+    $is_premium     = 0;
+    $imgCount       = 0;
+    $SubCatName     = "";
+    $noImage        = "https://www.franchiseindia.com/images/no-img.gif";
+    $image          = $noImage;
+    $brandImagepath = Config('constants.franAwsImgPath').$brandResult->company_logo;
+    $minValue       = is_numeric($brandResult->unit_inv_min) ? $brandResult->unit_inv_min : 0;
+    $area           = "-N/A-";
+
+    if($minValue < 100000 && $minValue > 10000) {
+        $minValue = substr(($minValue / 1000), 0, 5).' K';
+    } elseif($minValue <= 9999999 && $minValue > 100000) {
+        $minValue = substr(($minValue / 100000), 0, 5).' Lac';
+    } elseif($minValue > 9999999) {
+        $minValue = substr(($minValue / 10000000), 0, 5).' Cr';
+    }
+
+    $maxValue = is_numeric($brandResult->unit_inv_max) ? $brandResult->unit_inv_max : 0;
+    if($maxValue < 100000 && $maxValue > 10000) {
+        $maxValue = substr(($maxValue / 1000), 0, 5).' K';
+    } elseif($maxValue <= 9999999 && $maxValue > 100000) {
+        $maxValue = substr(($maxValue / 100000), 0, 5).' Lac';
+    } elseif($maxValue > 9999999) {
+        $maxValue = substr(($maxValue / 10000000), 0, 5).' Cr';
+    }
+
+    $priceRange = "INR  $minValue  - $maxValue ";
+
+    if(empty($brandResult->company_logo)) {
+        $brandImagepath = $noImage;
+    }
+
+    foreach (Config('constants.subSubCategoryArr') as $key => $abc) {
+        if(array_key_exists($brandResult->ind_sub_cat, $abc)) {
+            $SubCatName = $abc[$brandResult->ind_sub_cat];
+        }
+    }
+
+    foreach($franImageData as $imgData) {
+        if($imgData->franchisor_id == $brandResult->franchisor_id) {
+            $image      = $imgData->image_type_slider2;
+            $is_premium = 1;
+            $imgCount   = $imgData->count;
+        }
+    }
+
+    if(!empty($brandResult->prop_area_max)) {
+        $area = $brandResult->prop_area_min." - ".$brandResult->prop_area_max;
+    } elseif(!empty($brandResult->prop_area_min)) {
+        $area = $brandResult->prop_area_min;
+    }
+
+    $likes = 0;
+    $rate  = 0;
+    if(!empty($brandResult->franchisorLike)) {
+        $likes = $brandResult->franchisorLike->blike;
+        if($brandResult->franchisorLike->brate != 0 && $brandResult->franchisorLike->bclick != 0) {
+            $rate = $brandResult->franchisorLike->brate / $brandResult->franchisorLike->bclick;
+            $rate = round($rate, 1);
+        }
+    }
+?>
 
                             @if($brandResult->membership_type == 1 || $brandResult->free_logo_visibility == 1)
 

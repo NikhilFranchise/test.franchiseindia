@@ -1,67 +1,3 @@
-@php
-    $videos1 = [
-        0 => [
-            'url' => 'https://www.youtube.com/watch?v=NjtzKJquQhI',
-            'imageurl' => 'https://i.ytimg.com/vi/NjtzKJquQhI/mqdefault.jpg',
-            'title' =>
-                'Three Things to Look before Investing in an Early Stage Startup | Gaurav Marya | Franchise India',
-            'description' =>
-                'Franchise Guru Mr. Gaurav Marya speaks on What Points you should look before investing in an Early Stage Startup.',
-            'views' => '79',
-            'date' => 'Sep 25, 2023',
-        ],
-        1 => [
-            'url' => 'https://www.youtube.com/watch?v=_vmOB4KkfpE',
-            'imageurl' => url('https://i.ytimg.com/vi/_vmOB4KkfpE/mqdefault.jpg'),
-            'title' => 'Explore Scalable & Most Promising Business Opportunities at Nepal Franchise Show',
-            'description' => 'Are you a budding entrepreneur, business maverick',
-            'views' => '18',
-            'date' => 'Mar 7, 2024',
-        ],
-        2 => [
-            'url' => 'https://www.youtube.com/watch?v=EM-EyIobJ4I',
-            'imageurl' => 'https://i.ytimg.com/vi/EM-EyIobJ4I/mqdefault.jpg',
-            'title' => 'Triple M Strategy of Franchising | Measurable, Marketable & Manageable | Gaurav Marya',
-            'description' => 'Franchise Guru Mr. Gaurav Marya speaks on Triple M Strategy of Franchising.',
-            'views' => '14920',
-            'date' => 'April 17, 2023',
-        ],
-        3 => [
-            'url' => 'https://www.youtube.com/watch?v=1L-kk5WfeF8',
-            'imageurl' => 'https://i.ytimg.com/vi/1L-kk5WfeF8/mqdefault.jpg',
-            'title' => 'PICASSO Theory of Franchising | Gaurav Marya | Franchise India',
-            'description' => 'Franchise Guru Mr. Gaurav Marya reveals Picasso Theory of Franchising.',
-            'views' => '433',
-            'date' => 'Apr 20, 2023',
-        ],
-        4 => [
-            'url' => 'https://www.youtube.com/watch?v=AKpczDcXnfg',
-            'imageurl' => 'https://i.ytimg.com/vi/AKpczDcXnfg/mqdefault.jpg',
-            'title' => 'Five Most Common Mistakes Brands Do in Franchising ? Gaurav Marya | Franchise India',
-            'description' =>
-                'Franchise Guru Mr. Gaurav Marya speaks on Five Most Common Mistakes Brands Do in Franchising.',
-            'views' => '373',
-            'date' => 'Apr 15, 2023',
-        ],
-        5 => [
-            'url' => 'https://www.youtube.com/watch?v=I_hUIabtp7o',
-            'imageurl' => 'https://i.ytimg.com/vi/I_hUIabtp7o/mqdefault.jpg',
-            'title' => 'Make your Brand Ready for Franchising | Gaurav Marya | Franchise India',
-            'description' => 'Franchise Guru Mr. Gaurav Marya speaks on How to make your Brand Ready for Franchising.',
-            'views' => '341',
-            'date' => 'Apr 11, 2023',
-        ],
-        6 => [
-            'url' => 'https://www.youtube.com/watch?v=3iDvaGjpHq0',
-            'imageurl' => 'https://i.ytimg.com/vi/3iDvaGjpHq0/mqdefault.jpg',
-            'title' => '10 Points to Research on Brand Before Buying Franchise | Gaurav Marya | Franchise India',
-            'description' =>
-                'Franchise Guru Mr. Gaurav Marya speaks on 10 Points to Research on Brand before Buying Franchise.',
-            'views' => '715',
-            'date' => 'Apr 25, 2023',
-        ],
-    ];
-@endphp
 <section class="video-event">
     <div class="container">
         <div class="padset">
@@ -76,10 +12,21 @@
                         <li data-target="#myCarouselvideo" data-slide-to="0" class="active"></li>
                         <li data-target="#myCarouselvideo" data-slide-to="1"></li>
                         <li data-target="#myCarouselvideo" data-slide-to="2"></li>
-                        <li data-target="#myCarouselvideo" data-slide-to="3"></li>
+                        {{--  <li data-target="#myCarouselvideo" data-slide-to="3"></li>  --}}
                     </ol>
 
                     <div class="carousel-inner">
+                        @php
+                          $videos1 = $videos; 
+                          $videos1 = array_filter($videos, function ($video) {
+                                        return is_array($video) && isset($video['priority']);
+                                    });
+
+                          usort($videos1, function ($a, $b) {
+                                return $a['priority'] <=> $b['priority'];
+                            });
+                        //   @dd($videos1); 
+                        @endphp
                         @for ($i = 0; $i < count($videos1); $i += 2)
                             <div class="item @if ($i == 0) active @endif">
                                 @php
@@ -106,12 +53,14 @@
                                         <h2><a href="{{ $videos1[$firstVideoIndex]['url'] }}"
                                                 target="_blank">{{ $videos1[$firstVideoIndex]['title'] }}</a></h2>
                                         <div class="videtxt">
-                                            {{ $videos1[$firstVideoIndex]['description'] }}
+                                            {{-- {{ $videos1[$firstVideoIndex]['description'] }} --}}
+                                            {{-- {{ $videos1[$firstVideoIndex]['description'] }} --}}
+                                            {{strip_tags(Str::limit($videos1[$firstVideoIndex]['description'], 200,'...')) }}
+
                                         </div>
                                         <div class="showview">{{ $videos1[$firstVideoIndex]['views'] }}
                                             {{ Request::segment(1) == 'hi' ? 'विचारों' : 'Views' }}
-                                            <span>{{ $videos1[$firstVideoIndex]['date'] }}</span>
-                                        </div>
+                                            <span>{{ $videos1[$firstVideoIndex]['date'] }}</span></div>
                                     </div>
                                 </div>
 
@@ -136,12 +85,13 @@
                                             <h2><a href="{{ $videos1[$secondVideoIndex]['url'] }}"
                                                     target="_blank">{{ $videos1[$secondVideoIndex]['title'] }}</a></h2>
                                             <div class="videtxt">
-                                                {{ $videos1[$secondVideoIndex]['description'] }}
+                                                {{-- {{ $videos1[$secondVideoIndex]['description'] }} --}}
+                                                {{strip_tags(Str::limit($videos1[$secondVideoIndex]['description'], 200,'...')) }}
+
                                             </div>
                                             <div class="showview">{{ $videos1[$secondVideoIndex]['views'] }}
                                                 {{ Request::segment(1) == 'hi' ? 'विचारों' : 'Views' }}
-                                                <span>{{ $videos1[$secondVideoIndex]['date'] }}</span>
-                                            </div>
+                                                <span>{{ $videos1[$secondVideoIndex]['date'] }}</span></div>
                                         </div>
                                     </div>
                                 @endif
@@ -161,20 +111,21 @@
                 <!--  -->
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
+
                         <div class="swiper-slide">
                             <div class="eshowblk">
                                 <div class="eshowimg">
-                                    <a href="https://www.franchiseindia.com/fro/hyderabad/" target="_blank">
-                                        <img class="" alt="FROEXPO Hyderabad"
-                                            src="https://www.franchiseindia.com/images/fro-expo-hyderabad.jpg?id=6"></a>
+                                    <a href="https://www.franchiseindia.net/fro/bengaluru/" target="_blank">
+                                        <img class="" alt="FROEXPO Bengaluru"
+                                            src="https://www.franchiseindia.com/images/fro-bengaluru.webp"></a>
                                 </div>
                                 <div class="eshowcontent">
-                                    <h2>FROEXPO Hyderabad</h2>
+                                    <h2>FROEXPO Bengaluru</h2>
                                     <div class="eshowtxt">
-                                        16-17 March 2024, Hitex Exhibition Centre, Hyderabad
+                                        31 Aug - 1 Sep 2024, BIEC, Bengaluru, Karnataka
                                     </div>
                                     <div class="link-section  text-capitalize">
-                                        <a href="https://www.franchiseindia.com/fro/hyderabad/"
+                                        <a href="https://www.franchiseindia.net/fro/bengaluru/"
                                             target="_blank">Registration</a>
                                     </div>
                                     <div class="eventhotline  text-capitalize">
@@ -188,116 +139,92 @@
                         <div class="swiper-slide">
                             <div class="eshowblk">
                                 <div class="eshowimg">
-                                    <a href="https://restaurantindia.in/awards/mumbai/" target="_blank">
-                                        <img class="" alt="Restaurant Awards 2024 Mumbai"
-                                            src="https://www.franchiseindia.com/images/restaurant-mumbai-awards.jpg"></a>
+                                    <a href="https://www.entrepreneurindia.com/" target="_blank">
+                                        <img class="" alt="Entrepreneur 2024"
+                                            src="https://www.franchiseindia.com/images/entrepreneur.webp"></a>
                                 </div>
                                 <div class="eshowcontent">
-                                    <h2>Restaurant Awards 2024 Mumbai</h2>
+                                    <h2>Entrepreneur 2024</h2>
                                     <div class="eshowtxt">
-                                        19 March 2024, Hotel Trident, Mumbai
+                                        4 September 2024, Bharat Mandapam, Delhi
                                     </div>
                                     <div class="link-section  text-capitalize">
-                                        <a href="https://restaurantindia.in/awards/mumbai/"
+                                        <a href="https://www.entrepreneurindia.com/" target="_blank">Registration</a>
+                                    </div>
+                                    <div class="eventhotline text-capitalize">
+                                        Hotline: <span>+91 7290037182</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                    <a href="https://www.franchiseindia.net/fro/ahmedabad/" target="_blank">
+                                        <img class="" alt="FROEXPO Gujarat"
+                                            src="https://www.franchiseindia.com/images/fro-gujarat.webp"></a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>FROEXPO Ahmedabad</h2>
+                                    <div class="eshowtxt">
+                                        21-22 September 2024, Mahatma Mandir Convention...
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a href="https://www.franchiseindia.net/fro/ahmedabad/"
                                             target="_blank">Registration</a>
                                     </div>
-                                    <div class="eventhotline  text-capitalize">
-                                        Hotline: <span>+91 9654964838</span>
+                                    <div class="eventhotline text-capitalize">
+                                        Hotline: <span>+91 9311254088</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
 
+                        <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                    <a href="https://www.restaurantindia.in/congress/" target="_blank">
+                                        <img class="" alt="Indian Restaurant Congress & Awards 2024"
+                                            src="https://www.franchiseindia.com/images/restaurant.webp"></a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>Indian Restaurant Congress & Awards 2024</h2>
+                                    <div class="eshowtxt">
+                                        8-9 October 2024, YASHOBHOOMI, (IICC), New Delhi
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a href="https://www.restaurantindia.in/congress/"
+                                            target="_blank">Registration</a>
+                                    </div>
+                                    <div class="eventhotline text-capitalize">
+                                        Hotline: <span>+91 9667698380</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="swiper-slide">
                             <div class="eshowblk">
                                 <div class="eshowimg">
-                                    <a href="https://www.franglobal.com/nepal-franchise-distribution-show/"
+                                    <a href="https://www.franglobal.com/oman-franchise-distribution-show/"
                                         target="_blank">
-                                        <img class="" alt="Nepal Franchise & Distribution Show 2024"
-                                            src="https://www.franchiseindia.com/images/nepal-franchise-distribution.jpg?id=5"></a>
+                                        <img class="" alt="Oman Franchise Show"
+                                            src="https://www.franchiseindia.com/images/oman.webp"></a>
                                 </div>
                                 <div class="eshowcontent">
-                                    <h2>Nepal Franchise & Distribution Show 2024</h2>
+                                    <h2>Oman Franchise Show</h2>
                                     <div class="eshowtxt">
-                                        27 April 2024, Kathmandu Marriott Hotel
+                                        13 October 2024, Sheraton Oman Hotel
                                     </div>
                                     <div class="link-section  text-capitalize">
-                                        <a href="https://www.franglobal.com/nepal-franchise-distribution-show/"
+                                        <a href="https://www.franglobal.com/oman-franchise-distribution-show/"
                                             target="_blank">Registration</a>
                                     </div>
-                                    <div class="eventhotline  text-capitalize">
-                                        Hotline: <span>+91 9311148342</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide">
-                            <div class="eshowblk">
-                                <div class="eshowimg">
-                                    <a href="https://www.franchiseindia.com/expo/" target="_blank">
-                                        <img class="" alt="Franchise India 2024 Delhi "
-                                            src="https://www.franchiseindia.com/images/franchise-india-delhi.jpg?id=2"></a>
-                                </div>
-                                <div class="eshowcontent">
-                                    <h2>Franchise India 2024 Delhi</h2>
-                                    <div class="eshowtxt">
-                                        18-19 May 2024, (IICC) , Delhi, India
-                                    </div>
-                                    <div class="link-section  text-capitalize">
-                                        <a href="https://www.franchiseindia.com/expo/"
-                                            target="_blank">Registration</a>
-                                    </div>
-                                    <div class="eventhotline  text-capitalize">
-                                        Hotline: <span>+91 9311148342</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="swiper-slide">
-                            <div class="eshowblk">
-                                <div class="eshowimg">
-                                    <a href="https://www.franchiseindia.com/fro/chennai/" target="_blank">
-                                        <img class="" alt="FROEXPO Chennai"
-                                            src="https://www.franchiseindia.com/images/fro-expo-chennai.jpg?id=2"></a>
-                                </div>
-                                <div class="eshowcontent">
-                                    <h2>FROEXPO Chennai</h2>
-                                    <div class="eshowtxt">
-                                        29-30 June 2024, Hall No. 2, Chennai Trade Centre
-                                    </div>
-                                    <div class="link-section  text-capitalize">
-                                        <a href="https://www.franchiseindia.com/fro/chennai/"
-                                            target="_blank">Registration</a>
-                                    </div>
-                                    <div class="eventhotline  text-capitalize">
-                                        Hotline: <span>+91 9667696302</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide">
-                            <div class="eshowblk">
-                                <div class="eshowimg">
-                                    <a href="https://www.indiaev.org/" target="_blank">
-                                        <img class="" alt="India EV Show"
-                                            src="https://www.franchiseindia.com/images/indiaevshow.jpg"></a>
-                                </div>
-                                <div class="eshowcontent">
-                                    <h2>India EV Show</h2>
-                                    <div class="eshowtxt">
-                                        29-30 June 2024, Hall No. 3, Chennai Trade Centre
-                                    </div>
-                                    <div class="link-section  text-capitalize">
-                                        <a href="https://www.indiaev.org/" target="_blank">Registration</a>
-                                    </div>
-                                    <div class="eventhotline  text-capitalize">
-                                        Hotline: <span>+91 9312199219</span>
+                                    <div class="eventhotline text-capitalize">
+                                        Hotline: <span>+91 9717683838</span>
                                     </div>
                                 </div>
                             </div>
@@ -309,12 +236,12 @@
                                 <div class="eshowimg">
                                     <a href="https://www.franchiseindia.com/expo/mumbai/" target="_blank">
                                         <img class="" alt="Franchise India 2024 Mumbai"
-                                            src="https://www.franchiseindia.com/images/franchise-india-mumbai.jpg"></a>
+                                            src="https://www.franchiseindia.com/images/franchise-india.webp"></a>
                                 </div>
                                 <div class="eshowcontent">
                                     <h2>Franchise India 2024 Mumbai</h2>
                                     <div class="eshowtxt">
-                                        30 Nov - 1 Dec 2024, Jio World Convention Centre
+                                        29-30 November 2024, Jio World Convention Centre
                                     </div>
                                     <div class="link-section  text-capitalize">
                                         <a href="https://www.franchiseindia.com/expo/mumbai/"
@@ -328,8 +255,27 @@
                         </div>
 
 
-
-
+                        <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                    <a href="https://www.irec.asia/mumbai/" target="_blank">
+                                        <img class="" alt="IReC 2024"
+                                            src="https://www.franchiseindia.com/images/irec.webp"></a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>IReC 2024</h2>
+                                    <div class="eshowtxt">
+                                        29-30 November 2024, Jio World Convention Centre
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a href="https://www.irec.asia/mumbai/" target="_blank">Registration</a>
+                                    </div>
+                                    <div class="eventhotline  text-capitalize">
+                                        Hotline: <span>+91 9310438783</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
                     </div>

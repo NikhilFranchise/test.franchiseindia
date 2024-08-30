@@ -5,7 +5,6 @@ use App\Http\Controllers\StaticPageController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\SiteFeedbackController;
 use App\Http\Controllers\CommonController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandFilterController;
 use App\Http\Controllers\MobileVerificationController;
 use App\Http\Controllers\InvestorController;
@@ -41,7 +40,14 @@ use App\Http\Controllers\StartupEventController;
 use App\Http\Controllers\WellnessController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\DealersAndDistributorController;
+use App\Http\Controllers\InsightsController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\InsightSitemapController;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\cvwhomepage;
 
 
 
@@ -59,17 +65,65 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('optimize', function () {
+    // Run the artisan commands
+    Artisan::call('optimize:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('route:clear');
+
+    return 'Application optimized successfully.';
+});
+
+Route::get('content/{slug_and_id}', function ($slug_and_id) {
+    // Check if the slug_and_id contains a dot or a dash and split accordingly
+    if (strpos($slug_and_id, '.') !== false) {
+        // Split by dot
+        $parts = explode('.', $slug_and_id, 2);
+    } else {
+        // Split by dash
+        $parts = explode('-', $slug_and_id, 2);
+    }
+
+    // Validate that we have exactly two parts
+    if (count($parts) === 2) {
+        $slug = $parts[0];
+        $id = $parts[1];
+        return redirect("https://www.opportunityindia.com/article/{$slug}-{$id}", 301);
+    }
+
+    // Handle invalid format
+    abort(404);
+})->where('slug_and_id', '.*');
+
+
+Route::get('content/{kicker}', function ($kicker) {
+    // Dump the value to see what is being captured
+    // dd($kicker);
+
+    return redirect('https://www.opportunityindia.com/english/tag/' . $kicker, 301);
+});
+Route::get('hi/content/{kicker}', function ($kicker) {
+
+    return redirect('https://www.opportunityindia.com/hindi/tag/' . $kicker, 301);
+});
+
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
 Route::get('campaign/franchisor/{id}', [CommonController::class, 'franAutoLogin']);
 Route::get('campaign/deactivate/franchisor/{id}', [CommonController::class, 'franCampaignDeactivation']);
 Route::get('franchiseinternational', [InternationalController::class, 'getHomePage']); // International Page routes
-
-
 Route::get('/', [NewHomePageController::class, 'homeNew']);
 Route::get('/home', function () {
     return redirect('/', 301);
 });
 Route::get('/dashboard', function () {
     return redirect('/', 301);
+});
+Route::get('/contact/site', function () {
+    return redirect('/contact', 301);
 });
 Route::get('pagenotfound', function () {
     return view('static.404');
@@ -83,18 +137,30 @@ Route::get('testimonials', function () {
 });
 Route::get('testimonials-reviews', [StaticPageController::class, 'getTestimonials']);
 Route::get('sitemap/brands', [BrandFilterController::class, 'brandsitemap']);
-
+Route::get('sitemap/brands/{abre}',           [BrandFilterController::class, 'brandfilter']);
 Route::get('terms', [StaticPageController::class, 'mainTerm']);
 Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBystateName']);
 Route::get('invester-verifyformmobilenumber', [MobileVerificationController::class, 'investerverifyMobile']);
 Route::get('/user/check-mobile-status', [CommonController::class, 'verifyMobile']);
 Route::get('verifyformmobilenumber', [MobileVerificationController::class, 'verifyMobile']);
 Route::get('verify', [MobileVerificationController::class, 'verifyMobile']);
+Route::get('login_verify_mobile', [MobileVerificationController::class, 'verifyLoginMobile']);
 Route::get('/user/investor-mobile-verify', [CommonController::class, 'investormobileverify']);
 Route::get('validate-email', [CommonController::class, 'emailValidation']);
 Route::get('thanks-advice-form', function () {
     return view('thanks.advice-form');
 });
+Route::get('/ipo', function(){
+    return view('static.ipo');
+});
+Route::get('/policies', function(){
+    return view('static.policies');
+});
+Route::get('/corporate-governance', function(){
+    return view('static.corporate-governance');
+});
+Route::get('cat-brand-images',               [BusinessListingController::class, 'getbrandSliderImages']); // Business Listing Page Gallery section
+Route::get('check',                          [MobileVerificationController::class, 'verifySmsOTP']);
 Route::get('property-loan', [StaticPageController::class, 'getPropertyLoanForm']);
 Route::get('getpincode', [CommonController::class, 'getPincodeDetails']);
 Route::get('get-city-list-landing-page', [CommonController::class, 'getCityListLandingPage']);
@@ -105,23 +171,30 @@ Route::get('most-visitedbrands', [BrandFilterController::class, 'topbrands']);
 Route::get('brands/{profileName}', [BrandController::class, 'brandDetails']);
 Route::get('check-existing-registration', [InvestorController::class, 'checkInvestorExistence']);
 Route::get('mobcheck', [MobileVerificationController::class, 'mobCheck']);
-Route::get('get-city-list-landing-page', [CommonController::class, 'getCityListLandingPage']);
 Route::get('compare-brands', [BrandCompareController::class, 'compareBrands']);
 Route::get('get-brands', [BrandCompareController::class, 'getComparableBrands']);
 Route::get('/get-brand-compare', [BrandCompareController::class, 'getSingleBrand']);
 Route::get('newsletter/unsubscribe/thanks', [MailerController::class, 'newsletterUnsub']);  //unsubscribe thanks msg
 Route::get('international', [InternationalController::class, 'getHomePage']); // International Page routes
-Route::get('newsletter/subscriptionForm',     [NewsLetterController::class, 'newsletterForm']);
-
-
-
-// post routes
+Route::get('newsletter/subscriptionForm', [NewsLetterController::class, 'newsletterForm']);
+Route::get('premiumbrand', [HomepageController::class, 'premiumHome']);
+Route::get('dealers-search/{search}',        [DealersAndDistributorController::class, 'searchForDealerHomePage']);
+Route::get('dealers-india/search/{search}',  [DealersAndDistributorController::class, 'searchDealer']);
+Route::get('mailer',                         [MailerController::class, 'feedbackMailer']);
+Route::get('mailermessage',                  [MailerController::class, 'thanksMessage']);
+Route::get('cy_mails/unsubscribeme/',        [MailerController::class, 'unsub']);
+Route::get('all-insta-responce-csv',                [FranchisorController::class, 'allInstaResponse']); // Insta Responces interest csv copy
+Route::get('all-interests-csv',                     [FranchisorController::class, 'allInterestToCsv']);
+// post and get routes
+Route::post('multipleInvFreeinfo',            [ExpressInstaController::class, 'expressInterestMultiple']); //reg inv multiple
 Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);
-Route::post('subscribenews',     [NewsLetterController::class, 'subscriptionFormsubmit']);
+Route::post('subscribenews', [NewsLetterController::class, 'subscriptionFormsubmit']);
 Route::post('property-loan-submit', [StaticPageController::class, 'postPropertyLoanForm']);
 Route::post('contact-submit', [ContactUsController::class, 'contact']);
 Route::post('feedback', [FeedbackController::class, 'feedback']);
+Route::post('franchisor-feedback',            [FeedbackController::class, 'paidFranchisorFeedback']); // Paid Franchisor Feedback
 Route::post('freeadvice', [AdviceController::class, 'freeadvice']);
+Route::post('freeadvice-home', [AdviceController::class, 'freeadviceHome']);
 Route::post('brandlikes', [BrandController::class, 'likes']);
 Route::post('brandratings', [BrandController::class, 'ratings']);
 Route::post('brandcontactinfo', [ExpressInstaController::class, 'brandInfo']);     //guest
@@ -132,6 +205,8 @@ Route::post('loginform', [LoginController::class, 'login'])->name('franchise.log
 Route::get('logoutprofile', [LoginController::class, 'logoutProfile']);
 Route::get('fibl/login', [LoginController::class, 'fiblLogin']);  // FIBL brand routes
 Route::post('fibl/login', [LoginController::class, 'fiblLoginCheck']);
+Route::get('auth/{provider}',                [LoginController::class, 'redirectToProvider']);  // Routes for social login
+Route::get('auth/{provider}/callback',       [LoginController::class, 'handleProviderCallback']);  // Routes for social login
 Route::post('getfreeinfo', [ExpressInstaController::class, 'freeInfo']);      //guest
 Route::post('instasubsribe', [InstaSubscribeController::class, 'instasubsribe']);
 Route::post('advertise/addform', [AdvertiseController::class, 'advertise']);
@@ -143,16 +218,16 @@ Route::post('startup-mail-submit', [StartupEventController::class, 'mailStartup'
 Route::post('wivote', [WellnessController::class, 'vote']);
 Route::post('wiviewresult', [WellnessController::class, 'viewResult']);
 Route::post('unsub', [MailerController::class, 'unsubMailer']); //Newsletter unsubscribe
-
-
+Route::post('inv-lead',                       [ExpressInstaController::class, 'invLead']);       // inv view cont & exp int & category page exp int
+Route::post('inv-lead-normal',                [ExpressInstaController::class, 'invNormalLead']); // paid inv not want
 //Payment Routes
 Route::get('payment', [PaymentController::class, 'payment']);
-
 Route::group(['prefix' => 'investor'], function () {
     Route::get('plan', [InvestorController::class, 'campaignPlan']);
     Route::get('create-new', [InvestorController::class, 'campaignNewRegistration']);
     Route::get('verifyotp', [CommonController::class, 'vrifyOtp']);
     Route::get('verify-otp', [CommonController::class, 'investervrifyOtp']);
+    // Route::post('login/verify-otp', [LoginController::class, 'loginwithotp']);
     Route::get('checkmobilestatus', [CommonController::class, 'verifyMobile']);
     // Route::get('registration', [InvestorController::class, 'viewInvestorRegistrationForm']); not working on live site
     Route::get('campaign/create', [InvestorController::class, 'rviewInvQuickRegForm']);
@@ -162,7 +237,6 @@ Route::group(['prefix' => 'investor'], function () {
     Route::get('quickregistration', function () {
         return view('investor/register/investor-quick-registration');
     });
-
     // post routes of investor
     Route::post('inv-plan', [InvestorController::class, 'upgradeInvestor']);
     Route::post('register', [InvestorController::class, 'createInvestor']);
@@ -191,7 +265,6 @@ Route::group(['prefix' => 'investor'], function () {
         Route::get('advertisewithus', function () {
             return view('investor/myAccount/advertisewithus');
         });
-
         //Post routes
         Route::post('updatepersonaldetails', [InvestorController::class, 'updatePersonalDetails']);
         Route::post('updatepropertydetails', [InvestorController::class, 'updatePropertyDetails']);
@@ -225,7 +298,10 @@ Route::post('advertise-with-us-payment', [FranchisorController::class, 'advertis
 Route::group(['prefix' => 'franchisor'], function () {
     Route::get('verifyotp', [CommonController::class, 'vrifyOtp']);
     Route::get('checkmobilestatus', [CommonController::class, 'verifyMobile']);
-
+    Route::get('international-registration',     function () {
+        return view('franchisor/register/international-franchisor-registraion');
+    });
+    Route::post('franchisor_registration', [FranchisorController::class, 'postFranchisor']);
     Route::group(['prefix' => 'myaccount'], function () {
         Route::get('dashboard', [FranchisorController::class, 'viewDashboard']);
         Route::get('view-profile', [FranchisorController::class, 'viewProfile']);
@@ -246,17 +322,16 @@ Route::group(['prefix' => 'franchisor'], function () {
         Route::get('changepassword', function () {
             return view('franchisor/myAccount/changepassword');
         });
-
         Route::post('updatepassword', [FranchisorController::class, 'updatePassword']);
         Route::post('fran-photochange', [FranchisorController::class, 'franPhotoUpload'])->name('fran.photochange');
         Route::post('updatebusinessdetails', [FranchisorController::class, 'updateBusinessDetails']);
         Route::post('updateprofessionaldetails', [FranchisorController::class, 'updateProfessionalDetails']);
         Route::post('updatepropertydetails', [FranchisorController::class, 'updatePropertyDetails']);
         Route::post('updatetrainingaggrementdetails', [FranchisorController::class, 'updateTrainingAgreement']);
-
+        Route::post('updateappearance',               [FranchisorController::class, 'editAppearance']);
+        Route::post('deleteimage',                    [FranchisorController::class, 'deleteSliderImage']);
     });
 });
-
 // FranchisorPayment Routes
 Route::post('franpaymentsubmit', [FranPaymentController::class, 'paymentHdfcPayuPg']);
 Route::post('franfailed', [FranPaymentController::class, 'paymentFailure']);
@@ -265,9 +340,116 @@ Route::post('francancelled', [FranPaymentController::class, 'paymentCancelled'])
 Route::post('franfailedmyaccount', [FranPaymentController::class, 'paymentFailureMyAccount']);
 Route::post('fransuccessmysccount', [FranPaymentController::class, 'paymentSuccessMyAccount']);
 Route::post('francancelledmyaccount', [FranPaymentController::class, 'paymentCancelledMyAccount']);
-
-
 Route::group(['prefix' => 'business-opportunities'], function () {
+    Route::get('dealers-and-distributors.m5',         function () {
+        return redirect('https://dealer.franchiseindia.com/', 301);
+    });
+    Route::get('education-supplies.sc269',                   function () {
+        return redirect('business-opportunities/education-services.sc269', 301);
+    });
+    Route::get('food',                                       function () {
+        return redirect('business-opportunities/food-and-beverage.m2', 301);
+    });
+    Route::get('accessories',                                function () {
+        return redirect('business-opportunities/automobile-accessories.ssc262', 301);
+    });
+    Route::get('Others',                                     function () {
+        return redirect('business-opportunities/others-dealers-and-distributors.ssc126', 301);
+    });
+    Route::get('bakery',                                     function () {
+        return redirect('business-opportunities/bakery-sweets-and-ice-cream.sc424', 301);
+    });
+    Route::get('lowcost205',                                 function () {
+        return redirect('business-opportunities/lowcost', 301);
+    });
+    Route::get('retail/',                                    function () {
+        return redirect('business-opportunities/retail.m9', 301);
+    });
+    Route::get('.ssc243',                                    function () {
+        return redirect('business-opportunities/designer-wear.ssc243', 301);
+    });
+    Route::get('.ssc198',                                    function () {
+        return redirect('business-opportunities/stationery-stores.ssc198', 301);
+    });
+    Route::get('food-marts',                                 function () {
+        return redirect('business-opportunities/food-and-beverage.sc16', 301);
+    });
+    Route::get('retail-Franchise',                           function () {
+        return redirect('business-opportunities/retail.m9', 301);
+    });
+    Route::get('health-care',                                function () {
+        return redirect('business-opportunities/health-care.sc14', 301);
+    });
+    Route::get('Florists-Franchise/',                        function () {
+        return redirect('business-opportunities/florists.ssc207', 301);
+    });
+    Route::get('.m1',                                        function () {
+        return redirect('business-opportunities/beauty-and-health.m1', 301);
+    });
+    Route::get('.ssc127',                                    function () {
+        return redirect('business-opportunities/courier-and-delivery.ssc127', 301);
+    });
+    Route::get('.ssc156',                                    function () {
+        return redirect('business-opportunities/matrimonial.ssc156', 301);
+    });
+    Route::get('.ssc110',                                    function () {
+        return redirect('business-opportunities/digital-media-and-internet-marketing.ssc110', 301);
+    });
+    Route::get('direct-selling',                             function () {
+        return redirect('business-opportunities/direct-selling.ssc293', 301);
+    });
+    Route::get('consulting-Franchise',                       function () {
+        return redirect('business-opportunities/consulting-services.ssc300', 301);
+    });
+    Route::get('Automotive-Franchise',                       function () {
+        return redirect('business-opportunities/automotive.m8', 301);
+    });
+    Route::get('.ssc184',                                    function () {
+        return redirect('business-opportunities/photography.ssc184', 301);
+    });
+    Route::get('.ssc90',                                     function () {
+        return redirect('business-opportunities/online-coaching.ssc90', 301);
+    });
+    Route::get('.sc15',                                      function () {
+        return redirect('business-opportunities/hotels-and-resorts.sc15', 301);
+    });
+    Route::get('.ssc225',                                    function () {
+        return redirect('business-opportunities/kids-wear.ssc225', 301);
+    });
+    Route::get('.ssc130',                                    function () {
+        return redirect('business-opportunities/security-services.ssc130', 301);
+    });
+    Route::get('.LOC1',                                      function () {
+        return redirect('business-opportunities/andhra-pradesh.LOC1', 301);
+    });
+    //Route::get('uttaranchal.LOC31',                          function() { return redirect('business-opportunities/uttarakhand.LOC31', 301);});
+    Route::get('Jewellery-Franchise',                        function () {
+        return redirect('business-opportunities/jewellery.sc42', 301);
+    });
+    Route::get('clothing-Franchise/',                        function () {
+        return redirect('business-opportunities/clothing.sc40', 301);
+    });
+    Route::get('mbo-clothing-Franchise',                     function () {
+        return redirect('business-opportunities/clothing.sc40', 301);
+    });
+    Route::get('opticians-eye-wear',                         function () {
+        return redirect('business-opportunities/opticians-eye-wear.ssc246', 301);
+    });
+    Route::get('franchises-under-50Lac',                     function () {
+        return redirect('business-opportunities/franchises-under-50lac', 301);
+    });
+    Route::get('franchises-under-30Lac',                     function () {
+        return redirect('business-opportunities/franchises-under-30lac', 301);
+    });
+    Route::get('GFAI-Franchise',                             function () {
+        return redirect('business-opportunities/all/all', 301);
+    });
+    Route::get('Tanclean-Franchise',                         function () {
+        return redirect('business-opportunities/all/all', 301);
+    });
+    Route::get('/',                                       function () {
+        return redirect('business-opportunities/all/all', 301);
+    });
     Route::get('all/all', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('franchises-{price_range}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('tamilnadu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
@@ -305,19 +487,22 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('uttarakhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('himachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('jammu-and-kashmir.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-
-    Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
-
+    // Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
+    // Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
+    // Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
+    // Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
+    // Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
+    // Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListing']);
+    // Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
+    Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
+    Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
+    Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
+    Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListingnormalization']);
-    Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
+    Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('/lowcost', [BusinessListingController::class, 'searchBusinessListing'])
         ->defaults('lowcost', 'lowcost');
-
-
     Route::get('{code}/all/all', function () {
         return redirect('business-opportunities/all/all', 301);
     });
@@ -325,10 +510,6 @@ Route::group(['prefix' => 'business-opportunities'], function () {
         return redirect('business-opportunities/all/all', 301);
     });
 });
-
-
-
-
 // /Category Page Routes
 Route::group(['prefix' => 'category'], function () {
     Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
@@ -339,6 +520,8 @@ Route::group(['prefix' => 'category'], function () {
     });
 });
 Route::get('sitemapgenerate', [SitemapController::class, 'sitemap']); // Sitemap Generator route
+Route::get('sitemap',   [StaticPageController::class,'siteMap']);
+Route::get('sitemap/content/{year}/{month}', [StaticPageController::class,'getArticleList']);
 Route::post('invsuccess', [PaymentController::class, 'investorPaymentSuccess']);        // Investor Payment success routes
 Route::post('bookpaymentsubmit', [PaymentController::class, 'bookPayment']);                   // Books & Reports Payment section routes
 Route::post('payment/booksuccess', [PaymentController::class, 'bookPaymentSuccess']);            // Books & Reports Payment section routes
@@ -347,9 +530,10 @@ Route::post('paymentsubmit', [PaymentController::class, 'paymentHdfcPayuPg']);
 Route::post('payment/success', [PaymentController::class, 'paymentSuccess']);
 Route::post('payment/failure', [PaymentController::class, 'getHdfcPgResponseFailed']);
 Route::post('payment/cancelled', [PaymentController::class, 'getHdfcPgResponseFailed']);
+// Route::post('payment/cancelled', function() { return view('thanks.paymentfailed');});
 Route::get('confirm/{id}', [CommonController::class, 'verifyEmail']); // Mail Verification
+Route::get('change-password/{id}',           [CommonController::class, 'verifyEmail']);
 Route::get('newsletter/{code}', [NewsLetterController::class, 'subscriptionForm']);
-
 // Restaurant Routes
 Route::group(['prefix' => 'restaurant'], function () {
     Route::get('/', [RestaurantController::class, 'articleRestaurant']);
@@ -370,12 +554,7 @@ Route::group(['prefix' => 'restaurant'], function () {
     Route::get('newsletter/subscriptionForm', [NewsLetterController::class, 'newsletterForm']);
     Route::get('newsletter/newsub', [NewsLetterController::class, 'newsletterSub']);
     Route::get('{content_id}', [ArticleController::class, 'commonInner']);
-    Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);     // Newsletter signup
-
 });
-
-
-
 //for books
 Route::group(['prefix' => 'book'], function () {
     //Get routes
@@ -383,158 +562,159 @@ Route::group(['prefix' => 'book'], function () {
     Route::get('{name}', [BookController::class, 'bookInner']);
     //Post routes
     Route::post('{name}', [BookController::class, 'bookInner']);
-
 });
-// amp routes 
-Route::group(['prefix' => 'amp'], function () {
-    Route::get('location/{city}', [BusinessListingController::class, 'listingLocation']);
-    Route::get('location', [BusinessListingController::class, 'listingLocation']);
+// amp routes
+// 301 redirect route to remove 'amp' prefix
+Route::get('amp/{path}', function ($path) {
+    return redirect('/' . $path, 301);
+})->where('path', '.*');
+// Please do not open amp pages
 
-    //Hindi language amp pages routes
-    Route::group(['prefix' => 'hi'], function () {
-        //Category Page Routes
-        Route::group(['prefix' => 'category'], function () {
-            Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('search', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('searchby', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('index', function () {
-                return redirect('business-opportunities/all/all', 301);
-            });
-        });
+// Route::group(['prefix' => 'amp'], function () {
+//     Route::get('location/{city}', [BusinessListingController::class, 'listingLocation']);   //working
+//     Route::get('location', [BusinessListingController::class, 'listingLocation']);          //working
 
-        //Directory Page Routes
-        Route::group(['prefix' => 'business-opportunities'], function () {
-            Route::get('/', function () {
-                return view('category/category');
-            });
-            Route::get('all/all', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('franchises-{price_range}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('tamilnadu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('telangana.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('andaman-and-nicobar.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('maharashtra.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('delhi.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('karnataka.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('west-bengal.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('gujarat.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('uttar-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('madhya-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('haryana.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('rajasthan.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('andhra-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('kerala.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('punjab.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('chandigarh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('arunachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('assam.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('bihar.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('chhattisgarh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('daman-and-diu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('goa.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('jharkhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('lakshadweep.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('manipur.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('meghalaya.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('mizoram.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('nagaland.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('odisha.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('pondicherry.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('sikkim.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('tripura.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('uttarakhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('himachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('jammu-and-kashmir.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//     //Hindi language amp pages routes
+//     Route::group(['prefix' => 'hi'], function () {
+//         //Category Page Routes
+//         Route::group(['prefix' => 'category'], function () {
+//             Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('search', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('searchby', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('index', function () {
+//                 return redirect('business-opportunities/all/all', 301);
+//             });
+//         });
 
-            Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
-            Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
+//         //Directory Page Routes
+//         Route::group(['prefix' => 'business-opportunities'], function () {
+//             Route::get('/', function () {
+//                 return view('category/category');
+//             });
+//             Route::get('all/all', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('franchises-{price_range}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('tamilnadu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('telangana.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('andaman-and-nicobar.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('maharashtra.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('delhi.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('karnataka.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('west-bengal.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('gujarat.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('uttar-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('madhya-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('haryana.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('rajasthan.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('andhra-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('kerala.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('punjab.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('chandigarh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('arunachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('assam.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('bihar.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('chhattisgarh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('daman-and-diu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('goa.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('jharkhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('lakshadweep.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('manipur.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('meghalaya.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('mizoram.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('nagaland.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('odisha.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('pondicherry.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('sikkim.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('tripura.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('uttarakhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('himachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('jammu-and-kashmir.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
 
-            Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListing']);
-            Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
-        });
+//             Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
+//             Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
 
-
-
-
-        Route::get('content/{kicker}/{kickerId}', [AmpArticleController::class, 'getAmpHindiKickerList']); // Hindi Kicker Url
-        Route::get('content', [AmpArticleController::class, 'ampArticleHindiHome']);         // Article Hindi Home amp
-        Route::get('brands/{profileName}', [BrandController::class, 'ampBrandDetails']);                // Hindi brand url
-        Route::get('{contentSite}/{title}.{id}', [AmpArticleController::class, 'getAmpHindiArticle']);
-    });
-
-    //Category Page Routes
-    Route::group(['prefix' => 'category'], function () {
-        Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('search', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('searchby', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('index', function () {
-            return redirect('business-opportunities/all/all', 301);
-        });
-    });
-
-    //Directory Page Routes
-    Route::group(['prefix' => 'business-opportunities'], function () {
-        Route::get('/', function () {
-            return view('category/category');
-        });
-        Route::get('all/all', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('franchises-{price_range}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('tamilnadu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('telangana.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('andaman-and-nicobar.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('maharashtra.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('delhi.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('karnataka.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('west-bengal.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('gujarat.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('uttar-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('madhya-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('haryana.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('rajasthan.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('andhra-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('kerala.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('punjab.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('chandigarh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('arunachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('assam.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('bihar.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('chhattisgarh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('daman-and-diu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('goa.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('jharkhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('lakshadweep.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('manipur.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('meghalaya.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('mizoram.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('nagaland.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('odisha.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('pondicherry.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('sikkim.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('tripura.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('uttarakhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('himachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('jammu-and-kashmir.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-
-        Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
-
-        Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListing']);
-        Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
-    });
+//             Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListing']);
+//             Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
+//         });
 
 
 
-    Route::get('brands/{profileName}', [BrandController::class, 'ampBrandDetails']);                // Eng AMP brand url
-    Route::get('{contentSite}/{title}.{id}', [AmpArticleController::class, 'ampCreate']);
-});
+
+//         Route::get('content/{kicker}/{kickerId}', [AmpArticleController::class, 'getAmpHindiKickerList']); // Hindi Kicker Url
+//         Route::get('content', [AmpArticleController::class, 'ampArticleHindiHome']);         // Article Hindi Home amp
+//         Route::get('brands/{profileName}', [BrandController::class, 'ampBrandDetails']);                // Hindi brand url
+//         Route::get('{contentSite}/{title}.{id}', [AmpArticleController::class, 'getAmpHindiArticle']);
+//     });
+
+//     //Category Page Routes   working
+//     Route::group(['prefix' => 'category'], function () {
+//         Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('search', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('searchby', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('index', function () {
+//             return redirect('business-opportunities/all/all', 301);
+//         });
+//     });
+
+//     //Directory Page Routes      working
+//     Route::group(['prefix' => 'business-opportunities'], function () {
+//         Route::get('/', function () {
+//             return view('category/category');
+//         });
+//         Route::get('all/all', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('franchises-{price_range}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('tamilnadu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('telangana.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('andaman-and-nicobar.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('maharashtra.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('delhi.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('karnataka.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('west-bengal.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('gujarat.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('uttar-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('madhya-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('haryana.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('rajasthan.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('andhra-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('kerala.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('punjab.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('chandigarh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('arunachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('assam.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('bihar.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('chhattisgarh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('daman-and-diu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('goa.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('jharkhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('lakshadweep.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('manipur.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('meghalaya.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('mizoram.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('nagaland.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('odisha.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('pondicherry.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('sikkim.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('tripura.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('uttarakhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('himachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('jammu-and-kashmir.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
+//         Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
+
+//         Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListing']);
+//         Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
+//     });
 
 
 
+//     Route::get('brands/{profileName}', [BrandController::class, 'ampBrandDetails']);                // Eng AMP brand url  working
+//     Route::get('{contentSite}/{title}.{id}', [AmpArticleController::class, 'ampCreate']);
+// });
 //Education routes
 Route::group(['prefix' => 'education'], function () {
     //Route::get('/',                          'EducationController@articleEducation');
@@ -551,11 +731,8 @@ Route::group(['prefix' => 'education'], function () {
     Route::get('newsletter/newsub', [NewsLetterController::class, 'newsletterSub']);
     Route::get('{content_id}', [ArticleController::class, 'commonInner']);
 
-    Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);     // Newsletter signup
+    // Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);     // Newsletter signup
 });
-
-
-
 //Entrepreneur routes
 Route::group(['prefix' => 'entrepreneur'], function () {
     Route::get('/', [ArticleController::class, 'articleHome']);
@@ -577,17 +754,15 @@ Route::group(['prefix' => 'entrepreneur'], function () {
         return redirect(Config('constants.MainDomain') . '/content', 301);
     });
 });
-
 Route::get('event', [EventController::class, 'event']);
 
 //Rss Route
 Route::get('rss', [FacebookArticleController::class, 'rss']); // Facebook Instant Articles RSS feed route
-
-
-
 //Hindi language routes
 Route::group(['prefix' => 'hi'], function () {
     //Category Page Routes
+    Route::get('location/{city}', [BusinessListingController::class, 'listingLocation']);
+
     Route::group(['prefix' => 'category'], function () {
         Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('search', [BusinessListingController::class, 'searchBusinessListing']);
@@ -596,7 +771,6 @@ Route::group(['prefix' => 'hi'], function () {
             return redirect('business-opportunities/all/all', 301);
         });
     });
-
     //Directory Page Routes
     Route::group(['prefix' => 'business-opportunities'], function () {
         // Route::get('dealers-and-distributors.m5',      'DealersAndDistributorController@getHomePage'); // International Page routes
@@ -643,37 +817,67 @@ Route::group(['prefix' => 'hi'], function () {
         Route::get('uttarakhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('himachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('jammu-and-kashmir.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
-
         Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListing']);
-
         Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListing']);
         Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
     });
-
-    Route::get('/', [NewHomePageController::class, 'hindiHomePage']);               // Hindi Home Page	
+    Route::get('/', [NewHomePageController::class, 'hindiHomePage']);               // Hindi Home Page
+    // Article Hindi Home
     Route::get('content', function () {
         return redirect('https://www.opportunityindia.com/hindi', 301);
-    });         // Article Hindi Home
-    Route::get('premiumbrand', [HomepageController::class, 'hindiHome']);                // Hindi Premium Brand Page
-    Route::get('brands/{profileName}', [BrandController::class, 'brandDetails']);                // Hindi brand url
+    });
     Route::get('content/{kicker}/{kickerId}', function ($kicker) {
+        // dd('yes');
         return redirect('https://www.opportunityindia.com/hindi/tag/' . $kicker, 301);
     });       // Hindi Kicker Url
+    Route::get('premiumbrand', [HomepageController::class, 'hindiHome']);                // Hindi Premium Brand Page
+    Route::get('brands/{profileName}', [BrandController::class, 'brandDetails']);                // Hindi brand url
     Route::get('{site}/{slug}.{id}', [ArticleController::class, 'getHindiContent']);          // Hindi Article Url
-
     Route::get('newcontent', [NewArticleController::class, 'articleHindiHome']);
-    Route::get('newcontent/author/{author}', [NewArticleController::class, 'getAuthorHindiDetails']);// Hindi Author url
+    Route::get('newcontent/author/{author}', [NewArticleController::class, 'getAuthorHindiDetails']); // Hindi Author url
     Route::get('newcontent/{kicker}/{kickerId}', [NewArticleController::class, 'getHindiKickerList']);
     Route::get('newcontent/{slug}.{id}', [NewArticleController::class, 'getHindiContent']);
-    Route::get('next-article', [NewArticleController::class, 'getNextArticleHindiForRepeat']);// Hindi Repeat 
+    Route::get('next-article', [NewArticleController::class, 'getNextArticleHindiForRepeat']); // Hindi Repeat
     Route::get('video-and-podcast', [NewArticleController::class, 'getVideoAndPodcast']);
 });
 
+// Route::get('content/{kicker}',   function(Request $request){
+//     dd('yes');
+// });
 
+// [ArticleController::class,'articleKickersPage']);
+// Route::get('content/women-entrepreneurs',     [ArticleController::class,'check']);
+
+
+
+
+Route::get('/content/{slug}', function ($slug) {
+    // Split the slug by the last dot (.)
+    $parts = explode('.', $slug);
+
+    // Extract the article title and id
+    $title = implode('-', array_slice($parts, 0, -1));
+    $id = end($parts);
+
+    // Redirect to the new domain
+    return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
+});
+
+Route::get('/wellness/{slug}', function ($slug) {
+    // Split the slug by the last dot (.)
+    $parts = explode('.', $slug);
+
+    // Extract the article title and id
+    $title = implode('-', array_slice($parts, 0, -1));
+    $id = end($parts);
+
+    // Redirect to the new domain
+    return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
+});
 //Magazine Routes
 Route::group(['prefix' => 'magazine'], function () {
     Route::get('/', [MagazineController::class, 'magazineListHome']);
@@ -686,11 +890,187 @@ Route::group(['prefix' => 'magazine'], function () {
         return redirect('/magazine', 301);
     });
 });
-
-
+// Route::get('/content/{kicker}',    [ArticleController::class,'articleKickersPage']);
+// Route::get('content/{kicker}', function ($kicker) {
+//     return redirect('https://www.opportunityindia.com/article' .'-'. $kicker, 301);
+// });
 // Gallery Articles Section
 Route::group(['prefix' => 'gallery'], function () {
     Route::get('/', [GalleryController::class, 'galleryArticleHome']);
     Route::get('{title}.{id}', [GalleryController::class, 'galleryArticle']);
     Route::get('{kicker}/{kicker_id}', [GalleryController::class, 'galleryArticleKickersPage']);
 });
+
+//Admin Panel Post Routes
+Route::post('updateauthorstatus',             [AdminController::class, 'updateAuthorStatus']);
+Route::post('updatearticalinterviewstatus',   [AdminController::class, 'updateArticalInterviewStatus']);
+Route::post('updatenewsstatus',               [AdminController::class, 'updateNewsStatus']);
+Route::post('updateaicommentstatus',          [AdminController::class, 'updateAICommentStatus']);
+Route::post('updatenewscommentstatus',        [AdminController::class, 'updateNewsCommentStatus']);
+Route::post('updatemagazinestatus',           [AdminController::class, 'updateMagazineStatus']);
+Route::post('deletemagazine',                 [AdminController::class, 'deleteMagazine']);
+Route::post('updatemagazinearticlestatus',    [AdminController::class, 'updateMagazineArticleStatus']);
+Route::post('deletemagazinearticle',          [AdminController::class, 'deleteMagazineArticle']);
+Route::post('deletearticle',                  [AdminController::class, 'deleteArticle']);
+Route::post('deletenews',                     [AdminController::class, 'deleteNews']);
+Route::get('relatedbrands',                   [AdminController::class, 'relatedBrands']);
+Route::get('associatedtags',                  [AdminController::class, 'associatedTags']);
+Route::get('publisher',                       [AdminController::class, 'publisher']);
+Route::get('find',                            [AdminController::class, 'find']);
+Route::get('searcharticleinterview',          [AdminController::class, 'searchArticleInterview']);
+Route::get('searchnews',                      [AdminController::class, 'searchNews']);
+Route::get('searchmagazine',                  [AdminController::class, 'searchMagazine']);
+Route::get('articleinterviewcommentsearch',   [AdminController::class, 'searchArticleInterviewComment']);
+Route::get('newscommentsearch',               [AdminController::class, 'searchNewsComment']);
+Route::get('admin-logout',                    [AdminController::class, 'logout']);
+//admin panel routes
+Route::group(['prefix' => 'admin'], function () {
+    //Get routes
+    Route::get('login',                                [AdminController::class, 'loginView']);
+    Route::get('list-news',                            [AdminController::class, 'listNews']);
+    Route::get('edit-news-view/{id}',                  [AdminController::class, 'editNewsView']);
+    Route::get('dashboard',                            [AdminController::class, 'viewDashboard']);
+    Route::get('create-author',                        [AdminController::class, 'createAuthor']);
+    Route::get('edit-author/{id}',                     [AdminController::class, 'viewAuthor']);
+    Route::get('list-magazine-articles/{id}',          [AdminController::class, 'listMagazineArticles']);
+    Route::get('create-magazine-article/{id}',         [AdminController::class, 'createMagazineArticleView']);
+    Route::get('list-author',                          [AdminController::class, 'listAuthor']);
+    Route::get('create-article-interview',             [AdminController::class, 'createArticleView']);
+    Route::get('list-article-interview',               [AdminController::class, 'listArticleInterview']);
+    Route::get('edit-article-interview/{id}',          [AdminController::class, 'editViewArticleInterview']);
+    Route::get('create-news',                          [AdminController::class, 'createNewsView']);
+    Route::get('create-magazine',                      [AdminController::class, 'createMagazineView']);
+    Route::get('edit-magazine-view/{id}',              [AdminController::class, 'editMagazineView']);
+    Route::get('list-magazine',                        [AdminController::class, 'listMagazine']);
+    Route::get('edit-magazine-article/{id}',           [AdminController::class, 'editMagazineArticleView']);
+    Route::get('list-article-interview-comments',      [AdminController::class, 'listArticleInterviewComments']);
+    Route::get('list-news-comments',                   [AdminController::class, 'listNewsComments']);
+    Route::get('edit-article-interview-comment/{id}',  [AdminController::class, 'editArticleInterviewComment']);
+    Route::get('edit-news-comment/{id}',               [AdminController::class, 'editNewsComment']);
+    Route::get('article-interview-comment-reply/{id}', [AdminController::class, 'articleCommentReply']);
+    Route::get('magazine-comment-list',                [AdminController::class, 'getMagazineComments']);
+    Route::get('magzine-comment-search',               [AdminController::class, 'searchMagazineComment']);
+    Route::get('edit-mag-comment/{id}',                [AdminController::class, 'editMagazineComment']);
+    Route::get('kicker/create/{type}',                 [AdminController::class, 'getCreateKickerView']);
+    Route::get('get-kickers',                          [AdminController::class, 'getHindiKickers']);
+    Route::get('kickers/list/{type}',                  [AdminController::class, 'getKickersList']);
+    Route::get('{type}/hindi/{contentId}',             [AdminController::class, 'getCreateHindiArticleNewsForm']);
+    //Post routes
+    Route::post('update-magazine-comment',             [AdminController::class, 'updateMagazineComment']);
+    Route::post('update-mag-comment-status',           [AdminController::class, 'setMagazineCommentStatus']);
+    Route::post('article-comment-reply',               [AdminController::class, 'createArticleCommentReply']);
+    Route::post('edit-comment-reply/{replyId}',        [AdminController::class, 'updateArticleCommentReply']);
+    Route::post('article-register',                    [AdminController::class, 'createArticle']);
+    Route::post('create-news',                         [AdminController::class, 'createNews']);
+    Route::post('create-magazine',                     [AdminController::class, 'createMagazine']);
+    Route::post('edit-magazine',                       [AdminController::class, 'updateMagazine']);
+    Route::post('article-interview-edit',              [AdminController::class, 'editArticleInterview']);
+    Route::post('create-magazine-article',             [AdminController::class, 'createMagazineArticle']);
+    Route::post('update-magazine-article',             [AdminController::class, 'updateMagazineArticle']);
+    Route::post('author-edit',                         [AdminController::class, 'updateAuthor']);
+    Route::post('author-register',                     [AdminController::class, 'registerAuthor']);
+    Route::post('login-check',                         [AdminController::class, 'loginCheck']);
+    Route::post('update-news',                         [AdminController::class, 'updateNews']);
+    Route::post('edit-article-interview-comment',      [AdminController::class, 'updateArticleInterviewComment']);
+    Route::post('edit-news-comment',                   [AdminController::class, 'updateNewsComment']);
+    Route::post('delete-article-slider-image',         [AdminController::class, 'deleteArticleSliderImage']);
+    Route::post('create/kicker/{type}',                [AdminController::class, 'insertUpdateKicker']);
+    Route::post('delete-kicker',                       [AdminController::class, 'deleteKicker']);
+    Route::post('hindi/create',                        [AdminController::class, 'createUpdateHindiArticle']);
+    // insights get routes code by gp
+    Route::get('create-insights',                      [AdminController::class, 'createinsightsView']);
+    Route::get('list-insights',                        [AdminController::class, 'listinsights']);
+    Route::get('edit-insights-view/{id}',              [AdminController::class, 'editInsightsView']);
+    // insights post routes
+    Route::post('/create-insights',                      [AdminController::class, 'createInsights']);
+    Route::post('update-insights',                      [AdminController::class, 'updateInsights']);
+    Route::post('updateinsightstatus',                  [AdminController::class, 'updateInsightStatus']);
+    Route::post('deleteinsights',                       [AdminController::class, 'deleteInsights']);
+    // insights post routes end here
+    // category and sub category get routes code by gp
+    Route::get('cat/create',                      [AdminController::class, 'categoryform']);
+    Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
+    Route::get('cat/list',                        [AdminController::class, 'catlist']);
+    Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
+    Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
+    // routes/web.php
+    // insights post routes
+    Route::post('create/cat',                      [AdminController::class, 'storecat']);
+    Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
+    Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
+    Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
+});
+
+Route::get('location/{city}',              [BusinessListingController::class, 'listingLocation']);
+// INSIGHTS ROUTES START HERE //
+Route::get('insights/sitemap.xml', function(){
+    return response()->view('insights.sitemaps.sitemap')->header('Content-type','text/xml');
+});
+Route::group(['prefix'=>'insights'], function(){
+    Route::get('news.xml',                      [InsightSitemapController::class,'newssitemap']);
+    Route::get('article.xml',                   [InsightSitemapController::class,'articlesitemap'])->name('article.xml');
+    Route::get('interview.xml',                 [InsightSitemapController::class,'interviewsitemap'])->name('interview.xml');
+    Route::get('event.xml',                     [InsightSitemapController::class,'eventsitemap'])->name('event.xml');
+    Route::get('report.xml',                    [InsightSitemapController::class,'reportsitemap'])->name('report.xml');
+    Route::get('categories.xml',                [InsightSitemapController::class,'categorysitemap'])->name('categories.xml');
+    Route::get('subcategories.xml',             [InsightSitemapController::class,'subcategorysitemap'])->name('subcategories.xml');
+    Route::get('kickers.xml',                   [InsightSitemapController::class,'kickersitemap']);
+    Route::get('tags.xml',                      [InsightSitemapController::class,'tagsitemap'])->name('tags.xml');
+
+    });
+Route::middleware('TrailingSlashRedirect')->group(function () {
+    Route::get('/search/insights',                      [InsightsController::class, 'insightSearch']);
+    Route::group(['prefix' => 'insights'], function () {
+        Route::get('author/{slug}',                         [InsightsController::class, 'authordata']);
+        Route::get('thanks', function () {
+            return view('insights.thanks');
+        })->name('insights.thanks');
+        Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
+        Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
+        Route::get('/',                             [InsightsController::class, 'insightshome']);
+        Route::get('topstories',                    [InsightsController::class, 'getinsightstories']);
+        Route::get('trendstories',                  [InsightsController::class, 'trendstories']);
+        Route::get('interviews',                    [InsightsController::class, 'getinsightsinterviews']);
+        Route::get('events_reports',                [InsightsController::class, 'geteventsreports']);
+        Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
+        Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
+        Route::get('{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
+        Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
+        Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
+    });
+});
+Route::get('categoryall',       [StaticPageController::class, 'categoryAll']);
+Route::get('search',                                 function () {
+    return view('site.google-search-result');
+});
+Route::get('/content/{slug}', function ($slug) {
+    // Split the slug by the last dot (.)
+    // dd('yes');
+    $parts = explode('.', $slug);
+
+    // Extract the article title and id
+    $title = implode('-', array_slice($parts, 0, -1));
+    $id = end($parts);
+    // Redirect to the new domain
+    return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
+});
+Route::get('/wellness/{slug}', function ($slug) {
+    // Split the slug by the last dot (.)
+    $parts = explode('.', $slug);
+    // Extract the article title and id
+    $title = implode('-', array_slice($parts, 0, -1));
+    $id = end($parts);
+    // Redirect to the new domain
+    return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
+});
+
+Route::get('reload-captcha', [AdviceController::class, 'reloadCaptcha']);
+Route::get('reload-captcha-contact', [ContactUsController::class, 'reloadCaptcha']);
+
+Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('form.submit');
+Route::get('/brand-total-count',[CommonController::class,'brand_total_count']);
+
+
+// new homepage for cvw routes nikhil raman 26 aug 2024
+Route::get('/cvwhome', [cvwhomepage::class,'first']);
+Route::get('/cvwhome/hi', [cvwhomepage::class,'hindifirst']);

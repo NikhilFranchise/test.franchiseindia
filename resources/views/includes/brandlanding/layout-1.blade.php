@@ -1,6 +1,3 @@
-@php
-    use Illuminate\Support\Arr;
-@endphp
 <div class="row  landing" id="landfix">
     <div class="container">
         <div class="row">
@@ -12,14 +9,15 @@
                             'message' => '',
                             'abilityToApply' => 1,
                         ];
-                        if (Auth::check() && \Illuminate\Support\Facades\Auth::user()->profile_type == 2) {
-                            if (\Illuminate\Support\Facades\Auth::user()->membership_type == 1) {
+                        if (Auth::check() && Auth::user()->profile_type == 2) {
+                            if (Auth::user()->membership_type == 1) {
                                 $eligibility = 1;
                             } else {
                                 $checkData = \App\Http\Controllers\CommonController::checkInvestorApplicationEligibility();
                                 $eligibility = $checkData['abilityToApply'];
                             }
                         }
+
                         $img = 'https://www.franchiseindia.com/images/no-img.gif';
                         if (
                             ($franDetails->free_logo_visibility || $franDetails->membership_type != 0) &&
@@ -29,6 +27,9 @@
                         }
                     @endphp
                     <div class="brand-logo"><img src="{{ $img }}" alt="{{ $franDetails->company_name }}" /></div>
+                    @if($franDetails->brand_verified == 1)
+                    <div class="brand-verify-detail-mobile"><i class="fa fa-check"></i> Verified</div>
+                    @endif
                 </div>
                 <div class="col-xs-12 col-sm-10 col-md-10 mdy-width">
                     <div class="row">
@@ -40,7 +41,13 @@
                             <h1 class="ttl">{{ $franDetails->company_name }} Franchise Cost – How to get, Contact,
                                 Apply, Fee</h1>
                         </div>
+                        {{-- @if($franDetails->brand_verified == 1)
+                        <div style="text-align: right;">
+                        <img src="https://thumbs.dreamstime.com/b/verified-vector-stamp-isolated-white-background-41827520.jpg" style="height: 50px;">
+                        </div>
+                    @endif --}}
                         <!-- /Business Title -->
+
                         <!-- Tab Panel Start Here -->
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="tab-panel">
@@ -63,6 +70,7 @@
                                                 </li>
                                             </ul>
                                         @endif
+
                                         @if ($eligibility == 1 || $checkData['abilityToApply'] == 1)
                                             @if (Auth::check() && Auth::user()->profile_type == 2)
                                                 <ul>
@@ -83,6 +91,12 @@
                                         @endif
                                     @endif
                                 </div>
+
+                                @if($franDetails->brand_verified == 1)
+                                <div class="brand-verify-detail"><i class="fa fa-check"></i> Verified</div>
+
+                                 @endif
+                                
                             </div>
                         </div>
                         <!-- Tab Panel End Here -->
@@ -103,6 +117,46 @@
                     <div class="lft-pnl">
                         <div class="business-infonoimg">
                             <ul>
+                                {{--  @php
+                                    $area =
+                                        $franDetails->prop_area_min . ' - ' . $franDetails->prop_area_max . ' Sq.ft';
+                                    if (empty($franDetails->prop_area_max)) {
+                                        $area = $franDetails->prop_area_min;
+                                    }
+                                    if (is_numeric($franDetails->prop_area_min) && empty($franDetails->prop_area_max)) {
+                                        $area = $franDetails->prop_area_min . ' Sq.ft';
+                                    }
+                                    if (empty($franDetails->prop_area_min)) {
+                                        $area = '-N/A-';
+                                    }
+
+                                    $minValue = $franDetails->unit_inv_min;
+
+                                    if ($minValue < 100000 && $minValue > 10000) {
+                                        $minValue = substr($minValue / 1000, 0, 5) . ' K';
+                                    }
+
+                                    if ($minValue <= 9999999 && $minValue > 100000) {
+                                        $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
+                                    }
+
+                                    if ($minValue > 9999999) {
+                                        $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
+                                    }
+
+                                    $maxValue = $franDetails->unit_inv_max;
+                                    if ($maxValue < 100000 && $maxValue > 10000) {
+                                        $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
+                                    }
+
+                                    if ($maxValue <= 9999999 && $maxValue > 100000) {
+                                        $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
+                                    }
+
+                                    if ($maxValue > 9999999) {
+                                        $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
+                                    }
+                                @endphp  --}}
                                 @php
                                     $area =
                                         $franDetails->prop_area_min . ' - ' . $franDetails->prop_area_max . ' Sq.ft';
@@ -115,29 +169,30 @@
                                     if (empty($franDetails->prop_area_min)) {
                                         $area = '-N/A-';
                                     }
+
                                     $minValue = $franDetails->unit_inv_min;
-                                    if ($minValue < 100000 && $minValue > 10000) {
-                                        $minValue = substr($minValue / 1000, 0, 5) . ' K';
+                                    if (is_numeric($minValue)) {
+                                        if ($minValue < 100000 && $minValue > 10000) {
+                                            $minValue = substr($minValue / 1000, 0, 5) . ' K';
+                                        } elseif ($minValue <= 9999999 && $minValue > 100000) {
+                                            $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
+                                        } elseif ($minValue > 9999999) {
+                                            $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
+                                        }
                                     }
-                                    if ($minValue <= 9999999 && $minValue > 100000) {
-                                        $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
-                                    }
-                                    if ($minValue > 9999999) {
-                                        $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
-                                    }
+
                                     $maxValue = $franDetails->unit_inv_max;
-                                    if ($maxValue < 100000 && $maxValue > 10000) {
-                                        $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
-                                    }
-                                    if ($maxValue <= 9999999 && $maxValue > 100000) {
-                                        $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
-                                    }
-                                    if ($maxValue > 9999999) {
-                                        $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
+                                    if (is_numeric($maxValue)) {
+                                        if ($maxValue < 100000 && $maxValue > 10000) {
+                                            $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
+                                        } elseif ($maxValue <= 9999999 && $maxValue > 100000) {
+                                            $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
+                                        } elseif ($maxValue > 9999999) {
+                                            $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
+                                        }
                                     }
                                 @endphp
-                                <li>
-                                    Area Req
+                                <li>Area Req
                                     <div>{{ $area }}</div>
                                 </li>
                                 <li>
@@ -152,9 +207,11 @@
                                 </li>
                             </ul>
                         </div>
+
                         <!-- Business Section Start here -->
                         @include('includes.brandlanding.business_desc_video')
                         <!-- Business Section End here -->
+
                         <!-- Investment Detail Section Start here -->
                         @include('includes.brandlanding.investment_tab')
                         <!-- Investment Detail Section End here -->
@@ -170,15 +227,19 @@
                                 })(window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
                             </script>
                         </div>
+
                         <!-- Property Details Section Start here -->
                         @include('includes.brandlanding.property_tab')
                         <!-- Property Details Section End here -->
+
                         <!-- Training Details Section Start here -->
                         @include('includes.brandlanding.training_tab')
                         <!-- Training Details Section End here -->
+
                         <!-- Training Details Section Start here -->
                         @include('includes.brandlanding.others_tab')
                         <!-- Training Details Section End here -->
+
                     </div>
                     <!-- Left panel content End -->
                     <!-- Right panel Start here -->
@@ -212,7 +273,7 @@
                                         @if (!empty(Cookie::get('franRate' . $franDetails->franchisor_id)))
                                             <a data-toggle="#" data-target="#myRating" id="rateButton">Rated</a>
                                         @else
-                                            <a data-toggle="modal" data-target="#myRating" id="rateButton"><i
+                                            <a data-toggle="modal" onclick="ratebtn()" id="rateButton"><i
                                                     class="fa fa-star-half-o" aria-hidden="true"></i> Rate</a>
                                         @endif
                                     </li>
@@ -223,12 +284,15 @@
                             <!-- Rate Action Panel End here-->
                         </div>
                         <!-- Share panel end here-->
+
                         <!-- Insta Apply section start here -->
                         @if (Auth::check() && Auth::user()->profile_type == Config('constants.ProfileType.Investor'))
-                            @if (count($expIntVal) == 0 || (Auth::user()->membership_type == 1 && $expIntVal->visibility == 0))
+                            @if ($expIntVal == null || (Auth::user()->membership_type == 1 && $expIntVal->visibility == 0))
+
                                 @if (!empty($checkData['message']))
                                     {{ $checkData['message'] }}
                                 @endif
+
                                 @if ($eligibility == 1 || $checkData['abilityToApply'] == 1)
                                     <input type="button" value="Submit Your Interest" id="expbtn"
                                         class="btn btn-default submi" /></br>
@@ -247,7 +311,7 @@
                                         color: #fff;
                                     }
                                 </style>
-                                <div class="insta-apply thankscs" id="expmsg" style="display:none;">
+                                <div class="insta-apply thankscs" id="expmsg1" style="display:none;">
                                     <div class="green">
                                         <div class="bigth">Thank You!</div>
                                         <p><span class="popinfohead" id="companyContactinsta"
@@ -276,6 +340,7 @@
                                 </div>
                             @endif
                         @endif
+
                         @if (!Auth::check() || Auth::user()->profile_type == Config('constants.ProfileType.Franchisor'))
                             <div class="insta-apply" id="show-m">
                                 <div class="ttl" id="instahead">Insta Apply</div>
@@ -295,7 +360,7 @@
                                         name="insta">
                                         <input type="hidden" name="frandetailsid" id="franId"
                                             value="{{ $franDetails->franchisor_id }}">
-                                        @csrf
+                                        {{ csrf_field() }}
                                         <div class="form-group">
                                             <input type="text" class="form-control" name="infoname"
                                                 placeholder="Enter Name">
@@ -329,13 +394,7 @@
                                                 onchange="getcityinfoinsta(this.value)">
                                                 <option value>Select State for Franchise</option>
                                                 @php
-                                                    $stateListArray = Arr::get(
-                                                        json_decode($stateList, true),
-                                                        'region',
-                                                        [],
-                                                    );
-
-                                                    $states = array_unique(array_column($stateListArray, 'state'));
+                                                    $states = array_unique(array_column($stateList, 'state'));
                                                     if (count($states) > 0) {
                                                         foreach ($states as $state) {
                                                             $key = 0;
@@ -346,17 +405,13 @@
                                                                 }
                                                                 next($array);
                                                             }
-                                                            echo "
-                                  <option value='$key'>$state</option>
-                                  ";
+                                                            echo "<option value='$key'>$state</option>";
                                                         }
                                                     } else {
                                                         $stateArrVal = Config('location.stateArr');
                                                         asort($stateArrVal);
                                                         foreach ($stateArrVal as $key => $value) {
-                                                            echo "
-                                  <option value='$key'>$value</option>
-                                  ";
+                                                            echo "<option value='$key'>$value</option>";
                                                         }
                                                     }
                                                 @endphp
@@ -374,6 +429,7 @@
                                         <div class="form-group">
                                             <textarea class="form-control" name="address" placeholder="Enter Address" rows="3"></textarea>
                                         </div>
+
                                         <div class="form-group">
                                             <select class="form-control" id="investment_range_gallery"
                                                 name="investment_range">
@@ -391,6 +447,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
+
                                         <div class="checkbox">
                                             <label>
                                                 <input type="checkbox" name="newsletter_sub" checked> Yes, I want to
@@ -408,6 +465,7 @@
                                             <input type="submit" id="btninsta" class="btn btn-default btn-red"
                                                 value="Apply Now">
                                         </div>
+
                                     </form>
                                 </div>
                                 <div class="loantxt"><a target="_blank"
@@ -434,10 +492,12 @@
                         @endif
                         <!-- Insta Apply section end here -->
                         <div class="clr"></div>
+
                         <div class="catleftbanner300 detailpage">
                             <!-- /1057625/FIHL/Desktop_ROS_300x250_ATF-->
                             @desktop
                                 <div id='adslot300x250_ATF' style="text-align:center;">
+
                                     <script>
                                         googletag.cmd.push(function() {
                                             googletag.display('adslot300x250_ATF');
@@ -447,13 +507,11 @@
                             @enddesktop
                             {{-- @include("includes.banners.dfp_300X600") --}}
                         </div>
-                        {{--
-                   <div class="catleftbanneryahoo300"> --}}
+                        {{-- <div class="catleftbanneryahoo300"> --}}
                         {{-- @include("includes.banners.yahoo_300X600") --}}
-                        {{--
-                   </div>
-                   --}}
+                        {{-- </div> --}}
                         {{-- --}}
+
                     </div>
                     <!-- Right panel End here -->
                 </div>
@@ -463,6 +521,7 @@
         <!-- /row-->
     </div>
 </div>
+
 <script>
     if ("{{ $checkData['message'] }}" != "") {
         alert("{{ $checkData['message'] }}");

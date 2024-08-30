@@ -69,26 +69,26 @@
                 <div class="col-xs-12 col-sm-4 col-md-4">
                     <h3 class="catfoot">Our Group Sites</h3>
                     <ul class="btmlinklist">
-                        <li><a target="_blank" href="http://www.franchiselondon.com/" rel="nofollow">franchiselondon.com</a></li>
-                        <li><a target="_blank" href="https://www.menshealthindia.com/" rel="nofollow">menshealthindia.com</a></li>
-                        <li><a target="_blank" href="https://retail.franchiseindia.com/" rel="nofollow">indianretailer.com</a></li>
-                        <li><a target="_blank" href="http://www.entrepreneur.com/" rel="nofollow">entrepreneur.com</a></li>
+                        <li><a target="_blank" href="http://www.franchiselondon.com" rel="nofollow">franchiselondon.com</a></li>
+                        {{-- <li><a target="_blank" href="https://www.menshealthindia.com" rel="nofollow">menshealthindia.com</a></li> --}}
+                        <li><a target="_blank" href="https://www.indianretailer.com" rel="nofollow">indianretailer.com</a></li>
+                        <li><a target="_blank" href="http://www.entrepreneur.com" rel="nofollow">entrepreneur.com</a></li>
                         <li><a target="_blank" href="https://www.franchiseindia.com/dealers-distributor" rel="nofollow">dealersindia.in</a></li>
                         <li><a href="/restaurant">restaurantindia.in</a></li>
-                        <li><a href="/wellness">wellnessindia.org</a></li>
-                        <li><a href="/education" target="_blank">educationbiz.com</a></li>
-                        <li><a target="_blank" href="http://www.franchise.ae/" rel="nofollow">Franchise.ae</a></li>
-                        <li><a target="_blank" href="https://www.franchiseindia.net/" rel="nofollow">franchiseindia.net</a></li>
-                        <li><a target="_blank" href="https://www.franchiseindia.in/" rel="nofollow">franchiseindia.in</a></li>
-                        <li><a target="_blank" href="https://www.francorp.in/" rel="nofollow">francorp.in</a></li>
-                        <li><a target="_blank" href="https://www.licenseindia.com/" rel="nofollow">licenseindia.com</a></li>
-                        <li><a target="_blank" href="http://www.estateworld.in/" rel="nofollow">estateworld.in</a></li>
-                        <li><a target="_blank" href="https://www.franglobal.com/" rel="nofollow">franglobal.com</a></li>
-                        <li><a target="_blank" href="http://www.businessex.com/" rel="nofollow">businessex.com</a></li>
-                        <li><a target="_blank" href="https://www.gauravmarya.com/" rel="nofollow">gauravmarya.com</a></li>
-                        <li><a target="_blank" href="http://www.franchiseindiaventures.com/" rel="nofollow">franchiseindiaventures.com</a></li>
-                        <li><a target="_blank" href="http://www.quitters.in/" rel="nofollow">quitters.in</a></li>
-                        <li><a target="_blank" href="https://www.bradfordlicenseindia.com/" rel="nofollow">bradfordlicenseindia.com</a></li>
+                        {{-- <li><a href="/wellness">wellnessindia.org</a></li> --}}
+                        {{-- <li><a href="/education" target="_blank">educationbiz.com</a></li> --}}
+                        <li><a target="_blank" href="http://www.franchise.ae" rel="nofollow">Franchise.ae</a></li>
+                        <li><a target="_blank" href="https://www.franchiseindia.net" rel="nofollow">franchiseindia.net</a></li>
+                        <li><a target="_blank" href="https://www.franchiseindia.in" rel="nofollow">franchiseindia.in</a></li>
+                        <li><a target="_blank" href="https://www.francorp.in" rel="nofollow">francorp.in</a></li>
+                        <li><a target="_blank" href="https://www.licenseindia.com" rel="nofollow">licenseindia.com</a></li>
+                        {{-- <li><a target="_blank" href="http://www.estateworld.in" rel="nofollow">estateworld.in</a></li> --}}
+                        <li><a target="_blank" href="https://www.franglobal.com" rel="nofollow">franglobal.com</a></li>
+                        <li><a target="_blank" href="http://www.businessex.com" rel="nofollow">businessex.com</a></li>
+                        <li><a target="_blank" href="https://www.gauravmarya.com" rel="nofollow">gauravmarya.com</a></li>
+                        <li><a target="_blank" href="http://www.franchiseindiaventures.com" rel="nofollow">franchiseindiaventures.com</a></li>
+                        {{-- <li><a target="_blank" href="http://www.quitters.in" rel="nofollow">quitters.in</a></li> --}}
+                        <li><a target="_blank" href="https://www.bradfordlicenseindia.com" rel="nofollow">bradfordlicenseindia.com</a></li>
                     </ul>
                 </div>
             </div>
@@ -110,9 +110,9 @@
                     <ul class="staticlinks">
                         <li><a href="/">Home</a></li>
                         <li><a href="/about">About Us</a></li>
-                        <li><a href="/site/contact/">Contact Us</a></li>
-                        <li><a href="/site/feedback/">Feedback</a></li>
-                        <li><a href="https://news.franchiseindia.com/">News</a></li>
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/feedback">Feedback</a></li>
+                        <li><a href="https://www.opportunityindia.com">News</a></li>
                         <li><a href="/terms">Terms</a></li>
                         <li><a href="/sitemap">Sitemap</a></li>
                     </ul>

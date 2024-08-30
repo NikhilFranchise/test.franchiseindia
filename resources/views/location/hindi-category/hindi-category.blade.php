@@ -18,12 +18,16 @@
 @section('hindiUrl', $hindiUrl)
 @section('englishUrl', $engUrl)
 
-@section('hindibrandUrls')
+{{-- @section('hindibrandUrls')
     <link href="{{ str_replace('/hi/', '/amp/hi/', $hindiUrl) }}" rel="amphtml">
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
+@endsection --}}
+@section('hindibrandUrls')
+    <link href="{{ str_replace('/hi/', ' ', $hindiUrl) }}" >
+    <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
+    <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
 @endsection
-
 @section('content')
 
     @php
@@ -81,24 +85,23 @@
                                 $minValue       = $brandResult->unit_inv_min;
                                 $area           = "-N/A-";
 
-                                if($minValue < 100000 && $minValue > 10000)
-                                    $minValue = substr(($minValue/1000),0,5).' K';
+                                if($minValue < 100000 && $minValue > 10000) {
+                                    $minValue = substr(($minValue / 1000), 0, 5).' K';
+                                } elseif($minValue <= 9999999 && $minValue > 100000) {
+                                    $minValue = substr(($minValue / 100000), 0, 5).' Lac';
+                                } elseif($minValue > 9999999) {
+                                    $minValue = substr(($minValue / 10000000), 0, 5).' Cr';
+                                }
 
-                                if($minValue <= 9999999 && $minValue > 100000)
-                                    $minValue = substr(($minValue/100000),0,5).' Lac';
+                                $maxValue = is_numeric($brandResult->unit_inv_max) ? $brandResult->unit_inv_max : 0;
+                                if($maxValue < 100000 && $maxValue > 10000) {
+                                    $maxValue = substr(($maxValue / 1000), 0, 5).' K';
+                                } elseif($maxValue <= 9999999 && $maxValue > 100000) {
+                                    $maxValue = substr(($maxValue / 100000), 0, 5).' Lac';
+                                } elseif($maxValue > 9999999) {
+                                    $maxValue = substr(($maxValue / 10000000), 0, 5).' Cr';
+                                }
 
-                                if($minValue > 9999999)
-                                    $minValue = substr(($minValue/10000000),0,5).' Cr';
-
-                                $maxValue = $brandResult->unit_inv_max;
-                                if($maxValue < 100000 && $maxValue > 10000)
-                                    $maxValue = substr(($maxValue/1000),0,5).' K';
-
-                                if($maxValue <= 9999999 && $maxValue > 100000)
-                                    $maxValue = substr(($maxValue/100000),0,5).' Lac';
-
-                                if($maxValue > 9999999)
-                                    $maxValue = substr(($maxValue/10000000),0,5).' Cr';
 
                                 $priceRange = "INR  $minValue  - $maxValue ";
 

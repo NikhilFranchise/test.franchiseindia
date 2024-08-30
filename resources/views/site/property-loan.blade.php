@@ -88,7 +88,7 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 row-no-padding">
-            @if ($errors->any())
+            {{-- @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -96,7 +96,7 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
+            @endif --}}
             <form class="form-horizontal" id="loanForm" method="post" action="{{ url('property-loan-submit') }}">
                 @csrf
                 <div class="form-group">
@@ -115,7 +115,11 @@
                                 <option value="Above 5 Cr">Above 5 Cr</option>
                             </select>
                         </div>
+                        @error('loan_range')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
+
                 </div>
                 <div class="form-group">
                     <label class="col-xs-12 col-sm-4 col-md-4 com4mod control-label mandatory">Name</label>
@@ -126,6 +130,9 @@
                             <input type="text" class="form-control" id="name" name="name"
                                 placeholder="Enter Your Name" maxlength="30">
                         </div>
+                        @error('name')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group">
@@ -137,6 +144,9 @@
                             <input type="text" class="form-control" id="email" name="email"
                                 placeholder="Enter  Email">
                         </div>
+                        @error('email')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group">
@@ -148,6 +158,9 @@
                             <input type="text" class="form-control" pattern="[6789][0-9]{9}" id="mobile"
                                 name="mobile" placeholder="Enter Mobile" maxlength="10">
                         </div>
+                        @error('mobile')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group">
@@ -159,6 +172,9 @@
                                     alt="address"></span>
                             <textarea class="form-control height100" id="address" name="address" placeholder="Enter Your Address" maxlength="150"></textarea>
                         </div>
+                        @error('address')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group">
@@ -175,6 +191,9 @@
                                 @endforeach
                             </select>
                         </div>
+                        @error('city')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group">
@@ -187,6 +206,9 @@
                             <input type="text" class="form-control" name="pincode" placeholder="Enter Pincode"
                                 maxlength="6">
                         </div>
+                        @error('pincode')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group">
@@ -204,6 +226,9 @@
                                 <option value="Above 10 lacs">Above 10 lacs</option>
                             </select>
                         </div>
+                        @error('income_range')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group">
@@ -225,6 +250,9 @@
                                 <option value="Land">Land</option>
                             </select>
                         </div>
+                        @error('property_type')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group">
@@ -242,6 +270,9 @@
                                 <option value="1000 Sq ft and above">1000 Sq ft and above </option>
                             </select>
                         </div>
+                        @error('property_size')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group">
@@ -255,6 +286,9 @@
                             <input type="text" class="form-control" name="property_value"
                                 placeholder="Enter Property Value (INR)">
                         </div>
+                        @error('property_value')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 
@@ -268,6 +302,9 @@
                             <textarea class="form-control height100" id="details" name="details" placeholder="Enter Purpose Of Loan Detail"
                                 maxlength="60"></textarea>
                         </div>
+                        @error('details')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
                 <div style="text-align: center;">
@@ -445,3 +482,4 @@
         });
     </script>
 @endsection
+

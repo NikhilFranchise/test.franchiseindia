@@ -224,8 +224,8 @@
                 <div class="col-sm-4 col-md-2 bdn mrg-mdy txt-center">Hotline: 1800 102 2007</div>
                 <div class="col-sm-8 col-md-9 headmodfiy">
                     <ul class="sublink">
-                        <li><a href="{{ Config('constants.MainDomain') }}/content/">What's New</a></li>
-                        <li><a href="https://news.franchiseindia.com/">News</a></li>
+                        <li><a href="{{ Config('constants.MainDomain') }}/insights/">What's New</a></li>
+                        <li><a href="https://www.opportunityindia.com">News</a></li>
                         <li><a href="https://video.franchiseindia.com/">Videos</a></li>
                         <li><a href="{{ Config('constants.MainDomain') }}/advertise-with-us-payment/">Advertise</a>
                         </li>
@@ -241,16 +241,16 @@
                                 <li class="dropactive"><a target="_blank"
                                         href="{{ Config('constants.MainDomain') }}/" rel="nofollow"
                                         class="dotcom"></a></li>
-                                <li><a href="https://retail.franchiseindia.com/" rel="nofollow" target="_blank"
+                                <li><a href="https://indianretailer.com/" rel="nofollow" target="_blank"
                                         class="irin"> </a></li>
                                 <li><a href="https://www.entrepreneur.com/" rel="nofollow" target="_blank"
                                         class="entin"> </a></li>
                                 <li><a href="{{ Config('constants.MainDomain') }}/restaurant" class="riin"> </a>
                                 </li>
-                                <li><a href="{{ Config('constants.MainDomain') }}/wellness" class="wiin"> </a></li>
-                                <li><a href="{{ Config('constants.MainDomain') }}/education" class="eiin"></a></li>
+                                <li><a href="https://www.opportunityindia.com/english/tag/wellness" class="wiin"> </a></li>
+                                <li><a href="https://www.opportunityindia.com/english/tag/education" class="eiin"></a></li>
                                 <li><a href="https://www.licenseindia.com/" target="_blank" class="liin"></a></li>
-                                <li><a href="https://www.franchiseindia.com/dealers-distributor" class="dealerin"></a>
+                                <li><a href="https://www.dealerindia.com" class="dealerin"></a>
                                 </li>
                             </ul>
                         </div>
@@ -415,13 +415,14 @@
                     <div class="frgt-pwd" id="frg-pnl" style="display:none;">
                         <div class="ttl">Forgot Password</div>
                         <div class="desc">
-                            Enter your email address associated with your Franchiseindia account and we'll send you a
+                            Enter your email address associated with your Franchiseindia account and we will send you a
                             link
                             to reset your password.
                         </div>
                         <div class="frm-pnl">
                             <form class="form-horizontal" method="POST"
                                 action="{{ Config('constants.MainDomain') }}/password/email">
+                                @csrf
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <div class="usersprite"></div>
@@ -449,30 +450,49 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane" id="login">
                                 <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    @csrf
                                     <div class="frm-pnl">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="usersprite"></div>
                                             </span>
-                                            <input type="email" class="form-control" required name="email"
-                                                placeholder="Enter Your User ID">
-                                        </div>
-                                        <div class="input-group">
+
+                                            <input type="text" class="form-control blur" required=""
+                                                name="email_or_mobile" id="email_or_mobile"
+                                                placeholder="Enter Your User ID or Mobile Number"
+                                                onkeyup="checkInputType()">
+
+                                            <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
+                                                style="display:none">Edit</span>
+                                            <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
+                                                style="display:none">Get OTP</span>
+                                            </div>
+                                            <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">This mobile number
+                                                is not registered.</div>
+                                        <div class="input-group" id="password_group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
                                             </span>
-                                            <input type="password" required name="password" class="form-control"
+                                            <input type="password" name="password" class="form-control blur"
                                                 placeholder="Enter Your Password">
                                         </div>
-                                        <button type="submit" class="btn btn-default btn-gry btn-prop">SIGN
-                                            IN</button>
+
+                                        <div class="input-group" id="otp-block-wider" style="display: none;width:100%;">
+                                            <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
+                                                class="form-control blur" placeholder="Enter OTP" style="width:100%;">
+                                            <span class="vrfy" id="resend_otp" onclick="resendOTP()"
+                                                style="display:none">Resend
+                                                OTP</span>
+                                            <span class="vrfy" id="otp_timer"></span>
+                                        </div>
+
+                                        <button type="submit" id="sign_in_btn"
+                                            class="btn btn-default btn-gry btn-prop">SIGN IN</button>
                                         <span class="pipe">|</span> <a class="frg-link" href="#"
                                             onClick="frg_panel()">Forgot
                                             Password</a>
                                     </div>
                                 </form>
-
                                 <div class="popfi">
                                     <div class="signpop"></div>
                                     <div class="popleft">
@@ -500,6 +520,11 @@
                                             <div><a href="{{ Config('constants.MainDomain') }}/franchisor/registration/step/1"
                                                     class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel
                                                     Partners <span> (Franchisor Registration) </span> </a></div>
+                                            <br>
+                                            <div><a href="{{ Config('constants.MainDomain') }}/franchisor/international-registration"
+                                                    class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel
+                                                    Partners <span> (International Franchisor Registration) </span> </a>
+                                            </div>
                                         </center>
                                     </div>
                                 </form>
@@ -523,3 +548,4 @@
             </div>
         </div>
     </div>
+

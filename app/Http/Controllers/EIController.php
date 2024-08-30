@@ -69,15 +69,15 @@ class EIController extends Controller
          $title          = request()->title;
          $contentArr     = explode('-', $title);
          $lastElement    = end($contentArr);
- 
+        
          if (!is_numeric($lastElement))
              return redirect('https://www.franchiseindia.com/content/', 301);
  
          $articles       = EINews::query()->select('homeTitle','shortDesc','title','content','image','news_date')
                                      ->where('newsID',$lastElement)
                                      ->where('status','A')->first();
- 
-         if (count($articles) != 1)
+        
+         if ($articles == null)
              return redirect('content');
  
          $articles->content = CommonController::cleanContent($articles->content);

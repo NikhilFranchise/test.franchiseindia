@@ -11,8 +11,10 @@
         <!-- Swiper -->
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                @foreach($brands->where('brand_section', 5)->take(48)->shuffle() as $logoDetail)
-                    @php
+                {{-- @foreach($brands->where('brand_section', 5)->take(48)->shuffle() as $logoDetail) --}}
+                @foreach ($brandsffc as $logoDetail)
+
+             @php
                         $brandUrl = Config('constants.MainDomain').$logoDetail['brand_link'];
                         if(isset($hindiFrans) && is_array($hindiFrans) && in_array($logoDetail['fihl_id'], $hindiFrans))
                         $brandUrl = Config('constants.MainDomain').'/hi'.$logoDetail['brand_link'];

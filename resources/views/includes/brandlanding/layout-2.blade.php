@@ -8,6 +8,9 @@
             <div class="row  bg-white landing bop2">
                 <div class="row">
                     <div class="normal">
+                        @if($franDetails->brand_verified == 1)
+                        <div class="brand-verify-two"><i class="fa fa-check"></i> Verified</div>
+                        @endif
                         <div class="col-xs-12 col-sm-3 col-md-2 mdy-width pad-top">
                             @php
                                 $eligibility = 0;
@@ -34,6 +37,7 @@
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <h1 class="ttl">{{$franDetails->company_name}} Franchise Cost – How to get, Contact, Apply, Fee</h1>
+                                      
                                     <div class="sub-ttl">{{Config('constants.subSubCategoryArr.'.$franDetails->ind_cat.'.'.$franDetails->ind_sub_cat)}}</div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
@@ -172,7 +176,7 @@
                         @if(!empty(Cookie::get('franRate'.$franDetails->franchisor_id)))
                             <a data-toggle="#" data-target="#myRating" id="rateButton">Rated</a>
                         @else
-                            <a data-toggle="modal" data-target="#myRating"  id="rateButton"><i class="fa fa-star-half-o" aria-hidden="true"></i> Rate</a>
+                            <a data-toggle="modal" onclick="ratebtn()"id="rateButton"><i class="fa fa-star-half-o" aria-hidden="true"></i> Rate</a>
                         @endif
                     </li>
                     <li><a data-toggle="modal" data-target="#mysocial" id="seo_shareButton"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</a></li>
@@ -351,7 +355,7 @@
                                                 <input type="checkbox" name="is_termsagree3" id="is_termsagree3" value="1" checked>  I agree to the <a href="{{Config('constants.MainDomain')}}/terms" target="_blank">Terms & Conditions</a></label>
                                         </div>
                                         
-                                        <div class="submit-btn" id="sub" style="float: none;">
+                                        <div class="submit-btn" id="sub1" style="float: none;">
                                             <input type="submit" id="btninsta" class="btn btn-default btn-red" value="Apply Now">
                                         </div>
 

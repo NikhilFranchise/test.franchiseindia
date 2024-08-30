@@ -129,7 +129,7 @@
                         </li>
                     </ul>
                 </div>
-            </div> 
+            </div>
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2
                            col-lg-2">
                 <div class="footer-widget-link">
@@ -149,25 +149,6 @@
                     </ul>
                 </div>
             </div>
-           <!--  <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2
-                           col-lg-2">
-                <div class="footer-widget-link">
-                    <p><a
-                                href="https://www.franchiseindia.com/business-opportunities/education.m3">Education</a></p>
-                    <ul class="footer-links">
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/accessories.sc44">Accessories</a></li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/clothing.sc40">Clothing</a></li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/footwear.sc41">Footwear</a></li>
-                        <li><a
-                                    href="https://www.franchiseindia.com/business-opportunities/fashion.m10">View
-                                All&gt;</a>
-                        </li>
-                    </ul>
-                </div>
-            </div> -->
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2
                            col-lg-2">
                 <div class="footer-widget-link">
@@ -335,13 +316,13 @@
                             </li>
                             <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-1500000">Under 15 Lakh
                             </a>
-                            </li> 
+                            </li>
                             <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-2000000">Under 20 Lakh
                             </a>
                             </li>
                             <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-2500000">Under 25 Lakh
                             </a>
-                            </li> 
+                            </li>
                             <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-3000000">Under 30 Lakh
                             </a>
                             </li>
@@ -351,8 +332,8 @@
                             <li><a href="https://www.franchiseindia.com/business-opportunities/business/range-10000-10000000">Under 1 Crore
                             </a>
                             </li>
-                           
-                           
+
+
 
                     </ul>
                 </div>
@@ -458,7 +439,7 @@
                             <li><a href="https://www.franchiseindia.com/location/patna">Patna</a></li>
                             <li><a href="https://www.franchiseindia.com/location/prayagraj">Prayagraj</a></li>
                             <li><a href="https://www.franchiseindia.com/location/pune">Pune</a></li>
-                            <li><a href="https://www.franchiseindia.com/location/raipur">Raipur</a></li> 
+                            <li><a href="https://www.franchiseindia.com/location/raipur">Raipur</a></li>
                             <li><a href="https://www.franchiseindia.com/location/rajkot">Rajkot</a></li>
                             <li><a href="https://www.franchiseindia.com/location/ranchi">Ranchi</a></li>
                             <li><a href="https://www.franchiseindia.com/location/shimla">Shimla</a></li>
@@ -469,7 +450,7 @@
                             <li><a href="https://www.franchiseindia.com/location/varanasi">Varanasi</a></li>
                             <li><a href="https://www.franchiseindia.com/location/vijayawada">Vijayawada</a></li>
                             <li><a href="https://www.franchiseindia.com/location/visakhapatnam">Visakhapatnam</a></li>
-                           
+
 
                     </ul>
                 </div>

@@ -23,21 +23,75 @@
                                 <ul>
                                     @php
                                         $cityArr = Config('location.Hindicity');
-                                        //sort($cityArr);
-
+                                        $englishCityNames = [
+                                            "आगरा" => "Agra",
+                                            "अहमदाबाद" => "Ahmedabad",
+                                            "अमृतसर" => "Amritsar",
+                                            "औरंगाबाद" => "Aurangabad",
+                                            "बेंगलुरु" => "Bengaluru",
+                                            "भोपाल" => "Bhopal",
+                                            "भुवनेश्वर" => "Bhubaneswar",
+                                            "चंडीगढ़" => "Chandigarh",
+                                            "चेन्नई" => "Chennai",
+                                            "कोयंबटूर" => "Coimbatore",
+                                            "देहरादून" => "Dehradun",
+                                            "फरीदाबाद" => "Faridabad",
+                                            "गाजियाबाद" => "Ghaziabad",
+                                            "गुरुग्राम" => "Gurugram",
+                                            "गुवाहाटी" => "Guwahati",
+                                            "हैदराबाद" => "Hyderabad",
+                                            "इंदौर" => "Indore",
+                                            "जबलपुर" => "Jabalpur",
+                                            "जयपुर" => "Jaipur",
+                                            "जमशेदपुर" => "Jamshedpur",
+                                            "जोधपुर" => "Jodhpur",
+                                            "कानपुर" => "Kanpur",
+                                            "कोच्चि" => "Kochi",
+                                            "कोलकाता" => "Kolkata",
+                                            "कोटा" => "Kota",
+                                            "लखनऊ" => "Lucknow",
+                                            "लुधियाना" => "Ludhiana",
+                                            "मदुरै" => "Madurai",
+                                            "मैंगलोर" => "Mangalore",
+                                            "मेरठ" => "Meerut",
+                                            "मुंबई" => "Mumbai",
+                                            "मैसूरु" => "Mysuru",
+                                            "नागपुर" => "Nagpur",
+                                            "नासिक" => "Nashik",
+                                            "नवी मुंबई" => "Navi Mumbai",
+                                            "नई दिल्ली" => "New Delhi",
+                                            "नोएडा" => "Noida",
+                                            "पटना" => "Patna",
+                                            "प्रयागराज" => "Prayagraj",
+                                            "पुणे" => "Pune",
+                                            "रायपुर" => "Raipur",
+                                            "राजकोट" => "Rajkot",
+                                            "रांची" => "Ranchi",
+                                            "शिमला" => "Shimla",
+                                            "सूरत" => "Surat",
+                                            "तिरुवनंतपुरम" => "Thiruvananthpuram",
+                                            "उदयपुर" => "Udaipur",
+                                            "वडोदरा" => "Vadodara",
+                                            "वाराणसी" => "Varanasi",
+                                            "विजयवाड़ा" => "Vijayawada",
+                                            "विशाखापत्तनम" => "Visakhapatnam"
+                                        ];
                                     @endphp
-                                    @foreach($cityArr as $indexcity => $city)
 
+                                    @foreach($cityArr as $indexcity => $city)
+                                        @php
+                                            $trimmedCity = trim($city);
+                                            $citySlug = strtolower(str_replace(' ', '-', $englishCityNames[$trimmedCity]));
+                                        @endphp
                                         <li>
-                                            {{--<a href="JavaScript:Void(0)" class="accordian-arrow main-lst" id="cat-{{ $indexcity }}" onclick="accordionCategory(this.id)"></a>--}}
                                             <div class="radio">
                                                 <label>
-                                                    {{--<input type="radio" slug="{{strtolower(str_replace(' ', '-', $city))}}" name="mainCat" url="#" class="mainCat" id="optionsRadios{{ $indexcity }}" value="{{ $indexcity }}">--}}
-                                                    <a href="{{url('/location').'/'.strtolower(str_replace(' ', '-', $city))}}" > {{$city}} </a>
+                                                    <a href="{{url('/hi/location').'/'.$citySlug}}" > {{$trimmedCity}} </a>
                                                 </label>
                                             </div>
                                         </li>
                                     @endforeach
+
                                 </ul>
                             </div>
                         </div>

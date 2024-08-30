@@ -1,5 +1,9 @@
 @php
+<<<<<<< HEAD
     use Illuminate\Support\Str;
+=======
+    use Illuminate\support\Str;
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
     $catArr = Config('constants.CategoryArr');
     asort($catArr);
     $states = Config('location.stateArr');
@@ -84,14 +88,14 @@
                     </h2>
                 </div>
                 <ul class="nav nav-tabs custom-nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#categories">Categories</a></li>
-                    <li><a data-toggle="tab" href="#location">Location</a></li>
-                    <li><a data-toggle="tab" href="#investment">Investment</a></li>
+                    <li class="active"><a data-toggle="tab" href="#categories2">Categories</a></li>
+                    <li><a data-toggle="tab" href="#location2">Location</a></li>
+                    <li><a data-toggle="tab" href="#investment2">Investment</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div id="categories" class="tab-pane tab-pane-main fade in active">
-                        <form name="catform"class="form-horizontal" method="get"
+                    <div id="categories2" class="tab-pane tab-pane-main fade in active">
+                        <form name="catform" id="catform" class="form-horizontal" method="get"
                             action="{{ url('category/searchby') }}" onsubmit="return submitCategory()">
                             <div class="container-fluid">
                                 <div class="row">
@@ -107,7 +111,7 @@
                                                         <option value="{{ $index }}"
                                                             slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                             @if (isset($mc) && $index == $mc) selected @endif>
-                                                            {!! $value !!}</option>
+                                                            {{ $value }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -118,12 +122,12 @@
                                             <div
                                                 class="form-group
                                        form-group-search-section-li">
-                                                <select name="sc" id="getSubCategoryDataHeader"
+                                                <select name="sc" id="getSubCategoryDataHeader2"
                                                     onchange="getSubCatCategoryHeader(this.value)"
                                                     class="form-control
                                           form-control-search-main-custom"
                                                     id="exampleFormControlSelect1">
-                                                    <option value="" hidden>Select Sector</option>
+                                                    <option value="0">Select Sector</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -136,7 +140,7 @@
                                                 <select
                                                     class="form-control
                                           form-control-search-main-custom"
-                                                    name="ssc" id="getSubCatCategoryDataHeader">
+                                                    name="ssc" id="getSubCatCategoryDataHeader2">
                                                     <option value="" hidden>Select Service / Product</option>
                                                 </select>
                                             </div>
@@ -150,15 +154,17 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            <a href="javascript:void(0)" onclick="catform.reset();">Clear All</a>
+                                            {{-- <a href="javascript:void(0)" onclick="catform.reset();">Clear All</a> --}}
+                                            <a href="javascript:void(0)"
+                                                onclick="document.getElementById('catform').reset();">Clear All</a>
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div id="location" class="tab-pane tab-pane-main fade">
-                        <form name="locform" class="form-horizontal" method="get"
+                    <div id="location2" class="tab-pane tab-pane-main fade">
+                        <form name="locform" id="locform" class="form-horizontal" method="get"
                             action="{{ url('category/searchby') }}" onsubmit="return submitLocation()">
                             <input type="hidden" name="locTab" value="1">
                             <div class="container-fluid">
@@ -195,10 +201,12 @@
                                                     name="loc" id="stateHeader" onchange="getcity(this.value)"
                                                     required="required">
                                                     <option value="" hidden>Select State</option>
-                                                    {{-- @foreach ($states as $index => $value)
-
-                                                    <option value="{{ $index }}" slug="{{strtolower(str_slug($value))}}" @if (isset($loc[0]) && $loc[0] == $index) selected @endif>{!! $value !!}</option>
-                                                @endforeach --}}
+                                                    @foreach ($states as $index => $value)
+                                                        <option value="{{ $index }}"
+                                                            slug="{{ strtolower(Str::slug($value)) }}"
+                                                            @if (isset($loc[0]) && $loc[0] == $index) selected @endif>
+                                                            {{ $value }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -211,7 +219,7 @@
                                                 <select
                                                     class="form-control
                                           form-control-search-main-custom"
-                                                    id="headercity" name="city">
+                                                    id="headercity2" name="city">
                                                     <option value="" hidden>Select a City</option>
                                                 </select>
                                             </div>
@@ -225,15 +233,16 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            <a href="javascript:void(0)" onclick="locform.reset();">Clear All</a>
+                                            <a href="javascript:void(0)"
+                                                onclick="document.getElementById('locform').reset();">Clear All</a>
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div id="investment" class="tab-pane tab-pane-main fade">
-                        <form name="invform" class="form-horizontal" method="get"
+                    <div id="investment2" class="tab-pane tab-pane-main fade">
+                        <form name="invform" id="invform" class="form-horizontal" method="get"
                             action="{{ url('category/searchby') }}" onsubmit="return submitInvestment()">
                             <input type="hidden" name="invTab" value="1">
                             <div class="container-fluid">
@@ -267,7 +276,7 @@
                                                     class="form-control
                                           form-control-search-main-custom"
                                                     id="minAmount" required="required"
-                                                    onchange="selectMax(this.value)">
+                                                    onchange="selectMax1(this.value)">
                                                     <option value="" hidden>Select Min Investment</option>
                                                     @foreach (Config('constants.investRangeInWordsSingle') as $index => $value)
                                                         <option
@@ -289,8 +298,8 @@
                                                 <select name="max_cost"
                                                     class="form-control
                                           form-control-search-main-custom"
-                                                    id="maxAmount">
-                                                    <option value="" hidden> Select Max Investment </option>
+                                                    id="maxAmount1">
+                                                    <option value="0" hidden> Select Max Investment </option>
 
                                                 </select>
 
@@ -305,7 +314,7 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            <a href="javascript:void(0)" onclick="invform.reset();">Clear All</a>
+                                            <a href="javascript:void(0)" onclick="customResetForm()">Clear All</a>
                                         </span>
                                     </div>
                                 </div>
@@ -318,8 +327,14 @@
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
+<<<<<<< HEAD
     if (screen.width > 1) {
+=======
+    /*<![CDATA[*/
+    if (screen.width < 767) {
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
         $(document).ready(function() {
             setTimeout(function() {
                 $("#searchblk").slideUp(800);
@@ -363,15 +378,16 @@
         $('#registeractiveopen').addClass("active");
     });
 
-    function selectMax(selectmaxheaderval) {
+    function selectMax1(selectmaxheaderval) {
+        // console.log(selectmaxheaderval);
         let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
-        let maxAmount = $('#maxAmount');
+        let maxAmount = $('#maxAmount1');
         let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
         maxAmount.html("");
         selectmaxheaderval = parseInt(selectmaxheaderval);
         $.each(amountConfigArr, function(key, value) {
             if (key > selectmaxheaderval)
-                $('#maxAmount').append($("<option></option>").attr({
+                $('#maxAmount1').append($("<option></option>").attr({
                     "value": key,
                     "slug": getSlugAmount[key]['min']
                 }).text(value));
@@ -379,6 +395,16 @@
         if (selectmaxheaderval === 21)
             maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
     }
+
+    {{--  //code start by gp  --}}
+    document.addEventListener('DOMContentLoaded', function() {
+        var mainCategorySelect = document.getElementById('getMainCategoryDataHeader');
+        //console.log(mainCategorySelect);
+        if (mainCategorySelect.value) {
+            getSubCategoryHeader(mainCategorySelect.value);
+        }
+    });
+    {{--  //code end by gp  --}}
 
     function getSubCategoryHeader(value) {
         $.ajax({
@@ -388,7 +414,8 @@
                 categoryID: value
             },
             success: function(data) {
-                $("#getSubCategoryDataHeader").html(data);
+               console.log(data);
+                $("#getSubCategoryDataHeader2").html(data);
             }
         });
     }
@@ -401,7 +428,7 @@
                 subcategoryID: value
             },
             success: function(data) {
-                $("#getSubCatCategoryDataHeader").html(data);
+                $("#getSubCatCategoryDataHeader2").html(data);
             }
         });
     }
@@ -414,7 +441,7 @@
                 state: value
             },
             success: function(data) {
-                $("#headercity").html(data);
+                $("#headercity2").html(data);
             }
         });
     }
@@ -444,5 +471,21 @@
         $('.dropdown-toggle').click(function() {
             $('.searchoption').hide(400);
         });
+<<<<<<< HEAD
     }); 
 </script>
+=======
+    });
+    function customResetForm() {
+    let form = document.getElementById('invform');
+
+    // Reset the form
+    form.reset();
+
+    // Reset maxAmount1 select element to its default state
+    let maxAmount1 = document.getElementById('maxAmount1');
+    maxAmount1.innerHTML = '<option value="" hidden>Select Max Investment</option>';
+}
+    /*]]>*/
+</script>
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d

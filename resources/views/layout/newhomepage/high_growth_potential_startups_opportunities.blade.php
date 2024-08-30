@@ -28,7 +28,7 @@
                                 <div class="brand-main-section">
                                     <a href="https://www.businessex.com/startup/seeking-investment-for-adventure-and-tourism-market-place/lrgkm2"
                                         target="_blank"><img
-                                            src="https://media.businessex.com/business/pics/0415/574844992.jpg"
+                                            src="https://www.franchiseindia.com/images/bexhome/574844992.webp"
                                             class="img-responsive" alt=""></a>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                                 <div class="brand-main-section">
                                     <a href="https://www.businessex.com/startup/seeking-investor-for-high-class-sports-and-education-training-center/b0chev"
                                         target="_blank"><img
-                                            src="https://media.businessex.com/subCatImages/37/640_x_360/shutterstock_213333985.jpg"
+                                            src="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp"
                                             class="img-responsive" alt=""></a>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
                                 <div class="brand-main-section">
                                     <a href="https://www.businessex.com/startup/seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system/f3asef"
                                         target="_blank"> <img
-                                            src="https://media.businessex.com/business/pics/0818/928479563.jpg"
+                                            src="https://www.franchiseindia.com/images/bexhome/928479563.webp"
                                             class="img-responsive" alt=""></a>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                                 <div class="brand-main-section">
                                     <a href="https://www.businessex.com/startup/looking-for-an-investor-for-health-care-industry/sibsjr"
                                         target="_blank"><img
-                                            src="https://media.businessex.com/subCatImages/29/640_x_360/shutterstock_56187514.jpg"
+                                            src="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp"
                                             class="img-responsive" alt=""></a>
                                 </div>
                             </div>

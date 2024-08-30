@@ -3,37 +3,35 @@
     $TopInternationalOpportunities = [
         '0' => [
             'url' => 'https://www.franchiseindia.com/brands/pitman-training.88775',
-            'image' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/pitman-training_1.gif',
+            'image' => 'https://www.franchiseindia.com/images/top-international/pitman.webp',
             'category' => 'Other Online Education',
             'title' => 'Pitman Training',
-            'description' => 'Pitman Training is an extensive network of career training & professional development',
+            'description' => "World's oldest professional training academy with a rich legacy of 187 years offering unit & area franchise opportunities.",
             'bgcolor' => '0,78,153',
         ],
 
         '1' => [
             'url' => 'https://www.franchiseindia.com/brands/figaros-pizza.73238',
-            'image' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/figaros-pizza_1.jpg',
+            'image' => 'https://www.franchiseindia.com/images/top-international/figaros.webp',
             'category' => 'FINE DINE RESTAURANTS',
             'title' => "Figaro's Italian Pizza",
-            'description' => "Figaro's Pizza is an American multinational quick service restaurant",
+            'description' => "40+ year old multinational QSR pizza chai with already presence in Delhi, Mumbai, Hyderabad, Jallandhar, Indore & Jaipur.",
             'bgcolor' => '140,140,140',
         ],
         '2' => [
-            'url' => 'https://www.franchiseindia.com/brands/business-kids.77135',
-            'image' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/business-kids_3.png',
-            'category' => 'CAREER COUNSELING',
-            'title' => 'Business Kids/ Business Teens',
-            'description' =>
-                'BusinessKids is a program aimed at enterprising children, where they learn about entrepreneurship by playing, through private afternoon classes, summer courses and seminars',
+            'url' => 'https://www.franchiseindia.com/brands/easygym.95394',
+            'image' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/easygym_1.jpg',
+            'category' => 'Gyms And Fitness Centres',
+            'title' => 'Easygym',
+            'description' => 'Globally renowned fitness brand which is part of British conglomerate easyGroup from The UK & France',
             'bgcolor' => '140,140,140',
         ],
         '3' => [
-            'url' => 'https://www.franglobal.com/engage-and-grow/',
-            'image' =>
-                'https://www.franchiseindia.com/franchiseinternational/images/banners/homepage/engage_199x81.png',
-            'category' => 'Education',
-            'title' => 'Engage &amp; Grow',
-            'description' => 'Become A Certified Engage &amp; Grow Franchise in your Region &amp; Grow Your Business',
+            'url' => 'https://www.franchiseindia.com/brands/actioncoach.30037',
+            'image' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/actioncoach_1.jpg',
+            'category' => 'Service For SMEs',
+            'title' => 'ActionCOACH India',
+            'description' => 'ActionCOACH is a leading business coaching firm focussed on SMEs',
             'bgcolor' => '15,117,189',
         ],
     ];
