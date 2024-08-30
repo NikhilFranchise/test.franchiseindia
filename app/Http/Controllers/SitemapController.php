@@ -287,7 +287,7 @@ class SitemapController extends Controller
             //changes by GP 12-August-2024
 
 
-            $siteMapData = ""; 
+            $siteMapData = "";
             foreach ($subCategories as $key => $category) {
                 $siteMapData .= "<url>
                                 <loc>https://www.franchiseindia.com/business-opportunities/" . $category . ".sc" . $key . "</loc>
