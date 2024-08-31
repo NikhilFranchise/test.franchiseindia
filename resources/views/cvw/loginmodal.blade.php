@@ -59,9 +59,10 @@ aria-labelledby="exampleModalLabel">
                                         style="display:none">एडिट</span>
                                     <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
                                         style="display:none">ओटीपी भेजें</span>
-                                    <div style="display:none; color:red;" id="mismatch-mob">यह मोबाइल नंबर
+                                    </div>
+                                    <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">यह मोबाइल नंबर
                                         पंजीकृत नहीं है|</div>
-                                </div>
+                                
                                 <div class="input-group" id="password_group">
                                     <span class="input-group-addon">
                                         <div class="pwdsprite"></div>

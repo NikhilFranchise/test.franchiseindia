@@ -345,7 +345,7 @@
     </div>
 
 
-  @include('cvw.loginmodal')
+  
     
 <div class="modal fade lg-panel formsection in" id="expandFranchisenew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -383,23 +383,24 @@
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <div class="emailsprite"></div>
+                                       <img src="https://www.franchiseindia.com/images/email.png" alt="email">
                                     </span>
                                     <input type="text" name="emailfreeadvice" id="emailfreeadvice1" class="form-control blur" placeholder="Enter Email" required="">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <div class="usersprite"></div>
+                                        <img src="https://www.franchiseindia.com/images/mobile.png" alt="mobile">
                                     </span>
                                     <input type="text" class="form-control blur" maxlength="10" name="mobilefreeadvice1" id="mobilefreeadvice1" placeholder="Enter Mobile No" required="">
                                 </div>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><img src="https://www.franchiseindia.com/images/pincode.png" alt="pincode"></span>
+                                    <span class="input-group-addon">
+                                        <img src="https://www.franchiseindia.com/images/pincode.png" alt="pincode"></span>
                                     <input type="text" name="pincodefreeadvice1" id="pincodefreeadvice1" class="form-control blur" maxlength="6" placeholder="Enter Pincode">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon height80">
-                                        <div class="addreesssprite"></div>
+                                        <img src="https://www.franchiseindia.com/images/addreess.png" alt="address">
                                     </span>
                                     <textarea class="form-control height80 blur" name="detailsfreeadvice1" id="detailsfreeadvice1" placeholder="Enter Details"></textarea>
                                 </div>
@@ -435,11 +436,37 @@
 </div>
 
 
-    <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js" defer></script>
+
+
+<script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js" defer></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js" defer></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js" defer></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/swiper/js/swiper-bundle.min.js"></script>
+@include('cvw.loginmodal')
 <script>
+    if (window.screen.width < 600) {
+            document.addEventListener("DOMContentLoaded",function(){
+                var n=!1;window.addEventListener("scroll",function()
+                {100<window.scrollY&&function(){
+                    if(!n){var e=document.createElement("link");e.rel="stylesheet",e.href="cvw/stylemix.css",document.head.appendChild(e),n=!0,console.log("CSS file loaded.")}}()})});
+        }
+    
+        if (window.screen.width > 600) {
+            document.addEventListener("DOMContentLoaded",function(){
+                var n=!1;window.addEventListener("scroll",function()
+                {100<window.scrollY&&function(){
+                    if(!n){var e=document.createElement("link");e.rel="stylesheet",e.href="cvw/stylemix.css",document.head.appendChild(e),n=!0,console.log("CSS file loaded.")}}()})});
+        }
+        </script>
+    
+<script>
+    function frg_panel() {
+    $("#lg-pnl").hide(), $("#frg-pnl").show();
+}
+
+function lg_panel() {
+    $("#lg-pnl").show(), $("#loginactive").click(), $("#frg-pnl").hide();
+}
     $(document).ready(function() {
         $("#sidebar").mCustomScrollbar({
             theme: "minimal"
