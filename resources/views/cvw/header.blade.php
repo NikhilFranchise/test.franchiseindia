@@ -1039,8 +1039,8 @@
                                     <div class="form-group form-group-sm">
                                         <select class="form-control form-control-custom-main"  onchange="changelanguage(value)">
                                             <option hidden="">Language</option>
-                                            <option value="localhost:8000" >EN - English</option>
-                                            <option value="localhost:8000/hi" >HI - Hindi</option>
+                                            <option value="https://www.franchiseindia.com" >EN - English</option>
+                                            <option value="https://www.franchiseindia.com/hi" >HI - Hindi</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1103,16 +1103,12 @@
                                 </ul>
                             </div>
                             <div class="p-2 ml-auto">
-                                @php
-
-
-                                @endphp
                                 <div class="input-group input-group-custom"><span class="input-group-addon input-group-prepend-custom" id="basic-addon1"><img src="https://www.franchiseindia.com/newhomepage/assets/img/language-icon.svg" alt="language-icon" height="15" width="15"></span>
                                     <div class="form-group form-group-sm">
-                                        <select class="form-control form-control-custom-main" onchange="changelanguage(value)">
+                                        <select class="form-control form-control-custom-main" onchange="changelanguage(this.value)">
                                             <option hidden="">Language</option>
-                                            <option value="localhost:8000" >EN - English</option>
-                                            <option value="localhost:8000/hi" >HI - Hindi</option>
+                                            <option value="https://www.franchiseindia.com">EN - English</option>
+                                            <option value="https://www.franchiseindia.com/hi">HI - Hindi</option>
                                         </select>
                                     </div>
                                 </div>
