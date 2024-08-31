@@ -343,70 +343,98 @@
             </div>
         </div>
     </div>
-    <div class="modal fade lg-panel formsection in" id="login-pnl" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <div class="frgt-pwd" id="frg-pnl" style="display:none">
-                        <div class="ttl">Forgot Password</div>
-                        <div class="desc">Enter your email address associated with your Franchiseindia account and we'll send you a link to reset your password.</div>
-                        <div class="frm-pnl">
-                            <form class="form-horizontal" method="POST" action="https://www.franchiseindia.com/password/email">
-                                <div class="input-group"><span class="input-group-addon"><div class="usersprite"></div></span><input type="hidden" name="_token" value="99h71cGQGBzeEVUK02rQy5q5Yxm0vpYPxEcKy5VK" autocomplete="off"> <input id="email" type="email" class="form-control blur"
-                                        name="email" placeholder="Enter Email-Id" value="" required=""></div><button type="submit" class="btn btn-default btn-gry btn-prop">Reset Password</button><span class="pipe">|</span><a class="frg-link" href="#" onclick="lg_panel()">Login</a></form>
+
+
+  @include('cvw.loginmodal')
+    
+<div class="modal fade lg-panel formsection in" id="expandFranchisenew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <div class="frm-sec">
+                    <div id="askMsg" style="display:none;">
+                        <div class="green">
+                            Thank You for Submitting information for Free Advice!
                         </div>
                     </div>
-                    <div id="lg-pnl" style="display:block">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li id="loginactiveopen" class="active"><a href="#login" aria-controls="login" role="tab" data-toggle="tab" id="loginactive" aria-expanded="true">LOGIN</a></li>
-                            <li id="registeractiveopen" class=""><a href="#register" aria-controls="register" role="tab" data-toggle="tab" id="registeractive" aria-expanded="false">REGISTER</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="login">
-                                <form method="post" action="https://www.franchiseindia.com/loginform"><input type="hidden" name="_token" value="99h71cGQGBzeEVUK02rQy5q5Yxm0vpYPxEcKy5VK" autocomplete="off">
-                                    <div class="frm-pnl">
-                                        <div class="input-group"><span class="input-group-addon"><div class="usersprite"></div></span><input type="email" class="form-control blur" required="" name="email" placeholder="Enter Your User ID"></div>
-                                        <div class="input-group"><span class="input-group-addon"><div class="pwdsprite"></div></span><input type="password" required="" name="password" class="form-control blur" placeholder="Enter Your Password"></div><button type="submit" class="btn btn-default btn-gry btn-prop">SIGN IN</button>
-                                        <span
-                                            class="pipe">|</span><a class="frg-link" href="#" onclick="frg_panel()">Forgot Password</a></div>
-                                </form>
-                                <div class="popfi">
-                                    <div class="signpop"></div>
-                                    <div class="popleft"><span>or Sign in With</span>
-                                        <ul class="socl">
-                                            <li><a href="https://www.franchiseindia.com/auth/google"><img src="https://www.franchiseindia.com/newhomepage/assets/img/google.svg" alt="google" class=""></a></li>
-                                        </ul>
+                    <div class="frm-container" id="askForm">
+                        <form id="homepage" name="homepage" method="post">
+                            <input type="hidden" name="_token" value="KAOF7yzc65IokL4wHcVor6DXtd9wU1uIU8HXnzqW" autocomplete="off">                                <h2 class="ttl">Free Advice - Ask Our Experts</h2>
+                            <div id="errMsg1" style="display:none;">
+                                <font color="red"> Please Fill The form! </font>
+                            </div>
+                            <div class="frm-type">
+                                <div class="radio">
+                                    <label><input type="radio" name="optionsRadios1" id="optionsRadios3" checked="" value="franchisor"> Expand My Brand </label>
+                                </div>
+                                <div class="radio">
+                                    <label><input type="radio" name="optionsRadios1" id="optionsRadios1" value="investor"> Buy a Franchise</label>
+                                </div>
+
+                            </div>
+                            <div class="frm-input">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <div class="usersprite"></div>
+                                    </span>
+                                    <input type="text" class="form-control blur" name="namefreeadvice1" id="namefreeadvice1" placeholder="Enter Name" required="required">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <div class="emailsprite"></div>
+                                    </span>
+                                    <input type="text" name="emailfreeadvice" id="emailfreeadvice1" class="form-control blur" placeholder="Enter Email" required="">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <div class="usersprite"></div>
+                                    </span>
+                                    <input type="text" class="form-control blur" maxlength="10" name="mobilefreeadvice1" id="mobilefreeadvice1" placeholder="Enter Mobile No" required="">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><img src="https://www.franchiseindia.com/images/pincode.png" alt="pincode"></span>
+                                    <input type="text" name="pincodefreeadvice1" id="pincodefreeadvice1" class="form-control blur" maxlength="6" placeholder="Enter Pincode">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon height80">
+                                        <div class="addreesssprite"></div>
+                                    </span>
+                                    <textarea class="form-control height80 blur" name="detailsfreeadvice1" id="detailsfreeadvice1" placeholder="Enter Details"></textarea>
+                                </div>
+                                <div class="checkbox rm-prop">
+                                    <label>
+                                        <input type="checkbox" name="is_newsletterfreeadvice1" id="is_newsletterfreeadvice1" value="1" checked=""> Yes, i
+                                        want to subscribe for weekly Newsletter
+                                    </label>
+                                </div>
+                                <div class="checkbox rm-prop">
+                                    <label>
+                                        <input type="checkbox" name="is_termsagree1" id="is_termsagree1" value="1" checked="">
+                                        I agree to the <a href="https://www.franchiseindia.com/terms" target="_blank">Terms &amp; Conditions</a>
+                                    </label>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 txt-center" id="sub">
+                                        <input type="submit" id="btnhome1" class="btn btn-default btn-red" value="Ask Our Experts">
                                     </div>
-                                    <div class="popright">New User<a href="#" id="loginselect1">Click here</a></div>
+
                                 </div>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="register">
-                                <form class="form-horizontal" id="registration">
-                                    <div class="frm-pnl">
-                                        <div style="text-align:center">
-                                            <div><a href="https://www.franchiseindia.com/investor/create" class="btn btn-large btn-default btn-gry btn-prop">Start A Business Today<br><span>(Investor Registration)</span></a></div><br>
-                                            <div><a href="https://www.franchiseindia.com/franchisor/registration/step/1" class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel Partners<br><span>(Franchisor Registration)</span></a></div><br>
-                                            <div><a href="https://www.franchiseindia.com/franchisor/international-registration" class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel Partners<br><span>(International Franchisor Registration)</span></a></div><br>
-                                            <div><a target="_blank" href="https://www.franchiseindia.com/property-loan" class="btn btn- large btn-default btn-gry btn-prop">Loan Against Property</a></div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div class="popfi regspace">
-                                    <div class="signpop"></div>Registered User<a href="#" id="registerselect1">Login here</a></div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
+
                 </div>
-                <div class="modal-footer">
-                    <div class="footer-ttl">Why should I register?</div>
-                    <div class="footer-desc">
-                        <p>To get access to over 20000+ Franchise Business Opportunities.</p>
-                        <p>Network with the growing Business Community to get expert interventions to let you learn to Grow &amp; Expand your Business with Franchising.</p>
-                    </div>
-                </div>
+
+
             </div>
         </div>
     </div>
+</div>
+
+
     <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js" defer></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js" defer></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js" defer></script>
@@ -561,6 +589,14 @@ function getSubCategoryHeader1(value) {
             maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
     }
 
+    function changelanguage(url) {
+    console.log('Language change triggered');
+    if (url) { // require a URL
+        console.log('Redirecting to:', url);
+        window.location.href = url; // redirect
+    }
+    return false;
+}
 
 </script>
 <script type="text/javascript">

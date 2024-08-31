@@ -75,6 +75,9 @@ Route::get('optimize', function () {
     return 'Application optimized successfully.';
 });
 
+Route::get('http://127.0.0.1:8000/business-opportunities/robotics-and-technical-training.ssc91', function () {
+    return redirect('https://www.franchiseindia.com/aaa/business-opportunities/robotics-technical-training-coding-ai.ssc91', 301);
+});
 Route::get('content/{slug_and_id}', function ($slug_and_id) {
     // Check if the slug_and_id contains a dot or a dash and split accordingly
     if (strpos($slug_and_id, '.') !== false) {
@@ -777,6 +780,7 @@ Route::group(['prefix' => 'hi'], function () {
         Route::get('dealers-and-distributors.m5', function () {
             return redirect('https://dealer.franchiseindia.com/', 301);
         });
+       
         Route::get('/', function () {
             return view('category/category');
         });

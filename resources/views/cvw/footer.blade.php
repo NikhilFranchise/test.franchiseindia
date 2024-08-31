@@ -15,7 +15,7 @@
                     <li><a href="https://news.franchiseindia.com/">समाचार्</a></li>
                     <li><a href="https://www.franchiseindia.com/testimonials">प्रशंसापत्र</a></li>
                     <li><a href="https://www.franchiseindia.com/terms">शर्तें</a></li>
-                    <li><a href="https://www.franchiseindia.com/sitemap">साइटमैप</a></li>
+                    {{-- <li><a href="https://www.franchiseindia.com/sitemap">साइटमैप</a></li> --}}
                 </ul>
             </div>
         </div>
@@ -48,7 +48,7 @@
                     <li><a href="https://opportunityindia.com" target="_blank">News</a></li>
                     <li><a href="https://www.franchiseindia.com/testimonials" target="_blank">Testimonials</a></li>
                     <li><a href="https://www.franchiseindia.com/terms" target="_blank">Terms</a></li>
-                    <li><a href="https://www.franchiseindia.com/sitemap" target="_blank">Sitemap</a></li>
+                    {{-- <li><a href="https://www.franchiseindia.com/sitemap" target="_blank">Sitemap</a></li> --}}
                 </ul>
             </div>
         </div>
