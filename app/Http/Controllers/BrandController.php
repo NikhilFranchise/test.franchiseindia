@@ -340,6 +340,7 @@ class BrandController extends Controller
         // Initialize the variables
         $click = 0;
         $ratings = 0;
+        $averageRating = 0;
 
         // Fetch the variables
         $franchisorId = $request->fid;
@@ -347,22 +348,24 @@ class BrandController extends Controller
 
         // Query the database
         $LikeRateData = FranchisorLike::query()->where('franchisor_id', $franchisorId)->first();
+        $LikeRateDatacount = FranchisorLike::query()->where('franchisor_id', $franchisorId)->count();
 
         // If record count is 0, create new record
-        if ($LikeRateData->count() == 0)
+        if ($LikeRateData == null)
             FranchisorLike::query()->insert(['franchisor_id' => $franchisorId]);
 
-        if ($LikeRateData->count() == 1) {
+        if ($LikeRateDatacount == 1) {
             $click = $LikeRateData->bclick;
             $ratings = $LikeRateData->brate;
         }
 
-
+        // dd($ratings,$click);
         if (!empty(Cookie::get('franRate' . $franchisorId)))
-            return response()->json(array('ratings' => $ratings / $click), 200);
+        $averageRating = ($click > 0) ? round($ratings / $click, 1) : 0;
+        return response()->json(['ratings' => $averageRating], 200);
 
         // Increment the click by 1
-        $updatedClick = ++$click;
+        $updatedClick = $click + 1;
 
         // Add the ratings val to the existing value
         $newRatings = $ratings + $rate;
