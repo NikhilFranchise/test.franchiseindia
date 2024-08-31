@@ -5,7 +5,7 @@
         <label for="compare{{ $loop->index }}"><span></span></label>
     </div>
 
-    <div class="padfb15"> 
+    <div class="padfb15">
         <a href="{{ $brandUrl }}" target="_blank">
             <div class="catimgmobile">
                 <img src="{{ $brandImagepath }}" alt="{{ $brandResult->company_name }}" />
@@ -19,7 +19,7 @@
             <i class="fa fa-check"></i> Verified
         </div>
         @endif
-            </div> 
+            </div>
         {{-- @dd($brandResult->verified); --}}
         <style>
             .brand-verify{    display: inline-block;
@@ -36,7 +36,7 @@
 
         <div class="catlist">
             <a href="{{ $brandUrl }}" id="brandnamecategory{{ $brandResult->franchisor_id }}" target="_blank">
-                {{ $brandResult->company_name }} 
+                {{ $brandResult->company_name }}
             </a>
         </div>
 
@@ -64,19 +64,6 @@
                 </div>
             @endif
 
-            {{--  @if ($brandResult->franchisorLocState !== null && $brandResult->franchisorLocState->count() > 0)
-                <div class="subcat">
-                    <div>Locations looking for expansion</div>
-                    @php $uniqueStates = $brandResult->franchisorLocState->unique()->values()->all(); @endphp
-                    @foreach ($uniqueStates->take(3) as $state)
-                        {{ $state->state . ', ' }}
-                    @endforeach
-
-                    @if ($uniqueStates->count() > 3)
-                        .... + {{ $uniqueStates->count() - 3 }} more
-                    @endif
-                </div>
-            @endif  --}}
             @if ($brandResult->franchisorLocState !== null && $brandResult->franchisorLocState->count() > 0)
                 <div class="subcat">
                     <div>Locations looking for expansion</div>
@@ -185,16 +172,29 @@
     </div>
     <div class="catbottp">
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="col-xs-4 col-sm-4 col-md-4 bd"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
-                @if ($likes != 0)
+            <div class="like-action_{{ $i }} col-xs-4 col-sm-4 col-md-4 bd" style="cursor: pointer;">
+                <a onclick ="likebtn('{{ $brandResult->franchisor_id }}',this.id);"
+                    class="like" id="likeButton_{{ $i }}">
+                    <i class="fa fa-thumbs-up fa-lg" aria-hidden="true" id="like"></i></a>
+                {{--  <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>  --}}
+                <span id="likecount_{{ $i }}">@if ($likes != 0)
                     {{ $likes }}
-                @endif
+                @endif</span>
+
             </div>
-            <div class="col-xs-4 col-sm-4 col-md-4 bd"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i></div>
-            <div class="col-xs-4 col-sm-4 col-md-4 bd"><i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>
-                @if ($rate != 0)
-                    {{ $rate }}
-                @endif
+            <div class="col-xs-4 col-sm-4 col-md-4 bd">
+                {{--  <i class="fa fa-share-alt fa-lg" aria-hidden="true"></i>  --}}
+                <a data-toggle="modal" data-target="#mysocial" id="seo_shareButton_{{ $i }}" data-url="{{ $brandUrl }}"><i
+                    class="fa fa-share-alt fa-lg" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 bd">
+                {{--  <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>  --}}
+                <a data-toggle="modal" onclick="ratebtn()"  id="rateButton"><i
+                    class="fa fa-star-half-o fa-lg" aria-hidden="true"></i></a>
+                    <span><strong id="rating">@if ($rate != 0)
+                        {{ $rate }}
+                    @endif</strong></span>
+
             </div>
         </div>
     </div>
