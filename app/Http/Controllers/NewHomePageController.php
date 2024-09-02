@@ -298,9 +298,9 @@ class NewHomePageController extends Controller
 
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
-		// return view('cvw.homepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc'));
+		return view('cvw.homepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc'));
 
-		return view('layout.masternewhomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
+		// return view('layout.masternewhomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
 	}
 
 
