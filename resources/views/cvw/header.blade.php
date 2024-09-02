@@ -1622,8 +1622,8 @@
                                             <select class="form-control form-control-custom-main"
                                                 onchange="changelanguage(value)">
                                                 {{-- <option hidden="">Language</option> --}}
-                                                <option value="http://localhost:8000">EN - English</option>
-                                                <option value="http://localhost:8000/hi" selected>HI - Hindi</option>
+                                                <option value="{{ Config('constants.MainDomain') }}">EN - English</option>
+                                                <option value="{{ Config('constants.MainDomain') }}/hi" selected>HI - Hindi</option>
                                             </select>
                                         </div>
                                     </div>
