@@ -75,8 +75,8 @@ Route::get('optimize', function () {
     return 'Application optimized successfully.';
 });
 
-Route::get('http://127.0.0.1:8000/business-opportunities/robotics-and-technical-training.ssc91', function () {
-    return redirect('https://www.franchiseindia.com/aaa/business-opportunities/robotics-technical-training-coding-ai.ssc91', 301);
+Route::get('https://www.franchiseindia.com/business-opportunities/robotics-and-technical-training.ssc91', function () {
+    return redirect('https://www.franchiseindia.com/business-opportunities/robotics-technical-training-coding-ai.ssc91', 301);
 });
 Route::get('content/{slug_and_id}', function ($slug_and_id) {
     // Check if the slug_and_id contains a dot or a dash and split accordingly
@@ -1074,7 +1074,3 @@ Route::get('reload-captcha-contact', [ContactUsController::class, 'reloadCaptcha
 Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('form.submit');
 Route::get('/brand-total-count',[CommonController::class,'brand_total_count']);
 
-
-// new homepage for cvw routes nikhil raman 26 aug 2024
-Route::get('/cvwhome', [cvwhomepage::class,'first']);
-Route::get('/cvwhome/hi', [cvwhomepage::class,'hindifirst']);
