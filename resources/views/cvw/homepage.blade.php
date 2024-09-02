@@ -360,8 +360,9 @@
                         </div>
                     </div>
                     <div class="frm-container" id="askForm">
-                        <form id="homepage" name="homepage" method="post">
-                            <input type="hidden" name="_token" value="KAOF7yzc65IokL4wHcVor6DXtd9wU1uIU8HXnzqW" autocomplete="off">                                <h2 class="ttl">Free Advice - Ask Our Experts</h2>
+                        <form id="homepagenew" name="homepage" method="post" action="{{ route('form.submithome') }}">
+                            @csrf
+                                       <h2 class="ttl">Free Advice - Ask Our Experts</h2>
                             <div id="errMsg1" style="display:none;">
                                 <font color="red"> Please Fill The form! </font>
                             </div>
@@ -370,7 +371,7 @@
                                     <label><input type="radio" name="optionsRadios1" id="optionsRadios3" checked="" value="franchisor"> Expand My Brand </label>
                                 </div>
                                 <div class="radio">
-                                    <label><input type="radio" name="optionsRadios1" id="optionsRadios1" value="investor"> Buy a Franchise</label>
+                                    <label><input type="radio" name="optionsRadios1" id="optionsRadios1" value="investor">Buy a Franchise</label>
                                 </div>
 
                             </div>
@@ -385,7 +386,7 @@
                                     <span class="input-group-addon">
                                        <img src="https://www.franchiseindia.com/images/email.png" alt="email">
                                     </span>
-                                    <input type="text" name="emailfreeadvice" id="emailfreeadvice1" class="form-control blur" placeholder="Enter Email" required="">
+                                    <input type="text" name="emailfreeadvice1" id="emailfreeadvice1" class="form-control blur" placeholder="Enter Email" required="">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon">
@@ -624,6 +625,57 @@ function getSubCategoryHeader1(value) {
     }
     return false;
 }
+
+$(document).ready(function() {
+    $('#homepagenew').on('submit', function(e) {
+        // console.log('tres');
+        e.preventDefault(); // Prevent the default form submission
+
+        // Get form data
+        var formData = $(this).serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: formData,
+            success: function(response) {
+                $('#response').html('<p>Form submitted successfully!</p>');
+                window.location = "/thanks-advice-form";
+
+                // Clear previous error messages and placeholders
+                $('.error-message').text('');
+                // $('input').attr('placeholder', '');
+            },
+            error: function(xhr) {
+                // Clear previous error messages and placeholders
+                $('.error-message').text('');
+                // $('input').attr('placeholder', '');
+
+                var errors = xhr.responseJSON.errors;
+
+                $.each(errors, function(key, errorMessages) {
+                    // Check if the error message is for captcha and replace it with a custom message
+                    if (key === 'captcha' && errorMessages[0] === 'validation.captcha') {
+                        var customMessage = 'Invalid captcha value.';
+                        $('#' + key + '-error').text(customMessage);
+                        // $('#' + key).attr('placeholder', customMessage);
+                    } else {
+                        // Use the error messages provided by the server response
+                        var errorMessage = errorMessages[0];
+                        $('#' + key + '-error').text(errorMessage);
+                        // $('#' + key).attr('placeholder', errorMessage);
+                    }
+                });
+
+                // Optionally, handle global errors
+                if (xhr.responseJSON.message) {
+                    $('#response').html('<p>' + xhr.responseJSON.message + '</p>');
+                }
+            }
+        });
+    });
+});
+
 
 </script>
 <script type="text/javascript">

@@ -1074,3 +1074,4 @@ Route::get('reload-captcha-contact', [ContactUsController::class, 'reloadCaptcha
 Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('form.submit');
 Route::get('/brand-total-count',[CommonController::class,'brand_total_count']);
 
+Route::post('/submit-form1', [AdviceController::class, 'freeadviceHome_popup'])->name('form.submithome');
