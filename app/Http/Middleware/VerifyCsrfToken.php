@@ -26,7 +26,7 @@ class VerifyCsrfToken extends Middleware
         'franchisor-feedback',
         'reload-captcha',
         'getfreeinfo',
-        'loginform'
+        // 'loginform'
 
       
         
