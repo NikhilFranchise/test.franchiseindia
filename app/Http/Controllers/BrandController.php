@@ -339,7 +339,7 @@ class BrandController extends Controller
         $likeRecord = FranchisorLike::query()
             ->where('franchisor_id', $franchisorId)
             ->first();
-            // Check if the like record exists
+        // Check if the like record exists
 
         if ($likeRecord) {
             // If the user has already liked this franchisor, check the cookie
@@ -433,9 +433,12 @@ class BrandController extends Controller
     $LikeRateData = FranchisorLike::query()->where('franchisor_id', $franchisorId)->first();
 
     if ($LikeRateData) {
-        // Update existing record
-        $updatedClick = $LikeRateData->bclick + 1;
-        $newRatings = $LikeRateData->brate + $rate;
+        // Check if brate or bclick are null or 0, then set to 1
+        $currentClick = $LikeRateData->bclick ?? 0;
+        $currentRatings = $LikeRateData->brate ?? 0;
+
+        $updatedClick = $currentClick + 1;
+        $newRatings = $currentRatings + $rate;
         $averageRating = round($newRatings / $updatedClick, 1);
 
         FranchisorLike::query()->where('franchisor_id', $franchisorId)
@@ -459,6 +462,7 @@ class BrandController extends Controller
     // Return the average rating as JSON response
     return response()->json(['ratings' => $averageRating], 200);
 }
+
 
 
     /**
