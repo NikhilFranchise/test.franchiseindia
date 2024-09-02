@@ -240,27 +240,27 @@ class AdviceController extends Controller
         return response()->json(['captcha'=> captcha_img()]);
     }
 
-    public function freeadviceHome_popup()
+    public function freeadviceHome_popup(Request $request)
     {
-        dd($request->all()); 
+        // dd($request->all()); 
           $request->validate([
-            'namefreeadvice' => 'required',
-            'emailfreeadvice' => 'required|email',
-            'mobilefreeadvice' => 'required',
+            'namefreeadvice1' => 'required',
+            'emailfreeadvice1' => 'required|email',
+            'mobilefreeadvice1' => 'required',
             // 'captcha' => 'required|captcha',
-            'pincodefreeadvice' => 'required',
-            'detailsfreeadvice' => 'required',
-            'is_newsletterfreeadvice' => 'required',
+            'pincodefreeadvice1' => 'required',
+            'detailsfreeadvice1' => 'required',
+            'is_newsletterfreeadvice1' => 'required',
 
         ]);
 
         $user = $request->optionsRadios;
-        $name = $request->name ?? $request->namefreeadvice;
-        $email = $request->email ?? $request->emailfreeadvice;
-        $mobile = $request->mobile ?? $request->mobilefreeadvice;
-        $pincode = $request->pincode ?? $request->pincodefreeadvice;
-        $details = $request->details ?? $request->detailsfreeadvice;
-        $newsLetter = $request->is_newsletter ?? $request->is_newsletterfreeadvice;
+        $name = $request->name ?? $request->namefreeadvice1;
+        $email = $request->email ?? $request->emailfreeadvice1;
+        $mobile = $request->mobile ?? $request->mobilefreeadvice1;
+        $pincode = $request->pincode ?? $request->pincodefreeadvice1;
+        $details = $request->details ?? $request->detailsfreeadvice1;
+        $newsLetter = $request->is_newsletter ?? $request->is_newsletterfreeadvice1;
         $city = "";
         $state = "";
         $ip = $request->ip();
@@ -290,7 +290,7 @@ class AdviceController extends Controller
         if (!$users)
             return response()->json('Insertion failed..!');
 
-        // Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
+        Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
 
         if ($newsLetter == 1)
             NewsLetterController::createNewsLetter($request->input('email'), "fi");

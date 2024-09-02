@@ -386,7 +386,7 @@
                                     <span class="input-group-addon">
                                        <img src="https://www.franchiseindia.com/images/email.png" alt="email">
                                     </span>
-                                    <input type="text" name="emailfreeadvice" id="emailfreeadvice1" class="form-control blur" placeholder="Enter Email" required="">
+                                    <input type="text" name="emailfreeadvice1" id="emailfreeadvice1" class="form-control blur" placeholder="Enter Email" required="">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon">
