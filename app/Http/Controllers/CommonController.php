@@ -981,33 +981,45 @@ class CommonController extends Controller
         return strtolower($content_title1);
         //return str_replace('\'', '', $title);
     }
- 
-public function brand_total_count()
-{
-    $date = Carbon::now();
-    $formattedDate = $date->format('Y-m-d'); // Updated to 'Y-m-d' for consistency
 
-    // Fetch the count of unique visits grouped by franchisor_id
-    $brand_count = UniqueVisit::select('franchisor_id', DB::raw('COUNT(*) AS visit_count'))
-        ->groupBy('franchisor_id')
-        ->whereDate('date', $formattedDate) // Ensures comparison with date only
-        ->get();
 
-    // Prepare data for bulk insertion
-    $dataToInsert = $brand_count->map(function ($item) use ($formattedDate) {
-        return [
-            'franchisor_id' => $item->franchisor_id,
-            'total' => $item->visit_count,
-            'record_date' => $formattedDate
-        ];
-    })->toArray();
-
-    // Insert data into the franchisor_visits table
-    FranchisorVisitCount::insert($dataToInsert);
-
-    // Confirm successful insertion
-    dd('Data inserted successfully.');
-}
-
+    public function brand_total_count()
+    {
+        $date = Carbon::now();
+        $formattedDate = $date->format('Y-m-d'); // Use 'Y-m-d' format for consistency
+    
+        // Get the count of visits by franchisor for the current date
+        $brand_count = UniqueVisit::select('franchisor_id', DB::raw('COUNT(*) AS visit_count'))
+            ->groupBy('franchisor_id')
+            ->whereDate('date', $formattedDate)
+            ->get();
+    
+        // Aggregate visit counts
+        foreach ($brand_count as $item) {
+            $franchisorId = $item->franchisor_id;
+            $visitCount = $item->visit_count;
+    
+            // Check if there is already a record for this franchisor_id and record_date
+            $existingRecord = FranchisorVisitCount::where('franchisor_id', $franchisorId)
+                ->where('record_date', $formattedDate)
+                ->first();
+    
+            if ($existingRecord) {
+                // Update the existing record with the new count
+                $existingRecord->total += $visitCount; // Add new count to the existing total
+                $existingRecord->save();
+            } else {
+                // Insert a new record if it does not exist
+                FranchisorVisitCount::create([
+                    'franchisor_id' => $franchisorId,
+                    'total' => $visitCount,
+                    'record_date' => $formattedDate
+                ]);
+            }
+        }
+    
+        // Optional: log success message or handle additional actions
+        \Log::info('Brand visit counts updated successfully for date: ' . $formattedDate);
+    }
 
 }
