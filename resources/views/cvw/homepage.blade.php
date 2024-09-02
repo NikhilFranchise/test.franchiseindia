@@ -69,110 +69,7 @@
              $mangecls = 'wiei';
          }
      @endphp
-     <div id="myModal" class="modal fade in" aria-hidden="true" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <div class="modal-body">
-                <div id="my_modal" class="model_top" style="width:600px">
-                    <div class="headtag">
-                    </div>
-                    <div class="fi-bg-expo">
-                        <div class="boxblk">
-        <form class="form registration-form align-center" action="https://www.franchiseindia.net/fro/ahmedabad/register_update.php" method="post">
-         <input id="ref" name="ref" type="hidden" value="FRO-Insta-Paid">
-         <input type="hidden" value="Ahmedabad September 2024" name="event_year" id="event_year">  
-         <input type="hidden" value="FRO 2024 Ahmedabad" name="event_title" id="event_title">  
-         <input type="hidden" value="Ahmedabad" name="event_city" id="event_city">       
-         <input id="src" name="source" type="hidden" value="Popup">
-         <input id="tfw_interest" name="tfw_interest" type="hidden" value="Visit the Expo - LP Paid">    
 
-                       <div class="sec">
-                                    <div class="f1">
-<input name="txtName" type="text" class="form-control myselect" placeholder="Name" required="" style="color:#ffffff;">
-                                    </div>
-                                    <div class="f3">
-                                        <input name="txtEmail" type="email" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" class="form-control myselect" placeholder="Email" required="">
-                                    </div>
-                                </div>
-
-                                <div class="sec">
-                                    <div class="f1">
-                                        <input name="txtPhone" type="tel" placeholder="Contact No." class="form-control myselect" pattern="[789][0-9]{9}" minlength="10" maxlength="10" onkeypress="return isNumber(event)" required="">
-                                    </div>
-                                    <div class="f3">
-                                   
-                                        <select name="txtState" onchange="getcitypopup(this)" class="form-control myselect" id="txtState" required="">
-                                              <!-- <option value="new delhi">new delhi</option> -->
-                                            <option value="" data-id="">Select State</option>
-                                                                                            <option value="Andaman and Nicobar" data-id="35">Andaman and Nicobar</option>
-                                                                                            <option value="Andhra Pradesh" data-id="1">Andhra Pradesh</option>
-                                                                                            <option value="Arunachal Pradesh" data-id="2">Arunachal Pradesh</option>
-                                                                                            <option value="Assam" data-id="3">Assam</option>
-                                                                                            <option value="Bihar" data-id="4">Bihar</option>
-                                                                                            <option value="Chandigarh" data-id="5">Chandigarh</option>
-                                                                                            <option value="Chhattisgarh" data-id="6">Chhattisgarh</option>
-                                                                                            <option value="Daman and Diu" data-id="7">Daman and Diu</option>
-                                                                                            <option value="Delhi" data-id="23">Delhi</option>
-                                                                                            <option value="Goa" data-id="8">Goa</option>
-                                                                                            <option value="Gujarat" data-id="9">Gujarat</option>
-                                                                                            <option value="Haryana" data-id="10">Haryana</option>
-                                                                                            <option value="Himachal Pradesh" data-id="11">Himachal Pradesh</option>
-                                                                                            <option value="Jammu and Kashmir" data-id="12">Jammu and Kashmir</option>
-                                                                                            <option value="Jharkhand" data-id="13">Jharkhand</option>
-                                                                                            <option value="Karnataka" data-id="14">Karnataka</option>
-                                                                                            <option value="Kerala" data-id="15">Kerala</option>
-                                                                                            <option value="Lakshadweep" data-id="16">Lakshadweep</option>
-                                                                                            <option value="Madhya Pradesh" data-id="17">Madhya Pradesh</option>
-                                                                                            <option value="Maharashtra" data-id="18">Maharashtra</option>
-                                                                                            <option value="Manipur" data-id="19">Manipur</option>
-                                                                                            <option value="Meghalaya" data-id="20">Meghalaya</option>
-                                                                                            <option value="Mizoram" data-id="21">Mizoram</option>
-                                                                                            <option value="Nagaland" data-id="22">Nagaland</option>
-                                                                                            <option value="Odisha" data-id="24">Odisha</option>
-                                                                                            <option value="Pondicherry" data-id="25">Pondicherry</option>
-                                                                                            <option value="Punjab" data-id="26">Punjab</option>
-                                                                                            <option value="Rajasthan" data-id="27">Rajasthan</option>
-                                                                                            <option value="Sikkim" data-id="28">Sikkim</option>
-                                                                                            <option value="Tamil Nadu" data-id="29">Tamil Nadu</option>
-                                                                                            <option value="Telangana" data-id="34">Telangana</option>
-                                                                                            <option value="Tripura" data-id="30">Tripura</option>
-                                                                                            <option value="Uttar Pradesh" data-id="32">Uttar Pradesh</option>
-                                                                                            <option value="Uttarakhand" data-id="31">Uttarakhand</option>
-                                                                                            <option value="West Bengal" data-id="33">West Bengal</option>
-                                             
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="sec">
-                                    <div class="f1">
-                                         <select name="txtCity" class="form-control myselect" id="popupcity" required="">
-                                            <option value="">Select City</option>
-                                            <!-- <option value="delhi">delhi</option> -->
-                                        </select>
-                                    </div>
-                                    <div class="f3">
-                  <select type="text" placeholder="Select event date" id="eventdays" name="eventdays" class="form-control myselectclass3" accesskey="" onchange="checkNumbers();">
-                     <option value="Saturday21stSeptember" selected="selected">Saturday, 21st September</option>
-                            <option value="Sunday22ndSeptember">Sunday, 22nd September</option>
-                            <option value="Bothdays2122September">Bothdays, 21st-22nd September</option>
-                  </select>
-                                    </div>
-                                </div>
-
-                            <div class="sec" style="text-align:center">
-                                    <input type="submit" value="Register To Attend" name="btnSubmitReg" class="expo-submitnew">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-               
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal modal-cust fade in" id="search-main" tabindex="-1" aria-labelledby="search-mainLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-cust">
@@ -426,71 +323,99 @@
             </div>
         </div>
     </div>
-    <div class="modal fade lg-panel formsection in" id="login-pnl" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <div class="frgt-pwd" id="frg-pnl" style="display:none">
-                        <div class="ttl">Forgot Password</div>
-                        <div class="desc">Enter your email address associated with your Franchiseindia account and we'll send you a link to reset your password.</div>
-                        <div class="frm-pnl">
-                            <form class="form-horizontal" method="POST" action="https://www.franchiseindia.com/password/email">
-                                <div class="input-group"><span class="input-group-addon"><div class="usersprite"></div></span><input type="hidden" name="_token" value="99h71cGQGBzeEVUK02rQy5q5Yxm0vpYPxEcKy5VK" autocomplete="off"> <input id="email" type="email" class="form-control blur"
-                                        name="email" placeholder="Enter Email-Id" value="" required=""></div><button type="submit" class="btn btn-default btn-gry btn-prop">Reset Password</button><span class="pipe">|</span><a class="frg-link" href="#" onclick="lg_panel()">Login</a></form>
+
+
+  @include('cvw.loginmodal')
+    
+<div class="modal fade lg-panel formsection in" id="expandFranchisenew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                </button>
+                <div class="frm-sec">
+                    <div id="askMsg" style="display:none;">
+                        <div class="green">
+                            Thank You for Submitting information for Free Advice!
                         </div>
                     </div>
-                    <div id="lg-pnl" style="display:block">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li id="loginactiveopen" class="active"><a href="#login" aria-controls="login" role="tab" data-toggle="tab" id="loginactive" aria-expanded="true">LOGIN</a></li>
-                            <li id="registeractiveopen" class=""><a href="#register" aria-controls="register" role="tab" data-toggle="tab" id="registeractive" aria-expanded="false">REGISTER</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="login">
-                                <form method="post" action="https://www.franchiseindia.com/loginform"><input type="hidden" name="_token" value="99h71cGQGBzeEVUK02rQy5q5Yxm0vpYPxEcKy5VK" autocomplete="off">
-                                    <div class="frm-pnl">
-                                        <div class="input-group"><span class="input-group-addon"><div class="usersprite"></div></span><input type="email" class="form-control blur" required="" name="email" placeholder="Enter Your User ID"></div>
-                                        <div class="input-group"><span class="input-group-addon"><div class="pwdsprite"></div></span><input type="password" required="" name="password" class="form-control blur" placeholder="Enter Your Password"></div><button type="submit" class="btn btn-default btn-gry btn-prop">SIGN IN</button>
-                                        <span
-                                            class="pipe">|</span><a class="frg-link" href="#" onclick="frg_panel()">Forgot Password</a></div>
-                                </form>
-                                <div class="popfi">
-                                    <div class="signpop"></div>
-                                    <div class="popleft"><span>or Sign in With</span>
-                                        <ul class="socl">
-                                            <li><a href="https://www.franchiseindia.com/auth/google"><img src="https://www.franchiseindia.com/newhomepage/assets/img/google.svg" alt="google" class=""></a></li>
-                                        </ul>
+                    <div class="frm-container" id="askForm">
+                        <form id="homepage" name="homepage" method="post">
+                            <input type="hidden" name="_token" value="KAOF7yzc65IokL4wHcVor6DXtd9wU1uIU8HXnzqW" autocomplete="off">                                <h2 class="ttl">Free Advice - Ask Our Experts</h2>
+                            <div id="errMsg1" style="display:none;">
+                                <font color="red"> Please Fill The form! </font>
+                            </div>
+                            <div class="frm-type">
+                                <div class="radio">
+                                    <label><input type="radio" name="optionsRadios1" id="optionsRadios3" checked="" value="franchisor"> Expand My Brand </label>
+                                </div>
+                                <div class="radio">
+                                    <label><input type="radio" name="optionsRadios1" id="optionsRadios1" value="investor"> Buy a Franchise</label>
+                                </div>
+
+                            </div>
+                            <div class="frm-input">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <div class="usersprite"></div>
+                                    </span>
+                                    <input type="text" class="form-control blur" name="namefreeadvice1" id="namefreeadvice1" placeholder="Enter Name" required="required">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <div class="emailsprite"></div>
+                                    </span>
+                                    <input type="text" name="emailfreeadvice" id="emailfreeadvice1" class="form-control blur" placeholder="Enter Email" required="">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <div class="usersprite"></div>
+                                    </span>
+                                    <input type="text" class="form-control blur" maxlength="10" name="mobilefreeadvice1" id="mobilefreeadvice1" placeholder="Enter Mobile No" required="">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><img src="https://www.franchiseindia.com/images/pincode.png" alt="pincode"></span>
+                                    <input type="text" name="pincodefreeadvice1" id="pincodefreeadvice1" class="form-control blur" maxlength="6" placeholder="Enter Pincode">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon height80">
+                                        <div class="addreesssprite"></div>
+                                    </span>
+                                    <textarea class="form-control height80 blur" name="detailsfreeadvice1" id="detailsfreeadvice1" placeholder="Enter Details"></textarea>
+                                </div>
+                                <div class="checkbox rm-prop">
+                                    <label>
+                                        <input type="checkbox" name="is_newsletterfreeadvice1" id="is_newsletterfreeadvice1" value="1" checked=""> Yes, i
+                                        want to subscribe for weekly Newsletter
+                                    </label>
+                                </div>
+                                <div class="checkbox rm-prop">
+                                    <label>
+                                        <input type="checkbox" name="is_termsagree1" id="is_termsagree1" value="1" checked="">
+                                        I agree to the <a href="https://www.franchiseindia.com/terms" target="_blank">Terms &amp; Conditions</a>
+                                    </label>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 txt-center" id="sub">
+                                        <input type="submit" id="btnhome1" class="btn btn-default btn-red" value="Ask Our Experts">
                                     </div>
-                                    <div class="popright">New User<a href="#" id="loginselect1">Click here</a></div>
+
                                 </div>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="register">
-                                <form class="form-horizontal" id="registration">
-                                    <div class="frm-pnl">
-                                        <div style="text-align:center">
-                                            <div><a href="https://www.franchiseindia.com/investor/create" class="btn btn-large btn-default btn-gry btn-prop">Start A Business Today<br><span>(Investor Registration)</span></a></div><br>
-                                            <div><a href="https://www.franchiseindia.com/franchisor/registration/step/1" class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel Partners<br><span>(Franchisor Registration)</span></a></div><br>
-                                            <div><a href="https://www.franchiseindia.com/franchisor/international-registration" class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel Partners<br><span>(International Franchisor Registration)</span></a></div><br>
-                                            <div><a target="_blank" href="https://www.franchiseindia.com/property-loan" class="btn btn- large btn-default btn-gry btn-prop">Loan Against Property</a></div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div class="popfi regspace">
-                                    <div class="signpop"></div>Registered User<a href="#" id="registerselect1">Login here</a></div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
+
                 </div>
-                <div class="modal-footer">
-                    <div class="footer-ttl">Why should I register?</div>
-                    <div class="footer-desc">
-                        <p>To get access to over 20000+ Franchise Business Opportunities.</p>
-                        <p>Network with the growing Business Community to get expert interventions to let you learn to Grow &amp; Expand your Business with Franchising.</p>
-                    </div>
-                </div>
+
+
             </div>
         </div>
     </div>
-    <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js" defer></script>
+</div>
+
+
+    <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js" defer></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/swiper/js/swiper-bundle.min.js"></script>
@@ -504,6 +429,8 @@
             $("#sidebar").addClass("active"), $(".overlay").addClass("active"), $(".collapse.in").toggleClass("in"), $("a[aria-expanded=true]").attr("aria-expanded", "false")
         })
     });
+    </script>
+    <script>
 function getSubCategoryHeader12(value) {
         // console.log('i am called');
         $.ajax({
@@ -633,6 +560,22 @@ function selectMax1(selectmaxheaderval) {
         if (selectmaxheaderval === 21)
             maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
     }
+<<<<<<< HEAD
+=======
+
+    $(function() {
+            // bind change event to select
+            $('#language-changer').on('change', function() {
+                var url = $(this).val(); // get selected value
+                if (url) { // require a URL
+                    window.location = url; // redirect
+                }
+                return false;
+            });
+        });
+
+
+>>>>>>> bf8cf56c4b66a15f282a3cd119cb255ee1948ef8
 </script>
 <script type="text/javascript">
     if (screen.width > 1) {
@@ -704,6 +647,12 @@ $(document).ready(function() {
             $('.searchoption').hide(400);
         });
     });
+</script>
+<script language="javascript">
+
+    function isNumber(evt){evt=(evt)?evt:window.event;var charCode=(evt.which)?evt.which:evt.keyCode;return !(charCode > 31 && (charCode < 48 || charCode > 57));
+        }
+    function getcitypopup(value){value=$(value).find(':selected').attr('data-id');$.ajax({type:'GET',url:'/getcitylist',data:{state:value},success:function(data){$("#popupcity").html(data);}});}/*]]>*/
 </script>
 <script type="text/javascript">
     var linkElement = document.createElement("link");
@@ -806,7 +755,7 @@ function submitInvestment() {
         return false;
     }
 </script>
-<script defer>
+<script>
     //Awesomplete
     const input = document.getElementById("dealer-bar-search-top");
 // Init awesomplete
@@ -856,7 +805,7 @@ function prepareList(list) {
         }
     });
 </script>
-<script defer>
+<script>
     $(document).ready(function() {
         var l = $(".js-select2");
         l.select2({
@@ -879,7 +828,24 @@ function prepareList(list) {
         })
     })
 </script>
-<script defer>
+
+<script>
+if (window.screen.width < 600) {
+    	document.addEventListener("DOMContentLoaded",function(){
+            var n=!1;window.addEventListener("scroll",function()
+            {100<window.scrollY&&function(){
+                if(!n){var e=document.createElement("link");e.rel="stylesheet",e.href="cvw/stylemix.css",document.head.appendChild(e),n=!0,console.log("CSS file loaded.")}}()})});
+    }
+
+    if (window.screen.width > 600) {
+    	document.addEventListener("DOMContentLoaded",function(){
+            var n=!1;window.addEventListener("scroll",function()
+            {100<window.scrollY&&function(){
+                if(!n){var e=document.createElement("link");e.rel="stylesheet",e.href="cvw/stylemix.css",document.head.appendChild(e),n=!0,console.log("CSS file loaded.")}}()})});
+    }
+    </script>
+
+<script>
     var swiper = new Swiper(".trendvideo .swiper-container", {
         slidesPerView: 1,
         spaceBetween: 0,
@@ -913,7 +879,7 @@ function prepareList(list) {
         }
     })
 </script>
-<script type="text/javascript" defer>
+<script type="text/javascript">
     var swiper = new Swiper(".testimonial .swiper-container", {
         slidesPerView: 1,
         spaceBetween: 0,
@@ -947,7 +913,7 @@ function prepareList(list) {
         }
     })
 </script>
-<script defer>
+<script>
     var swiper = new Swiper(".eventblk .swiper-container", {
         slidesPerView: 1,
         spaceBetween: 0,
@@ -1023,7 +989,7 @@ function getCookie() {
 </script>
     <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/solid.js"></script>
     <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/fontawesome.js"></script>
-<div class="mycss">
+<!-- <div class="mycss">
     <link rel="stylesheet" href="{{ url('cvw/footer.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/search-main.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/login-panel.css')}}" rel="preload" as="style">
@@ -1041,7 +1007,7 @@ function getCookie() {
     <link rel="stylesheet" href="{{ url('cvw/featured-franchise-opportunities.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/news-section.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/testimonial.css')}}" rel="preload" as="style">
-</div>
+</div> -->
 
 
 

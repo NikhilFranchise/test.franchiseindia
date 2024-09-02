@@ -212,16 +212,21 @@ overflow: hidden;
 
 
 <script language="javascript">
-    function checkNumbers(){var amt=500;var eventdays=$("#eventdays :selected").val();var visitVal=$("#txtDelegates :selected").val();if(eventdays=="Saturday28thAugust")
-    {amt=500;$('#txtAmount').val(amt);}
-    else if(eventdays=="Sunday29thAugust")
-    {amt=500;$('#txtAmount').val(amt);}
-    else if(eventdays=="Bothdays2829August")
-    {amt=1000;$('#txtAmount').val(amt);}
-    else{amt=500;$('#txtAmount').val(amt);}
-        total=visitVal*amt;$('#txtAmount').val(total);}
-    /*<![CDATA[*/if(screen.width>767)
-    {$(document).ready(function(){$('#myModal').modal('show');});}
+    
+    if(screen.width>767){
+            $(window).scroll(function() {
+            if ($(this).scrollTop() > 100){
+            $('#myModal').modal('show');
+            }
+            else{
+            $('#myModal').modal('hide'); 
+            $('#myModal').hide();  
+            }
+        });
+    }
+    </script>
+
+<script language="javascript">
     function isNumber(evt){evt=(evt)?evt:window.event;var charCode=(evt.which)?evt.which:evt.keyCode;return !(charCode > 31 && (charCode < 48 || charCode > 57));
         }
     function getcitypopup(value){value=$(value).find(':selected').attr('data-id');$.ajax({type:'GET',url:'/getcitylist',data:{state:value},success:function(data){$("#popupcity").html(data);}});}/*]]>*/
