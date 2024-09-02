@@ -98,10 +98,10 @@ class NewHomePageController extends Controller
 				->shuffle();
 		});
 
-	
+
 		$filePath = public_path('oidata/articlehindi.json');
 
-	
+
 		$articles = Cache::remember($cacheKeys['articles_data_cache'], $cacheExpiration, function () use ($filePath) {
 			// If the data is not in Redis, read it from the file
 			if (file_exists($filePath)) {
@@ -111,25 +111,25 @@ class NewHomePageController extends Controller
 				return []; // Default to an empty array if the file does not exist
 			}
 		});
-		
+
 		$youtubeApiKey = 'AIzaSyCB2nVhCCrLyMmHhAdIuGVBOyV_ywUATUA';
 		$videos = Cache::remember($cacheKeys['fivideohi'], $cacheExpiration, function () use ($youtubeApiKey) {
-		
+
 			$videosData = [];
-		
+
 			// Fetch all videos with the required fields
 			$videos = Videos::query()
-				->select('fih_id as id', 'fih_title as title', 'fih_url as url', 'fih_imageurl as imageurl', 
-						'fih_date as date', 'fih_description as description', 'fih_views as views', 
+				->select('fih_id as id', 'fih_title as title', 'fih_url as url', 'fih_imageurl as imageurl',
+						'fih_date as date', 'fih_description as description', 'fih_views as views',
 						'fih_status as priority')
 				->orderBy('fih_date', 'ASC')
 				->get();
-		
+
 			// Extract video IDs and make a bulk API call to get view counts
 			$videoIds = $videos->map(function($vdo) {
 				return $this->extractYouTubeVideoId($vdo->url);
 			})->filter()->toArray();
-		
+
 			// Get view counts for all videos in one API call
 			$videoViewCounts = $this->getYouTubeVideoViewCount($videoIds, $youtubeApiKey);
 			foreach ($videos as $vdo) {
@@ -144,11 +144,11 @@ class NewHomePageController extends Controller
 							->update(['fih_views' => $viewCount]);
 					}
 				}
-	
+
 				$videosData[] = $vdo->toArray();
 			}
 			// dd($vdo->save());
-		
+
 			return $videosData;
 		});
 
@@ -179,7 +179,7 @@ class NewHomePageController extends Controller
 		$isBrandslftCached = Cache::has($cacheKeys['brandslft']);
 		// dd($isBrandslftCached);
 		// dd($request->all());
-	 
+
 		// Retrieve cached data or fetch and cache if not available
 		$brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
 			return HomePremiumPageBrand::query()
@@ -239,11 +239,11 @@ class NewHomePageController extends Controller
 				->shuffle();
 		});
 
-		
+
 
 		// Define the path where the JSON file is stored
 		$filePath = public_path('oidata/articles.json');
-		
+
 		// Read the data back from the JSON file
 		$articles = Cache::remember($cacheKeys['articles_data_cache_english'], $cacheExpiration, function () use ($filePath) {
 			// If the data is not in Redis, read it from the file
@@ -254,25 +254,25 @@ class NewHomePageController extends Controller
 				return []; // Default to an empty array if the file does not exist
 			}
 		});
-		
+
 		$youtubeApiKey = 'AIzaSyCB2nVhCCrLyMmHhAdIuGVBOyV_ywUATUA';
 		$videos = Cache::remember($cacheKeys['fivideo'], $cacheExpiration, function () use ($youtubeApiKey) {
-		
+
 			$videosData = [];
-		
+
 			// Fetch all videos with the required fields
 			$videos = Videos::query()
-				->select('fih_id as id', 'fih_title as title', 'fih_url as url', 'fih_imageurl as imageurl', 
-						'fih_date as date', 'fih_description as description', 'fih_views as views', 
+				->select('fih_id as id', 'fih_title as title', 'fih_url as url', 'fih_imageurl as imageurl',
+						'fih_date as date', 'fih_description as description', 'fih_views as views',
 						'fih_status as priority')
 				->orderBy('fih_date', 'ASC')
 				->get();
-		
+
 			// Extract video IDs and make a bulk API call to get view counts
 			$videoIds = $videos->map(function($vdo) {
 				return $this->extractYouTubeVideoId($vdo->url);
 			})->filter()->toArray();
-		
+
 			// Get view counts for all videos in one API call
 			$videoViewCounts = $this->getYouTubeVideoViewCount($videoIds, $youtubeApiKey);
 			foreach ($videos as $vdo) {
@@ -287,15 +287,15 @@ class NewHomePageController extends Controller
 							->update(['fih_views' => $viewCount]);
 					}
 				}
-	
+
 				$videosData[] = $vdo->toArray();
 			}
 			// dd($vdo->save());
-		
+
 			return $videosData;
 		});
 
-		
+
 		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
 		return view('cvw.homepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
@@ -308,22 +308,22 @@ class NewHomePageController extends Controller
 		preg_match('/v=([^\&\?\/]+)/', $url, $matches);
 		return $matches[1] ?? null;
 	}
-	
-    
+
+
 	// private function getYouTubeVideoViewCount(array $videoIds, $apiKey) {
 	// 	$ids = implode(',', $videoIds);
 	// 	$url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id={$ids}&key={$apiKey}";
-	
+
 	// 	$response = file_get_contents($url);
 	// 	$data = json_decode($response, true);
-	
+
 	// 	$viewCounts = [];
 	// 	if (isset($data['items'])) {
 	// 		foreach ($data['items'] as $item) {
 	// 			$viewCounts[$item['id']] = $item['statistics']['viewCount'];
 	// 		}
 	// 	}
-	
+
 	// 	return $viewCounts;
 	// }
 
@@ -331,27 +331,27 @@ class NewHomePageController extends Controller
 		// Generate a unique cache key based on the video IDs a
 		$cacheKey = 'youtube_video_view_count_' . md5(implode(',', $videoIds));
 		$cacheExpiration = 60 * 60; // Cache expiration time in seconds (1 hour)
-	
+
 		// Attempt to retrieve the view counts from cache
 		return Cache::remember($cacheKey, $cacheExpiration, function () use ($videoIds, $apiKey) {
 			$ids = implode(',', $videoIds);
 			$url = "https://www.googleapis.com/youtube/v3/videos?part=statistics&id={$ids}&key={$apiKey}";
-	
+
 			$response = file_get_contents($url);
 			$data = json_decode($response, true);
-	
+
 			$viewCounts = [];
 			if (isset($data['items'])) {
 				foreach ($data['items'] as $item) {
 					$viewCounts[$item['id']] = $item['statistics']['viewCount'];
 				}
 			}
-	
+
 			return $viewCounts;
 		});
 	}
-	
-	
+
+
 	public static function getSlug($title, $id)
 	{
 

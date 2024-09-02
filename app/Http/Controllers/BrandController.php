@@ -304,82 +304,162 @@ class BrandController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
+    // public function likes(Request $request)
+    // {
+    //     // Fetch the variables
+    //     $franchisorId = $request->fid;
+    //     $likesFranData = FranchisorLike::query()->select('blike')->where('franchisor_id', $franchisorId)->first();
+
+    //     // If the record count is 0, create new entry by franchisor_id
+    //     if ($likesFranData == null || $likesFranData->count() == 0) {
+    //         $likesFranData = 0;
+    //         FranchisorLike::query()->insert(['franchisor_id' => $franchisorId, 'blike' => 1]);
+    //     } else {
+    //         $likesFranData = $likesFranData->blike;
+    //     }
+
+    //     if (!empty(Cookie::get('franLike' . $franchisorId)))
+    //         return response()->json(array('newCount' => $likesFranData), 200);
+
+
+    //     // Update the like by increment 1
+    //     $updatedLikeCount = ++$likesFranData;
+    //     FranchisorLike::query()->where('franchisor_id', $franchisorId)->increment('blike');
+
+    //     Cookie::queue("franLike" . $franchisorId, 1, 43800);
+
+    //     return response()->json(array('newCount' => $updatedLikeCount), 200);
+    // }
     public function likes(Request $request)
     {
-        // Fetch the variables
+        // Fetch the franchisor ID from the request
         $franchisorId = $request->fid;
-        $likesFranData = FranchisorLike::query()->select('blike')->where('franchisor_id', $franchisorId)->first();
 
-        // If the record count is 0, create new entry by franchisor_id
-        if ($likesFranData == null || $likesFranData->count() == 0) {
-            $likesFranData = 0;
-            FranchisorLike::query()->insert(['franchisor_id' => $franchisorId, 'blike' => 1]);
+        // Retrieve the existing like data for the given franchisor ID
+        $likeRecord = FranchisorLike::query()
+            ->where('franchisor_id', $franchisorId)
+            ->first();
+            // Check if the like record exists
+
+        if ($likeRecord) {
+            // If the user has already liked this franchisor, check the cookie
+            if (!empty(Cookie::get('franLike' . $franchisorId))) {
+                return response()->json(['newCount' => $likeRecord->blike], 200);
+            }
+
+            // Increment the like count
+            $likeRecord->blike++;
+            $likeRecord->save();
         } else {
-            $likesFranData = $likesFranData->blike;
+            // If no record exists, create a new entry with an initial like count of 1
+            FranchisorLike::create([
+                'franchisor_id' => $franchisorId,
+                'blike' => 1
+            ]);
         }
 
-        if (!empty(Cookie::get('franLike' . $franchisorId)))
-            return response()->json(array('newCount' => $likesFranData), 200);
-
-
-        // Update the like by increment 1
-        $updatedLikeCount = ++$likesFranData;
-        FranchisorLike::query()->where('franchisor_id', $franchisorId)->increment('blike');
-
+        // Set a cookie to prevent the user from liking the same franchisor again
         Cookie::queue("franLike" . $franchisorId, 1, 43800);
 
-        return response()->json(array('newCount' => $updatedLikeCount), 200);
+        return response()->json(['newCount' => $likeRecord->blike ?? 1], 200);
     }
+
 
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
+    // public function ratings(Request $request)
+    // {
+    //     // Initialize the variables
+    //     $click = 0;
+    //     $ratings = 0;
+    //     $averageRating = 0;
+
+    //     // Fetch the variables
+    //     $franchisorId = $request->fid;
+    //     $rate = $request->rateValue;
+
+    //     // Query the database
+    //     $LikeRateData = FranchisorLike::query()->where('franchisor_id', $franchisorId)->first();
+    //     $LikeRateDatacount = FranchisorLike::query()->where('franchisor_id', $franchisorId)->count();
+
+    //     // If record count is 0, create new record
+    //     if ($LikeRateData == null)
+    //         FranchisorLike::query()->insert(['franchisor_id' => $franchisorId]);
+
+    //     if ($LikeRateDatacount == 1) {
+    //         $click = $LikeRateData->bclick;
+    //         $ratings = $LikeRateData->brate;
+    //     }
+
+    //     // dd($ratings,$click);
+    //     if (!empty(Cookie::get('franRate' . $franchisorId)))
+    //         $averageRating = ($click > 0) ? round($ratings / $click, 1) : 0;
+    //     return response()->json(['ratings' => $averageRating], 200);
+
+    //     // Increment the click by 1
+    //     $updatedClick = $click + 1;
+
+    //     // Add the ratings val to the existing value
+    //     $newRatings = $ratings + $rate;
+    //     $updatedRatings = round($newRatings / $updatedClick, 1);
+    //     FranchisorLike::query()->where('franchisor_id', $franchisorId)
+    //         ->update([
+    //             'brate' => $newRatings,
+    //             'bclick' => $updatedClick
+    //         ]);
+
+    //     Cookie::queue("franRate" . $franchisorId, 1, 43800);
+
+    //     return response()->json(array('ratings' => $updatedRatings), 200);
+    // }
     public function ratings(Request $request)
-    {
-        // Initialize the variables
-        $click = 0;
-        $ratings = 0;
-        $averageRating = 0;
+{
+    // Initialize variables
+    $franchisorId = $request->fid;
+    $rate = $request->rateValue;
 
-        // Fetch the variables
-        $franchisorId = $request->fid;
-        $rate = $request->rateValue;
+    // Ensure rate is between 1 and 5
+    if ($rate < 1) {
+        $rate = 1;
+    } elseif ($rate > 5) {
+        $rate = 5;
+    }
 
-        // Query the database
-        $LikeRateData = FranchisorLike::query()->where('franchisor_id', $franchisorId)->first();
-        $LikeRateDatacount = FranchisorLike::query()->where('franchisor_id', $franchisorId)->count();
+    $averageRating = 0;
 
-        // If record count is 0, create new record
-        if ($LikeRateData == null)
-            FranchisorLike::query()->insert(['franchisor_id' => $franchisorId]);
+    // Query the database for the existing record
+    $LikeRateData = FranchisorLike::query()->where('franchisor_id', $franchisorId)->first();
 
-        if ($LikeRateDatacount == 1) {
-            $click = $LikeRateData->bclick;
-            $ratings = $LikeRateData->brate;
-        }
+    if ($LikeRateData) {
+        // Update existing record
+        $updatedClick = $LikeRateData->bclick + 1;
+        $newRatings = $LikeRateData->brate + $rate;
+        $averageRating = round($newRatings / $updatedClick, 1);
 
-        // dd($ratings,$click);
-        if (!empty(Cookie::get('franRate' . $franchisorId)))
-        $averageRating = ($click > 0) ? round($ratings / $click, 1) : 0;
-        return response()->json(['ratings' => $averageRating], 200);
-
-        // Increment the click by 1
-        $updatedClick = $click + 1;
-
-        // Add the ratings val to the existing value
-        $newRatings = $ratings + $rate;
-        $updatedRatings = round($newRatings / $updatedClick, 1);
         FranchisorLike::query()->where('franchisor_id', $franchisorId)
             ->update([
                 'brate' => $newRatings,
                 'bclick' => $updatedClick
             ]);
-
-        Cookie::queue("franRate" . $franchisorId, 1, 43800);
-
-        return response()->json(array('ratings' => $updatedRatings), 200);
+    } else {
+        // Insert new record
+        FranchisorLike::query()->insert([
+            'franchisor_id' => $franchisorId,
+            'brate' => $rate,
+            'bclick' => 1
+        ]);
+        $averageRating = round($rate, 1);
     }
+
+    // Set a cookie to track the rating for this franchisor
+    Cookie::queue("franRate" . $franchisorId, 1, 43800);
+
+    // Return the average rating as JSON response
+    return response()->json(['ratings' => $averageRating], 200);
+}
+
 
     /**
      * @param $count
