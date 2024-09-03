@@ -1679,8 +1679,8 @@
                                             <select class="form-control form-control-custom-main"
                                                 onchange="changelanguage(value)">
                                                 {{-- <option hidden="">Language</option> --}}
-                                                <option value="{{ Config('constants.MainDomain') }}">EN - English</option>
-                                                <option value="{{ Config('constants.MainDomain') }}/hi" selected>HI - Hindi</option>
+                                                <option value="http://localhost:8000">EN - English</option>
+                                                <option value="http://localhost:8000/hi" selected>HI - Hindi</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1788,8 +1788,8 @@
                                             <select class="form-control form-control-custom-main"
                                                 onchange="changelanguage(this.value)">
                                                 {{-- <option hidden="">Language</option> --}}
-                                                <option value="{{ Config('constants.MainDomain') }}" selected>EN - English</option>
-                                                <option value="{{ Config('constants.MainDomain') }}/hi">HI - Hindi</option>
+                                                <option value="http://localhost:8000" selected>EN - English</option>
+                                                <option value="http://localhost:8000/hi">HI - Hindi</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1992,3 +1992,4 @@
             margin: 0 0 .063em
         }
     </style>
+    
