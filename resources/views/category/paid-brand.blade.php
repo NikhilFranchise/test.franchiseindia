@@ -197,12 +197,12 @@
                 </span>
 
             </div>
-            <div class="seo_shareButton_{{ $i }} col-xs-4 col-sm-4 col-md-4 bd">
+            <div class="seo_shareButton_{{ $i }} col-xs-4 col-sm-4 col-md-4 bd" style="cursor: pointer;">
                 {{--  <i class="fa fa-share-alt fa-lg" aria-hidden="true"></i>  --}}
                 <a data-toggle="modal" data-target="#mysocial" id="seo_shareButton_{{ $i }}"
                     data-url="{{ $brandUrl }}"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i></a>
             </div>
-            <div class="rate-action_{{ $i }} col-xs-4 col-sm-4 col-md-4 bd">
+            <div class="rate-action_{{ $i }} col-xs-4 col-sm-4 col-md-4 bd" style="cursor: pointer;">
             {{--  <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>  --}}
             <a data-toggle="modal" onclick="ratebtn('{{ $i }}')" id="rateButton_{{ $i }}">
                     <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i></a>
