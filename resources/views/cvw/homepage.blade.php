@@ -25,7 +25,7 @@
        
         @include('cvw.ffc')
 
-        @include('cvw.f_insights_news')
+        {{-- @include('cvw.f_insights_news') --}}
 
        @include('cvw.testimonials')
 
