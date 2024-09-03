@@ -344,6 +344,7 @@
         </div>
     </div>
 
+    
 
   
     
@@ -1119,6 +1120,99 @@ $(document).ready(function() {
         }
     });
 </script>
+
+
+
+
+
+
+
+
+<!-- Custom JS -->
+<script type="text/javascript" src="{{url('newhomepage/assets/js/custom.js')}}"></script>
+@if( !(!empty(request()->segment(2)) && request()->segment(1) == "brands" && isset(explode('.', request()->segment(2))[1]) && in_array(explode('.', request()->segment(2))[1], Config('constants.popupBrands')) ))
+  
+    @php
+        $expoPopup = 0;
+        if (empty(Cookie::get('expoppoup17'))) {
+        $expoPopup = 1;
+        Cookie::queue("expoppoup17", 'RI2017', 120);
+        }
+        $ip    = $_SERVER['REMOTE_ADDR'];
+        $query = "";
+        $query = App\Http\Controllers\CommonController::getIpLocationState($ip);
+        if(!empty($query))
+        $query = strtolower($query);
+		$southCodes = ['tamil nadu', 'telangana', 'kerala', 'pondicherry'];
+        $eastCodes = ['bihar', 'jharkhand', 'odisha', 'nepal', 'arunachal pradesh', 'assam', 'meghalaya', 'orissa', 'tripura'];
+        $westCodes  = ['goa', 'gujarat',  'rajasthan'];
+        $northCodes  = ['punjab', 'jammu and kashmir', 'jammu', 'kashmir', 'himachal pradesh', 'chandigarh', 'uttarakhand', 'uttar pradesh', 'delhi', 'haryana'];
+		$centerCodes = ['madhya pradesh', 'chhattisgarh', 'maharashtra'];
+        $indiaCodes  = ['andhra pradesh', 'kerala', 'lakshadweep', 'pondicherry', 'telangana', 'tamil nadu', 'tamilnadu', 'uttar pradesh', 'rajasthan', 'haryana'];
+        $GreenTrends  =  ['west bengal', 'karnataka', 'andhra pradesh'];
+
+        App\Http\Controllers\CommonController::checkCampaignUrl();
+    @endphp
+
+    @if($expoPopup == 1 && request()->segment(1) != 'property-loan' && request()->segment(1) != 'myaccount' && request()->segment(1) != 'payment' && request()->segment(1) != 'mailer' && empty(request()->openpopup) && empty(request()->popup_lead))
+		@if(in_array($query, $southCodes))
+            @if(request()->segment(1) == 'brands')
+                @if($franDetails->membership_type != 1)
+                    @include('includes.banners.popupfrobengaluru')
+                @endif
+            @else
+                @include('includes.banners.popupfrobengaluru')
+            @endif
+		@elseif(in_array($query, $eastCodes))
+            @if(request()->segment(1) == 'brands')
+                @if($franDetails->membership_type != 1)
+                    @include('includes.banners.popupfranchiseexpokolkata')
+                @endif
+            @else
+                @include('includes.banners.popupfranchiseexpokolkata')
+            @endif
+
+		@elseif(in_array($query, $westCodes))
+            @if(request()->segment(1) == 'brands')
+                @if($franDetails->membership_type != 1)
+                    @include('includes.banners.popupfroahmedabad')
+                @endif
+            @else
+                @include('includes.banners.popupfroahmedabad')
+            @endif
+
+		@elseif(in_array($query, $northCodes))
+            @if(request()->segment(1) == 'brands')
+                @if($franDetails->membership_type != 1)
+                    @include('includes.banners.popupfrobengaluru')
+                @endif
+            @else
+                @include('includes.banners.popupfrobengaluru')
+            @endif
+
+		@elseif(in_array($query, $centerCodes))
+            @if(request()->segment(1) == 'brands')
+                @if($franDetails->membership_type != 1)
+                    @include('includes.banners.popupfranchiseexpolucknow')
+                @endif
+            @else
+                @include('includes.banners.popupfranchiseexpolucknow')
+            @endif
+
+		@else
+            @if(request()->segment(1) == 'brands')
+                @if($franDetails->membership_type != 1)
+                    @include('includes.banners.popupfrobengaluru')
+				@endif
+			@else
+		        @include('includes.banners.popupfrobengaluru')
+			@endif
+		@endif
+    @endif
+    <!-- popupmag Start of franchiseindia Zendesk Widget script  popupmag -->
+  
+@endif
+
 
 <div class="mycss">
     <link rel="stylesheet" href="{{ url('cvw/footer.css')}}" rel="preload" as="style">

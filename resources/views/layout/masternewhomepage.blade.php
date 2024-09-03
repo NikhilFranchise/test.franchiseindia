@@ -401,6 +401,7 @@
         }
     });
 </script>
+
 <!-- Custom JS -->
 <script type="text/javascript" src="{{url('newhomepage/assets/js/custom.js')}}"></script>
 @if( !(!empty(request()->segment(2)) && request()->segment(1) == "brands" && isset(explode('.', request()->segment(2))[1]) && in_array(explode('.', request()->segment(2))[1], Config('constants.popupBrands')) ))
