@@ -33,47 +33,6 @@
 
 
 
-
-
-{{-- //Pankaj --}}
-<!-- Self-hosted Google Analytics gtag.js -->
-<script async src="{{ url('/js/gtag.js') }}"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-    gtag('config', 'G-8MKFEZLR18');
-</script>
-
-<!-- Self-hosted Google Tag Manager -->
-<script>
-    (function(w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({
-            'gtm.start': new Date().getTime(),
-            event: 'gtm.js'
-        });
-        var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s),
-            dl = l != 'dataLayer' ? '&l=' + l : '';
-        j.async = true;
-        j.src = '{{ url('/js/gtm.js') }}';
-        f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
-</script>
-{{-- ///Pankaj end --}}
-
-
-
-
-
-
-
-
-
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
     <script>
@@ -88,7 +47,7 @@
     </script>
 
     <!-- Google Tag Manager -->
-    {{-- <script>
+    <script>
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
@@ -103,11 +62,11 @@
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
-    </script> --}}
+    </script>
     <!-- End Google Tag Manager -->
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    {{-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -117,7 +76,7 @@
         gtag('js', new Date());
 
         gtag('config', 'G-8MKFEZLR18');
-    </script> --}}
+    </script>
 <!-- Facebook Pixel Code -->
 <script>
     !function(f,b,e,v,n,t,s)
@@ -1679,8 +1638,8 @@
                                             <select class="form-control form-control-custom-main"
                                                 onchange="changelanguage(value)">
                                                 {{-- <option hidden="">Language</option> --}}
-                                                <option value="http://localhost:8000">EN - English</option>
-                                                <option value="http://localhost:8000/hi" selected>HI - Hindi</option>
+                                                <option value="{{ Config('constants.MainDomain') }}">EN - English</option>
+                                                <option value="{{ Config('constants.MainDomain') }}/hi" selected>HI - Hindi</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1788,8 +1747,8 @@
                                             <select class="form-control form-control-custom-main"
                                                 onchange="changelanguage(this.value)">
                                                 {{-- <option hidden="">Language</option> --}}
-                                                <option value="http://localhost:8000" selected>EN - English</option>
-                                                <option value="http://localhost:8000/hi">HI - Hindi</option>
+                                                <option value="{{ Config('constants.MainDomain') }}" selected>EN - English</option>
+                                                <option value="{{ Config('constants.MainDomain') }}/hi">HI - Hindi</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1992,4 +1951,3 @@
             margin: 0 0 .063em
         }
     </style>
-    

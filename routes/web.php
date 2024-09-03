@@ -65,16 +65,6 @@ use App\Http\Controllers\cvwhomepage;
 
 Auth::routes();
 
-Route::get('/js/gtag.js', function () {
-    return response()->file(public_path('js/gtag.js'));
-});
-
-Route::get('/js/gtm.js', function () {
-    return response()->file(public_path('js/gtm.js'));
-});
-
-
-
 Route::get('optimize', function () {
     // Run the artisan commands
     Artisan::call('optimize:clear');

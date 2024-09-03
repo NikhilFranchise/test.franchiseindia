@@ -30,9 +30,6 @@ class Kernel extends ConsoleKernel
 
         //OI NEWS DATA
         $schedule->command('data:update')->hourly();
-        //google analytics
-        $schedule->command('update:analytics-scripts')->daily();
-
     }
 
     /**

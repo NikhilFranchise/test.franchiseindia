@@ -41,29 +41,29 @@ class BrandController extends Controller
         // dd($franDetails->company_name);
 
         // Check if company_name matches consecutively in the title of insights_list_new table
-        $insightMatches = InsightList::query()
-        ->select('news_id', 'title','insight_type')
-        ->where('status', 1)
-        ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
-        ->get();
+        // $insightMatches = InsightList::query()
+        // ->select('news_id', 'title','insight_type')
+        // ->where('status', 1)
+        // ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
+        // ->get();
         
-        $dataFromB = DB::connection('mysqloi')
-        ->table('article_list_en')
-        ->select('id', 'title')
-        ->where('status', 1)
-        ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
-        ->get();
+        // $dataFromB = DB::connection('mysqloi')
+        // ->table('article_list_en')
+        // ->select('id', 'title')
+        // ->where('status', 1)
+        // ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
+        // ->get();
 
-        // Convert both collections to arrays
-        $insightMatchesArray = $insightMatches->toArray();
-        $dataFromBArray = $dataFromB->toArray();
+        // // Convert both collections to arrays
+        // $insightMatchesArray = $insightMatches->toArray();
+        // $dataFromBArray = $dataFromB->toArray();
 
-        // Combine both arrays into one
-        $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
+        // // Combine both arrays into one
+        // $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
 
-        // If you prefer to work with a collection, you can convert it back to a collection
-        $combinedDataCollection = collect($combinedDataArray);
-        dd($combinedDataCollection);
+        // // If you prefer to work with a collection, you can convert it back to a collection
+        // $combinedDataCollection = collect($combinedDataArray);
+        // dd($combinedDataCollection);
         
         //OI Redirection Start
         if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
