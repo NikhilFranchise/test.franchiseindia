@@ -208,8 +208,6 @@
                     id="rateButton_{{ $i }}">
                     @if ($rate == 5)
                         <i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>
-                    @elseif($rate < 5 && $rate > 2.5)
-                        <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>
                     @else
                         <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>
                     @endif

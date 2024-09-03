@@ -771,10 +771,8 @@
                     $("#rating_" + i).html(a); // Update the specific rating div
                     if (a == 5) {
                         $("#rateButton_" + i).html('<i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>');
-                    } else if (a < 5 && a > 2.5) {
-                        $("#rateButton_" + i).html('<i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>');
                     } else {
-                        $("#rateButton_" + i).html('<i class="fa fa-star-o fa-lg" aria-hidden="true"></i>');
+                        $("#rateButton_" + i).html('<i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>');
                     }
 
                     $("#rateButton_" + i).attr('onclick', "#");
