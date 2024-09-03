@@ -1,9 +1,5 @@
 @php
-<<<<<<< HEAD
-    use Illuminate\Support\Str;
-=======
     use Illuminate\support\Str;
->>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
     $catArr = Config('constants.CategoryArr');
     asort($catArr);
     $states = Config('location.stateArr');
