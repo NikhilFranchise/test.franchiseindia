@@ -201,7 +201,6 @@ class BusinessListingController extends Controller
      */
     public function searchBusinessListing(Request $request)
     {
-        // dd('yes');
         $searchTerm = $request->route('searchTerm');
         $categoryIds = $request->route('categoryIds');
         $locationIds = $request->route('locationIds');
@@ -353,7 +352,7 @@ class BusinessListingController extends Controller
             $in = 'इन';
             $locName = 'इंडिया';
         }
-        if (!empty(request()->loc) || count(request()->loc) == 1) {
+        if (!empty(request()->loc) && count(request()->loc) == 1) {
             $locName = Config('location.stateArr.' . request()->loc[0]);
             if ((request()->segment(1) == 'hi')) {
                 $locName = Config('location.hindiStatesArr.' . $locName);
@@ -385,7 +384,7 @@ class BusinessListingController extends Controller
             $catArr = $seoClass->select('catname', 'parent_id', 'seoTitle', 'description', 'keywords')
                 ->where('catid', $catId)
                 ->first();
-            if (!empty(request()->loc) || count(request()->loc) == 1 && !empty($fTypeName) && !empty($catArr)) {
+            if (!empty(request()->loc) && count(request()->loc) == 1 && !empty($fTypeName) && !empty($catArr)) {
                 $seoTitle = "$catArr->catname $businessOpp $fTypeName $in $locName - Franchise India";
                 $seoDesc = "Franchise India provides $catArr->catname franchise opportunities '. $fTypeName .', business opportunities, business ideas. Buy $catArr->catname Franchise in $locName with affordable range.";
 
@@ -778,9 +777,8 @@ class BusinessListingController extends Controller
             $parentUrl = url()->current();
             return redirect($parentUrl);
         }
-
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
-        // dd($shuffledResults);
+
         $mc    = $mainCatId;
         $sc    = $subCatId;
         $ssc   = request()->ssc;
@@ -809,7 +807,6 @@ class BusinessListingController extends Controller
                 ->groupBy('franchisor_id', 'image_type_slider2')
                 ->havingRaw('count > 3')
                 ->get();
-            // dd($franImageData);
         }
 
         $view = 'category.category';
@@ -818,6 +815,10 @@ class BusinessListingController extends Controller
 
         if (request()->segment(1) == 'hi')
             $view = 'category.hindi-category.hindi-category';
+        // dd($brandResults,$shuffledResults,$breadCrumb,$catName);
+        //  dd($mc,$sc,$ssc,$ftype,$seoTitle,$seoDesc);
+        //  dd($loc,$seoKeywords,$orderby,$minRangeValue,$maxRangevalue,$text,$searchq);
+        //  dd($catTabResult,$locTabResult,$invTabResult,$minCost,$maxCost,$franImageData,$city,$view);
 
         return view($view, compact(
             'brandResults',
@@ -852,7 +853,6 @@ class BusinessListingController extends Controller
      */
     public function getBusinessListing(Request $request)
     {
-
         // Fetch the request parameters
         $catParam      = request()->category_param;
         $mcat      = request()->catUrl;
@@ -1000,7 +1000,6 @@ class BusinessListingController extends Controller
 
                 ->havingRaw('count > 3')
                 ->get();
-            // dd($franImageData);
         }
 
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
@@ -1070,6 +1069,9 @@ class BusinessListingController extends Controller
                 $seoTitle = 'Home Based Business ' . $seoTitle;
             }
         }
+
+        // return view($view, compact('brandResults', 'shuffledResults', 'breadCrumb', 'catName', 'mc', 'sc', 'ssc', 'loc', 'ftype', 'seoTitle', 'seoDesc', 'seoKeywords','sortby','minRangeValue','maxRangevalue','orderby','text', 'searchq', 'franImageData', 'city', 'resultType', 'reqSt', 'chk_homebased'));
+
 
         return view($view, compact('brandResults', 'shuffledResults', 'breadCrumb', 'catName', 'mc', 'sc', 'ssc', 'loc', 'ftype', 'seoTitle', 'seoDesc', 'seoKeywords', 'sortby', 'minRangeValue', 'maxRangevalue', 'orderby', 'text', 'searchq', 'franImageData', 'city', 'chk_homebased'));
     }
@@ -1662,10 +1664,7 @@ class BusinessListingController extends Controller
             $parentUrl = url()->current();
             return redirect($parentUrl);
         }
-
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
-    
-        
 
         $mc    = $mainCatId;
         $sc    = $subCatId;
@@ -1693,7 +1692,6 @@ class BusinessListingController extends Controller
                 ->groupBy('franchisor_id', 'image_type_slider2')
                 ->havingRaw('count > 3')
                 ->get();
-            // dd($franImageData);
         }
 
         $view = 'category.category';
@@ -1731,7 +1729,8 @@ class BusinessListingController extends Controller
     }
     public function getBusinessListingnormalization(Request $request)
     {
-        // dd('yes');
+        // dd($request);
+        // $lowcost = $request->route('lowcost');
 
         // Fetch the request parameters
         $catParam      = request()->category_param;
@@ -1818,7 +1817,11 @@ class BusinessListingController extends Controller
                 }
             }
         }
+        // else{
 
+        //     $defaultUrl = 'business-opportunities/all/all';
+        //     return redirect($defaultUrl);
+        // }
         $breadCrumb    = '';
         $sortby        = '';
         $minRangeValue = '';
@@ -1903,6 +1906,7 @@ class BusinessListingController extends Controller
         )
             ->where('profile_status',  1);
 
+
         if ($cid[0] == 'ssc') {
             //$franData->where('ind_sub_cat', $cid[1])->orderby('membership_type', 'desc');
             $franData->where('ind_sub_cat', $cid[1]);
@@ -1930,12 +1934,11 @@ class BusinessListingController extends Controller
             $mainCatId = $cid[1];
             // dd($mainCatId);
         }
-        $count = request()->segment(1) == 'amp' ? 20 : 21;
-        $brandResults = $franData->orderby('membership_weightage', 'desc')->paginate($count);
-        // dd($brandResults);
-// dd($brandResults->pluck('profile_name'));
 
-          // Get the current page and last page
+        $count = request()->segment(1) == 'amp' ? 20 : 21;
+
+        $brandResults = $franData->orderby('membership_weightage', 'desc')->paginate($count);
+           // Get the current page and last page
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
     
@@ -1945,38 +1948,34 @@ class BusinessListingController extends Controller
             $parentUrl = url()->current();
             return redirect($parentUrl);
         }
-
-        // dd($brandResults);
-
         $franImageData   = [];
         if (!empty($brandResults)) {
             $paidFranchisors = collect($brandResults->toArray()['data']);
             $imageFranchisor = $paidFranchisors->where('membership_type', 1)->pluck('franchisor_id');
-            $sliderCheck = FranchisorSliderTenure::query()
+            $sliderCheck     = FranchisorSliderTenure::query()
                 ->select('franchisor_id')
                 ->where('status', 1)
                 ->where('end_date', '>=', date('Y-m-d H:i:s'))
                 ->get()->pluck('franchisor_id');
-                $franImageData = FranchisorSliderImage::query()
-        ->select('franchisor_id', DB::raw('MAX(image_type_slider2) as image_type_slider2'), DB::raw('COUNT(franchisor_id) as count'))
-        ->where('image_type_slider2', '!=', '')
-        ->whereIn('franchisor_id', $imageFranchisor)
-        ->whereIn('franchisor_id', $sliderCheck)
-        ->where('status', 1)
-        ->groupBy('franchisor_id')
-        ->havingRaw('count > 3')
-        ->get();
-        // dd($franImageData);
-            // $franImageData = FranchisorSliderImage::query()
-            //     ->select('franchisor_id', 'image_type_slider2', DB::raw('COUNT(franchisor_id) as count'))
+            $franImageData = FranchisorSliderImage::query()
+                ->select('franchisor_id', DB::raw('MAX(image_type_slider2) as image_type_slider2'), DB::raw('COUNT(franchisor_id) as count'))
+                ->where('image_type_slider2', '!=', '')
+                ->whereIn('franchisor_id', $imageFranchisor)
+                ->whereIn('franchisor_id', $sliderCheck)
+                ->where('status', 1)
+                ->groupBy('franchisor_id')
+                ->havingRaw('count > 3')
+                ->get();
+            // $franImageData   = FranchisorSliderImage::query()->select('franchisor_id', 'image_type_slider2', DB::raw('COUNT(franchisor_id) as count'))
             //     ->where('image_type_slider2', '!=', '')
             //     ->whereIn('franchisor_id', $imageFranchisor)
             //     ->whereIn('franchisor_id', $sliderCheck)
             //     ->where('status', 1)
-            //     ->groupBy('franchisor_id')  // Added image_type_slider2 to groupBy clause
-            //     ->havingRaw('count < 3')
-            //     ->get();
+            //     // ->groupBy('franchisor_id')
+            //     ->groupBy('franchisor_id', 'image_type_slider2') // Include image_type_slider2 in the GROUP BY clause
 
+            //     ->havingRaw('count > 3')
+            //     ->get();
         }
 
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');

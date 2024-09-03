@@ -30,7 +30,7 @@
                             <div class="brand-main-section">
                                 <a href="{{ $brandUrl }}" target="_blank"> <img
                                     src="{{ $logoDetail['brand_img'] }}"
-                                    alt="{{ $logoDetail['brand_heading'] }}" loading="lazy"></a>
+                                    alt="{{ $logoDetail['brand_heading'] }}" loading="lazy" width="205" height="100"></a>
                             </div>
                         </div>
                         <div class="card-body-section">

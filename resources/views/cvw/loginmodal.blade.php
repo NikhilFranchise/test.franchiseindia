@@ -59,9 +59,10 @@ aria-labelledby="exampleModalLabel">
                                         style="display:none">एडिट</span>
                                     <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
                                         style="display:none">ओटीपी भेजें</span>
-                                    <div style="display:none; color:red;" id="mismatch-mob">यह मोबाइल नंबर
+                                    </div>
+                                    <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">यह मोबाइल नंबर
                                         पंजीकृत नहीं है|</div>
-                                </div>
+                                
                                 <div class="input-group" id="password_group">
                                     <span class="input-group-addon">
                                         <div class="pwdsprite"></div>
@@ -108,10 +109,16 @@ aria-labelledby="exampleModalLabel">
                         <form class="form-horizontal" id="registration">
                             <div class="frm-pnl">
                                 <div style="text-align:center">
-                                    <div><a href="https://www.franchiseindia.com/investor/create" class="btn btn-large btn-default btn-gry btn-prop">Start A Business Today<br><span>(Investor Registration)</span></a></div><br>
-                                    <div><a href="https://www.franchiseindia.com/franchisor/registration/step/1" class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel Partners<br><span>(Franchisor Registration)</span></a></div><br>
-                                    <div><a href="https://www.franchiseindia.com/franchisor/international-registration" class="btn btn-large btn-default btn-gry btn-prop">Appoint Channel Partners<br><span>(International Franchisor Registration)</span></a></div><br>
-                                    <div><a target="_blank" href="https://www.franchiseindia.com/property-loan" class="btn btn- large btn-default btn-gry btn-prop">Loan Against Property</a></div>
+                                    <div><a href="https://www.franchiseindia.com/investor/create" class="btn btn-large btn-default btn-gry btn-prop">  व्यापार की शुरुआत
+                                        आज <br /><span>(इन्वेस्टर
+                                            पंजीकरण) </span> </a></div><br>
+                                    <div><a href="https://www.franchiseindia.com/franchisor/registration/step/1" class="btn btn-large btn-default btn-gry btn-prop">चैनल
+                                        पार्टनर नियुक्त करें <br /><span> (फ्रेंचाइज़र पंजीकरण)
+                                        </span></a></div><br>
+                                    <div><a href="https://www.franchiseindia.com/franchisor/international-registration" class="btn btn-large btn-default btn-gry btn-prop">चैनल पार्टनर नियुक्त करें
+                                        <br><span>(अंतर्राष्ट्रीय फ्रेंचाइज़र पंजीकरण)</span></a></div><br>
+                                    <div><a target="_blank" href="https://www.franchiseindia.com/property-loan" class="btn btn- large btn-default btn-gry btn-prop">संपत्ति
+                                        के खिलाफ ऋण</a></div>
                                 </div>
                             </div>
                         </form>
@@ -344,3 +351,102 @@ aria-labelledby="exampleModalLabel">
         </div>
     </div>
 </div> --}}
+
+<script>
+    var otpInterval;
+
+    function checkInputType() {
+        // console.log('yes mobilw');
+        var input = $('#email_or_mobile').val();
+        var isEmail = validateEmail(input);
+
+        if (isEmail) {
+            $('#password_group').show();
+            $('#get_otp_btn').hide();
+            $('#sign_in_btn').prop('disabled', false);
+        } else if (validateMobile(input)) {
+            $('#password_group').hide();
+            $('#get_otp_btn').show();
+            $('#sign_in_btn').prop('disabled', true);
+        } else {
+            $('#password_group').show();
+            $('#get_otp_btn').hide();
+            $('#sign_in_btn').prop('disabled', false);
+        }
+    }
+
+    function validateEmail(email) {
+        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function validateMobile(mobile) {
+        var re = /^\d{10}$/;
+        return re.test(mobile);
+    }
+
+    function validateLoginMobileOTP() {
+        var mobile = $('#email_or_mobile').val();
+        $.ajax({
+            type: 'get',
+            url: '/login_verify_mobile',
+            data: {
+                mobile: mobile
+            },
+            success: function(data) {
+                if (data.data == 0) {
+                    $("#mismatch-mob").show();
+                    $("#email_or_mobile").prop("readonly", true);
+                    $("#sign_in_btn").prop("disabled", true);
+                    $("#edit-mobile-wider").show();
+                    $("#otp-block-wider").hide();
+                    $("#get_otp_btn").hide();
+                } else {
+                    $("#mismatch-mob").hide();
+                    $("#email_or_mobile").prop("readonly", true);
+                    $("#sign_in_btn").prop("disabled", false);
+                    $("#edit-mobile-wider").show();
+                    $("#otp-block-wider").show();
+                    $("#get_otp_btn").hide();
+                    startOTPTimer();
+                }
+            }
+        });
+    }
+
+    function editMobileWider() {
+        $("#email_or_mobile").prop("readonly", false);
+        $("#mismatch-mob").hide();
+        $("#edit-mobile-wider").hide();
+        $("#otp-block-wider").hide();
+        $("#sign_in_btn").prop("disabled", true);
+        clearInterval(otpInterval);
+        $('#otp_timer').hide();
+        $('#resend_otp').hide();
+    }
+
+    function startOTPTimer() {
+        var timer = 60;
+        $('#resend_otp').hide();
+        $('#otp_timer').show();
+
+        otpInterval = setInterval(function() {
+            if (timer > 0) {
+                timer--;
+                $('#otp_timer').text(timer + 'sec');
+            } else {
+                clearInterval(otpInterval);
+                $('#otp_timer').hide();
+                $('#resend_otp').show();
+                $("#sign_in_btn").prop("disabled", true);
+            }
+        }, 1000);
+    }
+
+    function resendOTP() {
+        clearInterval(otpInterval);
+        var mobile = $('#email_or_mobile').val();
+        startOTPTimer();
+        validateLoginMobileOTP();
+    }
+</script>

@@ -325,7 +325,7 @@
     </div>
 
 
-  @include('cvw.loginmodal')
+  
     
 <div class="modal fade lg-panel formsection in" id="expandFranchisenew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -340,8 +340,9 @@
                         </div>
                     </div>
                     <div class="frm-container" id="askForm">
-                        <form id="homepage" name="homepage" method="post">
-                            <input type="hidden" name="_token" value="KAOF7yzc65IokL4wHcVor6DXtd9wU1uIU8HXnzqW" autocomplete="off">                                <h2 class="ttl">Free Advice - Ask Our Experts</h2>
+                        <form id="homepagenew" name="homepage" method="post" action="{{ route('form.submithome') }}">
+                            @csrf
+                                       <h2 class="ttl">Free Advice - Ask Our Experts</h2>
                             <div id="errMsg1" style="display:none;">
                                 <font color="red"> Please Fill The form! </font>
                             </div>
@@ -350,7 +351,7 @@
                                     <label><input type="radio" name="optionsRadios1" id="optionsRadios3" checked="" value="franchisor"> Expand My Brand </label>
                                 </div>
                                 <div class="radio">
-                                    <label><input type="radio" name="optionsRadios1" id="optionsRadios1" value="investor"> Buy a Franchise</label>
+                                    <label><input type="radio" name="optionsRadios1" id="optionsRadios1" value="investor">Buy a Franchise</label>
                                 </div>
 
                             </div>
@@ -363,23 +364,24 @@
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <div class="emailsprite"></div>
+                                       <img src="https://www.franchiseindia.com/images/email.png" alt="email">
                                     </span>
-                                    <input type="text" name="emailfreeadvice" id="emailfreeadvice1" class="form-control blur" placeholder="Enter Email" required="">
+                                    <input type="text" name="emailfreeadvice1" id="emailfreeadvice1" class="form-control blur" placeholder="Enter Email" required="">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon">
-                                        <div class="usersprite"></div>
+                                        <img src="https://www.franchiseindia.com/images/mobile.png" alt="mobile">
                                     </span>
                                     <input type="text" class="form-control blur" maxlength="10" name="mobilefreeadvice1" id="mobilefreeadvice1" placeholder="Enter Mobile No" required="">
                                 </div>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><img src="https://www.franchiseindia.com/images/pincode.png" alt="pincode"></span>
+                                    <span class="input-group-addon">
+                                        <img src="https://www.franchiseindia.com/images/pincode.png" alt="pincode"></span>
                                     <input type="text" name="pincodefreeadvice1" id="pincodefreeadvice1" class="form-control blur" maxlength="6" placeholder="Enter Pincode">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon height80">
-                                        <div class="addreesssprite"></div>
+                                        <img src="https://www.franchiseindia.com/images/addreess.png" alt="address">
                                     </span>
                                     <textarea class="form-control height80 blur" name="detailsfreeadvice1" id="detailsfreeadvice1" placeholder="Enter Details"></textarea>
                                 </div>
@@ -417,9 +419,36 @@
 
     <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js" defer></script>
+
+
+
+<script src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/swiper/js/swiper-bundle.min.js"></script>
+@include('cvw.loginmodal')
 <script>
+    if (window.screen.width < 600) {
+            document.addEventListener("DOMContentLoaded",function(){
+                var n=!1;window.addEventListener("scroll",function()
+                {100<window.scrollY&&function(){
+                    if(!n){var e=document.createElement("link");e.rel="stylesheet",e.href="cvw/stylemix.css",document.head.appendChild(e),n=!0,console.log("CSS file loaded.")}}()})});
+        }
+    
+        if (window.screen.width > 600) {
+            document.addEventListener("DOMContentLoaded",function(){
+                var n=!1;window.addEventListener("scroll",function()
+                {100<window.scrollY&&function(){
+                    if(!n){var e=document.createElement("link");e.rel="stylesheet",e.href="cvw/stylemix.css",document.head.appendChild(e),n=!0,console.log("CSS file loaded.")}}()})});
+        }
+        </script>
+    
+<script>
+    function frg_panel() {
+    $("#lg-pnl").hide(), $("#frg-pnl").show();
+}
+
+function lg_panel() {
+    $("#lg-pnl").show(), $("#loginactive").click(), $("#frg-pnl").hide();
+}
     $(document).ready(function() {
         $("#sidebar").mCustomScrollbar({
             theme: "minimal"
@@ -560,22 +589,67 @@ function selectMax1(selectmaxheaderval) {
         if (selectmaxheaderval === 21)
             maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
     }
-<<<<<<< HEAD
-=======
 
-    $(function() {
-            // bind change event to select
-            $('#language-changer').on('change', function() {
-                var url = $(this).val(); // get selected value
-                if (url) { // require a URL
-                    window.location = url; // redirect
+    function changelanguage(url) {
+    console.log('Language change triggered');
+    if (url) { // require a URL
+        console.log('Redirecting to:', url);
+        window.location.href = url; // redirect
+    }
+    return false;
+}
+
+$(document).ready(function() {
+    $('#homepagenew').on('submit', function(e) {
+        // console.log('tres');
+        e.preventDefault(); // Prevent the default form submission
+
+        // Get form data
+        var formData = $(this).serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: formData,
+            success: function(response) {
+                $('#response').html('<p>Form submitted successfully!</p>');
+                window.location = "/thanks-advice-form";
+
+                // Clear previous error messages and placeholders
+                $('.error-message').text('');
+                // $('input').attr('placeholder', '');
+            },
+            error: function(xhr) {
+                // Clear previous error messages and placeholders
+                $('.error-message').text('');
+                // $('input').attr('placeholder', '');
+
+                var errors = xhr.responseJSON.errors;
+
+                $.each(errors, function(key, errorMessages) {
+                    // Check if the error message is for captcha and replace it with a custom message
+                    if (key === 'captcha' && errorMessages[0] === 'validation.captcha') {
+                        var customMessage = 'Invalid captcha value.';
+                        $('#' + key + '-error').text(customMessage);
+                        // $('#' + key).attr('placeholder', customMessage);
+                    } else {
+                        // Use the error messages provided by the server response
+                        var errorMessage = errorMessages[0];
+                        $('#' + key + '-error').text(errorMessage);
+                        // $('#' + key).attr('placeholder', errorMessage);
+                    }
+                });
+
+                // Optionally, handle global errors
+                if (xhr.responseJSON.message) {
+                    $('#response').html('<p>' + xhr.responseJSON.message + '</p>');
                 }
-                return false;
-            });
+            }
         });
+    });
+});
 
 
->>>>>>> bf8cf56c4b66a15f282a3cd119cb255ee1948ef8
 </script>
 <script type="text/javascript">
     if (screen.width > 1) {
@@ -989,8 +1063,8 @@ function getCookie() {
 </script>
     <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/solid.js"></script>
     <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/fontawesome.js"></script>
-<!-- <div class="mycss">
-    <link rel="stylesheet" href="{{ url('cvw/footer.css')}}" rel="preload" as="style">
+
+    <!-- <link rel="stylesheet" href="{{ url('cvw/footer.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/search-main.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/login-panel.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/home-newsletter.css')}}" rel="preload" as="style">
@@ -1006,8 +1080,8 @@ function getCookie() {
     <link rel="stylesheet" href="{{ url('cvw/top-franchise-opportunities.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/featured-franchise-opportunities.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/news-section.css')}}" rel="preload" as="style">
-    <link rel="stylesheet" href="{{ url('cvw/testimonial.css')}}" rel="preload" as="style">
-</div> -->
+    <link rel="stylesheet" href="{{ url('cvw/testimonial.css')}}" rel="preload" as="style"> -->
+
 
 
 

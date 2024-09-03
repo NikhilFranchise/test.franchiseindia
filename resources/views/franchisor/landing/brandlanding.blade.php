@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layout.master') 
 @section('seoTitle', $seoTitle)
 @if (!empty($seoDesc))
     @section('seoDesc', $seoDesc)

@@ -401,7 +401,7 @@
 
                                 @include('category.free-brand')
 
-                                @php 
+                                @php
                                     $banner++;
                                     $shortBox++;
                                 @endphp
@@ -488,105 +488,360 @@
     </div>
 
     <div class="modal fade lg-panel formsection in" id="expandFranchisenew" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">×</span>
-                </button>
-                <div class="frm-sec">
-                    <div id="askMsg" style="display:none;">
-                        <div class="green">
-                            Thank You for Submitting information for Free Advice!
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span>
+                    </button>
+                    <div class="frm-sec">
+                        <div id="askMsg" style="display:none;">
+                            <div class="green">
+                                Thank You for Submitting information for Free Advice!
+                            </div>
                         </div>
-                    </div>
-                    <div class="frm-container" id="askForm">
-                        <form id="homepage1" name="homepage1" method="post">
-                            @csrf
-                            <h2 class="ttl">Free Advice - Ask Our Experts</h2>
-                            <div id="errMsg1" style="display:none;">
-                                <font color="red"> Please select one option..! </font>
-                            </div>
-                            <div class="frm-type">
-                                <div class="radio">
-                                    <label><input type="radio" name="optionsRadios1" id="optionsRadios3"
-                                            checked="" value="franchisor"> Expand My Brand </label>
+                        <div class="frm-container" id="askForm">
+                            <form id="homepage1" name="homepage1" method="post">
+                                @csrf
+                                <h2 class="ttl">Free Advice - Ask Our Experts</h2>
+                                <div id="errMsg1" style="display:none;">
+                                    <font color="red"> Please select one option..! </font>
                                 </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="optionsRadios1" id="optionsRadios1"
-                                            value="investor"> Buy a Franchise</label>
-                                </div>
-                            </div>
-                            <div class="frm-input">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <div class="usersprite"></div>
-                                    </span>
-                                    <input type="text" class="form-control blur" name="namefreeadvice1"
-                                        id="namefreeadvice1" placeholder="Enter Name" required>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <div class="emailsprite"></div>
-                                    </span>
-                                    <input type="text" name="emailfreeadvice" id="emailfreeadvice1"
-                                        class="form-control blur" placeholder="Enter Email" required>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <div class="usersprite"></div>
-                                    </span>
-                                    <input type="text" class="form-control blur" maxlength="10"
-                                        name="mobilefreeadvice1" id="mobilefreeadvice1" placeholder="Enter Mobile No"
-                                        required>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><img
-                                            src="https://www.franchiseindia.com/images/pincode.png"
-                                            alt="pincode"></span>
-                                    <input type="text" name="pincodefreeadvice1" id="pincodefreeadvice1"
-                                        class="form-control blur" maxlength="6" placeholder="Enter Pincode">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon height80">
-                                        <div class="addreesssprite"></div>
-                                    </span>
-                                    <textarea class="form-control height80 blur" name="detailsfreeadvice1" id="detailsfreeadvice1"
-                                        placeholder="Enter Details"></textarea>
-                                </div>
-                                <div class="checkbox rm-prop">
-                                    <label>
-                                        <input type="checkbox" name="is_newsletterfreeadvice1"
-                                            id="is_newsletterfreeadvice1" value="1" checked=""> Yes, i want to
-                                        subscribe for weekly Newsletter
-                                    </label>
-                                </div>
-                                <div class="checkbox rm-prop">
-                                    <label>
-                                        <input type="checkbox" name="is_termsagree1" id="is_termsagree1" value="1"
-                                            checked="">
-                                        I agree to the <a href="https://www.franchiseindia.com/terms"
-                                            target="_blank">Terms &amp; Conditions</a>
-                                    </label>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 txt-center" id="sub">
-                                        <input type="submit" id="btnhome1" class="btn btn-default btn-red"
-                                            value="Ask Our Experts">
+                                <div class="frm-type">
+                                    <div class="radio">
+                                        <label><input type="radio" name="optionsRadios1" id="optionsRadios3"
+                                                checked="" value="franchisor"> Expand My Brand </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" name="optionsRadios1" id="optionsRadios1"
+                                                value="investor"> Buy a Franchise</label>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                                <div class="frm-input">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <div class="usersprite"></div>
+                                        </span>
+                                        <input type="text" class="form-control blur" name="namefreeadvice1"
+                                            id="namefreeadvice1" placeholder="Enter Name" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <div class="emailsprite"></div>
+                                        </span>
+                                        <input type="text" name="emailfreeadvice" id="emailfreeadvice1"
+                                            class="form-control blur" placeholder="Enter Email" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <div class="usersprite"></div>
+                                        </span>
+                                        <input type="text" class="form-control blur" maxlength="10"
+                                            name="mobilefreeadvice1" id="mobilefreeadvice1" placeholder="Enter Mobile No"
+                                            required>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><img
+                                                src="https://www.franchiseindia.com/images/pincode.png"
+                                                alt="pincode"></span>
+                                        <input type="text" name="pincodefreeadvice1" id="pincodefreeadvice1"
+                                            class="form-control blur" maxlength="6" placeholder="Enter Pincode">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon height80">
+                                            <div class="addreesssprite"></div>
+                                        </span>
+                                        <textarea class="form-control height80 blur" name="detailsfreeadvice1" id="detailsfreeadvice1"
+                                            placeholder="Enter Details"></textarea>
+                                    </div>
+                                    <div class="checkbox rm-prop">
+                                        <label>
+                                            <input type="checkbox" name="is_newsletterfreeadvice1"
+                                                id="is_newsletterfreeadvice1" value="1" checked=""> Yes, i want
+                                            to
+                                            subscribe for weekly Newsletter
+                                        </label>
+                                    </div>
+                                    <div class="checkbox rm-prop">
+                                        <label>
+                                            <input type="checkbox" name="is_termsagree1" id="is_termsagree1"
+                                                value="1" checked="">
+                                            I agree to the <a href="https://www.franchiseindia.com/terms"
+                                                target="_blank">Terms &amp; Conditions</a>
+                                        </label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 txt-center" id="sub">
+                                            <input type="submit" id="btnhome1" class="btn btn-default btn-red"
+                                                value="Ask Our Experts">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- social mdia code  -->
+    <div id="mysocial" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Share</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="macashare">
+                        <ul class="sharecat">
+                            <li><a href="http://www.facebook.com/sharer.php?u={{ $brandUrl }}"
+                                    target="_blank"><img src="{{ URL::asset('images/facebookcat.gif') }}"
+                                        alt="Facebook"><span>Facebook</span></a></li>
+                            <li><a href="https://twitter.com/share?url={{ $brandUrl }}" target="_blank"><img
+                                        alt="twitter"
+                                        src="{{ URL::asset('images/twittercat.gif') }}"><span>Twitter</span></a></li>
+                            <li class="btline"><a
+                                    href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ $brandUrl }}"
+                                    target="_blank"><img alt="linkedin"
+                                        src="{{ URL::asset('images/linkedincat.gif') }}"><span>LinkedIn</span></a></li>
+                            <li class="webt"><a href="whatsapp://send?text={{ $brandUrl }}"
+                                    target="_blank"><img alt="whatsapp"
+                                        src="{{ URL::asset('images/whatsappcat.gif') }}"><span>Whatsapp</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    {{--  <div id="mysocial" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Share</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="macashare">
+                        <ul class="sharecat">
+                            <li><a href="#" target="_blank" id="facebook-share"><img
+                                        src="{{ URL::asset('images/facebookcat.gif') }}"
+                                        alt="Facebook"><span>Facebook</span></a></li>
+                            <li><a href="#" target="_blank" id="twitter-share"><img alt="twitter"
+                                        src="{{ URL::asset('images/twittercat.gif') }}"><span>Twitter</span></a></li>
+                            <li class="btline"><a href="#" target="_blank" id="linkedin-share"><img
+                                        alt="linkedin"
+                                        src="{{ URL::asset('images/linkedincat.gif') }}"><span>LinkedIn</span></a></li>
+                            <li class="webt"><a href="#" target="_blank" id="whatsapp-share"><img
+                                        alt="whatsapp"
+                                        src="{{ URL::asset('images/whatsappcat.gif') }}"><span>Whatsapp</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  --}}
+
+    <!--  End social mdia code  -->
+    <!--  Start Rating modal code  -->
+    <div id="myRating" class="modal fade" role="dialog" style = "">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="closeButton">&times;</button>
+                    <h4 class="modal-title">Rating</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="catnew-form-star">
+                        <div class="rattxt">Your Rating</div>
+                        <div id="ratemsg" style="display: none">Thanks for rating..</div>
+                        <div id="ratingmsg">
+                            <fieldset class="rating" id="ratingnew">
+                                <input type="radio" id="star5" name="rating" value="5"><label
+                                    class="full" for="star5" title="Awesome - 5 stars"></label>
+
+                                <input type="radio" id="star4" name="rating" value="4"><label
+                                    class="full" for="star4" title="Pretty good - 4 stars"></label>
+
+                                <input type="radio" id="star3" name="rating" value="3"><label
+                                    class="full" for="star3" title="Meh - 3 stars"></label>
+
+                                <input type="radio" id="star2" name="rating" value="2"><label
+                                    class="full" for="star2" title="Kinda bad - 2 stars"></label>
+
+                                <input type="radio" id="star1" name="rating" value="1"><label
+                                    class="full" for="star1" title="Sucks big time - 1 star"></label>
+                            </fieldset>
+                            <div class="sasnsta">
+                                <div style="text-align: center;">
+                                    <input type="reset" class="btn btn-default" value="Cancel" data-dismiss="modal">
+                                    <input type="button" class="btn btn-default btntb" value="Submit"
+                                        onclick="ratings('{{ $brandResult->franchisor_id }}');">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- end of rating modal here -->
+
     <script type="text/javascript" src="{{ url('awesomplete/awesomplete.js') }}"></script>
 
     <script language="javascript">
+        // like function create by GP //
+
+        @php
+            $a = Auth::check() ? 1 : 0;
+        @endphp
+
+        function likebtn(franId, id) {
+            var btnid = id.split('_');
+            var i = btnid[1];
+            var like_id = franId;
+
+            var auth = @json($a);
+            if (like_id != '' && auth == 1) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/brandlikes',
+                    data: {
+                        "fid": like_id,
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success: function(data) {
+                        $("#likecount_" + i).html(data.newCount);
+                        $("#likeButton_" + i).attr('onclick', "#");
+                        $(".like-action_" + i).css('cursor', 'default');
+                    }
+                });
+            } else {
+                $('#login-pnl').modal('show');
+                $('#loginactive').tab('show');
+            }
+        }
+
+        function ratebtn() {
+            //console.log('yes');
+            var phpVar = @json($a);
+
+            if (phpVar == 0) {
+                $('#login-pnl').modal('show');
+                $('#loginactive').tab('show');
+
+            } else if (phpVar == 1) {
+                $('#myRating').modal('show');
+            }
+
+        }
+        $(document).ready(function() {
+            $('#mysocial').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var postUrl = button.data('url'); // Extract the post URL from data-* attribute
+
+                // Update the share links
+                $('#facebook-share').attr('href', 'http://www.facebook.com/sharer.php?u=' +
+                    postUrl);
+                $('#twitter-share').attr('href', 'https://twitter.com/share?url=' +
+                    postUrl);
+                $('#linkedin-share').attr('href', 'http://www.linkedin.com/shareArticle?mini=true&url=' +
+                    postUrl);
+                $('#whatsapp-share').attr('href', 'whatsapp://send?text=' + postUrl);
+            });
+        });
+
+        //display star ratings
+        var a = <?php echo $rate; ?>;
+        var b = Math.round(a);
+        var c = "";
+        for (var x = 0; x < b; x++) {
+            c += "<i class='fa fa-star fa-lg' aria-hidden='true'></i>";
+        }
+        if (a > b || a > (b + 0.5)) {
+            c += "<i class='fa fa-star-half-o fa-lg' aria-hidden='true'></i>";
+        } else {
+            if (a < 4.5)
+                c += "<i class='fa fa-star-o fa-lg' aria-hidden='true'></i>";
+        }
+        var remain = 5 - b;
+        for (var y = 0; y < remain - 1; y++) {
+            c += "<i class='fa fa-star-o fa-lg' aria-hidden='true'></i>";
+        }
+        $("#ratings").html(c);
+
+        //updating and showing star rating function
+        function ratings(franId) {
+            var rate_id = franId;
+            var rate_value = 0;
+
+            if (document.getElementById('star5').checked){
+                var rate_value = document.getElementById('star5').value;
+            }
+            if (document.getElementById('star4').checked){
+                var rate_value = document.getElementById('star4').value;
+            }
+            if (document.getElementById('star3').checked){
+                var rate_value = document.getElementById('star3').value;
+            }
+            if (document.getElementById('star2').checked){
+                var rate_value = document.getElementById('star2').value;
+            }
+            if (document.getElementById('star1').checked){
+                var rate_value = document.getElementById('star1').value;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/brandratings',
+                data: {
+                    "fid": rate_id,
+                    "_token": "{{ csrf_token() }}",
+                    "rateValue": rate_value
+                },
+                success: function(data) {
+                    var a = data.ratings;
+                    var b = Math.round(a);
+                    var c = "";
+                    for (var x = 0; x < b; x++) {
+                        c += "<i class='fa fa-star fa-lg' aria-hidden='true'></i>";
+                    }
+                    if (a > b || a > (b + 0.5)) {
+                        c += "<i class='fa fa-star-half-o fa-lg' aria-hidden='true'></i>";
+                    } else {
+                        if (a < 4.5)
+                            c += "<i class='fa fa-star-o fa-lg' aria-hidden='true'></i>";
+                    }
+                    var remain = 5 - b;
+                    for (var y = 0; y < remain - 1; y++) {
+                        c += "<i class='fa fa-star-o fa-lg' aria-hidden='true'></i>";
+                    }
+                    //console.log(c);
+                    $("#rating").html(c);
+                    $("#rateButton").html("Rated");
+                    $("#rateButton").attr('data-toggle', "#");
+                    document.getElementById("ratemsg").style.display = "block";
+                    document.getElementById("ratingmsg").style.display = "none";
+
+                    setTimeout(function() {
+                        $("#myRating").hide();
+                    }, 1000);
+                    $(".modal-backdrop").hide();
+                    $("#closeButton").click();
+
+                }
+            });
+        }
+
+
+        //like share and rating function created by GP -30-Aug-2024
+
         //action on submit your interest
         $('#expbtn').on('click', function() {
             var franId = document.getElementById('expIntFranId').value;

@@ -55,7 +55,7 @@
                         <div class="overlay-card"></div>
                         <div class="card card-m card-p-10" style="background-color:rgba(0,78,153,.1);box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgb(0,78,153,.36)">
                             <div class="brand-image-section">
-                                <div class="brand-main-section"><a href="{{ $top['url'] }}" target="_blank"><img src="{{ $top['image'] }}" class="" alt="Pitman Training" width="199" height="81"></a></div>
+                                <div class="brand-main-section"><a href="{{ $top['url'] }}" target="_blank"><img src="{{ $top['image'] }}" class="" alt="Pitman Training" width="199" height="81" loading="lazy"></a></div>
                             </div>
                             <div class="card-body-section">
                                 <p>

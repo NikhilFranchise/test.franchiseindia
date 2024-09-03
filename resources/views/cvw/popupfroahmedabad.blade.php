@@ -210,9 +210,8 @@ overflow: hidden;
     </div>
 </div>
 
-
+<!-- 
 <script language="javascript">
-    
     if(screen.width>767){
             $(window).scroll(function() {
             if ($(this).scrollTop() > 100){
@@ -224,10 +223,13 @@ overflow: hidden;
             }
         });
     }
-    </script>
-
-<script language="javascript">
+    if(screen.width<767){
+        $('#myModal').modal('hide'); 
+            $('#myModal').hide();  
+    }
     function isNumber(evt){evt=(evt)?evt:window.event;var charCode=(evt.which)?evt.which:evt.keyCode;return !(charCode > 31 && (charCode < 48 || charCode > 57));
         }
-    function getcitypopup(value){value=$(value).find(':selected').attr('data-id');$.ajax({type:'GET',url:'/getcitylist',data:{state:value},success:function(data){$("#popupcity").html(data);}});}/*]]>*/
-</script>
+    function getcitypopup(value){value=$(value).find(':selected').attr('data-id');$.ajax({type:'GET',url:'/getcitylist',data:{state:value},success:function(data){$("#popupcity").html(data);}});}
+    </script> -->
+
+
