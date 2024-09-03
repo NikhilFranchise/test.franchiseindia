@@ -133,6 +133,8 @@
     @endif
 @endif
 @endmobile
+
+
 <nav id="sidebar">
     <div id="dismiss">
         <i class="fa fa-arrow-left" aria-hidden="true"></i>
@@ -440,3 +442,8 @@
         </li>
     </ul>
 </nav>
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d

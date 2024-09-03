@@ -1,4 +1,3 @@
-
 @if (request()->segment(1) == 'hi')
 <section class="about-us" id="about-us">
     <div class="container">

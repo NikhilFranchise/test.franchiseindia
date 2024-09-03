@@ -204,10 +204,11 @@
 @mobile
 
 <div id="content">
+@include('layout.newhomepage.mobile.topsearch')
 @include('layout.newhomepage.mobile.header')
 
 <!-- HERO SECTION STARTS -->
-{{--@include('layout.newhomepage.mobile.herosection')--}}
+
 @include('layout.newhomepage.mobile.herosectionwithsearch')
 <!-- HERO SECTION EMDS -->
     <main class="main" id="main">
@@ -280,6 +281,37 @@
 
 <!-- mobile section end -->
 <div class="overlay"></div>
+<<<<<<< HEAD
+
+<script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
+@include('layout.newhomepage.jslink')
+
+
+
+<script>
+        $(document).ready(function() {
+            function selectMax(selectmaxheaderval) {
+                let amountConfigArr = '<?php echo json_encode(Config('constants.investRangeInWordsSingle')); ?>';
+               
+                let maxAmount = $('#maxAmount');
+                let getSlugAmount = '<?php  echo json_encode(Config('constants.InvestRange')); ?>';
+                maxAmount.html("");
+                selectmaxheaderval = parseInt(selectmaxheaderval);
+                $.each(amountConfigArr, function(key, value) {
+                    if (key > selectmaxheaderval)
+                        $('#maxAmount').append($("<option></option>").attr({
+                            "value": key,
+                            "slug": getSlugAmount[key]['min']
+                        }).text(value));
+                });
+                if (selectmaxheaderval === 21)
+                    maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
+            }
+        });
+    </script>
+
+
+=======
 <script src="{{ url('/js/jquery-3.1.1.min.js') }}"></script>
 @include('layout.newhomepage.jslink')
 
@@ -305,6 +337,7 @@
         }
     });
 </script>
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 <script>
     function setCookie() {
         document.cookie = "accept_cookie=ok";
@@ -630,6 +663,10 @@ src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1"
         validateLoginMobileOTP();
     }
 </script>
+
+
+
+
 
 </body>
 </html>

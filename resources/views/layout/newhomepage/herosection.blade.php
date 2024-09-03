@@ -478,6 +478,9 @@
 
     </section>
 @endif
+<<<<<<< HEAD
+
+=======
 <script type="text/javascript">
 
     if (screen.width < 767) {
@@ -646,6 +649,7 @@
         });
     });
 </script>
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 
 <style>
     .hero-searh .nav-tabs a {

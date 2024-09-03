@@ -20,7 +20,7 @@ Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a
 
                     <div class="ml-auto d-flex">
                            <span class="login-text-right text-right"
-                                 data-toggle="modal" data-target="#search">
+                                 data-toggle="modal" data-target="#search-main">
                            <img src="{{url('newhomepage/assets/img/Search.svg')}}" alt="Home Search">
                            </span>
                         @if(Auth::check())
@@ -39,4 +39,5 @@ Franchise India 2022, 18<sup>th</sup> International Franchise and Retail Show <a
             </div>
         </div>
     </div>
+    <div class="overin"></div>
 </header>

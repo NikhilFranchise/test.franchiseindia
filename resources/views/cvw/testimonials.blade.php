@@ -7,7 +7,7 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <div class="testimonial-main">
-                                <div class="testimonial-brand-section"><img src="{{url('cvw/images/testimonials-home/naturals.webp')}}" class="img-b-fluid" alt="Naturals Salon &amp; Spa" width="141" height="141"></div>
+                                <div class="testimonial-brand-section"><img loading="lazy" src="{{url('cvw/images/testimonials-home/naturals.webp')}}" class="img-b-fluid" alt="Naturals Salon &amp; Spa" width="141" height="141"></div>
                                 <div class="testimonial-brand-summury">
                                     <div class="open-quotes"><i class="fa fa-quote-left" aria-hidden="true"></i></div>
                                     <p>हम फ्रैंचाइज़ इंडिया द्वारा प्रदान की गई असाधारण सेवाओं से बेहद प्रसन्न हैं।
@@ -24,7 +24,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="testimonial-main">
-                            <div class="testimonial-brand-section"><img src="{{url('cvw/images/testimonials-home/apollo.webp')}}" class="img-b-fluid" alt="Apollo Health and Lifestyle Limited" width="141" height="141"></div>
+                            <div class="testimonial-brand-section"><img loading="lazy" src="{{url('cvw/images/testimonials-home/apollo.webp')}}" class="img-b-fluid" alt="Apollo Health and Lifestyle Limited" width="141" height="141"></div>
                             <div class="testimonial-brand-summury">
                                 <div class="open-quotes"><i class="fa fa-quote-left" aria-hidden="true"></i></div>
                                 <p>"आपकी टीम के समर्पण और विशेषज्ञता ने हमारे आउटरीच प्रयासों को बढ़ाने और सार्थक
@@ -39,7 +39,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="testimonial-main">
-                            <div class="testimonial-brand-section"><img src="{{url('cvw/images/testimonials-home/fern.webp')}}" class="img-b-fluid" alt="fnp" width="141" height="141"></div>
+                            <div class="testimonial-brand-section"><img loading="lazy" src="{{url('cvw/images/testimonials-home/fern.webp')}}" class="img-b-fluid" alt="fnp" width="141" height="141"></div>
                             <div class="testimonial-brand-summury">
                                 <div class="open-quotes"><i class="fa fa-quote-left" aria-hidden="true"></i></div>
                                 <p>यह वास्तव में किसी भी ब्रांड पैन इंडिया का विस्तार करने के लिए एक आदर्श मंच
@@ -52,7 +52,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="testimonial-main">
-                            <div class="testimonial-brand-section"><img src="{{url('cvw/images/testimonials-home/liberty.webp')}}" class="img-b-fluid" alt="Liberty" width="141" height="141"></div>
+                            <div class="testimonial-brand-section"><img loading="lazy" src="{{url('cvw/images/testimonials-home/liberty.webp')}}" class="img-b-fluid" alt="Liberty" width="141" height="141"></div>
                             <div class="testimonial-brand-summury">
                                 <div class="open-quotes"><i class="fa fa-quote-left" aria-hidden="true"></i></div>
                                 <p>एक विश्वसनीय ट्रेड पत्रिका फ्रैंचाइज़ इंडिया के रूप में, फ्रैंचाइज़
@@ -65,7 +65,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="testimonial-main">
-                            <div class="testimonial-brand-section"><img src="{{url('cvw/images/testimonials-home/ims.webp')}}" class="img-b-fluid" alt="Ims Home" width="141" height="141"></div>
+                            <div class="testimonial-brand-section"><img loading="lazy" src="{{url('cvw/images/testimonials-home/ims.webp')}}" class="img-b-fluid" alt="Ims Home" width="141" height="141"></div>
                             <div class="testimonial-brand-summury">
                                 <div class="open-quotes"><i class="fa fa-quote-left" aria-hidden="true"></i></div>
                                 <p> हम बहुत लंबे समय से फ्रैंचाइज़ इंडिया वेबसाइट सेवाओं का उपयोग कर रहे हैं। और
@@ -90,7 +90,7 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
                             <div class="testimonial-main">
-                                <div class="testimonial-brand-section"><img src="{{url('cvw/images/testimonials-home/naturals.webp')}}" class="img-b-fluid" alt="Naturals Salon &amp; Spa" width="141" height="141"></div>
+                                <div class="testimonial-brand-section"><img loading="lazy" src="{{url('cvw/images/testimonials-home/naturals.webp')}}" class="img-b-fluid" alt="Naturals Salon &amp; Spa" width="141" height="141"></div>
                                 <div class="testimonial-brand-summury">
                                     <div class="open-quotes"><i class="fa fa-quote-left" aria-hidden="true"></i></div>
                                     <p>We are extremely pleased with the exceptional services provided by Franchise India. The team demonstrated unparalleled professionalism, efficiency, and dedication. Their commitment to excellence and attention
@@ -103,7 +103,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="testimonial-main">
-                            <div class="testimonial-brand-section"><img src="{{url('cvw/images/testimonials-home/apollo.webp')}}" class="img-b-fluid" alt="Apollo Health and Lifestyle Limited" width="141" height="141"></div>
+                            <div class="testimonial-brand-section"><img loading="lazy" src="{{url('cvw/images/testimonials-home/apollo.webp')}}" class="img-b-fluid" alt="Apollo Health and Lifestyle Limited" width="141" height="141"></div>
                             <div class="testimonial-brand-summury">
                                 <div class="open-quotes"><i class="fa fa-quote-left" aria-hidden="true"></i></div>
                                 <p>Your team's dedication and expertise have played a pivotal role in enhancing our outreach efforts and driving meaningful results. The quality of leads generated through our partnership with Franchise India has exceeded
@@ -115,7 +115,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="testimonial-main">
-                            <div class="testimonial-brand-section"><img src="{{url('cvw/images/testimonials-home/fern.webp')}}" class="img-b-fluid" alt="fnp" width="141" height="141"></div>
+                            <div class="testimonial-brand-section"><img loading="lazy" src="{{url('cvw/images/testimonials-home/fern.webp')}}" class="img-b-fluid" alt="fnp" width="141" height="141"></div>
                             <div class="testimonial-brand-summury">
                                 <div class="open-quotes"><i class="fa fa-quote-left" aria-hidden="true"></i></div>
                                 <p>It is indeed an ideal platform to expand any brand PAN India. Our long association has helped us to grow our network &amp; establish 300+ outlets in 98 cities"</p>
@@ -126,7 +126,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="testimonial-main">
-                            <div class="testimonial-brand-section"><img src="{{url('cvw/images/testimonials-home/liberty.webp')}}" class="img-b-fluid" alt="Liberty" width="141" height="141"></div>
+                            <div class="testimonial-brand-section"><img loading="lazy" src="{{url('cvw/images/testimonials-home/liberty.webp')}}" class="img-b-fluid" alt="Liberty" width="141" height="141"></div>
                             <div class="testimonial-brand-summury">
                                 <div class="open-quotes"><i class="fa fa-quote-left" aria-hidden="true"></i></div>
                                 <p>As a trusted Trade magazine Franchise India is great tool to spread your message to the Franchise Community and our experience in this effort has been excellent with the magazine</p>
@@ -137,7 +137,7 @@
                     </div>
                     <div class="swiper-slide">
                         <div class="testimonial-main">
-                            <div class="testimonial-brand-section"><img src="{{url('cvw/images/testimonials-home/ims.webp')}}" class="img-b-fluid" alt="Ims Home" width="141" height="141"></div>
+                            <div class="testimonial-brand-section"><img loading="lazy" src="{{url('cvw/images/testimonials-home/ims.webp')}}" class="img-b-fluid" alt="Ims Home" width="141" height="141"></div>
                             <div class="testimonial-brand-summury">
                                 <div class="open-quotes"><i class="fa fa-quote-left" aria-hidden="true"></i></div>
                                 <p>We have been using Franchise India website services for a very long time. And we have been able to create some very successful franchisee partners. The quality and flow of leads is really very good. Our association

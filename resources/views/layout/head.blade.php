@@ -129,8 +129,15 @@
 @endphp
 {{-- @if($ampFlag == 1)
     <link href="{{$ampUrl}}" rel="amphtml">
+<<<<<<< HEAD
+@endif
+
+ <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+ <script src="{{ url('js/validationInsta.js?ver='.date('d'))}}"></script>
+=======
 @endif --}}
 {{-- <link rel="preload" href="{{ url('js/jquery-3.1.1.min.js') }}" as="script"> --}}
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 <!-- Scrollbar Custom CSS -->
 <link rel="stylesheet" href="{{url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css')}}" >
 
@@ -142,7 +149,11 @@
 <link rel="preload" href="{{ url('wle_tracker.js')}}" as="script">
 <link rel="preload" href="{{ url('js/bootstrap-filestyle.min.js')}}" as="script">
 <link rel="preload" href="{{ url('js/js.cookie.min.js')}}" as="script">
+<<<<<<< HEAD
+
+=======
 {{--  <link rel="preload" href="{{ url('js/validationInsta.js?ver='.date('d'))}}" as="script">  --}}
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 <link rel="preload" href="{{ url('js/bootstrap.min.js')}}" as="script">
 {{--  <link rel="preload" href="{{ url('js/custom.js?ver='.date('d'))}}" as="script">  --}}
 <link rel="preload" href="{{ url('js/lozad.min.js')}}" as="script">

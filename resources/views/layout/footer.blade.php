@@ -43,7 +43,13 @@
 
 <!-- Business Opportunities section starts -->
 <section class="Business-Opportunitiessection section-30" id="Business-Opportunitiessection">
+<<<<<<< HEAD
+
+<div class="overin" style="position: fixed;z-index: 5;background-color: rgba(255, 255, 255, 0);width: 100%;height: 100vh;top: 0px;left: 0px;"></div>
+
+=======
     <div class="overin"></div>
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
     <div class="container">
         <div class="row">
             <div class="modified-col col-xs-12 col-sm-12 col-md-12 col-xl-12
@@ -793,9 +799,18 @@
     @endnotmobile
 
 @endif
-<script>
-    $(document).ready(function() {
 
+
+
+
+<script>
+    $('.overin').hide();
+    $(document).ready(function() {
+<<<<<<< HEAD
+        
+=======
+
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
         $("#sidebar").mCustomScrollbar({
             theme: "minimal"
         });
@@ -803,18 +818,30 @@
         $('#dismiss, .overlay').on('click', function() {
             $('#sidebar').removeClass('active');
             $('.overlay').removeClass('active');
+<<<<<<< HEAD
+            $('.overin').hide();
+=======
             $('.overin').css("display", "none");
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
         });
 
         $('.overin').on('click', function() {
             $('#sidebar').removeClass('active');
+<<<<<<< HEAD
+            $('.overin').hide();
+=======
             $('.overin').css("display", "none");
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
         });
 
         $('#sidebarCollapse').on('click', function() {
             $('#sidebar').addClass('active');
             $('.overlay').addClass('active');
+<<<<<<< HEAD
+            $('.overin').show();
+=======
             $('.overin').css("display", "block");
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
             $('.collapse.in').toggleClass('in');
             $('a[aria-expanded=true]').attr('aria-expanded', 'false');
         });

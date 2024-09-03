@@ -205,6 +205,10 @@
                             <div role="tabpanel" class="tab-pane" id="login">
                                 <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
                                     @csrf
+<<<<<<< HEAD
+                                    <!-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> -->
+=======
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
                                     <div class="frm-pnl">
                                         <div class="input-group">
                                             <span class="input-group-addon">

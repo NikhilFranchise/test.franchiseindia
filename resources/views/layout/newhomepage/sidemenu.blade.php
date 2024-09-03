@@ -729,6 +729,16 @@
             <div class="busheadmebu"><a target="_blank" href="/categoryall">Franchise
                     Categories</a>
             </div>
+<<<<<<< HEAD
+        </li>
+        <li>
+            <div class="contact-us-section">
+                Toll Free 1800 102 2007799
+            </div>
+        </li>
+    </ul>
+</nav>
+=======
             @php
                 $categoryArr = Config('constants.CategoryArr');
                 asort($categoryArr);
@@ -898,4 +908,5 @@
             </li>
         </ul>
     </nav>
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 @endif

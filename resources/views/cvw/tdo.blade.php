@@ -1,7 +1,7 @@
 <section class="bg-sectionwize top-dealership-opportunity section-30 dealer generic" id="top-dealership-opportunity">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="modified-col col-md-12">
+            <div class="col-md-12">
                 <div class="section-ptb">
                     <h2>{{ Request::segment(1) == 'hi' ? 'शीर्ष डीलरशिप अवसर' : 'Top Dealership Opportunity' }}</h2>
             </div>
@@ -9,15 +9,15 @@
                 <div class="section-ptb section-ptb-new"></div>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="modified-col col-md-12">
+        <div class="justify-content-center">
+            <div class="col-md-12">
                 <div class="trending-franchise-wrap">
                     <div class="card card-m card-p-10">
                         <div class="brand-image-section">
                             <div class="brand-main-section">
                                 <a href="https://www.dealerindia.com/manufacturer/Xboom-India-2149" target="_blank">
                                     <img src="https://www.franchiseindia.com/images/top-dealership/boom.webp" alt=""
-                                     height="81" width="199" /></a>
+                                     height="81" width="199" loading="lazy"/></a>
                             </div>
                         </div>
                         <div class="card-body-section">
@@ -58,7 +58,7 @@
                     <div class="card card-m card-p-10">
                         <div class="brand-image-section">
                             <div class="brand-main-section">
-                                <a href="https://www.dealerindia.com/manufacturer/mini-metro-ev-llp-29320056" target="_blank"><img src="https://www.franchiseindia.com/images/top-dealership/mini.webp" alt="" height="81" width="199"></a>
+                                <a href="https://www.dealerindia.com/manufacturer/mini-metro-ev-llp-29320056" target="_blank"><img loading="lazy" src="https://www.franchiseindia.com/images/top-dealership/mini.webp" alt="" height="81" width="199"></a>
                             </div>
                         </div>
                         <div class="card-body-section">
@@ -98,7 +98,7 @@
                     </div>
                     <div class="card card-m card-p-10">
                         <div class="brand-image-section">
-                            <div class="brand-main-section"><a href="https://www.dealerindia.com/manufacturer/reclinersindia-pvt-ltd-29320694" target="_blank"><img src="https://www.franchiseindia.com/images/top-dealership/recliners.webp" alt="Chess KLUB" height="81" width="199"></a></div>
+                            <div class="brand-main-section"><a href="https://www.dealerindia.com/manufacturer/reclinersindia-pvt-ltd-29320694" target="_blank"><img loading="lazy" src="https://www.franchiseindia.com/images/top-dealership/recliners.webp" alt="Chess KLUB" height="81" width="199"></a></div>
                         </div>
                         <div class="card-body-section">
                             <p>
@@ -139,7 +139,7 @@
                     </div>
                     <div class="card card-m card-p-10">
                         <div class="brand-image-section">
-                            <div class="brand-main-section"><a href="https://www.dealerindia.com/manufacturer/drivex-mobility-pvt-ltd-29320732" target="_blank"><img src="https://www.franchiseindia.com/images/top-dealership/drive.webp" alt="" height="81" width="199"></a></div>
+                            <div class="brand-main-section"><a href="https://www.dealerindia.com/manufacturer/drivex-mobility-pvt-ltd-29320732" target="_blank"><img loading="lazy" src="https://www.franchiseindia.com/images/top-dealership/drive.webp" alt="" height="81" width="199"></a></div>
                         </div>
                         <div class="card-body-section">
                             <p>

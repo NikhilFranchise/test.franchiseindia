@@ -23,7 +23,7 @@
                                     <source media="(min-width: 1024px)" srcset="https://www.franchiseindia.com/images/bexhome/574844992.webp" alt="">
                                     <source media="(min-width: 650px)" srcset="https://www.franchiseindia.com/images/bexhome/574844992.webp" alt="">
                                     <source media="(min-width: 320px)" srcset="https://www.franchiseindia.com/images/bexhome/574844992.webp" alt="">
-                                        <img src="https://www.franchiseindia.com/images/bexhome/574844992.webp" alt="" height="141" width="250"></picture>
+                                        <img src="https://www.franchiseindia.com/images/bexhome/574844992.webp" alt="" height="141" width="250" loading="lazy"></picture>
                             </a>
                         </div>
                         <div class="card-body-section">
@@ -44,9 +44,9 @@
                             </div>
                         </div>
                         <div class="d-flex sale-bg-info">
-                            <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif" width="13" height="13" alt="phone"> Phone</div>
-                            <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif" width="13" height="13" alt="email"> Email</div>
-                            <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif" width="13" height="13" alt="map"> Delhi</div>
+                            <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif" loading="lazy" width="13" height="13" alt="phone"> Phone</div>
+                            <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif" loading="lazy" width="13" height="13" alt="email"> Email</div>
+                            <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif" loading="lazy" width="13" height="13" alt="map"> Delhi</div>
                         </div>
                         <div class="link-section"><a href="https://www.businessex.com/startup/seeking-investment-for-adventure-and-tourism-market-place/lrgkm2" target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a></div>
                     </div>
@@ -58,7 +58,7 @@
                                     <source media="(min-width: 1024px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp" alt="">
                                     <source media="(min-width: 650px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp" alt="">
                                     <source media="(min-width: 320px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp" alt="">
-                                        <img src="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp" alt="" height="141" width="250"></picture>
+                                        <img src="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp" alt="" height="141" width="250" loading="lazy"></picture>
                             </a>
                         </div>
                         <div class="card-body-section">
@@ -80,9 +80,9 @@
                             </div>
                         </div>
                         <div class="d-flex sale-bg-info">
-                            <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif" width="13" height="13" alt="phone"> Phone</div>
-                            <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif" width="13" height="13" alt="email"> Email</div>
-                            <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif" width="13" height="13" alt="map"> Kanpur</div>
+                            <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif" width="13" loading="lazy" height="13" alt="phone"> Phone</div>
+                            <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif" width="13" loading="lazy" height="13" alt="email"> Email</div>
+                            <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif" width="13" loading="lazy" height="13" alt="map"> Kanpur</div>
                         </div>
                         <div class="link-section">
                               <a href="https://www.businessex.com/startup/seeking-investor-for-high-class-sports-and-education-training-center/b0chev"
@@ -95,7 +95,7 @@
                                     <source media="(min-width: 1024px)" srcset="https://www.franchiseindia.com/images/bexhome/928479563.webp" alt="">
                                     <source media="(min-width: 650px)" srcset="https://www.franchiseindia.com/images/bexhome/928479563.webp" alt="">
                                     <source media="(min-width: 320px)" srcset="https://www.franchiseindia.com/images/bexhome/928479563.webp" alt="">
-                                        <img src="https://www.franchiseindia.com/images/bexhome/928479563.webp" alt="" height="141" width="250"></picture>
+                                        <img src="https://www.franchiseindia.com/images/bexhome/928479563.webp" alt="" height="141" width="250" loading="lazy"></picture>
                             </a>
                         </div>
                         <div class="card-body-section">
@@ -118,9 +118,9 @@
                             </div>
                         </div>
                         <div class="d-flex sale-bg-info">
-                            <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif" width="13" height="13" alt="phone"> Phone</div>
-                            <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif" width="13" height="13" alt="email"> Email</div>
-                            <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif" width="13" height="13" alt="map"> Faridabad</div>
+                            <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif" loading="lazy" width="13" height="13" alt="phone"> Phone</div>
+                            <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif" loading="lazy" width="13" height="13" alt="email"> Email</div>
+                            <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif" loading="lazy" width="13" height="13" alt="map"> Faridabad</div>
                         </div>
                         <div class="link-section"> 
                              <a href="https://www.businessex.com/startup/seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system/f3asef"
@@ -134,7 +134,7 @@
                                     <source media="(min-width: 1024px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp" alt="">
                                     <source media="(min-width: 650px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp" alt="">
                                     <source media="(min-width: 320px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp" alt="">
-                                        <img src="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp" alt="" height="141" width="250"></picture>
+                                        <img src="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp" alt="" height="141" width="250" loading="lazy"></picture>
                             </a>
                         </div>
                         <div class="card-body-section">
@@ -156,9 +156,9 @@
                             </div>
                         </div>
                         <div class="d-flex sale-bg-info">
-                            <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif" width="13" height="13" alt="phone"> Phone</div>
-                            <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif" width="13" height="13" alt="email"> Email</div>
-                            <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif" width="13" height="13" alt="map"> Hyderabad</div>
+                            <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif" width="13" loading="lazy" height="13" alt="phone"> Phone</div>
+                            <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif" width="13" loading="lazy" height="13" alt="email"> Email</div>
+                            <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif" width="13" loading="lazy" height="13" alt="map"> Hyderabad</div>
                         </div>
                         <div class="link-section">
                             <a href="https://www.businessex.com/startup/looking-for-an-investor-for-health-care-industry/sibsjr"

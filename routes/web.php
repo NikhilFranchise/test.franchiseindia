@@ -65,6 +65,16 @@ use App\Http\Controllers\cvwhomepage;
 
 Auth::routes();
 
+Route::get('/js/gtag.js', function () {
+    return response()->file(public_path('js/gtag.js'));
+});
+
+Route::get('/js/gtm.js', function () {
+    return response()->file(public_path('js/gtm.js'));
+});
+
+
+
 Route::get('optimize', function () {
     // Run the artisan commands
     Artisan::call('optimize:clear');
@@ -1075,3 +1085,8 @@ Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('
 Route::get('/brand-total-count',[CommonController::class,'brand_total_count']);
 
 Route::post('/submit-form1', [AdviceController::class, 'freeadviceHome_popup'])->name('form.submithome');
+
+
+// Route::get('/cvwhome/hi',[NewHomePageController::class,'cvwhindiHomePage']);
+Route::get('/cvwhome',[NewHomePageController::class,'cvwhomeNew']);
+

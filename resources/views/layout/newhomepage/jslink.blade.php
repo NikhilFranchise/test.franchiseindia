@@ -1,4 +1,4 @@
-{{--<script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>--}}
+
 <!-- <script src="{{url('newhomepage/assets/js/lazysizes.min.js')}}" async></script> -->
 <!-- Popper.JS -->
 <script src="{{url('newhomepage/assets/vendor/popper/js/popper.min.js')}}"></script>

@@ -1,5 +1,9 @@
 @php
+<<<<<<< HEAD
+    use Illuminate\Support\Str;
+=======
     use Illuminate\support\Str;
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
     $catArr = Config('constants.CategoryArr');
     asort($catArr);
     $states = Config('location.stateArr');
@@ -45,7 +49,10 @@
         $mangecls = 'wiei';
     }
 @endphp
-<div class="modal modal-cust fade" id="search" tabindex="-1" aria-labelledby="search-mainLabel" aria-hidden="true">
+
+
+
+<div class="modal modal-cust fade" id="search-main" tabindex="-1" aria-labelledby="search-mainLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-cust">
         <div class="modal-content modal-content-cust">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -322,8 +329,12 @@
 </div>
 
 <script type="text/javascript">
+<<<<<<< HEAD
+    if (screen.width > 1) {
+=======
     /*<![CDATA[*/
     if (screen.width < 767) {
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
         $(document).ready(function() {
             setTimeout(function() {
                 $("#searchblk").slideUp(800);
@@ -460,6 +471,10 @@
         $('.dropdown-toggle').click(function() {
             $('.searchoption').hide(400);
         });
+<<<<<<< HEAD
+    }); 
+</script>
+=======
     });
     function customResetForm() {
     let form = document.getElementById('invform');
@@ -473,3 +488,4 @@
 }
     /*]]>*/
 </script>
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
