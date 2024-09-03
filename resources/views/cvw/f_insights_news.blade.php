@@ -15,7 +15,7 @@
                                     <div class="news-overlay">
                                         <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][0]['title'], $articles['article'][0]['id']) }}"
                                             target="_blank">
-                                            <img src="{{ \App\Http\Controllers\NewHomePageController::getImageUrl($articles['article'][0]['image_path']) }}"
+                                            <img style="width: 269px,height=151px" src="{{ \App\Http\Controllers\NewHomePageController::getImageUrl($articles['article'][0]['image_path']) }}"
                                                 class="img-b" alt="{{ $articles['article'][0]['title'] }}">
                                         </a>
                                     </div>

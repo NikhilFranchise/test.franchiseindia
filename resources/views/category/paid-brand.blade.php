@@ -203,11 +203,19 @@
                     data-url="{{ $brandUrl }}"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i></a>
             </div>
             <div class="rate-action_{{ $i }} col-xs-4 col-sm-4 col-md-4 bd" style="cursor: pointer;">
-            {{--  <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>  --}}
-            <a data-toggle="modal" onclick="ratebtn('{{ $i }}')" id="rateButton_{{ $i }}">
-                    <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i></a>
+                {{--  <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>  --}}
+                <a data-toggle="modal" onclick="ratebtn('{{ $i }}','{{ $brandResult->franchisor_id }}')"
+                    id="rateButton_{{ $i }}">
+                    @if ($rate == 5)
+                        <i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>
+                    @elseif($rate < 5 && $rate > 2.5)
+                        <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>
+                    @else
+                        <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>
+                    @endif
+                </a>
                 <span><strong id="rating_{{ $i }}">
-                    {{--  @dd($rate);  --}}
+                        {{--  @dd($rate);  --}}
                         @if ($rate != 0)
                             {{ $rate }}
                         @endif
