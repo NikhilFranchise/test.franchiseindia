@@ -153,7 +153,7 @@
                                             $brandResult->franchisorLike->brate / $brandResult->franchisorLike->bclick;
                                         $rate = round($rate, 1);
                                     }
-                                   // dd($rate);
+                                    // dd($rate);
                                 }
                             @endphp
 
@@ -636,6 +636,7 @@
                         <div id="ratemsg" style="display: none">Thanks for rating..</div>
                         <div id="ratingmsg">
                             <input type="hidden" id="rateModalInput">
+                            <input type="hidden" id="fi_id">
                             <fieldset class="rating" id="ratingnew">
                                 <input type="radio" id="star5" name="rating" value="5"><label
                                     class="full" for="star5" title="Awesome - 5 stars"></label>
@@ -656,7 +657,7 @@
                                 <div style="text-align: center;">
                                     <input type="reset" class="btn btn-default" value="Cancel" data-dismiss="modal">
                                     <input type="button" class="btn btn-default btntb" value="Submit"
-                                        onclick="ratings('{{ $brandResult->franchisor_id }}');">
+                                        onclick="ratings();">
                                 </div>
                             </div>
                         </div>
@@ -718,10 +719,11 @@
             }
         }
 
-        function ratebtn(i) {
+        function ratebtn(i, fid) {
             //console.log('yes');
             var phpVar = @json($a);
             $('#rateModalInput').val(i);
+            $('#fi_id').val(fid);
             // Reset the modal to its initial state
             $('#ratemsg').hide();
             $('#ratingmsg').show();
@@ -732,26 +734,16 @@
 
             } else if (phpVar == 1) {
                 $('#myRating').modal('show');
-                //ratings(i);
             }
 
         }
 
-
-
-
-
-
         //updating and showing star rating function
-
-
-
-
-        function ratings(franId) {
-            var rate_id = franId;
+        function ratings() {
+            var rate_id = $('#fi_id').val();
             var rate_value = 0;
             var i = $('#rateModalInput').val(); // Get the specific div index
-
+            //  console.log(rate_id + '--' + i);
             // Determine which star is selected
             if (document.getElementById('star5').checked) {
                 rate_value = document.getElementById('star5').value;
@@ -777,8 +769,16 @@
                 success: function(data) {
                     var a = data.ratings;
                     $("#rating_" + i).html(a); // Update the specific rating div
-                    $("#rateButton_" + i).attr('data-toggle', "#");
+                    if (a == 5) {
+                        $("#rateButton_" + i).html('<i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>');
+                    } else if (a < 5 && a > 2.5) {
+                        $("#rateButton_" + i).html('<i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>');
+                    } else {
+                        $("#rateButton_" + i).html('<i class="fa fa-star-o fa-lg" aria-hidden="true"></i>');
+                    }
 
+                    $("#rateButton_" + i).attr('onclick', "#");
+                    $(".rate-action_" + i).css('cursor', 'default');
                     $('#ratemsg').show();
                     $('#ratingmsg').hide();
 

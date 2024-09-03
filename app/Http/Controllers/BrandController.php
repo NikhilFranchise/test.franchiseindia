@@ -415,53 +415,54 @@ class BrandController extends Controller
     //     return response()->json(array('ratings' => $updatedRatings), 200);
     // }
     public function ratings(Request $request)
-{
-    // Initialize variables
-    $franchisorId = $request->fid;
-    $rate = $request->rateValue;
+    {
+        // Initialize variables
+        $franchisorId = $request->fid;
+        $rate = $request->rateValue;
+        //dd($franchisorId,$rate);
+        // Ensure rate is between 1 and 5
+        if ($rate < 1) {
+            $rate = 1;
+        } elseif ($rate > 5) {
+            $rate = 5;
+        }
 
-    // Ensure rate is between 1 and 5
-    if ($rate < 1) {
-        $rate = 1;
-    } elseif ($rate > 5) {
-        $rate = 5;
-    }
+        $averageRating = 0;
 
-    $averageRating = 0;
+        // Query the database for the existing record
+        $LikeRateData = FranchisorLike::query()->where('franchisor_id', $franchisorId)->first();
 
-    // Query the database for the existing record
-    $LikeRateData = FranchisorLike::query()->where('franchisor_id', $franchisorId)->first();
+        if ($LikeRateData) {
+            // Check if brate or bclick are null or 0, then set to 1
+            $currentClick = $LikeRateData->bclick ?? 0;
+            $currentRatings = $LikeRateData->brate ?? 0;
 
-    if ($LikeRateData) {
-        // Check if brate or bclick are null or 0, then set to 1
-        $currentClick = $LikeRateData->bclick ?? 0;
-        $currentRatings = $LikeRateData->brate ?? 0;
-
-        $updatedClick = $currentClick + 1;
-        $newRatings = $currentRatings + $rate;
-        $averageRating = round($newRatings / $updatedClick, 1);
-
-        FranchisorLike::query()->where('franchisor_id', $franchisorId)
-            ->update([
-                'brate' => $newRatings,
-                'bclick' => $updatedClick
+            $updatedClick = $currentClick + 1;
+            $newRatings = $currentRatings + $rate;
+            $averageRating = round($newRatings / $updatedClick, 1);
+           // dd($updatedClick,$newRatings);
+           $rates = FranchisorLike::query()->where('franchisor_id', $franchisorId)
+                ->update([
+                    'brate' => $newRatings,
+                    'bclick' => $updatedClick
+                ]);
+                //dd($rates,'helo');
+        } else {
+            // Insert new record
+            FranchisorLike::query()->insert([
+                'franchisor_id' => $franchisorId,
+                'brate' => $rate,
+                'bclick' => 1
             ]);
-    } else {
-        // Insert new record
-        FranchisorLike::query()->insert([
-            'franchisor_id' => $franchisorId,
-            'brate' => $rate,
-            'bclick' => 1
-        ]);
-        $averageRating = round($rate, 1);
+            $averageRating = round($rate, 1);
+        }
+
+        // Set a cookie to track the rating for this franchisor
+        Cookie::queue("franRate" . $franchisorId, 1, 43800);
+
+        // Return the average rating as JSON response
+        return response()->json(['ratings' => $averageRating], 200);
     }
-
-    // Set a cookie to track the rating for this franchisor
-    Cookie::queue("franRate" . $franchisorId, 1, 43800);
-
-    // Return the average rating as JSON response
-    return response()->json(['ratings' => $averageRating], 200);
-}
 
 
 
