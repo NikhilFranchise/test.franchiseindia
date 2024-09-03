@@ -1528,7 +1528,7 @@ ul.sib li.comnew a{color:#333}
 .macashare{padding:5px 0}
 ul.sharecat{margin:0;padding:0}
 ul.sharecat li{margin:0;padding:10px 0;display:block;font-family:'Open Sans Regular',serif;font-size:18px;font-weight:400;color:#333;border-bottom:1px solid #dfdfdf;text-decoration:none}
-#myRating .rating>input,ul.sharecat li.webt{display:none}
+#myRating .rating>input,ul.sharecat li.webt{display:block}
 ul.sharecat li a{color:#333;text-decoration:none}
 .amagtxt a:hover,.dtst .artbtmtext a:hover,.listkick a:hover,.sbctsxt span a:hover,.seeinsi a,.vielink a{text-decoration:underline}
 ul.sharecat li span{position:relative;top:0;left:10px}
