@@ -16,6 +16,9 @@ use App\Models\FranchisorBusinessDetail;
 use App\Models\InvestorDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
+use App\Models\InsightList;
+use Illuminate\Support\Facades\DB;
+
 
 class BrandController extends Controller
 {
@@ -23,7 +26,7 @@ class BrandController extends Controller
     public function brandDetails(Request $request)
     {
         // Initialize the variables
-        // dd($request);
+        // dd($request->all());
         $ratings = 0;
         $likesCnt = 0;
         $brandUrlParam = $request->profileName;         // Fetch the request parameter
@@ -35,8 +38,33 @@ class BrandController extends Controller
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
         $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
-        // dd($franDetails);
-        // dd($franDetails->userActivity);
+        // dd($franDetails->company_name);
+
+        // Check if company_name matches consecutively in the title of insights_list_new table
+        $insightMatches = InsightList::query()
+        ->select('news_id', 'title','insight_type')
+        ->where('status', 1)
+        ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
+        ->get();
+        
+        $dataFromB = DB::connection('mysqloi')
+        ->table('article_list_en')
+        ->select('id', 'title')
+        ->where('status', 1)
+        ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
+        ->get();
+
+        // Convert both collections to arrays
+        $insightMatchesArray = $insightMatches->toArray();
+        $dataFromBArray = $dataFromB->toArray();
+
+        // Combine both arrays into one
+        $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
+
+        // If you prefer to work with a collection, you can convert it back to a collection
+        $combinedDataCollection = collect($combinedDataArray);
+        dd($combinedDataCollection);
+        
         //OI Redirection Start
         if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
             $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
