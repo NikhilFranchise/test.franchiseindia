@@ -1090,3 +1090,4 @@ Route::post('/submit-form1', [AdviceController::class, 'freeadviceHome_popup'])-
 // Route::get('/cvwhome/hi',[NewHomePageController::class,'cvwhindiHomePage']);
 Route::get('/cvwhome',[NewHomePageController::class,'cvwhomeNew']);
 
+
