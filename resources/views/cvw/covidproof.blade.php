@@ -16,7 +16,8 @@
 
                     <div class="card card-m card-p-10">
                         <div class="brand-image-section">
-                            <div class="brand-main-section"><a href="{{ $logoDetail['brand_link'] }}" target="_blank"><img src="{{ $logoDetail['brand_img'] }}" alt="{{ $logoDetail['brand_heading'] }}" height="100" width="205"></a></div>
+                            <div class="brand-main-section"><a href="{{ $logoDetail['brand_link'] }}" target="_blank">
+                                <img src="{{ $logoDetail['brand_img'] }}" alt="{{ $logoDetail['brand_heading'] }}" height="100" width="205" loading="lazy"></a></div>
                         </div>
                         <div class="card-body-section">
                             @php

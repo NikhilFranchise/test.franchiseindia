@@ -142,6 +142,7 @@
                                 }
                                 $likes = 0;
                                 $rate = 0;
+
                                 if (!empty($brandResult->franchisorLike)) {
                                     $likes = $brandResult->franchisorLike->blike;
                                     if (
@@ -152,6 +153,7 @@
                                             $brandResult->franchisorLike->brate / $brandResult->franchisorLike->bclick;
                                         $rate = round($rate, 1);
                                     }
+                                    // dd($rate);
                                 }
                             @endphp
 
@@ -597,8 +599,8 @@
                 <div class="modal-body">
                     <div class="macashare">
                         <ul class="sharecat">
-                            <li><a href="http://www.facebook.com/sharer.php?u={{ $brandUrl }}"
-                                    target="_blank"><img src="{{ URL::asset('images/facebookcat.gif') }}"
+                            <li><a href="http://www.facebook.com/sharer.php?u={{ $brandUrl }}" target="_blank"><img
+                                        src="{{ URL::asset('images/facebookcat.gif') }}"
                                         alt="Facebook"><span>Facebook</span></a></li>
                             <li><a href="https://twitter.com/share?url={{ $brandUrl }}" target="_blank"><img
                                         alt="twitter"
@@ -607,35 +609,7 @@
                                     href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ $brandUrl }}"
                                     target="_blank"><img alt="linkedin"
                                         src="{{ URL::asset('images/linkedincat.gif') }}"><span>LinkedIn</span></a></li>
-                            <li class="webt"><a href="whatsapp://send?text={{ $brandUrl }}"
-                                    target="_blank"><img alt="whatsapp"
-                                        src="{{ URL::asset('images/whatsappcat.gif') }}"><span>Whatsapp</span></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{--  <div id="mysocial" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Share</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="macashare">
-                        <ul class="sharecat">
-                            <li><a href="#" target="_blank" id="facebook-share"><img
-                                        src="{{ URL::asset('images/facebookcat.gif') }}"
-                                        alt="Facebook"><span>Facebook</span></a></li>
-                            <li><a href="#" target="_blank" id="twitter-share"><img alt="twitter"
-                                        src="{{ URL::asset('images/twittercat.gif') }}"><span>Twitter</span></a></li>
-                            <li class="btline"><a href="#" target="_blank" id="linkedin-share"><img
-                                        alt="linkedin"
-                                        src="{{ URL::asset('images/linkedincat.gif') }}"><span>LinkedIn</span></a></li>
-                            <li class="webt"><a href="#" target="_blank" id="whatsapp-share"><img
+                            <li class="webt"><a href="whatsapp://send?text={{ $brandUrl }}" target="_blank"><img
                                         alt="whatsapp"
                                         src="{{ URL::asset('images/whatsappcat.gif') }}"><span>Whatsapp</span></a></li>
                         </ul>
@@ -643,7 +617,8 @@
                 </div>
             </div>
         </div>
-    </div>  --}}
+    </div>
+
 
     <!--  End social mdia code  -->
     <!--  Start Rating modal code  -->
@@ -660,6 +635,8 @@
                         <div class="rattxt">Your Rating</div>
                         <div id="ratemsg" style="display: none">Thanks for rating..</div>
                         <div id="ratingmsg">
+                            <input type="hidden" id="rateModalInput">
+                            <input type="hidden" id="fi_id">
                             <fieldset class="rating" id="ratingnew">
                                 <input type="radio" id="star5" name="rating" value="5"><label
                                     class="full" for="star5" title="Awesome - 5 stars"></label>
@@ -680,7 +657,7 @@
                                 <div style="text-align: center;">
                                     <input type="reset" class="btn btn-default" value="Cancel" data-dismiss="modal">
                                     <input type="button" class="btn btn-default btntb" value="Submit"
-                                        onclick="ratings('{{ $brandResult->franchisor_id }}');">
+                                        onclick="ratings();">
                                 </div>
                             </div>
                         </div>
@@ -697,7 +674,21 @@
 
     <script language="javascript">
         // like function create by GP //
+        $(document).ready(function() {
+            $('#mysocial').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var postUrl = button.data('url'); // Extract the post URL from data-* attribute
 
+                // Update the share links
+                $('#facebook-share').attr('href', 'http://www.facebook.com/sharer.php?u=' +
+                    postUrl);
+                $('#twitter-share').attr('href', 'https://twitter.com/share?url=' +
+                    postUrl);
+                $('#linkedin-share').attr('href', 'http://www.linkedin.com/shareArticle?mini=true&url=' +
+                    postUrl);
+                $('#whatsapp-share').attr('href', 'whatsapp://send?text=' + postUrl);
+            });
+        });
         @php
             $a = Auth::check() ? 1 : 0;
         @endphp
@@ -728,10 +719,15 @@
             }
         }
 
-        function ratebtn() {
+        function ratebtn(i, fid) {
             //console.log('yes');
             var phpVar = @json($a);
-
+            $('#rateModalInput').val(i);
+            $('#fi_id').val(fid);
+            // Reset the modal to its initial state
+            $('#ratemsg').hide();
+            $('#ratingmsg').show();
+            $('#ratingnew input[type="radio"]').prop('checked', false);
             if (phpVar == 0) {
                 $('#login-pnl').modal('show');
                 $('#loginactive').tab('show');
@@ -741,62 +737,27 @@
             }
 
         }
-        $(document).ready(function() {
-            $('#mysocial').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                var postUrl = button.data('url'); // Extract the post URL from data-* attribute
-
-                // Update the share links
-                $('#facebook-share').attr('href', 'http://www.facebook.com/sharer.php?u=' +
-                    postUrl);
-                $('#twitter-share').attr('href', 'https://twitter.com/share?url=' +
-                    postUrl);
-                $('#linkedin-share').attr('href', 'http://www.linkedin.com/shareArticle?mini=true&url=' +
-                    postUrl);
-                $('#whatsapp-share').attr('href', 'whatsapp://send?text=' + postUrl);
-            });
-        });
-
-        //display star ratings
-        var a = <?php echo $rate; ?>;
-        var b = Math.round(a);
-        var c = "";
-        for (var x = 0; x < b; x++) {
-            c += "<i class='fa fa-star fa-lg' aria-hidden='true'></i>";
-        }
-        if (a > b || a > (b + 0.5)) {
-            c += "<i class='fa fa-star-half-o fa-lg' aria-hidden='true'></i>";
-        } else {
-            if (a < 4.5)
-                c += "<i class='fa fa-star-o fa-lg' aria-hidden='true'></i>";
-        }
-        var remain = 5 - b;
-        for (var y = 0; y < remain - 1; y++) {
-            c += "<i class='fa fa-star-o fa-lg' aria-hidden='true'></i>";
-        }
-        $("#ratings").html(c);
 
         //updating and showing star rating function
-        function ratings(franId) {
-            var rate_id = franId;
+        function ratings() {
+            var rate_id = $('#fi_id').val();
             var rate_value = 0;
-
-            if (document.getElementById('star5').checked){
-                var rate_value = document.getElementById('star5').value;
-            }
-            if (document.getElementById('star4').checked){
-                var rate_value = document.getElementById('star4').value;
-            }
-            if (document.getElementById('star3').checked){
-                var rate_value = document.getElementById('star3').value;
-            }
-            if (document.getElementById('star2').checked){
-                var rate_value = document.getElementById('star2').value;
-            }
-            if (document.getElementById('star1').checked){
-                var rate_value = document.getElementById('star1').value;
+            var i = $('#rateModalInput').val(); // Get the specific div index
+            //  console.log(rate_id + '--' + i);
+            // Determine which star is selected
+            if (document.getElementById('star5').checked) {
+                rate_value = document.getElementById('star5').value;
+            } else if (document.getElementById('star4').checked) {
+                rate_value = document.getElementById('star4').value;
+            } else if (document.getElementById('star3').checked) {
+                rate_value = document.getElementById('star3').value;
+            } else if (document.getElementById('star2').checked) {
+                rate_value = document.getElementById('star2').value;
+            } else if (document.getElementById('star1').checked) {
+                rate_value = document.getElementById('star1').value;
             }
 
+            // Perform the AJAX request to save the rating
             $.ajax({
                 type: 'POST',
                 url: '/brandratings',
@@ -807,37 +768,28 @@
                 },
                 success: function(data) {
                     var a = data.ratings;
-                    var b = Math.round(a);
-                    var c = "";
-                    for (var x = 0; x < b; x++) {
-                        c += "<i class='fa fa-star fa-lg' aria-hidden='true'></i>";
-                    }
-                    if (a > b || a > (b + 0.5)) {
-                        c += "<i class='fa fa-star-half-o fa-lg' aria-hidden='true'></i>";
+                    $("#rating_" + i).html(a); // Update the specific rating div
+                    if (a == 5) {
+                        $("#rateButton_" + i).html('<i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>');
+                    } else if (a < 5 && a > 2.5) {
+                        $("#rateButton_" + i).html('<i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>');
                     } else {
-                        if (a < 4.5)
-                            c += "<i class='fa fa-star-o fa-lg' aria-hidden='true'></i>";
+                        $("#rateButton_" + i).html('<i class="fa fa-star-o fa-lg" aria-hidden="true"></i>');
                     }
-                    var remain = 5 - b;
-                    for (var y = 0; y < remain - 1; y++) {
-                        c += "<i class='fa fa-star-o fa-lg' aria-hidden='true'></i>";
-                    }
-                    //console.log(c);
-                    $("#rating").html(c);
-                    $("#rateButton").html("Rated");
-                    $("#rateButton").attr('data-toggle', "#");
-                    document.getElementById("ratemsg").style.display = "block";
-                    document.getElementById("ratingmsg").style.display = "none";
+
+                    $("#rateButton_" + i).attr('onclick', "#");
+                    $(".rate-action_" + i).css('cursor', 'default');
+                    $('#ratemsg').show();
+                    $('#ratingmsg').hide();
 
                     setTimeout(function() {
-                        $("#myRating").hide();
+                        $("#myRating").modal('hide');
                     }, 1000);
-                    $(".modal-backdrop").hide();
-                    $("#closeButton").click();
-
                 }
             });
         }
+
+
 
 
         //like share and rating function created by GP -30-Aug-2024

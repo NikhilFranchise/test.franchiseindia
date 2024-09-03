@@ -58,7 +58,7 @@
                                             <div class="viiner"><a href="https://www.youtube.com/watch?v=vGfVj_kF0oY" target="_blank">
                                             <img loading="lazy" src="https://www.franchiseindia.com/newhomepage/assets/img/youtube.svg" alt="video-icon" width="40" height="40"></a></div>
                                         </div>
-                                    </div><img class="lazyloaded" title="" alt="entrepreneur" src="{{url('cvw/event-videos/three.webp')}}" loading="lazy" width="355" height="198"></div>
+                                    </div><img class="lazyloaded" title="" alt="entrepreneur" src="{{url('cvw/images/event-videos/three.webp')}}" loading="lazy" width="355" height="198"></div>
                                 <div class="videcontent">
                                     <h2><a href="https://www.youtube.com/watch?v=vGfVj_kF0oY" target="_blank">3 kinds of ROI that any business can get! | Gaurav Marya | Franchise India</a></h2>
                                     <div class="videtxt">Gaurav Marya emphasizes the significance of Return on Investment (ROI), Return on Involvement (ROI)</div>
@@ -74,7 +74,7 @@
                                             <div class="viiner"><a href="https://www.youtube.com/watch?v=vGfVj_kF0oY" target="_blank">
                                     <img loading="lazy" src="https://www.franchiseindia.com/newhomepage/assets/img/youtube.svg" alt="video-icon" width="40" height="40"></a></div>
                                         </div>
-                                    </div><img class="lazyloaded" title="" alt="entrepreneur" src="{{url('cvw/event-videos/three.webp')}}" loading="lazy" width="355" height="198"></div>
+                                    </div><img class="lazyloaded" title="" alt="entrepreneur" src="{{url('cvw/images/event-videos/three.webp')}}" loading="lazy" width="355" height="198"></div>
                                 <div class="videcontent">
                                     <h2><a href="https://www.youtube.com/watch?v=vGfVj_kF0oY" target="_blank">3 kinds of ROI that any business can get! | Gaurav Marya | Franchise India</a></h2>
                                     <div class="videtxt">Gaurav Marya emphasizes the significance of Return on Investment (ROI), Return on Involvement (ROI)</div>
@@ -90,7 +90,7 @@
                                             <div class="viiner"><a href="https://www.youtube.com/watch?v=vGfVj_kF0oY" target="_blank">
                                         <img loading="lazy" src="https://www.franchiseindia.com/newhomepage/assets/img/youtube.svg" alt="video-icon" width="40" height="40"></a></div>
                                         </div>
-                                    </div><img class="lazyloaded" title="" alt="entrepreneur" src="{{url('cvw/event-videos/three.webp')}}" loading="lazy" width="355" height="198"></div>
+                                    </div><img class="lazyloaded" title="" alt="entrepreneur" src="{{url('cvw/images/event-videos/three.webp')}}" loading="lazy" width="355" height="198"></div>
                                 <div class="videcontent">
                                     <h2><a href="https://www.youtube.com/watch?v=vGfVj_kF0oY" target="_blank">3 kinds of ROI that any business can get! | Gaurav Marya | Franchise India</a></h2>
                                     <div class="videtxt">Gaurav Marya emphasizes the significance of Return on Investment (ROI), Return on Involvement (ROI)</div>
@@ -128,7 +128,7 @@
                                                 
                                             <img loading="lazy" src="https://www.franchiseindia.com/newhomepage/assets/img/youtube.svg" alt="video-icon" width="40" height="40"></a></div>
                                         </div>
-                                    </div><img class="lazyloaded" title="" alt="entrepreneur" src="{{url('cvw/event-videos/three.webp')}}" loading="lazy" width="355" height="198"></div>
+                                    </div><img class="lazyloaded" title="" alt="entrepreneur" src="{{url('cvw/images/event-videos/three.webp')}}" loading="lazy" width="355" height="198"></div>
                                 <div class="videcontent">
                                     <h2><a href="https://www.youtube.com/watch?v=vGfVj_kF0oY" target="_blank">3 kinds of ROI that any business can get! | Gaurav Marya | Franchise India</a></h2>
                                     <div class="videtxt">Gaurav Marya emphasizes the significance of Return on Investment (ROI), Return on Involvement (ROI)</div>

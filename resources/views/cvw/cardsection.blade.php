@@ -19,7 +19,7 @@
                                             Start A Business Today <span class="smallimp">(Investor
                                                 Registration)</span>
                                         @endif
-                                            <img src="{{url('cvw/images/rarrow.png')}}" class="icon-bar-main-fihl" width="16" height="19"></a></div>
+                                            <img src="{{url('cvw/images/rarrow.png')}}" class="icon-bar-main-fihl" width="16" height="19" alt="Arrow"></a></div>
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
                                     <div class="business-a"><a
@@ -31,7 +31,7 @@
                                                 Appoint Channel partners <span class="smallimp">(Franchisor
                                                     Registration)</span>
                                             @endif
-                                            <img src="{{url('cvw/images/rarrow.png')}}" class="icon-bar-main-fihl" width="16" height="19"></a></div>
+                                            <img src="{{url('cvw/images/rarrow.png')}}" class="icon-bar-main-fihl" width="16" height="19" alt="Arrow"></a></div>
                                 </div>
                                 <div class="col-md-12 pt-30">
                                     @if (request()->segment(1) == 'hi')
@@ -41,7 +41,7 @@
                                         फ्रेंचाइजिंग के माध्यम से सीखने और कारोबार बढ़ाने के लिए विशेषज्ञों की राय मिल
                                         सकेगी।
                                     @else
-                                        <h4> Why Should I Register ?</h4>
+                                        <h3> Why Should I Register ?</h3>
                                         To get access to over 20000+ Franchise Business
                                         Opportunities.<br><br>
                                         Network with the growing Business Community to get
@@ -108,7 +108,7 @@
         </div>
     </div>
 </section>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
 $(document).ready(function () {
     $("#btnhome").click(function () {

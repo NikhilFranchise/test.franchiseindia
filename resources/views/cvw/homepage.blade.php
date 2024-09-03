@@ -324,6 +324,7 @@
         </div>
     </div>
 
+    
 
   
     
@@ -418,11 +419,11 @@
 
 
     <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
-<script src="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js" defer></script>
 
 
 
-<script src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js" defer></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/swiper/js/swiper-bundle.min.js"></script>
 @include('cvw.loginmodal')
 <script>
@@ -1064,7 +1065,126 @@ function getCookie() {
     <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/solid.js"></script>
     <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/fontawesome.js"></script>
 
-    <!-- <link rel="stylesheet" href="{{ url('cvw/footer.css')}}" rel="preload" as="style">
+
+<script>
+    $(document).ready(function() {
+        // Function to handle the visibility of .hero-section based on scroll position
+        function handleScroll() {
+            if ($(window).scrollTop() > 40) {
+                $(".main").show();
+                $(".mycss").css("display", "block");
+            } else {
+                $(".main").hide();
+                $(".mycss").css("display", "none");
+            }
+        }
+
+        // Check screen width and set up event handlers accordingly
+        if (screen.width < 767) {
+            // Initial visibility check
+            handleScroll();
+
+            // Attach the scroll event handler
+            $(window).scroll(handleScroll);
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+<!-- Custom JS -->
+<script type="text/javascript" src="{{url('newhomepage/assets/js/custom.js')}}"></script>
+@if( !(!empty(request()->segment(2)) && request()->segment(1) == "brands" && isset(explode('.', request()->segment(2))[1]) && in_array(explode('.', request()->segment(2))[1], Config('constants.popupBrands')) ))
+  
+    @php
+        $expoPopup = 0;
+        if (empty(Cookie::get('expoppoup17'))) {
+        $expoPopup = 1;
+        Cookie::queue("expoppoup17", 'RI2017', 120);
+        }
+        $ip    = $_SERVER['REMOTE_ADDR'];
+        $query = "";
+        $query = App\Http\Controllers\CommonController::getIpLocationState($ip);
+        if(!empty($query))
+        $query = strtolower($query);
+		$southCodes = ['tamil nadu', 'telangana', 'kerala', 'pondicherry'];
+        $eastCodes = ['bihar', 'jharkhand', 'odisha', 'nepal', 'arunachal pradesh', 'assam', 'meghalaya', 'orissa', 'tripura'];
+        $westCodes  = ['goa', 'gujarat',  'rajasthan'];
+        $northCodes  = ['punjab', 'jammu and kashmir', 'jammu', 'kashmir', 'himachal pradesh', 'chandigarh', 'uttarakhand', 'uttar pradesh', 'delhi', 'haryana'];
+		$centerCodes = ['madhya pradesh', 'chhattisgarh', 'maharashtra'];
+        $indiaCodes  = ['andhra pradesh', 'kerala', 'lakshadweep', 'pondicherry', 'telangana', 'tamil nadu', 'tamilnadu', 'uttar pradesh', 'rajasthan', 'haryana'];
+        $GreenTrends  =  ['west bengal', 'karnataka', 'andhra pradesh'];
+
+        App\Http\Controllers\CommonController::checkCampaignUrl();
+    @endphp
+
+    @if($expoPopup == 1 && request()->segment(1) != 'property-loan' && request()->segment(1) != 'myaccount' && request()->segment(1) != 'payment' && request()->segment(1) != 'mailer' && empty(request()->openpopup) && empty(request()->popup_lead))
+		@if(in_array($query, $southCodes))
+            @if(request()->segment(1) == 'brands')
+                @if($franDetails->membership_type != 1)
+                    @include('includes.banners.popupfrobengaluru')
+                @endif
+            @else
+                @include('includes.banners.popupfrobengaluru')
+            @endif
+		@elseif(in_array($query, $eastCodes))
+            @if(request()->segment(1) == 'brands')
+                @if($franDetails->membership_type != 1)
+                    @include('includes.banners.popupfranchiseexpokolkata')
+                @endif
+            @else
+                @include('includes.banners.popupfranchiseexpokolkata')
+            @endif
+
+		@elseif(in_array($query, $westCodes))
+            @if(request()->segment(1) == 'brands')
+                @if($franDetails->membership_type != 1)
+                    @include('includes.banners.popupfroahmedabad')
+                @endif
+            @else
+                @include('includes.banners.popupfroahmedabad')
+            @endif
+
+		@elseif(in_array($query, $northCodes))
+            @if(request()->segment(1) == 'brands')
+                @if($franDetails->membership_type != 1)
+                    @include('includes.banners.popupfrobengaluru')
+                @endif
+            @else
+                @include('includes.banners.popupfrobengaluru')
+            @endif
+
+		@elseif(in_array($query, $centerCodes))
+            @if(request()->segment(1) == 'brands')
+                @if($franDetails->membership_type != 1)
+                    @include('includes.banners.popupfranchiseexpolucknow')
+                @endif
+            @else
+                @include('includes.banners.popupfranchiseexpolucknow')
+            @endif
+
+		@else
+            @if(request()->segment(1) == 'brands')
+                @if($franDetails->membership_type != 1)
+                    @include('includes.banners.popupfrobengaluru')
+				@endif
+			@else
+		        @include('includes.banners.popupfrobengaluru')
+			@endif
+		@endif
+    @endif
+    <!-- popupmag Start of franchiseindia Zendesk Widget script  popupmag -->
+  
+@endif
+
+
+
+    <link rel="stylesheet" href="{{ url('cvw/footer.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/search-main.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/login-panel.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/home-newsletter.css')}}" rel="preload" as="style">
@@ -1080,7 +1200,7 @@ function getCookie() {
     <link rel="stylesheet" href="{{ url('cvw/top-franchise-opportunities.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/featured-franchise-opportunities.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/news-section.css')}}" rel="preload" as="style">
-    <link rel="stylesheet" href="{{ url('cvw/testimonial.css')}}" rel="preload" as="style"> -->
+    <link rel="stylesheet" href="{{ url('cvw/testimonial.css')}}" rel="preload" as="style"> 
 
 
 

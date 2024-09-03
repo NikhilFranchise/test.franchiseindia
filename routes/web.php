@@ -65,6 +65,16 @@ use App\Http\Controllers\cvwhomepage;
 
 Auth::routes();
 
+Route::get('/js/gtag.js', function () {
+    return response()->file(public_path('js/gtag.js'));
+});
+
+Route::get('/js/gtm.js', function () {
+    return response()->file(public_path('js/gtm.js'));
+});
+
+
+
 Route::get('optimize', function () {
     // Run the artisan commands
     Artisan::call('optimize:clear');
@@ -75,8 +85,8 @@ Route::get('optimize', function () {
     return 'Application optimized successfully.';
 });
 
-Route::get('http://127.0.0.1:8000/business-opportunities/robotics-and-technical-training.ssc91', function () {
-    return redirect('https://www.franchiseindia.com/aaa/business-opportunities/robotics-technical-training-coding-ai.ssc91', 301);
+Route::get('https://www.franchiseindia.com/business-opportunities/robotics-and-technical-training.ssc91', function () {
+    return redirect('https://www.franchiseindia.com/business-opportunities/robotics-technical-training-coding-ai.ssc91', 301);
 });
 Route::get('content/{slug_and_id}', function ($slug_and_id) {
     // Check if the slug_and_id contains a dot or a dash and split accordingly
@@ -1075,8 +1085,3 @@ Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('
 Route::get('/brand-total-count',[CommonController::class,'brand_total_count']);
 
 Route::post('/submit-form1', [AdviceController::class, 'freeadviceHome_popup'])->name('form.submithome');
-
-
-// new homepage for cvw routes nikhil raman 26 aug 2024
-Route::get('/cvwhome', [cvwhomepage::class,'first']);
-Route::get('/cvwhome/hi', [cvwhomepage::class,'hindifirst']);

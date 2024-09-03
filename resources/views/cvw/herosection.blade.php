@@ -259,7 +259,7 @@
 </section>
 @else
 <section class="hero-section" id="hero-section">
-    <img src="{{ url('cvw/assets/img/mobile-banner-expo.webp') }}" class="banner-expo mmdesk" alt="Franchise India">
+    <img src="{{ url('cvw/assets/img/mobile-banner-expo.webp') }}" class="banner-expo mmdesk" alt="Franchise India"> 
     <picture class="ppdesk">
         <source media="(min-width: 1024px)" srcset="{{ url('cvw/assets/img/banner-expo.webp') }}" alt="Franchsie India">
         <source media="(min-width: 650px)" srcset="{{ url('cvw/assets/img/mobile-banner-expo.webp') }}"

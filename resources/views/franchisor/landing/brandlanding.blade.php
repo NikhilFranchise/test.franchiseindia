@@ -847,10 +847,7 @@
             if(phpVar == 0){
                 // alert('user not logged in');
                 $('#login-pnl').modal('show');
-                // $('#login-pnl').on('shown.bs.modal', function () {
-                //         // Activate the "Login" tab
-                //         $('#loginactive').tab('show');
-                //     });
+                $('#loginactive').tab('show');
 
             }
             else if(phpVar == 1){
