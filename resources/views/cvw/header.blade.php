@@ -75,7 +75,7 @@
 
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
+    {{-- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -85,7 +85,7 @@
         gtag('js', new Date());
 
         gtag('config', 'AW-991358906');
-    </script>
+    </script> --}}
 
     <!-- Google Tag Manager -->
     {{-- <script>
@@ -119,7 +119,7 @@
         gtag('config', 'G-8MKFEZLR18');
     </script> --}}
 <!-- Facebook Pixel Code -->
-<script>
+{{-- <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -133,7 +133,7 @@
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1"
-    /></noscript>
+    /></noscript> --}}
     <!-- End Facebook Pixel Code -->
 
     <style>
