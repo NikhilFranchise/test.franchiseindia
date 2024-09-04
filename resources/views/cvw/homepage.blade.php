@@ -1183,7 +1183,8 @@ function getCookie() {
   
 @endif
 
-
+{{-- 
+popup closed --}}
 
     <link rel="stylesheet" href="{{ url('cvw/footer.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/search-main.css')}}" rel="preload" as="style">
