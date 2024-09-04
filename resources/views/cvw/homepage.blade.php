@@ -519,7 +519,7 @@ function selectMax(selectmaxheaderval) {
     }
 document.addEventListener('DOMContentLoaded', function() {
         var mainCategorySelect = document.getElementById('getMainCategoryDataHeader');
-        //console.log(mainCategorySelect);
+        // console.log(mainCategorySelect);
         if (mainCategorySelect.value) {
             getSubCategoryHeader(mainCategorySelect.value);
         }
@@ -729,13 +729,15 @@ $(document).ready(function() {
         }
     function getcitypopup(value){value=$(value).find(':selected').attr('data-id');$.ajax({type:'GET',url:'/getcitylist',data:{state:value},success:function(data){$("#popupcity").html(data);}});}/*]]>*/
 </script>
+<script src="https://cdn.jsdelivr.net/npm/lozad@1.14.0/dist/lozad.min.js"></script>
+
 <script type="text/javascript">
     var linkElement = document.createElement("link");
     linkElement.rel = "stylesheet";
     linkElement.href = "{{ url('css/font-awesome.minfresh.css') }}"; //Replace here
     document.head.appendChild(linkElement);
-    // const observer = lozad(); // lazy loads elements with default selector as '.lozad'
-    // observer.observe();
+    const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+    observer.observe();
 $(document).ready(function() {
         $(window).scroll(function() {
             if ($(this).scrollTop() > 100)
@@ -830,6 +832,9 @@ function submitInvestment() {
         return false;
     }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
+
+
 <script>
     //Awesomplete
     const input = document.getElementById("dealer-bar-search-top");
