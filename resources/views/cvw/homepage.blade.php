@@ -1099,7 +1099,7 @@ function getCookie() {
 
  {{-- Homepoage events banner banner  --}}
 <!-- Custom JS -->
-{{-- <script type="text/javascript" src="{{url('newhomepage/assets/js/custom.js')}}"></script>
+<script type="text/javascript" src="{{url('newhomepage/assets/js/custom.js')}}"></script>
 @if( !(!empty(request()->segment(2)) && request()->segment(1) == "brands" && isset(explode('.', request()->segment(2))[1]) && in_array(explode('.', request()->segment(2))[1], Config('constants.popupBrands')) ))
   
     @php
@@ -1181,7 +1181,7 @@ function getCookie() {
     @endif
     <!-- popupmag Start of franchiseindia Zendesk Widget script  popupmag -->
   
-@endif --}}
+@endif
 
 
 
