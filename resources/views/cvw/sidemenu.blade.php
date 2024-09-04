@@ -16,7 +16,7 @@
                     })();
                 </script>
                 <gcse:searchbox-only resultsurl="https://www.franchiseindia.com/search" newwindow="true" queryparametername="search"></gcse:searchbox-only>
-                <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css">
+                {{-- <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css"> --}}
             </div>
         </li>
         <li>&nbsp;</li>
@@ -911,7 +911,7 @@
                     })();
                 </script>
                 <gcse:searchbox-only resultsurl="https://www.franchiseindia.com/search" newwindow="true" queryparametername="search"></gcse:searchbox-only>
-                <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css">
+                {{-- <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css"> --}}
             </div>
         </li>
         <li>&nbsp;</li>
