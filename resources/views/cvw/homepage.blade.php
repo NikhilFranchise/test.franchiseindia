@@ -520,7 +520,7 @@ function selectMax(selectmaxheaderval) {
 document.addEventListener('DOMContentLoaded', function() {
         var mainCategorySelect = document.getElementById('getMainCategoryDataHeader');
         // console.log(mainCategorySelect);
-        if (mainCategorySelect.value) {
+        if (mainCategorySelect?.value ) {
             getSubCategoryHeader(mainCategorySelect.value);
         }
     });
