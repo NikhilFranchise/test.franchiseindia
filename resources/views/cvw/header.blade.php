@@ -17,7 +17,7 @@
 <meta name="y_key" content="0f4f718975ac23ed" />
 <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
 {{-- google codes --}}
-{{-- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
+ <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() {
@@ -71,11 +71,12 @@
     <noscript><img height="1" width="1" style="display:none"
         src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1"/>
     </noscript>
-    <!-- End Facebook Pixel Code --> --}}
+    <!-- End Facebook Pixel Code --> 
 
 
     <!-- Google Tag Manager -->
-<script async>
+{{-- <script async>
+
     (function(w, d, s, l, i) {
       w[l] = w[l] || [];
       w[l].push({
@@ -134,7 +135,7 @@
   <noscript>
     <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1"/>
   </noscript>
-  <!-- End Facebook Pixel Code -->
+  <!-- End Facebook Pixel Code --> --}}
 <link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2" rel="preload" as="style">
 <link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2" rel="preload" as="style" rel="preload" as="style">
 <link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/swiper/css/swiper-bundle.min.css?ver=2.2" rel="preload" as="style">
