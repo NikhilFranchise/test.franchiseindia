@@ -734,8 +734,8 @@ $(document).ready(function() {
     linkElement.rel = "stylesheet";
     linkElement.href = "{{ url('css/font-awesome.minfresh.css') }}"; //Replace here
     document.head.appendChild(linkElement);
-    const observer = lozad(); // lazy loads elements with default selector as '.lozad'
-    observer.observe();
+    // const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+    // observer.observe();
 $(document).ready(function() {
         $(window).scroll(function() {
             if ($(this).scrollTop() > 100)
@@ -880,6 +880,7 @@ function prepareList(list) {
         }
     });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
         var l = $(".js-select2");
