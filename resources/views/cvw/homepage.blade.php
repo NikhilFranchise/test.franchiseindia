@@ -730,6 +730,7 @@ $(document).ready(function() {
     function getcitypopup(value){value=$(value).find(':selected').attr('data-id');$.ajax({type:'GET',url:'/getcitylist',data:{state:value},success:function(data){$("#popupcity").html(data);}});}/*]]>*/
 </script>
 <script src="https://cdn.jsdelivr.net/npm/lozad@1.14.0/dist/lozad.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 
 <script type="text/javascript">
     var linkElement = document.createElement("link");
@@ -764,7 +765,7 @@ setTimeout(function() {
             });
         }, 20000);
 
-        @include('includes.banners-new.footer-google-tags')
+        // @include('includes.banners-new.footer-google-tags')
     });
 function submitCategory() {
         var subSubCat = $('#getSubCatCategoryDataHeader').val();
