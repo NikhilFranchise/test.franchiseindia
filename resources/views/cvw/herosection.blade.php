@@ -68,7 +68,7 @@
             </div> 
             <div class="col-md-12">
                 <div class="hero-search" id="hero-search">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs" role="tablist">
                         <li class="active"><a href="#categories1" aria-controls="categories1" role="tab"
                                 data-toggle="tab">Categories</a></li>
                         <li><a href="#location1" aria-controls="location1" role="tab" data-toggle="tab">Location</a>
