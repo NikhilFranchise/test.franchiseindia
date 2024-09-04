@@ -16,7 +16,7 @@
                         <div class="brand-image-section">
                             <div class="brand-main-section">
                                 <a href="https://www.dealerindia.com/manufacturer/Xboom-India-2149" target="_blank">
-                                    <img src="https://www.franchiseindia.com/images/top-dealership/boom.webp" alt=""
+                                    <img src="https://www.franchiseindia.com/images/top-dealership/boom.webp" alt="Xboom-India"
                                      height="81" width="199" loading="lazy"/></a>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                     <div class="card card-m card-p-10">
                         <div class="brand-image-section">
                             <div class="brand-main-section">
-                                <a href="https://www.dealerindia.com/manufacturer/mini-metro-ev-llp-29320056" target="_blank"><img loading="lazy" src="https://www.franchiseindia.com/images/top-dealership/mini.webp" alt="" height="81" width="199"></a>
+                                <a href="https://www.dealerindia.com/manufacturer/mini-metro-ev-llp-29320056" target="_blank"><img loading="lazy" src="https://www.franchiseindia.com/images/top-dealership/mini.webp" alt="Mini Metro" height="81" width="199"></a>
                             </div>
                         </div>
                         <div class="card-body-section">
@@ -98,7 +98,7 @@
                     </div>
                     <div class="card card-m card-p-10">
                         <div class="brand-image-section">
-                            <div class="brand-main-section"><a href="https://www.dealerindia.com/manufacturer/reclinersindia-pvt-ltd-29320694" target="_blank"><img loading="lazy" src="https://www.franchiseindia.com/images/top-dealership/recliners.webp" alt="Chess KLUB" height="81" width="199"></a></div>
+                            <div class="brand-main-section"><a href="https://www.dealerindia.com/manufacturer/reclinersindia-pvt-ltd-29320694" target="_blank"><img loading="lazy" src="https://www.franchiseindia.com/images/top-dealership/recliners.webp" alt="Reclinersindia Pvt Ltd" height="81" width="199"></a></div>
                         </div>
                         <div class="card-body-section">
                             <p>
@@ -139,7 +139,7 @@
                     </div>
                     <div class="card card-m card-p-10">
                         <div class="brand-image-section">
-                            <div class="brand-main-section"><a href="https://www.dealerindia.com/manufacturer/drivex-mobility-pvt-ltd-29320732" target="_blank"><img loading="lazy" src="https://www.franchiseindia.com/images/top-dealership/drive.webp" alt="" height="81" width="199"></a></div>
+                            <div class="brand-main-section"><a href="https://www.dealerindia.com/manufacturer/drivex-mobility-pvt-ltd-29320732" target="_blank"><img loading="lazy" src="https://www.franchiseindia.com/images/top-dealership/drive.webp" alt="Drivex Mobility Pvt Ltd" height="81" width="199"></a></div>
                         </div>
                         <div class="card-body-section">
                             <p>

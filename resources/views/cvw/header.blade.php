@@ -199,7 +199,7 @@
                                                 alt="language-icon" height="15" width="15"></span>
                                         <div class="form-group form-group-sm">
                                             <select class="form-control form-control-custom-main"
-                                                onchange="changelanguage(value)">
+                                                onchange="changelanguage(value)" aria-label="Language">
                                                 {{-- <option hidden="">Language</option> --}}
                                                 <option value="{{ Config('constants.MainDomain') }}">EN - English</option>
                                                 <option value="{{ Config('constants.MainDomain') }}/hi" selected>HI - Hindi</option>
@@ -308,7 +308,7 @@
                                                 alt="language-icon" height="15" width="15"></span>
                                         <div class="form-group form-group-sm">
                                             <select class="form-control form-control-custom-main"
-                                                onchange="changelanguage(this.value)">
+                                                onchange="changelanguage(this.value)" aria-label="Language">
                                                 {{-- <option hidden="">Language</option> --}}
                                                 <option value="{{ Config('constants.MainDomain') }}" selected>EN - English</option>
                                                 <option value="{{ Config('constants.MainDomain') }}/hi">HI - Hindi</option>

@@ -20,10 +20,10 @@
                         <div class="brand-image-section">
                             <a href="https://www.businessex.com/startup/seeking-investment-for-adventure-and-tourism-market-place/lrgkm2" target="_blank">
                                 <picture>
-                                    <source media="(min-width: 1024px)" srcset="https://www.franchiseindia.com/images/bexhome/574844992.webp" alt="">
-                                    <source media="(min-width: 650px)" srcset="https://www.franchiseindia.com/images/bexhome/574844992.webp" alt="">
-                                    <source media="(min-width: 320px)" srcset="https://www.franchiseindia.com/images/bexhome/574844992.webp" alt="">
-                                        <img src="https://www.franchiseindia.com/images/bexhome/574844992.webp" alt="" height="141" width="250" loading="lazy"></picture>
+                                    <source media="(min-width: 1024px)" srcset="https://www.franchiseindia.com/images/bexhome/574844992.webp" alt="seeking-investment-for-adventure-and-tourism-market-place">
+                                    <source media="(min-width: 650px)" srcset="https://www.franchiseindia.com/images/bexhome/574844992.webp" alt="seeking-investment-for-adventure-and-tourism-market-place">
+                                    <source media="(min-width: 320px)" srcset="https://www.franchiseindia.com/images/bexhome/574844992.webp" alt="seeking-investment-for-adventure-and-tourism-market-place">
+                                        <img src="https://www.franchiseindia.com/images/bexhome/574844992.webp" alt="seeking-investment-for-adventure-and-tourism-market-place" height="141" width="250" loading="lazy"></picture>
                             </a>
                         </div>
                         <div class="card-body-section">
@@ -55,10 +55,10 @@
                         <div class="brand-image-section">
                             <a href="https://www.businessex.com/startup/seeking-investor-for-high-class-sports-and-education-training-center/b0chev" target="_blank">
                                 <picture>
-                                    <source media="(min-width: 1024px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp" alt="">
-                                    <source media="(min-width: 650px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp" alt="">
-                                    <source media="(min-width: 320px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp" alt="">
-                                        <img src="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp" alt="" height="141" width="250" loading="lazy"></picture>
+                                    <source media="(min-width: 1024px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp" alt="seeking-investor-for-high-class-sports-and-education-training-center">
+                                    <source media="(min-width: 650px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp" alt="seeking-investor-for-high-class-sports-and-education-training-center">
+                                    <source media="(min-width: 320px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp" alt="seeking-investor-for-high-class-sports-and-education-training-center">
+                                        <img src="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp" alt="seeking-investor-for-high-class-sports-and-education-training-center" height="141" width="250" loading="lazy"></picture>
                             </a>
                         </div>
                         <div class="card-body-section">
@@ -92,10 +92,10 @@
                         <div class="brand-image-section">
                             <a href="https://www.businessex.com/startup/seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system/f3asef" target="_blank">
                                 <picture>
-                                    <source media="(min-width: 1024px)" srcset="https://www.franchiseindia.com/images/bexhome/928479563.webp" alt="">
-                                    <source media="(min-width: 650px)" srcset="https://www.franchiseindia.com/images/bexhome/928479563.webp" alt="">
-                                    <source media="(min-width: 320px)" srcset="https://www.franchiseindia.com/images/bexhome/928479563.webp" alt="">
-                                        <img src="https://www.franchiseindia.com/images/bexhome/928479563.webp" alt="" height="141" width="250" loading="lazy"></picture>
+                                    <source media="(min-width: 1024px)" srcset="https://www.franchiseindia.com/images/bexhome/928479563.webp" alt="seeking-investor-for-high-class-sports-and-education-training-center">
+                                    <source media="(min-width: 650px)" srcset="https://www.franchiseindia.com/images/bexhome/928479563.webp" alt="seeking-investor-for-high-class-sports-and-education-training-center">
+                                    <source media="(min-width: 320px)" srcset="https://www.franchiseindia.com/images/bexhome/928479563.webp" alt="seeking-investor-for-high-class-sports-and-education-training-center">
+                                        <img src="https://www.franchiseindia.com/images/bexhome/928479563.webp" alt="seeking-investor-for-high-class-sports-and-education-training-center" height="141" width="250" loading="lazy"></picture>
                             </a>
                         </div>
                         <div class="card-body-section">
@@ -131,10 +131,10 @@
                         <div class="brand-image-section">
                             <a href="https://www.businessex.com/startup/looking-for-an-investor-for-health-care-industry/sibsjr" target="_blank">
                                 <picture>
-                                    <source media="(min-width: 1024px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp" alt="">
-                                    <source media="(min-width: 650px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp" alt="">
-                                    <source media="(min-width: 320px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp" alt="">
-                                        <img src="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp" alt="" height="141" width="250" loading="lazy"></picture>
+                                    <source media="(min-width: 1024px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp" alt="seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system">
+                                    <source media="(min-width: 650px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp" alt="seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system">
+                                    <source media="(min-width: 320px)" srcset="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp" alt="seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system">
+                                        <img src="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp" alt="seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system" height="141" width="250" loading="lazy"></picture>
                             </a>
                         </div>
                         <div class="card-body-section">

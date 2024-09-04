@@ -7,13 +7,13 @@
                 </p>
                 <div class="row justify-content-center">
                     <div class="modified-col col-xs-4 col-sm-4 col-md-3 col-xl-2 col-lg-2">
-                        <div class="our-group-site-main"><a href="https://www.entrepreneur.com/" target="_blank"><img loading="lazy" src="{{url('cvw/assets/img/entrepreneur.webp')}}" loading="lazy" class="img-b lazyloaded" alt="" width="179" height="104"></a></div>
+                        <div class="our-group-site-main"><a href="https://www.entrepreneur.com/" target="_blank"><img loading="lazy" src="{{url('cvw/assets/img/entrepreneur.webp')}}" loading="lazy" class="img-b lazyloaded" alt="entrepreneur" width="179" height="104"></a></div>
                     </div>
                     <div class="modified-col col-xs-4 col-sm-4 col-md-3 col-xl-2 col-lg-2">
-                        <div class="our-group-site-main"><a href="https://www.indianretailer.com/" target="_blank"><img loading="lazy" src="{{url('cvw/assets/img/indianretailer.webp')}}" loading="lazy" class="img-b lazyloaded" alt="" width="179" height="104"></a></div>
+                        <div class="our-group-site-main"><a href="https://www.indianretailer.com/" target="_blank"><img loading="lazy" src="{{url('cvw/assets/img/indianretailer.webp')}}" loading="lazy" class="img-b lazyloaded" alt="indianretailer" width="179" height="104"></a></div>
                     </div>
                     <div class="modified-col col-xs-4 col-sm-4 col-md-3 col-xl-2 col-lg-2">
-                        <div class="our-group-site-main"><a href="https://www.restaurantindia.in/" target="_blank"><img loading="lazy" src="{{url('cvw/assets/img/restaurantindia.webp')}}" loading="lazy" class="img-b lazyloaded" alt="" width="179" height="104"></a></div>
+                        <div class="our-group-site-main"><a href="https://www.restaurantindia.in/" target="_blank"><img loading="lazy" src="{{url('cvw/assets/img/restaurantindia.webp')}}" loading="lazy" class="img-b lazyloaded" alt="restaurantindia" width="179" height="104"></a></div>
                     </div>
                     <div class="modified-col col-xs-4 col-sm-4 col-md-3 col-xl-2 col-lg-2">
                         <div class="our-group-site-main"><a href="https://www.franchisenepal.com/" target="_blank"><img loading="lazy" src="{{url('cvw/assets/img/franchiseindia-nepal.webp')}}" loading="lazy" class="img-b lazyloaded" alt="franchise nepal" width="179" height="104"></a></div>
