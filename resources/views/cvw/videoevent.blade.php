@@ -188,7 +188,7 @@
                                                 </div>
                                             </div>
                                             <img class="lazyloaded" title="" alt="entrepreneur"
-                                                src="{{ $videos1[$secondVideoIndex]['imageurl'] }}" loading="lazy">
+                                                src="{{ $videos1[$secondVideoIndex]['imageurl'] }}" loading="lazy" width="355" height="198">
                                         </div>
                                         <div class="videcontent">
                                             <h2><a href="{{ $videos1[$secondVideoIndex]['url'] }}"
