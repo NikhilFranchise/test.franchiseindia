@@ -41,30 +41,48 @@ class BrandController extends Controller
         // dd($franDetails->company_name);
 
         // Check if company_name matches consecutively in the title of insights_list_new table
-        // $insightMatches = InsightList::query()
-        // ->select('news_id', 'title','insight_type')
-        // ->where('status', 1)
-        // ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
-        // ->get();
-        
-        // $dataFromB = DB::connection('mysqloi')
-        // ->table('article_list_en')
-        // ->select('id', 'title')
-        // ->where('status', 1)
-        // ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
-        // ->get();
+       // $insightMatches = [];
 
+        $insightMatches = InsightList::query()
+            ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
+            ->where('status', 1)
+            ->whereIn('insight_type', ['News', 'Article']) // Only fetch 'News' and 'Article'
+            ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
+            ->orderByDesc('created_at')
+            ->limit(3)
+            ->get()
+            ->map(function ($item) {
+                // Assuming you want the URL to be based on the slug
+                $item->url = url('insights/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
+                return $item;
+            });
+        //    dd($insightMatches);
+
+        $dataFromB = DB::connection('mysqloi')
+            ->table('article_list_en')
+            ->select('id', 'title','created_at')
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
+            ->limit(3)
+            ->get()
+            ->map(function ($item) {
+                // Assuming you want the URL to be based on the slug
+                $item->url = 'https://www.opportunityindia.com/article/' . strtolower(str_replace(' ', '-', $item->title)) . '-' . $item->id;
+                return $item;
+            });
+        // dd($dataFromB, $insightMatches);
         // // Convert both collections to arrays
-        // $insightMatchesArray = $insightMatches->toArray();
-        // $dataFromBArray = $dataFromB->toArray();
+        $insightMatchesArray = $insightMatches->toArray();
+        $dataFromBArray = $dataFromB->toArray();
 
         // // Combine both arrays into one
-        // $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
+        $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
 
         // // If you prefer to work with a collection, you can convert it back to a collection
-        // $combinedDataCollection = collect($combinedDataArray);
+        $combinedDataCollection = collect($combinedDataArray);
         // dd($combinedDataCollection);
-        
+
         //OI Redirection Start
         if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
             $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
@@ -203,10 +221,10 @@ class BrandController extends Controller
                 ->first();
 
             // return the investor data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits'));
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection'));
         } else {
             // return the data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData'));
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection'));
         }
     }
 
@@ -468,13 +486,13 @@ class BrandController extends Controller
             $updatedClick = $currentClick + 1;
             $newRatings = $currentRatings + $rate;
             $averageRating = round($newRatings / $updatedClick, 1);
-           // dd($updatedClick,$newRatings);
-           $rates = FranchisorLike::query()->where('franchisor_id', $franchisorId)
+            // dd($updatedClick,$newRatings);
+            $rates = FranchisorLike::query()->where('franchisor_id', $franchisorId)
                 ->update([
                     'brate' => $newRatings,
                     'bclick' => $updatedClick
                 ]);
-                //dd($rates,'helo');
+            //dd($rates,'helo');
         } else {
             // Insert new record
             FranchisorLike::query()->insert([

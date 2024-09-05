@@ -66,7 +66,7 @@ return [
             'driver' => 'mysql',
             'host' => env('DB_HOST_B', '127.0.0.1'), // Website B's DB host
             'port' => env('DB_PORT_B', '3306'),       // Website B's DB port
-            'database' => env('DB_DATABASE_B', 'old_oi'), // Website B's DB name
+            'database' => env('DB_DATABASE_B', 'oi.com'), // Website B's DB name
             'username' => env('DB_USERNAME_B', 'root'), // Website B's DB username
             'password' => env('DB_PASSWORD_B', ''), // Website B's DB password
             'charset' => 'utf8mb4',

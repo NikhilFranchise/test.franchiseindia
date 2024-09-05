@@ -185,34 +185,34 @@
     </div>
     <div class="catbottp">
         <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="like-action_{{ $i }} col-xs-4 col-sm-4 col-md-4 bd" style="cursor: pointer;">
+            <div class="like-action_{{ $loop->index }} col-xs-4 col-sm-4 col-md-4 bd" style="cursor: pointer;">
                 <a onclick ="likebtn('{{ $brandResult->franchisor_id }}',this.id);" class="like"
-                    id="likeButton_{{ $i }}">
+                    id="likeButton_{{ $loop->index }}">
                     <i class="fa fa-thumbs-up fa-lg" aria-hidden="true" id="like"></i></a>
                 {{--  <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>  --}}
-                <span id="likecount_{{ $i }}">
+                <span id="likecount_{{ $loop->index }}">
                     @if ($likes != 0)
                         {{ $likes }}
                     @endif
                 </span>
 
             </div>
-            <div class="seo_shareButton_{{ $i }} col-xs-4 col-sm-4 col-md-4 bd" style="cursor: pointer;">
+            <div class="seo_shareButton_{{ $loop->index }} col-xs-4 col-sm-4 col-md-4 bd" style="cursor: pointer;">
                 {{--  <i class="fa fa-share-alt fa-lg" aria-hidden="true"></i>  --}}
-                <a data-toggle="modal" data-target="#mysocial" id="seo_shareButton_{{ $i }}"
+                <a data-toggle="modal" data-target="#mysocial" id="seo_shareButton_{{ $loop->index }}"
                     data-url="{{ $brandUrl }}"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i></a>
             </div>
-            <div class="rate-action_{{ $i }} col-xs-4 col-sm-4 col-md-4 bd" style="cursor: pointer;">
+            <div class="rate-action_{{ $loop->index }} col-xs-4 col-sm-4 col-md-4 bd" style="cursor: pointer;">
                 {{--  <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>  --}}
-                <a data-toggle="modal" onclick="ratebtn('{{ $i }}','{{ $brandResult->franchisor_id }}')"
-                    id="rateButton_{{ $i }}">
+                <a data-toggle="modal" onclick="ratebtn('{{ $loop->index }}','{{ $brandResult->franchisor_id }}')"
+                    id="rateButton_{{ $loop->index }}">
                     @if ($rate == 5)
                         <i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>
                     @else
                         <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>
                     @endif
                 </a>
-                <span><strong id="rating_{{ $i }}">
+                <span><strong id="rating_{{ $loop->index }}">
                         {{--  @dd($rate);  --}}
                         @if ($rate != 0)
                             {{ $rate }}
