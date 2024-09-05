@@ -733,23 +733,242 @@
     </div>
     <p>&nbsp;</p>
 </div>
+<!-- recent activities -->
+<style>
+    .recent-activities {
+        font-family: 'Open Sans Regular', serif;
+        width: 100%;
+        margin-bottom: 30px;
+        height: auto;
+        background: #ECF1F524;
+        mix-blend-mode: normal;
+        backdrop-filter: blur(15px);
+        box-shadow: 0px 20px 53px -30px rgba(95, 102, 173, 0.566816);
+        border-radius: 10px;
+    }
+
+    .recent-activities h3 {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 22px;
+        line-height: 30px;
+        color: #FFFFFF;
+        margin-left: 66px;
+        margin-top: 40px;
+    }
+
+    .recent-activities label {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 22px;
+        /* identical to box height */
+        margin-left: 66px;
+        margin-top: 10px;
+        color: #FFFFFF;
+    }
+
+    .recent-activities .box {
+        width: 100%;
+        height: auto;
+        background: #fbfcfd;
+        margin-top: 35px;
+        padding-bottom: 0px;
+    }
+
+    .recent-activities .box .container {
+        width: 100%;
+        height: auto;
+        display: flex;
+    }
+
+    .recent-activities .box .container .recent-lines {
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+
+    .recent-activities .box .container .recent-lines .dot {
+        width: 14px;
+        height: 14px;
+        background: #D1D6E6;
+        border-radius: 7px;
+    }
+
+    .recent-activities .box .container .recent-lines .recent-line {
+        height: 84px;
+        width: 2px;
+        background: #D1D6E6;
+        margin-left: 5.3px;
+    }
+
+    .recent-activities .box .container .cards {
+        margin-left: 12px;
+        transform: translateY(-28px);
+        width: 100%;
+    }
+
+    .recent-activities .box .container .cards .card p {
+        margin-bottom: 0px;
+    }
+
+    .recent-activities .box .container .cards .card {
+        border: none;
+        width: 100%;
+        height: auto;
+        padding-top: 25px;
+        background: #FFFFFF;
+        border-radius: 10px;
+        margin-bottom: 0px;
+        box-shadow: none;
+        padding-left: :0px !important;
+    }
+
+    .recent-activities .box .container .cards .card.mid {
+        height: auto;
+    }
+
+    .recent-activities .box .container .cards .card .recent-date {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 19px;
+        margin-left: 5px;
+        margin-bottom: 5px;
+        color: #666666;
+    }
+
+    .recent-activities .box .container .cards .card p {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 22px;
+        color: #666666;
+        margin-left: 2px;
+    }
+
+    .recent-activities .box .container .cards .card a {
+        color: #666666;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 25px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+    }
+
+    .recent-activities .box .bottom {
+        width: 100%;
+        height: 107px;
+        background: #fff;
+        box-shadow: 0 0 2px #eeeeee50;
+        padding-top: 45px;
+    }
+
+    .recent-activities .box .bottom .btn {
+        width: 249px;
+        height: 62px;
+        background: #FFFFFF40;
+        mix-blend-mode: normal;
+        cursor: pointer;
+        border: 1px solid #8260D780;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 19px;
+        color: #2B2862;
+        margin-left: 53px;
+        transition: 0.3s;
+        background: #2B2862;
+        color: #fff;
+        border-color: #2B2862;
+    }
+
+    .recent-activities .box .bottom .btn:hover {
+        transform: scale(1.03);
+    }
+
+    .recent-line:last-child {
+        display: none;
+    }
+
+    .brand-tags {
+        padding-bottom: 20px;
+    }
+
+    @media screen and (max-width:768px) {
+        .recent-activities .box .container .cards .card a {
+            font-size: 15px;
+            line-height: 20px;
+            white-space: normal;
+            height: 44px;
+        }
+    }
+</style>
 <div id="investmentnew_tab" class="tab-section">
-    @php
-        $maincat = Config('constants.CategoryArr.' . $franDetails->ind_main_cat);
-    @endphp
-    <span><strong>Tags:</strong></span>
-    @foreach ($stateList as $state)
+
+    @if ($combinedDataCollection != null && $combinedDataCollection->isNotEmpty())
+        <h2 class="tab-sec-ttl">Recent Activities</h2>
+        <div class="recent-activities">
+            <div class="box">
+                <div class="container">
+                    <div class="recent-lines">
+                        @foreach ($combinedDataCollection as $index => $data)
+                            <div class="dot"></div>
+                            @if ($index < count($combinedDataCollection) - 1)
+                                <div class="recent-line"></div>
+                            @endif
+                        @endforeach
+                    </div>
+                    <div class="cards">
+                        @foreach ($combinedDataCollection as $data)
+                            <div class="card {{ $loop->iteration == 2 ? 'mid' : '' }}">
+                                @if (is_array($data))
+                                    <div class="recent-date">{{ date('d-M-Y', strtotime($data['created_at'])) }}</div>
+                                    <p><a href="{{ $data['url'] }}" target="_blank">{{ $data['title'] }}</a></p>
+                                @elseif(is_object($data))
+                                    <div class="recent-date">{{ date('d-M-Y', strtotime($data->created_at)) }}</div>
+                                    <p><a href="{{ $data->url }}" target="_blank">{{ $data->title }}</a></p>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    @else
+        <style>
+            .tab-sec-ttl,
+            .recent-activities {
+                display: none;
+            }
+        </style>
+    @endif
+    <div class="brand-tags">
+        <span><strong>Tags:</strong></span>
         @php
-            // Find the key of the matching state in stateArr
-            $stateKey = array_search($state['state'], Config::get('location.stateArr'));
+            $maincat = Config('constants.CategoryArr.' . $franDetails->ind_main_cat);
         @endphp
-        @if ($stateKey !== false)
-            {{-- https://www.franchiseindia.com/business-opportunities/education-in-andaman-and-nicobar/mc-3/loc-35 --}}
-            {{-- Generate the URL for the matching state --}}
-            <a
-                href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc' . $stateKey) }}">
-                {{ $maincat . ' Business Franchise in ' . $state['state'] . ' || ' }}
-            </a>
-        @endif
-    @endforeach
+        @foreach ($stateList as $state)
+            @php
+                // Find the key of the matching state in stateArr
+                $stateKey = array_search($state['state'], Config::get('location.stateArr'));
+            @endphp
+            @if ($stateKey !== false)
+                {{-- https://www.franchiseindia.com/business-opportunities/education-in-andaman-and-nicobar/mc-3/loc-35 --}}
+                {{-- Generate the URL for the matching state --}}
+                <a
+                    href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc' . $stateKey) }}">
+                    {{ $maincat . ' Business Franchise in ' . $state['state'] }}
+                </a> .
+            @endif
+        @endforeach
+    </div>
 </div>
+<!-- recent activities -->
