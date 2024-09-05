@@ -1,4 +1,4 @@
-googletag.cmd.push(function () {
+{{-- googletag.cmd.push(function () {
 
 googletag.display('div-gpt-ad-1553254858292-0');
 googletag.display('div-gpt-ad-1553583946684-0');
@@ -61,4 +61,4 @@ googletag.display('div-gpt-ad-1536149771913-0');
 googletag.display('div-gpt-ad-1499086858072-0');
 googletag.display('div-gpt-ad-1504330473217-0');
 @endif
-});
+}); --}}
