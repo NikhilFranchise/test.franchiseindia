@@ -427,22 +427,6 @@
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/swiper/js/swiper-bundle.min.js"></script>
 @include('cvw.loginmodal')
 <script>
-    if (window.screen.width < 600) {
-            document.addEventListener("DOMContentLoaded",function(){
-                var n=!1;window.addEventListener("scroll",function()
-                {100<window.scrollY&&function(){
-                    if(!n){var e=document.createElement("link");e.rel="stylesheet",e.href="cvw/stylemix.css",document.head.appendChild(e),n=!0,console.log("CSS file loaded.")}}()})});
-        }
-    
-        if (window.screen.width > 600) {
-            document.addEventListener("DOMContentLoaded",function(){
-                var n=!1;window.addEventListener("scroll",function()
-                {100<window.scrollY&&function(){
-                    if(!n){var e=document.createElement("link");e.rel="stylesheet",e.href="cvw/stylemix.css",document.head.appendChild(e),n=!0,console.log("CSS file loaded.")}}()})});
-        }
-        </script>
-    
-<script>
     function frg_panel() {
     $("#lg-pnl").hide(), $("#frg-pnl").show();
 }
@@ -912,22 +896,6 @@ function prepareList(list) {
         })
     })
 </script>
-
-<script>
-if (window.screen.width < 600) {
-    	document.addEventListener("DOMContentLoaded",function(){
-            var n=!1;window.addEventListener("scroll",function()
-            {100<window.scrollY&&function(){
-                if(!n){var e=document.createElement("link");e.rel="stylesheet",e.href="cvw/stylemix.css",document.head.appendChild(e),n=!0,console.log("CSS file loaded.")}}()})});
-    }
-
-    if (window.screen.width > 600) {
-    	document.addEventListener("DOMContentLoaded",function(){
-            var n=!1;window.addEventListener("scroll",function()
-            {100<window.scrollY&&function(){
-                if(!n){var e=document.createElement("link");e.rel="stylesheet",e.href="cvw/stylemix.css",document.head.appendChild(e),n=!0,console.log("CSS file loaded.")}}()})});
-    }
-    </script>
 
 <script>
     var swiper = new Swiper(".trendvideo .swiper-container", {
