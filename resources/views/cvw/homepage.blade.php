@@ -1130,18 +1130,18 @@ function getCookie() {
 		@if(in_array($query, $southCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfrobengaluru')
+                    @include('includes.banners.popupfroahmedabad')
                 @endif
             @else
-                @include('includes.banners.popupfrobengaluru')
+                @include('includes.banners.popupfroahmedabad')
             @endif
 		@elseif(in_array($query, $eastCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfranchiseexpokolkata')
+                    @include('includes.banners.popupfroahmedabad')
                 @endif
             @else
-                @include('includes.banners.popupfranchiseexpokolkata')
+                @include('includes.banners.popupfroahmedabad')
             @endif
 
 		@elseif(in_array($query, $westCodes))
@@ -1156,28 +1156,28 @@ function getCookie() {
 		@elseif(in_array($query, $northCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfrobengaluru')
+                    @include('includes.banners.popupfroahmedabad')
                 @endif
             @else
-                @include('includes.banners.popupfrobengaluru')
+                @include('includes.banners.popupfroahmedabad')
             @endif
 
 		@elseif(in_array($query, $centerCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfranchiseexpolucknow')
+                    @include('includes.banners.popupfroahmedabad')
                 @endif
             @else
-                @include('includes.banners.popupfranchiseexpolucknow')
+                @include('includes.banners.popupfroahmedabad')
             @endif
 
 		@else
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfrobengaluru')
+                    @include('includes.banners.popupfroahmedabad')
 				@endif
 			@else
-		        @include('includes.banners.popupfrobengaluru')
+		        @include('includes.banners.popupfroahmedabad')
 			@endif
 		@endif
     @endif
