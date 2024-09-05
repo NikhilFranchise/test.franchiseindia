@@ -12,11 +12,7 @@
 
 
 <h4 class="static-subheadnew">General</h4>
-<<<<<<< HEAD
-<p class="static-txt-ter" style="margin-bottom:25px;">The domain name <a href="https://www.franchiseindia.com/" target="_blank">www.franchiseindia.com</a> (the "Site") is owned and presented by Franchise India Holdings Limited ("Company"/"we"/"us"/"our"which shall mean to include its affiliated, subsidiaries and associated companies and successors and assigns). These terms and conditions of the Site("Terms") govern use of the Site and are a binding contract between Company, the Site owner and you, the user. By accessing, browsing and/or using the Site, you acknowledge that you have read, understood and agree to be bound by these Terms and Conditions. The services that are being provided by Company vide the Site are subject to the conditions as mentioned herein.</p>
-=======
-<p class="static-txt-ter" >The domain name <a href="https://www.franchiseindia.com/" style="text-decoration:underline;" target="_blank">www.franchiseindia.com</a> (the "Site") is owned and presented by Franchise India. Com Limited (“Company"/"we"/"us"/"our"which shall mean to include its affiliated, subsidiaries and associated companies and successors and assigns). These terms and conditions of the Site("Terms") govern use of the Site and are a binding contract between Company, the Site owner and you, the user. By accessing, browsing and/or using the Site, you acknowledge that you have read, understood and agree to be bound by these Terms and Conditions. The services that are being provided by Company vide the Site are subject to the conditions as mentioned herein.</p>
->>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
+<p class="static-txt-ter" style="margin-bottom:25px;">The domain name <a href="https://www.franchiseindia.com/" style="text-decoration:underline;" target="_blank">www.franchiseindia.com</a> (the "Site") is owned and presented by Franchise India. Com Limited (“Company"/"we"/"us"/"our"which shall mean to include its affiliated, subsidiaries and associated companies and successors and assigns). These terms and conditions of the Site("Terms") govern use of the Site and are a binding contract between Company, the Site owner and you, the user. By accessing, browsing and/or using the Site, you acknowledge that you have read, understood and agree to be bound by these Terms and Conditions. The services that are being provided by Company vide the Site are subject to the conditions as mentioned herein.</p>
 
 
 <h4 class="static-subheadnew">Disclaimer Notice:</h4>
@@ -127,7 +123,20 @@
 <ul class="page-list">
 <li>We reserve the right to amend or modify these Terms and Conditions at any time without notice.</li>
 </ul>
+<h4 class="static-subheadnew">www.franchiseindia.com Terms & Policies:</h4>
+<ul class="page-list">
+<li><a href="https://www.franchiseindia.com/pdf/policies/Archival-Policy.pdf" style="text-decoration:underline;" target="_blank">Archival Policy</a></li>
+<li><a href="https://www.franchiseindia.com/pdf/policies/code-of-conduct.pdf" style="text-decoration:underline;" target="_blank">Code of conduct</a></li>
+<li><a href="https://www.franchiseindia.com/pdf/policies/FRANCHISEINDIA_Policy-fr-determining-group-companies.pdf" style="text-decoration:underline;" target="_blank">FRANCHISEINDIA_Policy fr determining group companies</a></li>
+<li><a href="https://www.franchiseindia.com/pdf/policies/Material-Policy_Franchiseindia.pdf" style="text-decoration:underline;" target="_blank">Material Policy_Franchiseindia</a></li>
+<li><a href="https://www.franchiseindia.com/pdf/policies/Policy-and-procedures-for-inquiry-in-case-of-leak-of-UPSI_FRANCHISE.pdf" style="text-decoration:underline;" target="_blank">Policy and procedures for inquiry in case of leak of UPSI_FRANCHISE</a></li>
+<li><a href="https://www.franchiseindia.com/pdf/policies/Policy-on-Material-Subsidiaries.pdf" style="text-decoration:underline;" target="_blank">Policy on Material Subsidiaries</a></li>
+<li><a href="https://www.franchiseindia.com/pdf/policies/Policy-for-Determination-of-Legitimate-purposes_FRANCHISE.pdf" style="text-decoration:underline;" target="_blank">Policy for Determination of Legitimate purposes_FRANCHISE</a></li>
+<li><a href="https://www.franchiseindia.com/pdf/policies/Policy-on-Preservation-of-records.pdf" style="text-decoration:underline;" target="_blank">Policy on Preservation of records</a></li>
+<li><a href="https://www.franchiseindia.com/pdf/policies/Related-Party-Tranaction-Policy_FRANCHISE.pdf" style="text-decoration:underline;" target="_blank">Related Party Tranaction Policy_FRANCHISE</a></li>
+<li><a href="https://www.franchiseindia.com/pdf/policies/vigil-mechanism-&-whistle-blower-policy.pdf" style="text-decoration:underline;" target="_blank">Vigil mechanism & whistle blower policy</a></li>
 
+</ul>
 
 <h4 class="static-subheadnew">Contact Information:</h4>
 <ul class="page-list">

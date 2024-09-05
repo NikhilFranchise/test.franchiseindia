@@ -27,7 +27,6 @@
 <meta name="description" content="@yield('seoDesc', 'Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.')" />
 <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india')" />
 {{-- <link href="@yield('canonicalUrl', Request::get('page') ? url()->full() : url()->full())" rel="canonical"> --}}
-
 @php
     $canonicalUrl = url()->current();
     $queryParams = request()->query();
@@ -46,9 +45,6 @@
     }
 @endphp
 <link href="{{ $canonicalUrl . $queryString }}" rel="canonical">
-
-
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <link rel="shortcut icon" href="https://www.franchiseindia.com/favicon.ico" type="image/x-icon" />
 <meta property="fb:pages" content="118224094883095" />
@@ -56,7 +52,7 @@
 <meta name="google-site-verification" content="8W9CXigRDmfNyf8vOfkZBefougI9sPXO4xvDBFLIjaw" />
 <meta name="y_key" content="0f4f718975ac23ed"/>
 <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
-<meta content="@yield('robot','noindex,nofollow')" name="robots"/>
+<meta content="@yield('robot','index,follow')" name="robots"/>
 @if($__env->yieldContent('prev'))
     <link href="@yield('prev')" rel="prev">
     <link href="@yield('next')" rel="next">
@@ -129,15 +125,8 @@
 @endphp
 {{-- @if($ampFlag == 1)
     <link href="{{$ampUrl}}" rel="amphtml">
-<<<<<<< HEAD
-@endif
-
- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
- <script src="{{ url('js/validationInsta.js?ver='.date('d'))}}"></script>
-=======
 @endif --}}
 {{-- <link rel="preload" href="{{ url('js/jquery-3.1.1.min.js') }}" as="script"> --}}
->>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 <!-- Scrollbar Custom CSS -->
 <link rel="stylesheet" href="{{url('newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css')}}" >
 
@@ -149,13 +138,9 @@
 <link rel="preload" href="{{ url('wle_tracker.js')}}" as="script">
 <link rel="preload" href="{{ url('js/bootstrap-filestyle.min.js')}}" as="script">
 <link rel="preload" href="{{ url('js/js.cookie.min.js')}}" as="script">
-<<<<<<< HEAD
-
-=======
 {{--  <link rel="preload" href="{{ url('js/validationInsta.js?ver='.date('d'))}}" as="script">  --}}
->>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 <link rel="preload" href="{{ url('js/bootstrap.min.js')}}" as="script">
-{{--  <link rel="preload" href="{{ url('js/custom.js?ver='.date('d'))}}" as="script">  --}}
+<link rel="preload" href="{{ url('js/custom.js?ver='.date('d'))}}" as="script">
 <link rel="preload" href="{{ url('js/lozad.min.js')}}" as="script">
 <link rel="preload" href="{{ url('js/bootstrap-typeahead.js')}}" as="script">
 @desktop
@@ -257,8 +242,8 @@ $(document).ready(function(){
 
   gtag('config', 'G-8MKFEZLR18');
 </script>
-
-{{-- <script type="text/javascript">
+{{-- 
+<script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;

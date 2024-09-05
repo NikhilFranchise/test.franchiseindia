@@ -571,13 +571,8 @@ a.desklink{display: none;}
 
 <tr>
     <td>23</td>
-<<<<<<< HEAD
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/manyavar.97335">
         <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/manyavar_1.gif" alt="Manyavar"> Manyavar</a></td>
-=======
-    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
-        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/manyavar.gif" alt="Manyavar"> Manyavar</a></td>
->>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
     <td>Retail</td>
     <td>Rs. 40 Lac - 50 Lac</td>   
     <td>
@@ -3589,13 +3584,8 @@ a.desklink{display: none;}
 
 <tr>
     <td>6</td>
-<<<<<<< HEAD
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/manyavar.97335">
         <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/manyavar_1.gif" alt="Manyavar"> Manyavar</a></td>
-=======
-    <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all">
-        <img src="https://www.franchiseindia.com/images/top-100-brand-logos/2024/manyavar.gif" alt="Manyavar"> Manyavar</a></td>
->>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
     <td>Retail</td>
     <td>Rs. 40 Lac - 50 Lac</td>   
     <td>

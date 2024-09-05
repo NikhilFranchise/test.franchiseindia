@@ -273,7 +273,7 @@
                         <span>10000+ Business</span>
                         options
                     </h1>
-                    <h2>World&apos;s highest visited franchise website network</h2>
+                    <h2>World's highest visited franchise website network</h2>
                 </div>
                 <div class="col-md-12">
 
@@ -478,11 +478,8 @@
 
     </section>
 @endif
-<<<<<<< HEAD
-
-=======
 <script type="text/javascript">
-
+    
     if (screen.width < 767) {
         $(document).ready(function() {
             setTimeout(function() {
@@ -621,7 +618,7 @@
             }
         });
     }
-
+    
     $(document).ready(function() {
         $('#searchoptnew').click(function() {
             $('.searchblknew').show(400);
@@ -649,7 +646,6 @@
         });
     });
 </script>
->>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 
 <style>
     .hero-searh .nav-tabs a {

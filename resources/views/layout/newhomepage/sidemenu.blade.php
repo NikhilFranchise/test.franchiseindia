@@ -399,6 +399,8 @@
                     & पुस्तकें</a>
             </li>
             <li><a href="https://www.franchiseindia.com/event/" target="_blank">प्रतिस्पर्धा</a></li>
+        <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">अब भुगतान करें</a></li>
+
         </ul>
         <ul class="list-unstyled components">
             <li><a href="https://www.franchiseindia.com/investor/create" target="_blank">निवेशक साइनअप</a></li>
@@ -729,16 +731,6 @@
             <div class="busheadmebu"><a target="_blank" href="/categoryall">Franchise
                     Categories</a>
             </div>
-<<<<<<< HEAD
-        </li>
-        <li>
-            <div class="contact-us-section">
-                Toll Free 1800 102 2007799
-            </div>
-        </li>
-    </ul>
-</nav>
-=======
             @php
                 $categoryArr = Config('constants.CategoryArr');
                 asort($categoryArr);
@@ -774,7 +766,7 @@
                                                     ),
                                                     true,
                                                 );
-                                            @endphp 
+                                            @endphp
                                             @if (is_array($sscJson) && in_array($key2, $sscJson))
                                                 <li>
                                                     <a target="_blank"
@@ -855,6 +847,8 @@
                     &amp; Books</a>
             </li>
             <li><a href="https://www.franchiseindia.com/event/" target="_blank">Event</a></li>
+        <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a></li>
+
         </ul>
         <ul class="list-unstyled components">
             <li><a href="https://www.franchiseindia.com/investor/create" target="_blank">Investor Signup</a></li>
@@ -908,5 +902,4 @@
             </li>
         </ul>
     </nav>
->>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
 @endif
