@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="card-info-amt"></div>
                             </div>
-                            <div class="card-info-amt">
+                            <div class="plc">
                                 Andhra Pradesh, Jammu & Kashmir +32
                             </div>
                             <div class="link-section"><a href="https://www.dealerindia.com/manufacturer/mini-metro-ev-llp-29320056" target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a></div>
@@ -172,7 +172,7 @@
                                 </div>
                                 <div class="card-info-amt"></div>
                             </div>
-                            <div  class="card-info-amt">
+                            <div  class="plc">
                                 Karnataka, Uttar Pradesh
                             </div>
                             <div class="link-section"><a href="https://www.dealerindia.com/manufacturer/drivex-mobility-pvt-ltd-29320732" target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a></div>

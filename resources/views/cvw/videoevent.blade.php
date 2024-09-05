@@ -10,7 +10,7 @@
                         <li>
                             <div class="eshowblk">
                                 <div class="eshowimg"><a href="https://www.franchiseindia.net/fro/ahmedabad/" target="_blank">
-                                <img loading="lazy" class="" alt="FROEXPO Gujarat" src="{{url('cvw/event-videos/fro-gujarat.webp')}}" width="345" height="208"></a></div>
+                                <img loading="lazy" alt="FROEXPO Gujarat" src="{{url('cvw/event-videos/fro-gujarat.webp')}}" width="345" height="208"></a></div>
                                 <div class="eshowcontent">
                                     <h2>FROEXPO Ahmedabad</h2>
                                     <div class="eshowtxt">21-22 September 2024, Mahatma Mandir Convention...</div>
@@ -21,25 +21,50 @@
                         </li>
                         <li>
                             <div class="eshowblk">
-                                <div class="eshowimg"><a href="https://www.franchiseindia.net/fro/ahmedabad/" target="_blank">
-                                    <img loading="lazy" class="" alt="FROEXPO Gujarat" src="https://www.franchiseindia.com/images/fro-gujarat.webp" width="345" height="208"></a></div>
+                                <div class="eshowimg"><a href="https://www.restaurantindia.in/congress/" target="_blank">
+                                    <img loading="lazy" alt="Indian Restaurant Congress & Awards 2024" 
+                                    src="{{url('cvw/event-videos/restaurant.webp')}}" width="345" height="208"></a></div>
                                 <div class="eshowcontent">
-                                    <h2>FROEXPO Ahmedabad</h2>
-                                    <div class="eshowtxt">21-22 September 2024, Mahatma Mandir Convention...</div>
-                                    <div class="link-section text-capitalize"><a href="{{url('cvw/event-videos/fro-gujarat.webp')}}" target="_blank">Registration</a></div>
-                                    <div class="eventhotline text-capitalize">Hotline:<span>+91 9311254088</span></div>
+                                    <h2>Indian Restaurant Congress & Awards 2024</h2>
+                                    <div class="eshowtxt">8-9 October 2024, YASHOBHOOMI, (IICC), New Delhi</div>
+                                    <div class="link-section text-capitalize"><a href="https://www.restaurantindia.in/congress/" target="_blank">Registration</a></div>
+                                    <div class="eventhotline text-capitalize">Hotline:<span>+91 966769838</span></div>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <div class="eshowblk">
-                                <div class="eshowimg"><a href="https://www.franchiseindia.net/fro/ahmedabad/" target="_blank">
-                                    <img loading="lazy" class="" alt="FROEXPO Gujarat" src="{{url('cvw/event-videos/fro-gujarat.webp')}}" width="345" height="208"></a></div>
+                                <div class="eshowimg"><a href="https://www.franglobal.com/oman-franchise-distribution-show/" target="_blank">
+                                    <img loading="lazy" alt="Oman Franchise Show" src="{{url('cvw/event-videos/fro-gujarat.webp')}}" width="345" height="208"></a></div>
                                 <div class="eshowcontent">
-                                    <h2>FROEXPO Ahmedabad</h2>
-                                    <div class="eshowtxt">21-22 September 2024, Mahatma Mandir Convention...</div>
-                                    <div class="link-section text-capitalize"><a href="https://www.franchiseindia.net/fro/ahmedabad/" target="_blank">Registration</a></div>
-                                    <div class="eventhotline text-capitalize">Hotline:<span>+91 9311254088</span></div>
+                                    <h2>Oman Franchise Show</h2>
+                                    <div class="eshowtxt">13 October 2024, Sheraton Oman Hotel</div>
+                                    <div class="link-section text-capitalize"><a href="https://www.franglobal.com/oman-franchise-distribution-show/" target="_blank">Registration</a></div>
+                                    <div class="eventhotline text-capitalize">Hotline:<span>+91 9717683838</span></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="eshowblk">
+                                <div class="eshowimg"><a href="https://www.franchiseindia.com/expo/mumbai/" target="_blank">
+                                    <img loading="lazy" alt="Franchise India 2024 Mumbai" src="{{url('cvw/event-videos/franchise-india.webp')}}" width="345" height="208"></a></div>
+                                <div class="eshowcontent">
+                                    <h2>Franchise India 2024 Mumbai</h2>
+                                    <div class="eshowtxt">29-30 November 2024, Jio World Convention Centre</div>
+                                    <div class="link-section text-capitalize"><a href="https://www.franchiseindia.com/expo/mumbai/" target="_blank">Registration</a></div>
+                                    <div class="eventhotline text-capitalize">Hotline:<span>+91 9311148342</span></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="eshowblk">
+                                <div class="eshowimg"><a href="https://www.irec.asia/mumbai/" target="_blank">
+                                    <img loading="lazy" alt="IReC 2024" src="{{url('cvw/event-videos/irec.webp')}}" width="345" height="208"></a></div>
+                                <div class="eshowcontent">
+                                    <h2>IReC 2024</h2>
+                                    <div class="eshowtxt">29-30 November 2024, Jio World Convention Centre</div>
+                                    <div class="link-section text-capitalize"><a href="https://www.irec.asia/mumbai/" target="_blank">Registration</a></div>
+                                    <div class="eventhotline text-capitalize">Hotline:<span>+91 9310438783</span></div>
                                 </div>
                             </div>
                         </li>

@@ -218,8 +218,8 @@
                                             onClick="frg_panel()">Forgot
                                             Password</a>
                                     </div>
-                                </form>
-                                <div class="popfi">
+
+                                    <div class="popfi">
                                     <div class="signpop"></div>
                                     <div class="popleft">
                                         <span>or Sign in With</span>
@@ -233,6 +233,8 @@
                                     <div class="popright">New User <a href="#" id="loginselect1">Click here</a>
                                     </div>
                                 </div>
+                                </form>
+                                
                             </div>
                             <div role="tabpanel" class="tab-pane active" id="register">
                                 <form class="form-horizontal" id="registration">
