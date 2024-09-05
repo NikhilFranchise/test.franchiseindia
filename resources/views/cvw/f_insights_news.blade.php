@@ -29,11 +29,11 @@
                                         target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक पढ़ें' : 'Read More' }}</a>
                                         <div class="d-flex author-section">
                                             <div class="author-info">
-                                                <ul class="author-share">
+                                                {{-- <ul class="author-share">
                                                     <li><a href="http://www.facebook.com/sharer.php?u={{ url('https://www.opportunityindia.com/article/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][0]['title'], $articles['article'][0]['id'])) }}"><img loading="lazy" src="https://www.franchiseindia.com/newhomepage/assets/img/facebookx2.png" alt="Facebook" width="16" height="16"></a></li>
                                                     <li><a href="https://twitter.com/share?url={{ url('https://www.opportunityindia.com/article/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][0]['title'], $articles['article'][0]['id'])) }}"><img loading="lazy" width="16" height="16" src="https://www.franchiseindia.com/newhomepage/assets/img/twitterx2.png" alt="twitter"></a></li>
                                                     <li><a href="http://www.linkedin.com/shareArticle?mini=true&url={{ url('https://www.opportunityindia.com/article/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][0]['title'], $articles['article'][0]['id'])) }}"><img loading="lazy" src="https://www.franchiseindia.com/newhomepage/assets/img/linkedinx2.png" alt="linkedin" width="16" height="16"></a></li>
-                                                </ul>
+                                                </ul> --}}
                                             </div>
                                         </div>
                                 </div>
@@ -83,11 +83,11 @@
                                     target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक पढ़ें' : 'Read More' }}</a>
                                 <div class="d-flex author-section">
                                     <div class="author-info">
-                                        <ul class="author-share">
+                                        {{-- <ul class="author-share">
                                             <li><a href="http://www.facebook.com/sharer.php?u={{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][5]['title'], $articles['article'][5]['id']) }}"><img loading="lazy" src="https://www.franchiseindia.com/newhomepage/assets/img/facebookx2.png" alt="Facebook" width="16" height="16"></a></li>
                                             <li><a href="https://twitter.com/share?url={{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][5]['title'], $articles['article'][5]['id']) }}"><img loading="lazy" width="16" height="16" src="https://www.franchiseindia.com/newhomepage/assets/img/twitterx2.png" alt="twitter"></a></li>
                                             <li><a href="http://www.linkedin.com/shareArticle?mini=true&url={{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][5]['title'], $articles['article'][5]['id']) }}"><img loading="lazy" src="https://www.franchiseindia.com/newhomepage/assets/img/linkedinx2.png" alt="linkedin" width="16" height="16"></a></li>
-                                        </ul>
+                                        </ul> --}}
                                     </div>
                                 </div>
                         </div>

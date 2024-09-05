@@ -1,3 +1,4 @@
+@mobile
 <section class="video-event video-event-mobile">
     <div class="container">
         <div class="row">
@@ -135,6 +136,9 @@
         </div>
     </div>
 </section>
+@endmobile
+
+@desktop
 <section class="video-event video-event-desktop">
     <div class="container">
         <div class="padset">
@@ -147,7 +151,7 @@
                         <li data-target="#myCarouselvideo" data-slide-to="0" class="active"></li>
                         <li data-target="#myCarouselvideo" data-slide-to="1"></li>
                         <li data-target="#myCarouselvideo" data-slide-to="2"></li>
-                        <li data-target="#myCarouselvideo" data-slide-to="3"></li>
+                        {{-- <li data-target="#myCarouselvideo" data-slide-to="3"></li> --}}
                     </ol>
                     <div class="carousel-inner">
                         @php
@@ -240,43 +244,7 @@
                 </div>
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="eshowblk">
-                                <div class="eshowimg"><a href="https://www.irec.asia/mumbai/" target="_blank">
-                                    <img loading="lazy" class="" alt="IReC 2024" src="https://www.franchiseindia.com/images/irec.webp" width="345" height="208"></a></div>
-                                <div class="eshowcontent">
-                                    <h2>IReC 2024</h2>
-                                    <div class="eshowtxt">29-30 November 2024, Jio World Convention Centre</div>
-                                    <div class="link-section text-capitalize"><a href="https://www.irec.asia/mumbai/" target="_blank">Registration</a></div>
-                                    <div class="eventhotline text-capitalize">Hotline:<span>+91 9310438783</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-slide" data-swiper-slide-index="0" style="width:367px;margin-right:30px">
-                            <div class="eshowblk">
-                                <div class="eshowimg"><a href="https://www.franchiseindia.net/fro/bengaluru/" target="_blank">
-                                    <img loading="lazy" class="" alt="FROEXPO Bengaluru" src="https://www.franchiseindia.com/images/fro-bengaluru.webp" width="345" height="208"></a></div>
-                                <div
-                                    class="eshowcontent">
-                                    <h2>FROEXPO Bengaluru</h2>
-                                    <div class="eshowtxt">31 Aug - 1 Sep 2024, BIEC, Bengaluru, Karnataka</div>
-                                    <div class="link-section text-capitalize"><a href="https://www.franchiseindia.net/fro/bengaluru/" target="_blank">Registration</a></div>
-                                    <div class="eventhotline text-capitalize">Hotline:<span>+91 9311254088</span></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide" data-swiper-slide-index="1" style="width:367px;margin-right:30px">
-                        <div class="eshowblk">
-                            <div class="eshowimg"><a href="https://www.entrepreneurindia.com/" target="_blank">
-                                <img loading="lazy" class="" alt="Entrepreneur 2024" src="https://www.franchiseindia.com/images/entrepreneur.webp" width="345" height="208"></a></div>
-                            <div class="eshowcontent">
-                                <h2>Entrepreneur 2024</h2>
-                                <div class="eshowtxt">4 September 2024, Bharat Mandapam, Delhi</div>
-                                <div class="link-section text-capitalize"><a href="https://www.entrepreneurindia.com/" target="_blank">Registration</a></div>
-                                <div class="eventhotline text-capitalize">Hotline:<span>+91 7290037182</span></div>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="swiper-slide swiper-slide-prev" data-swiper-slide-index="2" style="width:367px;margin-right:30px">
                         <div class="eshowblk">
                             <div class="eshowimg"><a href="https://www.franchiseindia.net/fro/ahmedabad/" target="_blank">
@@ -327,18 +295,6 @@
                     </div>
                 </div>
             </div>
-            <div class="swiper-slide swiper-slide-duplicate" data-swiper-slide-index="0" style="width:367px;margin-right:30px">
-                <div class="eshowblk">
-                    <div class="eshowimg"><a href="https://www.franchiseindia.net/fro/bengaluru/" target="_blank">
-                        <img class="" loading="lazy" alt="FROEXPO Bengaluru" src="https://www.franchiseindia.com/images/fro-bengaluru.webp" width="345" height="208"></a></div>
-                    <div class="eshowcontent">
-                        <h2>FROEXPO Bengaluru</h2>
-                        <div class="eshowtxt">31 Aug - 1 Sep 2024, BIEC, Bengaluru, Karnataka</div>
-                        <div class="link-section text-capitalize"><a href="https://www.franchiseindia.net/fro/bengaluru/" target="_blank">Registration</a></div>
-                        <div class="eventhotline text-capitalize">Hotline:<span>+91 9311254088</span></div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets"><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span><span class="swiper-pagination-bullet"
                 tabindex="0" role="button" aria-label="Go to slide 3"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 4"></span><span class="swiper-pagination-bullet"
@@ -347,3 +303,4 @@
     </div>
     </div>
 </section>
+@enddesktop

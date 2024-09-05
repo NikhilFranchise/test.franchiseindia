@@ -27,7 +27,6 @@
         gtag('js', new Date());
         gtag('config', 'AW-991358906');
     </script>
-<noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script async>
 
     (function(w, d, s, l, i) {
@@ -101,6 +100,8 @@
 </style>
 </head>
 <body id="dotcom">
+<noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
     @php
     $auth = new \Illuminate\Support\Facades\Auth();
     @endphp
