@@ -57,7 +57,7 @@ class BrandController extends Controller
                 return $item;
             });
         //    dd($insightMatches);
-            $apiUrl = 'http://127.0.0.1:2222/api/article/apibrandnamedataforfi';
+            $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
             $companyName = $franDetails->company_name;
             $response= Http::get($apiUrl,['company_name'=>$companyName]);
             if($response){
