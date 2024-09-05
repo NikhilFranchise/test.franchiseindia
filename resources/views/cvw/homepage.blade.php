@@ -423,7 +423,7 @@
 
 
 
-<script src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js" defer></script>
+<script src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js"></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/swiper/js/swiper-bundle.min.js"></script>
 @include('cvw.loginmodal')
 <script>

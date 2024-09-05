@@ -32,9 +32,9 @@
                                 <div class="card-info-amt-sale">15 Crores</div>
                             </div>
                             <div class="d-flex sale-bg-info">
-                                <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif" loading="lazy" width="13" height="13" alt="phone"> Phone</div>
-                                <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif" loading="lazy" width="13" height="13" alt="email"> Email</div>
-                                <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif" loading="lazy" width="13" height="13" alt="map"> Bengaluru</div>
+                                <div class="sale-bg-phone"><img src="{{url('cvw/images/f-phone.webp')}}" loading="lazy" width="13" height="13" alt="phone"> Phone</div>
+                                <div class="sale-bg-email"><img src="{{url('cvw/images/f-email.webp')}}" loading="lazy" width="13" height="13" alt="email"> Email</div>
+                                <div class="sale-bg-map"><img src="{{url('cvw/images/f-map.webp')}}" loading="lazy" width="13" height="13" alt="map"> Bengaluru</div>
                             </div>
                             <div class="link-section"><a href="https://www.businessex.com/business/looking-for-specialized-centralized-and-package-air-conditioning/mjzwdi" target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a></div>
                     </div>
@@ -62,9 +62,9 @@
                                 <div class="card-info-amt-sale">1 Crore</div>
                             </div>
                             <div class="d-flex sale-bg-info">
-                                <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif" loading="lazy" width="13" height="13" alt="phone"> Phone</div>
-                                <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif" loading="lazy" width="13" height="13" alt="email"> Email</div>
-                                <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif" loading="lazy" width="13" height="13" alt="map"> Bengaluru</div>
+                                <div class="sale-bg-phone"><img src="{{url('cvw/images/f-phone.webp')}}" loading="lazy" width="13" height="13" alt="phone"> Phone</div>
+                                <div class="sale-bg-email"><img src="{{url('cvw/images/f-email.webp')}}" loading="lazy" width="13" height="13" alt="email"> Email</div>
+                                <div class="sale-bg-map"><img src="{{url('cvw/images/f-map.webp')}}" loading="lazy" width="13" height="13" alt="map"> Bengaluru</div>
                             </div>
                             <div class="link-section">
                                 <a href="https://www.businessex.com/business/looking-for-buyers-investors-for-an-online-vegan-ecommerce-business/lsstic"
@@ -99,9 +99,9 @@
                                 <div class="card-info-amt-sale">5 Crores</div>
                             </div>
                             <div class="d-flex sale-bg-info">
-                                <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif" loading="lazy" width="13" height="13" alt="phone"> Phone</div>
-                                <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif" loading="lazy" width="13" height="13" alt="email"> Email</div>
-                                <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif" loading="lazy" width="13" height="13" alt="map"> Ahmedabad</div>
+                                <div class="sale-bg-phone"><img src="{{url('cvw/images/f-phone.webp')}}" loading="lazy" width="13" height="13" alt="phone"> Phone</div>
+                                <div class="sale-bg-email"><img src="{{url('cvw/images/f-email.webp')}}" loading="lazy" width="13" height="13" alt="email"> Email</div>
+                                <div class="sale-bg-map"><img src="{{url('cvw/images/f-map.webp')}}" loading="lazy" width="13" height="13" alt="map"> Ahmedabad</div>
                             </div>
                             <div class="link-section">
                                 <a href="https://www.businessex.com/business/seeking-buyers-for-marketing-and-communication-agency/mdk69z"
@@ -135,9 +135,9 @@
                             <div class="card-info-amt-sale">5 Crores</div>
                         </div>
                         <div class="d-flex sale-bg-info">
-                            <div class="sale-bg-phone"><img src="https://www.franchiseindia.com/images/f-phone.gif" loading="lazy" width="13" height="13" alt="phone"> Phone</div>
-                            <div class="sale-bg-email"><img src="https://www.franchiseindia.com/images/f-email.gif" loading="lazy" width="13" height="13" alt="email"> Email</div>
-                            <div class="sale-bg-map"><img src="https://www.franchiseindia.com/images/f-map.gif" loading="lazy" width="13" height="13" alt="map"> Mumbai</div>
+                            <div class="sale-bg-phone"><img src="{{url('cvw/images/f-phone.webp')}}" loading="lazy" width="13" height="13" alt="phone"> Phone</div>
+                            <div class="sale-bg-email"><img src="{{url('cvw/images/f-email.webp')}}" loading="lazy" width="13" height="13" alt="email"> Email</div>
+                            <div class="sale-bg-map"><img src="{{url('cvw/images/f-map.webp')}}" loading="lazy" width="13" height="13" alt="map"> Mumbai</div>
                         </div>
                         <div class="link-section">
                             <a href="https://www.businessex.com/business/looking-investor-for-pharma-distribution-business/ox9om1"

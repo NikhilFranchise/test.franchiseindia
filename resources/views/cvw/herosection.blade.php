@@ -58,7 +58,7 @@
     </picture>
     <div class="container">
         <div class="lnkblk"><a href="https://www.franchiseindia.com/brands/direct-english.78387" target="_blank"
-                class="setpat"><img src="https://www.franchiseindia.com/newhomepage/assets/img/direct-english.png"
+                class="setpat"><img src="{{url('cvw/images/direct-english.webp')}}"
                     width="300" alt="Direct English" height="76"></a></div>
         <div class="row">
             <div class="col-md-12">
@@ -270,12 +270,16 @@
     </picture>
     <div class="container">
         <div class="lnkblk"><a href="https://www.franchiseindia.com/brands/direct-english.78387" target="_blank"
-                class="setpat"><img src="https://www.franchiseindia.com/newhomepage/assets/img/direct-english.png"
+                class="setpat"><img src="{{url('cvw/images/direct-english.webp')}}"
                     width="300" alt="Direct English" height="76"></a></div>
         <div class="row">
             <div class="col-md-12">
+                @desktop
                 <h1 class="hero-desktop">Search from<span> 20000+ Business </span>options</h1>
+                @enddesktop
+                @mobile
                 <h1 class="hero-mobile">20000+ Business Options</h1>
+                @endmobile
                 <h2>World's highest visited franchise website network</h2>
             </div> 
             <div class="col-md-12">
