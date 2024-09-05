@@ -232,24 +232,25 @@ aria-labelledby="exampleModalLabel">
                                 onClick="frg_panel()">Forgot
                                 Password</a>
                         </div>
+                        <div class="popfi">
+                            <div class="signpop"></div>
+                            <div class="popleft">
+                                <span>or Sign in With</span>
+                                <ul class="socl">
+                                    {{-- <li><a href="{{ Config('constants.MainDomain') }}/auth/facebook"><i
+                                                class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li> --}}
+                                    <li><a href="{{ Config('constants.MainDomain') }}/auth/google"><i
+                                               aria-hidden="true"></i>
+                                                <img src="https://www.franchiseindia.com/newhomepage/assets/img/google.svg" alt="google" class="">
+                                            </a></li>
+                                    {{-- <li><a href="{{Config('constants.MainDomain')}}/auth/linkedin"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li> --}}
+                                </ul>
+                            </div>
+                            <div class='popright'>New User <a href="#" id="loginselect1">Click here</a>
+                            </div>
+                        </div>
                     </form>
-                    <div class="popfi">
-                        <div class="signpop"></div>
-                        <div class="popleft">
-                            <span>or Sign in With</span>
-                            <ul class="socl">
-                                {{-- <li><a href="{{ Config('constants.MainDomain') }}/auth/facebook"><i
-                                            class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li> --}}
-                                <li><a href="{{ Config('constants.MainDomain') }}/auth/google"><i
-                                           aria-hidden="true"></i>
-                                            <img src="https://www.franchiseindia.com/newhomepage/assets/img/google.svg" alt="google" class="">
-                                        </a></li>
-                                {{-- <li><a href="{{Config('constants.MainDomain')}}/auth/linkedin"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li> --}}
-                            </ul>
-                        </div>
-                        <div class='popright'>New User <a href="#" id="loginselect1">Click here</a>
-                        </div>
-                    </div>
+                    
                 </div>
                 <div role="tabpanel" class="tab-pane" id="register">
                     <form class="form-horizontal" id="registration">
