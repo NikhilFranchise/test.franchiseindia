@@ -727,7 +727,7 @@ $(document).ready(function() {
 
     function isNumber(evt){evt=(evt)?evt:window.event;var charCode=(evt.which)?evt.which:evt.keyCode;return !(charCode > 31 && (charCode < 48 || charCode > 57));
         }
-    function getcitypopup(value){value=$(value).find(':selected').attr('data-id');$.ajax({type:'GET',url:'/getcitylist',data:{state:value},success:function(data){$("#popupcity").html(data);}});}/*]]>*/
+    function getcitypopup(value){value=$(value).find(':selected').attr('data-id');$.ajax({type:'GET',url:'/getcitylist',data:{state:value},success:function(data){$("#popupcity").html(data);}});}
 </script>
 <script src="https://cdn.jsdelivr.net/npm/lozad@1.14.0/dist/lozad.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
@@ -739,7 +739,7 @@ $(document).ready(function() {
     document.head.appendChild(linkElement);
     const observer = lozad(); // lazy loads elements with default selector as '.lozad'
     observer.observe();
-$(document).ready(function() {
+    $(document).ready(function() {
         $(window).scroll(function() {
             if ($(this).scrollTop() > 100)
                 $('#scroll').fadeIn();
@@ -752,22 +752,22 @@ $(document).ready(function() {
             }, 600);
             return false;
         });
- $("#changeLang").on('click', function() {
+        $("#changeLang").on('click', function() {
             $('#langType').slideToggle();
         });
         $("#changeLang1").on('click', function() {
             $('#langType1').slideToggle();
         });
- let langType = Cookies.get('langType');
-setTimeout(function() {
+    let langType = Cookies.get('langType');
+    setTimeout(function() {
             Cookies.set('langType', 'english', {
                 expires: 7
             });
         }, 20000);
 
         // @include('includes.banners-new.footer-google-tags')
-    });
-function submitCategory() {
+    // });
+    function submitCategory() {
         var subSubCat = $('#getSubCatCategoryDataHeader').val();
         var subCat = $('#getSubCategoryDataHeader').val();
         var mainCat = $('#getMainCategoryDataHeader1').val();
@@ -789,7 +789,7 @@ function submitCategory() {
         window.open(url, '_blank');
         return false;
     }
-function submitLocation() {
+    function submitLocation() {
         var mainCat = $('#getMainCategoryDataHeaderLoc').val();
         var headerCity = $('#headercity').val();
         var stateHeader = $('#stateHeader').val();
@@ -813,7 +813,7 @@ function submitLocation() {
         window.open(url + "?locTab=1", '_blank');
         return false;
     }
-function submitInvestment() {
+    function submitInvestment() {
         var mainCat = $('#getMainCategoryDataHeaderInv').val();
         var minAmount = $('#minAmount').val();
         var maxAmount = $('#maxAmount').val();
@@ -832,6 +832,8 @@ function submitInvestment() {
         window.open(url + "?invTab=1", '_blank');
         return false;
     }
+        }); // This closing bracket and parenthesis was added to properly close the $(document).ready() function
+
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
 
