@@ -909,6 +909,16 @@
             height: 44px;
         }
     }
+
+        .dot {
+          height: 2px;
+          width: 2px;
+          background-color: black;
+          border-radius: 50%;
+          display: inline-block;
+          margin-bottom: 3px;
+        }
+
 </style>
 <div id="investmentnew_tab" class="tab-section">
 
@@ -927,15 +937,15 @@
                     </div>
                     <div class="cards">
                         @foreach ($combinedDataCollection as $data)
-                            <div class="card {{ $loop->iteration == 2 ? 'mid' : '' }}">
-                                @if (is_array($data))
-                                    <div class="recent-date">{{ date('d-M-Y', strtotime($data['created_at'])) }}</div>
-                                    <p><a href="{{ $data['url'] }}" target="_blank">{{ $data['title'] }}</a></p>
-                                @elseif(is_object($data))
-                                    <div class="recent-date">{{ date('d-M-Y', strtotime($data->created_at)) }}</div>
-                                    <p><a href="{{ $data->url }}" target="_blank">{{ $data->title }}</a></p>
-                                @endif
-                            </div>
+                            {{--  <div class="card {{ $loop->iteration == 2 ? 'mid' : '' }}">  --}}
+                            @if (is_array($data))
+                                <div class="recent-date">{{ date('d-M-Y', strtotime($data['created_at'])) }}</div>
+                                <p><a href="{{ $data['url'] }}" target="_blank">{{ $data['title'] }}</a></p>
+                            @elseif(is_object($data))
+                                <div class="recent-date">{{ date('d-M-Y', strtotime($data->created_at)) }}</div>
+                                <p><a href="{{ $data->url }}" target="_blank">{{ $data->title }}</a></p>
+                            @endif
+                            {{--  </div>  --}}
                         @endforeach
                     </div>
                 </div>
@@ -954,19 +964,31 @@
         <span><strong>Tags:</strong></span>
         @php
             $maincat = Config('constants.CategoryArr.' . $franDetails->ind_main_cat);
+            $renderedStates = []; // To keep track of already rendered states
         @endphp
         @foreach ($stateList as $state)
             @php
                 // Find the key of the matching state in stateArr
                 $stateKey = array_search($state['state'], Config::get('location.stateArr'));
             @endphp
-            @if ($stateKey !== false)
-                {{-- https://www.franchiseindia.com/business-opportunities/education-in-andaman-and-nicobar/mc-3/loc-35 --}}
-                {{-- Generate the URL for the matching state --}}
+            {{--  @if ($stateKey !== false)
+
                 <a
                     href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc' . $stateKey) }}">
                     {{ $maincat . ' Business Franchise in ' . $state['state'] }}
                 </a> .
+            @endif  --}}
+            @if ($stateKey !== false && !in_array($state['state'], $renderedStates))
+                {{-- Add the state to the renderedStates array to avoid duplicate rendering --}}
+                @php
+                    $renderedStates[] = $state['state'];
+                @endphp
+
+                {{-- Generate the URL for the matching state --}}
+                <a
+                    href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc' . $stateKey) }}">
+                    {{ $maincat . ' Business Franchise in ' . $state['state'] }}
+                </a>&nbsp;<span class="dot"></span>&nbsp;
             @endif
         @endforeach
     </div>
