@@ -1,49 +1,28 @@
 @include('cvw.header')
-
 {{-- @include('layout.newhomepage.expendfrm') --}}
 @include('cvw.herosection') 
-   
-    <main id="main" class="main">
-        
-        @include('cvw.cardsection')
- 
-        @include('cvw.covidproof')
-
-        @include('cvw.tbo')
-  
-        @include('cvw.tdo')
-
-        @include('cvw.businessforsale')
-       
-        @include('cvw.videoevent')
-        
-        @include('cvw.tio')
-
-        @include('cvw.hgps')
-   
-        @include('cvw.tfo')
-       
-        @include('cvw.ffc')
-
-        @include('cvw.f_insights_news')
-
-       @include('cvw.testimonials')
-
-    </main>
-
-    @include('cvw.sidemenu')
-
-    <div class="overlay"></div>
-
-         @include('cvw.newsletter')
-
-         @include('cvw.aboutus')
-
-         @include('cvw.footersection')
-
-         @include('cvw.footer')
-         
-         @php
+<main id="main" class="main">
+@include('cvw.cardsection')
+@include('cvw.covidproof')
+@include('cvw.tbo')
+@include('cvw.tdo')
+@include('cvw.businessforsale')
+@include('cvw.videoevent')
+@include('cvw.tio')
+@include('cvw.hgps')
+@include('cvw.tfo')
+@include('cvw.ffc')
+@include('cvw.f_insights_news')
+@include('cvw.testimonials')
+@include('cvw.popupfroahmedabad')
+</main>
+@include('cvw.sidemenu')
+<div class="overlay"></div>
+@include('cvw.newsletter')
+@include('cvw.aboutus')
+@include('cvw.footersection')
+@include('cvw.footer')
+@php
          use Illuminate\Support\Str;
          $catArr = Config('constants.CategoryArr');
          asort($catArr);
@@ -91,7 +70,8 @@
          }
      @endphp
 
-    <div class="modal modal-cust fade in" id="search-main" tabindex="-1" aria-labelledby="search-mainLabel" aria-hidden="true">
+
+<div class="modal modal-cust fade in" id="search-main" tabindex="-1" aria-labelledby="search-mainLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-cust">
             <div class="modal-content modal-content-cust"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <div class="modal-body modal-body-search-custom">
@@ -438,29 +418,14 @@
 </div>
 
 
-
-
-<script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js" defer></script>
+    <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js" defer></script>
+
+
+
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js" defer></script>
 <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/swiper/js/swiper-bundle.min.js"></script>
 @include('cvw.loginmodal')
-<script>
-    if (window.screen.width < 600) {
-            document.addEventListener("DOMContentLoaded",function(){
-                var n=!1;window.addEventListener("scroll",function()
-                {100<window.scrollY&&function(){
-                    if(!n){var e=document.createElement("link");e.rel="stylesheet",e.href="cvw/stylemix.css",document.head.appendChild(e),n=!0,console.log("CSS file loaded.")}}()})});
-        }
-    
-        if (window.screen.width > 600) {
-            document.addEventListener("DOMContentLoaded",function(){
-                var n=!1;window.addEventListener("scroll",function()
-                {100<window.scrollY&&function(){
-                    if(!n){var e=document.createElement("link");e.rel="stylesheet",e.href="cvw/stylemix.css",document.head.appendChild(e),n=!0,console.log("CSS file loaded.")}}()})});
-        }
-        </script>
-    
 <script>
     function frg_panel() {
     $("#lg-pnl").hide(), $("#frg-pnl").show();
@@ -478,8 +443,9 @@ function lg_panel() {
             $("#sidebar").addClass("active"), $(".overlay").addClass("active"), $(".collapse.in").toggleClass("in"), $("a[aria-expanded=true]").attr("aria-expanded", "false")
         })
     });
-
-    function getSubCategoryHeader12(value) {
+    </script>
+    <script>
+function getSubCategoryHeader12(value) {
         // console.log('i am called');
         $.ajax({
             type: 'GET',
@@ -492,8 +458,7 @@ function lg_panel() {
             }
         });
     };
-
-    function getSubCatCategoryHeader12(value) {
+function getSubCatCategoryHeader12(value) {
         // console.log('called');
         $.ajax({
             type: 'GET',
@@ -506,8 +471,7 @@ function lg_panel() {
             }
         });
     };
-
-    function getcity(value) {
+function getcity(value) {
         // console.log('yes');
         $.ajax({
             type: 'GET',
@@ -520,8 +484,7 @@ function lg_panel() {
             }
         });
     };
-
-    function selectMax(selectmaxheaderval) {
+function selectMax(selectmaxheaderval) {
         // console.log('yes');
         let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
         let maxAmount = $('#maxAmount');
@@ -538,16 +501,14 @@ function lg_panel() {
         if (selectmaxheaderval === 21)
             maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
         var mainCategorySelect = document.getElementById('getMainCategoryDataHeader');
-        //console.log(mainCategorySelect);
-        if (mainCategorySelect.value) {
+        // console.log(mainCategorySelect);
+        if (mainCategorySelect?.value ) {
             getSubCategoryHeader(mainCategorySelect.value);
         }
     });
-
-    function customResetForm() {
+function customResetForm() {
     let form = document.getElementById('invform_desktop');
 
     // Reset the form
@@ -557,7 +518,6 @@ function lg_panel() {
     let maxAmount1 = document.getElementById('maxAmount');
     maxAmount1.innerHTML = '<option value="" hidden>Select Max Investment</option>';
 };
-
 function getSubCategoryHeader1(value) {
     // console.log('yes');
         $.ajax({
@@ -571,8 +531,7 @@ function getSubCategoryHeader1(value) {
             }
         });
     };
-
-    function getSubCatCategoryHeader1(value) {
+function getSubCatCategoryHeader1(value) {
         // console.log('yes');
         $.ajax({
             type: 'GET',
@@ -585,8 +544,7 @@ function getSubCategoryHeader1(value) {
             }
         });
     };
-
-    function getcity1(value) {
+function getcity1(value) {
         // console.log('yes');
         $.ajax({
             type: 'GET',
@@ -599,8 +557,7 @@ function getSubCategoryHeader1(value) {
             }
         });
     };
-
-    function selectMax1(selectmaxheaderval) {
+function selectMax1(selectmaxheaderval) {
         // console.log('yes');
         let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
         let maxAmount = $('#maxAmount1');
@@ -723,15 +680,7 @@ $(document).ready(function() {
         $('#loginactiveopen').removeClass("active");
         $('#registeractiveopen').addClass("active");
     });
-
-    
-
-    
-   
-
-   
-
-    $(document).ready(function() {
+$(document).ready(function() {
         $('#searchoptnew').click(function() {
             $('.searchblknew').show(400);
             $('.searchspace').hide(400);
@@ -758,16 +707,22 @@ $(document).ready(function() {
         });
     });
 </script>
+<script language="javascript">
+
+    function isNumber(evt){evt=(evt)?evt:window.event;var charCode=(evt.which)?evt.which:evt.keyCode;return !(charCode > 31 && (charCode < 48 || charCode > 57));
+        }
+    function getcitypopup(value){value=$(value).find(':selected').attr('data-id');$.ajax({type:'GET',url:'/getcitylist',data:{state:value},success:function(data){$("#popupcity").html(data);}});}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/lozad@1.14.0/dist/lozad.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+
 <script type="text/javascript">
     var linkElement = document.createElement("link");
     linkElement.rel = "stylesheet";
     linkElement.href = "{{ url('css/font-awesome.minfresh.css') }}"; //Replace here
     document.head.appendChild(linkElement);
-
     const observer = lozad(); // lazy loads elements with default selector as '.lozad'
     observer.observe();
-
-
     $(document).ready(function() {
         $(window).scroll(function() {
             if ($(this).scrollTop() > 100)
@@ -781,29 +736,21 @@ $(document).ready(function() {
             }, 600);
             return false;
         });
-
         $("#changeLang").on('click', function() {
             $('#langType').slideToggle();
         });
         $("#changeLang1").on('click', function() {
             $('#langType1').slideToggle();
         });
-
-        let langType = Cookies.get('langType');
-
-        
-
-        setTimeout(function() {
+    let langType = Cookies.get('langType');
+    setTimeout(function() {
             Cookies.set('langType', 'english', {
                 expires: 7
             });
         }, 20000);
 
-        @include('includes.banners-new.footer-google-tags')
-
-       
-    });
-
+        // @include('includes.banners-new.footer-google-tags')
+    // });
     function submitCategory() {
         var subSubCat = $('#getSubCatCategoryDataHeader').val();
         var subCat = $('#getSubCategoryDataHeader').val();
@@ -826,7 +773,6 @@ $(document).ready(function() {
         window.open(url, '_blank');
         return false;
     }
-
     function submitLocation() {
         var mainCat = $('#getMainCategoryDataHeaderLoc').val();
         var headerCity = $('#headercity').val();
@@ -851,7 +797,6 @@ $(document).ready(function() {
         window.open(url + "?locTab=1", '_blank');
         return false;
     }
-
     function submitInvestment() {
         var mainCat = $('#getMainCategoryDataHeaderInv').val();
         var minAmount = $('#minAmount').val();
@@ -871,13 +816,16 @@ $(document).ready(function() {
         window.open(url + "?invTab=1", '_blank');
         return false;
     }
+        }); // This closing bracket and parenthesis was added to properly close the $(document).ready() function
+
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
+
 
 <script>
     //Awesomplete
     const input = document.getElementById("dealer-bar-search-top");
-
-    // Init awesomplete
+// Init awesomplete
     const awesomplete = new Awesomplete(input);
     const navBarSearch = $("#dealer-bar-search-top");
     //navBarSearch.keypress(function () {
@@ -898,19 +846,16 @@ $(document).ready(function() {
             });
         }
     });
-
-    function prepareList(list) {
+function prepareList(list) {
         var c_list = [];
 
         list.forEach((item) => {
             c_list.push(item.name);
         });
-
-        // Assigned the c_list to the list property of Awesomplete instance
+ // Assigned the c_list to the list property of Awesomplete instance
         awesomplete.list = c_list;
     }
-
-    navBarSearch.on("awesomplete-selectcomplete", function() {
+ navBarSearch.on("awesomplete-selectcomplete", function() {
         if ($("#dealer-bar-search-top").val() != "") {
             var value = $("#dealer-bar-search-top").val();
             var items = value.split(" - <strong> in");
@@ -918,8 +863,7 @@ $(document).ready(function() {
             window.location.href = "/dealers-india/search/" + value;
         }
     });
-
-    $("#textcompany").on("click", function() {
+ $("#textcompany").on("click", function() {
         if ($("#dealer-bar-search").val() != "") {
             var value = $("#dealer-bar-search-top").val();
             var items = value.split(" - <strong> in");
@@ -928,6 +872,7 @@ $(document).ready(function() {
         }
     });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
         var l = $(".js-select2");
@@ -943,7 +888,7 @@ $(document).ready(function() {
         }), l.on("select2:unselect", function(e) {})
     })
 </script>
-<script>
+<script defer>
     $(document).ready(function(e) {
         e("#myCarouselvideo").carousel({
             pause: !0,
@@ -951,6 +896,7 @@ $(document).ready(function() {
         })
     })
 </script>
+
 <script>
     var swiper = new Swiper(".trendvideo .swiper-container", {
         slidesPerView: 1,
@@ -1067,12 +1013,10 @@ $(document).ready(function() {
         console.log(expires);
         document.cookie = "username=cookie_user;" + expires + ";path=/";
     }
-
-    function getCookie() {
+function getCookie() {
         return checkCookie('accept_cookie');
     }
-
-    function checkCookie(cname) {
+ function checkCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');
         for (var i = 0; i < ca.length; i++) {
@@ -1095,6 +1039,8 @@ $(document).ready(function() {
         }
     });
 </script>
+    <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/solid.js"></script>
+    <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/fontawesome.js"></script>
 
 
 <script>
@@ -1121,13 +1067,7 @@ $(document).ready(function() {
     });
 </script>
 
-
-
-
-
-
-
-
+ {{-- Homepoage events banner banner  --}}
 <!-- Custom JS -->
 <script type="text/javascript" src="{{url('newhomepage/assets/js/custom.js')}}"></script>
 @if( !(!empty(request()->segment(2)) && request()->segment(1) == "brands" && isset(explode('.', request()->segment(2))[1]) && in_array(explode('.', request()->segment(2))[1], Config('constants.popupBrands')) ))
@@ -1158,18 +1098,18 @@ $(document).ready(function() {
 		@if(in_array($query, $southCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfrobengaluru')
+                    @include('includes.banners.popupfroahmedabad')
                 @endif
             @else
-                @include('includes.banners.popupfrobengaluru')
+                @include('includes.banners.popupfroahmedabad')
             @endif
 		@elseif(in_array($query, $eastCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfranchiseexpokolkata')
+                    @include('includes.banners.popupfroahmedabad')
                 @endif
             @else
-                @include('includes.banners.popupfranchiseexpokolkata')
+                @include('includes.banners.popupfroahmedabad')
             @endif
 
 		@elseif(in_array($query, $westCodes))
@@ -1184,28 +1124,28 @@ $(document).ready(function() {
 		@elseif(in_array($query, $northCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfrobengaluru')
+                    @include('includes.banners.popupfroahmedabad')
                 @endif
             @else
-                @include('includes.banners.popupfrobengaluru')
+                @include('includes.banners.popupfroahmedabad')
             @endif
 
 		@elseif(in_array($query, $centerCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfranchiseexpolucknow')
+                    @include('includes.banners.popupfroahmedabad')
                 @endif
             @else
-                @include('includes.banners.popupfranchiseexpolucknow')
+                @include('includes.banners.popupfroahmedabad')
             @endif
 
 		@else
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfrobengaluru')
+                    @include('includes.banners.popupfroahmedabad')
 				@endif
 			@else
-		        @include('includes.banners.popupfrobengaluru')
+		        @include('includes.banners.popupfroahmedabad')
 			@endif
 		@endif
     @endif
@@ -1213,15 +1153,16 @@ $(document).ready(function() {
   
 @endif
 
+{{-- 
+popup closed --}}
 
-<div class="mycss">
     <link rel="stylesheet" href="{{ url('cvw/footer.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/search-main.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/login-panel.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/home-newsletter.css')}}" rel="preload" as="style">
-    <link rel="stylesheet" href="{{ url('cvw/card.css')}}" rel="preload" as="style">
-    <link rel="stylesheet" href="{{ url('cvw/leading-franchise.css')}}" rel="preload" as="style">
-    <link rel="stylesheet" href="{{ url('cvw/top-business.css')}}" rel="preload" as="style">
+    <link rel="stylesheet" href="{{ url('cvw/card.css')}}">
+    <link rel="stylesheet" href="{{ url('cvw/leading-franchise.css')}}">
+    <link rel="stylesheet" href="{{ url('cvw/top-business.css')}}">
     <link rel="stylesheet" href="{{ url('cvw/top-dealership.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/business-for-sale.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/trending-videos.css')}}" rel="preload" as="style">
@@ -1231,7 +1172,10 @@ $(document).ready(function() {
     <link rel="stylesheet" href="{{ url('cvw/top-franchise-opportunities.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/featured-franchise-opportunities.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/news-section.css')}}" rel="preload" as="style">
-    <link rel="stylesheet" href="{{ url('cvw/testimonial.css')}}" rel="preload" as="style">
-</div>
+    <link rel="stylesheet" href="{{ url('cvw/testimonial.css')}}" rel="preload" as="style"> 
+
+
+
+
 </body>
 </html>

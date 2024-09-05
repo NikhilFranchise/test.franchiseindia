@@ -93,6 +93,8 @@ ol,ul,ul li{list-style-type:none}
 .c-button:focus,.c-menu__close:focus,a:focus{outline:0}
 .form-control {    border: 1px solid #ccc!important;    font-size: 12px!important;}
 .formsection .form-control {    padding: 14px 12px 14px!important;}
+#tryyyy .formsection {margin-bottom: 0px;}
+#askForm .frm-input{padding:0px 30px 20px 30px;}
 @media only screen and (min-width:1px) and (max-width:767px) {
     .testimonial .mdfrd{margin-left:0}
 }
@@ -4307,10 +4309,11 @@ div.btnblkf .btn-default.btn-red:hover{background:#f22406;color:#fff}
 .sideslideform{display:table}
 #tryyyy{background:#fff;width:305px;border-radius:10px 0 0 10px;z-index:1;float:left;position:relative}
 .sideslideform .ttl{color:#333;font-family:"Open Sans Light","serif";font-size:18px;text-align:center;text-transform:uppercase;padding:1px 0 5px}
-.sideslideform .frm-type{background-color:#f3f3f3;padding:5px 30px 5px 35px;margin-bottom:30px}
+.sideslideform .frm-type{background-color: #f3f3f3;padding: 5px 20px 5px 20px;margin-bottom: 10px;display: flex;align-items: baseline;}
+.sideslideform .frm-type .radio:first-child{margin-right: 20px;}
 .sideslideform .formsection.leftrightzero{padding:0!important}
-.sideslideform .frm-input{padding-left:30px;padding-right:30px}
-.sideslideform .input-group{margin-bottom:10px}
+.sideslideform .frm-input{padding-left:20px;padding-right:20px}
+.sideslideform .input-group{margin-bottom:0px}
 .sideslideform .formsection .input-group-addon{padding:5px 12px}
 .sideslideform .formsection .form-control{padding:10px 12px}
 .sideslideform .formsection .btn-default.btn-red{padding:8px 15px;font-family:"Open Sans Regular","serif";font-size:14px;margin:5px auto 0}

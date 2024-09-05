@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+jQuery.validator.addMethod("accept", function (value, element, param) { return value.match(new RegExp("." + param + "$")) });
+$(document).ready(function () {
+=======
 // Custom method to validate accepted characters
 jQuery.validator.addMethod("accept", function(value, element, param) {
     return value.match(new RegExp("." + param + "$"));
@@ -5,6 +9,7 @@ jQuery.validator.addMethod("accept", function(value, element, param) {
 
 $(document).ready(function() {
     // Initialize hints for input, textarea, and select elements with titles
+>>>>>>> d5f15692e90b386750ee3dc55c8d9230e1bfeb7d
     $('input[title!=""]').hint();
     $('textarea[title!=""]').hint();
     $('select[title!=""]').hint();

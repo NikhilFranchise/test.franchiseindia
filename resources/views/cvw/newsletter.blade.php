@@ -21,11 +21,11 @@
                 <div class="main-newsletter">
                     <form action="">
                         <ul class="newsletter-social">
-                            <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook" width="36" height="36"></a></li>
-                            <li><a href="https://www.instagram.com/franchiseindia_/" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg" alt="" width="36" height="36"></a></li>
-                            <li><a href="https://twitter.com/FranchiseIndia" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg" width="36" height="36" alt="twitter"></a></li>
-                            <li><a href="https://www.youtube.com/user/FranchiseIndia" target="_blank"><img width="36" height="36" src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg" alt="youtube"></a></li>
-                            <li><a href="https://www.linkedin.com/company/franchiseindia/" target="_blank"><img width="36" height="36" src="https://www.franchiseindia.com/newhomepage/assets/img/linkedin-new.svg" alt="linkedin"></a></li>
+                            <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook" width="36" height="36" loading="lazy"></a></li>
+                            <li><a href="https://www.instagram.com/franchiseindia_/" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg" alt="instagram" width="36" height="36" loading="lazy"></a></li>
+                            <li><a href="https://twitter.com/FranchiseIndia" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg" width="36" height="36" alt="twitter" loading="lazy"></a></li>
+                            <li><a href="https://www.youtube.com/user/FranchiseIndia" target="_blank"><img width="36" height="36" src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg" alt="youtube" loading="lazy"></a></li>
+                            <li><a href="https://www.linkedin.com/company/franchiseindia/" target="_blank"><img width="36" height="36" src="https://www.franchiseindia.com/newhomepage/assets/img/linkedin-new.svg" alt="linkedin" loading="lazy"></a></li>
                         </ul>
                     </form>
                 </div>

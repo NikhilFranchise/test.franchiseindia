@@ -11,7 +11,7 @@ $("#exampleFormControlSelect2").change(function () {
     // set the window's location property to the value of the option the user has selected
     window.location = $(this).val();
 });
-
+//code added date 31-July-2024 
 $(document).ready(function () {
     $("#btnhome1").click(function (event) {
         event.preventDefault(); // Prevent form submission
@@ -67,18 +67,12 @@ $(document).ready(function () {
     });
 });
 
-
-<<<<<<< HEAD
-
-
-
-=======
 $(document).ready(function () {
     $("#btnhome").click(function () {
         var mobile = $('#mobilefreeadvice').val().trim();
         var email = $('#emailfreeadvice').val().trim();
         var csrf_token = $("input[name='_token']").val();
-            // Clear previous error messages
+        // Clear previous error messages
         $('#mobile-error').text('');
         $('#email-error').text('');
         $('#mobilefreeadvice').removeClass('input-error');
@@ -115,39 +109,38 @@ $(document).ready(function () {
         if (!isValid) {
             return; // Stop the form submission if validation fails
         }
-            var type = $("input[name='optionsRadios']:checked").val();
-            var data = {
-                _token: csrf_token, // Add CSRF token
-                optionsRadios: type,
-                name: '--',
-                pincode: '000000',
-                email: email,
-                mobile: mobile,
-                details: '--',
-                is_newsletter: 1
-            };
+        var type = $("input[name='optionsRadios']:checked").val();
+        var data = {
+            _token: csrf_token, // Add CSRF token
+            optionsRadios: type,
+            name: '--',
+            pincode: '000000',
+            email: email,
+            mobile: mobile,
+            details: '--',
+            is_newsletter: 1
+        };
 
-            $.ajax({
-                type: 'POST',
-                url: '/freeadvice',
-                data: data,
-                beforeSend: function () {
-                    $('#btnhome').html('Please wait..');
-                },
-                success: function (data) {
-                    // Assuming the server returns a URL to redirect to
-                    window.location.href = data.redirect_url || "/thanks-advice-form";
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    console.error('Error:', errorThrown);
-                    // Handle error condition, e.g., display an error message
-                    alert('Error occurred. Please try again.');
-                }
-            });
+        $.ajax({
+            type: 'POST',
+            url: '/freeadvice',
+            data: data,
+            beforeSend: function () {
+                $('#btnhome').html('Please wait..');
+            },
+            success: function (data) {
+                // Assuming the server returns a URL to redirect to
+                window.location.href = data.redirect_url || "/thanks-advice-form";
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.error('Error:', errorThrown);
+                // Handle error condition, e.g., display an error message
+                alert('Error occurred. Please try again.');
+            }
+        });
 
     });
 });
->>>>>>> 8e8f1a3d5f1c18900b8636d06166d5ddc4a989d6
 
 
 function frg_panel() {

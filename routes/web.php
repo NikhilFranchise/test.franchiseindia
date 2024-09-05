@@ -1085,3 +1085,9 @@ Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('
 Route::get('/brand-total-count',[CommonController::class,'brand_total_count']);
 
 Route::post('/submit-form1', [AdviceController::class, 'freeadviceHome_popup'])->name('form.submithome');
+
+
+// Route::get('/cvwhome/hi',[NewHomePageController::class,'cvwhindiHomePage']);
+Route::get('/cvwhome',[NewHomePageController::class,'cvwhomeNew']);
+
+

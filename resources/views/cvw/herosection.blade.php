@@ -68,12 +68,12 @@
             </div> 
             <div class="col-md-12">
                 <div class="hero-search" id="hero-search">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a href="#categories1" aria-controls="categories1" role="tab"
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active nav-item" role="presentation">><a href="#categories1" aria-controls="categories1" role="tab"
                                 data-toggle="tab">Categories</a></li>
-                        <li><a href="#location1" aria-controls="location1" role="tab" data-toggle="tab">Location</a>
+                        <li class="nav-item"  role="presentation">><a href="#location1" aria-controls="location1" role="tab" data-toggle="tab">Location</a>
                         </li>
-                        <li><a href="#investment1" aria-controls="investment1" role="tab"
+                        <li class="nav-item"  role="presentation">><a href="#investment1" aria-controls="investment1" role="tab"
                                 data-toggle="tab">Investment</a></li>
                     </ul>
                     <div class="tab-content">
@@ -259,7 +259,7 @@
 </section>
 @else
 <section class="hero-section" id="hero-section">
-    <img src="{{ url('cvw/assets/img/mobile-banner-expo.webp') }}" class="banner-expo mmdesk" alt="Franchise India">
+    <img src="{{ url('cvw/assets/img/mobile-banner-expo.webp') }}" class="banner-expo mmdesk" alt="Franchise India"> 
     <picture class="ppdesk">
         <source media="(min-width: 1024px)" srcset="{{ url('cvw/assets/img/banner-expo.webp') }}" alt="Franchsie India">
         <source media="(min-width: 650px)" srcset="{{ url('cvw/assets/img/mobile-banner-expo.webp') }}"
@@ -280,7 +280,7 @@
             </div> 
             <div class="col-md-12">
                 <div class="hero-search" id="hero-search">
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs" role="tablist">
                         <li class="active"><a href="#categories1" aria-controls="categories1" role="tab"
                                 data-toggle="tab">Categories</a></li>
                         <li><a href="#location1" aria-controls="location1" role="tab" data-toggle="tab">Location</a>
@@ -293,8 +293,8 @@
                             <form class="form-horizontal" method="get" action="{{ url('category/searchby') }}"
                                 onsubmit="return submitCategory1()"><input type="hidden" name="catTab" value="1">
                                 <ul class="hero-search-main">
-                                    <li class="p-0 m-0"><select name="mc"
-                                            class="form-control form-control-custom dropdown-toogle-icon"
+                                    <li class="p-0 m-0">
+            <select name="mc" aria-label="Select Industry" class="form-control form-control-custom dropdown-toogle-icon"
                                             id="getMainCategoryDataHeader1"
                                             onchange="getSubCategoryHeader1(this.value)">
                                             <option value="" hidden="">Select Industry</option>
@@ -314,18 +314,19 @@
                                             <option value="11" slug="sports-fitness-and-entertainment">Sports,
                                                 Fitness &amp; Entertainment</option>
                                         </select></li>
-                                    <li class="p-0 m-0"><select name="sc" id="getSubCategoryDataHeader1"
+                                    <li class="p-0 m-0">
+                        <select aria-label="Select Sector" name="sc" id="getSubCategoryDataHeader1"
                                             onchange="getSubCatCategoryHeader1(this.value)"
                                             class="form-control form-control-custom dropdown-toogle-icon">
                                             <option value="" hidden="">Select Sector</option>
                                         </select></li>
                                     <li class="p-0 m-0"><select
                                             class="form-control form-control-custom dropdown-toogle-icon" name="ssc"
-                                            id="getSubCatCategoryDataHeader1">
+                                            id="getSubCatCategoryDataHeader1" aria-label="Select Service">
                                             <option value="" hidden="">Select Service/Product</option>
                                         </select></li>
                                     <li class="p-0 m-0"><button type="submit" class="btn btn-main btn-main-hero"
-                                            id="seo-hero-inv-btn"><i class="search-icon fa fa-search"
+                                            id="seo-hero-inv-btn" aria-label="Submit Brand Search"><i class="search-icon fa fa-search"
                                                 aria-hidden="true"></i><span class="smobile">Search</span></button>
                                     </li>
                                 </ul>
@@ -336,8 +337,8 @@
                                 onsubmit="return submitLocation1()"><input type="hidden" name="locTab"
                                     value="1">
                                 <ul class="hero-search-main">
-                                    <li class="p-0 m-0"><select
-                                            class="form-control form-control-custom dropdown-toogle-icon"
+                                    <li class="p-0 m-0">
+                    <select aria-label="Select Industry" class="form-control form-control-custom dropdown-toogle-icon"
                                             name="mc" id="getMainCategoryDataHeaderLoc1">
                                             <option value="" hidden="">Select Industry</option>
                                             <option value="8" slug="automotive">Automotive</option>
@@ -359,7 +360,7 @@
                                         </select></li>
                                     <li class="p-0 m-0"><select name="loc" id="stateHeader1"
                                             class="form-control form-control-custom dropdown-toogle-icon"
-                                            onchange="getcity1(this.value)">
+                                            onchange="getcity1(this.value)" aria-label="Select State">
                                             <option value="" hidden="">Select a State</option>
                                             <option value="35" slug="andaman-and-nicobar">Andaman and Nicobar
                                             </option>
@@ -398,9 +399,9 @@
                                             <option value="31" slug="uttarakhand">Uttarakhand</option>
                                             <option value="33" slug="west-bengal">West Bengal</option>
                                         </select></li>
-                                    <li class="p-0 m-0"><select name="city"
-                                            class="form-control form-control-custom dropdown-toogle-icon"
-                                            id="headercity1">
+                                    <li class="p-0 m-0">
+                        <select name="city" class="form-control form-control-custom dropdown-toogle-icon"
+                                            id="headercity1" aria-label="Select Service">
                                             <option value="" hidden="">Select a City</option>
                                         </select></li>
                                     <li class="p-0 m-0"><button type="submit" class="btn btn-main btn-main-hero"
@@ -415,7 +416,9 @@
                                 onsubmit="return submitInvestment1()"><input type="hidden" name="invTab"
                                     value="1">
                                 <ul class="hero-search-main">
-                                    <li class="p-0 m-0"><select name="mc" id="getMainCategoryDataHeaderInv1"
+                                    <li class="p-0 m-0">
+                                        
+                                        <select name="mc" aria-label="Select Industry" id="getMainCategoryDataHeaderInv1"
                                             class="form-control form-control-custom dropdown-toogle-icon">
                                             <option value="" hidden="">Select Industry</option>
                                             <option value="8" slug="automotive">Automotive</option>
@@ -435,8 +438,8 @@
                                             <option value="11" slug="sports-fitness-and-entertainment">Sports,
                                                 Fitness &amp; Entertainment</option>
                                         </select></li>
-                                    <li class="p-0 m-0"><select name="min_cost"
-                                            class="form-control form-control-custom dropdown-toogle-icon"
+                                    <li class="p-0 m-0">
+                <select name="min_cost" aria-label="Select Min Investment" class="form-control form-control-custom dropdown-toogle-icon"
                                             id="minAmount1" onchange="selectMax1(this.value)">
                                             <option value="" hidden="">Select Min Investment</option>
                                             <option slug="10000" value="1">Rs. 10000</option>
@@ -451,8 +454,8 @@
                                             <option slug="20000000" value="19">Rs. 2 Cr.</option>
                                             <option slug="50000000" value="21">Rs. 5 Cr.</option>
                                         </select></li>
-                                    <li class="p-0 m-0"><select name="max_cost"
-                                            class="form-control form-control-custom dropdown-toogle-icon"
+                                    <li class="p-0 m-0">
+                <select name="max_cost" aria-label="Select Max Investment" class="form-control form-control-custom dropdown-toogle-icon"
                                             id="maxAmount1">
                                             <option value="" hidden="">Select Max Investment</option>
                                         </select></li>

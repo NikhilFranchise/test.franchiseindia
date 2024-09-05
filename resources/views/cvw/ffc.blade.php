@@ -22,7 +22,7 @@
                 <div class="overlay-card"></div>
                 <div class="card-fihl card-m card-p-10">
                     <div class="brand-ffc-image-section">
-                        <div class="brand-main-section"><a href="{{ $brandUrl }}" target="_blank"><img src="{{ $logoDetail['brand_img'] }}" alt="{{ $logoDetail['brand_alt'] }}" class="img-b img-border" width="110" height="50"></a></div>
+                        <div class="brand-main-section"><a href="{{ $brandUrl }}" target="_blank"><img loading="lazy" src="{{ $logoDetail['brand_img'] }}" alt="{{ $logoDetail['brand_alt'] }}" class="img-b img-border" width="110" height="50"></a></div>
                     </div>
                     <div class="card-body-section">
                         <div class="ffchead"><a href="{{ $brandUrl }}" target="_blank">{{ mb_strimwidth($logoDetail['brand_alt'], 0, 25, '...') }}</a></div>

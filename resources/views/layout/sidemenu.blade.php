@@ -133,6 +133,8 @@
     @endif
 @endif
 @endmobile
+
+
 <nav id="sidebar">
     <div id="dismiss">
         <i class="fa fa-arrow-left" aria-hidden="true"></i>

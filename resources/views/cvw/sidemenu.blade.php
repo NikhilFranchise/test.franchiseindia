@@ -16,13 +16,22 @@
                     })();
                 </script>
                 <gcse:searchbox-only resultsurl="https://www.franchiseindia.com/search" newwindow="true" queryparametername="search"></gcse:searchbox-only>
-                <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css">
+                {{-- <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css"> --}}
             </div>
         </li>
-        <li>&nbsp;</li> 
-        <li><a target="_blank" href="/hi">घरेलू ब्रांड</a></li>
-        <li><a target="_blank" href="/hi/premiumbrand">प्रीमियम ब्रांड</a></li>
-        <li><a target="_blank" href="/international">अंतरराष्ट्रीय</a></li>
+        <li>&nbsp;</li>
+        <li class="top-investors top-investor-mobile">
+             <div class="dropdown policydropdown">
+                    <button class="btn dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="">Investor <svg class="svg-inline--fa fa-caret-down fa-w-10" aria-hidden="true" data-prefix="fa" data-icon="caret-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg><!-- <i class="fa fa-caret-down"></i> --></button>
+                        <div class="dropdown-menu policydropdownmenu" aria-labelledby="btnDropdownDemo">
+                            <a class="dropdown-item" href="https://www.franchiseindia.com/ipo" target="_blank">IPO</a>
+                            <a class="dropdown-item" href="https://www.franchiseindia.com/policies" target="_blank">Policies</a>
+                        </div>
+             </div>
+        </li>
+        <li><a target="_blank" href="/">Domestic Brands</a></li>
+        <li><a target="_blank" href="/premiumbrand">Premium Brands</a></li>
+        <li><a target="_blank" href="/international">International</a></li>
     </ul>
     <ul class="list-unstyled components border-bottom-1">
         <li><a target="_blank" href="https://www.franchiseindia.com/insights">फ्रेंचाइजी इनसाइट्स</a></li>
@@ -902,10 +911,19 @@
                     })();
                 </script>
                 <gcse:searchbox-only resultsurl="https://www.franchiseindia.com/search" newwindow="true" queryparametername="search"></gcse:searchbox-only>
-                <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css">
+                {{-- <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css"> --}}
             </div>
         </li>
         <li>&nbsp;</li>
+        <li class="top-investors top-investor-mobile">
+             <div class="dropdown policydropdown">
+                    <button class="btn dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="">Investor <svg class="svg-inline--fa fa-caret-down fa-w-10" aria-hidden="true" data-prefix="fa" data-icon="caret-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path></svg><!-- <i class="fa fa-caret-down"></i> --></button>
+                        <div class="dropdown-menu policydropdownmenu" aria-labelledby="btnDropdownDemo">
+                            <a class="dropdown-item" href="https://www.franchiseindia.com/ipo" target="_blank">IPO</a>
+                            <a class="dropdown-item" href="https://www.franchiseindia.com/policies" target="_blank">Policies</a>
+                        </div>
+             </div>
+        </li>
         <li><a target="_blank" href="/">Domestic Brands</a></li>
         <li><a target="_blank" href="/premiumbrand">Premium Brands</a></li>
         <li><a target="_blank" href="/international">International</a></li>
@@ -1738,11 +1756,11 @@
         <li>
             <div class="side-bar-social">
                 <ul class="sidebar-social">
-                    <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook-icon" class="mCS_img_loaded" width="36" height="36"></a></li>
-                    <li><a href="https://twitter.com/FranchiseIndia" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg" alt="twitter-icon" class="mCS_img_loaded" width="36" height="36"></a></li>
-                    <li><a href="https://www.instagram.com/franchiseindia_/" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg" alt="instagram-icon" class="mCS_img_loaded" width="36" height="36"></a></li>
-                    <li><a href="https://www.youtube.com/user/FranchiseIndia" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg" alt="youtube-icon" class="mCS_img_loaded" width="36" height="36"></a></li>
-                    <li><a href="https://www.linkedin.com/company/franchiseindia/" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/linkedin-new.svg" alt="linkedin-icon" class="mCS_img_loaded" width="36" height="36"></a></li>
+                    <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook-icon" loading="lazy" width="36" height="36"></a></li>
+                    <li><a href="https://twitter.com/FranchiseIndia" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg" alt="twitter-icon" loading="lazy" width="36" height="36"></a></li>
+                    <li><a href="https://www.instagram.com/franchiseindia_/" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg" alt="instagram-icon" loading="lazy" width="36" height="36"></a></li>
+                    <li><a href="https://www.youtube.com/user/FranchiseIndia" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg" alt="youtube-icon" loading="lazy" width="36" height="36"></a></li>
+                    <li><a href="https://www.linkedin.com/company/franchiseindia/" target="_blank"><img src="https://www.franchiseindia.com/newhomepage/assets/img/linkedin-new.svg" alt="linkedin-icon" loading="lazy" width="36" height="36"></a></li>
                 </ul>
             </div>
         </li>
@@ -1769,3 +1787,6 @@
     </div>
 </nav>
 @endif
+<style>
+ol.tree li{position: relative}.busheadmebu{float:none;font-size:16px;color:#333;margin:10px 0 8px 15px;font-weight:400;padding:0;line-height:22px}.eshowtxt,.videtxt{color:#828282;font-size:13px}.eshowtxt,.videtxt,ol.tree li a{font-weight:300}.busheadmebu.marmodfy{margin-left:-8px;width:275px}.busheadmebu.marmodfy .gsc-input-box{border:0!important}.busheadmebu a:hover{color:#e62005;text-decoration:underline}ol.tree{padding:0 0 0 15px;width:auto;margin:10px 0}.eshowcontent h2,.videcontent h2{color:#333;font-size:19px;margin-top:9px;overflow:hidden}ol.tree li{list-style:none;font-size:15px;margin:12px 0;font-weight:400;line-height:18px}ol.tree li a:hover{color:#000;text-decoration:underline}#myclose,.icon-whatsapp a,.myaccount ul.nvss a:hover,.sidemy ul.nvss a:hover,a,a:focus,a:hover,ol.tree li.file a,ul.sublink li a:hover{text-decoration:none}ol.tree li.file{margin-left:-1px!important}ol.tree li.file a{background:url(https://www.franchiseindia.com/images/document.png) no-repeat;color:#fff;padding-left:14px;display:block;font-size:12px}ol.tree li input{position:absolute;left:0;margin-left:0;opacity:0;z-index:2;cursor:pointer;height:1em;width:1em;top:0}ol.tree li input+ol{background:url(cvw/images/fright.png?d=2) 40px 0 no-repeat;margin:-19px 0 0 -44px;height:1em}ol.tree li input+ol>li{display:none;padding-left:1px;margin:8px 0 8px -18px!important}ol.tree li label{cursor:pointer;display:block;padding-left:14px;line-height:20px;font-weight:300;margin-bottom:1px}ol.tree li input+ol a:hover{font-weight:400;color:#000}ol.tree li input:checked+ol{background:url(https://www.franchiseindia.com/images/reddown.png?d=2) 40px 1px no-repeat;margin:-19px 0 0 -44px;padding:1.563em 0 0 74px;height:auto}ol.tree li input:checked+ol>li{display:block;margin:0 0 .125em;font-size:13px;line-height:16px}ol.tree li input:checked+ol>li:last-child{margin:0 0 .063em}
+</style>
