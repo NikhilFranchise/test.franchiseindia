@@ -58,27 +58,26 @@ class BrandController extends Controller
             });
         //    dd($insightMatches);
 
-        // $dataFromB = DB::connection('mysqloi')
-        //     ->table('article_list_en')
-        //     ->select('id', 'title','created_at')
-        //     ->where('status', 1)
-        //     ->orderByDesc('created_at')
-        //     ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
-        //     ->limit(3)
-        //     ->get()
-        //     ->map(function ($item) {
-        //         // Assuming you want the URL to be based on the slug
-        //         $item->url = 'https://www.opportunityindia.com/article/' . strtolower(str_replace(' ', '-', $item->title)) . '-' . $item->id;
-        //         return $item;
-        //     });
-        // // dd($dataFromB, $insightMatches);
-        // // // Convert both collections to arrays
-        // $dataFromBArray = $dataFromB->toArray();
+        $dataFromB = DB::connection('mysqloi')
+            ->table('article_list_en')
+            ->select('id', 'title','created_at')
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
+            ->limit(3)
+            ->get()
+            ->map(function ($item) {
+                // Assuming you want the URL to be based on the slug
+                $item->url = 'https://www.opportunityindia.com/article/' . strtolower(str_replace(' ', '-', $item->title)) . '-' . $item->id;
+                return $item;
+            });
+        // dd($dataFromB, $insightMatches);
+        // // Convert both collections to arrays
         $insightMatchesArray = $insightMatches->toArray();
+        $dataFromBArray = $dataFromB->toArray();
 
         // // Combine both arrays into one
-        // $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
-        $combinedDataArray = $insightMatchesArray;
+        $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
 
         // // If you prefer to work with a collection, you can convert it back to a collection
         $combinedDataCollection = collect($combinedDataArray);
