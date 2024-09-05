@@ -17,8 +17,9 @@
 <meta name="y_key" content="0f4f718975ac23ed" />
 <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
 {{-- google codes --}}
- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
-    <script>
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
+    <script >
         window.dataLayer = window.dataLayer || [];
         function gtag() {
             dataLayer.push(arguments);
@@ -26,56 +27,8 @@
         gtag('js', new Date());
         gtag('config', 'AW-991358906');
     </script>
-    <!-- Google Tag Manager -->
-    <script>
-        (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
-    </script>
-    <!-- End Google Tag Manager -->
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
-    <script >
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'G-8MKFEZLR18');
-    </script>
-<!-- Facebook Pixel Code -->
-
-    <script >
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '865253970178641');
-        fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1"/>
-    </noscript>
-    <!-- End Facebook Pixel Code --> 
-
-
-    <!-- Google Tag Manager -->
-{{-- <script async>
+<noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script async>
 
     (function(w, d, s, l, i) {
       w[l] = w[l] || [];
@@ -91,10 +44,11 @@
       f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
   </script>
+  
   <!-- End Google Tag Manager -->
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
-  <script>
+  <script >
       window.dataLayer = window.dataLayer || [];
       function gtag() {
           dataLayer.push(arguments);
@@ -111,6 +65,7 @@
     gtag('js', new Date());
     gtag('config', 'G-8MKFEZLR18');
   </script>
+
   <!-- Facebook Pixel Code -->
   <script async>
     !function(f, b, e, v, n, t, s) {
@@ -132,10 +87,11 @@
     fbq('init', '865253970178641');
     fbq('track', 'PageView');
   </script>
+
   <noscript>
     <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1"/>
   </noscript>
-  <!-- End Facebook Pixel Code --> --}}
+  <!-- End Facebook Pixel Code -->
 <link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2" rel="preload" as="style">
 <link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2" rel="preload" as="style" rel="preload" as="style">
 <link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/swiper/css/swiper-bundle.min.css?ver=2.2" rel="preload" as="style">
