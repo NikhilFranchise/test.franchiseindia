@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\InsightList;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Http;
 
 class BrandController extends Controller
 {
@@ -57,31 +57,25 @@ class BrandController extends Controller
                 return $item;
             });
         //    dd($insightMatches);
+            $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
+            $companyName = $franDetails->company_name;
+            $response= Http::get($apiUrl,['company_name'=>$companyName]);
+            if($response){
+                $dataFromB=$response->json();
+            }
 
-        $dataFromB = DB::connection('mysqloi')
-            ->table('article_list_en')
-            ->select('id', 'title','created_at')
-            ->where('status', 1)
-            ->orderByDesc('created_at')
-            ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
-            ->limit(3)
-            ->get()
-            ->map(function ($item) {
-                // Assuming you want the URL to be based on the slug
-                $item->url = 'https://www.opportunityindia.com/article/' . strtolower(str_replace(' ', '-', $item->title)) . '-' . $item->id;
-                return $item;
-            });
-        // dd($dataFromB, $insightMatches);
+            // dd($dataFromB);
+
         // // Convert both collections to arrays
         $insightMatchesArray = $insightMatches->toArray();
-        $dataFromBArray = $dataFromB->toArray();
-
+        $dataFromBArray = $dataFromB;
         // // Combine both arrays into one
         $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
+       // dd($combinedDataArray);
 
         // // If you prefer to work with a collection, you can convert it back to a collection
         $combinedDataCollection = collect($combinedDataArray);
-        // dd($combinedDataCollection);
+        //dd($combinedDataCollection);
 
         //OI Redirection Start
         if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
