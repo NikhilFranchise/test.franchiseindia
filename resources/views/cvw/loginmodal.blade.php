@@ -272,7 +272,7 @@ aria-labelledby="exampleModalLabel">
     <div class="modal-footer">
         <div class="footer-ttl">Why should I register?</div>
         <div class="footer-desc">
-            <p>To get access to over 10000+ Franchise Business Opportunities.</p>
+            <p>To get access to over 20000+ Franchise Business Opportunities.</p>
             <p>Network with the growing Business Community to get expert interventions to let you learn to
                 Grow
                 & Expand your Business with Franchising.</p>
