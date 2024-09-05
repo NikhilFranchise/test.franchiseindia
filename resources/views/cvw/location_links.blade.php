@@ -134,7 +134,7 @@
                         <li><a href="https://www.franchiseindia.com/location/meerut">Meerut</a></li>
                         <li><a href="https://www.franchiseindia.com/location/mumbai">Mumbai</a></li>
                         <li><a href="https://www.franchiseindia.com/location/mysuru">Mysuru</a></li>
-                        <li><a href="https://www.franchiseindia.com/location/nagpur">nagpur</a></li>
+                        <li><a href="https://www.franchiseindia.com/location/nagpur">Nagpur</a></li>
                         <li><a href="https://www.franchiseindia.com/location/nashik">Nashik</a></li>
                         <li><a href="https://www.franchiseindia.com/location/navi-mumbai">Navi Mumbai</a></li>
                         <li><a href="https://www.franchiseindia.com/location/new-delhi">New Delhi</a></li>

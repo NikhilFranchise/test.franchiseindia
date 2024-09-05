@@ -36,7 +36,7 @@
                         <li>
                             <div class="eshowblk">
                                 <div class="eshowimg"><a href="https://www.franglobal.com/oman-franchise-distribution-show/" target="_blank">
-                                    <img loading="lazy" alt="Oman Franchise Show" src="{{url('cvw/event-videos/fro-gujarat.webp')}}" width="345" height="208"></a></div>
+                                    <img loading="lazy" alt="Oman Franchise Show" src="{{url('cvw/event-videos/oman.webp')}}" width="345" height="208"></a></div>
                                 <div class="eshowcontent">
                                     <h2>Oman Franchise Show</h2>
                                     <div class="eshowtxt">13 October 2024, Sheraton Oman Hotel</div>
@@ -248,7 +248,8 @@
                     <div class="swiper-slide swiper-slide-prev" data-swiper-slide-index="2" style="width:367px;margin-right:30px">
                         <div class="eshowblk">
                             <div class="eshowimg"><a href="https://www.franchiseindia.net/fro/ahmedabad/" target="_blank">
-                                <img loading="lazy" class="" alt="FROEXPO Gujarat" src="https://www.franchiseindia.com/images/fro-gujarat.webp" width="345" height="208"></a></div>
+                                <img loading="lazy" class="" alt="FROEXPO Gujarat" 
+                                src="{{url('cvw/event-videos/fro-gujarat.webp')}}" width="345" height="208"></a></div>
                             <div class="eshowcontent">
                                 <h2>FROEXPO Ahmedabad</h2>
                                 <div class="eshowtxt">21-22 September 2024, Mahatma Mandir Convention...</div>
@@ -260,7 +261,8 @@
                     <div class="swiper-slide swiper-slide-active" data-swiper-slide-index="3" style="width:367px;margin-right:30px">
                         <div class="eshowblk">
                             <div class="eshowimg"><a href="https://www.restaurantindia.in/congress/" target="_blank">
-                                <img loading="lazy" class="" alt="Indian Restaurant Congress &amp; Awards 2024" src="https://www.franchiseindia.com/images/restaurant.webp" width="345" height="208"></a></div>
+                                <img loading="lazy" class="" alt="Indian Restaurant Congress &amp; Awards 2024" 
+                                src="{{url('cvw/event-videos/restaurant.webp')}}" width="345" height="208"></a></div>
                             <div
                                 class="eshowcontent">
                                 <h2>Indian Restaurant Congress &amp; Awards 2024</h2>
@@ -270,10 +272,28 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class="swiper-slide swiper-slide-active" data-swiper-slide-index="3" style="width:367px;margin-right:30px">
+                    <div class="eshowblk">
+                        <div class="eshowimg"><a href="https://www.franglobal.com/oman-franchise-distribution-show/" target="_blank">
+                            <img loading="lazy" alt="Oman Franchise Show" 
+                            src="{{url('cvw/event-videos/oman.webp')}}" width="345" height="208"></a></div>
+                        <div
+                            class="eshowcontent">
+                            <h2>Oman Franchise Show</h2>
+                            <div class="eshowtxt">13 October 2024, Sheraton Oman Hotel</div>
+                            <div class="link-section text-capitalize"><a href="https://www.franglobal.com/oman-franchise-distribution-show/" target="_blank">Registration</a></div>
+                            <div class="eventhotline text-capitalize">Hotline:<span>+91 9717683838</span></div>
+                    </div>
+                </div>
+            </div>
+
                 <div class="swiper-slide swiper-slide-next" data-swiper-slide-index="4" style="width:367px;margin-right:30px">
                     <div class="eshowblk">
                         <div class="eshowimg"><a href="https://www.franchiseindia.com/expo/mumbai/" target="_blank">
-                            <img class="" loading="lazy" alt="Franchise India 2024 Mumbai" src="https://www.franchiseindia.com/images/franchise-india.webp" width="345" height="208" defer></a></div>
+                            <img class="" loading="lazy" alt="Franchise India 2024 Mumbai" 
+                            src="{{url('cvw/event-videos/franchise-india.webp')}}" width="345" height="208" defer></a></div>
                         <div
                             class="eshowcontent">
                             <h2>Franchise India 2024 Mumbai</h2>
@@ -286,7 +306,8 @@
             <div class="swiper-slide" data-swiper-slide-index="5" style="width:367px;margin-right:30px">
                 <div class="eshowblk">
                     <div class="eshowimg"><a href="https://www.irec.asia/mumbai/" target="_blank">
-                        <img class="" alt="IReC 2024" loading="lazy" src="https://www.franchiseindia.com/images/irec.webp" width="345" height="208"></a></div>
+                        <img class="" alt="IReC 2024" loading="lazy" 
+                        src="{{url('cvw/event-videos/irec.webp')}}" width="345" height="208"></a></div>
                     <div class="eshowcontent">
                         <h2>IReC 2024</h2>
                         <div class="eshowtxt">29-30 November 2024, Jio World Convention Centre</div>

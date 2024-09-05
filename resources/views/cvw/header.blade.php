@@ -9,8 +9,6 @@
 <link href="https://www.franchiseindia.com/" rel="canonical">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta content="noindex,nofollow" name="robots" />
-
-
 <meta property="fb:pages" content="118224094883095" />
 <meta property="fb:app_id" content="110294989480112" />
 <meta name="google-site-verification" content="8W9CXigRDmfNyf8vOfkZBefougI9sPXO4xvDBFLIjaw" />
@@ -92,7 +90,7 @@
   </noscript>
   <!-- End Facebook Pixel Code -->
 <link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2" rel="preload" as="style">
-<link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2" rel="preload" as="style" rel="preload" as="style">
+<link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2">
 <link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/swiper/css/swiper-bundle.min.css?ver=2.2" rel="preload" as="style">
 <!-- <link rel="stylesheet" href="banner.css"> -->
 <style>
@@ -179,11 +177,9 @@
                                             src="https://www.franchiseindia.com/newhomepage/assets/img/menu-icon.svg"
                                             width="25" height="14" alt="menu-icon"><span>Menu</span></div>
                                 </div>
-                                <div class="logo"><a href="https://www.franchiseindia.com"><img
-                                            src="https://www.franchiseindia.com/newhomepage/assets/img/Logo.svg"
-                                            alt="446+ Automotive Franchise, Automotive Business Franchise, Automotive Franchise Opportunities - Franchise India"
-                                            title="446+ Automotive Franchise, Automotive Business Franchise, Automotive Franchise Opportunities - Franchise India"
-                                            height="32" width="200"></a></div>
+                                <div class="logo"><a href="https://www.franchiseindia.com">
+                                    <img src="https://www.franchiseindia.com/newhomepage/assets/img/Logo.svg"
+                                            alt="Franchise India" height="32" width="200"></a></div>
                                 <div class="d-flex m-search"><span class="search" id="search">
                                         <div class="p-2" data-toggle="modal" data-target="#search-main"><img
                                                 src="https://www.franchiseindia.com/newhomepage/assets/img/Search.svg"
@@ -288,10 +284,9 @@
                                             src="https://www.franchiseindia.com/newhomepage/assets/img/menu-icon.svg"
                                             width="25" height="14" alt="menu-icon"><span>Menu</span></div>
                                 </div>
-                                <div class="logo"><a href="https://www.franchiseindia.com"><img
+<div class="logo"><a href="https://www.franchiseindia.com"><img
                                             src="https://www.franchiseindia.com/newhomepage/assets/img/Logo.svg"
-                                            alt="446+ Automotive Franchise, Automotive Business Franchise, Automotive Franchise Opportunities - Franchise India"
-                                            title="446+ Automotive Franchise, Automotive Business Franchise, Automotive Franchise Opportunities - Franchise India"
+                                            alt="Franchise India"
                                             height="32" width="200"></a></div>
                                 <div class="d-flex m-search"><span class="search" id="search">
                                         <div class="p-2" data-toggle="modal" data-target="#search-main"><img
