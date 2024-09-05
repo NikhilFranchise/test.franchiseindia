@@ -246,21 +246,22 @@
                                             onClick="frg_panel()">Forgot
                                             Password</a>
                                     </div>
+                                    <div class="popfi">
+                                        <div class="signpop"></div>
+                                        <div class="popleft">
+                                            <span>or Sign in With</span>
+                                            <ul class="socl">
+    
+                                                <li><a href="{{ config('constants.MainDomain') }}/auth/google"><img
+                                                            src="{{ url('newhomepage/assets/img/google.svg') }}"
+                                                            alt="google" class="" /></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="popright">New User <a href="#" id="loginselect1">Click here</a>
+                                        </div>
+                                    </div>
                                 </form>
-                                <div class="popfi">
-                                    <div class="signpop"></div>
-                                    <div class="popleft">
-                                        <span>or Sign in With</span>
-                                        <ul class="socl">
-
-                                            <li><a href="{{ config('constants.MainDomain') }}/auth/google"><img
-                                                        src="{{ url('newhomepage/assets/img/google.svg') }}"
-                                                        alt="google" class="" /></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="popright">New User <a href="#" id="loginselect1">Click here</a>
-                                    </div>
-                                </div>
+                               
                             </div>
                             <div role="tabpanel" class="tab-pane active" id="register">
                                 <form class="form-horizontal" id="registration">
