@@ -17,7 +17,6 @@ use App\Models\InvestorDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\InsightList;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class BrandController extends Controller
@@ -38,9 +37,7 @@ class BrandController extends Controller
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
         $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
-        // dd($franDetails->company_name);
 
-        // Check if company_name matches consecutively in the title of insights_list_new table
        // $insightMatches = [];
 
         $insightMatches = InsightList::query()
@@ -56,7 +53,7 @@ class BrandController extends Controller
                 $item->url = url('insights/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
                 return $item;
             });
-        //    dd($insightMatches);
+
             $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
             $companyName = $franDetails->company_name;
             $response= Http::get($apiUrl,['company_name'=>$companyName]);
@@ -64,7 +61,7 @@ class BrandController extends Controller
                 $dataFromB=$response->json();
             }
 
-            // dd($dataFromB);
+
 
         // // Convert both collections to arrays
         $insightMatchesArray = $insightMatches->toArray();
