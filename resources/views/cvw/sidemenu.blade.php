@@ -19,7 +19,6 @@
                 {{-- <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css"> --}}
             </div>
         </li>
-        <li>&nbsp;</li>
         
         @mobile
         <li>
@@ -938,7 +937,6 @@ form-control-custom-main"
                 {{-- <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css"> --}}
             </div>
         </li>
-        <li>&nbsp;</li>
         @mobile
         <li>
             <div class="p-2 language-main-bx">

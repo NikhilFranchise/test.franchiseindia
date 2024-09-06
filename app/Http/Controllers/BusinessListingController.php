@@ -201,6 +201,7 @@ class BusinessListingController extends Controller
      */
     public function searchBusinessListing(Request $request)
     {
+        // dd('yes');
         $searchTerm = $request->route('searchTerm');
         $categoryIds = $request->route('categoryIds');
         $locationIds = $request->route('locationIds');
@@ -1081,7 +1082,7 @@ class BusinessListingController extends Controller
 
     public function searchBusinessListingnormalization(Request $request)
     {
-        // dd($request);
+        // dd($request->all());
         $url = $request->url();
         $lowcost      = request()->lowcost;
         preg_match('/[a-zA-Z]+(\d+)/', $lowcost, $matches);

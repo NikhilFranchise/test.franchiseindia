@@ -45,7 +45,7 @@
         $mangecls = 'wiei';
     }
 @endphp
-<div class="modal modal-cust fade" id="search" tabindex="-1" aria-labelledby="search-mainLabel" aria-hidden="true">
+<div class="modal modal-cust fade" id="search-main" tabindex="-1" aria-labelledby="search-mainLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-cust">
         <div class="modal-content modal-content-cust">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -382,7 +382,7 @@
                 }).text(value));
         });
         if (selectmaxheaderval === 21)
-            maxAmount.append($("<option>hhghhjghhh</option>").attr("value", 21).text("Above"));
+            maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
     }
 
     {{--  //code start by gp  --}}

@@ -325,7 +325,60 @@
     </div>
 
     
+@mobile
+<nav id="sidebar-login" class="c-menu c-menu--slide-right myaccount sidemy is-active 
+mCustomScrollbar _mCS_2 mCS-autoHide active" style="overflow: visible;"><div id="mCSB_2" class="mCustomScrollBox mCS-minimal mCSB_vertical mCSB_outside" tabindex="0" style="max-height: none;"><div id="mCSB_2_container" class="mCSB_container" style="position:relative; top:0; left:0;" dir="ltr">
+    <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding lbt">
+        <div class="wel-list-re" id="dismiss-login"> <span class="c-menu__close"><img src="https://www.franchiseindia.com/images/close-right.png" alt="close btn" id="close_Btn" class="mCS_img_loaded"></span></div>
+        <div class="welmy">Welcome
+            <span class="username">Live Testing</span>
+            <a href="https://www.franchiseindia.com/logoutprofile"><span class="btn btn-default myacout btn-logout">Logout</span></a>
+        </div>
 
+        <div class="myline"></div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding">
+        <div class="upgrade-section">
+                                    <a href="https://www.franchiseindia.com/franchisor/myaccount/payment-plan" class=" sidebtn">Upgrade Account </a>
+            
+            <div class="myline"></div>
+
+            <div class="parblk">
+                <div class="per">You completed <span>80%</span> Profile</div>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="44" aria-valuemin="0" aria-valuemax="100" style="width:44%">
+                    </div>
+                </div>
+            </div>
+            <div class="myline marbtm"></div>
+            <ul class="nvss">
+                <li><div><span class="icon-spc"><img alt="dashboard" src="https://www.franchiseindia.com/images/dashboard.png" class="mCS_img_loaded"></span><span class="fl"><a href="/franchisor/myaccount/dashboard">Dashboards</a></span></div></li>
+                <li><div><span class="icon-spc"><img alt="view profile" src="https://www.franchiseindia.com/images/view-profile.png" class="mCS_img_loaded"></span><span><a href="/franchisor/myaccount/viewprofile">View Profile</a></span></div></li>
+                <li><div><span class="icon-spc"><img alt="response" src="https://www.franchiseindia.com/images/response.png" class="mCS_img_loaded"></span><span><a href="/franchisor/myaccount/expressed-interest">Expressed Interest</a></span>
+                    </div></li>
+            </ul>
+            <div class="nav__list">
+                <input id="group-7" type="checkbox" hidden="" checked="checked">
+                <label for="group-7" class="myperp"> <img alt="manage profiles" src="https://www.franchiseindia.com/images/manage-profile.png" class="icon-spc mCS_img_loaded"> <p class="manetxt">Manage Profile</p> <span class="fa fa-angle-down"></span></label>
+                <ul class="nvss group-list pafdd">
+                    <li class="selected"><a href="/franchisor/myaccount/personaldetails">Personal Details</a></li>
+                    <li><a href="/franchisor/myaccount/investmentdetails">Investment Details</a></li>
+                    <li><a href="/franchisor/myaccount/propertydetails">Property Details</a></li>
+                    <li><a href="/franchisor/myaccount/businessdetails">Professional Details</a></li>
+                    <li><a href="/franchisor/myaccount/payment">Payment</a></li>
+                </ul>
+            </div>
+            <ul class="nvss mymenu">
+                <li><div><span class="icon-spc"><img alt="response manager" src="https://www.franchiseindia.com/images/response-manager.png" class="mCS_img_loaded"></span><span><a href="/franchisor/myaccount/responsemanager">Response Manager</a></span></div></li>
+                <li><div><span class="icon-spc"><img alt="advertise with us" src="https://www.franchiseindia.com/images/adverise-with-us.png" class="mCS_img_loaded"></span><span><a href="/franchisor/myaccount/advertisewithus">Advertise With us</a></span></div></li>
+                <li><div><span class="icon-spc"><img alt="change password" src="https://www.franchiseindia.com/images/change-password.png" class="mCS_img_loaded"></span><span><a href="/franchisor/myaccount/changepassword">Change Password</a></span></div></li>
+            </ul>
+            <div class="myline"></div>
+            <a href="/franchisor/myaccount/feedback" class="sidebtn">Feedback</a>
+        </div>
+    </div>
+</div></div><div id="mCSB_2_scrollbar_vertical" class="mCSB_scrollTools mCSB_2_scrollbar mCS-minimal mCSB_scrollTools_vertical" style="display: block;"><div class="mCSB_draggerContainer"><div id="mCSB_2_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; display: block; height: 550px; max-height: 633.333px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div></nav>
+@endmobile
   
     
 <div class="modal fade lg-panel formsection in" id="expandFranchisenew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -444,6 +497,27 @@ function lg_panel() {
         })
     });
     </script>
+
+<script>
+    //loging section sidebar
+    $(document).ready(function() {
+        $("#sidebar-login").mCustomScrollbar({
+            theme: "minimal"
+        });
+
+        $('#dismiss-login, .overlay').on('click', function() {
+            $('#sidebar-login').removeClass('active');
+            $('.overlay').removeClass('active');
+        });
+
+        $('#sidebarCollapse-main-login').on('click', function() {
+            $('#sidebar-login').addClass('active');
+            $('.overlay').addClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+    });
+</script>
     <script>
 function getSubCategoryHeader12(value) {
         // console.log('i am called');
