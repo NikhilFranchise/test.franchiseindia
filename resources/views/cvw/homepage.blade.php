@@ -326,7 +326,7 @@
 
     
     @endphp
-   
+    @if (Auth::check())
         @if (Auth::user()->profile_type == config('constants.ProfileType.Investor'))
             <nav id="sidebar-login" class="c-menu c-menu--slide-right myaccount sidemy is-active">
                 <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding lbt">
@@ -494,7 +494,7 @@
                 </div>
             </nav>
         @endif
-   
+    @endif
   
     
 <div class="modal fade lg-panel formsection in" id="expandFranchisenew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
