@@ -393,10 +393,21 @@ padding-bottom: 50px;}.hero-desktop {display: none;}.hero-mobile {display: block
                                                 src="https://www.franchiseindia.com/newhomepage/assets/img/Search.svg"
                                                 alt="Search"><span>सर्च</span></div>
                                     </span>
-                                    <span class="login-text-right text-right d-main"><span><a data-target="#login-pnl"
-                                                data-toggle="modal" href="#"><img
-                                                    src="https://www.franchiseindia.com/newhomepage/assets/img/Login.svg"
-                                                    alt="Login"></a></span>
+                                    <span class="login-text-right text-right d-main"><span>
+                                        @if (Auth::check())
+                                        <span class="login-text-right text-right" id="sidebarCollapse-main-login">
+                   <img src="{{url('newhomepage/assets/img/Login.svg')}}" alt="Login" id="leftsidebar-open">
+                   </span>
+
+                                @else
+                                <a
+                                data-target="#login-pnl" data-toggle="modal" href="#"><img
+                                    src="https://www.franchiseindia.com/newhomepage/assets/img/Login.svg"
+                                    alt="Login"></a>      
+                                @endif  
+
+
+                                                </span>
                                         <ul class="login-main-section">
                                             {{-- @dd(Auth::check()); --}}
                                             @if (Auth::check())
@@ -502,10 +513,26 @@ padding-bottom: 50px;}.hero-desktop {display: none;}.hero-mobile {display: block
                                                 src="https://www.franchiseindia.com/newhomepage/assets/img/Search.svg"
                                                 alt="Search"><span>Search</span></div>
                                                 
-                                    </span><span class="login-text-right text-right d-main"><span><a
-                                                data-target="#login-pnl" data-toggle="modal" href="#"><img
-                                                    src="https://www.franchiseindia.com/newhomepage/assets/img/Login.svg"
-                                                    alt="Login"></a></span>
+                                    </span><span class="login-text-right text-right d-main"><span>
+                                        {{-- <a
+                                        data-target="#login-pnl" data-toggle="modal" href="#"><img
+                                            src="https://www.franchiseindia.com/newhomepage/assets/img/Login.svg"
+                                            alt="Login"></a>       --}}
+
+                                        @if (Auth::check())
+                                                <span class="login-text-right text-right" id="sidebarCollapse-main-login">
+                           <img src="{{url('newhomepage/assets/img/Login.svg')}}" alt="Login" id="leftsidebar-open">
+                           </span>
+
+                                        @else
+                                        <a
+                                        data-target="#login-pnl" data-toggle="modal" href="#"><img
+                                            src="https://www.franchiseindia.com/newhomepage/assets/img/Login.svg"
+                                            alt="Login"></a>      
+                                        @endif      
+                                        
+                                        
+                                                </span>
                                         <ul class="login-main-section">
                                             {{-- @dd(Auth::check()); --}}
                                             @if (Auth::check())
@@ -676,3 +703,5 @@ padding-bottom: 50px;}.hero-desktop {display: none;}.hero-mobile {display: block
             margin: 0 0 .063em
         }
     </style>
+
+

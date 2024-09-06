@@ -43,10 +43,10 @@
                         <a href="/investor/myaccount/payment" class=" sidebtn">खाते का उन्नयन </a>
                         <div class="myline"></div>
                         <div class="parblk">
-                            <div class="per">आपने पूरा किया <span>44%</span> प्रोफ़ाइल</div>
+                            <div class="per">आपने पूरा किया <span>{{ Cookie::get('franPercentage') }}%</span> प्रोफ़ाइल</div>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="44" aria-valuemin="0"
-                                    aria-valuemax="100" style="width:44%">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ Cookie::get('franPercentage') }}" aria-valuemin="0"
+                                    aria-valuemax="100" style="width:{{ Cookie::get('franPercentage') }}%">
                                 </div>
                             </div>
                         </div>
@@ -473,10 +473,10 @@
                         <a href="/investor/myaccount/payment" class=" sidebtn">Upgrade Account </a>
                         <div class="myline"></div>
                         <div class="parblk">
-                            <div class="per">You completed <span>44%</span> Profile</div>
+                            <div class="per">You completed <span>{{ Cookie::get('franPercentage') }}%</span> Profile</div>
                             <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="44" aria-valuemin="0"
-                                    aria-valuemax="100" style="width:44%">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{ Cookie::get('franPercentage') }}" aria-valuemin="0"
+                                    aria-valuemax="100" style="{{ Cookie::get('franPercentage') }}%">
                                 </div>
                             </div>
                         </div>

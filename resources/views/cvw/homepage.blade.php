@@ -326,175 +326,356 @@
 
     
     @endphp
-    @if (Auth::check())
-        @if (Auth::user()->profile_type == config('constants.ProfileType.Investor'))
-            <nav id="sidebar-login" class="c-menu c-menu--slide-right myaccount sidemy is-active">
-                <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding lbt">
-                    <div class="wel-list-re" id="dismiss-login"> <span class="c-menu__close"><img
-                                src="https://www.franchiseindia.com/images/close-right.png" alt="close btn"></span></div>
-                    <div class="welmy">Welcome
-                        <span class="username">{{ Auth::user()->name }}</span>
-                        <a href="/logoutprofile"><span class="btn btn-default myacout btn-logout">Logout</span></a>
-                    </div>
-                    <div class="myline"></div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding">
-                    <div class="upgrade-section">
-                        <a href="/investor/myaccount/payment" class=" sidebtn">Upgrade Account </a>
+    @mobile
+    @if (request()->segment(1) == 'hi')
+        @if (Auth::check())
+            @if (Auth::user()->profile_type == config('constants.ProfileType.Investor'))
+                <nav id="sidebar-login" class="c-menu c-menu--slide-right myaccount sidemy is-active">
+                    <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding lbt">
+                        <div class="wel-list-re" id="dismiss-login"> <span class="c-menu__close"><img
+                                    src="https://www.franchiseindia.com/images/close-right.png" alt="close btn"></span></div>
+                        <div class="welmy">स्वागत हे
+                            <span class="username">{{ Auth::user()->name }}</span>
+                            <a href="/logoutprofile"><span class="btn btn-default myacout btn-logout">लॉग आउट</span></a>
+                        </div>
                         <div class="myline"></div>
-                        <div class="parblk">
-                            <div class="per">You completed <span>44%</span> Profile</div>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="44" aria-valuemin="0"
-                                    aria-valuemax="100" style="width:44%">
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding">
+                        <div class="upgrade-section">
+                            <a href="/investor/myaccount/payment" class=" sidebtn">खाते का उन्नयन </a>
+                            <div class="myline"></div>
+                            <div class="parblk">
+                                <div class="per">आपने पूरा किया <span>{{ Cookie::get('invPercentage') }}%</span> प्रोफ़ाइल</div>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ Cookie::get('invPercentage') }}" aria-valuemin="0"
+                                        aria-valuemax="100" style="width:{{ Cookie::get('invPercentage') }}%">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="myline marbtm"></div>
-                        <ul class="nvss">
-                            <li>
-                                <div><span class="icon-spc"><img alt="dashboard"
-                                            src="https://www.franchiseindia.com/images/dashboard.png"></span><span
-                                        class="fl"><a href="/investor/myaccount/dashboard">Dashboards</a></span></div>
-                            </li>
-                            <li>
-                                <div><span class="icon-spc"><img alt="view profile"
-                                            src="https://www.franchiseindia.com/images/view-profile.png"></span><span><a
-                                            href="/investor/myaccount/viewprofile">View Profile</a></span></div>
-                            </li>
-                            <li>
-                                <div><span class="icon-spc"><img alt="response"
-                                            src="https://www.franchiseindia.com/images/response.png"></span><span><a
-                                            href="/investor/myaccount/expressed-interest">Expressed Interest</a></span>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="nav__list">
-                            <input id="group-7" type="checkbox" hidden="" checked="checked">
-                            <label for="group-7" class="myperp"> <img alt="manage profiles"
-                                    src="https://www.franchiseindia.com/images/manage-profile.png" class="icon-spc">
-                                <p class="manetxt">Manage Profile</p> <span class="fa fa-angle-down"></span>
-                            </label>
-                            <ul class="nvss group-list pafdd">
-                                <li class="selected"><a href="/investor/myaccount/personaldetails">Personal Details</a></li>
-                                <li><a href="/investor/myaccount/investmentdetails">Investment Details</a></li>
-                                <li><a href="/investor/myaccount/propertydetails">Property Details</a></li>
-                                <li><a href="/investor/myaccount/businessdetails">Professional Details</a></li>
-                                <li><a href="/investor/myaccount/payment">Payment</a></li>
-                            </ul>
-                        </div>
-                        <ul class="nvss mymenu">
-                            <li>
-                                <div><span class="icon-spc"><img alt="response manager"
-                                            src="https://www.franchiseindia.com/images/response-manager.png"></span><span><a
-                                            href="/investor/myaccount/responsemanager">Response Manager</a></span></div>
-                            </li>
-                            <li>
-                                <div><span class="icon-spc"><img alt="advertise with us"
-                                            src="https://www.franchiseindia.com/images/adverise-with-us.png"></span><span><a
-                                            href="/investor/myaccount/advertisewithus">Advertise With us</a></span></div>
-                            </li>
-                            <li>
-                                <div><span class="icon-spc"><img alt="change password"
-                                            src="https://www.franchiseindia.com/images/change-password.png"></span><span><a
-                                            href="/investor/myaccount/changepassword">Change Password</a></span></div>
-                            </li>
-                        </ul>
-                        <div class="myline"></div>
-                        <a href="/investor/myaccount/feedback" class="sidebtn">Feedback</a>
-                    </div>
-                </div>
-            </nav>
-        @endif
-        @if (Auth::user()->profile_type == config('constants.ProfileType.Franchisor'))
-            <nav id="sidebar-login" class="c-menu c-menu--slide-right myaccount sidemy is-active">
-                <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding lbt">
-                    <div class="wel-list-re" id="dismiss-login"> <span class="c-menu__close"><img
-                                src="https://www.franchiseindia.com/images/close-right.png" alt="close btn"></span></div>
-                    <div class="welmy">Welcome
-                        <span class="username">{{ session()->get('name') }}</span>
-                        <a href="{{ Config('constants.MainDomain') }}/logoutprofile"><span
-                                class="btn btn-default myacout btn-logout">Logout</span></a>
-                    </div>
-    
-                    <div class="myline"></div>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding">
-                    <div class="upgrade-section">
-                        @if (Auth::user()->membership_plan < 405)
-                            <a href="{{ Config('constants.MainDomain') }}/franchisor/myaccount/payment-plan"
-                                class=" sidebtn">Upgrade Account </a>
-                        @endif
-    
-                        <div class="myline"></div>
-    
-                        <div class="parblk">
-                            <div class="per">You completed <span>{{ Cookie::get('franPercentage') }}%</span> Profile
-                            </div>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" aria-valuenow="44" aria-valuemin="0"
-                                    aria-valuemax="100" style="width:44%">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="myline marbtm"></div>
-                        <ul class="nvss">
-                            <li>
-                                <div><span class="icon-spc"><img alt="dashboard"
-                                            src="https://www.franchiseindia.com/images/dashboard.png"></span><span
-                                        class="fl"><a href="/investor/myaccount/dashboard">Dashboards</a></span></div>
-                            </li>
-                            <li>
-                                <div><span class="icon-spc"><img alt="view profile"
-                                            src="https://www.franchiseindia.com/images/view-profile.png"></span><span><a
-                                            href="/investor/myaccount/viewprofile">View Profile</a></span></div>
-                            </li>
-                            <li>
-                                <div><span class="icon-spc"><img alt="response"
-                                            src="https://www.franchiseindia.com/images/response.png"></span><span><a
-                                            href="/investor/myaccount/expressed-interest">Expressed Interest</a></span>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="nav__list">
-                            <input id="group-7" type="checkbox" hidden="" checked="checked">
-                            <label for="group-7" class="myperp"> <img alt="manage profiles"
-                                    src="https://www.franchiseindia.com/images/manage-profile.png" class="icon-spc">
-                                <p class="manetxt">Manage Profile</p> <span class="fa fa-angle-down"></span>
-                            </label>
-                            <ul class="nvss group-list pafdd">
-                                <li class="selected"><a href="/investor/myaccount/personaldetails">Personal Details</a>
+                            <div class="myline marbtm"></div>
+                            <ul class="nvss">
+                                <li>
+                                    <div><span class="icon-spc"><img alt="dashboard"
+                                                src="https://www.franchiseindia.com/images/dashboard.png"></span><span
+                                            class="fl"><a href="/investor/myaccount/dashboard">डैशबोर्ड</a></span></div>
                                 </li>
-                                <li><a href="/investor/myaccount/investmentdetails">Investment Details</a></li>
-                                <li><a href="/investor/myaccount/propertydetails">Property Details</a></li>
-                                <li><a href="/investor/myaccount/businessdetails">Professional Details</a></li>
-                                <li><a href="/investor/myaccount/payment">Payment</a></li>
+                                <li>
+                                    <div><span class="icon-spc"><img alt="view profile"
+                                                src="https://www.franchiseindia.com/images/view-profile.png"></span><span><a
+                                                href="/investor/myaccount/viewprofile">प्रोफाइल देखिये</a></span></div>
+                                </li>
+                                <li>
+                                    <div><span class="icon-spc"><img alt="response"
+                                                src="https://www.franchiseindia.com/images/response.png"></span><span><a
+                                                href="/investor/myaccount/expressed-interest">रुचि व्यक्त की</a></span>
+                                    </div>
+                                </li>
                             </ul>
+                            <div class="nav__list">
+                                <input id="group-7" type="checkbox" hidden="" checked="checked">
+                                <label for="group-7" class="myperp"> <img alt="manage profiles"
+                                        src="https://www.franchiseindia.com/images/manage-profile.png" class="icon-spc">
+                                    <p class="manetxt">प्रोफ़ाइल प्रबंधित करें</p> <span class="fa fa-angle-down"></span>
+                                </label>
+                                <ul class="nvss group-list pafdd">
+                                    <li class="selected"><a href="/investor/myaccount/personaldetails">व्यक्तिगत विवरण</a>
+                                    </li>
+                                    <li><a href="/investor/myaccount/investmentdetails">निवेश का विवरण</a></li>
+                                    <li><a href="/investor/myaccount/propertydetails">संपत्ति ब्यौरा</a></li>
+                                    <li><a href="/investor/myaccount/businessdetails">पेशेवर विवरण</a></li>
+                                    <li><a href="/investor/myaccount/payment">भुगतान</a></li>
+                                </ul>
+                            </div>
+                            <ul class="nvss mymenu">
+                                <li>
+                                    <div><span class="icon-spc"><img alt="response manager"
+                                                src="https://www.franchiseindia.com/images/response-manager.png"></span><span><a
+                                                href="/investor/myaccount/responsemanager">प्रतिक्रिया प्रबंधक</a></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div><span class="icon-spc"><img alt="advertise with us"
+                                                src="https://www.franchiseindia.com/images/adverise-with-us.png"></span><span><a
+                                                href="/investor/myaccount/advertisewithus">हमारे साथ विज्ञापन</a></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div><span class="icon-spc"><img alt="change password"
+                                                src="https://www.franchiseindia.com/images/change-password.png"></span><span><a
+                                                href="/investor/myaccount/changepassword">पासवर्ड बदलें</a></span></div>
+                                </li>
+                            </ul>
+                            <div class="myline"></div>
+                            <a href="/investor/myaccount/feedback" class="sidebtn">प्रतिपुष्टि</a>
                         </div>
-                        <ul class="nvss mymenu">
-                            <li>
-                                <div><span class="icon-spc"><img alt="response manager"
-                                            src="https://www.franchiseindia.com/images/response-manager.png"></span><span><a
-                                            href="/investor/myaccount/responsemanager">Response Manager</a></span></div>
-                            </li>
-                            <li>
-                                <div><span class="icon-spc"><img alt="advertise with us"
-                                            src="https://www.franchiseindia.com/images/adverise-with-us.png"></span><span><a
-                                            href="/investor/myaccount/advertisewithus">Advertise With us</a></span></div>
-                            </li>
-                            <li>
-                                <div><span class="icon-spc"><img alt="change password"
-                                            src="https://www.franchiseindia.com/images/change-password.png"></span><span><a
-                                            href="/investor/myaccount/changepassword">Change Password</a></span></div>
-                            </li>
-                        </ul>
-                        <div class="myline"></div>
-                        <a href="/investor/myaccount/feedback" class="sidebtn">Feedback</a>
                     </div>
-                </div>
-            </nav>
+                </nav>
+            @endif
+            @if (Auth::user()->profile_type == config('constants.ProfileType.Franchisor'))
+                <nav id="sidebar-login" class="c-menu c-menu--slide-right myaccount sidemy is-active">
+                    <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding lbt">
+                        <div class="wel-list-re" id="dismiss-login"> <span class="c-menu__close"><img
+                                    src="https://www.franchiseindia.com/images/close-right.png" alt="close btn"></span>
+                        </div>
+                        <div class="welmy">स्वागत हे
+                            <span class="username">{{ session()->get('name') }}</span>
+                            <a href="{{ Config('constants.MainDomain') }}/logoutprofile"><span
+                                    class="btn btn-default myacout btn-logout">लॉग आउट</span></a>
+                        </div>
+
+                        <div class="myline"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding">
+                        <div class="upgrade-section">
+                            @if (Auth::user()->membership_plan < 405)
+                                <a href="{{ Config('constants.MainDomain') }}/franchisor/myaccount/payment-plan"
+                                    class=" sidebtn">खाते का उन्नयन </a>
+                            @endif
+
+                            <div class="myline"></div>
+
+                            <div class="parblk">
+                                <div class="per">आपने पूरा किया <span>{{ Cookie::get('franPercentage') }}%</span>
+                                    प्रोफ़ाइल</div>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ Cookie::get('franPercentage') }}" aria-valuemin="0"
+                                        aria-valuemax="100" style="width:{{ Cookie::get('franPercentage') }}%">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="myline marbtm"></div>
+                            <ul class="nvss">
+                                <li>
+                                    <div><span class="icon-spc"><img alt="dashboard"
+                                                src="https://www.franchiseindia.com/images/dashboard.png"></span><span
+                                            class="fl"><a href="/investor/myaccount/dashboard">डैशबोर्ड</a></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div><span class="icon-spc"><img alt="view profile"
+                                                src="https://www.franchiseindia.com/images/view-profile.png"></span><span><a
+                                                href="/investor/myaccount/viewprofile">प्रोफाइल देखिये</a></span></div>
+                                </li>
+                                <li>
+                                    <div><span class="icon-spc"><img alt="response"
+                                                src="https://www.franchiseindia.com/images/response.png"></span><span><a
+                                                href="/investor/myaccount/expressed-interest">रुचि व्यक्त की</a></span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="nav__list">
+                                <input id="group-7" type="checkbox" hidden="" checked="checked">
+                                <label for="group-7" class="myperp"> <img alt="manage profiles"
+                                        src="https://www.franchiseindia.com/images/manage-profile.png" class="icon-spc">
+                                    <p class="manetxt">प्रोफ़ाइल प्रबंधित करें</p> <span class="fa fa-angle-down"></span>
+                                </label>
+                                <ul class="nvss group-list pafdd">
+                                    <li class="selected"><a href="/franchisor/myaccount/personaldetails">व्यक्तिगत
+                                            विवरण</a></li>
+                                    <li><a href="/franchisor/myaccount/investmentdetails">निवेश का विवरण</a></li>
+                                    <li><a href="/franchisor/myaccount/propertydetails">संपत्ति ब्यौरा</a></li>
+                                    <li><a href="/franchisor/myaccount/businessdetails">पेशेवर विवरण</a></li>
+                                    <li><a href="/franchisor/myaccount/payment">भुगतान</a></li>
+                                </ul>
+                            </div>
+                            <ul class="nvss mymenu">
+                                <li>
+                                    <div><span class="icon-spc"><img alt="response manager"
+                                                src="https://www.franchiseindia.com/images/response-manager.png"></span><span><a
+                                                href="/franchisor/myaccount/responsemanager">प्रतिक्रिया प्रबंधक</a></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div><span class="icon-spc"><img alt="advertise with us"
+                                                src="https://www.franchiseindia.com/images/adverise-with-us.png"></span><span><a
+                                                href="/franchisor/myaccount/advertisewithus">हमारे साथ विज्ञापन</a></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div><span class="icon-spc"><img alt="change password"
+                                                src="https://www.franchiseindia.com/images/change-password.png"></span><span><a
+                                                href="/franchisor/myaccount/changepassword">पासवर्ड बदलें</a></span></div>
+                                </li>
+                            </ul>
+                            <div class="myline"></div>
+                            <a href="/franchisor/myaccount/feedback" class="sidebtn">Feedback</a>
+                        </div>
+                    </div>
+                </nav>
+            @endif
+        @endif
+    @else
+        @if (Auth::check())
+                @if (Auth::user()->profile_type == config('constants.ProfileType.Investor'))
+                    <nav id="sidebar-login" class="c-menu c-menu--slide-right myaccount sidemy is-active">
+                        <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding lbt">
+                            <div class="wel-list-re" id="dismiss-login"> <span class="c-menu__close"><img
+                                        src="https://www.franchiseindia.com/images/close-right.png" alt="close btn"></span></div>
+                            <div class="welmy">Welcome
+                                <span class="username">{{ Auth::user()->name }}</span>
+                                <a href="/logoutprofile"><span class="btn btn-default myacout btn-logout">Logout</span></a>
+                            </div>
+                            <div class="myline"></div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding">
+                            <div class="upgrade-section">
+                                <a href="/investor/myaccount/payment" class=" sidebtn">Upgrade Account </a>
+                                <div class="myline"></div>
+                                <div class="parblk">
+                                    <div class="per">You completed <span>{{ Cookie::get('invPercentage') }}%</span> Profile</div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ Cookie::get('invPercentage') }}" aria-valuemin="0"
+                                            aria-valuemax="100" style="width:{{ Cookie::get('invPercentage') }}%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="myline marbtm"></div>
+                                <ul class="nvss">
+                                    <li>
+                                        <div><span class="icon-spc"><img alt="dashboard"
+                                                    src="https://www.franchiseindia.com/images/dashboard.png"></span><span
+                                                class="fl"><a href="/investor/myaccount/dashboard">Dashboards</a></span></div>
+                                    </li>
+                                    <li>
+                                        <div><span class="icon-spc"><img alt="view profile"
+                                                    src="https://www.franchiseindia.com/images/view-profile.png"></span><span><a
+                                                    href="/investor/myaccount/viewprofile">View Profile</a></span></div>
+                                    </li>
+                                    <li>
+                                        <div><span class="icon-spc"><img alt="response"
+                                                    src="https://www.franchiseindia.com/images/response.png"></span><span><a
+                                                    href="/investor/myaccount/expressed-interest">Expressed Interest</a></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="nav__list">
+                                    <input id="group-7" type="checkbox" hidden="" checked="checked">
+                                    <label for="group-7" class="myperp"> <img alt="manage profiles"
+                                            src="https://www.franchiseindia.com/images/manage-profile.png" class="icon-spc">
+                                        <p class="manetxt">Manage Profile</p> <span class="fa fa-angle-down"></span>
+                                    </label>
+                                    <ul class="nvss group-list pafdd">
+                                        <li class="selected"><a href="/investor/myaccount/personaldetails">Personal Details</a></li>
+                                        <li><a href="/investor/myaccount/investmentdetails">Investment Details</a></li>
+                                        <li><a href="/investor/myaccount/propertydetails">Property Details</a></li>
+                                        <li><a href="/investor/myaccount/businessdetails">Professional Details</a></li>
+                                        <li><a href="/investor/myaccount/payment">Payment</a></li>
+                                    </ul>
+                                </div>
+                                <ul class="nvss mymenu">
+                                    <li>
+                                        <div><span class="icon-spc"><img alt="response manager"
+                                                    src="https://www.franchiseindia.com/images/response-manager.png"></span><span><a
+                                                    href="/investor/myaccount/responsemanager">Response Manager</a></span></div>
+                                    </li>
+                                    <li>
+                                        <div><span class="icon-spc"><img alt="advertise with us"
+                                                    src="https://www.franchiseindia.com/images/adverise-with-us.png"></span><span><a
+                                                    href="/investor/myaccount/advertisewithus">Advertise With us</a></span></div>
+                                    </li>
+                                    <li>
+                                        <div><span class="icon-spc"><img alt="change password"
+                                                    src="https://www.franchiseindia.com/images/change-password.png"></span><span><a
+                                                    href="/investor/myaccount/changepassword">Change Password</a></span></div>
+                                    </li>
+                                </ul>
+                                <div class="myline"></div>
+                                <a href="/investor/myaccount/feedback" class="sidebtn">Feedback</a>
+                            </div>
+                        </div>
+                    </nav>
+                @endif
+                @if (Auth::user()->profile_type == config('constants.ProfileType.Franchisor'))
+                    <nav id="sidebar-login" class="c-menu c-menu--slide-right myaccount sidemy is-active">
+                        <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding lbt">
+                            <div class="wel-list-re" id="dismiss-login"> <span class="c-menu__close"><img
+                                        src="https://www.franchiseindia.com/images/close-right.png" alt="close btn"></span></div>
+                            <div class="welmy">Welcome
+                                <span class="username">{{ session()->get('name') }}</span>
+                                <a href="{{ Config('constants.MainDomain') }}/logoutprofile"><span
+                                        class="btn btn-default myacout btn-logout">Logout</span></a>
+                            </div>
+            
+                            <div class="myline"></div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding">
+                            <div class="upgrade-section">
+                                @if (Auth::user()->membership_plan < 405)
+                                    <a href="{{ Config('constants.MainDomain') }}/franchisor/myaccount/payment-plan"
+                                        class=" sidebtn">Upgrade Account </a>
+                                @endif
+            
+                                <div class="myline"></div>
+            
+                                <div class="parblk">
+                                    <div class="per">You completed <span>{{ Cookie::get('franPercentage') }}%</span> Profile
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ Cookie::get('franPercentage') }}" aria-valuemin="0"
+                                            aria-valuemax="100" style="width:{{ Cookie::get('franPercentage') }}%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="myline marbtm"></div>
+                                <ul class="nvss">
+                                    <li>
+                                        <div><span class="icon-spc"><img alt="dashboard"
+                                                    src="https://www.franchiseindia.com/images/dashboard.png"></span><span
+                                                class="fl"><a href="/investor/myaccount/dashboard">Dashboards</a></span></div>
+                                    </li>
+                                    <li>
+                                        <div><span class="icon-spc"><img alt="view profile"
+                                                    src="https://www.franchiseindia.com/images/view-profile.png"></span><span><a
+                                                    href="/investor/myaccount/viewprofile">View Profile</a></span></div>
+                                    </li>
+                                    <li>
+                                        <div><span class="icon-spc"><img alt="response"
+                                                    src="https://www.franchiseindia.com/images/response.png"></span><span><a
+                                                    href="/investor/myaccount/expressed-interest">Expressed Interest</a></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="nav__list">
+                                    <input id="group-7" type="checkbox" hidden="" checked="checked">
+                                    <label for="group-7" class="myperp"> <img alt="manage profiles"
+                                            src="https://www.franchiseindia.com/images/manage-profile.png" class="icon-spc">
+                                        <p class="manetxt">Manage Profile</p> <span class="fa fa-angle-down"></span>
+                                    </label>
+                                    <ul class="nvss group-list pafdd">
+                                        <li class="selected"><a href="/investor/myaccount/personaldetails">Personal Details</a>
+                                        </li>
+                                        <li><a href="/investor/myaccount/investmentdetails">Investment Details</a></li>
+                                        <li><a href="/investor/myaccount/propertydetails">Property Details</a></li>
+                                        <li><a href="/investor/myaccount/businessdetails">Professional Details</a></li>
+                                        <li><a href="/investor/myaccount/payment">Payment</a></li>
+                                    </ul>
+                                </div>
+                                <ul class="nvss mymenu">
+                                    <li>
+                                        <div><span class="icon-spc"><img alt="response manager"
+                                                    src="https://www.franchiseindia.com/images/response-manager.png"></span><span><a
+                                                    href="/investor/myaccount/responsemanager">Response Manager</a></span></div>
+                                    </li>
+                                    <li>
+                                        <div><span class="icon-spc"><img alt="advertise with us"
+                                                    src="https://www.franchiseindia.com/images/adverise-with-us.png"></span><span><a
+                                                    href="/investor/myaccount/advertisewithus">Advertise With us</a></span></div>
+                                    </li>
+                                    <li>
+                                        <div><span class="icon-spc"><img alt="change password"
+                                                    src="https://www.franchiseindia.com/images/change-password.png"></span><span><a
+                                                    href="/investor/myaccount/changepassword">Change Password</a></span></div>
+                                    </li>
+                                </ul>
+                                <div class="myline"></div>
+                                <a href="/investor/myaccount/feedback" class="sidebtn">Feedback</a>
+                            </div>
+                        </div>
+                    </nav>
+                @endif
         @endif
     @endif
+    @endmobile
   
     
 <div class="modal fade lg-panel formsection in" id="expandFranchisenew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
