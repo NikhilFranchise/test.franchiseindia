@@ -19,7 +19,6 @@
                 {{-- <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css"> --}}
             </div>
         </li>
-        <li>&nbsp;</li>
         
         @mobile
         <li>
@@ -53,9 +52,9 @@ form-control-custom-main"
              </div>
         </li>
         @endmobile
-        <li><a target="_blank" href="/">Domestic Brands</a></li>
-        <li><a target="_blank" href="/premiumbrand">Premium Brands</a></li>
-        <li><a target="_blank" href="/international">International</a></li>
+        <li><a target="_blank" href="/">घरेलू ब्रांड</a></li>
+        <li><a target="_blank" href="/premiumbrand">प्रीमियम ब्रांड</a></li>
+        <li><a target="_blank" href="/international">अंतरराष्ट्रीय ब्रांड</a></li>
     </ul>
     <ul class="list-unstyled components border-bottom-1">
         <li><a target="_blank" href="https://www.franchiseindia.com/insights">फ्रेंचाइजी इनसाइट्स</a></li>
@@ -938,7 +937,6 @@ form-control-custom-main"
                 {{-- <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css"> --}}
             </div>
         </li>
-        <li>&nbsp;</li>
         @mobile
         <li>
             <div class="p-2 language-main-bx">

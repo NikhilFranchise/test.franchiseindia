@@ -1,4 +1,147 @@
 @if  (request()->segment(1) == 'hi')
+@mobile
+<div class="modal fade lg-panel formsection" id="login-pnl" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-body">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span>
+            </button>
+
+            <!-- Nav tabs -->
+            <div class="frgt-pwd" id="frg-pnl" style="display:none;">
+                <div class="ttl singlehindi">पासवर्ड भूल गए</div>
+                <div class="desc singlehindi">
+                    अपने फ्रेंचाइजीडिया खाते से जुड़े अपना ईमेल पता दर्ज करें और हम आपको एक लिंक भेजेंगे अपना
+                    पासवर्ड रीसेट करने के लिए।
+                </div>
+                <div class="frm-pnl">
+                    <form class="form-horizontal" method="POST"
+                        action="{{ Config('constants.MainDomain') }}/password/email">
+                        <input type ="hidden" name="_token" value="{{ csrf_token() }}">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <div class="usersprite"></div>
+                            </span>
+
+                            <input id="email" type="email" class="form-control" name="email"
+                                placeholder="Enter Email-Id" value="" required>
+                        </div>
+                        <button type="submit" class="btn btn-default btn-gry btn-prop">पासवर्ड रीसेट</button>
+                        <span class="pipe">|</span> <a class="frg-link" href="#"
+                            onclick="lg_panel()">mobileलॉगिन </a>
+                    </form>
+
+                </div>
+            </div>
+            <div id="lg-pnl" style="display:block;">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li id="loginactiveopen"><a href="#login" aria-controls="login" role="tab"
+                            data-toggle="tab" id="loginactive">mobileलॉगिन </a></li>
+                    <li id="registeractiveopen"><a href="#register" aria-controls="register" role="tab"
+                            data-toggle="tab" id="registeractive">mmobileरजिस्टर </a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane" id="login">
+                        <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
+                            @csrf
+                            <div class="frm-pnl">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <div class="usersprite"></div>
+                                    </span>
+                                    <input type="text" class="form-control blur" name="email_or_mobile"
+                                        id="email_or_mobile" placeholder="ईमेल-आईडी या मोबाइल नंबर दर्ज करें"
+                                        onkeyup="checkInputType()">
+
+                                    <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
+                                        style="display:none">एडिट</span>
+                                    <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
+                                        style="display:none">ओटीपी भेजें</span>
+                                    </div>
+                                    <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">यह मोबाइल नंबर
+                                        पंजीकृत नहीं है|</div>
+                                
+                                <div class="input-group" id="password_group">
+                                    <span class="input-group-addon">
+                                        <div class="pwdsprite"></div>
+                                    </span>
+                                    <input type="password" name="password" class="form-control blur"
+                                        placeholder="पासवर्ड दर्ज करें">
+
+                                </div>
+                                <div class="input-group" id="otp-block-wider" style="display: none;width:100%;">
+                                    <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
+                                        class="form-control blur" placeholder="ओटीपी दर्ज करें">
+
+                                    <span class="vrfy" id="resend_otp" onclick="resendOTP()"
+                                        style="display:none">ओटीपी पुनः भेजें</span>
+                                    <span class="vrfy" id="otp_timer"></span>
+                                </div>
+                                <button type="submit" id="sign_in_btn"
+                                    class="btn btn-default btn-gry btn-prop">साइन
+                                    इन </button>
+                                <span class="pipe">|</span> <a class="frg-link" href="#"
+                                    onClick="frg_panel()">पासवर्ड भूल गए</a>
+                            </div>
+                        </form>
+
+                        <div class="popfi">
+                            <div class="signpop"></div>
+                            <div class="popleft">
+                                <span>या सोशल मीडिया के साथ साइन इन करें</span>
+                                <ul class="socl">
+                                    {{-- <li><a href="{{ Config('constants.MainDomain') }}/auth/facebook"><i
+                                                class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li> --}}
+                                    <li><a href="{{ Config('constants.MainDomain') }}/auth/google"><i
+                                               aria-hidden="true"></i>
+                                                <img src="https://www.franchiseindia.com/newhomepage/assets/img/google.svg" alt="google" class="">
+                                            </a></li>
+
+                                </ul>
+                            </div>
+                            <div class='popright'>नया उपयोगकर्ता <a href="#" id="loginselect1">यहां क्लिक
+                                    करे</a></div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="register">
+                        <form class="form-horizontal" id="registration">
+                            <div class="frm-pnl">
+                                <div style="text-align:center">
+                                    <div><a href="https://www.franchiseindia.com/investor/create" class="btn btn-large btn-default btn-gry btn-prop">  व्यापार की शुरुआत
+                                        आज <br /><span>(इन्वेस्टर
+                                            पंजीकरण) </span> </a></div><br>
+                                    <div><a href="https://www.franchiseindia.com/franchisor/registration/step/1" class="btn btn-large btn-default btn-gry btn-prop">चैनल
+                                        पार्टनर नियुक्त करें <br /><span> (फ्रेंचाइज़र पंजीकरण)
+                                        </span></a></div><br>
+                                    <div><a href="https://www.franchiseindia.com/franchisor/international-registration" class="btn btn-large btn-default btn-gry btn-prop">चैनल पार्टनर नियुक्त करें
+                                        <br><span>(अंतर्राष्ट्रीय फ्रेंचाइज़र पंजीकरण)</span></a></div><br>
+                                    <div><a target="_blank" href="https://www.franchiseindia.com/property-loan" class="btn btn- large btn-default btn-gry btn-prop">संपत्ति
+                                        के खिलाफ ऋण</a></div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="popfi regspace">
+                            <div class="signpop"></div>Registered User<a href="#" id="registerselect1">Login here</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="footer-ttl singlehindi">मुझे पंजीकरण क्यों करना चाहिए?</div>
+            <div class="footer-desc singlehindi">
+                <p>10000 से अधिक फ़्रैंचाइज़ी व्यापार अवसरों तक पहुंच प्राप्त करने के लिए।</p>
+                <p>फ्रैंचाइजींग के साथ अपने व्यवसाय को बढ़ाना और विस्तार करना सीखने के लिए विशेषज्ञ हस्तक्षेप
+                    प्राप्त करने के लिए बढ़ते व्यापार समुदाय के साथ नेटवर्क।</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+@endmobile
+@desktop
 <div class="modal fade lg-panel formsection" id="login-pnl" tabindex="-1" role="dialog"
 aria-labelledby="exampleModalLabel">
 <div class="modal-dialog" role="document">
@@ -139,7 +282,7 @@ aria-labelledby="exampleModalLabel">
     </div>
 </div>
 </div>
-
+@enddesktop
 
 @else
 <div class="modal fade lg-panel formsection" id="login-pnl" tabindex="-1" role="dialog"
