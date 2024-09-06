@@ -902,12 +902,14 @@
     }
 
     @media screen and (max-width:768px) {
+        .recent-lines{height: 100px;}
         .recent-activities .box .container .cards .card a {
             font-size: 15px;
             line-height: 20px;
             white-space: normal;
             height: 44px;
         }
+        .recent-activities .box .container .cards .card{padding-top: 20px;}
     }
 
         .dot {
@@ -915,8 +917,7 @@
           width: 2px;
           background-color: black;
           border-radius: 50%;
-          display: inline-block;
-          margin-bottom: 3px;
+          margin-bottom: 0px;
         }
 
 </style>
@@ -936,19 +937,20 @@
                         @endforeach
                     </div>
                     <div class="cards">
-                        @foreach ($combinedDataCollection as $data)
-                            {{--  <div class="card {{ $loop->iteration == 2 ? 'mid' : '' }}">  --}}
-                            @if (is_array($data))
-                                <div class="recent-date">{{ date('d-M-Y', strtotime($data['created_at'])) }}</div>
-                                <p><a href="{{ $data['url'] }}" target="_blank">{{ $data['title'] }}</a></p>
-                            @elseif(is_object($data))
-                                <div class="recent-date">{{ date('d-M-Y', strtotime($data->created_at)) }}</div>
-                                <p><a href="{{ $data->url }}" target="_blank">{{ $data->title }}</a></p>
-                            @endif
-                            {{--  </div>  --}}
+                        @foreach ($combinedDataCollection as $index => $data)
+                            <div class="card">
+                                @if (is_array($data))
+                                    <div class="recent-date">{{ date('d-M-Y', strtotime($data['created_at'])) }}</div>
+                                    <p><a href="{{ $data['url'] }}" target="_blank">{{ $data['title'] }}</a></p>
+                                @elseif(is_object($data))
+                                    <div class="recent-date">{{ date('d-M-Y', strtotime($data->created_at)) }}</div>
+                                    <p><a href="{{ $data->url }}" target="_blank">{{ $data->title }}</a></p>
+                                @endif
+                            </div>
                         @endforeach
                     </div>
                 </div>
+
 
             </div>
         </div>
