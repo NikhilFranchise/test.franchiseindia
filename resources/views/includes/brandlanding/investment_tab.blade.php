@@ -927,7 +927,7 @@
 <div id="investmentnew_tab" class="tab-section">
 
     @if ($combinedDataCollection != null && $combinedDataCollection->isNotEmpty())
-        <h2 class="tab-sec-ttl">Recent Activities</h2>
+        <h2 class="tab-sec-ttl">Recent Updates</h2>
         <div class="recent-activities">
             <div class="box">
                 <div class="container">
@@ -991,7 +991,7 @@
 
                 {{-- Generate the URL for the matching state --}}
                 <a
-                    href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc/' . $stateKey) }}">
+                    href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc-' . $stateKey) }}">
                     {{ $maincat . ' Business Franchise in ' . $state['state'] }}
                 </a>&nbsp;<span class="dots"></span>&nbsp;
             @endif
