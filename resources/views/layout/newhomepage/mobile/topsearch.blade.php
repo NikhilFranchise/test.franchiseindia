@@ -291,7 +291,7 @@
                                                 <select name="max_cost"
                                                     class="form-control
                                           form-control-search-main-custom"
-                                                    id="maxAmount3">
+                                                    id="maxAmount">
                                                     <option value="0" hidden> Select Max Investment </option>
 
                                                 </select>
@@ -368,19 +368,20 @@
     });
 
     function selectMax3(selectmaxheaderval) {
-        console.log(selectmaxheaderval);
         let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
-        let maxAmount = $('#maxAmount3');
+        let maxAmount = $('#maxAmount');
         let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
         maxAmount.html("");
+        
         selectmaxheaderval = parseInt(selectmaxheaderval);
         $.each(amountConfigArr, function(key, value) {
             if (key > selectmaxheaderval)
-                $('#maxAmount3').append($("<option></option>").attr({
+                $('#maxAmount').append($("<option></option>").attr({
                     "value": key,
                     "slug": getSlugAmount[key]['min']
                 }).text(value));
         });
+
         if (selectmaxheaderval === 21)
             maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
     }
@@ -467,9 +468,9 @@
     // Reset the form
     form.reset();
 
-    // Reset maxAmount3 select element to its default state
-    let maxAmount3 = document.getElementById('maxAmount3');
-    maxAmount3.innerHTML = '<option value="" hidden>Select Max Investment</option>';
+    // Reset maxAmount select element to its default state
+    let maxAmount = document.getElementById('maxAmount');
+    maxAmount.innerHTML = '<option value="" hidden>Select Max Investment</option>';
 }
     /*]]>*/
 </script>

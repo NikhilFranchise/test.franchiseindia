@@ -2488,7 +2488,7 @@ ul.tobbxslider li img{width:449px;height:253px}
     #footbtm .padcoLoc,#franchisorRegform .setup-content .sidehead{margin-bottom:10px}
     #footbtm .padcoLoc{margin-top:10px}
     ul.sharecat li.btline{border-bottom:1px solid #dfdfdf}
-    ul.sharecat li.webt{display:block;border-bottom:none}
+    ul.sharecat li.webt{display:none;border-bottom:none}
     .artsec{display:none}
 }
 @media only screen and (min-width:320px) and (max-width:359px) {
