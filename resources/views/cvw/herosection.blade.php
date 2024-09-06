@@ -79,7 +79,7 @@
                         <li class="active nav-item" role="presentation"><a href="#categories1" aria-controls="categories1" role="tab"
                                 data-toggle="tab">Categories</a></li>
                         <li class="nav-item"  role="presentation"><a href="#location1" aria-controls="location1" role="tab" data-toggle="tab">Location</a>
-                        </li>
+                        </li> 
                         <li class="nav-item"  role="presentation"><a href="#investment1" aria-controls="investment1" role="tab"
                                 data-toggle="tab">Investment</a></li>
                     </ul>
@@ -285,7 +285,7 @@
                 <h1 class="hero-desktop">Search from<span> 20000+ Business </span>options</h1>
                 @enddesktop
                 @mobile
-                <h1 class="hero-mobile">20000+ Business Options</h1>
+                <h1 class="hero-mobile"><span>20000+ Business </span>Options</h1>
                 @endmobile
                 <h2>World's highest visited franchise website network</h2>
             </div> 

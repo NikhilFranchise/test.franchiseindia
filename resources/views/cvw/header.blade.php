@@ -497,9 +497,11 @@ padding-bottom: 50px;}.hero-desktop {display: none;}.hero-mobile {display: block
                                             alt="Franchise India"
                                             height="32" width="200"></a></div>
                                 <div class="d-flex m-search"><span class="search" id="search">
-                                        <div class="p-2" data-toggle="modal" data-target="#search-main"><img
+                                        
+                                    <div class="p-2" data-toggle="modal" data-target="#search-main"><img
                                                 src="https://www.franchiseindia.com/newhomepage/assets/img/Search.svg"
                                                 alt="Search"><span>Search</span></div>
+                                                
                                     </span><span class="login-text-right text-right d-main"><span><a
                                                 data-target="#login-pnl" data-toggle="modal" href="#"><img
                                                     src="https://www.franchiseindia.com/newhomepage/assets/img/Login.svg"
