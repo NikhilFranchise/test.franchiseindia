@@ -912,12 +912,15 @@
         .recent-activities .box .container .cards .card{padding-top: 20px;}
     }
 
-        .dot {
-          height: 2px;
-          width: 2px;
-          background-color: black;
-          border-radius: 50%;
-          margin-bottom: 0px;
+        .dots {
+            height: 2px;
+            width: 2px;
+            display: inline-block;
+            background-color: #555555;
+            border-radius: 50%;
+            margin-bottom: 0px;
+            vertical-align: middle;
+            border-radius: 200%;
         }
 
 </style>
@@ -990,7 +993,7 @@
                 <a
                     href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc' . $stateKey) }}">
                     {{ $maincat . ' Business Franchise in ' . $state['state'] }}
-                </a>&nbsp;<span class="dot"></span>&nbsp;
+                </a>&nbsp;<span class="dots"></span>&nbsp;
             @endif
         @endforeach
     </div>
