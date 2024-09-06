@@ -6,32 +6,45 @@
     </div>
 
     <div class="padfb15">
-        <a href="{{ $brandUrl }}" target="_blank"> 
+        <a href="{{ $brandUrl }}" target="_blank">
             <div class="catimgmobile"><img src="{{ $brandImagepath }}" alt="{{ $brandResult->company_name }}" /></div>
         </a>
- 
- 
+
+
         <div class="catlisthead hindi">
             {{ $SubCatName }}
-            @if($brandResult->brand_verified == 1)
-        <div class="brand-verify">
-            <i class="fa fa-check"></i> Verified
+            @if ($brandResult->brand_verified == 1)
+                <div class="brand-verify">
+                    <i class="fa fa-check"></i> Verified
+                </div>
+            @endif
         </div>
-        @endif
-            </div> 
         {{-- @dd($brandResult->verified); --}}
         <style>
-            .brand-verify{    display: inline-block;
-    float: right;
-    border: 1px solid #209f0c;
-    border-radius: 4px;
-    padding: 3px 9px;
-    font-size: 11px;
-    color: #03931b;
-    font-weight: bold;}
-    .brand-verify .fa{font-size: 11px;margin-right: 3px;}
-    @media screen and (max-width:768px){.brand-verify{position: absolute;right: 15px;top:15px;}}
-            </style>
+            .brand-verify {
+                display: inline-block;
+                float: right;
+                border: 1px solid #209f0c;
+                border-radius: 4px;
+                padding: 3px 9px;
+                font-size: 11px;
+                color: #03931b;
+                font-weight: bold;
+            }
+
+            .brand-verify .fa {
+                font-size: 11px;
+                margin-right: 3px;
+            }
+
+            @media screen and (max-width:768px) {
+                .brand-verify {
+                    position: absolute;
+                    right: 15px;
+                    top: 15px;
+                }
+            }
+        </style>
 
 
         {{-- <div class="catlisthead hindi">{{ $SubCatName }}</div> --}}
@@ -63,7 +76,7 @@
                     @endif
                 </div>
             @endif
-                {{--  @dd($brandResult->franchisorLocState);  --}}
+            {{--  @dd($brandResult->franchisorLocState);  --}}
             @if ($brandResult->franchisorLocState != null)
                 <div class="subcat hindi">
                     <div>Locations looking for expansion</div>
@@ -177,7 +190,7 @@
         <!--mobile hide code  end 1 -->
     </div>
     <div class="catbottp">
-        <div class="col-xs-12 col-sm-12 col-md-12">
+        {{--  <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="col-xs-4 col-sm-4 col-md-4 bd"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>
                 @if ($likes != 0)
                     {{ $likes }}
@@ -189,6 +202,44 @@
                     {{ $rate }}
                 @endif
             </div>
+        </div>  --}}
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="like-action_{{ $loop->index }} col-xs-4 col-sm-4 col-md-4 bd" style="cursor: pointer;">
+                <a onclick ="likebtn('{{ $brandResult->franchisor_id }}',this.id);" class="like"
+                    id="likeButton_{{ $loop->index }}">
+                    <i class="fa fa-thumbs-up fa-lg" aria-hidden="true" id="like"></i></a>
+                {{--  <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>  --}}
+                <span id="likecount_{{ $loop->index }}">
+                    @if ($likes != 0)
+                        {{ $likes }}
+                    @endif
+                </span>
+
+            </div>
+            <div class="seo_shareButton_{{ $loop->index }} col-xs-4 col-sm-4 col-md-4 bd" style="cursor: pointer;">
+                {{--  <i class="fa fa-share-alt fa-lg" aria-hidden="true"></i>  --}}
+                <a data-toggle="modal" data-target="#mysocial" id="seo_shareButton_{{ $loop->index }}"
+                    data-url="{{ $brandUrl }}"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i></a>
+            </div>
+            <div class="rate-action_{{ $loop->index }} col-xs-4 col-sm-4 col-md-4 bd" style="cursor: pointer;">
+                {{--  <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>  --}}
+                <a data-toggle="modal" onclick="ratebtn('{{ $loop->index }}','{{ $brandResult->franchisor_id }}')"
+                    id="rateButton_{{ $loop->index }}">
+                    @if ($rate == 5)
+                        <i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>
+                    @else
+                        <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>
+                    @endif
+                </a>
+                <span><strong id="rating_{{ $loop->index }}">
+                        {{--  @dd($rate);  --}}
+                        @if ($rate != 0)
+                            {{ $rate }}
+                        @endif
+                    </strong></span>
+            </div>
+
+
         </div>
     </div>
 </div>
