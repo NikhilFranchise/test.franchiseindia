@@ -944,10 +944,10 @@
                             <div class="card">
                                 @if (is_array($data))
                                     <div class="recent-date">{{ date('d-M-Y', strtotime($data['created_at'])) }}</div>
-                                    <p><a href="{{ $data['url'] }}" target="_blank">{{ $data['title'] }}</a></p>
+                                    <p><a href="{{ $data['url'] }}" target="_blank">{{ ucwords($data['title']) }}</a></p>
                                 @elseif(is_object($data))
                                     <div class="recent-date">{{ date('d-M-Y', strtotime($data->created_at)) }}</div>
-                                    <p><a href="{{ $data->url }}" target="_blank">{{ $data->title }}</a></p>
+                                    <p><a href="{{ $data->url }}" target="_blank">{{ ucwords($data->title) }}</a></p>
                                 @endif
                             </div>
                         @endforeach
@@ -991,7 +991,7 @@
 
                 {{-- Generate the URL for the matching state --}}
                 <a
-                    href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc' . $stateKey) }}">
+                    href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc/' . $stateKey) }}">
                     {{ $maincat . ' Business Franchise in ' . $state['state'] }}
                 </a>&nbsp;<span class="dots"></span>&nbsp;
             @endif
