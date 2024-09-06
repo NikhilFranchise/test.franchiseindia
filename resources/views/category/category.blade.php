@@ -599,19 +599,23 @@
                 <div class="modal-body">
                     <div class="macashare">
                         <ul class="sharecat">
-                            <li><a href="http://www.facebook.com/sharer.php?u={{ $brandUrl }}" target="_blank"><img
-                                        src="{{ URL::asset('images/facebookcat.gif') }}"
-                                        alt="Facebook"><span>Facebook</span></a></li>
-                            <li><a href="https://twitter.com/share?url={{ $brandUrl }}" target="_blank"><img
-                                        alt="twitter"
-                                        src="{{ URL::asset('images/twittercat.gif') }}"><span>Twitter</span></a></li>
-                            <li class="btline"><a
-                                    href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ $brandUrl }}"
-                                    target="_blank"><img alt="linkedin"
-                                        src="{{ URL::asset('images/linkedincat.gif') }}"><span>LinkedIn</span></a></li>
-                            <li class="webt"><a href="whatsapp://send?text={{ $brandUrl }}" target="_blank"><img
-                                        alt="whatsapp"
-                                        src="{{ URL::asset('images/whatsappcat.gif') }}"><span>Whatsapp</span></a></li>
+                            @if (!empty($brandUrl))
+                                <li><a href="http://www.facebook.com/sharer.php?u={{ $brandUrl }}"
+                                        target="_blank"><img src="{{ URL::asset('images/facebookcat.gif') }}"
+                                            alt="Facebook"><span>Facebook</span></a></li>
+                                <li><a href="https://twitter.com/share?url={{ $brandUrl }}" target="_blank"><img
+                                            alt="twitter"
+                                            src="{{ URL::asset('images/twittercat.gif') }}"><span>Twitter</span></a></li>
+                                <li class="btline"><a
+                                        href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ $brandUrl }}"
+                                        target="_blank"><img alt="linkedin"
+                                            src="{{ URL::asset('images/linkedincat.gif') }}"><span>LinkedIn</span></a>
+                                </li>
+                                <li class="webt"><a href="whatsapp://send?text={{ $brandUrl }}"
+                                        target="_blank"><img alt="whatsapp"
+                                            src="{{ URL::asset('images/whatsappcat.gif') }}"><span>Whatsapp</span></a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -770,9 +774,11 @@
                     var a = data.ratings;
                     $("#rating_" + i).html(a); // Update the specific rating div
                     if (a == 5) {
-                        $("#rateButton_" + i).html('<i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>');
+                        $("#rateButton_" + i).html(
+                            '<i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>');
                     } else {
-                        $("#rateButton_" + i).html('<i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>');
+                        $("#rateButton_" + i).html(
+                        '<i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>');
                     }
 
                     $("#rateButton_" + i).attr('onclick', "#");
