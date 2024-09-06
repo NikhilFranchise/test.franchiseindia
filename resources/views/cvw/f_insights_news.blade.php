@@ -26,7 +26,7 @@
                                     <p> {{ strip_tags(\Illuminate\Support\Str::words($articles['article'][0]['content'], 20, ' ...')) }}
                                     </p>
                                     <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][0]['title'], $articles['article'][0]['id']) }}"
-                                        target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक पढ़ें' : 'Read More' }}</a>
+                                        target="_blank"></a>
                                         <div class="d-flex author-section">
                                             <div class="author-info">
                                                 {{-- <ul class="author-share">
@@ -52,7 +52,7 @@
                                                 class="modified-col col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                                                 <div class="post-news-text">
                                                     <p><a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][$i]['title'], $articles['article'][$i]['id']) }}" target="_blank">{{ $articles['article'][$i]['title'] }}</a></p><a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][$i]['title'], $articles['article'][$i]['id']) }}"
-                                                        class="read-more" target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक पढ़ें' : 'Read More' }}</a></div>
+                                                        class="read-more" target="_blank"></a></div>
                                         </div>
                             </div>
                        
@@ -80,7 +80,7 @@
                                 class="card-news-summry">
                                 <h3><a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][5]['title'], $articles['article'][5]['id']) }}" target="_blank">{{ $articles['article'][5]['title'] }}</a></h3>
                                 <p>{{ strip_tags(\Illuminate\Support\Str::words($articles['article'][5]['content'], 20, ' ...')) }}</p><a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][5]['title'], $articles['article'][5]['id']) }}"
-                                    target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक पढ़ें' : 'Read More' }}</a>
+                                    target="_blank"></a>
                                 <div class="d-flex author-section">
                                     <div class="author-info">
                                         {{-- <ul class="author-share">
@@ -104,7 +104,7 @@
                                         class="modified-col col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                                         <div class="post-news-text">
                                             <p><a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][$i]['title'], $articles['article'][$i]['id']) }}" target="_blank">{{ $articles['article'][$i]['title'] }}</a></p><a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][$i]['title'], $articles['article'][$i]['id']) }}"
-                                                class="read-more" target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक पढ़ें' : 'Read More' }}</a></div>
+                                                class="read-more" target="_blank"></a></div>
                                 </div>
                     </div>
                     </li>

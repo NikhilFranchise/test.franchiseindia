@@ -7,7 +7,7 @@
 <meta name="description" content="Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.">
 <meta name="keywords" itemprop="keywords" content="franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india">
 <link href="https://www.franchiseindia.com/" rel="canonical">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta content="noindex,nofollow" name="robots" />
 <meta property="fb:pages" content="118224094883095" />
 <meta property="fb:app_id" content="110294989480112" />
