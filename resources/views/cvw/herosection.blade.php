@@ -62,18 +62,25 @@
                     width="300" alt="Direct English" height="76"></a></div>
         <div class="row">
             <div class="col-md-12">
+                @desktop
                 <h1 class="hero-desktop"><span>20 हजार से अधिक  </span> कारोबारी विक्लपों में अपने लिए तलाश करें</h1>
-                
+                @enddesktop
+                @tablet
+                <h1 class="hero-tablet"><span>20 हजार से अधिक  </span> कारोबारी विक्लपों में अपने लिए तलाश करें</h1>
+                @endtablet
+                @mobile
+                <h1 class="hindi-mobile"><span>20 हजार से अधिक  </span> कारोबारी विक्लपों में अपने लिए तलाश करें</h1>
+                @endmobile
                 <h2>दुनियाभर में सबसे अधिक तलाश किया जाने वाला फ्रैंचाइज वेबसाइट नेटवर्क।</h2>
             </div> 
             <div class="col-md-12">
                 <div class="hero-search" id="hero-search">
                     <ul class="nav nav-tabs" role="tablist">
-                        <li class="active nav-item" role="presentation">><a href="#categories1" aria-controls="categories1" role="tab"
+                        <li class="active nav-item" role="presentation"><a href="#categories1" aria-controls="categories1" role="tab"
                                 data-toggle="tab">Categories</a></li>
-                        <li class="nav-item"  role="presentation">><a href="#location1" aria-controls="location1" role="tab" data-toggle="tab">Location</a>
+                        <li class="nav-item"  role="presentation"><a href="#location1" aria-controls="location1" role="tab" data-toggle="tab">Location</a>
                         </li>
-                        <li class="nav-item"  role="presentation">><a href="#investment1" aria-controls="investment1" role="tab"
+                        <li class="nav-item"  role="presentation"><a href="#investment1" aria-controls="investment1" role="tab"
                                 data-toggle="tab">Investment</a></li>
                     </ul>
                     <div class="tab-content">
