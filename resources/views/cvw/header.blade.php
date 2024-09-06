@@ -15,18 +15,8 @@
 <meta name="y_key" content="0f4f718975ac23ed" />
 <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
 {{-- google codes --}}
-    <!-- Google Tag Manager -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
-    <script >
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'AW-991358906');
-    </script>
+     <!-- Google Tag Manager -->
 <script async>
-
     (function(w, d, s, l, i) {
       w[l] = w[l] || [];
       w[l].push({
@@ -41,18 +31,8 @@
       f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
   </script>
-  
   <!-- End Google Tag Manager -->
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
-  <script >
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-          dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'AW-991358906');
-  </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
   <script async>
     window.dataLayer = window.dataLayer || [];
@@ -62,7 +42,16 @@
     gtag('js', new Date());
     gtag('config', 'G-8MKFEZLR18');
   </script>
-
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
+    <script async >
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'AW-991358906');
+    </script>
   <!-- Facebook Pixel Code -->
   <script async>
     !function(f, b, e, v, n, t, s) {
@@ -84,7 +73,6 @@
     fbq('init', '865253970178641');
     fbq('track', 'PageView');
   </script>
-
   <noscript>
     <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1"/>
   </noscript>
