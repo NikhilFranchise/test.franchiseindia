@@ -117,7 +117,7 @@
                     </ul>
                 </div>
             </div>
-            
+
 			<div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2 col-lg-2">
                 <div class="footer-widget-link"><p><a href="https://www.dealerindia.com" target="_blank">Dealers &amp; Distributors</a></p>
                     <ul class="footer-links">
@@ -319,33 +319,33 @@
                 <div class="brows-by-location">
                     <ul class="fihl-loaction-browse">
                         <ul class="fihl-loaction-browse">
-                           
+
                                     <li><a href="https://www.franchiseindia.com/business-opportunities/maharashtra.LOC18">महाराष्ट्र</a></li>
-                           
+
                             <li><a href="https://www.franchiseindia.com/business-opportunities/delhi.LOC23">दिल्ली</a></li>
-                           
+
                             <li><a href="https://www.franchiseindia.com/business-opportunities/karnataka.LOC14">कर्नाटक</a></li>
-                           
+
                             <li><a href="https://www.franchiseindia.com/business-opportunities/tamilnadu.LOC29">तमिलनाडु</a></li>
-                           
+
                             <li><a href="https://www.franchiseindia.com/business-opportunities/west-bengal.LOC33">पश्चिम बंगाल</a></li>
-                           
+
                             <li><a href="https://www.franchiseindia.com/business-opportunities/gujarat.LOC9">गुजरात</a></li>
-                           
+
                             <li><a href="https://www.franchiseindia.com/business-opportunities/uttar-pradesh.LOC32">उत्तर प्रदेश</a></li>
-                           
+
                             <li><a href="https://www.franchiseindia.com/business-opportunities/madhya-pradesh.LOC17">मध्य प्रदेश</a></li>
-                           
+
                             <li><a href="https://www.franchiseindia.com/business-opportunities/haryana.LOC10">हरियाणा</a></li>
-                           
+
                             <li><a href="https://www.franchiseindia.com/business-opportunities/rajasthan.LOC27">राजस्थान</a></li>
-                           
+
                             <li><a href="https://www.franchiseindia.com/business-opportunities/andhra-pradesh.LOC1">आंध्र प्रदेश</a></li>
-                           
+
                             <li><a href="https://www.franchiseindia.com/business-opportunities/kerala.LOC15">केरल</a></li>
-                           
+
                             <li><a href="https://www.franchiseindia.com/business-opportunities/punjab.LOC26">पंजाब</a></li>
-                           
+
                             <li><a href="https://www.franchiseindia.com/business-opportunities/chandigarh.LOC5">चंडीगढ़</a></li>
                         </ul>
                     </ul>
@@ -425,6 +425,24 @@
 
 
 <script>
+     //loging section sidebar
+        $(document).ready(function() {
+            $("#sidebar-login").mCustomScrollbar({
+                theme: "minimal"
+            });
+
+            $('#dismiss-login, .overlay').on('click', function() {
+                $('#sidebar-login').removeClass('active');
+                $('.overlay').removeClass('active');
+            });
+
+            $('#sidebarCollapse-main-login').on('click', function() {
+                $('#sidebar-login').addClass('active');
+                $('.overlay').addClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+        });
     //Awesomplete
     const input = document.getElementById('dealer-bar-search-top');
 
@@ -482,9 +500,7 @@
             window.location.href = '/dealers-india/search/' + value;
         }
     });
-</script>
 
-<script>
     $(document).ready(function () {
         $("#sidebar").mCustomScrollbar({
             theme: "minimal"
@@ -591,7 +607,7 @@
         setTimeout(function(){
             Cookies.set('langType', 'hindi', { expires: 7 });
         }, 20000);
-		
+
 		@include('includes.banners-new.footer-google-tags')
     });
 

@@ -56,34 +56,34 @@
                 <li><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i></li>
                 <li><i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>@if($rate != 0){{$rate}}@endif</li>  --}}
                 <li class="like-action_{{ $loop->index }}" style="cursor: pointer;"><a onclick ="likebtn('{{ $brandResult->franchisor_id }}',this.id);" class="like"
-                    id="likeButton_{{ $loop->index }}">
-                    <i class="fa fa-thumbs-up fa-lg" aria-hidden="true" id="like"></i></a>
-                {{--  <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>  --}}
-                <span id="likecount_{{ $loop->index }}">
-                    @if ($likes != 0)
-                        {{ $likes }}
-                    @endif
-                </span>
-            </li>
-            <li class="seo_shareButton_{{ $loop->index }}" style="cursor: pointer;"><a data-toggle="modal" data-target="#mysocial" id="seo_shareButton_{{ $loop->index }}"
-                    data-url="{{ $brandUrl }}"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i></a>
-            </li>
-            <li class="rate-action_{{ $loop->index }}" style="cursor: pointer;"><a data-toggle="modal"
-                    onclick="ratebtn('{{ $loop->index }}','{{ $brandResult->franchisor_id }}')"
-                    id="rateButton_{{ $loop->index }}">
-                    @if ($rate == 5)
-                        <i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>
-                    @else
-                        <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>
-                    @endif
-                </a>
-                <span><strong id="rating_{{ $loop->index }}">
-                        {{--  @dd($rate);  --}}
-                        @if ($rate != 0)
-                            {{ $rate }}
+                        id="likeButton_{{ $loop->index }}">
+                        <i class="fa fa-thumbs-up fa-lg" aria-hidden="true" id="like"></i></a>
+                    {{--  <i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i>  --}}
+                    <span id="likecount_{{ $loop->index }}">
+                        @if ($likes != 0)
+                            {{ $likes }}
                         @endif
-                    </strong></span>
-            </li>
+                    </span>
+                </li>
+                <li class="seo_shareButton_{{ $loop->index }}" style="cursor: pointer;"><a data-toggle="modal" data-target="#mysocial" id="seo_shareButton_{{ $loop->index }}"
+                        data-url="{{ $brandUrl }}"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i></a>
+                </li>
+                <li class="rate-action_{{ $loop->index }}" style="cursor: pointer;"><a data-toggle="modal"
+                        onclick="ratebtn('{{ $loop->index }}','{{ $brandResult->franchisor_id }}')"
+                        id="rateButton_{{ $loop->index }}">
+                        @if ($rate == 5)
+                            <i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>
+                        @else
+                            <i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>
+                        @endif
+                    </a>
+                    <span><strong id="rating_{{ $loop->index }}">
+                            {{--  @dd($rate);  --}}
+                            @if ($rate != 0)
+                                {{ $rate }}
+                            @endif
+                        </strong></span>
+                </li>
             </ul>
         </div>
     </div>
