@@ -161,78 +161,78 @@
                                 }
                             @endphp  --}}
                             @php
-                            $brandUrl = sprintf(
-                                Config('constants.brandPagePattern'),
-                                Config('constants.MainDomain'),
-                                $brandResult->profile_name,
-                                $brandResult->fran_detail_id,
-                            );
-                            $is_premium = 0;
-                            $imgCount = 0;
-                            $SubCatName = '';
-                            $noImage = 'https://www.franchiseindia.com/images/no-img.gif';
-                            $image = $noImage;
-                            $brandImagepath = Config('constants.franAwsImgPath') . $brandResult->company_logo;
-                            $minValue = $brandResult->unit_inv_min;
-                            $area = '-N/A-';
-                            if (is_numeric($minValue)) {
-                                if ($minValue < 100000 && $minValue > 10000) {
-                                    $minValue = substr($minValue / 1000, 0, 5) . ' K';
-                                } elseif ($minValue <= 9999999 && $minValue > 100000) {
-                                    $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
-                                } elseif ($minValue > 9999999) {
-                                    $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
-                                }
-                            }
-                            $maxValue = $brandResult->unit_inv_max;
-                            if (is_numeric($maxValue)) {
-                                if ($maxValue < 100000 && $maxValue > 10000) {
-                                    $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
-                                } elseif ($maxValue <= 9999999 && $maxValue > 100000) {
-                                    $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
-                                } elseif ($maxValue > 9999999) {
-                                    $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
-                                }
-                            }
-                            $priceRange = "INR $minValue - $maxValue ";
-                            if (empty($brandResult->company_logo)) {
-                                $brandImagepath = $noImage;
-                            }
-                            foreach (Config('constants.subSubCategoryArr') as $key => $abc) {
-                                if (array_key_exists($brandResult->ind_sub_cat, $abc)) {
-                                    $SubCatName = $abc[$brandResult->ind_sub_cat];
-                                }
-                            }
-                            foreach ($franImageData as $imgData) {
-                                if ($imgData->franchisor_id == $brandResult->franchisor_id) {
-                                    $image = $imgData->image_type_slider2;
-                                    $is_premium = 1;
-                                    $imgCount = $imgData->count;
-                                }
-                            }
-                            if (!empty($brandResult->prop_area_max)) {
-                                $area = $brandResult->prop_area_min . ' - ' . $brandResult->prop_area_max;
-                            }
-                            if (empty($brandResult->prop_area_max)) {
-                                $area = $brandResult->prop_area_min;
-                            }
-                            if (empty($brandResult->prop_area_min)) {
+                                $brandUrl = sprintf(
+                                    Config('constants.brandPagePattern'),
+                                    Config('constants.MainDomain'),
+                                    $brandResult->profile_name,
+                                    $brandResult->fran_detail_id,
+                                );
+                                $is_premium = 0;
+                                $imgCount = 0;
+                                $SubCatName = '';
+                                $noImage = 'https://www.franchiseindia.com/images/no-img.gif';
+                                $image = $noImage;
+                                $brandImagepath = Config('constants.franAwsImgPath') . $brandResult->company_logo;
+                                $minValue = $brandResult->unit_inv_min;
                                 $area = '-N/A-';
-                            }
-                            $likes = 0;
-                            $rate = 0;
-                            if (!empty($brandResult->franchisorLike)) {
-                                $likes = $brandResult->franchisorLike->blike;
-                                if (
-                                    $brandResult->franchisorLike->brate != 0 &&
-                                    $brandResult->franchisorLike->bclick != 0
-                                ) {
-                                    $rate =
-                                        $brandResult->franchisorLike->brate / $brandResult->franchisorLike->bclick;
-                                    $rate = round($rate, 1);
+                                if (is_numeric($minValue)) {
+                                    if ($minValue < 100000 && $minValue > 10000) {
+                                        $minValue = substr($minValue / 1000, 0, 5) . ' K';
+                                    } elseif ($minValue <= 9999999 && $minValue > 100000) {
+                                        $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
+                                    } elseif ($minValue > 9999999) {
+                                        $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
+                                    }
                                 }
-                            }
-                        @endphp
+                                $maxValue = $brandResult->unit_inv_max;
+                                if (is_numeric($maxValue)) {
+                                    if ($maxValue < 100000 && $maxValue > 10000) {
+                                        $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
+                                    } elseif ($maxValue <= 9999999 && $maxValue > 100000) {
+                                        $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
+                                    } elseif ($maxValue > 9999999) {
+                                        $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
+                                    }
+                                }
+                                $priceRange = "INR $minValue - $maxValue ";
+                                if (empty($brandResult->company_logo)) {
+                                    $brandImagepath = $noImage;
+                                }
+                                foreach (Config('constants.subSubCategoryArr') as $key => $abc) {
+                                    if (array_key_exists($brandResult->ind_sub_cat, $abc)) {
+                                        $SubCatName = $abc[$brandResult->ind_sub_cat];
+                                    }
+                                }
+                                foreach ($franImageData as $imgData) {
+                                    if ($imgData->franchisor_id == $brandResult->franchisor_id) {
+                                        $image = $imgData->image_type_slider2;
+                                        $is_premium = 1;
+                                        $imgCount = $imgData->count;
+                                    }
+                                }
+                                if (!empty($brandResult->prop_area_max)) {
+                                    $area = $brandResult->prop_area_min . ' - ' . $brandResult->prop_area_max;
+                                }
+                                if (empty($brandResult->prop_area_max)) {
+                                    $area = $brandResult->prop_area_min;
+                                }
+                                if (empty($brandResult->prop_area_min)) {
+                                    $area = '-N/A-';
+                                }
+                                $likes = 0;
+                                $rate = 0;
+                                if (!empty($brandResult->franchisorLike)) {
+                                    $likes = $brandResult->franchisorLike->blike;
+                                    if (
+                                        $brandResult->franchisorLike->brate != 0 &&
+                                        $brandResult->franchisorLike->bclick != 0
+                                    ) {
+                                        $rate =
+                                            $brandResult->franchisorLike->brate / $brandResult->franchisorLike->bclick;
+                                        $rate = round($rate, 1);
+                                    }
+                                }
+                            @endphp
 
                             @if ($brandResult->membership_type == 1)
 
@@ -492,8 +492,8 @@
                                 @if (count($brandResults) == 0)
                                     <div class="noresults">कोई परिणाम नहीं मिला</div>
                                 @endif
-                                {{--  {!! $brandResults->appends($params)->render() !!}--}}
-								 {!! $brandResults->appends($params)->links('vendor.pagination.custom') !!}
+                                {{--  {!! $brandResults->appends($params)->render() !!} --}}
+                                {!! $brandResults->appends($params)->links('vendor.pagination.custom') !!}
                             </div>
                         </div>
                     </div>
@@ -554,9 +554,211 @@
     <!-- Popup Gallery Code Starts Here -->
     @include('category.hindi-category.popup-gallery-hindi')
     <!-- Popup Gallery Code End Here -->
+
+    <!-- social mdia code  -->
+    <div id="mysocial" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Share</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="macashare">
+                        <ul class="sharecat">
+                            <li><a href="http://www.facebook.com/sharer.php?u={{ $brandUrl }}" target="_blank"><img
+                                        src="{{ URL::asset('images/facebookcat.gif') }}"
+                                        alt="Facebook"><span>Facebook</span></a></li>
+                            <li><a href="https://twitter.com/share?url={{ $brandUrl }}" target="_blank"><img
+                                        alt="twitter"
+                                        src="{{ URL::asset('images/twittercat.gif') }}"><span>Twitter</span></a></li>
+                            <li class="btline"><a
+                                    href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ $brandUrl }}"
+                                    target="_blank"><img alt="linkedin"
+                                        src="{{ URL::asset('images/linkedincat.gif') }}"><span>LinkedIn</span></a></li>
+                            <li class="webt"><a href="whatsapp://send?text={{ $brandUrl }}" target="_blank"><img
+                                        alt="whatsapp"
+                                        src="{{ URL::asset('images/whatsappcat.gif') }}"><span>Whatsapp</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--  End social mdia code  -->
+    <!--  Start Rating modal code  -->
+    <div id="myRating" class="modal fade" role="dialog" style = "">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="closeButton">&times;</button>
+                    <h4 class="modal-title">Rating</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="catnew-form-star">
+                        <div class="rattxt">Your Rating</div>
+                        <div id="ratemsg" style="display: none">Thanks for rating..</div>
+                        <div id="ratingmsg">
+                            <input type="hidden" id="rateModalInput">
+                            <input type="hidden" id="fi_id">
+                            <fieldset class="rating" id="ratingnew">
+                                <input type="radio" id="star5" name="rating" value="5"><label
+                                    class="full" for="star5" title="Awesome - 5 stars"></label>
+
+                                <input type="radio" id="star4" name="rating" value="4"><label
+                                    class="full" for="star4" title="Pretty good - 4 stars"></label>
+
+                                <input type="radio" id="star3" name="rating" value="3"><label
+                                    class="full" for="star3" title="Meh - 3 stars"></label>
+
+                                <input type="radio" id="star2" name="rating" value="2"><label
+                                    class="full" for="star2" title="Kinda bad - 2 stars"></label>
+
+                                <input type="radio" id="star1" name="rating" value="1"><label
+                                    class="full" for="star1" title="Sucks big time - 1 star"></label>
+                            </fieldset>
+                            <div class="sasnsta">
+                                <div style="text-align: center;">
+                                    <input type="reset" class="btn btn-default" value="Cancel" data-dismiss="modal">
+                                    <input type="button" class="btn btn-default btntb" value="Submit"
+                                        onclick="ratings();">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- end of rating modal here -->
     <script type="text/javascript" src="{{ url('awesomplete/awesomplete.js') }}"></script>
 
     <script language="javascript">
+        // like function create by GP //
+        $(document).ready(function() {
+            $('#mysocial').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var postUrl = button.data('url'); // Extract the post URL from data-* attribute
+
+                // Update the share links
+                $('#facebook-share').attr('href', 'http://www.facebook.com/sharer.php?u=' +
+                    postUrl);
+                $('#twitter-share').attr('href', 'https://twitter.com/share?url=' +
+                    postUrl);
+                $('#linkedin-share').attr('href', 'http://www.linkedin.com/shareArticle?mini=true&url=' +
+                    postUrl);
+                $('#whatsapp-share').attr('href', 'whatsapp://send?text=' + postUrl);
+            });
+        });
+        @php
+            $a = Auth::check() ? 1 : 0;
+        @endphp
+
+        function likebtn(franId, id) {
+            var btnid = id.split('_');
+            var i = btnid[1];
+            var like_id = franId;
+
+            var auth = @json($a);
+            if (like_id != '' && auth == 1) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/brandlikes',
+                    data: {
+                        "fid": like_id,
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success: function(data) {
+                        $("#likecount_" + i).html(data.newCount);
+                        $("#likeButton_" + i).attr('onclick', "#");
+                        $(".like-action_" + i).css('cursor', 'default');
+                    }
+                });
+            } else {
+                $('#login-pnl').modal('show');
+                $('#loginactive').tab('show');
+            }
+        }
+
+        function ratebtn(i, fid) {
+            //console.log('yes');
+            var phpVar = @json($a);
+            $('#rateModalInput').val(i);
+            $('#fi_id').val(fid);
+            // Reset the modal to its initial state
+            $('#ratemsg').hide();
+            $('#ratingmsg').show();
+            $('#ratingnew input[type="radio"]').prop('checked', false);
+            if (phpVar == 0) {
+                $('#login-pnl').modal('show');
+                $('#loginactive').tab('show');
+
+            } else if (phpVar == 1) {
+                $('#myRating').modal('show');
+            }
+
+        }
+
+        //updating and showing star rating function
+        function ratings() {
+            var rate_id = $('#fi_id').val();
+            var rate_value = 0;
+            var i = $('#rateModalInput').val(); // Get the specific div index
+            //  console.log(rate_id + '--' + i);
+            // Determine which star is selected
+            if (document.getElementById('star5').checked) {
+                rate_value = document.getElementById('star5').value;
+            } else if (document.getElementById('star4').checked) {
+                rate_value = document.getElementById('star4').value;
+            } else if (document.getElementById('star3').checked) {
+                rate_value = document.getElementById('star3').value;
+            } else if (document.getElementById('star2').checked) {
+                rate_value = document.getElementById('star2').value;
+            } else if (document.getElementById('star1').checked) {
+                rate_value = document.getElementById('star1').value;
+            }
+
+            // Perform the AJAX request to save the rating
+            $.ajax({
+                type: 'POST',
+                url: '/brandratings',
+                data: {
+                    "fid": rate_id,
+                    "_token": "{{ csrf_token() }}",
+                    "rateValue": rate_value
+                },
+                success: function(data) {
+                    var a = data.ratings;
+                    $("#rating_" + i).html(a); // Update the specific rating div
+                    if (a == 5) {
+                        $("#rateButton_" + i).html(
+                            '<i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>');
+                    } else {
+                        $("#rateButton_" + i).html(
+                        '<i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>');
+                    }
+
+                    $("#rateButton_" + i).attr('onclick', "#");
+                    $(".rate-action_" + i).css('cursor', 'default');
+                    $('#ratemsg').show();
+                    $('#ratingmsg').hide();
+
+                    setTimeout(function() {
+                        $("#myRating").modal('hide');
+                    }, 1000);
+                }
+            });
+        }
+
+        //like share and rating function created by GP -30-Aug-2024
+
+
         //action on submit your interest
         $('#expbtn').on('click', function() {
             let franId = document.getElementById('expIntFranId').value;
@@ -850,11 +1052,11 @@
                 if ($("#dealer-bar-search").val() != "") {
                     var value = $("#dealer-bar-search").val();
                     var items = value.split(' - <strong> in');
-                    if (items.length > 1){
+                    if (items.length > 1) {
                         value = items[0];
                         window.location.href = '/dealers-india/search/' + value;
                     }
-                        
+
                 }
             });
 
