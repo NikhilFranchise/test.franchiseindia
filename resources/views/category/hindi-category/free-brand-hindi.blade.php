@@ -28,12 +28,16 @@
             @if($brandResult->franchisorLocState->count() > 0)
                 <div class="subcat hindi">
                     <div>Locations looking for expansion</div>
-                    @foreach($brandResult->franchisorLocState->take(3) as $state)
+                    @php
+                        $uniqueStates = $brandResult->franchisorLocState->unique('state')->values();
+                        $statesToShow = $uniqueStates->take(3);
+                    @endphp
+                    @foreach($statesToShow->take(3) as $state)
                         {{ Config('location.hindiStatesArr.'.$state->state).", " }}
                     @endforeach
 
-                    @if($brandResult->franchisorLocState->count() > 3)
-                        .... + {{ $brandResult->franchisorLocState->count() - 3 }} more
+                    @if($statesToShow->count() > 3)
+                        .... + {{ $statesToShow->count() - 3 }} more
                     @endif
                 </div>
             @endif
