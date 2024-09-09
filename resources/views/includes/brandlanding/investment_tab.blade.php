@@ -922,12 +922,22 @@
             vertical-align: middle;
             border-radius: 200%;
         }
+        .tab-sec-ttl-recent{
+            border-bottom: 1px solid #dbdbdb;
+            font-family: 'Open Sans Light', serif;
+            font-size: 18px;
+            line-height: 18px;
+            padding-bottom: 7px;
+            text-transform: uppercase;
+            margin-bottom: 0;
+            margin-top: 0;
+        }
 
 </style>
 <div id="investmentnew_tab" class="tab-section">
 
     @if ($combinedDataCollection != null && $combinedDataCollection->isNotEmpty())
-        <h2 class="tab-sec-ttl">Recent Updates</h2>
+        <h2 class="tab-sec-ttl-recent">Recent Updates</h2>
         <div class="recent-activities">
             <div class="box">
                 <div class="container">
@@ -959,7 +969,7 @@
         </div>
     @else
         <style>
-            .tab-sec-ttl,
+            .tab-sec-ttl-recent,
             .recent-activities {
                 display: none;
             }
