@@ -80,3 +80,37 @@
         </div>
     </div>
 </div>
+<!-- social mdia code  -->
+<div id="mysocial" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Share</h4>
+            </div>
+            <div class="modal-body">
+                <div class="macashare">
+                    <ul class="sharecat">
+                        <li><a href="http://www.facebook.com/sharer.php?u={{ $brandUrl }}" target="_blank"><img
+                                    src="{{ URL::asset('images/facebookcat.gif') }}"
+                                    alt="Facebook"><span>Facebook</span></a></li>
+                        <li><a href="https://twitter.com/share?url={{ $brandUrl }}" target="_blank"><img
+                                    alt="twitter"
+                                    src="{{ URL::asset('images/twittercat.gif') }}"><span>Twitter</span></a></li>
+                        <li class="btline"><a
+                                href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ $brandUrl }}"
+                                target="_blank"><img alt="linkedin"
+                                    src="{{ URL::asset('images/linkedincat.gif') }}"><span>LinkedIn</span></a></li>
+                        <li class="webt"><a href="whatsapp://send?text={{ $brandUrl }}" target="_blank"><img
+                                    alt="whatsapp"
+                                    src="{{ URL::asset('images/whatsappcat.gif') }}"><span>Whatsapp</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--  End social mdia code  -->
