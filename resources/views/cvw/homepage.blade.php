@@ -152,7 +152,10 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            <a href="javascript:void(0)" onclick="catform.reset();">Clear All</a>
+                                            {{-- <a href="javascript:void(0)" onclick="catform.reset();">Clear All</a> --}}
+                                            <a href="#" role="button" onclick="event.preventDefault(); catform.reset();">
+                                                Clear All
+                                            </a>
                                         </span>
                                     </div>
                                 </div>
@@ -230,7 +233,10 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            <a href="javascript:void(0)" onclick="locform.reset();">Clear All</a>
+                                            {{-- <a href="javascript:void(0)" onclick="locform.reset();">Clear All</a> --}}
+                                            <a href="#" role="button" onclick="event.preventDefault(); catform.reset();">
+                                                Clear All
+                                            </a>
                                         </span>
                                     </div>
                                 </div>
@@ -311,7 +317,10 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            <a href="javascript:void(0)" onclick="customResetForm();">Clear All</a>
+                                            {{-- <a href="javascript:void(0)" onclick="customResetForm();">Clear All</a> --}}
+                                            <a href="#" role="button" onclick="event.preventDefault(); catform.reset();">
+                                                Clear All
+                                            </a>
                                         </span>
                                     </div>
                                 </div>
