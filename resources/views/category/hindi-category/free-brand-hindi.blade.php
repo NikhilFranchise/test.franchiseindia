@@ -20,7 +20,9 @@
                 {{implode(' ', array_slice(explode(' ', substr(strip_tags($brandResult->business_desc_hindi),0,110)), 0, 10))}}
             @else
 
-                {{implode(' ', array_slice(explode(' ', substr(strip_tags($brandResult->business_desc),0,110)), 0, 10))}}
+                {{--  {{implode(' ', array_slice(explode(' ', substr(strip_tags($brandResult->business_desc),0,110)), 0, 10))}}  --}}
+                {{ implode(' ', array_slice(explode(' ', substr(strip_tags(html_entity_decode($brandResult->business_desc)), 0, 110)), 0, 10)) }}
+
             @endif
 
             @if($brandResult->franchisorLocState->count() > 0)

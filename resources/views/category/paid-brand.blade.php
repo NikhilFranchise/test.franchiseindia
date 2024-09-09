@@ -72,8 +72,10 @@
                 </div>
             @else
                 <div class="cattxtimg">
-                    {!! implode(' ', array_slice(explode(' ', strip_tags($brandResult->business_desc)), 0, 10)) !!}
+                    {{--  {!! implode(' ', array_slice(explode(' ', strip_tags($brandResult->business_desc)), 0, 10)) !!}  --}}
                     {{--  {{implode(' ', array_slice(explode(' ', substr(strip_tags($brandResult->business_desc),0,110)), 0, 10))}}  --}}
+                    {{ implode(' ', array_slice(explode(' ', substr(strip_tags(html_entity_decode($brandResult->business_desc)), 0, 110)), 0, 10)) }}
+
                 </div>
             @endif
 
