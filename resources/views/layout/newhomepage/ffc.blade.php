@@ -12,7 +12,7 @@
         </div>
         <div class="row justify-content-center">
             {{-- @foreach ($brands->where('brand_section', 5)->take(48)->shuffle() as $logoDetail) --}}
-            @foreach ($brandsffc as $logoDetail)
+            @foreach ($brandsffc->shuffle() as $logoDetail)
                 @php
                     $brandUrl = Config('constants.MainDomain') . $logoDetail['brand_link'];
                     if (isset($hindiFrans) && is_array($hindiFrans) && in_array($logoDetail['fihl_id'], $hindiFrans)) {

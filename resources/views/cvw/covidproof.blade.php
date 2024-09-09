@@ -12,7 +12,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="trending-franchise-wrap">
-                @foreach($brandslft as $logoDetail)
+                @foreach($brandslft->shuffle() as $logoDetail)
 
                     <div class="card card-m card-p-10">
                         <div class="brand-image-section">
