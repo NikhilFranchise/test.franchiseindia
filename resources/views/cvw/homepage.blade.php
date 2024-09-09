@@ -234,7 +234,7 @@
                                         </button>
                                         <span class="clear">
                                             {{-- <a href="javascript:void(0)" onclick="locform.reset();">Clear All</a> --}}
-                                            <a href="#" role="button" onclick="event.preventDefault(); catform.reset();">
+                                            <a href="#" role="button" onclick="event.preventDefault(); locform.reset();">
                                                 Clear All
                                             </a>
                                         </span>
@@ -318,7 +318,7 @@
                                         </button>
                                         <span class="clear">
                                             {{-- <a href="javascript:void(0)" onclick="customResetForm();">Clear All</a> --}}
-                                            <a href="#" role="button" onclick="event.preventDefault(); catform.reset();">
+                                            <a href="#" role="button" onclick="event.preventDefault(); customResetForm();">
                                                 Clear All
                                             </a>
                                         </span>
