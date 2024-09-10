@@ -704,7 +704,7 @@ class ExpressInstaController extends Controller
      */
     public function brandInfo(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
             'infoname' => 'required',
             'infoemail' => 'required|email',
@@ -745,7 +745,7 @@ class ExpressInstaController extends Controller
 
             // Check for duplicate entry
             $chkRec = ExpressInstaApply::query()->where('franchisor_id', '=', $franId)->where('email', '=', $email)->count();
-
+            dd($checkRec);
             // Fetch Franchisor Details
             $franchisorDetail = FranchisorBusinessDetail::query()->where('franchisor_id', $franId)->select('company_name', 'membership_type', 'ind_main_cat')->first();
 
