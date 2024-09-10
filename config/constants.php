@@ -3187,6 +3187,7 @@ return [
         "OPTMOBP" => "0",
         "OPTEMI" => "2.12",
         "OPTWLT" => "0",
-        "Paytm" => "2.36"
+        "Paytm" => "2.36",
+        "OPTUPI" => "0"
     ),
 ];

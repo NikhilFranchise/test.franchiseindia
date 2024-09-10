@@ -47,8 +47,10 @@
     <div class="sideline"></div>
     <ul class="side-list">
         <li><a href="/advertise-with-us-payment/">Advertise With us</a></li>
-        <li><a href="/emagazine/" target="_blank">Subscribe</a></li> 
-        <li><a href="{{ Config('constants.NewsDomain') }}">News</a></li>
+        {{-- <li><a href="/emagazine/" target="_blank">Subscribe</a></li>  --}}
+        <li><a href="https://master.franchiseindia.com/magazine-subscribe" target="_blank">Subscribe</a></li> 
+
+        <li><a href="https://www.opportunityindia.com">News</a></li>
     </ul>
     <div class="sideline"></div>
     <ul class="side-list">
