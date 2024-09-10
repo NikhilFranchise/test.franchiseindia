@@ -773,6 +773,7 @@ class ExpressInstaController extends Controller
             if (!empty(Cookie::get('campaignSource')))
                 $source_ref = Cookie::get('campaignSource');
             //$IndMainCat = ($franchisorDetail->ind_main_cat) ? $franchisorDetail->ind_main_cat : 0;
+                // dd($userDetail->membership_type);
             $insertData = [
                 'name' => $name,
                 'email' => $email,
@@ -787,8 +788,8 @@ class ExpressInstaController extends Controller
                 'investment' => $investmentRange,
                 'mobile_status' => 'S',
                 'franchisor_id' => $franId,
-                'visibility' => ($userDetail->membership_type == 1 ? 1 : 0),
-                'visibility_date' => ($userDetail->membership_type == 1 ? date('Y-m-d H:i:s') : null)
+                'visibility' => ($userDetail->membership_type === 1 ? 1 : 0),
+                'visibility_date' => ($userDetail->membership_type === 1 ? date('Y-m-d H:i:s') : null)
 
             ];
             // dd($insertData);
