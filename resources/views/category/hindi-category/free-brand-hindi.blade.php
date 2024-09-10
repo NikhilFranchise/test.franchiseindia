@@ -20,18 +20,24 @@
                 {{implode(' ', array_slice(explode(' ', substr(strip_tags($brandResult->business_desc_hindi),0,110)), 0, 10))}}
             @else
 
-                {{implode(' ', array_slice(explode(' ', substr(strip_tags($brandResult->business_desc),0,110)), 0, 10))}}
+                {{--  {{implode(' ', array_slice(explode(' ', substr(strip_tags($brandResult->business_desc),0,110)), 0, 10))}}  --}}
+                {{ implode(' ', array_slice(explode(' ', substr(strip_tags(html_entity_decode($brandResult->business_desc)), 0, 110)), 0, 10)) }}
+
             @endif
 
             @if($brandResult->franchisorLocState->count() > 0)
                 <div class="subcat hindi">
                     <div>Locations looking for expansion</div>
-                    @foreach($brandResult->franchisorLocState->take(3) as $state)
+                    @php
+                        $uniqueStates = $brandResult->franchisorLocState->unique('state')->values();
+                        $statesToShow = $uniqueStates->take(3);
+                    @endphp
+                    @foreach($statesToShow->take(3) as $state)
                         {{ Config('location.hindiStatesArr.'.$state->state).", " }}
                     @endforeach
 
-                    @if($brandResult->franchisorLocState->count() > 3)
-                        .... + {{ $brandResult->franchisorLocState->count() - 3 }} more
+                    @if($statesToShow->count() > 3)
+                        .... + {{ $statesToShow->count() - 3 }} more
                     @endif
                 </div>
             @endif
@@ -88,3 +94,37 @@
         </div>
     </div>
 </div>
+<!-- social mdia code  -->
+<div id="mysocial" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Share</h4>
+            </div>
+            <div class="modal-body">
+                <div class="macashare">
+                    <ul class="sharecat">
+                        <li><a href="http://www.facebook.com/sharer.php?u={{ $brandUrl }}" target="_blank"><img
+                                    src="{{ URL::asset('images/facebookcat.gif') }}"
+                                    alt="Facebook"><span>Facebook</span></a></li>
+                        <li><a href="https://twitter.com/share?url={{ $brandUrl }}" target="_blank"><img
+                                    alt="twitter"
+                                    src="{{ URL::asset('images/twittercat.gif') }}"><span>Twitter</span></a></li>
+                        <li class="btline"><a
+                                href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ $brandUrl }}"
+                                target="_blank"><img alt="linkedin"
+                                    src="{{ URL::asset('images/linkedincat.gif') }}"><span>LinkedIn</span></a></li>
+                        <li class="webt"><a href="whatsapp://send?text={{ $brandUrl }}" target="_blank"><img
+                                    alt="whatsapp"
+                                    src="{{ URL::asset('images/whatsappcat.gif') }}"><span>Whatsapp</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--  End social mdia code  -->

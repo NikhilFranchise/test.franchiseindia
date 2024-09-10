@@ -11,7 +11,7 @@
         <div class="row justify-content-center">
            
             {{-- @foreach ($brands->where('brand_section', 2)->where('page_type', $pageType)->take(4)->shuffle() as $logoDetail) --}}
-                @foreach($brandslft as $logoDetail)
+                @foreach($brandslft->shuffle() as $logoDetail)
                 @php
                     $brandUrl = Config('constants.MainDomain') . $logoDetail['brand_link'];
                       

@@ -11,7 +11,7 @@
             <div class="col-md-12">
                 <ul class="top-franchise">
 
-                    @foreach($brandstfo as $logoDetail)
+                    @foreach($brandstfo->shuffle() as $logoDetail)
                     @php
                          $brandUrl = Config('constants.MainDomain') . $logoDetail['brand_link'];
                          if (
