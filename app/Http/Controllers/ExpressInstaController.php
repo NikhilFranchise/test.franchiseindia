@@ -704,7 +704,6 @@ class ExpressInstaController extends Controller
      */
     public function brandInfo(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'infoname' => 'required',
             'infoemail' => 'required|email',
