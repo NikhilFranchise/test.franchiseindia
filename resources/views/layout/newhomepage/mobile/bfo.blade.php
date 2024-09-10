@@ -16,7 +16,7 @@
                 @endphp
 
                 {{-- @foreach($brandLogo3 as $logoDetail) --}}
-                @foreach ($brandstbo as $logoDetail)
+                @foreach ($brandstbo->shuffle() as $logoDetail)
 
                     @php
                         $brandUrl = Config('constants.MainDomain').$logoDetail['brand_link'];

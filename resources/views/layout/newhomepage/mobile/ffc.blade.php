@@ -12,7 +12,7 @@
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 {{-- @foreach($brands->where('brand_section', 5)->take(48)->shuffle() as $logoDetail) --}}
-                @foreach ($brandsffc as $logoDetail)
+                @foreach ($brandsffc->shuffle() as $logoDetail)
 
              @php
                         $brandUrl = Config('constants.MainDomain').$logoDetail['brand_link'];

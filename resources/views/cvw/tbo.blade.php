@@ -10,7 +10,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="trending-franchise-wrap">
-                    @foreach ($brandstbo as $logoDetail)
+                    @foreach ($brandstbo->shuffle() as $logoDetail)
 
                         @php
                         $brandUrl = Config('constants.MainDomain') . $logoDetail['brand_link'];

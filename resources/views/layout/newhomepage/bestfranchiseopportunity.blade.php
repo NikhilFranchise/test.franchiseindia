@@ -12,7 +12,7 @@
                 $brandLogo3 = $brands->where('brand_section', 3)->where('page_type', $pageType)->take(12)->shuffle();
             @endphp --}}
 
-            @foreach ($brandstbo as $logoDetail)
+            @foreach ($brandstbo->shuffle() as $logoDetail)
                 @php
                     $brandUrl = Config('constants.MainDomain') . $logoDetail['brand_link'];
                 @endphp

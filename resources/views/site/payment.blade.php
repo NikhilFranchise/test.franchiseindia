@@ -149,6 +149,8 @@
                                 <option value="OPTDBCRD">Debit Card</option>
                                 <option value="OPTNBK">Net Banking</option>
                                 <option value="OPTEMI">EMI</option>
+                                <option value="OPTUPI">UPI</option>
+
 
                             </select>
                         </div>
