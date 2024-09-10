@@ -744,7 +744,7 @@ class ExpressInstaController extends Controller
 
             // Check for duplicate entry
             $chkRec = ExpressInstaApply::query()->where('franchisor_id', '=', $franId)->where('email', '=', $email)->count();
-            dd($chkRec);
+
             // Fetch Franchisor Details
             $franchisorDetail = FranchisorBusinessDetail::query()->where('franchisor_id', $franId)->select('company_name', 'membership_type', 'ind_main_cat')->first();
 
