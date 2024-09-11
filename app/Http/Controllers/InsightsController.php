@@ -21,31 +21,31 @@ class InsightsController extends Controller
 
 
     public function insightshome()
-        {
+    {
 
         $homeArticle = InsightList::with('category')->where('status', 1)
-                                    ->where('insight_type','News')
-                                    ->where('news_type','fi')
-                                    ->whereNotNull('image')
-                                    ->whereNotNull('cat_id')
-                                    ->orderByDesc('news_id')
-                                    ->take(1)->get();
+            ->where('insight_type', 'News')
+            ->where('news_type', 'fi')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('news_id')
+            ->take(1)->get();
 
         $homeArticle = CommonController::contentUrlSlug($homeArticle);
 
-        if(empty($homeArticle)){
+        if (empty($homeArticle)) {
             return redirect('/insights');
         }
 
         $topstories = InsightList::with('category')
-                                    ->where('status', 1)
-                                    ->where('insight_type','=','News')
-                                    ->where('news_type','fi')
-                                    ->whereNotNull('image')
-                                    ->whereNotNull('cat_id')
-                                    ->orderByDesc('news_id')
-                                    ->whereNotIn('news_id',$homeArticle->pluck('news_id'))
-                                    ->take(5)->get();
+            ->where('status', 1)
+            ->where('insight_type', '=', 'News')
+            ->where('news_type', 'fi')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('news_id')
+            ->whereNotIn('news_id', $homeArticle->pluck('news_id'))
+            ->take(5)->get();
 
         $topstories     = CommonController::contentUrlSlug($topstories);
 
@@ -53,113 +53,116 @@ class InsightsController extends Controller
         $topcategories = SeoTag::orderByDesc('frequency')->take(10)->get();
 
         $trendArticles = InsightList::with('category')
-                                    ->where('status', 1)
-                                    ->where('news_type','=','fi')
-                                    ->whereNotNull('image')
-                                    ->whereNotNull('cat_id')
-                                    ->orderByDesc('views')
-                                    ->take(8)->get();
-		$trendArticles      = CommonController::contentUrlSlug($trendArticles);
+            ->where('status', 1)
+            ->where('news_type', '=', 'fi')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('views')
+            ->take(8)->get();
+        $trendArticles      = CommonController::contentUrlSlug($trendArticles);
 
         $industry_focus = InsightList::with('category')
-                                    ->where('insight_type','=', 'Article')
-                                    ->where('news_type','=', 'fi')
-                                    ->where('status', 1)
-                                    ->whereNotNull('image')
-                                    ->whereNotNull('cat_id')
-                                    ->orderByDesc('created_at')
-                                    ->take(1)->get();
+            ->where('insight_type', '=', 'Article')
+            ->where('news_type', '=', 'fi')
+            ->where('status', 1)
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->take(1)->get();
 
         $industry_focus      = CommonController::contentUrlSlug($industry_focus);
 
         $industry_data = InsightList::with('category')
-                                    ->where('insight_type','=', 'Article')
-                                    ->where('news_type','=', 'fi')
-                                    ->where('status', 1)
-                                    ->whereNotNull('image')
-                                    ->whereNotNull('cat_id')
-                                    ->whereNotIn('news_id',$industry_focus->pluck('news_id'))
-                                    ->orderByDesc('created_at')
-                                    ->take(6)->get();
+            ->where('insight_type', '=', 'Article')
+            ->where('news_type', '=', 'fi')
+            ->where('status', 1)
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->whereNotIn('news_id', $industry_focus->pluck('news_id'))
+            ->orderByDesc('created_at')
+            ->take(6)->get();
 
         $industry_data      = CommonController::contentUrlSlug($industry_data);
 
         $interview = InsightList::with('category')
-                                ->where('insight_type','=', 'Interview')
-                                ->where('news_type','=', 'fi')
-                                ->where('status', 1)
-                                ->whereNotNull('image')
-                                ->whereNotNull('cat_id')
-                                ->orderByDesc('created_at')
-                                ->take(8)->get();
-         $interview      = CommonController::contentUrlSlug($interview);
+            ->where('insight_type', '=', 'Interview')
+            ->where('news_type', '=', 'fi')
+            ->where('status', 1)
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->take(8)->get();
+        $interview      = CommonController::contentUrlSlug($interview);
 
-        return view('insights.insight_home',compact('homeArticle','topstories','trendArticles','topcategories','industry_focus','industry_data','interview'));
+        return view('insights.insight_home', compact('homeArticle', 'topstories', 'trendArticles', 'topcategories', 'industry_focus', 'industry_data', 'interview'));
     }
 
-    public function getinsightstories(){
+    public function getinsightstories()
+    {
         $insightstories = InsightList::with('author')
-        ->where('insight_type','News')
-        ->where('news_type','fi')
-        ->where('status', 1)
-        ->whereNotNull('image')
-        ->whereNotNull('cat_id')
-        ->orderByDesc('created_at')->paginate(6);
+            ->where('insight_type', 'News')
+            ->where('news_type', 'fi')
+            ->where('status', 1)
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')->paginate(6);
         $insightstories = CommonController::contentUrlSlug($insightstories);
 
-        return view('insights.topstories',compact('insightstories'));
-
+        return view('insights.topstories', compact('insightstories'));
     }
 
-    public function industryfocus(){
-    // $insArticles = InsightList::with(['author','category','Subcategory'])
-    $insArticles = InsightList::with('author')
-        ->where('insight_type','=', 'Article')
-        ->where('news_type','=', 'fi')
-        ->whereNotNull('image')
-        ->whereNotNull('cat_id')
-        ->where('status', 1)
-        ->orderByDesc('created_at')
-        ->paginate(6);
+    public function industryfocus()
+    {
+        // $insArticles = InsightList::with(['author','category','Subcategory'])
+        $insArticles = InsightList::with('author')
+            ->where('insight_type', '=', 'Article')
+            ->where('news_type', '=', 'fi')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->paginate(6);
         // dd($insArticles);
-    $insArticles      = CommonController::contentUrlSlug($insArticles);
+        $insArticles      = CommonController::contentUrlSlug($insArticles);
 
-    if ($insArticles->isEmpty()) {
-        return redirect('/insights');
-    } else {
-        return view('insights.articles',compact('insArticles'));
+        if ($insArticles->isEmpty()) {
+            return redirect('/insights');
+        } else {
+            return view('insights.articles', compact('insArticles'));
+        }
     }
-}
 
-    public function getinsightsinterviews(){
+    public function getinsightsinterviews()
+    {
 
-    $interviews  = InsightList::with('author')
-        ->where('news_type','fi')
-        ->where('insight_type','Interview')
-        ->whereNotNull('image')
-        ->whereNotNull('cat_id')
-        ->where('status', 1)
-        ->orderByDesc('created_at')
-        ->paginate(6);
-    $interviews = CommonController::contentUrlSlug($interviews);
-    if ($interviews->isEmpty()) {
-        return redirect('/insights');
-    } else {
-        return view('insights.interviewslist',compact('interviews'));
+        $interviews  = InsightList::with('author')
+            ->where('news_type', 'fi')
+            ->where('insight_type', 'Interview')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->paginate(6);
+        $interviews = CommonController::contentUrlSlug($interviews);
+        if ($interviews->isEmpty()) {
+            return redirect('/insights');
+        } else {
+            return view('insights.interviewslist', compact('interviews'));
+        }
     }
-}
 
-    public function geteventsreports(){
+    public function geteventsreports()
+    {
 
-    $events_reports = InsightList::with('author')
-        ->where('status', 1)
-        ->where('news_type', 'fi')
-        ->where('insight_type','Event')
-        ->orWhere('insight_type','Report')
-        ->whereNotNull('image')
-        ->whereNotNull('cat_id')
-        ->orderByDesc('news_id')
-        ->paginate(6);
+        $events_reports = InsightList::with('author')
+            ->where('status', 1)
+            ->where('news_type', 'fi')
+            ->where('insight_type', 'Event')
+            ->orWhere('insight_type', 'Report')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('news_id')
+            ->paginate(6);
         $events_reports = CommonController::contentUrlSlug($events_reports);
 
         if ($events_reports->isEmpty()) {
@@ -170,93 +173,98 @@ class InsightsController extends Controller
     }
 
 
-    public function authordata(Request $request){
+    public function authordata(Request $request)
+    {
 
-        $author_id =  explode('-',$request->slug);
+        $author_id =  explode('-', $request->slug);
         $id = end($author_id);
-        if(!is_int($id)){
+        if (!is_int($id)) {
             $id = (int)$id;
-            if($id==0) return redirect('/insight');
+            if ($id == 0) return redirect('/insight');
         }
         $author = AuthorList::find($id);
 
-        $articleCount = InsightList::where('author_id',$id)
-                                    ->where('news_type','fi')->count();
-        $article = InsightList::where('author_id',$id)
-                                ->where('status', 1)
-                                ->where('news_type','fi')
-                                ->whereNotNull('image')
-                                ->whereNotNull('cat_id')
-                                ->orderByDesc('created_at')
-                                ->paginate(6);
+        $articleCount = InsightList::where('author_id', $id)
+            ->where('news_type', 'fi')->count();
+        $article = InsightList::where('author_id', $id)
+            ->where('status', 1)
+            ->where('news_type', 'fi')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->paginate(6);
         $article = CommonController::contentUrlSlug($article);
 
-        return view('insights.author',compact('author','article','articleCount'));
+        return view('insights.author', compact('author', 'article', 'articleCount'));
     }
 
-    public function insightscategorydata(Request $request){
+    public function insightscategorydata(Request $request)
+    {
 
 
         $slug      = $request->slug;
-        $slugr = str_replace(' ', '-',$slug);
+        $slugr = str_replace(' ', '-', $slug);
         $slugarr = strtolower($slugr);
 
-    $category = InsightCategory::query()
-        ->where('slug', 'LIKE','%' . $slugarr . '%')
-        ->where('status', '1')
-        ->first();
+        $category = InsightCategory::query()
+            ->where('slug', 'LIKE', '%' . $slugarr . '%')
+            ->where('status', '1')
+            ->first();
 
-    if ($category) {
-    $insightcategories = InsightList::with('author')
-            ->where('cat_id', $category->id)
-            ->where('status', 1)
-            ->where('news_type', 'fi')
-            ->orderByDesc('news_id')
-            ->paginate(6);
-    $insightcategories = CommonController::contentUrlSlug($insightcategories);
+        if ($category) {
+            $insightcategories = InsightList::with('author')
+                ->where('cat_id', $category->id)
+                ->where('status', 1)
+                ->where('news_type', 'fi')
+                ->orderByDesc('news_id')
+                ->paginate(6);
+            $insightcategories = CommonController::contentUrlSlug($insightcategories);
 
-    if ($insightcategories->count() > 0) {
-        return view('insights.categorylist',compact('insightcategories','category'));
-    } else {
-        return redirect('/insights');
+            if ($insightcategories->count() > 0) {
+                return view('insights.categorylist', compact('insightcategories', 'category'));
+            } else {
+                return redirect('/insights');
+            }
         }
-     }
     }
 
-    public function trendstories(){
+    public function trendstories()
+    {
 
-    $trendstories = InsightList::with('author')
-        ->where('insight_type','News')
-        ->where('news_type','fi')
-        ->whereNotNull('image')
-        ->whereNotNull('cat_id')
-        ->where('status', 1)
-        ->orderByDesc('created_at')
-        ->paginate(6);
+        $trendstories = InsightList::with('author')
+            ->where('insight_type', 'News')
+            ->where('news_type', 'fi')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->paginate(6);
 
-    $trendstories = CommonController::contentUrlSlug($trendstories);
-    if($trendstories->isEmpty()){
-        return redirect('/insights');
-    }else{
-        return view('insights.trendstories',compact('trendstories'));
+        $trendstories = CommonController::contentUrlSlug($trendstories);
+        if ($trendstories->isEmpty()) {
+            return redirect('/insights');
+        } else {
+            return view('insights.trendstories', compact('trendstories'));
+        }
     }
-}
 
-    public function getInsightsDetails(Request $request){
+    public function getInsightsDetails(Request $request)
+    {
 
         $id = $request->id;
 
 
-        $newsDetails        = InsightList::with(['author','category','Subcategory'])->where('status', 1)->where('news_type', 'fi')->where('news_id', $id)->get();
+        $newsDetails        = InsightList::with(['author', 'category', 'Subcategory'])->where('status', 1)->where('news_type', 'fi')->where('news_id', $id)->get();
+        // If news details not found, abort with 404
+        if ($newsDetails->isEmpty()) {
+            // abort(404);
+            return redirect('insights/pagenotfound');
+        }
+        $author_details = AuthorList::query()->where('author_id', $newsDetails[0]['author_id'])->get();
+        $associatedTags = ContentTagsAssigned::query()->where('content_id', $id)->select('tag_id')->where('content_type', 2)->get();
 
-
-        $author_details = AuthorList::query()->where('author_id',$newsDetails[0]['author_id'])->get();
-
-		$associatedTags     = ContentTagsAssigned::query()->where('content_id', $id)->select('tag_id')->where('content_type',2)->get();
-
-
-            foreach ($associatedTags as $tags) {
-                $assocTag = SeoTag::query()
+        foreach ($associatedTags as $tags) {
+            $assocTag = SeoTag::query()
                 ->where('tag_id', $tags->tag_id)
                 ->select('tag_id', 'name')
                 ->distinct()
@@ -264,89 +272,87 @@ class InsightsController extends Controller
 
             if ($assocTag) {
                 $assocTags[] = $assocTag;
-
             }
-            }
+        }
 
 
-        if(empty($newsDetails)){
+        if (empty($newsDetails)) {
             return redirect('/insights');
-        }else{
+        } else {
 
             return view('insights.insight_detail')->with(compact('newsDetails', 'author_details'));
         }
+    }
 
-
-	}
-
-    public function insightSearch(Request $request){
+    public function insightSearch(Request $request)
+    {
         $search = $request->search;
         $articleCount = InsightList::with('author')
-        ->where('status', 1)
-        ->where(function ($query) use ($search) {
-            $query->where('title', 'LIKE', '%' . $search . '%')
-                ->orWhere('kicker', 'LIKE', '%' . $search . '%');
-        })
-        ->where('news_type', 'fi')
-        ->whereNotNull('image')
-        ->whereNotNull('cat_id')
-        ->orderByDesc('created_at')->count();
+            ->where('status', 1)
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'LIKE', '%' . $search . '%')
+                    ->orWhere('kicker', 'LIKE', '%' . $search . '%');
+            })
+            ->where('news_type', 'fi')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')->count();
         if (($articleCount < 1)) {
-           return redirect('/insights');
+            return redirect('/insights');
         }
 
         $articlesList = InsightList::with('author')
-    ->where('status', 1)
-    ->where(function ($query) use ($search) {
-        $query->where('title', 'LIKE', '%' . $search . '%')
-            ->orWhere('kicker', 'LIKE', '%' . $search . '%');
-    })
-    ->where('news_type', 'fi')
-    ->whereNotNull('image')
-    ->orderByDesc('created_at')
-    ->paginate(5);
+            ->where('status', 1)
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'LIKE', '%' . $search . '%')
+                    ->orWhere('kicker', 'LIKE', '%' . $search . '%');
+            })
+            ->where('news_type', 'fi')
+            ->whereNotNull('image')
+            ->orderByDesc('created_at')
+            ->paginate(5);
 
         $articlesList      = CommonController::contentUrlSlug($articlesList);
-        return view('insights.search', compact('articleCount','articlesList','search'));
-   }
-
-   public function insightstags(Request $request)
-{
-    $tag = $request->tagslug;
-    $tagstr = str_replace('-', ' ', $tag);
-    $tagword = ucfirst($tagstr);
-
-    $data = SeoTag::query()->where('name', $tagword)->first();
-
-    if (is_null($data)) {
-        return redirect('/insights');
+        return view('insights.search', compact('articleCount', 'articlesList', 'search'));
     }
 
-    $articleIds = ContentTagsAssigned::query()
-    ->select('content_id')
-    ->where('tag_id', $data->tag_id)
-    ->where('content_type', 2)
-    ->distinct()
-    ->pluck('content_id')
-    ->toArray();
+    public function insightstags(Request $request)
+    {
+        $tag = $request->tagslug;
+        $tagstr = str_replace('-', ' ', $tag);
+        $tagword = ucfirst($tagstr);
 
-$articlesList = InsightList::with('author')
-    ->whereIn('news_id', $articleIds)
-    ->where('status', 1)
-    ->where('news_type', 'fi')
-    ->whereNotNull('image')
-    ->whereNotNull('cat_id')
-    ->orderByDesc('created_at')
-    ->paginate(6);
+        $data = SeoTag::query()->where('name', $tagword)->first();
 
-    $articlesList = CommonController::contentUrlSlug($articlesList);
+        if (is_null($data)) {
+            return redirect('/insights');
+        }
 
-    if($articlesList->count() > 0){
-    return view('insights.insightstags', compact('articlesList', 'data'));
-}else{
-    return redirect('/insights');
-}
-}
+        $articleIds = ContentTagsAssigned::query()
+            ->select('content_id')
+            ->where('tag_id', $data->tag_id)
+            ->where('content_type', 2)
+            ->distinct()
+            ->pluck('content_id')
+            ->toArray();
+
+        $articlesList = InsightList::with('author')
+            ->whereIn('news_id', $articleIds)
+            ->where('status', 1)
+            ->where('news_type', 'fi')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->paginate(6);
+
+        $articlesList = CommonController::contentUrlSlug($articlesList);
+
+        if ($articlesList->count() > 0) {
+            return view('insights.insightstags', compact('articlesList', 'data'));
+        } else {
+            return redirect('/insights');
+        }
+    }
 
 
     // STATIC FUNCTIONS START HERE
@@ -355,16 +361,16 @@ $articlesList = InsightList::with('author')
     {
         $nextArticle = InsightList::query()->where('status', 1)->where('news_id', '>', $contentIdParam);
         $nextArticle = $nextArticle->where('status', 1)
-                                  ->orderBy('news_id', 'asc')
-                                  ->take(1)->get();
+            ->orderBy('news_id', 'asc')
+            ->take(1)->get();
 
         if (count($nextArticle) == 0) {
             $nextArticle = InsightList::query()->where('news_id', '<', $contentIdParam);
             $nextArticle = $nextArticle->where('status', 1)
-                                       ->orderBy('news_id', 'desc')
-                                       ->take(1)->get();
+                ->orderBy('news_id', 'desc')
+                ->take(1)->get();
         }
-        if(empty($nextArticle))
+        if (empty($nextArticle))
             return [];
         return CommonController::contentUrlSlug($nextArticle);
     }
@@ -374,15 +380,16 @@ $articlesList = InsightList::with('author')
         /*Calculating length of total words*/
         $totaltext = $obj->title . ' ' . $obj->content;
 
-        if (App::getLocale() == 'en'){
+        if (App::getLocale() == 'en') {
             $articlelen = str_word_count($totaltext);
-        }else{
-            $articlelen = count(explode(' ',$totaltext));
+        } else {
+            $articlelen = count(explode(' ', $totaltext));
         }
         return round($articlelen / 200);
     }
 
-    public static function insightcategory() {
+    public static function insightcategory()
+    {
         $categories = InsightCategory::all()->toArray();
         return $categories;
     }
@@ -390,121 +397,121 @@ $articlesList = InsightList::with('author')
     // STATIC FUNCTIONS END HERE
 
     public function newslettersignup()
-{
-    $email      = strtolower(request()->email);
-    $siteType   = request()->site_type;
-    $randValue  = rand(100000, 9999999);
-    $checkEmail = FiNewsLetter::query()->select('status')->where('email', $email)->where('site_type', $siteType)->orderby('nid', 'DESC')->first();
+    {
+        $email      = strtolower(request()->email);
+        $siteType   = request()->site_type;
+        $randValue  = rand(100000, 9999999);
+        $checkEmail = FiNewsLetter::query()->select('status')->where('email', $email)->where('site_type', $siteType)->orderby('nid', 'DESC')->first();
 
 
-    $news   = 'subscribing';
+        $news   = 'subscribing';
 
-    if ($checkEmail !== null) {
-        if ($checkEmail->status == "S") {
-            $news = 'alreadysubscribed';
-            return view('insights/subscribe')->with(compact('news'));
+        if ($checkEmail !== null) {
+            if ($checkEmail->status == "S") {
+                $news = 'alreadysubscribed';
+                return view('insights/subscribe')->with(compact('news'));
+            }
         }
-    }
 
-    $source = "DOTCOM";
+        $source = "DOTCOM";
 
-    // If no record exists, send the verification mail
-    if ($checkEmail === null) {
-        $news = 'subscribing';
-        FiNewsLetter::query()->insert([
-            'email'       => $email,
-            'verify_code' => $randValue,
-            'site_type'   => $siteType,
-            'source_ref'  => $source
-        ]);
-        if(!empty($email))
+        // If no record exists, send the verification mail
+        if ($checkEmail === null) {
+            $news = 'subscribing';
+            FiNewsLetter::query()->insert([
+                'email'       => $email,
+                'verify_code' => $randValue,
+                'site_type'   => $siteType,
+                'source_ref'  => $source
+            ]);
+            if (!empty($email))
                 Mail::getFacadeRoot()->to($email)->send(new NewsLetterSubscribe($randValue));
-    } elseif ($checkEmail->status == "P") {
-        $news = 'pending';
-    }  elseif ($checkEmail->status == "S") {
-        $news = 'subscribed';
+        } elseif ($checkEmail->status == "P") {
+            $news = 'pending';
+        } elseif ($checkEmail->status == "S") {
+            $news = 'subscribed';
+        }
+        // dd('saved');
+        return view('insights.thanks')->with(compact('news'));
     }
-    // dd('saved');
-    return view('insights.thanks')->with(compact('news'));
-}
 
 
-public function instasubsribe(Request $request)
-{
-    // $this->validate($request, array(
-    //     'email' => 'required|email|max:255',
-    //     'tel' => 'required|min:10|max:10'
-    // ));
+    public function instasubsribe(Request $request)
+    {
+        // $this->validate($request, array(
+        //     'email' => 'required|email|max:255',
+        //     'tel' => 'required|min:10|max:10'
+        // ));
 
-    $email  = $request->email;
-    $mobile = $request->tel;
-    // dd($mobile);
-    $ip     = $request->ip();
+        $email  = $request->email;
+        $mobile = $request->tel;
+        // dd($mobile);
+        $ip     = $request->ip();
 
-    try {
-        // Check if the record already exists based on mobileno and emailid
-        $recordExists = InstaSubscribe::where('mobileno', $mobile)
-            ->orWhere('emailid', $email)
-            ->exists();
+        try {
+            // Check if the record already exists based on mobileno and emailid
+            $recordExists = InstaSubscribe::where('mobileno', $mobile)
+                ->orWhere('emailid', $email)
+                ->exists();
 
-        if ($recordExists) {
+            if ($recordExists) {
+
+                return response()->json([
+                    'error' => true,
+                    'message1' => 'This email already exists.',
+                    'message2' => 'This mobile already exists.',
+                    'fields' => [
+                        'email' => $email,
+                        'tel' => $mobile,
+                    ],
+                ]);
+            }
+
+            // If no duplicate, insert the new record
+            $instaSubData = InstaSubscribe::create([
+                'mobileno' => $mobile,
+                'emailid' => $email,
+                'client_ip' => $ip
+            ]);
+
+            return response()->json([
+                'error' => false,
+                'message' => '1',
+            ]);
+        } catch (\Exception $e) {
+
+            Log::error($e);
+
 
             return response()->json([
                 'error' => true,
-                'message1' => 'This email already exists.',
-                'message2' => 'This mobile already exists.',
-                'fields' => [
-                    'email' => $email,
-                    'tel' => $mobile,
-                ],
+                'message' => 'An error occurred. Please try again.',
+                'exception_message' => $e->getMessage(),
             ]);
         }
-
-        // If no duplicate, insert the new record
-        $instaSubData = InstaSubscribe::create([
-            'mobileno' => $mobile,
-            'emailid' => $email,
-            'client_ip' => $ip
-        ]);
-
-        return response()->json([
-            'error' => false,
-            'message' => '1',
-        ]);
-    } catch (\Exception $e) {
-
-        Log::error($e);
+    }
 
 
-        return response()->json([
-            'error' => true,
-            'message' => 'An error occurred. Please try again.',
-            'exception_message' => $e->getMessage(),
-        ]);
-}
-}
-
-
-    public function insightsubcategory(Request $request){
+    public function insightsubcategory(Request $request)
+    {
         // dd($request->category);
-        if($request->category == 'kicker' || $request->subcategory == 'kicker'){
+        if ($request->category == 'kicker' || $request->subcategory == 'kicker') {
             return redirect('/insights');
         }
         $catslug = $request->category;
         $subcat = $request->subcategory;
-        $subcat_data = InsightSubcategory::query()->where('slug',$subcat)->first();
-        $cat_data = InsightCategory::query()->where('slug',$catslug)->where('id',$subcat_data->mcat_id)->first();
+        $subcat_data = InsightSubcategory::query()->where('slug', $subcat)->first();
+        $cat_data = InsightCategory::query()->where('slug', $catslug)->where('id', $subcat_data->mcat_id)->first();
 
-        $contentdata = InsightList::with(['author','category','subcategory'])
-                                    ->where('subcat_id',$subcat_data->id)
-                                    ->where('news_type','fi')
-                                    ->where('status',1)
-                                    ->whereNotNull('image')
-                                    ->whereNotNull('cat_id')
-                                    ->whereNotNull('subcat_id')
-                                    ->paginate(10);
+        $contentdata = InsightList::with(['author', 'category', 'subcategory'])
+            ->where('subcat_id', $subcat_data->id)
+            ->where('news_type', 'fi')
+            ->where('status', 1)
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->whereNotNull('subcat_id')
+            ->paginate(10);
         // dd($contentdata);
-        return view('insights.subcatdata',compact('contentdata','subcat_data'));
+        return view('insights.subcatdata', compact('contentdata', 'subcat_data'));
     }
 }
-
