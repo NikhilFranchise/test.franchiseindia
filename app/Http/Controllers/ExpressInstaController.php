@@ -763,7 +763,10 @@ class ExpressInstaController extends Controller
             }
 
             // dd($franId);
-            $userDetail = UserAccount::query()->where('profile_str', $franId)->first();
+            $userDetail = UserAccount::query()->where('profile_str', $franId)
+                                            ->where('profile_status', 1)
+                                            ->where('profile_type', 1)
+                                            ->first();
             // dd($userDetail);
             $resource = "DOTCOM";
             if (!empty(request()->check_lead_popup))
@@ -772,8 +775,7 @@ class ExpressInstaController extends Controller
             $source_ref = "";
             if (!empty(Cookie::get('campaignSource')))
                 $source_ref = Cookie::get('campaignSource');
-            //$IndMainCat = ($franchisorDetail->ind_main_cat) ? $franchisorDetail->ind_main_cat : 0;
-                // dd($userDetail->membership_type);
+
             $insertData = [
                 'name' => $name,
                 'email' => $email,
