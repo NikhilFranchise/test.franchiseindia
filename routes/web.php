@@ -107,7 +107,7 @@ Route::get('content/{slug_and_id}', function ($slug_and_id) {
 
     // Handle invalid format
     abort(404);
-})->where('slug_and_id', '.*');
+})->name('content')->where('slug_and_id', '.*');
 
 Route::get('hi/content/{kicker}', function ($kicker) {
 
