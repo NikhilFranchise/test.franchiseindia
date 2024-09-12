@@ -88,6 +88,7 @@ class StaticPageController extends Controller
             $kickerSpecificRange[] = $data;
 
             $alphabeticalKickers[$kickerRange] = $kickerSpecificRange;
+            // dd($alphabeticalKickers);
         }
 
         // return view('static.sitemapnew', compact('years', 'allData', 'kickers', 'alphabeticalKickers'));

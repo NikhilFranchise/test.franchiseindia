@@ -109,13 +109,6 @@ Route::get('content/{slug_and_id}', function ($slug_and_id) {
     abort(404);
 })->where('slug_and_id', '.*');
 
-
-Route::get('content/{kicker}', function ($kicker) {
-    // Dump the value to see what is being captured
-    // dd($kicker);
-
-    return redirect('https://www.opportunityindia.com/english/tag/' . $kicker, 301);
-});
 Route::get('hi/content/{kicker}', function ($kicker) {
 
     return redirect('https://www.opportunityindia.com/hindi/tag/' . $kicker, 301);
@@ -859,27 +852,6 @@ Route::group(['prefix' => 'hi'], function () {
     Route::get('video-and-podcast', [NewArticleController::class, 'getVideoAndPodcast']);
 });
 
-// Route::get('content/{kicker}',   function(Request $request){
-//     dd('yes');
-// });
-
-// [ArticleController::class,'articleKickersPage']);
-// Route::get('content/women-entrepreneurs',     [ArticleController::class,'check']);
-
-
-
-
-Route::get('/content/{slug}', function ($slug) {
-    // Split the slug by the last dot (.)
-    $parts = explode('.', $slug);
-
-    // Extract the article title and id
-    $title = implode('-', array_slice($parts, 0, -1));
-    $id = end($parts);
-
-    // Redirect to the new domain
-    return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
-});
 
 Route::get('/wellness/{slug}', function ($slug) {
     // Split the slug by the last dot (.)
@@ -1062,17 +1034,7 @@ Route::get('categoryall',       [StaticPageController::class, 'categoryAll']);
 Route::get('search',                                 function () {
     return view('site.google-search-result');
 });
-Route::get('/content/{slug}', function ($slug) {
-    // Split the slug by the last dot (.)
-    // dd('yes');
-    $parts = explode('.', $slug);
 
-    // Extract the article title and id
-    $title = implode('-', array_slice($parts, 0, -1));
-    $id = end($parts);
-    // Redirect to the new domain
-    return redirect("https://www.opportunityindia.com/article/{$title}-{$id}", 301);
-});
 Route::get('/wellness/{slug}', function ($slug) {
     // Split the slug by the last dot (.)
     $parts = explode('.', $slug);
