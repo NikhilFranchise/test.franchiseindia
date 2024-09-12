@@ -88,21 +88,22 @@ Route::get('optimize', function () {
 Route::get('https://www.franchiseindia.com/business-opportunities/robotics-and-technical-training.ssc91', function () {
     return redirect('https://www.franchiseindia.com/business-opportunities/robotics-technical-training-coding-ai.ssc91', 301);
 });
+
 Route::get('content/{slug_and_id}', function ($slug_and_id) {
     // Check if the slug_and_id contains a dot or a dash and split accordingly
-    if (strpos($slug_and_id, '.') !== false) {
-        // Split by dot
-        $parts = explode('.', $slug_and_id, 2);
-    } else {
-        // Split by dash
-        $parts = explode('-', $slug_and_id, 2);
-    }
+    
+    if (preg_match('/\.\d+$/', $slug_and_id)) {
+        // Replace the dot with a dash only if there is a number after the dot
+        $slug_and_id = preg_replace('/\./', '-', $slug_and_id);
+        // dd($slug_and_id);
 
-    // Validate that we have exactly two parts
-    if (count($parts) === 2) {
-        $slug = $parts[0];
-        $id = $parts[1];
-        return redirect("https://www.opportunityindia.com/article/{$slug}-{$id}", 301);
+        return redirect("https://www.opportunityindia.com/article/{$slug_and_id}", 301);
+
+    }
+    else{
+        $slug = $slug_and_id;
+        return redirect("https://www.opportunityindia.com/english/tag/{$slug}", 301);
+
     }
 
     // Handle invalid format
