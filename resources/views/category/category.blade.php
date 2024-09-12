@@ -12,7 +12,7 @@
 @if ($mc == 2)
     @section('seoTitle', 'Food and Beverage - Business Ideas and Franchise Opportunities')
 
-@elseif (URL::Current()  ==  'http://localhost:8000/category/search' )
+@elseif (URL::Current()  ==  Config('constants.MainDomain') .'/category/search' )
 
         @php
             $url = URL::full();
