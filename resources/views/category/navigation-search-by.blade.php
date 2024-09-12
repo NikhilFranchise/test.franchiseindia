@@ -47,7 +47,7 @@ $searchText = request()->query('text');
     $h1 = 'Business opportunities';
    }
    else{
-    $h1 = 'Business/Franchise Opportunities Results For '. $searchText . ' - Franchise India' ;
+    $h1 = 'Business/Franchise Opportunities Results For '. $searchText ;
    }
 // dd($searchText);
 }
