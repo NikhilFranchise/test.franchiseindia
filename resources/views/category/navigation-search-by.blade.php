@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
     @endif
 </ul>
 @php
+// dd(URL::current());
 if(URL::current() ==  Config('constants.MainDomain') . '/business-opportunities/business/range-10000-100000')
 $h1 = 'Business opportunities under 1 lakh investment';
 elseif(URL::current() ==  Config('constants.MainDomain') . '/business-opportunities/business/range-10000-200000')
