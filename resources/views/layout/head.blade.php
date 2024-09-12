@@ -21,7 +21,11 @@
 	{{ $mainTitle  }}
 	{{--@yield('seoTitle', '-pawan')--}}
 	@else
-	@yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities')
+          @if (URL::Current() ==  Config('constants.MainDomain') . '/category/search')
+          @yield('seoTitle', 'zudio - Business Ideas and Franchise Opportunities')
+          @else
+	       @yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities')
+           @endif
 	@endif
 </title>
 <meta name="description" content="@yield('seoDesc', 'Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.')" />
