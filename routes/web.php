@@ -790,7 +790,7 @@ Route::group(['prefix' => 'hi'], function () {
         Route::get('dealers-and-distributors.m5', function () {
             return redirect('https://dealer.franchiseindia.com/', 301);
         });
-       
+
         Route::get('/', function () {
             return view('category/category');
         });
@@ -1039,6 +1039,10 @@ Route::middleware('TrailingSlashRedirect')->group(function () {
         Route::get('thanks', function () {
             return view('insights.thanks');
         })->name('insights.thanks');
+        Route::get('pagenotfound', function () {
+            // dd('hello');
+            return view('static.404');
+        }); //404 ERROR PAGE
         Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
         Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
         Route::get('/',                             [InsightsController::class, 'insightshome']);
@@ -1051,6 +1055,7 @@ Route::middleware('TrailingSlashRedirect')->group(function () {
         Route::get('{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
         Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
         Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
+
     });
 });
 Route::get('categoryall',       [StaticPageController::class, 'categoryAll']);

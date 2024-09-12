@@ -280,7 +280,10 @@ class ExpressInstaController extends Controller
 
             //check for the confirmation of cutting the credit
             if (isset($request->flag) && ($request->flag == 'confirm' || $request->flag == 'expint'))
-                return $invData->credit_limit;
+                if ($invData->credit_limit > 0) {
+
+                    return $invData->credit_limit;
+                }
 
             //decrement the credits for a paid investor who is not having unlimited plan
             InvestorDetails::query()->where('investor_id', $request->user()->profile_str)
@@ -292,7 +295,8 @@ class ExpressInstaController extends Controller
                 ->first()->credit_limit;
 
             //expire the investor membership if his/her credit has been end
-            if ($reCreditLimit < 1) {
+            if ($reCreditLimit == 0) {
+
                 $lastApply = 1;
 
                 //update the investor detail table
@@ -310,10 +314,12 @@ class ExpressInstaController extends Controller
             }
         }
 
-        if ($request->user()->membership_type == 1 && $request->user()->membership_plan != 401 || $request->user()->reg_source == 'DelhiExpoPaid'){
+        if ($request->user()->membership_type == 1 && $request->user()->membership_plan != 401 || $request->user()->reg_source == 'DelhiExpoPaid') {
             $visibility = 1;
+
         }
         //update details of existing record
+        // dd($update,$insert);
         if ($update == 1) {
             UserActivity::query()->where('investor_id', $request->user()->profile_str)
                 ->where('franchisor_id', $request->input('franId'))
@@ -338,7 +344,7 @@ class ExpressInstaController extends Controller
         //check and allot the value of invcity and invstate for the mail
         $invCity = (empty($invData->inv_city) ? "Unknown" : $invData->inv_city);
         $invState = (empty($invData->inv_state) ? "Unknown" : $invData->inv_state);
-
+        // dd($invCity, $invState);
         $details[0] = [
             'name' => $request->user()->name,
             'email' => $request->user()->email,
@@ -522,7 +528,7 @@ class ExpressInstaController extends Controller
      */
     public function freeInfo(Request $request)
     {
-        // dd($request); 
+        // dd($request);
         $companyName = "";
         $successCount = 1;
         $failedCount = 1;
@@ -609,7 +615,7 @@ class ExpressInstaController extends Controller
 
                     $investorController->convertLeadsToInvestor($insertData, $leadSource);
 
-                   /* if ($userDetail->email == 'fiblbrands@franchiseindia.in') {
+                    /* if ($userDetail->email == 'fiblbrands@franchiseindia.in') {
                         try {
                             CronController::saveAPI($name, $email, $phone, $franchisorDetail->ind_main_cat, $franchisorDetail->fibl_brands, $city, $state);
                         } catch (\Exception $e) {
@@ -698,7 +704,6 @@ class ExpressInstaController extends Controller
      */
     public function brandInfo(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'infoname' => 'required',
             'infoemail' => 'required|email',
@@ -758,7 +763,10 @@ class ExpressInstaController extends Controller
             }
 
             // dd($franId);
-            $userDetail = UserAccount::query()->where('profile_str', $franId)->first();
+            $userDetail = UserAccount::query()->where('profile_str', $franId)
+                                            ->where('profile_status', 1)
+                                            ->where('profile_type', 1)
+                                            ->first();
             // dd($userDetail);
             $resource = "DOTCOM";
             if (!empty(request()->check_lead_popup))
@@ -767,7 +775,7 @@ class ExpressInstaController extends Controller
             $source_ref = "";
             if (!empty(Cookie::get('campaignSource')))
                 $source_ref = Cookie::get('campaignSource');
-            //$IndMainCat = ($franchisorDetail->ind_main_cat) ? $franchisorDetail->ind_main_cat : 0;
+
             $insertData = [
                 'name' => $name,
                 'email' => $email,
@@ -782,8 +790,8 @@ class ExpressInstaController extends Controller
                 'investment' => $investmentRange,
                 'mobile_status' => 'S',
                 'franchisor_id' => $franId,
-                'visibility' => ($userDetail->membership_type == 1 ? 1 : 0),
-                'visibility_date' => ($userDetail->membership_type == 1 ? date('Y-m-d H:i:s') : null)
+                'visibility' => ($userDetail->membership_type === 1 ? 1 : 0),
+                'visibility_date' => ($userDetail->membership_type === 1 ? date('Y-m-d H:i:s') : null)
 
             ];
             // dd($insertData);
@@ -820,7 +828,7 @@ class ExpressInstaController extends Controller
 
             $investorController->convertLeadsToInvestor($insertData, $leadSource);
 
-           /* if ($userDetail->email == 'fiblbrands@franchiseindia.in') {
+            /* if ($userDetail->email == 'fiblbrands@franchiseindia.in') {
                 try {
                     CronController::saveAPI($name, $email, $phone, $franchisorDetail->ind_main_cat, $franchisorDetail->fibl_brands, $city, $state);
                 } catch (\Exception $e) {
@@ -1002,7 +1010,7 @@ class ExpressInstaController extends Controller
      */
     private function sendNewsletterNotifications($emailId, $data)
     {
-         $this->sendMail($emailId, new NewsLetterSubscribe($data));
+        $this->sendMail($emailId, new NewsLetterSubscribe($data));
     }
 
     /**
@@ -1012,7 +1020,7 @@ class ExpressInstaController extends Controller
     private function sendMail($emailId, $senderClass)
     {
         try {
-             Mail::to($emailId)->send($senderClass);
+            Mail::to($emailId)->send($senderClass);
         } catch (ClientException $e) {
             $this->logError('could not send to ' . $e->getMessage());
         }

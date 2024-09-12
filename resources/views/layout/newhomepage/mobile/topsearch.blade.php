@@ -147,9 +147,7 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            {{-- <a href="javascript:void(0)" onclick="catform.reset();">Clear All</a> --}}
-                                            <a href="javascript:void(0)"
-                                                onclick="document.getElementById('catform').reset();">Clear All</a>
+                                            <a href="javascript:void(0)" onclick="catform.reset();">Clear All</a>
                                         </span>
                                     </div>
                                 </div>

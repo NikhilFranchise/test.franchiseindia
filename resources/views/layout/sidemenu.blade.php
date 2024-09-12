@@ -234,49 +234,7 @@
             $i = 0;
         @endphp
 
-        <!--<ol class="tree">
-            @foreach($categoryArr as $key => $value)
-                @php
-                    $catClass = "Cate".$key;
-                    $subcatClass = "SubCat".$key;
-                    $subsubcatClass = "";
-                @endphp
-                <li>
-                    <label for="folder1">
-                        <a target="_blank"
-                           href="/business-opportunities/{{Config('category.SeoCategoryArr.'.$key)}}.m{{$key}}">{{$value}}</a>
-                    </label> <input type="checkbox" id="folder1">
-                    <ol>
-                        @foreach(Config('constants.subCategoryArr.'.$key) as $key1 => $value1)
-                            <li>
-                                <label for="subsubfolder1"><a target="_blank"
-                                                              href="/business-opportunities/{{Config('category.SeoSubCategoryArr.'.$key1)}}.sc{{$key1}}">{{$value1}}</a></label> <input type="checkbox"
-                                                                                                                                                                                        id="subsubfolder1">
-                                <ol>
-                                    @foreach(Config('constants.subSubCategoryArr.'.$key1) as $key2 => $value2)
-                                        @if(in_array($key2, json_decode(\Illuminate\Support\Facades\Storage::getFacadeRoot()->get('ssc.json'), true)))
-                                            <li><a target="_blank"
-                                                   href="/business-opportunities/{{Config('category.SeoSubSubCategoryArr.'.$key2)}}.ssc{{$key2}}">{{$value2}}</a>
-                                            </li>
-                                        @endif
-                                    @endforeach
-                                </ol>
-                            </li>
-                        @endforeach
-                    </ol>
-                </li>
-            @endforeach
-            <li>
-
-         <span class="shaicon">
-            <div class="rightdimg"></div>
-         </span>
-                <a
-                        target="_blank"
-                        href="https://www.franchiseindia.com/business-opportunities/lowcost">Low
-                    Cost Business Opportunities</a>
-            </li>
-        </ol>-->
+      
 		<ol class="tree">
                 @foreach($categoryArr as $key => $value)
                     @php
