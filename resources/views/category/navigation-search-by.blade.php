@@ -35,8 +35,26 @@ elseif(URL::current() ==  Config('constants.MainDomain') . '/business-opportunit
 $h1 = 'Business opportunities under 50 lakhs investment';
 elseif(URL::current() ==  Config('constants.MainDomain') . '/business-opportunities/business/range-10000-10000000')
 $h1 = 'Business opportunities under 1 crore investment';
-else
-$h1 = 'Business opportunities in '.$catName;
+elseif(URL::current() == Config('constants.MainDomain') .'/category/search'){
+    // @dd(URL::current());
+$url = URL::full();
+$parsedUrl = parse_url($url);
+$path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '';
+$segments = explode('/', trim($path, '/'));
+$searchText = request()->query('text');
+   if(!$searchText){
+    $h1 = 'Business opportunities';
+   }
+   else{
+    $h1 = 'Business opportunities for ' . $searchText ;
+   }
+// dd($searchText);
+}
+else{
+    $h1 = 'Business opportunities in '.$catName ;
+}
+
+
 if (strpos($seoTitle, "- Franchise India") !== false){
 $_h1 = explode('- Franchise India',$seoTitle);
 $h1 = $_h1[0];
