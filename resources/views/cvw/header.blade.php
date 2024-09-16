@@ -38,8 +38,8 @@
     }
 @endphp
 <link href="{{ $canonicalUrl . $queryString }}" rel="canonical">
-{{-- <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> --}}
-<meta name="viewport" content="width=device-width, initial-scale=1.0, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+{{-- <meta name="viewport" content="width=device-width, initial-scale=1.0, initial-scale=1"> --}}
 
 <meta content="noindex,nofollow" name="robots" />
 <meta property="fb:pages" content="118224094883095" />
