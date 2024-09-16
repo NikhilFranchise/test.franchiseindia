@@ -36,50 +36,7 @@
 </section>
 @enddesktop
 @mobile
-<style>
-/* Mobile responsive styles */
-@media only screen and (max-width: 768px) {
-    #newslettersection {
-        padding: 20px 0;
-    }
 
-    /* Stack the columns vertically */
-    #newslettersection .modified-col {
-        width: 100%;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    #newslettersection .main-newsletter ul.newsletter,
-    #newslettersection .newsletter-social {
-        display: block;
-        padding: 0;
-        list-style: none;
-        text-align: center;
-    }
-
-    /* Make inputs and buttons full-width */
-    #newslettersection .main-newsletter ul.newsletter li,
-    #newslettersection .newsletter-social li {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    /* Ensure the email input and button are responsive */
-    #newslettersection .emailer-main,
-    #newslettersection .btn-main {
-        width: 100%;
-        padding: 10px;
-        font-size: 1rem;
-    }
-
-    /* Resize social icons for mobile */
-    #newslettersection .newsletter-social li a img {
-        width: 30px;
-        height: 30px;
-    }
-}
-</style>
 <section class="newslettersection section-30 bg-b-main" id="newslettersection">
     <div class="container">
         <div class="row justify-content-center">
@@ -115,4 +72,5 @@
         </div>
     </div>
 </section>
+
 @endmobile
