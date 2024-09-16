@@ -146,7 +146,7 @@
 <script type="text/javascript" src="{{url('/js/jquery-3.1.1.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/jquery.validate.min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/bootstrap.min.js')}}"></script>
-<script type="text/javascript" src="{{url('/js/jquery.bxslider.js')}}"></script>
+{{-- <script type="text/javascript" src="{{url('/js/jquery.bxslider.js')}}"></script> --}}
 <script type="text/javascript" src="{{url('/js/jquery.flexslider-min.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/classList.js')}}"></script>
 <script type="text/javascript" src="{{url('/js/menu.js')}}"></script>
