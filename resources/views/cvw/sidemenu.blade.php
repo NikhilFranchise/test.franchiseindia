@@ -9,7 +9,8 @@
                         var cx = "017593288126496616373:bpgflqv932a";
                         var gcse = document.createElement("script");
                         gcse.type = "text/javascript";
-                        gcse.async = true;
+                        // gcse.async = true;
+                        gcse.defer = true;  // Use 'defer' to load the script after the page is parsed
                         gcse.src = "https://cse.google.com/cse.js?cx=" + cx;
                         let s = document.getElementsByTagName("script")[0];
                         s.parentNode.insertBefore(gcse, s);
@@ -927,7 +928,8 @@ form-control-custom-main"
                         var cx = "017593288126496616373:bpgflqv932a";
                         var gcse = document.createElement("script");
                         gcse.type = "text/javascript";
-                        gcse.async = true;
+                        // gcse.async = true;
+                        gcse.defer = true;  // Use 'defer' to load the script after the page is parsed
                         gcse.src = "https://cse.google.com/cse.js?cx=" + cx;
                         let s = document.getElementsByTagName("script")[0];
                         s.parentNode.insertBefore(gcse, s);
