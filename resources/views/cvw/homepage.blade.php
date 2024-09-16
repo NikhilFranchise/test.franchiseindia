@@ -1095,6 +1095,7 @@ $(document).ready(function() {
 </script>
 <script src="https://cdn.jsdelivr.net/npm/lozad@1.14.0/dist/lozad.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+<link rel="preload" href="{{ url('css/font-awesome.minfresh.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
 
 <script type="text/javascript">
     var linkElement = document.createElement("link");
