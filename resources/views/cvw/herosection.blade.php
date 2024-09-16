@@ -205,7 +205,7 @@
                                 </ul>
                             </form>
                         </div>
-                        <div id="investment1" class="tab-pane fade">
+                        <div id="investment1" role="tabpanel" class="tab-pane fade">
                             <form class="form-horizontal" method="get" action="{{ url('category/searchby') }}"
                                 onsubmit="return submitInvestment1()"><input type="hidden" name="invTab"
                                     value="1">
@@ -300,7 +300,7 @@
                                 data-toggle="tab">Investment</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div id="categories1" class="tab-pane fade in active">
+                        <div id="categories1" role="tabpanel" class="tab-pane fade in active">
                             <form class="form-horizontal" method="get" action="{{ url('category/searchby') }}"
                                 onsubmit="return submitCategory1()"><input type="hidden" name="catTab" value="1">
                                 <ul class="hero-search-main">
@@ -343,7 +343,7 @@
                                 </ul>
                             </form>
                         </div>
-                        <div id="location1" class="tab-pane fade">
+                        <div id="location1" role="tabpanel" class="tab-pane fade">
                             <form class="form-horizontal" method="get" action="{{ url('category/searchby') }}"
                                 onsubmit="return submitLocation1()"><input type="hidden" name="locTab"
                                     value="1">
