@@ -119,7 +119,12 @@ use Illuminate\Support\Str;
                                             <div class="col-xs-12 col-sm-4 col-md-3">
                                                 <ul class="yearartielist">
                                                     @endif
-                                                    <li><a href="{{ Config('constants.MainDomain') }}/content/{{ Str::slug($kicker['kicker'])}}">{{$kicker['kicker']}} <span>({{$kicker['count']}})</span></a></li>
+                                                    <li>
+                                                        <a href="{{ route('content', ['slug_and_id' => Str::slug($kicker['kicker'])]) }}">
+                                                            {{$kicker['kicker']}} <span>({{$kicker['count']}})</span>
+                                                        </a>
+                                                        {{-- <a href="{{ Config('constants.MainDomain') }}/content/{{ Str::slug($kicker['kicker'])}}">{{$kicker['kicker']}} <span>({{$kicker['count']}})</span></a> --}}
+                                                    </li>
                                                     @if( $loop->index == (round(count($alphabeticalKickers[$key][0])/4)) || $loop->index == (round(count($alphabeticalKickers[$key][0])/2) ) || $loop->index == round((count($alphabeticalKickers[$key][0]) *3) / 4) )
                                                 </ul>
                                             </div>

@@ -6,8 +6,41 @@
 <title>Franchise India - Business Opportunities, Franchise Opportunities</title>
 <meta name="description" content="Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.">
 <meta name="keywords" itemprop="keywords" content="franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india">
-<link href="https://www.franchiseindia.com/" rel="canonical">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+@php
+    $canonicalUrl = url()->current();
+    $queryParams = request()->query();
+    $queryString = '';
+    // dd($queryParams);
+    // Parameters to exclude
+    $excludedParams = ['sortby', 'catTab', 'invTab'];
+
+    if (!empty($queryParams)) {
+        $queryString = '?';
+        foreach ($queryParams as $key => $value) {
+              // Skip if the parameter is in the excluded list
+              if (in_array($key, $excludedParams)) {
+                continue;
+            }
+            if (is_null($value)) {
+                $queryString .= $key . '&';
+            } else {
+                $queryString .= $key . '=' . urlencode($value) . '&';
+            }
+             // Remove the trailing '&' and the '?' if no valid query parameters are left
+        
+        }
+        $queryString = rtrim($queryString, '&');
+        if ($queryString === '?') {
+            $queryString = '';
+        }
+        
+        $queryString = rtrim($queryString, '&');
+    }
+@endphp
+<link href="{{ $canonicalUrl . $queryString }}" rel="canonical">
+{{-- <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"> --}}
+<meta name="viewport" content="width=device-width, initial-scale=1.0, initial-scale=1">
+
 <meta content="noindex,nofollow" name="robots" />
 <meta property="fb:pages" content="118224094883095" />
 <meta property="fb:app_id" content="110294989480112" />

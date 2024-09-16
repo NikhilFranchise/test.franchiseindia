@@ -32,7 +32,7 @@ input-group-prepend-custom" id="basic-addon1">
                     </span>
                     <div class="form-group form-group-sm">
                         <select class="form-control
-form-control-custom-main"
+form-control-custom-main" aria-label="Select Language"
                             id="exampleFormControlSelect1">
                             <option hidden="">Language</option>
                             <option value="{{ url('') }}">EN - English</option>
@@ -948,8 +948,8 @@ input-group-prepend-custom" id="basic-addon1">
                             alt="">
                     </span>
                     <div class="form-group form-group-sm">
-                        <select class="form-control
-form-control-custom-main"
+                        <select class="form-control 
+form-control-custom-main" aria-label="Select Language"
                             id="exampleFormControlSelect1">
                             <option hidden="">Language</option>
                             <option value="{{ url('') }}">EN - English</option>
