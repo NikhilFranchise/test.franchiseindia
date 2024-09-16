@@ -38,44 +38,14 @@
 @mobile
 <style>
      @media only screen and (max-width: 768px) {
-        #newslettersection {
-    padding-top: 50px;
-    padding-bottom: 50px;
-}
-.newsletter {
-    list-style: none;
-    padding-inline-start: 0px;
-}
-ul.newsletter li {
-    display: inline-flex;
-}
-.btn-main {
-    color: rgb(255, 255, 255);
-    background-color: rgb(237, 28, 36);
-    border-color: rgb(237, 28, 36);
-    outline: none;
-    border-radius: 0px;
-}
-.socail-newsletter-section {
-    margin-top: 20px;
-    border-top: 1px dashed rgb(223, 223, 223) !important;
-    padding-top: 32px !important;
-}
-.text-center {
-    text-align: center;
-}
-.newsletter-social {
-    list-style: none;
-    padding-inline-start: 0px;
-}
-img {
-    vertical-align: middle;
-    border: 0;
-
-}
-
+    /* Add specific image dimensions to avoid layout shift */
+    img[loading="lazy"] {
+            width: 36px;
+            height: 36px;
+        }
      }
     </style>
+
 <section class="newslettersection section-30 bg-b-main" id="newslettersection">
     <div class="container">
         <div class="row justify-content-center">
