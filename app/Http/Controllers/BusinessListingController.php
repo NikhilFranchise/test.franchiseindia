@@ -769,6 +769,7 @@ class BusinessListingController extends Controller
 
         $count           = request()->segment(1) == 'amp' ? 20 : 21;
         $brandResults    = $franData->paginate($count);
+        // dd($brandResults->pluck('company_name'));
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
     
@@ -973,6 +974,7 @@ class BusinessListingController extends Controller
         $count = request()->segment(1) == 'amp' ? 20 : 21;
 
         $brandResults = $franData->orderby('membership_weightage', 'desc')->paginate($count);
+        // dd($brandResults);
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
     
@@ -1941,6 +1943,7 @@ class BusinessListingController extends Controller
 
         $brandResults = $franData->orderby('membership_weightage', 'desc')->paginate($count);
            // Get the current page and last page
+        // dd($brandResults->pluck('company_name'));
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
     

@@ -4138,6 +4138,9 @@ a.desklink{display: none;}
       
     </td>
 </tr>
+
+
+
 <tr>
     <td>5</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/quantum-energy-limited.79701"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/quantum-energy-limited_1.png" alt="Quantum Energy logo">Quantum Energy</a></td>
