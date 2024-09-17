@@ -56,8 +56,13 @@
             if($minValue < 100000 && $minValue > 10000)
                 $minValue = substr(($minValue/1000),0,5).' K';
 
-            if($minValue <= 9999999 && $minValue > 100000)
-                $minValue = substr(($minValue/100000),0,5).' Lakh';
+            //if($minValue <= 9999999 && $minValue > 100000)
+               // $minValue = substr(($minValue/100000),0,5).' Lakh';
+            if (is_numeric($minValue) && $minValue <= 9999999 && $minValue > 100000) {
+                // Format the number to 2 decimal places (or adjust to your needs)
+                $minValue = number_format($minValue / 100000, 2) . ' Lakh';
+            }
+
 
             if($minValue > 9999999)
                 $minValue = substr(($minValue/10000000),0,5).' Cr';
@@ -125,8 +130,12 @@
             if($maxValue < 100000 && $maxValue > 10000)
                 $maxValue = substr(($maxValue/1000),0,5).' K';
 
-            if($maxValue <= 9999999 && $maxValue > 100000)
-                $maxValue = substr(($maxValue/100000),0,5).' Lakh';
+            //if($maxValue <= 9999999 && $maxValue > 100000)
+            //    $maxValue = substr(($maxValue/100000),0,5).' Lakh';
+            if (is_numeric($minValue) && $minValue <= 9999999 && $minValue > 100000) {
+                // Format the number to 2 decimal places (or adjust to your needs)
+                $minValue = number_format($minValue / 100000, 2) . ' Lakh';
+            }
 
             if($maxValue > 9999999)
                 $maxValue = substr(($maxValue/10000000),0,5).' Cr';
@@ -424,7 +433,7 @@
                             <td id="rating2"></td>
                             <td id="rating3"></td>
                         </tr>
-                       
+
                     </tbody>
                 </table>
             </div>
