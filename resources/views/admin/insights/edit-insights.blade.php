@@ -402,7 +402,7 @@
             }
         });
 
-        $("#showImage").change(function() {
+        {{--  $("#showImage").change(function() {
             var val = $(this).val();
             var fileInput = this;
             val = val.replace('jpeg', 'jpg');
@@ -452,7 +452,7 @@
                 $('#showImage_msg_size').css('display', 'none');
                 $('#newssubmit').prop('disabled', false);
             }
-        }
+        }  --}}
 
         $('#showImage').bind('change', function() {
             checkImageSize(this);

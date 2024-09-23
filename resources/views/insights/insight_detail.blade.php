@@ -1,47 +1,69 @@
-@extends('layout.insights.master') 
-@section('seoTitle', $newsDetails[0]['title']) 
-@section('seoDesc', $newsDetails[0]['shortDesc']) 
-@section('seoKeywords', $newsDetails[0]['kicker']) 
-@section('canonicalUrl', url()->current()) 
-@php $ogimage = Config('constants.awsS3Url') . $newsDetails[0]['image']; @endphp 
-@section('image', $ogimage) 
-@section('shortDesc', $newsDetails[0]['shortDesc']) 
-@section('imagesrc', $ogimage) 
-@section('title', $newsDetails[0]['title']) 
-@section('url',url()->current()) 
+@extends('layout.insights.master')
+@section('seoTitle', $newsDetails[0]['title'])
+@section('seoDesc', $newsDetails[0]['shortDesc'])
+@section('seoKeywords', $newsDetails[0]['kicker'])
+@section('canonicalUrl', url()->current())
+@php
+    $ogimage = Config('constants.awsS3Url') . $newsDetails[0]['image'];
+
+    // Get the headers to check if the file exists
+    $headers = @get_headers($ogimage);
+
+    if ($headers && strpos($headers[0], '200')) {
+        // Fetch the image data
+        $imageData = file_get_contents($ogimage);
+
+        // Get image size from the image data
+        $imageDetails = getimagesizefromstring($imageData);
+
+        if ($imageDetails) {
+            $width = $imageDetails[0];
+            $height = $imageDetails[1];
+            //dd($ogimage, $width, $height);
+        }
+    }
+@endphp
+
+@section('image', $ogimage)
+@section('shortDesc', $newsDetails[0]['shortDesc'])
+@section('imagesrc', $ogimage)
+@section('title', $newsDetails[0]['title'])
+@section('url',url()->current())
+@section('width',$width)
+@section('height',$height)
 @section('content')
 <div class="maininnver">
-    @php 
-        $image = Config('constants.awsS3Url') . $newsDetails[0]['image']; 
-        $url = Config('constants.MainDomain') . '/insights/' . $newsDetails[0]['slug'] . '.' . $newsDetails[0]['news_id']; 
+    @php
+        $image = Config('constants.awsS3Url') . $newsDetails[0]['image'];
+        $url = Config('constants.MainDomain') . '/insights/' . $newsDetails[0]['slug'] . '.' . $newsDetails[0]['news_id'];
         if(!empty($author_details[0]['image'])){
-            $author_image = 'https://franchiseindia.s3.ap-south-1.amazonaws.com'. $author_details[0]['image']; 
-        }else{ 
+            $author_image = 'https://franchiseindia.s3.ap-south-1.amazonaws.com'. $author_details[0]['image'];
+        }else{
             $author_image = url('images/defaultuser.png'); }
 
-        if (!empty($author_details[0]['slug'])) { 
-            $authorurl = Config('constants.MainDomain') . '/insights/author/' . $author_details[0]['slug'] .'-' .$author_details[0]['author_id']; 
-        }else{ 
+        if (!empty($author_details[0]['slug'])) {
+            $authorurl = Config('constants.MainDomain') . '/insights/author/' . $author_details[0]['slug'] .'-' .$author_details[0]['author_id'];
+        }else{
             $slug = strtolower(str_replace(' ','-', $author_details[0]['title']));
-            $authorurl = Config('constants.MainDomain') . '/insights/author/' . $slug .'-' .$author_details[0]['author_id']; 
-        } 
+            $authorurl = Config('constants.MainDomain') . '/insights/author/' . $slug .'-' .$author_details[0]['author_id'];
+        }
     @endphp
     <div class="contentblk">
         <div class="container">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/insights') }}" class="tip-bottom">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{ url('/insights') }}" class="tip-bottom">{{ $newsDetails[0]['insight_type'] }}</a></li>
-                @foreach ($newsDetails[0]['category'] as $category) 
-                    @php 
-                        $catslug = Config('constants.MainDomain') . '/insights/' . $category->slug; 
-                        $catname = $category->catname; 
+                @foreach ($newsDetails[0]['category'] as $category)
+                    @php
+                        $catslug = Config('constants.MainDomain') . '/insights/' . $category->slug;
+                        $catname = $category->catname;
                     @endphp
                         <li class="breadcrumb-item"><a href="{{ $catslug }}" class="tip-bottom">{{ $catname }}</a></li>
-                @endforeach 
-                @foreach ($newsDetails[0]['Subcategory'] as $subcat) 
-                    @php 
-                        $subcatslug = Config('constants.MainDomain') . '/insights/' . $category->slug . '/' . $subcat->slug; 
-                        $subcatname = $subcat->subcat_name; 
+                @endforeach
+                @foreach ($newsDetails[0]['Subcategory'] as $subcat)
+                    @php
+                        $subcatslug = Config('constants.MainDomain') . '/insights/' . $category->slug . '/' . $subcat->slug;
+                        $subcatname = $subcat->subcat_name;
                     @endphp
                         <li class="breadcrumb-item active"><a href="{{ $subcatslug }}">{{ $subcatname }}</a></li>
                 @endforeach

@@ -354,7 +354,7 @@
         });
 
 
-        $("#showImage").change(function() {
+        {{--  $("#showImage").change(function() {
             var val = $(this).val();
             var fileInput = this;
             val = val.replace('jpeg', 'jpg');
@@ -382,7 +382,7 @@
                     $('#newssubmit').prop('disabled', true);
                     break;
             }
-        });
+        });  --}}
 
         function readImageDimensions(file, callback) {
             var reader = new FileReader();
