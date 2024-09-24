@@ -195,10 +195,9 @@
                                         <br><span style="color: red;">{{ $error }}</span>
                                     @endforeach
                                 @endif
-                                <div style="display: none; color: red;" id="showImage_msg">Please select a valid
-                                    image (jpg / gif / png)</div>
-                                <div style="display: none; color: red;" id="showImage_msg_size">Please select a
-                                    image of size(Less than 150 KB)</div>
+                                <div style="display: none; color: red;" id="showImage_msg">Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP)</div>
+                                <div style="display: none; color: red;" id="showImage_msg_size">Please select a image
+                                    of size(Less than 150 KB)</div>
                                 <br />
                                 Note : * Image Size 1600x940
                             </div>
@@ -207,7 +206,7 @@
                             <label class="control-label" for="select2">Related Brands :</label>
                             <div class="controls" id="brands">
                                 <select multiple style="display: none;" name="brands[]" id="select2"></select>
-                               
+
                             </div>
                         </div>
                         <div class="control-group">
@@ -215,7 +214,7 @@
                             <div class="controls" id="associatedTags">
                                 <select multiple required style="display: none;" name="associated_tags[]"
                                     id="select3"></select>
-                                
+
                             </div>
                         </div>
                         <div class="form-actions">
@@ -356,17 +355,24 @@
                 case 'jpg':
                 case 'jpeg':
                 case 'png':
+                {{--  case 'webp':  --}}
+                    //toastr.success('Valid image type selected. You may proceed.');
                     checkImageSize(fileInput);
                     break;
                 default:
                     $(this).val('');
+                    toastr.error(
+                    'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
                     $('#showImage_msg').css('display', 'block');
+                    setTimeout(function() {
+                        $('#showImage_msg').css('display', 'none');
+                    }, 5000); 
                     $('#newssubmit').prop('disabled', true);
                     break;
             }
         });
 
-       // we are using these functions for validate image dimensions start here
+        // we are using these functions for validate image dimensions start here
         {{--  readImageDimensions(fileInput.files[0], function(width, height) {
             if (width === 680 && height === 435) {
                 $('#showImage_msg_dimensions').css('display', 'none');
@@ -394,17 +400,22 @@
 
         function checkImageSize(fileInput) {
             if (fileInput.files[0].size > 153600) {
+                toastr.error('Image size should be 150 KB or less.');
                 $('#showImage_msg_size').css('display', 'block');
+                setTimeout(function() {
+                    $('#showImage_msg_size').css('display', 'none');
+                }, 5000); 
                 $('#newssubmit').prop('disabled', true);
             } else {
+                // toastr.success('Image size is valid. You can proceed.');
                 $('#showImage_msg_size').css('display', 'none');
                 $('#newssubmit').prop('disabled', false);
             }
         }
 
-        $('#showImage').bind('change', function() {
+        {{--  $('#showImage').bind('change', function() {
             checkImageSize(this);
-        });
+        });  --}}
     </script>
 
     <script>

@@ -234,8 +234,8 @@
                                 <input type="hidden" name="old_image"
                                     value="{{ Config('constants.franAwsS3Url') . ltrim($data->image, '/') }}" />
                                 <input type="file" id="showImage" class="span11" name="image">
-                                <div style="display: none; color: red;" id="showImage_msg">Please select a valid
-                                    image (jpg / gif / png)</div>
+                                <div style="display: none; color: red;" id="showImage_msg">Invalid image type! Please
+                                    select a valid image format (JPG, GIF, PNG, or WebP)</div>
                                 <div style="display: none; color: red;" id="showImage_msg_size">Please select a
                                     image of size(Less than 150 KB)</div>
                                 <br />
@@ -410,11 +410,17 @@
                 case 'jpg':
                 case 'jpeg':
                 case 'png':
+                case 'webp':
                     checkImageSize(fileInput);
                     break;
                 default:
                     $(this).val('');
+                    toastr.error(
+                    'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
                     $('#showImage_msg').css('display', 'block');
+                    setTimeout(function(){
+                        $('#showImage_msg').css('display', 'hide');
+                    }, 5000);
                     $('#newssubmit').prop('disabled', true);
                     break;
             }
@@ -444,18 +450,22 @@
 
         function checkImageSize(fileInput) {
             if (fileInput.files[0].size > 153600) {
-                toastr.error('Image size should be 153600 bytes or less.');
+                toastr.error('Image size should be 150 KB or less.');
                 $('#showImage_msg_size').css('display', 'block');
+                setTimeout(function(){
+                    $('#showImage_msg_size').css('display', 'hide');
+                }, 5000);
                 $('#newssubmit').prop('disabled', true);
             } else {
+                //toastr.success('Image size is valid. You can proceed.');
                 $('#showImage_msg_size').css('display', 'none');
                 $('#newssubmit').prop('disabled', false);
             }
         }
 
-        $('#showImage').bind('change', function() {
+        {{--  $('#showImage').bind('change', function() {
             checkImageSize(this);
-        });
+        });  --}}
     </script>
 
 
