@@ -240,7 +240,7 @@
                                     <div style="display: none; color: red;" id="showImage_msg_size">Please select a
                                         image of size(Less than 150 KB)</div>
                                     <br />
-                                    Note : * Image Size 680x435
+                                    Note : * Image Size 1600x940
                                 </div>
 
                             </div>

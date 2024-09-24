@@ -1622,7 +1622,7 @@ class AdminController extends Controller
         }
 
         // Resize the image to 680x435px and convert it to WebP format
-        $resizedImage = Image::make($image)->resize(680, 435)->encode('webp', 90);
+        $resizedImage = Image::make($image)->resize(1600, 940)->encode('webp', 90);
         // dd($resizedImage);
         // Store the image in the specified storage
         Storage::getFacadeRoot()->disk($store_type)->put($picPath, (string) $resizedImage, 'public');
