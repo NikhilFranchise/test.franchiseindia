@@ -11,12 +11,12 @@
         <ul class="maglsi">
           <li class="wid180">
             <label>Enter Email</label>
-            <input type="email" name="email" id="email">
+            <input type="email" name="email" id="emailId">
             <span class="text-danger" id="email-error">
            </span>
           </li>
           <li class="wid180">
-            <label>Enter No. </label>
+            <label>Enter Mobile No. </label>
             <div class="flis">
               <select class="code"><option> + 91 </option> </select>
               <input type="text" name="tel" id="tel" class="telcode" pattern="[0-9]{10}">
@@ -60,16 +60,16 @@
         // Reset previous error messages
         $(".text-danger").text("");
 
-        var email = $("#email").val();
+        var email = $("#emailId").val();
         var tel = $("#tel").val();
 
         if (email === "") {
             $("#email-error").text("Please enter your email.");
-            $("#email").focus();
+            $("#emailId").focus();
             return false;
         } else if (!isValidEmail(email)) {
             $("#email-error").text("Please enter a valid email address.");
-            $("#email").focus();
+            $("#emailId").focus();
             return false;
         }
 
