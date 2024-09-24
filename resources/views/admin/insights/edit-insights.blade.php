@@ -276,7 +276,7 @@
 
                             </div>
                         </div>
-                        <div class="form-actions">
+                        <div class="form-actions" style="text-align: center">
                             <button type="submit" class="btn btn-success" id="newssubmit">Save</button>
                         </div>
                         </form>

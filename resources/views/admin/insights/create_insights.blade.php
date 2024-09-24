@@ -217,7 +217,7 @@
 
                             </div>
                         </div>
-                        <div class="form-actions">
+                        <div class="form-actions" style="text-align: center">
                             <button type="submit" class="btn btn-success" id="newssubmit">Save</button>
                         </div>
                         </form>
@@ -355,7 +355,7 @@
                 case 'jpg':
                 case 'jpeg':
                 case 'png':
-                {{--  case 'webp':  --}}
+                case 'webp':
                     //toastr.success('Valid image type selected. You may proceed.');
                     checkImageSize(fileInput);
                     break;
