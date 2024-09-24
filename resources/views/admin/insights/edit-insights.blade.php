@@ -419,7 +419,7 @@
                     'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
                     $('#showImage_msg').css('display', 'block');
                     setTimeout(function(){
-                        $('#showImage_msg').css('display', 'hide');
+                        $('#showImage_msg').css('display', 'none');
                     }, 5000);
                     $('#newssubmit').prop('disabled', true);
                     break;
@@ -453,7 +453,7 @@
                 toastr.error('Image size should be 150 KB or less.');
                 $('#showImage_msg_size').css('display', 'block');
                 setTimeout(function(){
-                    $('#showImage_msg_size').css('display', 'hide');
+                    $('#showImage_msg_size').css('display', 'none');
                 }, 5000);
                 $('#newssubmit').prop('disabled', true);
             } else {
