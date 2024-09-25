@@ -99,7 +99,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="pull-right">{{ $insta->links() }}</div>
+                        <div class="pull-right">{{ $insta->links('pagination::bootstrap-4') }}</div>
                     </div>
                 </div>
             </div>
