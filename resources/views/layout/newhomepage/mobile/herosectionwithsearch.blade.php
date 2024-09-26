@@ -218,7 +218,7 @@
                                             class="form-control
                                                    form-control-custom
                                                    dropdown-toogle-icon"
-                                            id="minAmount1" onchange="selectMax2(this.value)">
+                                            id="minAmount1" onchange="selectMax1(this.value)">
                                             <option value="" hidden> Select Min Investment </option>
                                             @foreach (Config('constants.investRangeInWordsSingle') as $index => $value)
                                                 <option slug="{{ Config('constants.InvestRange')[$index]['min'] }}"
@@ -233,7 +233,7 @@
                                             class="form-control
                                                    form-control-custom
                                                    dropdown-toogle-icon"
-                                            id="maxAmount2">
+                                            id="maxAmount1">
                                             <option value="" hidden> Select Max Investment </option>
 
                                         </select>
@@ -310,16 +310,32 @@
         $('#registeractiveopen').addClass("active");
     });
 
+    // function selectMax1(selectmaxheaderval) {
+    //     // console.log(selectmaxheaderval);
+    //     let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
+    //     let maxAmount = $('#maxAmount2');
+    //     let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
+    //     maxAmount.html("");
+    //     selectmaxheaderval = parseInt(selectmaxheaderval);
+    //     $.each(amountConfigArr, function(key, value) {
+    //         if (key > selectmaxheaderval)
+    //             $('#maxAmount2').append($("<option></option>").attr({
+    //                 "value": key,
+    //                 "slug": getSlugAmount[key]['min']
+    //             }).text(value));
+    //     });
+    //     if (selectmaxheaderval === 21)
+    //         maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
+    // }
     function selectMax1(selectmaxheaderval) {
-        // console.log(selectmaxheaderval);
         let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
-        let maxAmount = $('#maxAmount2');
+        let maxAmount = $('#maxAmount1');
         let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
         maxAmount.html("");
         selectmaxheaderval = parseInt(selectmaxheaderval);
         $.each(amountConfigArr, function(key, value) {
             if (key > selectmaxheaderval)
-                $('#maxAmount2').append($("<option></option>").attr({
+                $('#maxAmount1').append($("<option></option>").attr({
                     "value": key,
                     "slug": getSlugAmount[key]['min']
                 }).text(value));
