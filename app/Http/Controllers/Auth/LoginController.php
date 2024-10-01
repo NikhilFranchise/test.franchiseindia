@@ -249,8 +249,11 @@ class LoginController extends Controller
             ->join('franchisor_business_details', 'franchisor_business_details.franchisor_id', '=', 'user_accounts.profile_str')
             ->select('user_accounts.profile_str', 'franchisor_business_details.profile_name', 'franchisor_business_details.company_name')
             ->get();
+            if($userdata > 1){
+
+                return response()->json($userdata);
+            }
         // dd($userdata);
-        return response()->json($userdata);
     }
 
     public function fihlLoginCheck(Request $request)
