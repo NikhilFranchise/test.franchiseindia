@@ -3,3 +3,4 @@
 @include('cwv-mobile.leading-franchise-today')
 @include('cwv-mobile.top-business-opportunities')
 @include('cwv-mobile.top-dealership-opportunity')
+@include('cwv-mobile.business-for-sale')
