@@ -135,6 +135,10 @@ Route::get('/contact/site', function () {
 Route::get('pagenotfound', function () {
     return view('static.404');
 }); //404 ERROR PAGE
+// Route::get('/index', function(){
+//     return view('cwv-mobile.homepage-mobile');
+//    });
+Route::get('/index', [NewHomePageController::class, 'cwvMobile']);
 Route::get('/hi', [NewHomePageController::class, 'hindiHomePage']); //checck
 Route::get('about', [StaticPageController::class, 'aboutus']);
 Route::get('contact', [ContactUsController::class, 'contactUsForm']);
