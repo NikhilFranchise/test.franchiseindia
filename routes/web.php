@@ -210,6 +210,10 @@ Route::get('login', [LoginController::class, 'showLoginForm']);
 Route::get('loginform', [LoginController::class, 'showLoginForm'])->name('franchise.login');
 Route::post('loginform', [LoginController::class, 'login'])->name('franchise.login.submit');
 Route::get('logoutprofile', [LoginController::class, 'logoutProfile']);
+Route::get('fihl/login', [LoginController::class, 'fihlLogin']);  // FIHL brand routes
+Route::post('fihl/login', [LoginController::class, 'fihlLoginCheck']);  // FIHL brand routes
+Route::get('/getrecord',[LoginController::class,'getFranRecords']);
+
 Route::get('fibl/login', [LoginController::class, 'fiblLogin']);  // FIBL brand routes
 Route::post('fibl/login', [LoginController::class, 'fiblLoginCheck']);
 Route::get('auth/{provider}',                [LoginController::class, 'redirectToProvider']);  // Routes for social login
