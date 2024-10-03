@@ -33,7 +33,7 @@ class BrandController extends Controller
         $images = [];
         $view = "brandlanding";
         // return dd($request);
-        if (count($brandParamsArr) < 2) {
+        if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
         $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
