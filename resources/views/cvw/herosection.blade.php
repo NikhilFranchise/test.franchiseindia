@@ -72,14 +72,14 @@
                 <h1 class="hindi-mobile"><span>20 हजार से अधिक  </span> कारोबारी विक्लपों में अपने लिए तलाश करें</h1>
                 @endmobile
                 <h2>दुनियाभर में सबसे अधिक तलाश किया जाने वाला फ्रैंचाइज वेबसाइट नेटवर्क।</h2>
-            </div> 
+            </div>
             <div class="col-md-12">
                 <div class="hero-search" id="hero-search">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="active nav-item" role="presentation"><a href="#categories1" aria-controls="categories1" role="tab"
                                 data-toggle="tab">Categories</a></li>
                         <li class="nav-item"  role="presentation"><a href="#location1" aria-controls="location1" role="tab" data-toggle="tab">Location</a>
-                        </li> 
+                        </li>
                         <li class="nav-item"  role="presentation"><a href="#investment1" aria-controls="investment1" role="tab"
                                 data-toggle="tab">Investment</a></li>
                     </ul>
@@ -266,7 +266,7 @@
 </section>
 @else
 <section class="hero-section" id="hero-section">
-    <img src="{{ url('cvw/assets/img/mobile-banner-expo.webp') }}" class="banner-expo mmdesk" alt="Franchise India"> 
+    <img src="{{ url('cvw/assets/img/mobile-banner-expo.webp') }}" class="banner-expo mmdesk" alt="Franchise India">
     <picture class="ppdesk">
         <source media="(min-width: 1024px)" srcset="{{ url('cvw/assets/img/banner-expo.webp') }}" alt="Franchsie India">
         <source media="(min-width: 650px)" srcset="{{ url('cvw/assets/img/mobile-banner-expo.webp') }}"
@@ -288,7 +288,7 @@
                 <h1 class="hero-mobile"><span>20000+ Business </span>Options</h1>
                 @endmobile
                 <h2>World's highest visited franchise website network</h2>
-            </div> 
+            </div>
                 <div class="col-md-12">
                     <div class="hero-search" id="hero-search">
                         <ul class="nav nav-tabs" role="tablist">
@@ -428,7 +428,7 @@
                                         value="1">
                                     <ul class="hero-search-main">
                                         <li class="p-0 m-0">
-                                            
+
                                             <select name="mc" aria-label="Select Industry" id="getMainCategoryDataHeaderInv1"
                                                 class="form-control form-control-custom dropdown-toogle-icon">
                                                 <option value="" hidden="">Select Industry</option>

@@ -370,7 +370,7 @@
         let maxAmount = $('#maxAmount');
         let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
         maxAmount.html("");
-        
+
         selectmaxheaderval = parseInt(selectmaxheaderval);
         $.each(amountConfigArr, function(key, value) {
             if (key > selectmaxheaderval)
@@ -403,7 +403,7 @@
             },
             success: function(data) {
                console.log(data);
-                $("#getSubCategoryDataHeader2").html(data);
+                $("#getSubCategoryDataHeader1").html(data);
             }
         });
     }

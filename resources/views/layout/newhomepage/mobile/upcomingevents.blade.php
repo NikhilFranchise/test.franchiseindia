@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
 
 
@@ -88,7 +88,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
 
                          <div class="swiper-slide">
@@ -114,7 +114,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
 
                          <div class="swiper-slide">
@@ -140,7 +140,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
 
                          <div class="swiper-slide">
@@ -166,7 +166,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
  -->
 
                                 <!--   <div class="swiper-slide">
@@ -192,7 +192,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
 
                          <div class="swiper-slide">
@@ -243,7 +243,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
 
                          <div class="swiper-slide">
@@ -374,7 +374,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
 
 
@@ -401,7 +401,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
  -->
 
 
@@ -429,7 +429,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
 
                         <div class="swiper-slide">
@@ -455,7 +455,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
 
                         <div class="swiper-slide">
@@ -481,7 +481,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
 
                         <div class="swiper-slide">
@@ -507,7 +507,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
 
 
@@ -535,7 +535,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
                          <div class="swiper-slide">
                             <div class="swiper-slide-events-main">
@@ -563,7 +563,7 @@
                         </div>  -->
 
 
-                                              
+
 
 
 
@@ -646,7 +646,7 @@
                             </div>
                         </div> -->
 
-                        
+
   <!-- <div class="swiper-slide">
                             <div class="swiper-slide-events-main">
                                 <div class="overlay-card"></div>
@@ -670,7 +670,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
                          <div class="swiper-slide">
                             <div class="swiper-slide-events-main">
@@ -690,14 +690,14 @@
                                             <a href="https://www.franchiseindiaevents.com/bangladesh-franchise-show/" target="_blank">Registration</a>
                                         </div>
                                         <div class="eventhotline  text-capitalize">
-                                             Hotline: <span>+91 9717683838</span> 
+                                             Hotline: <span>+91 9717683838</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
 
-                         
+
                          <div class="swiper-slide">
                             <div class="swiper-slide-events-main">
                                 <div class="overlay-card"></div>
@@ -722,7 +722,7 @@
                                 </div>
                             </div>
                         </div> -->
-                        
+
 
                        <!--  <div class="swiper-slide">
                             <div class="swiper-slide-events-main">
@@ -748,7 +748,7 @@
                                 </div>
                             </div>
                         </div> -->
-                       
+
                     <!--      <div class="swiper-slide">
                             <div class="swiper-slide-events-main">
                                 <div class="overlay-card"></div>
@@ -1149,7 +1149,7 @@
                         </div> -->
 
 
- 
+
 
 <!--  <div class="swiper-slide">
                             <div class="swiper-slide-events-main">
@@ -1573,7 +1573,7 @@
                         </div>
 
 
-                       
+
 
 
                          <div class="swiper-slide">
@@ -1600,7 +1600,7 @@
                                 </div>
                             </div>
                         </div>
-                         
+
 
             </div>
             <!-- Add Pagination -->
