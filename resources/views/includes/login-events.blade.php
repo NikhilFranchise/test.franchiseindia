@@ -36,9 +36,7 @@
                            
 							@if(isset($mc) && $mc == 2)
 							<div style='width: 100%;'><a href="https://www.franchiseindia.com/brands/what-a-sandwich.51513"><img src="https://www.franchiseindia.com/images/go69pizza.jpg" style="width:100%;" alt="What a Sandwich"/></a></div>
-							{{-- @elseif(isset($sc) && $sc == 342)
-                            <div style='width: 100%;'><a href="https://www.franchiseindia.com/brands/pikpart-smart-garage-4-wheeler.95803 "><img src="https://www.franchiseindia.com/images/banner/pikpart-728X90.jpg" style="width:100%;" alt="What a Sandwich"/></a></div>
-                            @else	 --}}
+							
                             @else
                             @include('includes.banners-new.HP_DSK_ATF_728x90')
 							@endif
