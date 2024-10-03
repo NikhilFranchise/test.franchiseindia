@@ -71,6 +71,7 @@ class DealersAndDistributorController extends Controller
     /**
      * result for search submit
      */
+    
     public function searchDealer()
     {
         request()->search = str_replace('-or-', '/', request()->search);
