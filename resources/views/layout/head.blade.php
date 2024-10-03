@@ -27,12 +27,12 @@
 <meta name="description" content="@yield('seoDesc', 'Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.')" />
 <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india')" />
 {{-- <link href="@yield('canonicalUrl', Request::get('page') ? url()->full() : url()->full())" rel="canonical"> --}}
-@php
+
+{{-- @php
     $canonicalUrl = url()->current();
     $queryParams = request()->query();
     $queryString = '';
-    // dd($queryParams);
-    // Parameters to exclude
+    
     $excludedParams = ['sortby', 'catTab', 'invTab'];
 
     if (!empty($queryParams)) {
@@ -46,15 +46,31 @@
                 $queryString .= $key . '&';
             } else {
                 $queryString .= $key . '=' . urlencode($value) . '&';
-            }
-             // Remove the trailing '&' and the '?' if no valid query parameters are left
-        
+            }        
         }
         $queryString = rtrim($queryString, '&');
         if ($queryString === '?') {
             $queryString = '';
         }
         
+        $queryString = rtrim($queryString, '&');
+    }
+@endphp
+<link href="{{ $canonicalUrl . $queryString }}" rel="canonical"> --}}
+@php
+    $canonicalUrl = url()->current();
+    $queryParams = request()->query();
+    $queryString = '';
+
+    if (!empty($queryParams)) {
+        $queryString = '?';
+        foreach ($queryParams as $key => $value) {
+            if (is_null($value)) {
+                $queryString .= $key . '&';
+            } else {
+                $queryString .= $key . '=' . urlencode($value) . '&';
+            }
+        }
         $queryString = rtrim($queryString, '&');
     }
 @endphp
