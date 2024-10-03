@@ -120,7 +120,7 @@
                         width="13" height="13" alt="mobile" loading="lazy">Email</div>
                 <div class="sale-bg-map"><img
                         src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/map.webp" width="13"
-                        height="13" alt="location" loading="lazy">Bengaluru</div>
+                        height="13" alt="location" loading="lazy">Ahmedabad</div>
             </div>
             <a href="https://www.businessex.com/business/seeking-buyers-for-marketing-and-communication-agency/mdk69z"
                 target="_blank" class="know-more">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
@@ -156,7 +156,7 @@
                         width="13" height="13" alt="mobile" loading="lazy">Email</div>
                 <div class="sale-bg-map"><img
                         src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/map.webp" width="13"
-                        height="13" alt="location" loading="lazy">Bengaluru</div>
+                        height="13" alt="location" loading="lazy">Mumbai</div>
             </div>
             <a href="https://www.businessex.com/business/looking-investor-for-pharma-distribution-business/ox9om1" target="_blank" class="know-more">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>

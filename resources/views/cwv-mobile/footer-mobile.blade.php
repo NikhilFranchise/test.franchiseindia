@@ -2447,44 +2447,43 @@
         </div>
       </div>
 
-
 <script>
     $(document).ready(function() {
-        $('#myBtn').click(function(event) {
+        $("#myBtn").click(function(event) {
             showModal();
             event.stopPropagation();
         });
-        $('#modalClose').click(function() {
+
+        $("#modalClose").click(function() {
             hideModal();
         });
 
-        $('.modal-content').click(function(event) {
+        $(".modal-content").click(function(event) {
             event.stopPropagation();
+        });
+
+        $(document).click(function() {
+            hideModal();
         });
     });
 
     function showModal() {
-        $('#myModal').fadeIn('slow');
-        (function fun() {
-            $('.modal-content').css({
-                'transform': 'translateY(-50px)'
-            });
-        })();
+        $("#myModal").fadeIn('slow');
+        $('.modal-content').css({
+            'transform': 'translateY(-50px)',
+            'transition': 'transform 0.3s ease'
+        });
     }
 
     function hideModal() {
-        $('#myModal').fadeOut('fast');
-        (function fun2() {
-            $('.modal-content').css({
-                'transform': 'translateY(0px)'
-            });
-        })();
+        $("#myModal").fadeOut('fast'); // Hide the modal quickly
+        $('.modal-content').css({
+            'transform': 'translateY(0px)', // Reset modal content position
+            'transition': 'transform 0.3s ease' // Ensure transition is applied
+        });
     }
+</script>
 
-    $(document).on("click", function() {
-        hideModal();
-    });
-</script> -->
 
 
 <script type="text/javascript" async>
@@ -2599,4 +2598,19 @@
             modalContentss.style.transform = 'translateY(0px)'; // Reset position
         }
     });
+
+    function getSubCategoryHeader1(value) {
+        $.ajax({
+            type: 'GET',
+            url: '{{ url('getsubcategory') }}',
+            data: {
+                categoryID: value
+            },
+            success: function(data) {
+               console.log(data);
+                $("#getSubCategoryDataHeader1").html(data);
+                //$("#getSubCategoryDataHeader2").html(data);
+            }
+        });
+    }
 </script>
