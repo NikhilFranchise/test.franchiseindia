@@ -43,7 +43,6 @@ class BusinessListingController extends Controller
 
     public function listingLocation()
     {
-        // dd(url()->current());
         // Initialize the variables
         $seoTitle = '';
         $seoDesc = '';
@@ -1667,15 +1666,6 @@ class BusinessListingController extends Controller
             $orderbyVal = 'views';
             $franData->orderBy($orderbyVal, 'desc');
         }
-
-        $currentUrl = request()->url();
-        $a = $franData->count();
-        // dd($currentUrl,$a);
-        return response()->json([
-            'current_url' => $currentUrl,
-         
-            'data' => $a // Optionally include the response data
-        ]);
         
 
         $count           = request()->segment(1) == 'amp' ? 20 : 21;
