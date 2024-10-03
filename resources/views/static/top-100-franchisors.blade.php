@@ -61,6 +61,14 @@ ul.topp li{color: #333333;font-size: 15px;margin-bottom: 5px;position: relative;
 .yeartab li a{color:#333333;font-weight: bold;font-size: 20px;cursor: pointer;}
 .yeartab{display: block!important;}
 .yeartab li.active::after{border-radius: 10px 20px 20px 5px;width: 20px;position: absolute;padding-left: 40px; bottom: 0px;left: 50px;bottom: 10px;display: block;}
+
+.top-hundred .crit {
+  color: #ED1C25;
+  font-size: 16px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 @media screen and (min-width:1000px) and (max-width:1199px){
 .nav-tabs>li>a span{display: none;}	
 
@@ -70,7 +78,7 @@ ul.topp li{color: #333333;font-size: 15px;margin-bottom: 5px;position: relative;
 .nav-tabs > li.active > a:hover{color:#ffffff!important;font-weight: bold;}
 .staicp h1 {font-size: 22px;line-height: 33px;}
 .scriteria .catbheading, .scriteria h2.catbheading{font-size: 18px;line-height: 27px;margin-bottom: 0px;}
-.moblink{display: none;}
+.moblink{display: block;}
 .top-hundred a{font-size: 15px;}
 .tbrands .nav > li > a{padding: 5px 10px;}
 .top-hundred h2{font-size:20px;}
@@ -131,7 +139,7 @@ a.desklink{display: none;}
 <br>
 <h1>Top 100 Franchise/Franchisor 2024</h1>
 <p>Revealing brand impact, consumer value, and dynamic opportunities. Explore trends in Indian franchises, including global giants and emerging innovators. Rankings consider financial strength, expansion, growth rate, and success, reflecting a distinct identity, robust planning, support, innovation, and cultural sensitivity. This analysis assists franchisees and franchisors alike, offering insights into the franchise sector that underpin thriving business ventures.</p>
-<a data-target="#topFranchise" data-toggle="modal">Understand Selection Criteria</a>
+<div data-target="#topFranchise" data-toggle="modal" class="crit">Understand Selection Criteria</div>
 </div>
 
 <!-- Top 100 franchises -->
@@ -2029,7 +2037,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/car-wash-ceramic-coating-detailing.ssc358" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2047,7 +2055,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/automobile-maintanance-related.ssc367" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2065,7 +2073,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/car-maintanance-repair-services.ssc353" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2101,7 +2109,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pathological-labs.ssc51" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2119,7 +2127,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2138,7 +2146,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2157,7 +2165,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pathological-labs.ssc51" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2176,7 +2184,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/cosmetics-beauty-product-stores.ssc49" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2195,7 +2203,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/gyms-and-fitness-centres.ssc52" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2214,7 +2222,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/beauty-salons.ssc47" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2233,7 +2241,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/clinics-nursing-homes.ssc56" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2252,7 +2260,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/cosmetics-beauty-product-stores.ssc49" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2271,7 +2279,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/gyms-and-fitness-centres.ssc52" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2307,7 +2315,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/courier-delivery.ssc127" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2326,7 +2334,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/finance-advisors-and-brokers.ssc137" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2345,7 +2353,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2364,7 +2372,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/payment-solution-services.ssc554" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2383,7 +2391,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/laundry-dry-cleaning.ssc150" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2402,7 +2410,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/courier-delivery.ssc127" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2421,7 +2429,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pet-stores.ssc191" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2440,7 +2448,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/real-estate-sub.ssc267" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2459,7 +2467,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-financial.ssc142" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2495,7 +2503,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.dealerindia.com/dir/energy-saving-products-devices" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2513,7 +2521,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.dealerindia.com/dir/paints-allied-products" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2531,7 +2539,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.dealerindia.com/dir/home-furniture" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2549,7 +2557,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.dealerindia.com/dir/electric-vehicles-parts" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2568,7 +2576,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/electric-vehicles.ssc725" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2587,7 +2595,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/electric-vehicles.ssc725" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2622,7 +2630,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/preschools.ssc85" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2643,7 +2651,7 @@ a.desklink{display: none;}
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/competitive-exam-coaching-institute.ssc89
 " class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2662,7 +2670,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/after-school-activities.ssc87" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2681,7 +2689,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mobile-application-services.ssc734" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2716,7 +2724,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fashion-accessories.ssc248" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2734,7 +2742,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/kids-wear.ssc225" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2753,7 +2761,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/lingerie-innerwear.ssc232" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2772,7 +2780,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/opticianseye-wear.ssc246" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2791,7 +2799,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2810,7 +2818,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/sports.ssc236" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2829,7 +2837,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2848,7 +2856,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2867,7 +2875,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/departmentalunisex.ssc228" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2885,7 +2893,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/departmentalunisex.ssc228" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2906,7 +2914,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2925,7 +2933,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.dealerindia.com/dir/mens-wear" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2944,7 +2952,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/readymade.ssc230" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2963,7 +2971,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casuals.ssc235" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -2982,7 +2990,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3001,7 +3009,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-clothing.ssc233" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3037,7 +3045,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ice-creams-yogurt-parlors.ssc436" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3055,7 +3063,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3073,7 +3081,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ice-creams-yogurt-parlors.ssc436" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3091,7 +3099,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3111,7 +3119,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/pizzeria.ssc724" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3129,7 +3137,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/express-food-joints-drive-through.ssc429" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3148,7 +3156,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3167,7 +3175,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3186,7 +3194,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3204,7 +3212,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3223,7 +3231,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3242,7 +3250,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-food-service.ssc84" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3261,7 +3269,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/fine-dine-restaurants.ssc431" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3280,7 +3288,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casual-dine-restaurants.ssc432" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3299,7 +3307,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/others-food-service.ssc84" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3318,7 +3326,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3336,7 +3344,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/quick-service-restaurants.ssc428" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3355,7 +3363,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tea-and-coffee-chain.ssc427" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3391,7 +3399,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/tour-packages.ssc392" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3409,7 +3417,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/online-travel-services.ssc146" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3428,7 +3436,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3447,7 +3455,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3466,7 +3474,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/hotel-chain.ssc67" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3501,7 +3509,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/consumer-electronics.ssc177" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3648,7 +3656,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/superstores.ssc186" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3667,7 +3675,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3686,7 +3694,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/e-commerce-related.ssc223" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3705,7 +3713,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3723,7 +3731,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniturehome-decor-furnishing.ssc213" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3741,7 +3749,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/book-stores.ssc197" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3760,7 +3768,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3779,7 +3787,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-wear.ssc227" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3798,7 +3806,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/grocery-stores.ssc188" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3817,7 +3825,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/ethnic-stores.ssc229" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3836,7 +3844,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/precious-jewellery.ssc241" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3855,7 +3863,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/womens-clothing.ssc560" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3873,7 +3881,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/designer-jewellery.ssc564" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3892,7 +3900,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniturehome-decor-furnishing.ssc213" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3911,7 +3919,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/superstores.ssc186" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3930,7 +3938,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/grocery-stores.ssc188" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3949,7 +3957,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/building-material-stores.ssc221" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3968,7 +3976,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/mens-footwear.ssc559" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -3986,7 +3994,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/casuals.ssc235" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
@@ -4004,7 +4012,7 @@ a.desklink{display: none;}
         View more
     </a>
     <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/furniture-home-decor-and-furnishing.ssc213" class="moblink">
-        <img src="http://localhost:8000/images/top100/arrow-new.png" alt="">
+        <img src="{{ url('images/top100/arrow-new.png') }}" alt="">
     </a>
 
 </td>
