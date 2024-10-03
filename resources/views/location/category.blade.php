@@ -53,7 +53,7 @@
     {{-- <link href="{{$hindiUrl}}" rel="amphtml"> --}}
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
-@endsection-->
+@endsection
 
 @section('content')
 
@@ -461,14 +461,16 @@
                             if(!empty($searchq))
                                 $params['searchq'] = $searchq;
                         @endphp
-                        <div class="row">
+                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                @if(count($brandResults) == 0)
+                                @if (count($brandResults) == 0)
                                     <div class="noresults">No result found</div>
                                 @endif
-                                {!! $brandResults
+                                {{-- {!! $brandResults
                                 ->appends($params)
-                                ->render() !!}
+                                ->render() !!} --}}
+                                {!! $brandResults->appends($params)->links('vendor.pagination.custom') !!}
+
                             </div>
                         </div>
                     </div>
