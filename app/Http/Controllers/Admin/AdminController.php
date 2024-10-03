@@ -1534,52 +1534,108 @@ class AdminController extends Controller
      * @param $oldImagePath
      * @return mixed
      */
+    // private function uploadImage($image, $type, $isDelete, $store_type, $oldImagePath)
+    // {
+    //     $uploadPath = "uploads/";
+    //     if ($isDelete == 1 && $store_type == 'public' && !empty($oldImagePath))
+    //         unlink(public_path($oldImagePath));
+
+    //     if ($isDelete == 1 && $store_type == 's3')
+    //         Storage::getFacadeRoot()->disk('s3')->delete(parse_url($oldImagePath)['path']);
+
+    //     $extension  = $image->extension();
+
+    //     $picPath    = config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
+
+    //     switch ($type) {
+    //         case 'Author':
+    //             $picPath    = $uploadPath . sprintf(config('constants.AdminAuthor'), date('md')) . '/' . uniqid() . '.' . $extension;
+    //             break;
+
+    //         case 'Article':
+    //             $picPath    = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
+    //             break;
+
+    //         case 'Interview':
+    //             $picPath    = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/int/' . uniqid() . '.' . $extension;
+    //             break;
+
+    //         case 'Gallery':
+    //             $picPath    = config('constants.AdminArticleInterview') . '/gallery/art/' . uniqid() . '.' . $extension;
+    //             break;
+
+    //         case 'Magazine':
+    //             $picPath    = $uploadPath . config('constants.AdminMagazine') . '/' . '' . uniqid() . '.' . $extension;
+    //             break;
+
+    //         case 'News':
+    //             $picPath    = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+    //             break;
+    //     }
+    //     Storage::getFacadeRoot()->disk($store_type)->put($picPath, file_get_contents($image), 'public');
+    //     $imageUrl   = Storage::getFacadeRoot()->disk($store_type)->url($picPath);
+
+    //     if ($store_type == 's3' && $type != 'Gallery')
+    //         return  str_replace('storage', 'uploads', parse_url($imageUrl, PHP_URL_PATH));
+
+    //     return  str_replace('storage', 'uploads', $imageUrl);
+    // }
+
+
+
     private function uploadImage($image, $type, $isDelete, $store_type, $oldImagePath)
     {
         $uploadPath = "uploads/";
-        if ($isDelete == 1 && $store_type == 'public' && !empty($oldImagePath))
+
+        // Delete old image if needed
+        if ($isDelete == 1 && $store_type == 'public' && !empty($oldImagePath)) {
             unlink(public_path($oldImagePath));
+        }
 
-        if ($isDelete == 1 && $store_type == 's3')
+        if ($isDelete == 1 && $store_type == 's3') {
             Storage::getFacadeRoot()->disk('s3')->delete(parse_url($oldImagePath)['path']);
+        }
 
-        $extension  = $image->extension();
-
-        $picPath    = config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
+        // Define the upload path based on the type
+        $extension = 'webp'; // Saving images in webp format
+        $picPath = config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
 
         switch ($type) {
             case 'Author':
-                $picPath    = $uploadPath . sprintf(config('constants.AdminAuthor'), date('md')) . '/' . uniqid() . '.' . $extension;
+                $picPath = $uploadPath . sprintf(config('constants.AdminAuthor'), date('md')) . '/' . uniqid() . '.' . $extension;
                 break;
-
             case 'Article':
-                $picPath    = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
+                $picPath = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
                 break;
-
             case 'Interview':
-                $picPath    = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/int/' . uniqid() . '.' . $extension;
+                $picPath = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/int/' . uniqid() . '.' . $extension;
                 break;
-
             case 'Gallery':
-                $picPath    = config('constants.AdminArticleInterview') . '/gallery/art/' . uniqid() . '.' . $extension;
+                $picPath = config('constants.AdminArticleInterview') . '/gallery/art/' . uniqid() . '.' . $extension;
                 break;
-
             case 'Magazine':
-                $picPath    = $uploadPath . config('constants.AdminMagazine') . '/' . '' . uniqid() . '.' . $extension;
+                $picPath = $uploadPath . config('constants.AdminMagazine') . '/' . '' . uniqid() . '.' . $extension;
                 break;
-
             case 'News':
-                $picPath    = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
                 break;
         }
-        Storage::getFacadeRoot()->disk($store_type)->put($picPath, file_get_contents($image), 'public');
-        $imageUrl   = Storage::getFacadeRoot()->disk($store_type)->url($picPath);
 
-        if ($store_type == 's3' && $type != 'Gallery')
-            return  str_replace('storage', 'uploads', parse_url($imageUrl, PHP_URL_PATH));
+        // Resize the image to 680x435px and convert it to WebP format
+        $resizedImage = Image::make($image)->resize(1600, 940)->encode('webp', 90);
+        // dd($resizedImage);
+        // Store the image in the specified storage
+        Storage::getFacadeRoot()->disk($store_type)->put($picPath, (string) $resizedImage, 'public');
+        $imageUrl = Storage::getFacadeRoot()->disk($store_type)->url($picPath);
 
-        return  str_replace('storage', 'uploads', $imageUrl);
+        // Return the correct image URL
+        if ($store_type == 's3' && $type != 'Gallery') {
+            return str_replace('storage', 'uploads', parse_url($imageUrl, PHP_URL_PATH));
+        }
+
+        return str_replace('storage', 'uploads', $imageUrl);
     }
+
 
     /**
      * @param $imageUrl

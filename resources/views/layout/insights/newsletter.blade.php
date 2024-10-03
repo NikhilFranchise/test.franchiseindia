@@ -9,6 +9,7 @@
             <div class="modified-col col-md-6">
             <div class="main-newsletter">
                     <form id="update" method="post" action="{{url('/insights/newslettersignup')}}">
+                        @csrf
                         <ul class="newsletter">
                             <li>
                                 <input type="hidden" name="site_type" value="insights">

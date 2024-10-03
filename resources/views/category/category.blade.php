@@ -3,9 +3,9 @@
     $brandCount = count($brandResults);
 @endphp
 
-@if ($brandCount < 2)
+{{-- @if ($brandCount < 2)
     @section('robot', 'noindex, nofollow')
-@endif
+@endif --}}
 
 
 
