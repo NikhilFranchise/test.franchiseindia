@@ -9,9 +9,41 @@
     @section('seoKeywords', $seoKeywords)
 @endif
 
-<!--@php
-    $hindiUrl = str_replace('/location/', '/hi/location/', url()->current());
-    $engUrl   = url()->current();
+@php
+    $c_Url = url()->current();
+    $queryParams = request()->query();
+    $queryString = '';
+    // dd($queryParams);
+    // Parameters to exclude
+    $excludedParams = ['sortby', 'catTab', 'invTab'];
+
+    if (!empty($queryParams)) {
+        $queryString = '?';
+        foreach ($queryParams as $key => $value) {
+              // Skip if the parameter is in the excluded list
+              if (in_array($key, $excludedParams)) {
+                continue;
+            }
+            if (is_null($value)) {
+                $queryString .= $key . '&';
+            } else {
+                $queryString .= $key . '=' . urlencode($value) . '&';
+            }
+             // Remove the trailing '&' and the '?' if no valid query parameters are left
+        
+        }
+        $queryString = rtrim($queryString, '&');
+        if ($queryString === '?') {
+            $queryString = '';
+        }
+        
+        $queryString = rtrim($queryString, '&');
+    }
+
+    $hindiUrl = str_replace('/location/', '/hi/location/', $c_Url . $queryString );
+    $engUrl   =  $c_Url . $queryString ;
+   
+    // dd($engUrl);
 @endphp
 
 @section('hindiUrl', $hindiUrl)

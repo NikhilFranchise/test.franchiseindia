@@ -35,12 +35,43 @@
 @endif
 
 @php
+
+$c_Url = url()->current();
+    $queryParams = request()->query();
+    $queryString = '';
+    // dd($queryParams);
+    // Parameters to exclude
+    $excludedParams = ['sortby', 'catTab', 'invTab'];
+
+    if (!empty($queryParams)) {
+        $queryString = '?';
+        foreach ($queryParams as $key => $value) {
+              // Skip if the parameter is in the excluded list
+              if (in_array($key, $excludedParams)) {
+                continue;
+            }
+            if (is_null($value)) {
+                $queryString .= $key . '&';
+            } else {
+                $queryString .= $key . '=' . urlencode($value) . '&';
+            }
+             // Remove the trailing '&' and the '?' if no valid query parameters are left
+        
+        }
+        $queryString = rtrim($queryString, '&');
+        if ($queryString === '?') {
+            $queryString = '';
+        }
+        
+        $queryString = rtrim($queryString, '&');
+    }
+
     $hindiUrl = str_replace(
         '/category/',
         '/hi/category/',
-        str_replace('/business-opportunities/', '/hi/business-opportunities/', url()->current()),
+        str_replace('/business-opportunities/', '/hi/business-opportunities/', $c_Url . $queryString),
     );
-    $engUrl = url()->current();
+    $engUrl = $c_Url . $queryString ;
 @endphp
 
 @section('hindiUrl', $hindiUrl)
@@ -53,8 +84,8 @@
 @endsection --}}
 @section('hindibrandUrls')
     <?php
-    $currentUrl = url()->current();
-    $hindiUrl = str_replace('/business-opportunities/', '/hi/business-opportunities/', $currentUrl);
+    // $currentUrl = url()->current();
+    // $hindiUrl = str_replace('/business-opportunities/', '/hi/business-opportunities/', $currentUrl);
     ?>
     {{-- <link href="{{ $hindiUrl }}"> --}}
     {{-- <link href="{{ str_replace( '/category/',  str_replace('/business-opportunities/',  url()->current())) }}"> --}}

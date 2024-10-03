@@ -505,7 +505,7 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
-    Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
+     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListingnormalization']);
     Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('/lowcost', [BusinessListingController::class, 'searchBusinessListing'])
@@ -1057,5 +1057,9 @@ Route::post('/submit-form1', [AdviceController::class, 'freeadviceHome_popup'])-
 
 // Route::get('/cvwhome/hi',[NewHomePageController::class,'cvwhindiHomePage']);
 Route::get('/cvwhome',[NewHomePageController::class,'cvwhomeNew']);
+
+Route::get('/caturl',[CommonController::class,'url']);
+Route::get('/subcaturl',[CommonController::class,'subcaturl']);
+Route::get('/subsubcaturl',[CommonController::class,'subsubcaturl']);
 
 
