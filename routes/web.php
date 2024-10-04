@@ -138,7 +138,6 @@ Route::get('pagenotfound', function () {
 Route::get('/index1', function(){
     return view('index');
    });
-Route::get('/index', [NewHomePageController::class, 'cwvMobile']);
 Route::get('/hi', [NewHomePageController::class, 'hindiHomePage']); //checck
 Route::get('about', [StaticPageController::class, 'aboutus']);
 Route::get('contact', [ContactUsController::class, 'contactUsForm']);
@@ -1065,7 +1064,10 @@ Route::post('/submit-form1', [AdviceController::class, 'freeadviceHome_popup'])-
 
 
 // Route::get('/cvwhome/hi',[NewHomePageController::class,'cvwhindiHomePage']);
+Route::get('/index/hi',[NewHomePageController::class,'cwvMobilehindiHomePage']);
 Route::get('/cvwhome',[NewHomePageController::class,'cvwhomeNew']);
+Route::get('/index', [NewHomePageController::class, 'cwvMobile']);
+
 
 Route::get('/caturl',[CommonController::class,'url']);
 Route::get('/subcaturl',[CommonController::class,'subcaturl']);

@@ -1,6 +1,6 @@
 <section class="featured-franchise-opportunities">
     <h2 class="brands-head">
-        {{ Request::segment(1) == 'hi' ? 'फीचर्ड फ्रैंचाइज़ कंपनियां' : 'Featured Franchise Companies' }}</h2>
+        {{ Request::segment(2) == 'hi' ? 'फीचर्ड फ्रैंचाइज़ कंपनियां' : 'Featured Franchise Companies' }}</h2>
     <div class="card-wrap">
         @foreach ($brandsffc->shuffle() as $logoDetail)
             @php
@@ -19,7 +19,7 @@
                     <h2><a href="{{ $brandUrl }}" target="_blank">{{ mb_strimwidth($logoDetail['brand_alt'], 0, 25, '...') }}</a></h2>
                 </div>
                 <div class="leading-card-investment">
-                    <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment range' }}</div>
+                    <div class="card-info">{{ Request::segment(2) == 'hi' ? 'निवेश सीमा' : 'Investment range' }}</div>
                     <div class="card-info-amt">₹{{ $logoDetail['investment_range_new'] }}</div>
                 </div>
                 {{--  <a href="{{ $brandUrl }}" target="_blank" class="know-more">Know More</a>  --}}

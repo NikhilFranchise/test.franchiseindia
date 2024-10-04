@@ -1,5 +1,5 @@
 <section class="top-franchise-opportunities">
-    <h2 class="brands-head">{{ Request::segment(1) == 'hi' ? 'शीर्ष फ्रैंचाइज़ अवसर' : 'Top Franchise Opportunities' }}
+    <h2 class="brands-head">{{ Request::segment(2) == 'hi' ? 'शीर्ष फ्रैंचाइज़ अवसर' : 'Top Franchise Opportunities' }}
     </h2>
     <div class="card-wrap">
         @foreach ($brandstfo->shuffle() as $logoDetail)
@@ -27,14 +27,14 @@
                     </h2>
                 </div>
                 <div class="leading-card-investment">
-                    <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment range' }}</div>
+                    <div class="card-info">{{ Request::segment(2) == 'hi' ? 'निवेश सीमा' : 'Investment range' }}</div>
                     <div class="card-info-amt">₹{{ $logoDetail['investment_range_new'] }}</div>
                 </div>
                 <div class="leading-card-area">
-                    <div class="card-info">{{ Request::segment(1) == 'hi' ? 'क्षेत्र की आवश्यकता है' : 'Area Required' }}</div>
+                    <div class="card-info">{{ Request::segment(2) == 'hi' ? 'क्षेत्र की आवश्यकता है' : 'Area Required' }}</div>
                     <div class="card-info-amt">{{ $logoDetail['area_required'] }}</div>
                 </div>
-                <a href="{{ $brandUrl }}" target="_blank" class="know-more">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                <a href="{{ $brandUrl }}" target="_blank" class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
             </div>
         @endforeach
         {{--  <div class="leading-card">

@@ -14,7 +14,7 @@
     @include('cwv-mobile.franchise_insights_news')
     @include('cwv-mobile.testimonials')
 </main>
-{{--  @include('cwv-mobile.sidemenu-mobile')  --}}
+@include('cwv-mobile.sidemenu-mobile')
 <div class="overlay"></div>
 @include('cwv-mobile.newsletter')
 @include('cwv-mobile.aboutus')
@@ -34,7 +34,7 @@
     $barndStick = 0;
     $googleSearchTop = 0;
     $gcodeurl = 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-    if (request()->segment(1) === 'brands' || (request()->segment(1) === 'hi' && request()->segment(2) === 'brands')) {
+    if (request()->segment(2) === 'brands' || (request()->segment(2) === 'hi' && request()->segment(2) === 'brands')) {
         $barndStick = 1;
     }
     $eduUrlSelected = '';
@@ -44,7 +44,7 @@
     $menuicon = 'menu-icon.png';
     $logoClass = 'logo';
     $mainUrl = '';
-    $webtitleUrl = request()->segment(1);
+    $webtitleUrl = request()->segment(2);
     $mangecls = '';
     if ($webtitleUrl == 'content') {
         $dotUrlSelected = 'class=dropactive';
