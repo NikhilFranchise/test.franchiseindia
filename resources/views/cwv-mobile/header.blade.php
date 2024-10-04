@@ -1285,12 +1285,13 @@
                     <div class="d-flex">
                         <div class="p-2">
                             <div id="myBtnss" class="menu-bar">
-                                <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/menu-icon.svg"
-                                    alt="Menu" width="25" height="14">
+                                {{--  src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/menu-icon.svg"  --}}
+                                <img src="{{ url('cwv-mobile/images/menu-icon.svg') }}" alt="Menu" width="25"
+                                    height="14">
                             </div>
                         </div>
                         <div class="p-2 logo"> <a href="https://www.franchiseindia.com"><img
-                                    src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/logo.svg"
+                                    src="{{ url('cwv-mobile/images/logo.svg') }}"
                                     alt="Franchise India - Business Opportunities, Franchise Opportunities"
                                     title="Franchise India - Business Opportunities, Franchise Opportunities"
                                     width="200" height="32"></a>
@@ -1298,37 +1299,34 @@
 
                         <div class="ml-auto d-flex p15">
                             <span id="myBtns">
-                                <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/Search.svg"
-                                    alt="Home Search" width="22" height="24">
+                                <img src="{{ url('cwv-mobile/images/Search.svg') }}" alt="Home Search" width="22"
+                                    height="24">
                             </span>
                             <span id="myBtn">
-                                <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/Login.svg"
-                                    alt="Login" width="21" height="21">
+                                <img src="{{ url('cwv-mobile/images/Login.svg') }}" alt="Login" width="21"
+                                    height="21">
                             </span>
-
-
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </header>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        gtag('config', 'AW-991358906');
+    <link rel="stylesheet"
+        href="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2">
+    <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/popper/js/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script
+        src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js">
     </script>
+    <!-- Font Awesome JS -->
+    <script defer src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/solid.js"></script>
+    <script defer src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/fontawesome.js"></script>
+
 
     <!-- Google Tag Manager -->
-    <script>
+    <script async>
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
@@ -1337,41 +1335,41 @@
             });
             var f = d.getElementsByTagName(s)[0],
                 j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
+                dl = l !== 'dataLayer' ? '&l=' + l : '';
             j.async = true;
-            j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
     </script>
     <!-- End Google Tag Manager -->
-
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
-    <script>
+    <script async>
         window.dataLayer = window.dataLayer || [];
 
         function gtag() {
             dataLayer.push(arguments);
         }
         gtag('js', new Date());
-
         gtag('config', 'G-8MKFEZLR18');
     </script>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe>
-    </noscript>
-    <!-- End Google Tag Manager (noscript) -->
 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
+    <script async>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'AW-991358906');
+    </script>
     <!-- Facebook Pixel Code -->
-    <script>
+    <script async>
         ! function(f, b, e, v, n, t, s) {
             if (f.fbq) return;
             n = f.fbq = function() {
-                n.callMethod ?
-                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
             };
             if (!f._fbq) f._fbq = n;
             n.push = n;
@@ -1382,12 +1380,12 @@
             t.async = !0;
             t.src = v;
             s = b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t, s)
-        }(window, document, 'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
+            s.parentNode.insertBefore(t, s);
+        }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '865253970178641');
         fbq('track', 'PageView');
     </script>
-    <noscript><img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1" /></noscript>
-    <!-- End Facebook Pixel Code -->
+    <noscript>
+        <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1" />
+    </noscript>

@@ -2320,7 +2320,7 @@
                               <div class="ttl">Forgot Password</div>
                               <div class="desc">
                                   Enter your email address associated with your
-                                  Franchiseindia account and we'll send you a link
+                                  Franchiseindia account and we&apos;ll send you a link
                                   to reset your password.
                               </div>
                               <div class="frm-pnl">
