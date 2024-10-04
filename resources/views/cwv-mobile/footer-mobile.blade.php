@@ -4046,3 +4046,472 @@
         });
     }
 </script>
+<script>
+    $(document).ready(function() {
+        function selectMax(selectmaxheaderval) {
+            let amountConfigArr = '{"1":"Rs. 10000","3":"Rs. 50000","5":"Rs. 2lakh","7":"Rs. 5lakh","9":"Rs. 10lakh","11":"Rs. 20lakh","13":"Rs. 30lakh","15":"Rs. 50lakh","17":"Rs. 1 Cr.","19":"Rs. 2 Cr.","21":"Rs. 5 Cr."}';
+
+            let maxAmount = $('#maxAmount');
+            let getSlugAmount = '{"1":{"min":"10000","max":"50000"},"3":{"min":"50000","max":"200000"},"5":{"min":"200000","max":"500000"},"7":{"min":"500000","max":"1000000"},"9":{"min":"1000000","max":"2000000"},"11":{"min":"2000000","max":"3000000"},"13":{"min":"3000000","max":"5000000"},"15":{"min":"5000000","max":"10000000"},"17":{"min":"10000000","max":"20000000"},"19":{"min":"20000000","max":"50000000"},"21":{"min":"50000000","max":"100000000"}}';
+
+            maxAmount.html("");
+            selectmaxheaderval = parseInt(selectmaxheaderval);
+            $.each(amountConfigArr, function (key, value) {
+                if (key > selectmaxheaderval)
+                    $('#maxAmount').append($("<option></option>").attr({
+                        "value": key,
+                        "slug": getSlugAmount[key]['min']
+                    }).text(value));
+            });
+            if (selectmaxheaderval === 21)
+                maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
+        }
+    });
+</script>
+<script>
+    function setCookie() {
+        document.cookie = "accept_cookie=ok";
+        $('#cookie').hide();
+        const d = new Date();
+        d.setTime(d.getTime() + (7*24*60*60*1000));
+        let expires = "expires="+d.toUTCString();console.log(expires);
+        document.cookie = "username=cookie_user;"+ expires + ";path=/";
+    }
+
+    function getCookie() {
+        return checkCookie('accept_cookie');
+    }
+
+    function checkCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    $(document).ready(function() {
+        var cookie = getCookie();
+        if (cookie == 'ok') {
+            $('#cookie').hide();
+        } else {
+            $('#cookie').show();
+        }
+    });
+</script>
+
+
+
+<script>
+    $(function(){
+        // bind change event to select
+        $('#language-changer').on('change', function () {
+            var url = $(this).val(); // get selected value
+            if (url) { // require a URL
+                window.location = url; // redirect
+            }
+            return false;
+        });
+    });
+</script>
+<script>
+    var otpInterval;
+
+    function checkInputType() {
+        var input = $('#email_or_mobile').val();
+        var isEmail = validateEmail(input);
+
+        if (isEmail) {
+            $('#password_group').show();
+            $('#get_otp_btn').hide();
+            $('#sign_in_btn').prop('disabled', false);
+        } else if (validateMobile(input)) {
+            $('#password_group').hide();
+            $('#get_otp_btn').show();
+            $('#sign_in_btn').prop('disabled', true);
+        } else {
+            $('#password_group').show();
+            $('#get_otp_btn').hide();
+            $('#sign_in_btn').prop('disabled', false);
+        }
+    }
+
+    function validateEmail(email) {
+        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    function validateMobile(mobile) {
+        var re = /^\d{10}$/;
+        return re.test(mobile);
+    }
+
+    function validateLoginMobileOTP() {
+        var mobile = $('#email_or_mobile').val();
+        $.ajax({
+            type: 'get',
+            url: '/login_verify_mobile',
+            data: {
+                mobile: mobile
+            },
+            success: function(data) {
+                if (data.data == 0) {
+                    $("#mismatch-mob").show();
+                    $("#email_or_mobile").prop("readonly", true);
+                    $("#sign_in_btn").prop("disabled", true);
+                    $("#edit-mobile-wider").show();
+                    $("#otp-block-wider").hide();
+                    $("#get_otp_btn").hide();
+                } else {
+                    $("#email_or_mobile").prop("readonly", true);
+                    $("#mismatch-mob").hide();
+                    $("#sign_in_btn").prop("disabled", false);
+                    $("#edit-mobile-wider").show();
+                    $("#otp-block-wider").show();
+                    $("#get_otp_btn").hide();
+                    startOTPTimer();
+                }
+            }
+        });
+    }
+
+    function editMobileWider() {
+        $("#email_or_mobile").prop("readonly", false);
+        $("#edit-mobile-wider").hide();
+        $("#mismatch-mob").hide();
+        $("#otp-block-wider").hide();
+        $("#sign_in_btn").prop("disabled", true);
+        clearInterval(otpInterval);
+        $('#otp_timer').hide();
+        $('#resend_otp').hide();
+    }
+
+    function startOTPTimer() {
+        var timer = 60;
+        $('#resend_otp').hide();
+        $('#otp_timer').show();
+
+        otpInterval = setInterval(function() {
+            if (timer > 0) {
+                timer--;
+                $('#otp_timer').text(timer + 'sec');
+            } else {
+                clearInterval(otpInterval);
+                $('#otp_timer').hide();
+                $('#resend_otp').show();
+                $("#sign_in_btn").prop("disabled", true);
+            }
+        }, 1000);
+    }
+
+    function resendOTP() {
+        clearInterval(otpInterval);
+        var mobile = $('#email_or_mobile').val();
+        startOTPTimer();
+        validateLoginMobileOTP();
+    }
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+    $("#sidebar").mCustomScrollbar({
+        theme: "minimal"
+    });
+
+    $('#dismiss, .overlay').on('click', function () {
+        $('#sidebar').removeClass('active');
+        $('.overlay').removeClass('active');
+    });
+
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').addClass('active');
+        $('.overlay').addClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    });
+});
+
+//loging section sidebar
+$(document).ready(function () {
+    $("#sidebar-login").mCustomScrollbar({
+        theme: "minimal"
+    });
+
+    $('#dismiss-login, .overlay').on('click', function () {
+        $('#sidebar-login').removeClass('active');
+        $('.overlay').removeClass('active');
+    });
+
+    $('#sidebarCollapse-main-login').on('click', function () {
+        $('#sidebar-login').addClass('active');
+        $('.overlay').addClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    });
+});
+
+var header = $('.header');
+
+$(window).scroll(function(e){
+    if(header.offset().top !== 0){
+        if(!header.hasClass('shadow')){
+            header.addClass('shadow');
+        }
+    }else{
+        header.removeClass('shadow');
+    }
+});
+//search bar class
+// $(document).scroll(function () {
+//  myID = document.getElementById("search");
+//  var a = function () {
+//      var b = window.scrollY;
+//      if (b >= 300) {
+//          myID.className = "search show slide-right"
+//      } else {
+//          myID.className = "search hide"
+//      }
+//  };
+//  window.addEventListener("scroll", a)
+// });
+
+var swiper = new Swiper('.swiper-container', {
+    // mousewheel: true,
+    loop: true,
+    slidesPerView: 'auto',
+    slidesPerView: 1.5,
+    spaceBetween: 10,
+    // init: false,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    // autoplay: {
+    //     delay: 1000,
+    //     disableOnInteraction: true,
+    //   },
+    scrollbar: {
+        el: '.swiper-scrollbar',
+        hide: true,
+    },
+    keyboard: {
+        enabled: true,
+    },
+    breakpoints: {
+      //samll
+        '@0.00': {
+        slidesPerView:  1.5,
+        spaceBetween: 15,
+      },
+        //xs
+      '@0.25': {
+            slidesPerView:  1.5,
+            spaceBetween: 15,
+        },
+        //tab-mini
+        '@0.50': {
+            slidesPerView:  1.5,
+            spaceBetween: 15,
+        },
+        //ipad
+
+        '@0.75': {
+        slidesPerView: 2.5,
+        spaceBetween: 15,
+      },
+        //desktop-mini
+      '@1.00': {
+        slidesPerView: 3.5,
+        spaceBetween: 20,
+      },
+        //xl-lg desktop
+      '@1.50': {
+        slidesPerView: 4 ,
+        spaceBetween: 25,
+      },
+    }
+  });
+  (function($) {
+    "use strict";
+
+    /*--/ Testimonials owl /--*/
+    $('#testimonial-carousel').owlCarousel({
+      margin: 0,
+      autoplay: true,
+      nav: true,
+      animateOut: 'fadeOut',
+      animateIn: 'fadeInUp',
+      navText: ['<i class="ion-ios-arrow-back" aria-hidden="true"></i>', '<i class="ion-ios-arrow-forward" aria-hidden="true"></i>'],
+      autoplayTimeout: 3000,
+      autoplayHoverPause: true,
+      responsive: {
+        0: {
+          items: 1,
+        }
+      }
+    });
+
+  })(jQuery);
+</script>
+
+
+<script type="text/javascript">
+    /*<![CDATA[*/
+    if (screen.width < 767) {
+        $(document).ready(function() {
+            setTimeout(function() {
+                $("#searchblk").slideUp(800);
+                $('#clickhidebtn').show();
+                $('#clickshowbtn').hide();
+            }, 3000);
+            $("#clickhidebtn").click(function() {
+                $("#searchblk").slideDown("slow");
+                $('#clickhidebtn').hide();
+                $('#clickshowbtn').show();
+            });
+            $("#clickshowbtn").click(function() {
+                $("#searchblk").slideUp("slow");
+                $('#clickhidebtn').show();
+                $('#clickshowbtn').hide();
+            });
+        });
+    }
+    $('#registerselect').click(function() {
+        $('#registeractive').click();
+    });
+    $('#loginselect').click(function() {
+        $('#loginactive').click();
+    });
+    $('#mobilereg').click(function() {
+        $('#registeractive').click();
+    });
+    $("#changeLang").on('click', function() {
+        $('#langType').slideToggle();
+    })
+    $('#registerselect1').click(function() {
+        $('#login').addClass("active");
+        $('#register').removeClass("active");
+        $('#loginactiveopen').addClass("active");
+        $('#registeractiveopen').removeClass("active");
+    });
+    $('#loginselect1').click(function() {
+        $('#login').removeClass("active");
+        $('#register').addClass("active");
+        $('#loginactiveopen').removeClass("active");
+        $('#registeractiveopen').addClass("active");
+    });
+
+    function selectMax3(selectmaxheaderval) {
+        let amountConfigArr = {"1":"Rs. 10000","3":"Rs. 50000","5":"Rs. 2lakh","7":"Rs. 5lakh","9":"Rs. 10lakh","11":"Rs. 20lakh","13":"Rs. 30lakh","15":"Rs. 50lakh","17":"Rs. 1 Cr.","19":"Rs. 2 Cr.","21":"Rs. 5 Cr."};
+        let maxAmount = $('#maxAmount');
+        let getSlugAmount = {"1":{"min":"10000","max":"50000"},"3":{"min":"50000","max":"200000"},"5":{"min":"200000","max":"500000"},"7":{"min":"500000","max":"1000000"},"9":{"min":"1000000","max":"2000000"},"11":{"min":"2000000","max":"3000000"},"13":{"min":"3000000","max":"5000000"},"15":{"min":"5000000","max":"10000000"},"17":{"min":"10000000","max":"20000000"},"19":{"min":"20000000","max":"50000000"},"21":{"min":"50000000","max":"100000000"}};
+        maxAmount.html("");
+
+        selectmaxheaderval = parseInt(selectmaxheaderval);
+        $.each(amountConfigArr, function(key, value) {
+            if (key > selectmaxheaderval)
+                $('#maxAmount').append($("<option></option>").attr({
+                    "value": key,
+                    "slug": getSlugAmount[key]['min']
+                }).text(value));
+        });
+
+        if (selectmaxheaderval === 21)
+            maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var mainCategorySelect = document.getElementById('getMainCategoryDataHeader');
+        //console.log(mainCategorySelect);
+        if (mainCategorySelect.value) {
+            getSubCategoryHeader(mainCategorySelect.value);
+        }
+    });
+
+
+    function getSubCategoryHeader(value) {
+        $.ajax({
+            type: 'GET',
+            url: 'https://www.franchiseindia.com/getsubcategory',
+            data: {
+                categoryID: value
+            },
+            success: function(data) {
+               console.log(data);
+                $("#getSubCategoryDataHeader2").html(data);
+            }
+        });
+    }
+
+    function getSubCatCategoryHeader(value) {
+        $.ajax({
+            type: 'GET',
+            url: 'https://www.franchiseindia.com/getsubcatcategory',
+            data: {
+                subcategoryID: value
+            },
+            success: function(data) {
+                $("#getSubCatCategoryDataHeader2").html(data);
+            }
+        });
+    }
+
+    function getcity(value) {
+        $.ajax({
+            type: 'GET',
+            url: 'https://www.franchiseindia.com/getcitylist',
+            data: {
+                state: value
+            },
+            success: function(data) {
+                $("#headercity2").html(data);
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        $('#searchoptnew').click(function() {
+            $('.searchblknew').show(400);
+            $('.searchspace').hide(400);
+        });
+        $('#closegsearch').click(function() {
+            $('.searchspace').show(400);
+            $('.searchblknew').hide(400);
+        });
+        if (screen.width > 1199 && screen.height <= 768)
+            $(".gsc-wrapper").css({
+                "max-height": "340px",
+                "overflow": "auto"
+            });
+        $('#searchopt').click(function() {
+            $('.open').click();
+            $('.searchoption').toggle(400);
+            return false;
+        });
+        $('#searchopt2').click(function() {
+            $('.searchoption').hide(400);
+        });
+        $('.dropdown-toggle').click(function() {
+            $('.searchoption').hide(400);
+        });
+    });
+    function customResetForm() {
+    let form = document.getElementById('invform');
+
+    // Reset the form
+    form.reset();
+
+    // Reset maxAmount select element to its default state
+    let maxAmount = document.getElementById('maxAmount');
+    maxAmount.innerHTML = '<option value="" hidden>Select Max Investment</option>';
+}
+    /*]]>*/
+</script>
