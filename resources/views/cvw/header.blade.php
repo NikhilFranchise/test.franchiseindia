@@ -278,7 +278,7 @@ padding-bottom: 50px;}.hero-desktop {display: none;}.hero-mobile {display: block
 </style>
 </head>
 <body id="dotcom">
-<noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+{{--  <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>  --}}
 
     @php
     $auth = new \Illuminate\Support\Facades\Auth();
