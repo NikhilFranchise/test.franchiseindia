@@ -22,7 +22,7 @@
                     <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment range' }}</div>
                     <div class="card-info-amt">₹{{ $logoDetail['investment_range_new'] }}</div>
                 </div>
-                <a href="{{ $brandUrl }}" target="_blank" class="know-more">Know More</a>
+                {{--  <a href="{{ $brandUrl }}" target="_blank" class="know-more">Know More</a>  --}}
             </div>
         @endforeach
 

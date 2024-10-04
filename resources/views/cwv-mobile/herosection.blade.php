@@ -1,5 +1,5 @@
 @php
-    use Illuminate\support\Str;
+    use Illuminate\Support\Str;
     $catArr = Config('constants.CategoryArr');
     asort($catArr);
     $states = Config('location.stateArr');
@@ -109,16 +109,13 @@
                             </select>
                         </li>
                         <li class="p-0 m-0">
-                            <select name="city"
-                                class="form-control form-control-custom dropdown-toogle-icon"
+                            <select name="city" class="form-control form-control-custom dropdown-toogle-icon"
                                 id="headercity1">
                                 <option value="" hidden="">Select a City</option>
                             </select>
                         </li>
                         <li class="p-0 m-0">
-                            <button type="submit"
-                                class="btn btn-main btn-main-hero"
-                                id="seo-loc-btn-main-hero">
+                            <button type="submit" class="btn btn-main btn-main-hero" id="seo-loc-btn-main-hero">
                                 Search
                             </button>
                         </li>
@@ -143,8 +140,7 @@
                             </select>
                         </li>
                         <li class="p-0 m-0">
-                            <select name="min_cost"
-                                class="form-control form-control-custom dropdown-toogle-icon"
+                            <select name="min_cost" class="form-control form-control-custom dropdown-toogle-icon"
                                 id="minAmount1" onchange="selectMax2(this.value)">
                                 <option value="" hidden=""> Select Min Investment </option>
                                 <option slug="10000" value="1">Rs. 10000</option>

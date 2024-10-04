@@ -19,3 +19,50 @@
 @include('cwv-mobile.newsletter')
 @include('cwv-mobile.aboutus')
 @include('cwv-mobile.footer-mobile')
+@php
+    use Illuminate\Support\Str;
+    $catArr = Config('constants.CategoryArr');
+    asort($catArr);
+    $states = Config('location.stateArr');
+    asort($states);
+    $loginUrl = 'https://www.franchiseindia.com/loginform';
+    $loginName = 'Login';
+    $class = '';
+    $regName = 'Register';
+    $regUrl = '#';
+    $modelWindow = 'data-toggle=modal data-target=#login-pnl';
+    $barndStick = 0;
+    $googleSearchTop = 0;
+    $gcodeurl = 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+    if (request()->segment(1) === 'brands' || (request()->segment(1) === 'hi' && request()->segment(2) === 'brands')) {
+        $barndStick = 1;
+    }
+    $eduUrlSelected = '';
+    $wellUrlSelected = '';
+    $dotUrlSelected = '';
+    $logo = 'logo-black.svg';
+    $menuicon = 'menu-icon.png';
+    $logoClass = 'logo';
+    $mainUrl = '';
+    $webtitleUrl = request()->segment(1);
+    $mangecls = '';
+    if ($webtitleUrl == 'content') {
+        $dotUrlSelected = 'class=dropactive';
+    }
+    if ($webtitleUrl == 'education') {
+        $eduUrlSelected = 'class=dropactive';
+        $logo = 'education-logo-black.svg';
+        $menuicon = 'menu-iconei.png';
+        $logoClass = 'logo wiei';
+        $mainUrl = 'education';
+        $mangecls = 'wiei';
+    }
+    if ($webtitleUrl == 'wellness') {
+        $wellUrlSelected = 'class=dropactive';
+        $logo = 'wellness-logo-black.svg';
+        $menuicon = 'menu-iconwi.png';
+        $logoClass = 'logo wiei';
+        $mainUrl = 'wellness';
+        $mangecls = 'wiei';
+    }
+@endphp
