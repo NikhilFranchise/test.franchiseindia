@@ -1273,45 +1273,6 @@
             box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 5px 0px inset;
         }
     </style>
-</head>
-
-<body>
-
-
-    <header class="header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col">
-                    <div class="d-flex">
-                        <div class="p-2">
-                            <div id="myBtnss" class="menu-bar">
-                                {{--  src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/menu-icon.svg"  --}}
-                                <img src="{{ url('cwv-mobile/images/menu-icon.svg') }}" alt="Menu" width="25"
-                                    height="14">
-                            </div>
-                        </div>
-                        <div class="p-2 logo"> <a href="https://www.franchiseindia.com"><img
-                                    src="{{ url('cwv-mobile/images/logo.svg') }}"
-                                    alt="Franchise India - Business Opportunities, Franchise Opportunities"
-                                    title="Franchise India - Business Opportunities, Franchise Opportunities"
-                                    width="200" height="32"></a>
-                        </div>
-
-                        <div class="ml-auto d-flex p15">
-                            <span id="myBtns">
-                                <img src="{{ url('cwv-mobile/images/Search.svg') }}" alt="Home Search" width="22"
-                                    height="24">
-                            </span>
-                            <span id="myBtn">
-                                <img src="{{ url('cwv-mobile/images/Login.svg') }}" alt="Login" width="21"
-                                    height="21">
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
     <link rel="stylesheet"
         href="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2">
     <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/popper/js/popper.min.js"></script>
@@ -1389,3 +1350,42 @@
         <img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1" />
     </noscript>
+</head>
+
+<body>
+    <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex">
+                        <div class="p-2">
+                            <div id="myBtnss" class="menu-bar">
+                                {{--  src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/menu-icon.svg"  --}}
+                                <img src="{{ url('cwv-mobile/images/menu-icon.svg') }}" alt="Menu" width="25"
+                                    height="14">
+                            </div>
+                        </div>
+                        <div class="p-2 logo"> <a href="https://www.franchiseindia.com"><img
+                                    src="{{ url('cwv-mobile/images/logo.svg') }}"
+                                    alt="Franchise India - Business Opportunities, Franchise Opportunities"
+                                    title="Franchise India - Business Opportunities, Franchise Opportunities"
+                                    width="200" height="32"></a>
+                        </div>
+
+                        <div class="ml-auto d-flex p15">
+                            <span id="myBtns">
+                                <img src="{{ url('cwv-mobile/images/Search.svg') }}" alt="Home Search" width="22"
+                                    height="24">
+                            </span>
+                            <span id="myBtn">
+                                <img src="{{ url('cwv-mobile/images/Login.svg') }}" alt="Login" width="21"
+                                    height="21">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+

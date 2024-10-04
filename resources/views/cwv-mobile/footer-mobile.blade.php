@@ -99,7 +99,7 @@
         text-decoration: none;
         cursor: pointer;
     }
-    .radio{visibility: hidden;}
+    .radio{visibility: hidden;} a{color: black}
 </style>
 
 
