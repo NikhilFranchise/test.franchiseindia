@@ -9,9 +9,41 @@
     @section('seoKeywords', $seoKeywords)
 @endif
 
-<!--@php
-    $hindiUrl = str_replace('/location/', '/hi/location/', url()->current());
-    $engUrl   = url()->current();
+@php
+    $c_Url = url()->current();
+    $queryParams = request()->query();
+    $queryString = '';
+    // dd($queryParams);
+    // Parameters to exclude
+    // $excludedParams = [ 'catTab', 'invTab'];
+
+    if (!empty($queryParams)) {
+        $queryString = '?';
+        foreach ($queryParams as $key => $value) {
+              // Skip if the parameter is in the excluded list
+            //   if (in_array($key, $excludedParams)) {
+            //     continue;
+            // }
+            if (is_null($value)) {
+                $queryString .= $key . '&';
+            } else {
+                $queryString .= $key . '=' . urlencode($value) . '&';
+            }
+             // Remove the trailing '&' and the '?' if no valid query parameters are left
+        
+        }
+        $queryString = rtrim($queryString, '&');
+        if ($queryString === '?') {
+            $queryString = '';
+        }
+        
+        $queryString = rtrim($queryString, '&');
+    }
+
+    $hindiUrl = str_replace('/location/', '/hi/location/', $c_Url . $queryString );
+    $engUrl   =  $c_Url . $queryString ;
+   
+    // dd($engUrl);
 @endphp
 
 @section('hindiUrl', $hindiUrl)
@@ -21,7 +53,7 @@
     {{-- <link href="{{$hindiUrl}}" rel="amphtml"> --}}
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
-@endsection-->
+@endsection
 
 @section('content')
 
@@ -429,14 +461,16 @@
                             if(!empty($searchq))
                                 $params['searchq'] = $searchq;
                         @endphp
-                        <div class="row">
+                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                @if(count($brandResults) == 0)
+                                @if (count($brandResults) == 0)
                                     <div class="noresults">No result found</div>
                                 @endif
-                                {!! $brandResults
+                                {{-- {!! $brandResults
                                 ->appends($params)
-                                ->render() !!}
+                                ->render() !!} --}}
+                                {!! $brandResults->appends($params)->links('vendor.pagination.custom') !!}
+
                             </div>
                         </div>
                     </div>

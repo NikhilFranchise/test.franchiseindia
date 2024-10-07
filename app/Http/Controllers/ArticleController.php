@@ -268,13 +268,15 @@ class ArticleController extends Controller
         $contentIdParam      = $contentArr[1];
         
         if( !is_numeric($contentIdParam))
-            return redirect('/'.$redirectionSite);
+            return redirect('/'.$redirectionSite); 
 
         //fetch data with selected contentId
         $articles             = ContentList::query()->find($contentIdParam);
 
-        if ( count($articles) == 0 || $articles->status != 1)
-            return redirect('/'.$redirectionSite, 301);
+        // if ( count($articles) == 0 || $articles->status != 1)
+        //     return redirect('/'.$redirectionSite, 301);
+
+        
 
         $artSite              = config('constants.articleArr.' . $articles['site_type']);
         $redirectUrl = 'http://opportunityindia.franchiseindia.com/article/'. $articles['slug'].'-'.$contentIdParam;

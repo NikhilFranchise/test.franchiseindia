@@ -4,6 +4,7 @@
 @if(strpos(collect(request()->segments())->last(), 'range-') !== false)
 
 	@php
+    // $seoTitle = 'test';
 	$mainTitle = ($seoTitle)? $seoTitle : '';
 	$lastSegment = str_replace("range-","Under Range ",collect(request()->segments())->last());
 	$title1 = $lastSegment.' - Franchise India';

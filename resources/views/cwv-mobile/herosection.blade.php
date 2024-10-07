@@ -1,5 +1,5 @@
 @php
-    use Illuminate\support\Str;
+    use Illuminate\Support\Str;
     $catArr = Config('constants.CategoryArr');
     asort($catArr);
     $states = Config('location.stateArr');
@@ -11,17 +11,30 @@
                 src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/direct-english.webp"
                 alt="direct english" width="237" height="60"></a>
     </div>
-    <h1>10000+ Business Options</h1>
-    <h2>World&apos;s highest visited franchise website network</h2>
+    @if (request()->segment(2) == 'hi')
+        <h1><span>20 हजार से अधिक </span> कारोबारी विक्लपों में अपने लिए तलाश करें</h1>
+        <h2>दुनियाभर में सबसे अधिक तलाश किया जाने वाला फ्रैंचाइज वेबसाइट नेटवर्क।</h2>
+    @else
+        <h1>10000+ Business Options</h1>
+        <h2>World&apos;s highest visited franchise website network</h2>
+    @endif
     <div class="warpper">
         <input class="radio" id="one" name="group" type="radio" checked>
         <input class="radio" id="two" name="group" type="radio">
         <input class="radio" id="three" name="group" type="radio">
-        <div class="tabs">
-            <label class="tab" id="one-tab" for="one">Categories</label>
-            <label class="tab" id="two-tab" for="two">Location</label>
-            <label class="tab" id="three-tab" for="three">Investment</label>
-        </div>
+        @if (request()->segment(2) == 'hi')
+            <div class="tabs">
+                <label class="tab" id="one-tab" for="one">कैटेगरी</label>
+                <label class="tab" id="two-tab" for="two">लोकेशन</label>
+                <label class="tab" id="three-tab" for="three">निवेश</label>
+            </div>
+        @else
+            <div class="tabs">
+                <label class="tab" id="one-tab" for="one">Categories</label>
+                <label class="tab" id="two-tab" for="two">Location</label>
+                <label class="tab" id="three-tab" for="three">Investment</label>
+            </div>
+        @endif
         <div class="panels">
             <div class="panel" id="one-panel">
                 <form class="form-horizontal" method="get" action="https://www.franchiseindia.com/category/searchby"
@@ -109,20 +122,13 @@
                             </select>
                         </li>
                         <li class="p-0 m-0">
-                            <select name="city"
-                                class="form-control
-                                                   form-control-custom
-                                                   dropdown-toogle-icon"
+                            <select name="city" class="form-control form-control-custom dropdown-toogle-icon"
                                 id="headercity1">
                                 <option value="" hidden="">Select a City</option>
                             </select>
                         </li>
                         <li class="p-0 m-0">
-                            <button type="submit"
-                                class="btn
-                                                   btn-main
-                                                   btn-main-hero"
-                                id="seo-loc-btn-main-hero">
+                            <button type="submit" class="btn btn-main btn-main-hero" id="seo-loc-btn-main-hero">
                                 Search
                             </button>
                         </li>
@@ -147,10 +153,7 @@
                             </select>
                         </li>
                         <li class="p-0 m-0">
-                            <select name="min_cost"
-                                class="form-control
-                                                   form-control-custom
-                                                   dropdown-toogle-icon"
+                            <select name="min_cost" class="form-control form-control-custom dropdown-toogle-icon"
                                 id="minAmount1" onchange="selectMax2(this.value)">
                                 <option value="" hidden=""> Select Min Investment </option>
                                 <option slug="10000" value="1">Rs. 10000</option>

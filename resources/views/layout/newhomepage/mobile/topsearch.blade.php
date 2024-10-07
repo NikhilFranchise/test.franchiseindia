@@ -394,19 +394,19 @@
     });
     {{--  //code end by gp  --}}
 
-    function getSubCategoryHeader(value) {
-        $.ajax({
-            type: 'GET',
-            url: '{{ url('getsubcategory') }}',
-            data: {
-                categoryID: value
-            },
-            success: function(data) {
-               console.log(data);
-                $("#getSubCategoryDataHeader1").html(data);
-            }
-        });
-    }
+function getSubCategoryHeader(value) {
+    $.ajax({
+        type: 'GET',
+        url: '{{ url('getsubcategory') }}',
+        data: {
+            categoryID: value
+        },
+        success: function(data) {
+            console.log(data);
+            $("#getSubCategoryDataHeader2").html(data);
+        }
+    });
+}
 
     function getSubCatCategoryHeader(value) {
         $.ajax({

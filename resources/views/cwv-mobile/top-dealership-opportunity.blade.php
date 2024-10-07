@@ -1,5 +1,5 @@
 <section class="top-dealership-opportunities">
-    <h2 class="brands-head">{{ Request::segment(1) == 'hi' ? 'शीर्ष डीलरशिप अवसर' : 'Top Dealership Opportunity' }}</h2>
+    <h2 class="brands-head">{{ Request::segment(2) == 'hi' ? 'शीर्ष डीलरशिप अवसर' : 'Top Dealership Opportunity' }}</h2>
     <div class="card-wrap">
         <div class="leading-card">
             <div class="brand-ins">
@@ -16,19 +16,19 @@
                 </h2>
             </div>
             <div class="leading-card-investment">
-                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
+                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
                 <div class="card-info-amt"> ₹ 20 Lac - 25 Lac</div>
             </div>
             <div class="leading-card-area">
-                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}</div>
+                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}</div>
                 <div class="card-info-amt">1500 - 4300 Sq. ft</div>
             </div>
             <div class="leading-card-outlets">
-                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'स्थान' : 'Location' }}</div>
+                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'स्थान' : 'Location' }}</div>
                 <div class="card-info-amt">Delhi, Puducherry +13 More</div>
             </div>
             <a href="https://www.dealerindia.com/manufacturer/supergas-29320320" target="_blank"
-                class="know-more">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
 
@@ -46,19 +46,19 @@
                         target="_blank">NEK INSAN </a></h2>
             </div>
             <div class="leading-card-investment">
-                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
+                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
                 <div class="card-info-amt">₹ 30 K - 50 K</div>
             </div>
             <div class="leading-card-area">
-                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}</div>
+                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}</div>
                 <div class="card-info-amt"> 0 - 0 Sq. ft</div>
             </div>
             <div class="leading-card-outlets">
-                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'स्थान' : 'Location' }}</div>
+                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'स्थान' : 'Location' }}</div>
                 <div class="card-info-amt">Delhi, Uttar Pradesh +1 More</div>
             </div>
             <a href="https://www.dealerindia.com/manufacturer/jiyo-india-sales-and-marketing-pvt-ltd-29320983"
-                target="_blank" class="know-more">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                target="_blank" class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
 
@@ -76,21 +76,21 @@
                 </h2>
             </div>
             <div class="leading-card-investment">
-                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
+                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
                 <div class="card-info-amt">₹ 75 K - 2 Lac</div>
             </div>
             <div class="leading-card-area">
-                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}
+                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}
                 </div>
                 <div class="card-info-amt">000 - 000 Sq. ft</div>
             </div>
             <div class="leading-card-outlets">
-                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'स्थान' : 'Location' }}</div>
+                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'स्थान' : 'Location' }}</div>
                 <div class="card-info-amt">Assam, Manipur +35 More</div>
             </div>
 
             <a href="https://www.dealerindia.com/manufacturer/rocketpay-29321177" target="_blank"
-                class="know-more">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
         <div class="leading-card">
             <div class="brand-ins"><a href="https://www.dealerindia.com/manufacturer/bnc-motors-pvt-ltd-29320924"
@@ -105,21 +105,21 @@
                         Motors</a></h2>
             </div>
             <div class="leading-card-investment">
-                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
+                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
                 <div class="card-info-amt">₹ 20 Lac - 30 Lac</div>
             </div>
             <div class="leading-card-area">
-                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}
+                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}
                 </div>
                 <div class="card-info-amt">500 - 1000 Sq. ft</div>
             </div>
             <div class="leading-card-outlets">
-                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'स्थान' : 'Location' }}</div>
+                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'स्थान' : 'Location' }}</div>
                 <div class="card-info-amt">Karnataka, Kerala +7 More</div>
             </div>
 
             <a href="https://www.dealerindia.com/manufacturer/bnc-motors-pvt-ltd-29320924" target="_blank"
-                class="know-more">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
 

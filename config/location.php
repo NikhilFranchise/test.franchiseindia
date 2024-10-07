@@ -392,7 +392,7 @@ return [
         "1" => "Andhra Pradesh", 
         "2" => "Arunachal Pradesh", 
         "3" => "Assam", 
-        "4" => "Bihar", 
+        "4" => "Bihar",   
         "5" => "Chandigarh", 
         "6" => "Chhattisgarh", 
         "7" => "Daman and Diu", 

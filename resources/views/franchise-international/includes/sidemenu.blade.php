@@ -44,17 +44,16 @@
             <img src="{{url('franchiseinternational/images/cat-12.png')}}" alt="Sports, Fitness &amp; Entertainment"> Sports, Fitness &amp; Entertainment</a>
         </li> 
     </ul>
-    <div class="sideline"></div>
+    <div class="sideline"></div> 
     <ul class="side-list">
         <li><a href="/advertise-with-us-payment/">Advertise With us</a></li>
         {{-- <li><a href="/emagazine/" target="_blank">Subscribe</a></li>  --}}
         <li><a href="https://master.franchiseindia.com/emagazine/" target="_blank">Subscribe</a></li> 
-
         <li><a href="https://www.opportunityindia.com">News</a></li>
     </ul>
     <div class="sideline"></div>
     <ul class="side-list">
-        <li><a href="/investor/create">Investor Signup</a></li>
+        <li><a href="/investor/create">Investor Signup</a></li> 
         <li><a href="/franchisor/registration/step/1">Franchisor Signup</a></li>
     </ul>
     <div class="sideline"></div>

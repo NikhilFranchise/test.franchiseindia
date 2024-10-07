@@ -1022,4 +1022,129 @@ class CommonController extends Controller
         \Log::info('Brand visit counts updated successfully for date: ' . $formattedDate);
     }
 
+
+    public function url(){
+        $m_cat = Config('constants.CategoryArr');
+        $loc = Config('location.stateArr');
+        
+        $baseUrl = Config('constants.MainDomain') . '/business-opportunities/';
+        
+        $urls = []; // Array to hold the generated URLs
+        
+        foreach ($m_cat as $key => $category) {
+            foreach ($loc as $index => $location) {
+                // Replace spaces and commas with hyphens and remove multiple hyphens
+                $locationSlug = preg_replace('/[ ,]+/', '-', $location);
+                $categorySlug = preg_replace('/[ ,]+/', '-', $category);
+                
+                // Trim hyphens from the start and end
+                $locationSlug = trim($locationSlug, '-');
+                $categorySlug = trim($categorySlug, '-');
+        
+                // Use the index directly as the location ID
+                $locationId = $index;
+        
+                // Create the URL by appending the modified category, location, key, and location ID
+                $url = $baseUrl . urlencode($categorySlug) . '-in-' . urlencode($locationSlug) . '/mc-' . $key . '/loc-' .$locationId;
+                $urls[] = $url; // Add the URL to the array
+            }
+        }
+        
+       
+        dd($urls);
+        // $this->saveUrlData($urls);
+        
+        
+
+    }
+
+    public function subcaturl(){
+        $subCategoryArr = Config('constants.subCategoryArr');
+        $loc = Config('location.stateArr');
+
+            $baseUrl = Config('constants.MainDomain') . '/business-opportunities/';
+            $urls = []; // Array to hold the generated URLs
+
+                foreach ($subCategoryArr as $mainCategoryKey => $subCategories) {
+                    foreach ($subCategories as $subCategoryKey => $subCategory) {
+                    // Replace spaces and commas with hyphens and remove multiple hyphens
+                    $subCategorySlug = preg_replace('/[ ,]+/', '-', $subCategory);
+                    $mainCategorySlug = preg_replace('/[ ,]+/', '-', $mainCategoryKey); // Use main category key
+
+                    // Trim hyphens from the start and end
+                    $subCategorySlug = trim($subCategorySlug, '-');
+                    $mainCategorySlug = trim($mainCategorySlug, '-');
+
+                        foreach ($loc as $index => $location) {
+                        // Replace spaces and commas with hyphens for location
+                        $locationSlug = preg_replace('/[ ,]+/', '-', $location);
+                        $locationSlug = trim($locationSlug, '-');
+
+                        // Create the URL by appending the modified subcategory, location, and keys
+                        $url = $baseUrl  . urlencode($subCategorySlug) . '-in-' . urlencode($locationSlug) . '/sc-' . $subCategoryKey . '/loc-' . $index;
+                        $urls[] = $url; // Add the URL to the array
+                        }
+                    }
+                }
+
+            // To check the generated URLs
+            dd($urls);
+        
+        
+
+    }
+
+    public function subsubcaturl(){
+        $subCategoryArr = Config('constants.subSubCategoryArr');
+        $loc = Config('location.stateArr');
+
+            $baseUrl = Config('constants.MainDomain') . '/business-opportunities/';
+            $urls = []; // Array to hold the generated URLs
+
+                foreach ($subCategoryArr as $mainCategoryKey => $subCategories) {
+                    foreach ($subCategories as $subCategoryKey => $subCategory) {
+                    // Replace spaces and commas with hyphens and remove multiple hyphens
+                    $subCategorySlug = preg_replace('/[ ,]+/', '-', $subCategory);
+                    $mainCategorySlug = preg_replace('/[ ,]+/', '-', $mainCategoryKey); // Use main category key
+
+                    // Trim hyphens from the start and end
+                    $subCategorySlug = trim($subCategorySlug, '-');
+                    $mainCategorySlug = trim($mainCategorySlug, '-');
+
+                        foreach ($loc as $index => $location) {
+                        // Replace spaces and commas with hyphens for location
+                        $locationSlug = preg_replace('/[ ,]+/', '-', $location);
+                        $locationSlug = trim($locationSlug, '-');
+
+                        // Create the URL by appending the modified subcategory, location, and keys
+                        $url = $baseUrl  . urlencode($subCategorySlug) . '-in-' . urlencode($locationSlug) . '/ssc-' . $subCategoryKey . '/loc-' . $index;
+                        $urls[] = $url; // Add the URL to the array
+                        }
+                    }
+                }
+
+            // To check the generated URLs
+            dd($urls);
+        
+        
+
+    }
+
+    function saveUrlData($urls) {
+        // Example: Iterate over each URL and perform your saving logic
+        foreach ($urls as $url) {
+            // Here you can use file_get_contents or cURL to fetch data from the URL
+            $response = file_get_contents($url); // Fetch data from the URL
+            
+            // Process the response as needed
+            // For example, decode JSON data if that's what you expect
+            // $data = json_decode($response, true);
+            
+            // Here you can save the data to your database or perform other actions
+            // Example: saveToDatabase($data);
+            
+            // Log or echo the response for debugging
+            // echo "Data saved for URL: $url\n";
+        }
+    }
 }

@@ -138,7 +138,6 @@ Route::get('pagenotfound', function () {
 Route::get('/index1', function(){
     return view('index');
    });
-Route::get('/index', [NewHomePageController::class, 'cwvMobile']);
 Route::get('/hi', [NewHomePageController::class, 'hindiHomePage']); //checck
 Route::get('about', [StaticPageController::class, 'aboutus']);
 Route::get('contact', [ContactUsController::class, 'contactUsForm']);
@@ -513,7 +512,7 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
-    Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
+     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListingnormalization']);
     Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('/lowcost', [BusinessListingController::class, 'searchBusinessListing'])
@@ -1065,6 +1064,13 @@ Route::post('/submit-form1', [AdviceController::class, 'freeadviceHome_popup'])-
 
 
 // Route::get('/cvwhome/hi',[NewHomePageController::class,'cvwhindiHomePage']);
+Route::get('/index/hi',[NewHomePageController::class,'cwvMobilehindiHomePage']);
 Route::get('/cvwhome',[NewHomePageController::class,'cvwhomeNew']);
+Route::get('/index', [NewHomePageController::class, 'cwvMobile']);
+
+
+Route::get('/caturl',[CommonController::class,'url']);
+Route::get('/subcaturl',[CommonController::class,'subcaturl']);
+Route::get('/subsubcaturl',[CommonController::class,'subsubcaturl']);
 
 
