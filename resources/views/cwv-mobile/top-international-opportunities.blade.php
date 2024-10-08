@@ -47,7 +47,7 @@
                 <div class="leading-card">
                     <div class="brand-ins">
                         <a href="{{ $top['url'] }}" target="_blank"><img src="{{ $top['image'] }}"
-                                alt="{{ $top['title'] }}" width="192" height="94" loading="lazy"></a>
+                                alt="{{ $top['title'] }}" width="161" height="66" loading="lazy"></a>
                     </div>
                     <div class="leading-card-brand-category">
                         <p>

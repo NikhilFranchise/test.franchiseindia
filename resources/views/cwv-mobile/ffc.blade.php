@@ -12,7 +12,7 @@
             @endphp
             <div class="leading-card">
                 <div class="brand-ins">
-                    <a href="{{ $brandUrl }}" target="_blank"><img loading="lazy" src="{{ $logoDetail['brand_img'] }}" alt="{{ $logoDetail['brand_alt'] }}" width="110" height="54" loading="lazy">
+                    <a href="{{ $brandUrl }}" target="_blank"><img loading="lazy" src="{{ $logoDetail['brand_img'] }}" alt="{{ $logoDetail['brand_alt'] }}" width="110" height="50" loading="lazy">
                 </div>
 
                 <div class="leading-card-brand-title">

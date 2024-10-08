@@ -9,7 +9,7 @@
                     target="_blank">
 
                     <img src="https://www.franchiseindia.com/images/bexhome/574844992.webp"
-                        alt="seeking-investment-for-adventure-and-tourism-market-place" width="219" height="123"
+                        alt="seeking-investment-for-adventure-and-tourism-market-place" width="203" height="114"
                         loading="lazy">
                     </picture>
                 </a></div>
@@ -46,8 +46,7 @@
             <div class="brands-inner"><a
                     href="https://www.businessex.com/startup/seeking-investor-for-high-class-sports-and-education-training-center/b0chev"
                     target="_blank"><img src="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp"
-                        alt="seeking-investor-for-high-class-sports-and-education-training-center" width="219"
-                        height="123" loading="lazy"></a></div>
+                        alt="seeking-investor-for-high-class-sports-and-education-training-center"  width="203" height="114" loading="lazy"></a></div>
 
             <div class="leading-card-brand-category"><a
                     href="https://www.businessex.com/startupslisting/education-startups-in-India/3/s0/st0"
@@ -83,8 +82,7 @@
             <div class="brands-inner"><a
                     href="https://www.businessex.com/startup/seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system/f3asef"
                     target="_blank"><img src="https://www.franchiseindia.com/images/bexhome/928479563.webp"
-                        alt="seeking-investor-for-high-class-sports-and-education-training-center" width="219"
-                        height="123" loading="lazy"></div>
+                        alt="seeking-investor-for-high-class-sports-and-education-training-center"  width="203" height="114" loading="lazy"></div>
 
             <div class="leading-card-brand-category"><a
                     href="https://www.businessex.com/startupslisting/energy-environment-startups-in-India/12/s0/st0"
@@ -122,7 +120,7 @@
                     target="_blank"><img
                         src="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp"
                         alt="seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system"
-                        width="219" height="123" loading="lazy"></div>
+                        width="203" height="114" loading="lazy"></div>
 
             <div class="leading-card-brand-category"><a
                     href="https://www.businessex.com/startupslisting/fmcg-startups-in-India/2/s0/st0"

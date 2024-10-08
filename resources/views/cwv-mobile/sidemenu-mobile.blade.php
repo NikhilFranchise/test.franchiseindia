@@ -26,8 +26,8 @@
                     <div class="p-2 language-main-bx">
                         <div class="input-group input-group-custom">
                             <span class="input-group-addon input-group-prepend-custom" id="basic-addon1">
-                                <img src="https://www.franchiseindia.com/newhomepage/assets/img/language-icon.svg"
-                                    alt="">
+ <img src="https://www.franchiseindia.com/newhomepage/assets/img/language-icon.svg"
+                                    alt="" width="19" height="19">
                             </span>
                             <div class="form-group form-group-sm">
                                 <select class="form-control form-control-custom-main" aria-label="Select Language"

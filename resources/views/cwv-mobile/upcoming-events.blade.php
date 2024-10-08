@@ -4,40 +4,57 @@
     <div class="card-wrap">
         <div class="leading-card">
             <div class="brand-ins">
-                <a href="https://www.franchiseindia.net/fro/ahmedabad/" target="_blank">
-                    <img loading="lazy" alt="FROEXPO Gujarat" src="{{ url('cvw/event-videos/fro-gujarat.webp') }}"
-                        width="345" height="208"></a>
+                <a href="https://www.franchiseindia.net/fro-bos/visakhapatnam/" target="_blank">
+                    <img loading="lazy" alt="Franchise Expo Vishakhapatnam"
+                    src="https://www.franchiseindia.com/images/franchise-expo-vishakhapatnam.webp"
+                        width="161" height="97"></a>
             </div>
-            <h2>FROEXPO Ahmedabad</h2>
-            <p>21-22 September 2024, Mahatma Mandir Convention...</p>
-            <a href="https://www.franchiseindia.net/fro/ahmedabad/" target="_blank" class="know-more">Registration</a>
-            <div class="hotline">Hotline:<span>+91 9311254088</span></div>
+            <h2>Franchise Expo Vishakhapatnam</h2>
+            <p>19 October 2024, Hotel Green Park, Visakhapatnam</p>
+            <a href="https://www.franchiseindia.net/fro-bos/visakhapatnam/" target="_blank" class="know-more">Registration</a>
+            <div class="hotline">Hotline:<span>+91 8800638077</span></div>
 
         </div>
 
         <div class="leading-card">
             <div class="brand-ins">
-                <a href="https://www.restaurantindia.in/congress/" target="_blank">
-                    <img loading="lazy" alt="Indian Restaurant Congress & Awards 2024"
-                    src="{{url('cvw/event-videos/restaurant.webp')}}" width="345" height="208"></a>
+                <a href="https://www.franchiseindia.com/expo/mumbai/" target="_blank">
+                    <img loading="lazy" alt="Franchise India 2024 Mumbai"
+                    src="https://www.franchiseindia.com/images/franchise-india.webp" width="161" height="97"></a>
             </div>
-            <h2>Indian Restaurant Congress & Awards 2024</h2>
-            <p>8-9 October 2024, YASHOBHOOMI, (IICC), New Delhi</p>
-            <a href="https://www.restaurantindia.in/congress/" target="_blank" class="know-more">Registration</a>
-            <div class="hotline">Hotline: <span>+91 9717683838</span></div>
+            <h2>Franchise India 2024 Mumbai</h2>
+            <p>29-30 November 2024, Jio World Convention Centre</p>
+            <a href="https://www.franchiseindia.com/expo/mumbai/" target="_blank" class="know-more">Registration</a>
+            <div class="hotline">Hotline: <span>+91 9311148342</span></div>
         </div>
 
 
         <div class="leading-card">
             <div class="brand-ins">
-                <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/fro-gujarat.webp"
-                    alt="FRO Gujarat" width="345" height="208" loading="lazy">
+                <a href="https://www.irec.asia/mumbai/" target="_blank">
+                    <img loading="lazy" alt="IReC 2024"
+                    src="https://www.franchiseindia.com/images/irec.webp" width="161" height="97"></a>
             </div>
-            <h2>Thailand Franchise &amp; Distribution Show</h2>
-            <p>4 October 2024</p>
-            <a href="https://www.franchiseindia.com/brands/seeds-pre-school.85746" class="know-more">Registration</a>
+            <h2>IReC 2024</h2>
+            <p>29-30 November 2024, Jio World Convention Centre</p>
+            <a href="https://www.irec.asia/mumbai/" target="_blank" class="know-more">Registration</a>
+            <div class="hotline">Hotline: <span>+91 93104387833</span></div>
+        </div>
+
+        <div class="leading-card">
+            <div class="brand-ins">
+                <a>
+                    <img loading="lazy" alt="Saudi Franchise Expo"
+                    src="https://www.franchiseindia.com/images/sfe.webp" width="161" height="97"></a>
+            </div>
+            <h2>Saudi Franchise Expo</h2>
+            <p>27-29 January 2025, RIEC, Saudi Arabia</p>
+            <a class="know-more">Registration</a>
             <div class="hotline">Hotline: <span>+91 9717683838</span></div>
         </div>
+
+
+
 
     </div>
 </section>

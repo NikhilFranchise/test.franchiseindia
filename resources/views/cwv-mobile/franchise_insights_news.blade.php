@@ -11,7 +11,7 @@
                 target="_blank">
                 <img loading="lazy"
                     src="{{ \App\Http\Controllers\NewHomePageController::getImageUrl($articles['article'][0]['image_path']) }}"
-                    alt="{{ $articles['article'][0]['title'] }}" width="295" height="165" loading="lazy"></a>
+                    alt="{{ $articles['article'][0]['title'] }}" width="295" height="166" loading="lazy"></a>
 
         </div>
         <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][0]['title'], $articles['article'][0]['id']) }}"
@@ -151,7 +151,7 @@
             <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][5]['title'], $articles['article'][5]['id']) }}"
                 aria-label="Read more about Musashi Seimitsu and Log9 Materials" target="_blank">
                 <img src="{{ \App\Http\Controllers\NewHomePageController::getImageUrl($articles['article'][5]['image_path']) }}"
-                    alt="{{ $articles['article'][5]['title'] }}" width="295" height="165" loading="lazy"></a>
+                    alt="{{ $articles['article'][5]['title'] }}" width="295" height="166" loading="lazy"></a>
         </div>
         <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][5]['title'], $articles['article'][5]['id']) }}"
             target="_blank" aria-label="Read more about Musashi Seimitsu and Log9 Materials">

@@ -5,8 +5,9 @@
         @foreach ($brandslft->shuffle() as $logoDetail)
             <div class="leading-card">
                 <div class="brand-ins"><a href="{{ $logoDetail['brand_link'] }}" target="_blank">
-                        <img src="{{ $logoDetail['brand_img'] }}" alt="{{ $logoDetail['brand_heading'] }}" width="308"
-                            height="150"></a>
+                        <img src="{{ $logoDetail['brand_img'] }}" alt="{{ $logoDetail['brand_heading'] }}"
+                        width="161"
+                            height="79"></a>
                 </div>
                 <div class="leading-card-brand-category">
 
@@ -22,7 +23,6 @@
                     </p>
                 </div>
                 <div class="leading-card-brand-title">
-                    {{--  <h2>Westside</h2>  --}}
                     <h2><a href="{{ $logoDetail['brand_link'] }}" target="_blank">{{ $logoDetail['brand_heading'] }}</a>
                     </h2>
                 </div>
@@ -40,7 +40,6 @@
                         {{ Request::segment(2) == 'hi' ? 'फ्रेंचाइज आउटलेट्स' : 'Franchise Outlets' }}</div>
                     <div class="card-info-amt">{{ $logoDetail['franchise_outlets'] }}</div>
                 </div>
-
                 <a href="{{ $logoDetail['brand_link'] }}" target="_blank"
                     class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
             </div>
