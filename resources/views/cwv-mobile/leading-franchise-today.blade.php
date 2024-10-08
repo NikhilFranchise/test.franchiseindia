@@ -6,8 +6,7 @@
             <div class="leading-card">
                 <div class="brand-ins"><a href="{{ $logoDetail['brand_link'] }}" target="_blank">
                         <img src="{{ $logoDetail['brand_img'] }}" alt="{{ $logoDetail['brand_heading'] }}"
-                        width="161"
-                            height="79"></a>
+                        width="161" height="79" loading="lazy"></a>
                 </div>
                 <div class="leading-card-brand-category">
 

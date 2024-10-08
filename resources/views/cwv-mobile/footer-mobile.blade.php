@@ -1016,7 +1016,7 @@
 
 
 <script async src="{{ url('cwv-mobile/js/jquery-3.1.1.min.js') }}"></script>
-<script async type="text/javascript" src="{{ url('cwv-mobile/js/custom.js') }}"></script>
+<script async type="text/javascript" src="{{ url('cwv-mobile/js/custom_mob.js') }}"></script>
 {{--  <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/popper/js/popper.min.js"></script>  --}}
 <script async src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js">
 <!-- Bootstrap JS -->
