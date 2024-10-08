@@ -645,7 +645,6 @@
 @endif
 {{-- login popup modal end here  --}}
 {{--  dashobards of mobile frnachisor or investor start here  --}}
-@mobile
     @if (request()->segment(2) == 'hi')
         @if (Auth::check())
             @if (Auth::user()->profile_type == config('constants.ProfileType.Investor'))
@@ -1013,18 +1012,24 @@
             @endif
         @endif
     @endif
-@endmobile
 {{--  dashobards of mobile frnachisor or investor  end here --}}
 
 
-<script src="{{ url('cwv-mobile/js/jquery-3.1.1.min.js') }}"></script>
+<script async src="{{ url('cwv-mobile/js/jquery-3.1.1.min.js') }}"></script>
+<script async type="text/javascript" src="{{ url('cwv-mobile/js/custom.js') }}"></script>
+{{--  <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/popper/js/popper.min.js"></script>  --}}
+<script async src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js">
 <!-- Bootstrap JS -->
-<script src="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script
-    src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js">
+<script async src="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 </script>
-<script type="text/javascript" src="{{ url('cwv-mobile/js/custom.js') }}"></script>
-<script>
+<!-- Bootstrap JS -->
+
+<!-- Font Awesome JS -->
+{{--  <script defer src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/solid.js"></script>
+<script defer src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/fontawesome.js"></script>  --}}
+
+<script async>
+
     function setCookie() {
         document.cookie = "accept_cookie=ok";
         $('#cookie').hide();
@@ -1485,6 +1490,17 @@
 
     function customResetForm() {
         let form = document.getElementById('invform');
+
+        // Reset the form
+        form.reset();
+
+        // Reset maxAmount select element to its default state
+        let maxAmount = document.getElementById('maxAmount');
+        maxAmount.innerHTML = '<option value="" hidden>Select Max Investment</option>';
+    }
+
+    function customResetForm() {
+        let form = document.getElementById('invform_desktop');
 
         // Reset the form
         form.reset();

@@ -11,24 +11,11 @@
         content="Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.">
     <meta name="keywords" itemprop="keywords"
         content="franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india">
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> -->
-
     <link rel="stylesheet" href="{{ url('cwv-mobile/css/style.css') }}">
-
     <link rel="stylesheet"
         href="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2">
     <link rel="stylesheet"
         href="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2">
-    <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/popper/js/popper.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script
-        src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js">
-    </script>
-    <!-- Font Awesome JS -->
-    <script defer src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/solid.js"></script>
-    <script defer src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/fontawesome.js"></script>
-
     <!-- Google Tag Manager -->
     <script async>
         (function(w, d, s, l, i) {
@@ -122,8 +109,9 @@
                                 <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/Search.svg"
                                     alt="Home Search" width="22" height="24"></a>
                             @if (Auth::check())
-                            <span class="login-text-right text-right" id="sidebarCollapse-main-login">
-                                <img src="{{url('newhomepage/assets/img/Login.svg')}}" alt="Login" id="leftsidebar-open">
+                                <span class="login-text-right text-right" id="sidebarCollapse-main-login">
+                                    <img src="{{ url('newhomepage/assets/img/Login.svg') }}" alt="Login"
+                                        id="leftsidebar-open">
                                 </span>
                             @else
                                 <span data-toggle="modal" data-target="#login-pnl" id="loginselect">
