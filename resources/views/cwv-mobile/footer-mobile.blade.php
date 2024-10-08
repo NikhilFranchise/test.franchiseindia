@@ -1015,20 +1015,19 @@
 {{--  dashobards of mobile frnachisor or investor  end here --}}
 
 
-<script async src="{{ url('cwv-mobile/js/jquery-3.1.1.min.js') }}"></script>
-<script async type="text/javascript" src="{{ url('cwv-mobile/js/custom.js') }}"></script>
-{{--  <script src="https://www.franchiseindia.com/newhomepage/assets/vendor/popper/js/popper.min.js"></script>  --}}
-<script async src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js">
-<!-- Bootstrap JS -->
-<script async src="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-</script>
-<!-- Bootstrap JS -->
+<script src="{{ url('cwv-mobile/js/jquery-3.1.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('cwv-mobile/js/custom.js') }}"></script>
+<script src="https://www.franchiseindia.com/newhomepage/assets/vendor/popper/js/popper.min.js"></script>
+<script  src="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<script  src="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+
 
 <!-- Font Awesome JS -->
-{{--  <script defer src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/solid.js"></script>
-<script defer src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/fontawesome.js"></script>  --}}
+<script defer src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/solid.js"></script>
+<script defer src="https://www.franchiseindia.com/newhomepage/assets/vendor/fontawesome/js/fontawesome.js"></script>
 
-<script async>
+<script>
 
     function setCookie() {
         document.cookie = "accept_cookie=ok";
