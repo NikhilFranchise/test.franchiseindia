@@ -153,9 +153,9 @@ class NewHomePageController extends Controller
 		});
 
 		// dd($videos);
-		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
+		// $brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
-		return view('cvw.homepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
+		return view('cvw.homepage')->with(compact('articles',  'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
 
 
 		// return view('layout.hindihomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
@@ -296,9 +296,9 @@ class NewHomePageController extends Controller
 		});
 
 
-		$brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
+		// $brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
-		return view('cvw.homepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
+		return view('cvw.homepage')->with(compact('articles', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
 
 		// return view('layout.masternewhomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
 	}
