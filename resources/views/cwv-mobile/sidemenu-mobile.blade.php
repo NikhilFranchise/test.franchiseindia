@@ -21,7 +21,7 @@
                 </div>
             </li>
 
-            @mobile
+
                 <li>
                     <div class="p-2 language-main-bx">
                         <div class="input-group input-group-custom">
@@ -33,7 +33,7 @@
                                 <select class="form-control form-control-custom-main" aria-label="Select Language"
                                     id="exampleFormControlSelect1">
                                     <option hidden="">Language</option>
-                                    <option value="{{ url('') }}">EN - English</option>
+                                    <option value="{{ url('index') }}">EN - English</option>
                                     <option value="{{ url('index/hi/') }}">HI - Hindi</option>
                                 </select>
                             </div>
@@ -58,7 +58,7 @@
                         </div>
                     </div>
                 </li>
-            @endmobile
+
             <li><a target="_blank" href="/">घरेलू ब्रांड</a></li>
             <li><a target="_blank" href="/premiumbrand">प्रीमियम ब्रांड</a></li>
             <li><a target="_blank" href="/international">अंतरराष्ट्रीय ब्रांड</a></li>
@@ -1847,7 +1847,7 @@
 
                 </div>
             </li>
-            @mobile
+
                 <li>
                     <div class="p-2 language-main-bx">
                         <div class="input-group input-group-custom">
@@ -1859,7 +1859,7 @@
                                 <select class="form-control form-control-custom-main" aria-label="Select Language"
                                     id="exampleFormControlSelect1">
                                     <option hidden="">Language</option>
-                                    <option value="{{ url('') }}">EN - English</option>
+                                    <option value="{{ url('index') }}">EN - English</option>
                                     <option value="{{ url('index/hi/') }}">HI - Hindi</option>
                                 </select>
                             </div>
@@ -1884,7 +1884,7 @@
                         </div>
                     </div>
                 </li>
-            @endmobile
+
             <li><a target="_blank" href="/">Domestic Brands</a></li>
             <li><a target="_blank" href="/premiumbrand">Premium Brands</a></li>
             <li><a target="_blank" href="/international">International</a></li>
@@ -2003,7 +2003,7 @@
                                 <li><a target="_blank" href="/business-opportunities/bike-wash.ssc349">Bike Wash</a>
                                 </li>
                                 <li><a target="_blank"
-                                        href="/business-opportunities/bikers-accessories.ssc351">Biker's
+                                        href="/business-opportunities/bikers-accessories.ssc351">Biker&apos;s
                                         Accessories</a></li>
                                 <li><a target="_blank"
                                         href="/business-opportunities/electric-two-wheelers.ssc350">Electric Two
