@@ -6,7 +6,7 @@
         <div class="leading-card">
             <div class="brands-inner">
                 <a href="https://www.businessex.com/business/looking-for-specialized-centralized-and-package-air-conditioning/mjzwdi"
-                    target="_blank">
+                    target="_blank" aria-label="BusinsessEx">
                     <picture>
                         <img src="https://www.franchiseindia.com/images/bexhome/1412051103.webp" alt="BusinsessEx" height="114" width="203"
                             loading="lazy">
@@ -16,12 +16,12 @@
 
             <div class="leading-card-brand-category"><a
                     href="https://www.businessex.com/businesslisting/building-construction-home-products/8/s0/st0"
-                    target="_blank">Building construction</a>
+                    target="_blank" aria-label="Building construction">Building construction</a>
             </div>
 
             <div class="leading-card-brand-title">
                 <h2><a href="https://www.businessex.com/business/looking-for-specialized-centralized-and-package-air-conditioning/mjzwdi"
-                        target="_blank">Looking For Specialized Centralized A</a></h2>
+                        target="_blank" aria-label="Looking For Specialized Centralized">Looking For Specialized Centralized</a></h2>
             </div>
             <div class="leading-card-investment">
                 <div class="card-info">{{ Request::segment(2) == 'hi' ? 'कीमत' : 'Asking Price' }}</div>
@@ -39,27 +39,26 @@
                         height="13" alt="location" loading="lazy">Bengaluru</div>
             </div>
             <a href="https://www.businessex.com/business/looking-for-specialized-centralized-and-package-air-conditioning/mjzwdi"
-                target="_blank" class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                target="_blank" aria-label="Know More" class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
         <div class="leading-card">
             <div class="brands-inner"><a
                     href="https://www.businessex.com/business/looking-for-buyers-investors-for-an-online-vegan-ecommerce-business/lsstic"
-                    target="_blank">
+                    target="_blank" aria-label="Know More">
                     <picture>
                         <img src="https://www.franchiseindia.com/images/bexhome/346922596.webp" alt="BusinessEx" height="114" width="203" loading="lazy">
                     </picture>
                 </a></div>
 
             <div class="leading-card-brand-category"><a
-                    href="https://www.businessex.com/businesslisting/food-beverage/6/s0/st0" target="_blank">Food &
-                    beverage</a>
+                    href="https://www.businessex.com/businesslisting/food-beverage/6/s0/st0" target="_blank" aria-label="Food & beverage">Food & beverage</a>
             </div>
 
             <div class="leading-card-brand-title">
                 <h2>
                     <a href="https://www.businessex.com/business/looking-for-buyers-investors-for-an-online-vegan-ecommerce-business/lsstic"
-                        target="_blank">Looking For Buyers / Investors For An Online Vegan Ecommerce
+                        target="_blank" aria-label="Looking For Buyers / Investors For An Online Vegan Ecommerce Business">Looking For Buyers / Investors For An Online Vegan Ecommerce
                         Business</a>
                 </h2>
             </div>
@@ -79,7 +78,7 @@
                         height="13" alt="location" loading="lazy">Bengaluru</div>
             </div>
             <a href="https://www.businessex.com/business/looking-for-buyers-investors-for-an-online-vegan-ecommerce-business/lsstic"
-                target="_blank" class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                target="_blank" class="know-more" aria-label="Know More">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
         <div class="leading-card">
