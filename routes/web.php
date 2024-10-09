@@ -1067,6 +1067,7 @@ Route::post('/submit-form1', [AdviceController::class, 'freeadviceHome_popup'])-
 Route::get('/index/hi',[NewHomePageController::class,'cwvMobilehindiHomePage']);
 Route::get('/cvwhome',[NewHomePageController::class,'cvwhomeNew']);
 Route::get('/index', [NewHomePageController::class, 'cwvMobile']);
+Route::get('/index1', [NewHomePageController::class, 'cwvMobile']);
 
 
 Route::get('/caturl',[CommonController::class,'url']);

@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2" rel="preload" as="style">
 
         <!-- Google Tag Manager -->
-    <script async>
+    {{--  <script async>
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
@@ -83,12 +83,12 @@
     <noscript>
         <img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1" />
-    </noscript>
+    </noscript>  --}}
 </head>
 
 <body>
-    <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
+    {{--  <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>  --}}
     <header class="header">
         <div class="container-fluid">
             <div class="row">
