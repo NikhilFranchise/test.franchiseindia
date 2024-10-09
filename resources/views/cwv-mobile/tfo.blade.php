@@ -17,7 +17,7 @@
             <div class="leading-card">
                 <div class="brand-ins">
                     <a href="{{ $brandUrl }}" target="_blank" aria-label="{{ $logoDetail['brand_heading'] }}"><img loading="lazy" src="{{ $logoDetail['brand_img'] }}"
-                            alt="{{ $logoDetail['brand_alt'] }}" width="161" height="72" loading="lazy">
+                            alt="{{ $logoDetail['brand_alt'] }}" width="192" height="86" loading="lazy">
                 </div>
                 <div class="leading-card-brand-category"><a href="{{ url('') . $cat_url }}"
                     target="_blank" aria-label="{{ $logoDetail['brand_heading'] }}">{{ $logoDetail['brand_category'] }}</a>

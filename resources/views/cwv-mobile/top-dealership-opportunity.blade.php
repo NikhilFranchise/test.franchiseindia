@@ -5,8 +5,8 @@
             <div class="brand-ins">
                 <a href="https://www.dealerindia.com/manufacturer/supergas-29320320" target="_blank" aria-label="SUPERGAS">
                     <img src="https://img.franchiseindia.com/brands/logo/846455832.jpg" alt="supergas"
-                    width="161"
-                        height="66" loading="lazy"></a>
+                    width="199"
+                        height="81" loading="lazy"></a>
             </div>
             <div class="leading-card-brand-category"><a
                     href="https://www.dealerindia.com/dir/lpg-gas-cylinders-accessories" target="_blank" aria-label="SUPERGAS">
@@ -37,7 +37,7 @@
             <div class="brand-ins">
                 <a href="https://www.dealerindia.com/manufacturer/jiyo-india-sales-and-marketing-pvt-ltd-29320983"
                     target="_blank" aria-label="NEK INSAN"><img loading="lazy" src="https://img.franchiseindia.com/brands/logo/1390859740.jpg"
-                        alt="jiyo-india" width="161" height="66" loading="lazy">
+                        alt="jiyo-india" width="199" height="81" loading="lazy">
             </div>
             <div class="leading-card-brand-category"><a href="https://www.dealerindia.com/dir/roadway-safety"
                     target="_blank" aria-label="NEK INSAN">Roadway safety </a>
@@ -96,7 +96,7 @@
         <div class="leading-card">
             <div class="brand-ins"><a href="https://www.dealerindia.com/manufacturer/bnc-motors-pvt-ltd-29320924"
                     target="_blank" aria-label="BNC Motors"><img src="https://img.franchiseindia.com/brands/logo/1095036619.jpg"
-                        alt="bnc motors" width="161" height="66" loading="lazy"></a>
+                        alt="bnc motors" width="188" height="81" loading="lazy"></a>
             </div>
             <div class="leading-card-brand-category"><a href="https://www.dealerindia.com/dir/electric-vehicles-parts"
                     target="_blank" aria-label="BNC Motors">Electric Vehicles & Parts</a>

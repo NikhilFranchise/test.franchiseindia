@@ -46,7 +46,7 @@
             @foreach ($TopInternationalOpportunities as $top)
                 <div class="leading-card">
                     <div class="brand-ins">
-   <a href="{{ $top['url'] }}" target="_blank"><img src="{{ $top['image'] }}" alt="{{ $top['title'] }}" width="161" height="66" loading="lazy" aria-label="{{ $top['title'] }}"></a>
+   <a href="{{ $top['url'] }}" target="_blank"><img src="{{ $top['image'] }}" alt="{{ $top['title'] }}" width="199" height="81" loading="lazy" aria-label="{{ $top['title'] }}"></a>
                     </div>
                     <div class="leading-card-brand-category">
                         <p>

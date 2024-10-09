@@ -7,7 +7,7 @@
                 <a href="https://www.franchiseindia.net/fro-bos/visakhapatnam/" target="_blank">
                     <img loading="lazy" alt="Franchise Expo Vishakhapatnam"
                     src="https://www.franchiseindia.com/images/franchise-expo-vishakhapatnam.webp"
-                        width="161" height="97"></a>
+                        width="378" height="228"></a>
             </div>
             <h2>Franchise Expo Vishakhapatnam</h2>
             <p>19 October 2024, Hotel Green Park, Visakhapatnam</p>
@@ -20,7 +20,7 @@
             <div class="brand-ins">
                 <a href="https://www.franchiseindia.com/expo/mumbai/" target="_blank">
                     <img loading="lazy" alt="Franchise India 2024 Mumbai"
-                    src="https://www.franchiseindia.com/images/franchise-india.webp" width="161" height="97"></a>
+                    src="https://www.franchiseindia.com/images/franchise-india.webp" width="378" height="228"></a>
             </div>
             <h2>Franchise India 2024 Mumbai</h2>
             <p>29-30 November 2024, Jio World Convention Centre</p>
@@ -33,7 +33,7 @@
             <div class="brand-ins">
                 <a href="https://www.irec.asia/mumbai/" target="_blank">
                     <img loading="lazy" alt="IReC 2024"
-                    src="https://www.franchiseindia.com/images/irec.webp" width="161" height="97"></a>
+                    src="https://www.franchiseindia.com/images/irec.webp" width="378" height="228"></a>
             </div>
             <h2>IReC 2024</h2>
             <p>29-30 November 2024, Jio World Convention Centre</p>
@@ -45,7 +45,7 @@
             <div class="brand-ins">
                 <a>
                     <img loading="lazy" alt="Saudi Franchise Expo"
-                    src="https://www.franchiseindia.com/images/sfe.webp" width="161" height="97"></a>
+                    src="https://www.franchiseindia.com/images/sfe.webp" width="378" height="228"></a>
             </div>
             <h2>Saudi Franchise Expo</h2>
             <p>27-29 January 2025, RIEC, Saudi Arabia</p>
