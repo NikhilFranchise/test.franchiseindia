@@ -19,10 +19,10 @@
         </a>
         <p> {{ strip_tags(\Illuminate\Support\Str::words($articles['article'][0]['content'], 20, ' ...')) }}
         </p>
-        <div class="news-konwmore">
+        {{--  <div class="news-konwmore">
             <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][0]['title'], $articles['article'][0]['id']) }}"
                 target="_blank"></a>
-        </div>
+        </div>  --}}
         <ul class="small-newsx-post-main">
             @for ($i = 1; $i <= 4; $i++)
                 <li>
@@ -71,8 +71,11 @@
             <h2>{{ $articles['article'][5]['title'] }}</h2>
         </a>
         <p>{{ strip_tags(\Illuminate\Support\Str::words($articles['article'][5]['content'], 20, ' ...')) }}</p>
-        <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][5]['title'], $articles['article'][5]['id']) }}"
+        {{--  <div class="news-konwmore">
+           <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][5]['title'], $articles['article'][5]['id']) }}"
             target="_blank" aria-label="{{ $articles['article'][5]['title'] }}"></a>
+        </div>  --}}
+
         <ul class="small-newsx-post-main">
             @for ($i = 6; $i <= 9; $i++)
                 <li>
