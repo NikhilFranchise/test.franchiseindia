@@ -43,13 +43,13 @@
 
         <div class="leading-card">
             <div class="brand-ins">
-                <a>
+                <a href="javascript:void(0);">
                     <img loading="lazy" alt="Saudi Franchise Expo"
                     src="https://www.franchiseindia.com/images/sfe.webp" width="378" height="228"></a>
             </div>
             <h2>Saudi Franchise Expo</h2>
             <p>27-29 January 2025, RIEC, Saudi Arabia</p>
-            <a class="know-more">Registration</a>
+            <a class="know-more" href="javascript:void(0);">Registration</a>
             <div class="hotline">Hotline: <span>+91 9717683838</span></div>
         </div>
 
