@@ -11,12 +11,16 @@
         content="Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.">
     <meta name="keywords" itemprop="keywords"
         content="franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india">
-    <link rel="stylesheet" href="{{ url('cwv-mobile/css/style.css') }}">
-    <link rel="stylesheet"
-        href="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2">
-    <link rel="stylesheet"
-        href="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2">
-    <!-- Google Tag Manager -->
+
+<link rel="preload" fetchpriority="high" as="image" href="{{ url('cwv-mobile/images/mobile-banner.webp') }}" type="image/webp">
+
+<link rel="stylesheet" href="{{ url('cwv-mobile/css/style.css')}}" rel="preload" as="style">
+
+<link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2" rel="preload" as="style">
+
+<link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2" rel="preload" as="style">
+
+        <!-- Google Tag Manager -->
     <script async>
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];

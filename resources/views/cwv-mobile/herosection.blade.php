@@ -6,8 +6,9 @@
     asort($states);
 @endphp
 <section class="hero-moblie" id="hero-mobile">
+    <img src="{{ url('cwv-mobile/images/mobile-banner.webp')}}" class="hero-banner" alt="Franchise India" fetch-priority="high" height="1067" width="600">
     <div class="lnkblk">
-        <a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank" class="setpat"><img
+        <a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank" fetch-priority="high" class="setpat"><img
                 src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/direct-english.webp"
                 alt="direct english" width="237" height="60"></a>
     </div>
