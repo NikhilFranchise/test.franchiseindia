@@ -6,7 +6,7 @@
         <div class="leading-card">
             <div class="brands-inner"><a
                     href="https://www.businessex.com/startup/seeking-investment-for-adventure-and-tourism-market-place/lrgkm2"
-                    target="_blank">
+                    target="_blank" aria-label="Travel & tourism">
 
                     <img src="https://www.franchiseindia.com/images/bexhome/574844992.webp"
                         alt="seeking-investment-for-adventure-and-tourism-market-place" width="203" height="114"
@@ -16,12 +16,12 @@
 
             <div class="leading-card-brand-category"><a
                     href="https://www.businessex.com/startupslisting/travel-tourism-startups-in-India/9/s0/st0"
-                    target="_blank">Travel & tourism</a>
+                    target="_blank" aria-label="Travel & tourism">Travel & tourism</a>
             </div>
 
             <div class="leading-card-brand-title">
                 <h2><a href="https://www.businessex.com/startup/seeking-investment-for-adventure-and-tourism-market-place/lrgkm2"
-                        target="_blank">Seeking Investment For Adventure And Tourism Market Place</a></h2>
+                        target="_blank" aria-label="Seeking Investment For Adventure And Tourism Market Place">Seeking Investment For Adventure And Tourism Market Place</a></h2>
             </div>
             <div class="leading-card-investment">
                 <div class="card-info">{{ Request::segment(2) == 'hi' ? 'कीमत' : 'Asking Price' }}</div>
@@ -39,23 +39,23 @@
                         height="13" alt="location" loading="lazy">Delhi</div>
             </div>
             <a href="https://www.businessex.com/startup/seeking-investment-for-adventure-and-tourism-market-place/lrgkm2"
-                target="_blank" class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                target="_blank" class="know-more" aria-label="know more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
         <div class="leading-card">
             <div class="brands-inner"><a
                     href="https://www.businessex.com/startup/seeking-investor-for-high-class-sports-and-education-training-center/b0chev"
-                    target="_blank"><img src="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp"
+                    target="_blank" aria-label="Education"><img src="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp"
                         alt="seeking-investor-for-high-class-sports-and-education-training-center"  width="203" height="114" loading="lazy"></a></div>
 
             <div class="leading-card-brand-category"><a
                     href="https://www.businessex.com/startupslisting/education-startups-in-India/3/s0/st0"
-                    target="_blank">Education</a>
+                    target="_blank" aria-label="Education">Education</a>
             </div>
 
             <div class="leading-card-brand-title">
                 <h2><a href="https://www.businessex.com/startup/seeking-investor-for-high-class-sports-and-education-training-center/b0chev"
-                        target="_blank">Seeking Investor For High Class Sports And Education Training
+                        target="_blank" aria-label="Seeking Investor For High Class Sports And Education Training Center">Seeking Investor For High Class Sports And Education Training
                         Center</a>
                 </h2>
             </div>
@@ -75,23 +75,24 @@
                         height="13" alt="location" loading="lazy">Kanpur</div>
             </div>
             <a href="https://www.businessex.com/startup/seeking-investor-for-high-class-sports-and-education-training-center/b0chev"
-                target="_blank" class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                target="_blank" aria-label="know more" class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
         <div class="leading-card">
             <div class="brands-inner"><a
                     href="https://www.businessex.com/startup/seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system/f3asef"
-                    target="_blank"><img src="https://www.franchiseindia.com/images/bexhome/928479563.webp"
+                    target="_blank" aria-label="seeking-investor-for-high-class-sports-and-education-training-center"><img src="https://www.franchiseindia.com/images/bexhome/928479563.webp"
                         alt="seeking-investor-for-high-class-sports-and-education-training-center"  width="203" height="114" loading="lazy"></div>
 
             <div class="leading-card-brand-category"><a
                     href="https://www.businessex.com/startupslisting/energy-environment-startups-in-India/12/s0/st0"
-                    target="_blank">Energy & Environment</a>
+                    target="_blank" aria-label="Energy & Environment">Energy & Environment</a>
             </div>
 
             <div class="leading-card-brand-title">
                 <h2> <a href="https://www.businessex.com/startup/seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system/f3asef"
-                        target="_blank">Seeking Investment for Company Revolutionizing Solar Power
+                        target="_blank" aria-label="Seeking Investment for Company Revolutionizing Solar Power
+                        Generation">Seeking Investment for Company Revolutionizing Solar Power
                         Generation</a>
                 </h2>
             </div>
@@ -111,25 +112,25 @@
                         height="13" alt="location" loading="lazy">Faridabad</div>
             </div>
             <a href="https://www.businessex.com/startup/seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system/f3asef"
-                class="know-more" target="_blank">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                class="know-more" aria-label="know more" target="_blank">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
         <div class="leading-card">
             <div class="brands-inner"><a
                     href="https://www.businessex.com/startup/looking-for-an-investor-for-health-care-industry/sibsjr"
-                    target="_blank"><img
+                    target="_blank" aria-label="FMCG"><img
                         src="https://www.franchiseindia.com/images/bexhome/shutterstock_56187514.webp"
                         alt="seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system"
                         width="203" height="114" loading="lazy"></div>
 
             <div class="leading-card-brand-category"><a
                     href="https://www.businessex.com/startupslisting/fmcg-startups-in-India/2/s0/st0"
-                    target="_bkank">FMCG</a>
+                    target="_bkank" aria-label="FMCG">FMCG</a>
             </div>
 
             <div class="leading-card-brand-title">
                 <h2><a href="https://www.businessex.com/startup/looking-for-an-investor-for-health-care-industry/sibsjr"
-                        target="_blank">Looking For An Investor For Health Care Industry</a>
+                        target="_blank" aria-label="Looking For An Investor For Health Care Industry">Looking For An Investor For Health Care Industry</a>
                 </h2>
             </div>
             <div class="leading-card-investment">
@@ -147,7 +148,7 @@
                         src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/map.webp" width="13"
                         height="13" alt="location" loading="lazy">Hyderabad</div>
             </div>
-            <a href="https://www.businessex.com/startup/looking-for-an-investor-for-health-care-industry/sibsjr" class="know-more"
+            <a href="https://www.businessex.com/startup/looking-for-an-investor-for-health-care-industry/sibsjr" class="know-more" aria-label="know more"
                 target="_blank">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
     </div>

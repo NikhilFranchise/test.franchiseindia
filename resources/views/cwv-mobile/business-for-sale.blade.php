@@ -84,7 +84,7 @@
         <div class="leading-card">
             <div class="brands-inner"><a
                     href="https://www.businessex.com/business/seeking-buyers-for-marketing-and-communication-agency/mdk69z"
-                    target="_blank">
+                    target="_blank" aria-label="Business services">
                     <picture>
                         <img src="https://www.franchiseindia.com/images/bexhome/677175222.webp" alt="BusinessEx" height="114" width="203" loading="lazy">
                     </picture>
@@ -92,12 +92,12 @@
 
             <div class="leading-card-brand-category"><a
                     href="https://www.businessex.com/businesslisting/business-services/5/s0/st0"
-                    target="_blank">Business services</a>
+                    target="_blank" aria-label="Business services">Business services</a>
             </div>
 
             <div class="leading-card-brand-title">
                 <h2><a href="https://www.businessex.com/business/seeking-buyers-for-marketing-and-communication-agency/mdk69z"
-                        target="_blank">Seeking Buyers For Marketing And Communication Agency</a></h2>
+                        target="_blank" aria-label="Seeking Buyers For Marketing And Communication Agency">Seeking Buyers For Marketing And Communication Agency</a></h2>
             </div>
             <div class="leading-card-investment">
                 <div class="card-info">{{ Request::segment(2) == 'hi' ? 'कीमत' : 'Asking Price' }}</div>
@@ -115,24 +115,24 @@
                         height="13" alt="location" loading="lazy">Ahmedabad</div>
             </div>
             <a href="https://www.businessex.com/business/seeking-buyers-for-marketing-and-communication-agency/mdk69z"
-                target="_blank" class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                target="_blank" class="know-more" aria-label="Know More">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
         <div class="leading-card">
             <div class="brands-inner"><a
                     href="https://www.businessex.com/business/looking-investor-for-pharma-distribution-business/ox9om1"
-                    target="_blank">
+                    target="_blank" aria-label="Retail">
                     <picture>
                         <img src="https://www.franchiseindia.com/images/bexhome/109411676.webp" alt="BusinessEx" height="114" width="203" loading="lazy">
                     </picture>
                 </a></div>
 
             <div class="leading-card-brand-category"><a
-                    href="https://www.businessex.com/businesslisting/retail/14/s0/st0" target="_blank">Retail</a>
+                    href="https://www.businessex.com/businesslisting/retail/14/s0/st0" target="_blank" aria-label="Retail">Retail</a>
             </div>
 
             <div class="leading-card-brand-title">
                 <h2><a href="https://www.businessex.com/business/looking-investor-for-pharma-distribution-business/ox9om1"
-                        target="_blank">Looking Investor For Pharma Distribution Business</a></h2>
+                        target="_blank" aria-label="Looking Investor For Pharma Distribution Business">Looking Investor For Pharma Distribution Business</a></h2>
             </div>
             <div class="leading-card-investment">
                 <div class="card-info">{{ Request::segment(2) == 'hi' ? 'कीमत' : 'Asking Price' }}</div>
@@ -150,7 +150,7 @@
                         height="13" alt="location" loading="lazy">Mumbai</div>
             </div>
             <a href="https://www.businessex.com/business/looking-investor-for-pharma-distribution-business/ox9om1"
-                target="_blank" class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                target="_blank" class="know-more" aria-label="Know More">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
     </div>
 </section>
