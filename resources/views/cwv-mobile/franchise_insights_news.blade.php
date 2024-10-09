@@ -30,7 +30,7 @@
                         <div class="d-flex">
                             <div class="brand-newsx-small-image-section">
                                 <div class="brand-main-section">
-                                    <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][0]['title'], $articles['article'][0]['id']) }}"
+                                    <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][$i]['title'], $articles['article'][$i]['id']) }}"
                                         target="_blank" aria-label="{{ $articles['article'][$i]['title'] }}"><img
                                             src="{{ \App\Http\Controllers\NewHomePageController::getImageUrl($articles['article'][$i]['image_path']) }}"
                                             alt="{{ $articles['article'][$i]['title'] }}" width="80" height="45"
@@ -43,7 +43,7 @@
                                     aria-label="{{ $articles['article'][$i]['title'] }}">{{ $articles['article'][$i]['title'] }}</a>
                                 </p><a
                                     href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][$i]['title'], $articles['article'][$i]['id']) }}"
-                                    class="read-more" target="_blank"></a>
+                                    class="read-more" aria-label="{{ $articles['article'][$i]['title'] }}" target="_blank"></a>
                             </div>
                         </div>
                     </div>
