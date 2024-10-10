@@ -16,13 +16,16 @@
                 @endphp
                 <div class="leading-card">
                     <div class="brand-ins">
-                        <a href="{{ $brandUrl }}" target="_blank"> <img src="{{ $logoDetail['brand_img'] }}"
-                                alt="{{ $logoDetail['brand_heading'] }}" width="250" height="122" loading="lazy"></a>
+                        <a href="{{ $brandUrl }}" target="_blank" aria-label="{{ $logoDetail['brand_heading'] }}"> <img
+                                src="{{ $logoDetail['brand_img'] }}" alt="{{ $logoDetail['brand_heading'] }}"
+                                width="205" height="100" loading="lazy"></a>
                     </div>
-                    <div class="leading-card-brand-category"><a href="{{ url('') . $cat_url }}"
-                            target="_blank">{{ $logoDetail['brand_category'] }}</a></div>
+                    <div class="leading-card-brand-category"><a href="{{ url('') . $cat_url }}" target="_blank"
+                            aria-label="{{ $logoDetail['brand_heading'] }}">{{ $logoDetail['brand_category'] }}</a>
+                    </div>
                     <div class="leading-card-brand-title">
-                        <h2><a href="{{ $brandUrl }}" target="_blank">{{ $logoDetail['brand_heading'] }}
+                        <h2><a href="{{ $brandUrl }}" target="_blank"
+                                aria-label="{{ $logoDetail['brand_heading'] }}">{{ $logoDetail['brand_heading'] }}
                             </a></h2>
                     </div>
                     <div class="leading-card-investment">
@@ -39,8 +42,8 @@
                         <div class="card-info">
                             {{ Request::segment(2) == 'hi' ? 'फ्रेंचाइज आउटलेट्स' : 'Franchise Outlets' }}</div>
                         <div class="card-info-amt">{{ $logoDetail['franchise_outlets'] }}</div>
-                    </div><a href="{{ $brandUrl }}" target="_blank"
-                        class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                    </div><a href="{{ $brandUrl }}" target="_blank" class="know-more"
+                        aria-label="{{ $logoDetail['brand_heading'] }}">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
                 </div>
             @endif
         @endforeach

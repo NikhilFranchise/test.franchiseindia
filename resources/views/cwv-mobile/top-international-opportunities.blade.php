@@ -46,8 +46,7 @@
             @foreach ($TopInternationalOpportunities as $top)
                 <div class="leading-card">
                     <div class="brand-ins">
-                        <a href="{{ $top['url'] }}" target="_blank"><img src="{{ $top['image'] }}"
-                                alt="{{ $top['title'] }}" width="192" height="94" loading="lazy"></a>
+   <a href="{{ $top['url'] }}" target="_blank"><img src="{{ $top['image'] }}" alt="{{ $top['title'] }}" width="199" height="81" loading="lazy" aria-label="{{ $top['title'] }}"></a>
                     </div>
                     <div class="leading-card-brand-category">
                         <p>
@@ -55,10 +54,10 @@
                         </p>
                     </div>
                     <div class="leading-card-brand-title">
-                        <h2><a href="{{ $top['url'] }}" target="_blank">{{ $top['title'] }}</a></h2>
+                        <h2><a href="{{ $top['url'] }}" target="_blank" aria-label="{{ $top['title'] }}">{{ $top['title'] }}</a></h2>
                     </div>
                     <div class="card-info-summary">{{ $top['description'] }}</div>
-                    <a href="{{ $top['url'] }}" target="_blank" class="know-more">
+                    <a href="{{ $top['url'] }}" target="_blank" class="know-more" aria-label="{{ $top['title'] }}">
                         <div class="link-section-main">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}
                         </div>
                     </a>

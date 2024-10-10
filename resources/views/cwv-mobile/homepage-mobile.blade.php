@@ -1,4 +1,8 @@
-@include('cwv-mobile.header')
+@if (Request::segment(1) == 'index1')
+    @include('cwv-mobile.header_withoutgtm')
+@else
+    @include('cwv-mobile.header')
+@endif
 @include('cwv-mobile.herosection')
 <main id="main" class="main">
     @include('cwv-mobile.leading-franchise-today')

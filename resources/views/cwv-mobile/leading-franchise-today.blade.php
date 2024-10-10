@@ -4,9 +4,11 @@
     <div class="card-wrap">
         @foreach ($brandslft->shuffle() as $logoDetail)
             <div class="leading-card">
-                <div class="brand-ins"><a href="{{ $logoDetail['brand_link'] }}" target="_blank">
-                        <img src="{{ $logoDetail['brand_img'] }}" alt="{{ $logoDetail['brand_heading'] }}" width="308"
-                            height="150"></a>
+                <div class="brand-ins">
+    <a href="{{ $logoDetail['brand_link'] }}" target="_blank" aria-label="{{ $logoDetail['brand_heading'] }}">
+
+                        <img src="{{ $logoDetail['brand_img'] }}" alt="{{ $logoDetail['brand_heading'] }}"
+                        width="161" height="79" loading="lazy"></a>
                 </div>
                 <div class="leading-card-brand-category">
 
@@ -18,12 +20,11 @@
                             $logoDetail['brand_category_id'];
                     @endphp
                     <p>
-                        <a href="{{ url('') . $cat_url }}" target="_blank">{{ $logoDetail['brand_category'] }}</a>
+                        <a href="{{ url('') . $cat_url }}" target="_blank" aria-label="{{ $logoDetail['brand_heading'] }}">{{ $logoDetail['brand_category'] }}</a>
                     </p>
                 </div>
                 <div class="leading-card-brand-title">
-                    {{--  <h2>Westside</h2>  --}}
-                    <h2><a href="{{ $logoDetail['brand_link'] }}" target="_blank">{{ $logoDetail['brand_heading'] }}</a>
+                    <h2><a href="{{ $logoDetail['brand_link'] }}" target="_blank" aria-label="{{ $logoDetail['brand_heading'] }}">{{ $logoDetail['brand_heading'] }}</a>
                     </h2>
                 </div>
                 <div class="leading-card-investment">
@@ -40,9 +41,8 @@
                         {{ Request::segment(2) == 'hi' ? 'फ्रेंचाइज आउटलेट्स' : 'Franchise Outlets' }}</div>
                     <div class="card-info-amt">{{ $logoDetail['franchise_outlets'] }}</div>
                 </div>
-
                 <a href="{{ $logoDetail['brand_link'] }}" target="_blank"
-                    class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                    class="know-more" aria-label="{{ $logoDetail['brand_heading'] }}">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
             </div>
         @endforeach
     </div>

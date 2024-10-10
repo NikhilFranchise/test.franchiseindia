@@ -6,8 +6,10 @@
     asort($states);
 @endphp
 <section class="hero-moblie" id="hero-mobile">
+    <img src="{{ url('cwv-mobile/images/mobile-banner.webp')}}" class="hero-banner"
+    alt="Franchise India" fetch-priority="high" height="590" width="412">
     <div class="lnkblk">
-        <a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank" class="setpat"><img
+        <a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank" fetch-priority="high" class="setpat"><img
                 src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/direct-english.webp"
                 alt="direct english" width="237" height="60"></a>
     </div>
@@ -154,7 +156,7 @@
                         </li>
                         <li class="p-0 m-0">
                             <select name="min_cost" class="form-control form-control-custom dropdown-toogle-icon"
-                                id="minAmount1" onchange="selectMax2(this.value)">
+                                id="minAmount1" onchange="selectMax1(this.value)">
                                 <option value="" hidden=""> Select Min Investment </option>
                                 <option slug="10000" value="1">Rs. 10000</option>
                                 <option slug="50000" value="3">Rs. 50000</option>
