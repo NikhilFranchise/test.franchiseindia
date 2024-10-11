@@ -387,21 +387,24 @@ class InsightsController extends Controller
     
         $allBrandMatches = [];
         foreach ($newsDetails as $detail) {
-            $title = $detail->title;
-            $brandCacheKey = "brand_matches_" . md5($title);
+            $title = strtolower($detail->title);
+            $titleWords = preg_split('/\s+/', $title); // Split title into words using spaces
     
-            $brandMatches = Cache::remember($brandCacheKey, $cacheDuration, function () use ($title) {
-                return FranchisorBusinessDetail::query()
-                    ->select('fran_detail_id', 'company_name')
-                    ->where('profile_status', 1)
-                    ->whereRaw("LOWER(?) LIKE CONCAT('%', LOWER(company_name), '%')", [$title])
-                    ->orderByDesc('created_at')
-                    ->limit(3)
+            $brandMatches = Cache::remember("brand_matches_" . md5($title), $cacheDuration, function () use ($title,$titleWords) {
+                return FranchisorBusinessDetail::where('profile_status', 1)
+                    ->select('fran_detail_id', 'company_name', 'profile_name')
                     ->get()
+                    ->filter(function ($item) use ($titleWords) {
+                        // Split the company name into words and check if all are in the title
+                        $companyWords = explode(' ', strtolower($item->company_name));
+                        return empty(array_diff($companyWords, $titleWords)); // Check if all company words are in title words
+                    })
+                    ->take(3) // Limit the results after filtering
                     ->map(function ($item) {
                         return [
                             'fran_detail_id' => $item->fran_detail_id,
                             'company_name' => $item->company_name,
+                            'profile_name' => $item->profile_name,
                         ];
                     });
             });
@@ -415,10 +418,13 @@ class InsightsController extends Controller
                 $franchiseData[] = [
                     'fran_detail_id' => $match['fran_detail_id'],
                     'company_name' => $match['company_name'],
+                    'profile_name'=>$match['profile_name'],
                     'title' => $title
+
                 ];
             }
         }
+        // dd($franchiseData);
     
         return view('insights.insight_detail')->with(compact('newsDetails', 'author_details', 'franchiseData'));
     }
