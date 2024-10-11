@@ -33,8 +33,29 @@
     }
 
 @endphp
-
-@if ($agent->isDesktop() || $agent->isTablet())
+@if ($agent->isMobile())
+    @include('newHomepage.mobile.header')
+    @include('newHomepage.mobile.herosection')
+    <main id="main" class="main">
+        @include('newHomepage.mobile.leading-franchise-today')
+        @include('newHomepage.mobile.top-business-opportunities')
+        @include('newHomepage.mobile.top-dealership-opportunity')
+        @include('newHomepage.mobile.business-for-sale')
+        @include('newHomepage.mobile.upcoming-events')
+        @include('newHomepage.mobile.trending-videoes')
+        @include('newHomepage.mobile.top-international-opportunities')
+        @include('newHomepage.mobile.hgps')
+        @include('newHomepage.mobile.tfo')
+        @include('newHomepage.mobile.ffc')
+        @include('newHomepage.mobile.franchise_insights_news')
+        @include('newHomepage.mobile.testimonials')
+    </main>
+    @include('newHomepage.mobile.sidemenu-mobile')
+    <div class="overlay"></div>
+    @include('newHomepage.mobile.newsletter')
+    @include('newHomepage.mobile.aboutus')
+    @include('newHomepage.mobile.footer-mobile')
+@else
     @include('newHomepage.header')
     @include('newHomepage.herosection')
     <main id="main" class="main">
@@ -59,32 +80,11 @@
     @include('newHomepage.aboutus')
     @include('newHomepage.footersection')
     @include('newHomepage.footer')
-@elseif ($agent->isMobile())
-    @include('newHomepage.mobile.header')
-    @include('newHomepage.mobile.herosection')
-    <main id="main" class="main">
-        @include('newHomepage.mobile.leading-franchise-today')
-        @include('newHomepage.mobile.top-business-opportunities')
-        @include('newHomepage.mobile.top-dealership-opportunity')
-        @include('newHomepage.mobile.business-for-sale')
-        @include('newHomepage.mobile.upcoming-events')
-        @include('newHomepage.mobile.trending-videoes')
-        @include('newHomepage.mobile.top-international-opportunities')
-        @include('newHomepage.mobile.hgps')
-        @include('newHomepage.mobile.tfo')
-        @include('newHomepage.mobile.ffc')
-        @include('newHomepage.mobile.franchise_insights_news')
-        @include('newHomepage.mobile.testimonials')
-    </main>
-    @include('newHomepage.mobile.sidemenu-mobile')
-    <div class="overlay"></div>
-    @include('newHomepage.mobile.newsletter')
-    @include('newHomepage.mobile.aboutus')
-    @include('newHomepage.mobile.footer-mobile')
 @endif
 
 @if ($agent->isDesktop() || $agent->isTablet())
-    <div class="modal modal-cust fade in" id="search-main" tabindex="-1" aria-labelledby="search-mainLabel" aria-hidden="true">
+    <div class="modal modal-cust fade in" id="search-main" tabindex="-1" aria-labelledby="search-mainLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-cust">
             <div class="modal-content modal-content-cust"><button type="button" class="close" data-dismiss="modal"
                     aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -98,7 +98,8 @@
                                         aria-describedby="basic-addon2" autocomplete="off" aria-expanded="false"
                                         aria-owns="awesomplete_list_1" role="combobox">
                                     <ul hidden="" role="listbox" id="awesomplete_list_1"></ul><span
-                                        class="visually-hidden" role="status" aria-live="assertive" aria-atomic="true">Type
+                                        class="visually-hidden" role="status" aria-live="assertive"
+                                        aria-atomic="true">Type
                                         2 or more characters for results.</span>
                                 </div><span class="input-group-addon input-group-addon-search-custom"
                                     id="basic-addon2"><button class="btn btn-group-sm btn-main bhide-main"
@@ -415,11 +416,12 @@
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                            <img src="https://www.franchiseindia.com/images/mobile.png" alt="mobile">
+                                            <img src="https://www.franchiseindia.com/images/mobile.png"
+                                                alt="mobile">
                                         </span>
                                         <input type="text" class="form-control blur" maxlength="10"
-                                            name="mobilefreeadvice1" id="mobilefreeadvice1" placeholder="Enter Mobile No"
-                                            required="">
+                                            name="mobilefreeadvice1" id="mobilefreeadvice1"
+                                            placeholder="Enter Mobile No" required="">
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -430,7 +432,8 @@
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon height80">
-                                            <img src="https://www.franchiseindia.com/images/addreess.png" alt="address">
+                                            <img src="https://www.franchiseindia.com/images/addreess.png"
+                                                alt="address">
                                         </span>
                                         <textarea class="form-control height80 blur" name="detailsfreeadvice1" id="detailsfreeadvice1"
                                             placeholder="Enter Details"></textarea>
@@ -484,7 +487,8 @@
     <link rel="stylesheet" href="{{ url('cvw/top-international.css') }}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/potential-startup.css') }}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/top-franchise-opportunities.css') }}" rel="preload" as="style">
-    <link rel="stylesheet" href="{{ url('cvw/featured-franchise-opportunities.css') }}" rel="preload" as="style">
+    <link rel="stylesheet" href="{{ url('cvw/featured-franchise-opportunities.css') }}" rel="preload"
+        as="style">
     <link rel="stylesheet" href="{{ url('cvw/news-section.css') }}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/testimonial.css') }}" rel="preload" as="style">
 
