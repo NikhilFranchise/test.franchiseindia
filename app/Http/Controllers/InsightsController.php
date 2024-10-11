@@ -423,7 +423,12 @@ class InsightsController extends Controller
                     ->filter(function ($item) use ($titleWords) {
                         // Split the company name into words and ensure each word is exactly in the title words
                         $companyWords = explode(' ', strtolower($item->company_name));
-                        $pattern = '/\b'.implode('\b.*\b', $companyWords).'\b/';
+                        // Escape regex characters in company words
+                        $escapedWords = array_map(function($word) {
+                            return preg_quote($word, '/');
+                        }, $companyWords);
+                        // Form a regex pattern to match words in sequence within the title
+                        $pattern = '/\b' . implode('\b.*?\b', $escapedWords) . '\b/';
                         return preg_match($pattern, implode(' ', $titleWords));
                     })
                     ->take(3) // Limit the results after filtering
