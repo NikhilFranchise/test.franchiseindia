@@ -8,7 +8,7 @@
                 <a href="https://www.businessex.com/business/looking-for-specialized-centralized-and-package-air-conditioning/mjzwdi"
                     target="_blank" aria-label="BusinsessEx">
                     <picture>
-                        <img src="https://www.franchiseindia.com/images/bexhome/1412051103.webp" alt="BusinsessEx" height="114" width="203"
+                        <img src="{{ url('cwv-mobile/images/1412051103.webp') }}" alt="BusinsessEx" height="114" width="203"
                             loading="lazy">
                     </picture>
                 </a>

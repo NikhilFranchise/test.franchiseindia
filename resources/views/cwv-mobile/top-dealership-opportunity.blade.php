@@ -64,16 +64,19 @@
 
 
         <div class="leading-card">
-            <div class="brand-ins"><a href="https://www.dealerindia.com/manufacturer/rocketpay-29321177"
+            <div class="brand-ins">
+                <a href="https://www.dealerindia.com/manufacturer/rocketpay-29321177"
                     target="_blank" aria-label="RocketPay"><img src="https://img.franchiseindia.com/brands/logo/257198266.jpg" alt="rocketpay"
-                        width="161" height="66" loading="lazy">
+                        width="199" height="81" loading="lazy">
             </div>
             <div class="leading-card-brand-category"><a
                     href="https://www.dealerindia.com/dir/computer-mobile-softwares-apps" target="_blank" aria-label="RocketPay"> Computer &
                     Mobile Softwares & Apps</a>
             </div>
             <div class="leading-card-brand-title">
-                <h2><a href="https://www.dealerindia.com/manufacturer/rocketpay-29321177" target="_blank" aria-label="RocketPay"> RocketPay</a>
+                <h2>
+                    <a href="https://www.dealerindia.com/manufacturer/rocketpay-29321177" target="_blank"
+                    aria-label="RocketPay"> RocketPay</a>
                 </h2>
             </div>
             <div class="leading-card-investment">
@@ -91,8 +94,11 @@
             </div>
 
             <a href="https://www.dealerindia.com/manufacturer/rocketpay-29321177" target="_blank"
-                class="know-more" aria-label="RocketPay">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                class="know-more" aria-label="RocketPay">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' :
+                'Know More' }}</a>
         </div>
+
+
         <div class="leading-card">
             <div class="brand-ins"><a href="https://www.dealerindia.com/manufacturer/bnc-motors-pvt-ltd-29320924"
                     target="_blank" aria-label="BNC Motors"><img src="https://img.franchiseindia.com/brands/logo/1095036619.jpg"

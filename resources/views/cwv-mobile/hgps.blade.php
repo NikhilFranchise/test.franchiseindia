@@ -6,8 +6,7 @@
         <div class="leading-card">
             <div class="brands-inner"><a
                     href="https://www.businessex.com/startup/seeking-investment-for-adventure-and-tourism-market-place/lrgkm2"target="_blank" aria-label="Travel & tourism">
-                    <img src="https://www.franchiseindia.com/images/bexhome/574844992.webp"
-                        alt="seeking-investment-for-adventure-and-tourism-market-place" width="203" height="114"
+                    <img src="{{ url('cwv-mobile/images/574844992.webp') }}" alt="seeking-investment-for-adventure-and-tourism-market-place" width="203" height="114"
                         loading="lazy"></a>
             </div>
             <div class="leading-card-brand-category"><a
@@ -43,7 +42,7 @@
             <div class="brands-inner"><a
                     href="https://www.businessex.com/startup/seeking-investor-for-high-class-sports-and-education-training-center/b0chev"
                     target="_blank" aria-label="Education"><img
-                        src="https://www.franchiseindia.com/images/bexhome/shutterstock_213333985.webp"
+                        src="{{ url('cwv-mobile/images/shutterstock_213333985.webp') }}"
                         alt="seeking-investor-for-high-class-sports-and-education-training-center" width="203"
                         height="114" loading="lazy"></a></div>
             <div class="leading-card-brand-category"><a

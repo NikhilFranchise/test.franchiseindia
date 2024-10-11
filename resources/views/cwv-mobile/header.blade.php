@@ -113,7 +113,7 @@
                                 <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/Search.svg"
                                     alt="Home Search" width="22" height="24"></span>
                             @if (Auth::check())
-                                <span class="login-text-right text-right" id="sidebarCollapse-main-login">
+                                <span id="sidebarCollapse-main-login">
                                     <img src="{{ url('newhomepage/assets/img/Login.svg') }}" alt="Login"
                                         id="leftsidebar-open">
                                 </span>
