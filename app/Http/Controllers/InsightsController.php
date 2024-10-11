@@ -386,18 +386,45 @@ class InsightsController extends Controller
         }
     
         $allBrandMatches = [];
+        // foreach ($newsDetails as $detail) {
+        //     $title = strtolower($detail->title);
+        //     $titleWords = preg_split('/\s+/', $title); // Split title into words using spaces
+    
+        //     $brandMatches = Cache::remember("brand_matches_" . md5($title), $cacheDuration, function () use ($title,$titleWords) {
+        //         return FranchisorBusinessDetail::where('profile_status', 1)
+        //             ->select('fran_detail_id', 'company_name', 'profile_name')
+        //             ->get()
+        //             ->filter(function ($item) use ($titleWords) {
+        //                 // Split the company name into words and check if all are in the title
+        //                 $companyWords = explode(' ', strtolower($item->company_name));
+        //                 return empty(array_diff($companyWords, $titleWords)); // Check if all company words are in title words
+        //             })
+        //             ->take(30) // Limit the results after filtering
+        //             ->map(function ($item) {
+        //                 return [
+        //                     'fran_detail_id' => $item->fran_detail_id,
+        //                     'company_name' => $item->company_name,
+        //                     'profile_name' => $item->profile_name,
+        //                 ];
+        //             });
+        //     });
+    
+        //     $allBrandMatches[$title] = $brandMatches;
+        // }
         foreach ($newsDetails as $detail) {
             $title = strtolower($detail->title);
             $titleWords = preg_split('/\s+/', $title); // Split title into words using spaces
     
-            $brandMatches = Cache::remember("brand_matches_" . md5($title), $cacheDuration, function () use ($title,$titleWords) {
+            $brandMatches = Cache::remember("brand_matches_" . md5($title), $cacheDuration, function () use ($title, $titleWords) {
+                // Fetch company details and filter based on exact matches in title words
                 return FranchisorBusinessDetail::where('profile_status', 1)
                     ->select('fran_detail_id', 'company_name', 'profile_name')
                     ->get()
                     ->filter(function ($item) use ($titleWords) {
-                        // Split the company name into words and check if all are in the title
+                        // Split the company name into words and ensure each word is exactly in the title words
                         $companyWords = explode(' ', strtolower($item->company_name));
-                        return empty(array_diff($companyWords, $titleWords)); // Check if all company words are in title words
+                        $pattern = '/\b'.implode('\b.*\b', $companyWords).'\b/';
+                        return preg_match($pattern, implode(' ', $titleWords));
                     })
                     ->take(3) // Limit the results after filtering
                     ->map(function ($item) {
