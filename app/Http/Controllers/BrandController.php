@@ -38,51 +38,51 @@ class BrandController extends Controller
         }
         $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
 
-       // $insightMatches = [];
+        // $insightMatches = [];
 
-        $insightMatches = InsightList::query()
-            ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
-            ->where('status', 1)
-            ->whereIn('insight_type', ['News', 'Article']) // Only fetch 'News' and 'Article'
-            ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
-            ->orderByDesc('created_at')
-            ->limit(3)
-            ->get()
-            ->map(function ($item) {
-                // Assuming you want the URL to be based on the slug
-                $item->url = url('insights/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
-                return $item;
-            });
+        //     $insightMatches = InsightList::query()
+        //         ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
+        //         ->where('status', 1)
+        //         ->whereIn('insight_type', ['News', 'Article']) // Only fetch 'News' and 'Article'
+        //         ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
+        //         ->orderByDesc('created_at')
+        //         ->limit(3)
+        //         ->get()
+        //         ->map(function ($item) {
+        //             // Assuming you want the URL to be based on the slug
+        //             $item->url = url('insights/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
+        //             return $item;
+        //         });
 
-            $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
-            $companyName = $franDetails->company_name;
-            $response= Http::get($apiUrl,['company_name'=>$companyName]);
-            if($response){
-                $dataFromB=$response->json();
-            }
+        //         $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
+        //         $companyName = $franDetails->company_name;
+        //         $response= Http::get($apiUrl,['company_name'=>$companyName]);
+        //         if($response){
+        //             $dataFromB=$response->json();
+        //         }
 
 
 
-        // // Convert both collections to arrays
-        $insightMatchesArray = $insightMatches->toArray();
-        $dataFromBArray = $dataFromB;
-        // // Combine both arrays into one
-        $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
-       // dd($combinedDataArray);
+        //     // // Convert both collections to arrays
+        //     $insightMatchesArray = $insightMatches->toArray();
+        //     $dataFromBArray = $dataFromB;
+        //     // // Combine both arrays into one
+        //     $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
+        //    // dd($combinedDataArray);
 
-        // // If you prefer to work with a collection, you can convert it back to a collection
-        $combinedDataCollection = collect($combinedDataArray);
-        //dd($combinedDataCollection);
+        //     // // If you prefer to work with a collection, you can convert it back to a collection
+        //     $combinedDataCollection = collect($combinedDataArray);
+        //     //dd($combinedDataCollection);
 
-        //OI Redirection Start
-        if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
-            $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
-            //dd($iobrands);
-            if (!empty($iobrands)) { 
-                $ioRedirect = Config('constants.OIDomain') . '/manufacturer/' . $iobrands->profile_name . '-' . $iobrands->brand_id;
-                return redirect($ioRedirect, 301);
-            }
-        }
+        //     //OI Redirection Start
+        //     if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
+        //         $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
+        //         //dd($iobrands);
+        //         if (!empty($iobrands)) {
+        //             $ioRedirect = Config('constants.OIDomain') . '/manufacturer/' . $iobrands->profile_name . '-' . $iobrands->brand_id;
+        //             return redirect($ioRedirect, 301);
+        //         }
+        //     }
         //OI Redirection Code End
 
         if (!empty($franDetails) && request()->segment(1) == 'hi' && $franDetails->is_hindi == 0)
@@ -212,10 +212,12 @@ class BrandController extends Controller
                 ->first();
 
             // return the investor data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection'));
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits'));
+            // , 'combinedDataCollection'
         } else {
             // return the data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection'));
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData'));
+            // , 'combinedDataCollection'
         }
     }
 

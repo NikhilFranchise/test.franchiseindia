@@ -319,8 +319,8 @@
         </div>
 
 
-        
-     
+
+
     </div>
 </div>
 
@@ -510,7 +510,7 @@
     <p>&nbsp;</p>
 </div>
 <!-- recent activities -->
-<style>
+{{--  <style>
     .recent-activities {
         font-family: 'Open Sans Regular', serif;
         width: 100%;
@@ -709,8 +709,8 @@
             margin-top: 0;
         }
 
-</style>
-<div id="investmentnew_tab" class="tab-section">
+</style>  --}}
+{{--  <div id="investmentnew_tab" class="tab-section">
 
     @if ($combinedDataCollection != null && $combinedDataCollection->isNotEmpty())
         <h2 class="tab-sec-ttl-recent">Recent Updates</h2>
@@ -755,21 +755,21 @@
         <span><strong>Tags:</strong></span>
         @php
             $maincat = Config('constants.CategoryArr.' . $franDetails->ind_main_cat);
-            $renderedStates = []; // To keep track of already rendered states
+            $renderedStates = [];
         @endphp
         @foreach ($stateList as $state)
             @php
-                // Find the key of the matching state in stateArr
+
                 $stateKey = array_search($state['state'], Config::get('location.stateArr'));
             @endphp
-            
+
             @if ($stateKey !== false && !in_array($state['state'], $renderedStates))
-                {{-- Add the state to the renderedStates array to avoid duplicate rendering --}}
+
                 @php
                     $renderedStates[] = $state['state'];
                 @endphp
 
-                {{-- Generate the URL for the matching state --}}
+
                 <a
                     href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc-' . $stateKey) }}">
                     {{ $maincat . ' Business Franchise in ' . $state['state'] }}
@@ -777,5 +777,5 @@
             @endif
         @endforeach
     </div>
-</div>
+</div>  --}}
 <!-- recent activities -->

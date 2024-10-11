@@ -1068,7 +1068,8 @@ Route::get('/index/hi',[NewHomePageController::class,'cwvMobilehindiHomePage']);
 Route::get('/cvwhome',[NewHomePageController::class,'cvwhomeNew']);
 Route::get('/index', [NewHomePageController::class, 'cwvMobile']);
 Route::get('/index1', [NewHomePageController::class, 'cwvMobile']);
-
+Route::get('/homepage', [NewHomePageController::class, 'newhomepage']);
+Route::get('/homepage/hi', [NewHomePageController::class, 'hindinewhomepage']);
 
 Route::get('/caturl',[CommonController::class,'url']);
 Route::get('/subcaturl',[CommonController::class,'subcaturl']);
