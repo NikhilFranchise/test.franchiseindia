@@ -8,7 +8,7 @@
     <a href="{{ $logoDetail['brand_link'] }}" target="_blank" aria-label="{{ $logoDetail['brand_heading'] }}">
 
                         <img src="{{ $logoDetail['brand_img'] }}" alt="{{ $logoDetail['brand_heading'] }}"
-                        width="161" height="79" loading="lazy"></a>
+                        width="205" height="100" loading="lazy"></a>
                 </div>
                 <div class="leading-card-brand-category">
 
