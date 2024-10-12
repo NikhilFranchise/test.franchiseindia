@@ -712,7 +712,7 @@ class BusinessListingController extends Controller
             });
         }
 
-
+// dd($stateNames);
         $city = "";
 
         if (!empty(request()->city)) {/*
@@ -814,6 +814,83 @@ class BusinessListingController extends Controller
                 ->get();
         }
 
+        $cat_ids = config('constants.CategoryArr');
+        // dd($cat_ids); 
+        $categoryCounts = [];
+        
+        foreach ($cat_ids as $id => $name) {
+            $cat_brand_count = FranchisorBusinessDetail::query()
+                ->where('profile_status', 1)
+                ->where('ind_main_cat', $id); // Use the ID here
+                // ->count();
+
+                foreach ($stateNames as $stateName) {
+                    $cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
+                }
+            
+                $cat_brand_count = $cat_brand_count->count();
+                $categoryCounts[$id] = $cat_brand_count;
+            // $categoryCounts[$id] = [
+            //     'name' => $name,
+            //     'count' => $cat_brand_count,
+            // ];
+        }
+      
+        // asort($categoryCounts);
+        // dd($categoryCounts);
+       
+      
+        $sub_cat_ids = config('constants.subCategoryArr');
+        // dd($sub_cat_ids);
+        $sub_categoryCounts = [];
+
+        // Loop through each main category
+        foreach ($sub_cat_ids as $category) {
+            // Loop through each subcategory within the main category
+            foreach ($category as $id => $name) {
+                // Query the database for each subcategory
+                $sub_cat_brand_count = FranchisorBusinessDetail::query()
+                    ->where('profile_status', 1)
+                    ->where('ind_cat', $id); // Use the ID here
+                    // ->count();
+                
+                    foreach ($stateNames as $stateName) {
+                        $sub_cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
+                    }
+                // Store the count in the result array
+                $sub_cat_brand_count = $sub_cat_brand_count->count();
+                $sub_categoryCounts[$id] = $sub_cat_brand_count;
+            }
+        }
+        
+        // Output the counts
+        // dd($sub_categoryCounts);
+
+        $sub_sub_cat_ids = config('constants.subSubCategoryArr');
+        // dd($sub_sub_cat_ids);
+        $sub_sub_categoryCounts = [];
+
+        // Loop through each main category
+        foreach ($sub_sub_cat_ids as $category) {
+            // Loop through each subcategory within the main category
+            foreach ($category as $id => $name) {
+                // Query the database for each subcategory
+                $sub_sub_cat_brand_count = FranchisorBusinessDetail::query()
+                    ->where('profile_status', 1)
+                    ->where('ind_sub_cat', $id); // Use the ID here
+                    // ->count();
+                    foreach ($stateNames as $stateName) {
+                        $sub_sub_cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
+                    }
+                
+                // Store the count in the result array
+                $sub_sub_cat_brand_count = $sub_sub_cat_brand_count->count();
+                $sub_sub_categoryCounts[$id] = $sub_sub_cat_brand_count;
+            }
+        }
+       
+
+
         $view = 'category.category';
         if (request()->segment(1) == 'amp')
             $view = 'category.hindi-category.amp-category';
@@ -851,7 +928,10 @@ class BusinessListingController extends Controller
             'franImageData',
             'city',
             'minInvestment',
-            'maxInvestment'
+            'maxInvestment',
+            'categoryCounts',
+            'sub_categoryCounts',
+            'sub_sub_categoryCounts'
         ));
     }
 
@@ -1099,6 +1179,15 @@ class BusinessListingController extends Controller
         // dd($segments[3]);
         // Check if the segments array has at least 4 elements
         $segment = isset($segments[3]) ? $segments[3] : null;
+
+        // to get brands total in cat on location merged pages
+        // $l = isset($segments[4]) ? $segments[4] : null;
+        // $list_l = explode('-', $l);
+        // $length = count($list_l); // This will give you 2
+        // dd($length);
+        // dd($list_l[1]);
+
+       
 
         // preg_match('/[a-zA-Z]+(\d+)$/', $lowcost, $matches);    // Match all integers at the end of $lowcost
         $lastIntegers = $matches[1] ?? null;    // Get the last set of integers
@@ -1525,10 +1614,14 @@ class BusinessListingController extends Controller
             }
             $locArrKey = explode(',', $locArrKey);
             $loc = $locArrKey;
+            // dd($loc);
+
+
         }
 
         if (!empty(request()->ftype))
             $franType = request()->ftype;
+        // dd($franType);
 
         if (!empty(request()->ssc)) {
             if (is_array(request()->ssc)) {
@@ -1597,22 +1690,104 @@ class BusinessListingController extends Controller
         if (!empty($franType))
             $franData->where('franchise_partner_type',  $franType);
 
-        if (count($locArrKey) > 0) {
+        if (count($locArrKey) > 0) {  
             $stateNames = [];
 
             foreach ($locArrKey as $key => $val) {
                 $stateNames[] = config('location.stateArr.' . $val);
             }
-            $franData->where(function ($query) use ($stateNames) {
+            // dd($stateNames);
+             $aa = $franData->where(function ($query) use ($stateNames) {
                 $query->where('expansion_location', 'LIKE', '%' . $stateNames[0] . '%');
 
                 for ($i = 1; $i < count($stateNames); $i++) {
                     $query->orWhere('expansion_location', 'LIKE', '%' . $stateNames[$i] . '%');
                 }
-            });
+            })->count();
+            // dd($aa);
         }
 
+        // total brands count for master cat
+        $cat_ids = config('constants.CategoryArr');
+        // dd($cat_ids); 
+        $categoryCounts = [];
+        
+        foreach ($cat_ids as $id => $name) {
+            $cat_brand_count = FranchisorBusinessDetail::query()
+                ->where('profile_status', 1)
+                ->where('ind_main_cat', $id); // Use the ID here
+                // ->count();
 
+                foreach ($stateNames as $stateName) {
+                    $cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
+                }
+            
+                $cat_brand_count = $cat_brand_count->count();
+                $categoryCounts[$id] = $cat_brand_count;
+            // $categoryCounts[$id] = [
+            //     'name' => $name,
+            //     'count' => $cat_brand_count,
+            // ];
+        }
+      
+        // asort($categoryCounts);
+        // dd($categoryCounts);
+       
+      
+        $sub_cat_ids = config('constants.subCategoryArr');
+        // dd($sub_cat_ids);
+        $sub_categoryCounts = [];
+
+        // Loop through each main category
+        foreach ($sub_cat_ids as $category) {
+            // Loop through each subcategory within the main category
+            foreach ($category as $id => $name) {
+                // Query the database for each subcategory
+                $sub_cat_brand_count = FranchisorBusinessDetail::query()
+                    ->where('profile_status', 1)
+                    ->where('ind_cat', $id); // Use the ID here
+                    // ->count();
+                
+                    foreach ($stateNames as $stateName) {
+                        $sub_cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
+                    }
+                // Store the count in the result array
+                $sub_cat_brand_count = $sub_cat_brand_count->count();
+                $sub_categoryCounts[$id] = $sub_cat_brand_count;
+            }
+        }
+        
+        // Output the counts
+        // dd($sub_categoryCounts);
+
+        $sub_sub_cat_ids = config('constants.subSubCategoryArr');
+        // dd($sub_sub_cat_ids);
+        $sub_sub_categoryCounts = [];
+
+        // Loop through each main category
+        foreach ($sub_sub_cat_ids as $category) {
+            // Loop through each subcategory within the main category
+            foreach ($category as $id => $name) {
+                // Query the database for each subcategory
+                $sub_sub_cat_brand_count = FranchisorBusinessDetail::query()
+                    ->where('profile_status', 1)
+                    ->where('ind_sub_cat', $id); // Use the ID here
+                    // ->count();
+                    foreach ($stateNames as $stateName) {
+                        $sub_sub_cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
+                    }
+                
+                // Store the count in the result array
+                $sub_sub_cat_brand_count = $sub_sub_cat_brand_count->count();
+                $sub_sub_categoryCounts[$id] = $sub_sub_cat_brand_count;
+            }
+        }
+       
+        // $cat_brand_count = FranchisorBusinessDetail::query()->select('ind_main_cat')
+        // ->where('profile_status', 1)
+        // ->where('ind_main_cat',8)
+        // ->count();
+        // dd($cat_brand_count);
         $city = "";
 
         if (!empty(request()->city)) {/*
@@ -1744,7 +1919,10 @@ class BusinessListingController extends Controller
             'franImageData',
             'city',
             'minInvestment',
-            'maxInvestment'
+            'maxInvestment',
+            'categoryCounts',
+            'sub_categoryCounts',
+            'sub_sub_categoryCounts'
         ));
     }
     public function getBusinessListingnormalization(Request $request)
@@ -2071,10 +2249,70 @@ class BusinessListingController extends Controller
             }
         }
 
+        $cat_ids = config('constants.CategoryArr');
+        // dd($cat_ids);
+        // $categoryCounts = [];
+        
+        // foreach ($cat_ids as $id => $name) {
+        //     $cat_brand_count = FranchisorBusinessDetail::query()
+        //         ->where('profile_status', 1)
+        //         ->where('ind_main_cat', $id) /
+        //         ->count();
+        
+        //     $categoryCounts[$id] = $cat_brand_count;
+            
+        // }
+        // dd($categoryCounts);
+        $categoryCounts = config('category.catCountArr');
+
+        // $sub_cat_ids = config('constants.subCategoryArr');
+        // // dd($sub_cat_ids);
+        // $sub_categoryCounts = [];
+
+        // // Loop through each main category
+        // foreach ($sub_cat_ids as $category) {
+        //     // Loop through each subcategory within the main category
+        //     foreach ($category as $id => $name) {
+        //         // Query the database for each subcategory
+        //         $sub_cat_brand_count = FranchisorBusinessDetail::query()
+        //             ->where('profile_status', 1)
+        //             ->where('ind_cat', $id) // Use the ID here
+        //             ->count();
+                
+        //         // Store the count in the result array
+        //         $sub_categoryCounts[$id] = $sub_cat_brand_count;
+        //     }
+        // }
+        
+        // // Output the counts
+        // dd($sub_categoryCounts);
+$sub_categoryCounts = config('category.subcatcount');
+
+        // $sub_sub_cat_ids = config('constants.subSubCategoryArr');
+        // // dd($sub_sub_cat_ids);
+        // $sub_sub_categoryCounts = [];
+
+        // // Loop through each main category
+        // foreach ($sub_sub_cat_ids as $category) {
+        //     // Loop through each subcategory within the main category
+        //     foreach ($category as $id => $name) {
+        //         // Query the database for each subcategory
+        //         $sub_sub_cat_brand_count = FranchisorBusinessDetail::query()
+        //             ->where('profile_status', 1)
+        //             ->where('ind_sub_cat', $id) // Use the ID here
+        //             ->count();
+                
+        //         // Store the count in the result array
+        //         $sub_sub_categoryCounts[$id] = $sub_sub_cat_brand_count;
+        //     }
+        // }
+        // dd($sub_sub_categoryCounts);
+        $sub_sub_categoryCounts = config('category.sub_sub_cat_count');
+       
         // return view($view, compact('brandResults', 'shuffledResults', 'breadCrumb', 'catName', 'mc', 'sc', 'ssc', 'loc', 'ftype', 'seoTitle', 'seoDesc', 'seoKeywords','sortby','minRangeValue','maxRangevalue','orderby','text', 'searchq', 'franImageData', 'city', 'resultType', 'reqSt', 'chk_homebased'));
 
 
-        return view($view, compact('brandResults', 'shuffledResults', 'breadCrumb', 'catName', 'mc', 'sc', 'ssc', 'loc', 'ftype', 'seoTitle', 'seoDesc', 'seoKeywords', 'sortby', 'minRangeValue', 'maxRangevalue', 'orderby', 'text', 'searchq', 'franImageData', 'city', 'chk_homebased','minInvestment','maxInvestment'));
+        return view($view, compact('sub_sub_categoryCounts','sub_categoryCounts','categoryCounts','brandResults', 'shuffledResults', 'breadCrumb', 'catName', 'mc', 'sc', 'ssc', 'loc', 'ftype', 'seoTitle', 'seoDesc', 'seoKeywords', 'sortby', 'minRangeValue', 'maxRangevalue', 'orderby', 'text', 'searchq', 'franImageData', 'city', 'chk_homebased','minInvestment','maxInvestment'));
     }
 
     /**

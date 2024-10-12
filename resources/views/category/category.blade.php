@@ -50,7 +50,6 @@ $c_Url = url()->current();
             } else {
                 $queryString .= $key . '=' . urlencode($value) . '&';
             }
-             // Remove the trailing '&' and the '?' if no valid query parameters are left
         
         }
         $queryString = rtrim($queryString, '&');
@@ -196,6 +195,7 @@ $c_Url = url()->current();
                                     // dd($rate);
                                 }
                             @endphp
+
 
                             @if ($brandResult->membership_type == 1 || $brandResult->free_logo_visibility == 1)
 

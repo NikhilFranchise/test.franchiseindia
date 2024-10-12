@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>
-                    10000+ Business Options
+                    30000+ Business Options
                 </h1>
                 <h2>World's highest visited franchise website network</h2>
                 <a href="{{url('investor/create')}}">
