@@ -59,7 +59,7 @@
 
                                         </div>
                                         <div class="showview">{{ $videos1[$firstVideoIndex]['views'] }}
-                                            {{ Request::segment(2) == 'hi' ? 'विचारों' : 'Views' }}
+                                            {{ Request::segment(1) == 'hi' ? 'विचारों' : 'Views' }}
                                             <span>{{ date('d-M-Y', strtotime($videos1[$firstVideoIndex]['date'])) }}</span></div>
                                     </div>
                                 </div>
@@ -90,7 +90,7 @@
 
                                             </div>
                                             <div class="showview">{{ $videos1[$secondVideoIndex]['views'] }}
-                                                {{ Request::segment(2) == 'hi' ? 'विचारों' : 'Views' }}
+                                                {{ Request::segment(1) == 'hi' ? 'विचारों' : 'Views' }}
                                                 <span>{{ date('d-M-Y', strtotime($videos1[$secondVideoIndex]['date'])) }}</span></div>
                                         </div>
                                     </div>

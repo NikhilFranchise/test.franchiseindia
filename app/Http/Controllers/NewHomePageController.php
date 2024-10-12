@@ -162,8 +162,11 @@ class NewHomePageController extends Controller
         // dd($videos);
         // $brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
-        return view('cvw.homepage')->with(compact('articles',  'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
+        // return view('cvw.homepage')->with(compact('articles',  'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
 
+        return view('newHomepage.newmasterhomepage')->with(compact('articles',  'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
+
+        // return view('newHomepage.newmasterhomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
 
         // return view('layout.hindihomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
     }
@@ -184,8 +187,6 @@ class NewHomePageController extends Controller
 
         // Check if the 'brandslft' data exists in the cache
         $isBrandslftCached = Cache::has($cacheKeys['brandslft']);
-        // dd($isBrandslftCached);
-        // dd($request->all());
 
         // Retrieve cached data or fetch and cache if not available
         $brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
@@ -198,20 +199,6 @@ class NewHomePageController extends Controller
                 ->get()
                 ->shuffle();
         });
-        // dd($brandslft);
-        // dd($cacheDatalft);
-        // dd([
-        // 	'is_brandslft_cached' => $isBrandslftCached,
-        // 	'cache_data' => $cacheData,
-        // 	'database_data' => HomePremiumPageBrand::query()
-        // 		->where('status', 1)
-        // 		->where('brand_section', 2)
-        // 		->where('page_type', 1)
-        // 		->orderBy('inventory_backup', 'ASC')
-        // 		->take(2)
-        // 		->get()
-        // 		->shuffle(),
-        // ]);
 
         $brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
             return HomePremiumPageBrand::query()
@@ -312,7 +299,8 @@ class NewHomePageController extends Controller
 
         // $brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
 
-        return view('cvw.homepage')->with(compact('articles', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
+        // return view('cvw.homepage')->with(compact('articles', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
+        return view('newHomepage.newmasterhomepage')->with(compact('articles', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
 
         // return view('layout.masternewhomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
     }

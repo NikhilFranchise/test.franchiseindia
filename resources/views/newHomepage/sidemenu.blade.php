@@ -1,4 +1,4 @@
-@if (request()->segment(2) == 'hi')
+@if (request()->segment(1) == 'hi')
 <nav id="sidebar">
     <div id="dismiss"><i class="fas fa-arrow-left"></i></div>
     <ul class="list-unstyled components border-bottom-1 pt-35">
@@ -19,7 +19,7 @@
                 {{-- <link rel="stylesheet" href="https://www.google.com/cse/style/look/greensky.css" type="text/css"> --}}
             </div>
         </li>
-        
+
         @mobile
         <li>
             <div class="p-2 language-main-bx">
@@ -914,7 +914,7 @@ form-control-custom-main" aria-label="Select Language"
             <div class="mCSB_draggerRail"></div>
         </div>
     </div>
-</nav>    
+</nav>
 @else
 
 <nav id="sidebar">
@@ -948,7 +948,7 @@ input-group-prepend-custom" id="basic-addon1">
                             alt="">
                     </span>
                     <div class="form-group form-group-sm">
-                        <select class="form-control 
+                        <select class="form-control
 form-control-custom-main" aria-label="Select Language"
                             id="exampleFormControlSelect1">
                             <option hidden="">Language</option>

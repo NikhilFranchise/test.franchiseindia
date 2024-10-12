@@ -1,5 +1,5 @@
 <section class="trending-videos">
-    <h2 class="brands-head">{{ Request::segment(2) == 'hi' ? 'ट्रेंडिंग वीडियो' : 'Trending Videos' }}</h2>
+    <h2 class="brands-head">{{ Request::segment(1) == 'hi' ? 'ट्रेंडिंग वीडियो' : 'Trending Videos' }}</h2>
     <div class="card-wrap">
         @php
             $videos1 = $videos;

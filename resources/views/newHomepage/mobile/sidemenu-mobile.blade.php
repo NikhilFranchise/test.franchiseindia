@@ -1,4 +1,4 @@
-@if (request()->segment(2) == 'hi')
+@if (request()->segment(1) == 'hi')
     <nav id="sidebar">
         <div id="dismiss"><i class="fas fa-arrow-left"></i></div>
         <ul class="list-unstyled components border-bottom-1 pt-35">
@@ -33,8 +33,8 @@
                                 <select class="form-control form-control-custom-main" aria-label="Select Language"
                                     id="exampleFormControlSelect1">
                                     <option hidden="">Language</option>
-                                    <option value="{{ url('index') }}">EN - English</option>
-                                    <option value="{{ url('index/hi/') }}">HI - Hindi</option>
+                                    <option value="{{ url('/') }}">EN - English</option>
+                                    <option value="{{ url('/hi') }}">HI - Hindi</option>
                                 </select>
                             </div>
                         </div>
@@ -1859,8 +1859,8 @@
                                 <select class="form-control form-control-custom-main" aria-label="Select Language"
                                     id="exampleFormControlSelect1">
                                     <option hidden="">Language</option>
-                                    <option value="{{ url('index') }}">EN - English</option>
-                                    <option value="{{ url('index/hi/') }}">HI - Hindi</option>
+                                    <option value="{{ url('/') }}">EN - English</option>
+                                    <option value="{{ url('/hi') }}">HI - Hindi</option>
                                 </select>
                             </div>
                         </div>

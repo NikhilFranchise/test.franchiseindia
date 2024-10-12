@@ -1,4 +1,4 @@
-@if  (request()->segment(2) == 'hi')
+@if  (request()->segment(1) == 'hi')
 @mobile
 <div class="modal fade lg-panel formsection" id="login-pnl" tabindex="-1" role="dialog"
 aria-labelledby="exampleModalLabel">
@@ -63,7 +63,7 @@ aria-labelledby="exampleModalLabel">
                                     </div>
                                     <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">यह मोबाइल नंबर
                                         पंजीकृत नहीं है|</div>
-                                
+
                                 <div class="input-group" id="password_group">
                                     <span class="input-group-addon">
                                         <div class="pwdsprite"></div>
@@ -205,7 +205,7 @@ aria-labelledby="exampleModalLabel">
                                     </div>
                                     <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">यह मोबाइल नंबर
                                         पंजीकृत नहीं है|</div>
-                                
+
                                 <div class="input-group" id="password_group">
                                     <span class="input-group-addon">
                                         <div class="pwdsprite"></div>
@@ -393,7 +393,7 @@ aria-labelledby="exampleModalLabel">
                             </div>
                         </div>
                     </form>
-                    
+
                 </div>
                 <div role="tabpanel" class="tab-pane" id="register">
                     <form class="form-horizontal" id="registration">

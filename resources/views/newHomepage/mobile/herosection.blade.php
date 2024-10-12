@@ -13,7 +13,7 @@
                 src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.png"
                 alt="easy gym" width="237" height="60"></a>
     </div>
-    @if (request()->segment(2) == 'hi')
+    @if (request()->segment(1) == 'hi')
         <h1><span>20 हजार से अधिक </span> कारोबारी विक्लपों में अपने लिए तलाश करें</h1>
         <h2>दुनियाभर में सबसे अधिक तलाश किया जाने वाला फ्रैंचाइज वेबसाइट नेटवर्क।</h2>
     @else
@@ -24,7 +24,7 @@
         <input class="radio" id="one" name="group" type="radio" checked>
         <input class="radio" id="two" name="group" type="radio">
         <input class="radio" id="three" name="group" type="radio">
-        @if (request()->segment(2) == 'hi')
+        @if (request()->segment(1) == 'hi')
             <div class="tabs">
                 <label class="tab" id="one-tab" for="one">कैटेगरी</label>
                 <label class="tab" id="two-tab" for="two">लोकेशन</label>

@@ -1,9 +1,9 @@
-@if (request()->segment(2) == 'hi')
+@if (request()->segment(1) == 'hi')
 <section class="about-us" id="about-us">
     <div class="container">
         <div class="row justify-content-center">
             <div class="modified-col col-md-12">
-                <p class="section-th">फ्रैंचाइज़ इंडिया के बारे में</p>    
+                <p class="section-th">फ्रैंचाइज़ इंडिया के बारे में</p>
                 <div class="about-text-section">
                     Franchiseindia.com दुनिया की # 1 फ्रेंचाइजी वेबसाइट और एक उद्यमी की दैनिक खुराक है।
                     फ्रैंचाइज़ इंडिया होल्डिंग्स लिमिटेड - एशिया की सबसे बड़ी एकीकृत फ़्रैंचाइज़ समाधान

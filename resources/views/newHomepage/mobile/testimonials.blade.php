@@ -1,7 +1,7 @@
 <section class="testimonials">
     {{--  <h2 class="brands-head">Trending Videos</h2>  --}}
     <div class="testimonial-container">
-        @if (request()->segment(2) != 'hi')
+        @if (request()->segment(1) != 'hi')
             <div class="testimonial-wrap">
                 <img src="{{ url('cvw/images/testimonials-home/naturals.webp') }}" class="img-b-fluid"
                     alt="Naturals Salon &amp; Spa" width="141" height="141" loading="lazy">

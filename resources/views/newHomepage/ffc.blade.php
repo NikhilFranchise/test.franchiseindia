@@ -3,9 +3,9 @@
         <div class="row justify-content-center">
             <div class="modified-col col-md-12">
                 <div class="section-ptb">
-                    <h2>{{ Request::segment(2) == 'hi' ? 'फीचर्ड फ्रैंचाइज़ कंपनियां' : 'Featured Franchise Companies' }}
+                    <h2>{{ Request::segment(1) == 'hi' ? 'फीचर्ड फ्रैंचाइज़ कंपनियां' : 'Featured Franchise Companies' }}
                     </h2>
-                </div> 
+                </div>
             </div>
         </div>
         <ul>
@@ -27,7 +27,7 @@
                     <div class="card-body-section">
                         <div class="ffchead"><a href="{{ $brandUrl }}" target="_blank">{{ mb_strimwidth($logoDetail['brand_alt'], 0, 25, '...') }}</a></div>
                         <p>
-                                {{ Request::segment(2) == 'hi' ? 'निवेश सीमा' : 'Investment range' }}
+                                {{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment range' }}
                         </p>
                         <div class="card-info-amount">
                             ₹{{ $logoDetail['investment_range_new'] }}

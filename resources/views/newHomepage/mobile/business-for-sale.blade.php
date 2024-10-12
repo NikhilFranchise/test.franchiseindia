@@ -1,6 +1,6 @@
 <section class="business-for-sale">
     <h2 class="brands-head">
-        {{ Request::segment(2) == 'hi' ? 'बिजनेस की बिक्री का अवसर' : 'Business For Sale Opportunity' }}</h2>
+        {{ Request::segment(1) == 'hi' ? 'बिजनेस की बिक्री का अवसर' : 'Business For Sale Opportunity' }}</h2>
     <div class="card-wrap">
 
         <div class="leading-card">
@@ -24,7 +24,7 @@
                         target="_blank" aria-label="Looking For Specialized Centralized">Looking For Specialized Centralized</a></h2>
             </div>
             <div class="leading-card-investment">
-                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'कीमत' : 'Asking Price' }}</div>
+                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'कीमत' : 'Asking Price' }}</div>
                 <div class="card-info-amt">15 Crores</div>
             </div>
             <div class="leading-card-area">
@@ -39,7 +39,7 @@
                         height="13" alt="location" loading="lazy">Bengaluru</div>
             </div>
             <a href="https://www.businessex.com/business/looking-for-specialized-centralized-and-package-air-conditioning/mjzwdi"
-                target="_blank" aria-label="Know More" class="know-more">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                target="_blank" aria-label="Know More" class="know-more">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
         <div class="leading-card">
@@ -63,7 +63,7 @@
                 </h2>
             </div>
             <div class="leading-card-investment">
-                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'कीमत' : 'Asking Price' }}</div>
+                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'कीमत' : 'Asking Price' }}</div>
                 <div class="card-info-amt">1 Crore</div>
             </div>
             <div class="leading-card-area">
@@ -78,7 +78,7 @@
                         height="13" alt="location" loading="lazy">Bengaluru</div>
             </div>
             <a href="https://www.businessex.com/business/looking-for-buyers-investors-for-an-online-vegan-ecommerce-business/lsstic"
-                target="_blank" class="know-more" aria-label="Know More">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                target="_blank" class="know-more" aria-label="Know More">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
         <div class="leading-card">
@@ -100,7 +100,7 @@
                         target="_blank" aria-label="Seeking Buyers For Marketing And Communication Agency">Seeking Buyers For Marketing And Communication Agency</a></h2>
             </div>
             <div class="leading-card-investment">
-                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'कीमत' : 'Asking Price' }}</div>
+                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'कीमत' : 'Asking Price' }}</div>
                 <div class="card-info-amt">5 Crores</div>
             </div>
             <div class="leading-card-area">
@@ -115,7 +115,7 @@
                         height="13" alt="location" loading="lazy">Ahmedabad</div>
             </div>
             <a href="https://www.businessex.com/business/seeking-buyers-for-marketing-and-communication-agency/mdk69z"
-                target="_blank" class="know-more" aria-label="Know More">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                target="_blank" class="know-more" aria-label="Know More">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
         <div class="leading-card">
             <div class="brands-inner"><a
@@ -135,7 +135,7 @@
                         target="_blank" aria-label="Looking Investor For Pharma Distribution Business">Looking Investor For Pharma Distribution Business</a></h2>
             </div>
             <div class="leading-card-investment">
-                <div class="card-info">{{ Request::segment(2) == 'hi' ? 'कीमत' : 'Asking Price' }}</div>
+                <div class="card-info">{{ Request::segment(1) == 'hi' ? 'कीमत' : 'Asking Price' }}</div>
                 <div class="card-info-amt">5 Crores</div>
             </div>
             <div class="leading-card-area">
@@ -150,7 +150,7 @@
                         height="13" alt="location" loading="lazy">Mumbai</div>
             </div>
             <a href="https://www.businessex.com/business/looking-investor-for-pharma-distribution-business/ox9om1"
-                target="_blank" class="know-more" aria-label="Know More">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                target="_blank" class="know-more" aria-label="Know More">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
     </div>
 </section>

@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="section-ptb">
                     <h2>
-                        {{ Request::segment(2) == 'hi' ? 'आज की ट्रेंडिंग फ्रैंचाइजी कंपनियां' : 'Leading Franchises Today' }}
+                        {{ Request::segment(1) == 'hi' ? 'आज की ट्रेंडिंग फ्रैंचाइजी कंपनियां' : 'Leading Franchises Today' }}
                     </h2>
                 </div>
             </div>
@@ -33,23 +33,23 @@
                             <h2>
                                 <a href="{{ $logoDetail['brand_link'] }}" target="_blank">{{ $logoDetail['brand_heading'] }}</a>
                             </h2>
-                            <div class="d-flex"> 
-                                <div class="card-info"> {{ Request::segment(2) == 'hi' ? 'निवेश सीमा' : 'Investment range' }}</div>
+                            <div class="d-flex">
+                                <div class="card-info"> {{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment range' }}</div>
                                 <div class="card-info-amt"> ₹{{ $logoDetail['investment_range_new'] }}</div>
                             </div>
                             <div class="d-flex">
-                                <div class="card-info"> {{ Request::segment(2) == 'hi' ? 'क्षेत्र की आवश्यकता है' : 'Area Required' }}</div>
+                                <div class="card-info"> {{ Request::segment(1) == 'hi' ? 'क्षेत्र की आवश्यकता है' : 'Area Required' }}</div>
                                 <div class="card-info-amt"> {{ $logoDetail['area_required'] }}</div>
                             </div>
                             <div class="d-flex">
-                                <div class="card-info"> {{ Request::segment(2) == 'hi' ? 'फ्रेंचाइज आउटलेट्स' : 'Franchise Outlets' }}</div>
+                                <div class="card-info"> {{ Request::segment(1) == 'hi' ? 'फ्रेंचाइज आउटलेट्स' : 'Franchise Outlets' }}</div>
                                 <div class="card-info-amt">{{ $logoDetail['franchise_outlets'] }}</div>
                             </div>
-                            <div class="link-section"><a href="{{ $logoDetail['brand_link']}}" target="_blank">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a></div>
+                            <div class="link-section"><a href="{{ $logoDetail['brand_link']}}" target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a></div>
                         </div>
                     </div>
-                 
-                    @endforeach    
+
+                    @endforeach
                 </div>
             </div>
         </div>
