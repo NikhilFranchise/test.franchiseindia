@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewsLetterSubscribe;
 use Illuminate\Support\Facades\Log;
+use App\Models\FranchisorBusinessDetail;
+use Illuminate\Support\Facades\Cache;
+
 
 class InsightsController extends Controller
 {
@@ -248,40 +251,214 @@ class InsightsController extends Controller
         }
     }
 
+    // public function getInsightsDetails(Request $request)
+    // {
+
+    //     $id = $request->id;
+
+
+    //     $newsDetails        = InsightList::with(['author', 'category', 'Subcategory'])->where('status', 1)->where('news_type', 'fi')->where('news_id', $id)->get();
+    //     // If news details not found, abort with 404
+    //     if ($newsDetails->isEmpty()) {
+    //         // abort(404);
+    //         return redirect('insights/pagenotfound');
+    //     }
+    //     $author_details = AuthorList::query()->where('author_id', $newsDetails[0]['author_id'])->get();
+    //     $associatedTags = ContentTagsAssigned::query()->where('content_id', $id)->select('tag_id')->where('content_type', 2)->get();
+
+    //     foreach ($associatedTags as $tags) {
+    //         $assocTag = SeoTag::query()
+    //             ->where('tag_id', $tags->tag_id)
+    //             ->select('tag_id', 'name')
+    //             ->distinct()
+    //             ->first();
+
+    //         if ($assocTag) {
+    //             $assocTags[] = $assocTag;
+    //         }
+    //     }
+
+    //     $allBrandMatches = [];
+
+    //     // Loop through each news detail to match titles
+    //         foreach ($newsDetails as $detail) {
+    //             $title = $detail->title; // Get the title of the current news detail
+
+    //             // Find matches in FranchisorBusinessDetail based on partial match of company_name in the title
+    //             $brandMatches = FranchisorBusinessDetail::query()
+    //                 ->select('fran_detail_id', 'company_name')
+    //                 ->where('profile_status', 1)
+    //                 ->whereRaw("LOWER(?) LIKE CONCAT('%', LOWER(company_name), '%')", [$title])
+    //                 ->orderByDesc('created_at')
+    //                 ->limit(3)
+    //                 ->get()
+    //                 ->map(function ($item) {
+    //                     // Return an associative array with company name and fran_detail_id
+    //                     return [
+    //                         'fran_detail_id' => $item->fran_detail_id,
+    //                         'company_name' => $item->company_name,
+    //                     ];
+    //                 });
+
+    //             // Store the matches in the allBrandMatches array with the title
+    //             $allBrandMatches[$title] = $brandMatches;
+    //         }
+
+    //         // Prepare data for the view
+    //             $franchiseData = [];
+    //             foreach ($allBrandMatches as $title => $matches) {
+    //                 foreach ($matches as $match) {
+    //                     $franchiseData[] = [
+    //                         'fran_detail_id' => $match['fran_detail_id'],
+    //                         'company_name' => $match['company_name'],
+    //                         'title' => $title // Optionally include the title if needed
+    //                     ];
+    //                 }
+    //             }
+            
+    //         //  dd($franchiseData); // This will show the flattened array
+    //         //  dd($allBrandMatches);
+    //         //  dd($newsDetails);
+
+    //     if (empty($newsDetails)) {
+    //         return redirect('/insights');
+    //     } else {
+
+    //         return view('insights.insight_detail')->with(compact('newsDetails', 'author_details','franchiseData'));
+    //     }
+    // }
+
     public function getInsightsDetails(Request $request)
     {
-
         $id = $request->id;
-
-
-        $newsDetails        = InsightList::with(['author', 'category', 'Subcategory'])->where('status', 1)->where('news_type', 'fi')->where('news_id', $id)->get();
-        // If news details not found, abort with 404
+        $cacheDuration = 3600; // Cache duration in seconds (1 hour)
+    
+        // Cache key for the news details
+        $newsCacheKey = "news_details_{$id}";
+    
+        // Retrieve or cache news details
+        $newsDetails = Cache::remember($newsCacheKey, $cacheDuration, function () use ($id) {
+            return InsightList::with(['author', 'category', 'Subcategory'])
+                ->where('status', 1)
+                ->where('news_type', 'fi')
+                ->where('news_id', $id)
+                ->get();
+        });
+    
         if ($newsDetails->isEmpty()) {
-            // abort(404);
             return redirect('insights/pagenotfound');
         }
-        $author_details = AuthorList::query()->where('author_id', $newsDetails[0]['author_id'])->get();
-        $associatedTags = ContentTagsAssigned::query()->where('content_id', $id)->select('tag_id')->where('content_type', 2)->get();
-
+    
+        // Cache key for the author details
+        $authorCacheKey = "author_details_{$newsDetails[0]['author_id']}";
+    
+        $author_details = Cache::remember($authorCacheKey, $cacheDuration, function () use ($newsDetails) {
+            return AuthorList::query()->where('author_id', $newsDetails[0]['author_id'])->get();
+        });
+    
+        // Cache key for associated tags
+        $tagsCacheKey = "associated_tags_{$id}";
+    
+        $associatedTags = Cache::remember($tagsCacheKey, $cacheDuration, function () use ($id) {
+            return ContentTagsAssigned::query()
+                ->where('content_id', $id)
+                ->select('tag_id')
+                ->where('content_type', 2)
+                ->get();
+        });
+    
+        // Get associated SEO tags
+        $assocTags = [];
         foreach ($associatedTags as $tags) {
-            $assocTag = SeoTag::query()
-                ->where('tag_id', $tags->tag_id)
-                ->select('tag_id', 'name')
-                ->distinct()
-                ->first();
-
+            $tagCacheKey = "seo_tag_{$tags->tag_id}";
+    
+            $assocTag = Cache::remember($tagCacheKey, $cacheDuration, function () use ($tags) {
+                return SeoTag::query()
+                    ->where('tag_id', $tags->tag_id)
+                    ->select('tag_id', 'name')
+                    ->distinct()
+                    ->first();
+            });
+    
             if ($assocTag) {
                 $assocTags[] = $assocTag;
             }
         }
-
-
-        if (empty($newsDetails)) {
-            return redirect('/insights');
-        } else {
-
-            return view('insights.insight_detail')->with(compact('newsDetails', 'author_details'));
+    
+        $allBrandMatches = [];
+        // foreach ($newsDetails as $detail) {
+        //     $title = strtolower($detail->title);
+        //     $titleWords = preg_split('/\s+/', $title); // Split title into words using spaces
+    
+        //     $brandMatches = Cache::remember("brand_matches_" . md5($title), $cacheDuration, function () use ($title,$titleWords) {
+        //         return FranchisorBusinessDetail::where('profile_status', 1)
+        //             ->select('fran_detail_id', 'company_name', 'profile_name')
+        //             ->get()
+        //             ->filter(function ($item) use ($titleWords) {
+        //                 // Split the company name into words and check if all are in the title
+        //                 $companyWords = explode(' ', strtolower($item->company_name));
+        //                 return empty(array_diff($companyWords, $titleWords)); // Check if all company words are in title words
+        //             })
+        //             ->take(30) // Limit the results after filtering
+        //             ->map(function ($item) {
+        //                 return [
+        //                     'fran_detail_id' => $item->fran_detail_id,
+        //                     'company_name' => $item->company_name,
+        //                     'profile_name' => $item->profile_name,
+        //                 ];
+        //             });
+        //     });
+    
+        //     $allBrandMatches[$title] = $brandMatches;
+        // }
+        foreach ($newsDetails as $detail) {
+            $title = strtolower($detail->title);
+            $titleWords = preg_split('/\s+/', $title); // Split title into words using spaces
+    
+            $brandMatches = Cache::remember("brand_matches_" . md5($title), $cacheDuration, function () use ($title, $titleWords) {
+                // Fetch company details and filter based on exact matches in title words
+                return FranchisorBusinessDetail::where('profile_status', 1)
+                    ->select('fran_detail_id', 'company_name', 'profile_name')
+                    ->get()
+                    ->filter(function ($item) use ($titleWords) {
+                        // Split the company name into words and ensure each word is exactly in the title words
+                        $companyWords = explode(' ', strtolower($item->company_name));
+                        // Escape regex characters in company words
+                        $escapedWords = array_map(function($word) {
+                            return preg_quote($word, '/');
+                        }, $companyWords);
+                        // Form a regex pattern to match words in sequence within the title
+                        $pattern = '/\b' . implode('\b.*?\b', $escapedWords) . '\b/';
+                        return preg_match($pattern, implode(' ', $titleWords));
+                    })
+                    ->take(3) // Limit the results after filtering
+                    ->map(function ($item) {
+                        return [
+                            'fran_detail_id' => $item->fran_detail_id,
+                            'company_name' => $item->company_name,
+                            'profile_name' => $item->profile_name,
+                        ];
+                    });
+            });
+    
+            $allBrandMatches[$title] = $brandMatches;
         }
+    
+        $franchiseData = [];
+        foreach ($allBrandMatches as $title => $matches) {
+            foreach ($matches as $match) {
+                $franchiseData[] = [
+                    'fran_detail_id' => $match['fran_detail_id'],
+                    'company_name' => $match['company_name'],
+                    'profile_name'=>$match['profile_name'],
+                    'title' => $title
+
+                ];
+            }
+        }
+        // dd($franchiseData);
+    
+        return view('insights.insight_detail')->with(compact('newsDetails', 'author_details', 'franchiseData'));
     }
 
     public function insightSearch(Request $request)

@@ -27,13 +27,13 @@
                 $queryString .= $key . '=' . urlencode($value) . '&';
             }
              // Remove the trailing '&' and the '?' if no valid query parameters are left
-        
+
         }
         $queryString = rtrim($queryString, '&');
         if ($queryString === '?') {
             $queryString = '';
         }
-        
+
         $queryString = rtrim($queryString, '&');
     }
 @endphp
@@ -75,7 +75,7 @@
     gtag('js', new Date());
     gtag('config', 'G-8MKFEZLR18');
   </script>
-  
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
     <script async >
         window.dataLayer = window.dataLayer || [];
@@ -436,8 +436,8 @@ padding-bottom: 50px;}.hero-desktop {display: none;}.hero-mobile {display: block
                                 <a
                                 data-target="#login-pnl" data-toggle="modal" href="#"><img
                                     src="https://www.franchiseindia.com/newhomepage/assets/img/Login.svg"
-                                    alt="Login"></a>      
-                                @endif  
+                                    alt="Login"></a>
+                                @endif
 
 
                                                 </span>
@@ -541,11 +541,11 @@ padding-bottom: 50px;}.hero-desktop {display: none;}.hero-mobile {display: block
                                             alt="Franchise India"
                                             height="32" width="200"></a></div>
                                 <div class="d-flex m-search"><span class="search" id="search">
-                                        
+
                                     <div class="p-2" data-toggle="modal" data-target="#search-main"><img
                                                 src="https://www.franchiseindia.com/newhomepage/assets/img/Search.svg"
                                                 alt="Search"><span>Search</span></div>
-                                                
+
                                     </span><span class="login-text-right text-right d-main"><span>
                                         {{-- <a
                                         data-target="#login-pnl" data-toggle="modal" href="#"><img
@@ -561,10 +561,10 @@ padding-bottom: 50px;}.hero-desktop {display: none;}.hero-mobile {display: block
                                         <a
                                         data-target="#login-pnl" data-toggle="modal" href="#"><img
                                             src="https://www.franchiseindia.com/newhomepage/assets/img/Login.svg"
-                                            alt="Login"></a>      
-                                        @endif      
-                                        
-                                        
+                                            alt="Login"></a>
+                                        @endif
+
+
                                                 </span>
                                         <ul class="login-main-section">
                                             {{-- @dd(Auth::check()); --}}

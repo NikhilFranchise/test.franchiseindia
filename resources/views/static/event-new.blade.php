@@ -795,11 +795,11 @@
         <div class="row">
             <div class="eventbor" style="margin-top:40px; ">
                 <div class="col-xs-12 col-sm-6 col-md-7 mdfy"><h1 class="evn">Upcoming Events</h1></div>
-                <div class="col-xs-12 col-sm-3 col-md-3 rightp">
+                <div class="col-xs-12 col-sm-6 col-md-5 rightp">
                     <a href="{{ Config::get('constants.MainDomain') }}/event-archives">Archives</a>
 
                 </div>
-
+{{-- 
                 <div class="col-xs-12 col-sm-3 col-md-2 eventserblk">
                     <div class="dropdown">
                         <button class="dropbtn">Location <img class="shercode" src="https://www.franchiseindia.com/images/drop-down-icon.png"/>
@@ -893,7 +893,7 @@
                         });
                     </script>
 
-                </div>
+                </div> --}}
 
 
             </div>
@@ -915,28 +915,29 @@
 
         </style>
         @php
-            $closed = array();
-                $currentd=date("Y/m/d");
-                function timecount($currentd,$eventdate)
-                {
-                $startTimeStamp = strtotime($currentd);
-                $endTimeStamp = strtotime($eventdate);
-                $timeDiff = $endTimeStamp - $startTimeStamp;
-                $numberDays = $timeDiff/86400;  // 86400 seconds in one day
-                // and you might want to convert to integer
-                $numberDays = $numberDays;
-                $showval= "in ".$numberDays." Days";
+          
+            $closed = [];
+             $currentd = date("Y/m/d");
 
-                if($numberDays==0 )
+            // Define the timecount function if it doesn't already exist
+            if (!function_exists('timecount')) {
+                function timecount($currentd, $eventdate)
                 {
-                    $showval="Today";
+                    $startTimeStamp = strtotime($currentd);
+                    $endTimeStamp = strtotime($eventdate);
+                    $timeDiff = $endTimeStamp - $startTimeStamp;
+                    $numberDays = $timeDiff / 86400;  // 86400 seconds in one day
+
+                    // Determine the display value
+                    if ($numberDays == 0) {
+                        return "Today";
+                    } elseif ($numberDays < 1) {
+                        return "Closed";
+                    } else {
+                        return "in " . intval($numberDays) . " Days";
+                    }
                 }
-                else if($numberDays<1 )
-                {
-                    $showval="Closed";
-                }
-                return $showval;
-                }
+            }
         @endphp
 
 
@@ -978,7 +979,7 @@
                     <div class="venuedate">
                         {{$event['date']}}
 
-                        <span> {{($event['venu']=='N/A')? '' : $event['venu']}}</span></div>
+                        <span> {{($event['venue']=='N/A')? '' : $event['venue']}}</span></div>
 
                     <a href="{{$event['url']}}"
                        target="_blank" class="btn btn-default eventbtn">Registration</a>
@@ -1025,7 +1026,7 @@
                     <div class="eventhdk">{{$clos['title']}}
                     </div>
                     <div class="venuedate"> {{$clos['date']}}
-                        <span>{{$clos['venu']}} </span></div>
+                        <span>{{$clos['venue']}} </span></div>
 
                     <a href="{{$clos['url']}}"
                        target="_blank" class="btn btn-default eventbtn">Registration Closed</a>

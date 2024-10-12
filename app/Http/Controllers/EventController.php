@@ -5,40 +5,53 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use App\Models\Events;
+use Illuminate\Support\Facades\Cache;
+
+
 class EventController extends Controller
 {
     //
-    public function event()
+    public function event(Request $request)
     {
+		$cacheKey = 'events_cache'; // Define a single cache key for events
 
-		$curl = curl_init();
+        // Define cache expiration time in seconds
+        $cacheExpiration = 3600; // 1 hour
 
-		curl_setopt_array($curl, array(
-			CURLOPT_URL => 'https://melete.franchiseindia.com/api/franchise-home-videos-and-events',
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => '',
-			CURLOPT_SSL_VERIFYPEER=>0,
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 0,
+        // Check if events data exists in the cache
+        $events = Cache::remember($cacheKey, $cacheExpiration, function () use ($request) {
+            $eventdata = $request->input('events', ''); // Use input method for better readability
 
-			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => 'GET',
-		));
+            // Fetch upcoming or all events based on request
+            $query = Events::query()->select(
+                'fih_title as title',
+                'fih_url as url',
+                'fih_imageurl as image',
+                'fih_displaydate as date',
+                'fih_startdate as start_date',
+                'fih_date as endDate',
+                'fih_address as venue',
+                'fih_mobile as contact',
+                'fih_homepage as isDisplayOnHome',
+                'fih_facebook as facebook',
+                'fih_twitter as twitter',
+                'fih_linkedin as linkedin',
+                'fih_status as priority',
+                'show_website'
+            );
 
-		$response = curl_exec($curl);
+            // Apply conditions based on request
+            if ($eventdata === 'upcoming') {
+                $query->where('fih_status', 1)
+                      ->where('fih_date', '>=', DB::raw('CURDATE()'));
+            }
 
-		curl_close($curl);
+            return $query->orderBy('fih_date', 'ASC')->get()->toArray();
+        });
 
-
-		$event = json_decode($response, true);
-
-        $events = $event['events'];
-
-		 return view('static.event-new')->with(compact('events'));
-
-
-
-    }
+        // Return view with cached events data
+        return view('static.event-new')->with(compact('events'));
+}
 
 }
