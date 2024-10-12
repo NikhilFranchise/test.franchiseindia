@@ -8,6 +8,7 @@
     }
 </style>
 @php
+// dd($categoryCounts);
     use Illuminate\Support\Str;
     // dd($minInvestment);
     $minRangeValue = $minInvestment;
@@ -94,7 +95,10 @@
                                 <ul>
                                     @php
                                         $categArr = Config('constants.CategoryArr');
+                                        // dd($categArr);
+                                        // $categArr = $categoryCounts;
                                         asort($categArr);
+
                                     @endphp
                                     @foreach ($categArr as $indexMainCat => $mainCat)
                                         @php
@@ -110,6 +114,8 @@
                                                 $mainCheck = 'checked';
                                                 $display = 'block';
                                             }
+                                            $count = $categoryCounts[$indexMainCat] ?? 0;
+                                            // dd($categoryCounts); 
                                         @endphp
                                         <li>
                                             <a href="JavaScript:Void(0)" class="accordian-arrow main-lst"
@@ -122,7 +128,7 @@
                                                         id="optionsRadios{{ $indexMainCat }}"
                                                         value="{{ $indexMainCat }}">
                                                     <a href="{{ $url }}" class="cat-disable"
-                                                        id="aoptionsRadios{{ $indexMainCat }}"> {{ $mainCat }}
+                                                        id="aoptionsRadios{{ $indexMainCat }}">{{ $count }} {{ $mainCat }}
                                                     </a>
                                                 </label>
                                             </div>
@@ -142,6 +148,8 @@
                                                             $subCheck = 'checked';
                                                             $displaysc = 'block';
                                                         }
+                                            $sub_cat_count = $sub_categoryCounts[$subCatIndex] ;
+
                                                     @endphp
                                                     <li>
                                                         <a href="JavaScript:Void(0)" class="accordian-arrow sub-lst"
@@ -155,9 +163,9 @@
                                                                     id="optionsRadiosSub{{ $indexMainCat }}_{{ $subCatIndex }}"
                                                                     url="{{ $subCatUrl }}" name="subcat"
                                                                     class="subcatselect" type="radio">
-                                                                <a href="{{ $subCatUrl }}" class="sub-cat-disable"
+                                                                <a href="{{ $subCatUrl }}" class="sub-cat-disable" 
                                                                     id="aoptionsRadiosSub{{ $indexMainCat }}_{{ $subCatIndex }}">
-                                                                    {{ $subCat }}
+                                                                    {{$sub_cat_count}} {{ $subCat }}
                                                                 </a>
                                                             </label>
                                                         </div>
@@ -184,6 +192,9 @@
                                                                         ) .
                                                                         '.ssc' .
                                                                         $subSubCatIndex;
+
+                                            $sub_sub_cat_count = $sub_sub_categoryCounts[$subSubCatIndex] ?? 0;
+
                                                                 @endphp
                                                                 @if (in_array($subSubCatIndex, json_decode(Storage::get('ssc.json'), true)))
                                                                     <li>
@@ -201,8 +212,9 @@
                                                                                     url="{{ $subsubCatUrl }}" />
                                                                                 <a href="{{ $subsubCatUrl }}"
                                                                                     class="sub-sub-cat-disable"
+                                                                                    
                                                                                     id="aoptionsRadiosSubSub{{ $indexMainCat }}_{{ $subSubCatIndex }}">
-                                                                                    {{ $subSubCat }}
+                                                                                 {{$sub_sub_cat_count}}   {{ $subSubCat }}
                                                                                 </a>
                                                                             </label>
                                                                         </div>

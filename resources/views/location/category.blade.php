@@ -461,18 +461,18 @@
                             if(!empty($searchq))
                                 $params['searchq'] = $searchq;
                         @endphp
-                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                @if (count($brandResults) == 0)
-                                    <div class="noresults">No result found</div>
-                                @endif
-                                {{-- {!! $brandResults
-                                ->appends($params)
-                                ->render() !!} --}}
-                                {!! $brandResults->appends($params)->links('vendor.pagination.custom') !!}
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    @if (count($brandResults) == 0)
+                                        <div class="noresults">No result found</div>
+                                    @endif
+                                    {{-- {!! $brandResults
+                                    ->appends($params)
+                                    ->render() !!} --}}
+                                    {!! $brandResults->appends($params)->links('vendor.pagination.custom') !!}
 
+                                </div>
                             </div>
-                        </div>
                     </div>
                     <!-- category list section end here-->
                 </div>
