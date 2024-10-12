@@ -118,8 +118,7 @@
                                                     <div
                                                         class="modified-col col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
                                                         <a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][$i]['title'], $articles['article'][$i]['id']) }}"
-                                                            target="_blank"
-                                                            aria-label="{{ $articles['article'][$i]['title'] }}"><img
+                                                            target="_blank" aria-label="{{ $articles['article'][$i]['title'] }}"><img
                                                                 loading="lazy"
                                                                 src="{{ \App\Http\Controllers\NewHomePageController::getImageUrl($articles['article'][$i]['image_path']) }}"
                                                                 class="img-z-fluid"
@@ -129,12 +128,11 @@
                                                     <div
                                                         class="modified-col col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                                                         <div class="post-news-text">
-                                                            <p><a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][$i]['title'], $articles['article'][$i]['id']) }}"
-                                                                    aria-label="{{ $articles['article'][$i]['title'] }}"
+                                                            <p><a href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][$i]['title'], $articles['article'][$i]['id']) }}" aria-label="{{ $articles['article'][$i]['title'] }}"
                                                                     target="_blank">{{ $articles['article'][$i]['title'] }}</a>
                                                             </p><a
                                                                 href="{{ 'https://www.opportunityindia.com/' . \App\Http\Controllers\NewHomePageController::getSlug($articles['article'][$i]['title'], $articles['article'][$i]['id']) }}"
-                                                                class="read-more" target="_blank"></a>
+                                                                class="read-more" aria-label="{{ $articles['article'][$i]['title'] }}" target="_blank"></a>
                                                         </div>
                                                     </div>
                                                 </div>
