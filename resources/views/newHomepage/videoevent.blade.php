@@ -18,7 +18,7 @@
 
                     <div class="carousel-inner">
                         @php
-                          $videos1 = $videos; 
+                          $videos1 = $videos;
                           $videos1 = array_filter($videos, function ($video) {
                                         return is_array($video) && isset($video['priority']);
                                     });
@@ -26,7 +26,7 @@
                           usort($videos1, function ($a, $b) {
                                 return $a['priority'] <=> $b['priority'];
                             });
-                        //   @dd($videos1); 
+                        //   @dd($videos1);
                         @endphp
                         @for ($i = 0; $i < count($videos1); $i += 2)
                             <div class="item @if ($i == 0) active @endif">
@@ -60,7 +60,7 @@
                                         </div>
                                         <div class="showview">{{ $videos1[$firstVideoIndex]['views'] }}
                                             {{ Request::segment(2) == 'hi' ? 'विचारों' : 'Views' }}
-                                            <span>{{ $videos1[$firstVideoIndex]['date'] }}</span></div>
+                                            <span>{{ date('d-M-Y', strtotime($videos1[$firstVideoIndex]['date'])) }}</span></div>
                                     </div>
                                 </div>
 
@@ -91,7 +91,7 @@
                                             </div>
                                             <div class="showview">{{ $videos1[$secondVideoIndex]['views'] }}
                                                 {{ Request::segment(2) == 'hi' ? 'विचारों' : 'Views' }}
-                                                <span>{{ $videos1[$secondVideoIndex]['date'] }}</span></div>
+                                                <span>{{ date('d-M-Y', strtotime($videos1[$secondVideoIndex]['date'])) }}</span></div>
                                         </div>
                                     </div>
                                 @endif
