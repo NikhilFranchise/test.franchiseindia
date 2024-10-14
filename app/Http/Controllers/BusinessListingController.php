@@ -658,6 +658,7 @@ class BusinessListingController extends Controller
 
         $franData->where('profile_status', 1);
 
+        // dd($franData->count());
 
         if (isset(request()->text)) {
             $text = str_replace('-or-', '/', request()->text);
@@ -750,10 +751,11 @@ class BusinessListingController extends Controller
 
             $maxRangevalue = Config('constants.InvestRange.' . request()->investment . '.max');
         }
+        
 
         $franData->where('unit_inv_max', '<=', $maxRangevalue);
         $franData->where('unit_inv_max', '>=', $minRangeValue);
-
+// dd($maxRangeValue);
         $orderbyVal = 'membership_weightage';
         $franData->orderBy($orderbyVal, 'desc');
 
@@ -767,6 +769,7 @@ class BusinessListingController extends Controller
             $orderbyVal = 'views';
             $franData->orderBy($orderbyVal, 'desc');
         }
+        
         $count           = request()->segment(1) == 'amp' ? 20 : 21;
         $brandResults    = $franData->paginate($count);
         // dd($brandResults->pluck('company_name'));
@@ -1720,7 +1723,14 @@ class BusinessListingController extends Controller
         $cat_ids = config('constants.CategoryArr');
         // dd($cat_ids); 
         $categoryCounts = [];
-        
+        // dd($stateNames)
+
+        if(empty($stateName)){
+            $categoryCounts = config('category.catCountArr');
+            $sub_categoryCounts = config('category.subcatcount');
+            $sub_sub_categoryCounts = config('category.sub_sub_cat_count');
+
+        }else{
         foreach ($cat_ids as $id => $name) {
             $cat_brand_count = FranchisorBusinessDetail::query()
                 ->where('profile_status', 1)
@@ -1791,6 +1801,7 @@ class BusinessListingController extends Controller
                 $sub_sub_categoryCounts[$id] = $sub_sub_cat_brand_count;
             }
         }
+    }
        
         // $cat_brand_count = FranchisorBusinessDetail::query()->select('ind_main_cat')
         // ->where('profile_status', 1)
