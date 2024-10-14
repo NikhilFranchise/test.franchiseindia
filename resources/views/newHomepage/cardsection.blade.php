@@ -1,5 +1,18 @@
 <style>
-.error-message{color:red;font-size:13px;font-weight:400;display:block;text-align:left;text-align:left;margin-top:-10px;margin-bottom:10px}.input-error{border:1px solid red}
+    .error-message {
+        color: red;
+        font-size: 13px;
+        font-weight: 400;
+        display: block;
+        text-align: left;
+        text-align: left;
+        margin-top: -10px;
+        margin-bottom: 10px
+    }
+
+    .input-error {
+        border: 1px solid red
+    }
 </style>
 <section class="card-section section-30" id="card-section">
     <div class="container">
@@ -10,20 +23,20 @@
                         <div class="col-md-8">
                             <div class="row justify-content-center">
                                 <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
-                                    <div class="business-a"><a
-                                            href="{{ url('investor/create') }}">
+                                    <div class="business-a"><a href="{{ url('investor/create') }}">
                                             @if (request()->segment(1) == 'hi')
-                                            आज ही बिजनेस शुरू करें <span class="smallimp">(इन्वेस्टर
-                                                पंजीकरण)</span>
-                                        @else
-                                            Start A Business Today <span class="smallimp">(Investor
-                                                Registration)</span>
-                                        @endif
-                                            <img src="{{url('cvw/images/rarrow.png')}}" class="icon-bar-main-fihl" width="16" height="19" alt="Arrow"></a></div>
+                                                आज ही बिजनेस शुरू करें <span class="smallimp">(इन्वेस्टर
+                                                    पंजीकरण)</span>
+                                            @else
+                                                Start A Business Today <span class="smallimp">(Investor
+                                                    Registration)</span>
+                                            @endif
+                                            <img src="{{ url('cvw/images/rarrow.png') }}" class="icon-bar-main-fihl"
+                                                width="16" height="19" alt="Arrow">
+                                        </a></div>
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-xl-6 col-sm-6">
-                                    <div class="business-a"><a
-                                            href="{{ url('franchisor/registration/step/1') }}">
+                                    <div class="business-a"><a href="{{ url('franchisor/registration/step/1') }}">
                                             @if (request()->segment(1) == 'hi')
                                                 चैनल पार्टनर नियुक्त करें <span class="smallimp">(फ्रैंचाइज़र
                                                     रजिस्ट्रेशन)</span>
@@ -31,18 +44,20 @@
                                                 Appoint Channel partners <span class="smallimp">(Franchisor
                                                     Registration)</span>
                                             @endif
-                                            <img src="{{url('cvw/images/rarrow.png')}}" class="icon-bar-main-fihl" width="16" height="19" alt="Arrow"></a></div>
+                                            <img src="{{ url('cvw/images/rarrow.png') }}" class="icon-bar-main-fihl"
+                                                width="16" height="19" alt="Arrow">
+                                        </a></div>
                                 </div>
                                 <div class="col-md-12 pt-30">
                                     @if (request()->segment(1) == 'hi')
                                         <h4>हमें रजिस्टर क्यों करना चाहिए ? </h4>
-                                        बीस हजार से अधिक फ्रैंचाइज बिजनेस अवसरों तक पहुंच हो जाएगी। <br> <br>
+                                        पन्द्रह हजार से अधिक फ्रैंचाइज बिजनेस अवसरों तक पहुंच हो जाएगी। <br> <br>
                                         तेजी से विकास कर रहे कारोबारी समुदाय से नेटवर्किंग का मौका मिलेगा। इससे
                                         फ्रेंचाइजिंग के माध्यम से सीखने और कारोबार बढ़ाने के लिए विशेषज्ञों की राय मिल
                                         सकेगी।
                                     @else
                                         <h3> Why Should I Register ?</h3>
-                                        To get access to over 20000+ Franchise Business
+                                        To get access to over 15000+ Franchise Business
                                         Opportunities.<br><br>
                                         Network with the growing Business Community to get
                                         expert
@@ -59,7 +74,6 @@
                                 </h4>
                                 <form id="homepage" name="homepage" method="post">
                                     @csrf
-                                    {{-- <input type="hidden" name="_token" value="99h71cGQGBzeEVUK02rQy5q5Yxm0vpYPxEcKy5VK" autocomplete="off"> --}}
                                     <div class="raido-main-section">
                                         <ul class="radio-main">
                                             <li>
@@ -93,7 +107,7 @@
                                             name="mobilefreeadvice" id="mobilefreeadvice"
                                             placeholder="{{ Request::segment(1) == 'hi' ? 'मोबाइल नंबर दर्ज करें' : 'Enter Mobile No' }}"
                                             required=""></div>
-                                            <span id="mobile-error" class="error-message"></span>
+                                    <span id="mobile-error" class="error-message"></span>
                                     <div id="askMsg" style="display:none">
                                         <div class="green">
                                             {{ Request::segment(1) == 'hi' ? 'नि: शुल्क सलाह के लिए जानकारी जमा करने के लिए धन्यवाद!' : 'Thank You for Submitting information for Free Advice!' }}
@@ -111,45 +125,45 @@
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
-$(document).ready(function () {
-    $("#btnhome").click(function () {
-        var mobile = $('#mobilefreeadvice').val().trim();
-        var email = $('#emailfreeadvice').val().trim();
-        var csrf_token = $("input[name='_token']").val();
+    $(document).ready(function() {
+        $("#btnhome").click(function() {
+            var mobile = $('#mobilefreeadvice').val().trim();
+            var email = $('#emailfreeadvice').val().trim();
+            var csrf_token = $("input[name='_token']").val();
             // Clear previous error messages
-        $('#mobile-error').text('');
-        $('#email-error').text('');
-        $('#mobilefreeadvice').removeClass('input-error');
-        $('#emailfreeadvice').removeClass('input-error');
-        // Basic validation
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        var mobileRegex = /^\d{10}$/;
-        var isValid = true;
-        if (mobile === '') {
-            $('#mobile-error').text('Mobile number is required.');
-            $('#mobilefreeadvice').addClass('input-error').focus();
-            isValid = false;
-        } else if (!/^\d+$/.test(mobile)) {
-            $('#mobile-error').text('Mobile number must be numeric.');
-            $('#mobilefreeadvice').addClass('input-error').focus();
-            isValid = false;
-        } else if (!mobileRegex.test(mobile)) {
-            $('#mobile-error').text('Please enter a valid 10-digit mobile number.');
-            $('#mobilefreeadvice').addClass('input-error').focus();
-            isValid = false;
-        }
-        if (email === '') {
-            $('#email-error').text('Email is required.');
-            $('#emailfreeadvice').addClass('input-error').focus();
-            isValid = false;
-        } else if (!emailRegex.test(email)) {
-            $('#email-error').text('Please enter a valid email address.');
-            $('#emailfreeadvice').addClass('input-error').focus();
-            isValid = false;
-        }
-        if (!isValid) {
-            return; // Stop the form submission if validation fails
-        }
+            $('#mobile-error').text('');
+            $('#email-error').text('');
+            $('#mobilefreeadvice').removeClass('input-error');
+            $('#emailfreeadvice').removeClass('input-error');
+            // Basic validation
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var mobileRegex = /^\d{10}$/;
+            var isValid = true;
+            if (mobile === '') {
+                $('#mobile-error').text('Mobile number is required.');
+                $('#mobilefreeadvice').addClass('input-error').focus();
+                isValid = false;
+            } else if (!/^\d+$/.test(mobile)) {
+                $('#mobile-error').text('Mobile number must be numeric.');
+                $('#mobilefreeadvice').addClass('input-error').focus();
+                isValid = false;
+            } else if (!mobileRegex.test(mobile)) {
+                $('#mobile-error').text('Please enter a valid 10-digit mobile number.');
+                $('#mobilefreeadvice').addClass('input-error').focus();
+                isValid = false;
+            }
+            if (email === '') {
+                $('#email-error').text('Email is required.');
+                $('#emailfreeadvice').addClass('input-error').focus();
+                isValid = false;
+            } else if (!emailRegex.test(email)) {
+                $('#email-error').text('Please enter a valid email address.');
+                $('#emailfreeadvice').addClass('input-error').focus();
+                isValid = false;
+            }
+            if (!isValid) {
+                return; // Stop the form submission if validation fails
+            }
             var type = $("input[name='optionsRadios']:checked").val();
             var data = {
                 _token: csrf_token, // Add CSRF token
@@ -165,19 +179,19 @@ $(document).ready(function () {
                 type: 'POST',
                 url: '/freeadvice',
                 data: data,
-                beforeSend: function () {
+                beforeSend: function() {
                     $('#btnhome').html('Please wait..');
                 },
-                success: function (data) {
+                success: function(data) {
                     // Assuming the server returns a URL to redirect to
                     window.location.href = data.redirect_url || "/thanks-advice-form";
                 },
-                error: function (xhr, textStatus, errorThrown) {
+                error: function(xhr, textStatus, errorThrown) {
                     console.error('Error:', errorThrown);
                     // Handle error condition, e.g., display an error message
                     alert('Error occurred. Please try again.');
                 }
             });
+        });
     });
-});
 </script>
