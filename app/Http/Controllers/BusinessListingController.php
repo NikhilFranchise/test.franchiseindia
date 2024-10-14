@@ -814,81 +814,90 @@ class BusinessListingController extends Controller
                 ->get();
         }
 
-        $cat_ids = config('constants.CategoryArr');
-        // dd($cat_ids); 
-        $categoryCounts = [];
-        
-        foreach ($cat_ids as $id => $name) {
-            $cat_brand_count = FranchisorBusinessDetail::query()
-                ->where('profile_status', 1)
-                ->where('ind_main_cat', $id); // Use the ID here
-                // ->count();
+        if(empty($stateName)){
+            $categoryCounts = config('category.catCountArr');
+            $sub_categoryCounts = config('category.subcatcount');
+            $sub_sub_categoryCounts = config('category.sub_sub_cat_count');
 
-                foreach ($stateNames as $stateName) {
-                    $cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
-                }
+        }else{
+            $cat_ids = config('constants.CategoryArr');
+            // dd($cat_ids); 
+            $categoryCounts = [];
             
-                $cat_brand_count = $cat_brand_count->count();
-                $categoryCounts[$id] = $cat_brand_count;
-            // $categoryCounts[$id] = [
-            //     'name' => $name,
-            //     'count' => $cat_brand_count,
-            // ];
-        }
-      
-        // asort($categoryCounts);
-        // dd($categoryCounts);
-       
-      
-        $sub_cat_ids = config('constants.subCategoryArr');
-        // dd($sub_cat_ids);
-        $sub_categoryCounts = [];
-
-        // Loop through each main category
-        foreach ($sub_cat_ids as $category) {
-            // Loop through each subcategory within the main category
-            foreach ($category as $id => $name) {
-                // Query the database for each subcategory
-                $sub_cat_brand_count = FranchisorBusinessDetail::query()
+            foreach ($cat_ids as $id => $name) {
+                $cat_brand_count = FranchisorBusinessDetail::query()
                     ->where('profile_status', 1)
-                    ->where('ind_cat', $id); // Use the ID here
+                    ->where('ind_main_cat', $id); // Use the ID here
                     // ->count();
-                
+    
                     foreach ($stateNames as $stateName) {
-                        $sub_cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
-                    }
-                // Store the count in the result array
-                $sub_cat_brand_count = $sub_cat_brand_count->count();
-                $sub_categoryCounts[$id] = $sub_cat_brand_count;
-            }
-        }
-        
-        // Output the counts
-        // dd($sub_categoryCounts);
-
-        $sub_sub_cat_ids = config('constants.subSubCategoryArr');
-        // dd($sub_sub_cat_ids);
-        $sub_sub_categoryCounts = [];
-
-        // Loop through each main category
-        foreach ($sub_sub_cat_ids as $category) {
-            // Loop through each subcategory within the main category
-            foreach ($category as $id => $name) {
-                // Query the database for each subcategory
-                $sub_sub_cat_brand_count = FranchisorBusinessDetail::query()
-                    ->where('profile_status', 1)
-                    ->where('ind_sub_cat', $id); // Use the ID here
-                    // ->count();
-                    foreach ($stateNames as $stateName) {
-                        $sub_sub_cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
+                        $cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
                     }
                 
-                // Store the count in the result array
-                $sub_sub_cat_brand_count = $sub_sub_cat_brand_count->count();
-                $sub_sub_categoryCounts[$id] = $sub_sub_cat_brand_count;
+                    $cat_brand_count = $cat_brand_count->count();
+                    $categoryCounts[$id] = $cat_brand_count;
+                // $categoryCounts[$id] = [
+                //     'name' => $name,
+                //     'count' => $cat_brand_count,
+                // ];
             }
+          
+            // asort($categoryCounts);
+            // dd($categoryCounts);
+           
+          
+            $sub_cat_ids = config('constants.subCategoryArr');
+            // dd($sub_cat_ids);
+            $sub_categoryCounts = [];
+    
+            // Loop through each main category
+            foreach ($sub_cat_ids as $category) {
+                // Loop through each subcategory within the main category
+                foreach ($category as $id => $name) {
+                    // Query the database for each subcategory
+                    $sub_cat_brand_count = FranchisorBusinessDetail::query()
+                        ->where('profile_status', 1)
+                        ->where('ind_cat', $id); // Use the ID here
+                        // ->count();
+                    
+                        foreach ($stateNames as $stateName) {
+                            $sub_cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
+                        }
+                    // Store the count in the result array
+                    $sub_cat_brand_count = $sub_cat_brand_count->count();
+                    $sub_categoryCounts[$id] = $sub_cat_brand_count;
+                }
+            }
+            
+            // Output the counts
+            // dd($sub_categoryCounts);
+    
+            $sub_sub_cat_ids = config('constants.subSubCategoryArr');
+            // dd($sub_sub_cat_ids);
+            $sub_sub_categoryCounts = [];
+    
+            // Loop through each main category
+            foreach ($sub_sub_cat_ids as $category) {
+                // Loop through each subcategory within the main category
+                foreach ($category as $id => $name) {
+                    // Query the database for each subcategory
+                    $sub_sub_cat_brand_count = FranchisorBusinessDetail::query()
+                        ->where('profile_status', 1)
+                        ->where('ind_sub_cat', $id); // Use the ID here
+                        // ->count();
+                        foreach ($stateNames as $stateName) {
+                            $sub_sub_cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
+                        }
+                    
+                    // Store the count in the result array
+                    $sub_sub_cat_brand_count = $sub_sub_cat_brand_count->count();
+                    $sub_sub_categoryCounts[$id] = $sub_sub_cat_brand_count;
+                }
+            }
+           
         }
-       
+
+   
 
 
         $view = 'category.category';
