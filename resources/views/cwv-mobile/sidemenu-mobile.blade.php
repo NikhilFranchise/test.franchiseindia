@@ -33,8 +33,8 @@
                                 <select class="form-control form-control-custom-main" aria-label="Select Language"
                                     id="exampleFormControlSelect1">
                                     <option hidden="">Language</option>
-                                    <option value="{{ url('index') }}">EN - English</option>
-                                    <option value="{{ url('index/hi/') }}">HI - Hindi</option>
+                                    <option value="{{ url('/') }}">EN - English</option>
+                                    <option value="{{ url('/hi') }}">HI - Hindi</option>
                                 </select>
                             </div>
                         </div>
@@ -1751,8 +1751,7 @@
             <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
                     rel="nofollow">franchiseindiaventures.com</a></li>
             <li><a target="_blank" href="https://www.gauravmarya.com/" rel="nofollow">gauravmarya.com</a></li>
-            <li><a target="_blank" href="https://www.franchiseafrica.co/" rel="nofollow">franchiseafrica.co</a>
-            </li>
+
         </ul>
         <ul class="list-unstyled components border-bottom-1">
             <li><a href="https://www.businessex.com/" target="_blank">अपना व्यवसाय बेचें</a></li>
@@ -1859,8 +1858,8 @@
                                 <select class="form-control form-control-custom-main" aria-label="Select Language"
                                     id="exampleFormControlSelect1">
                                     <option hidden="">Language</option>
-                                    <option value="{{ url('index') }}">EN - English</option>
-                                    <option value="{{ url('index/hi/') }}">HI - Hindi</option>
+                                    <option value="{{ url('/') }}">EN - English</option>
+                                    <option value="{{ url('hi/') }}">HI - Hindi</option>
                                 </select>
                             </div>
                         </div>
@@ -3608,8 +3607,7 @@
             <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
                     rel="nofollow">franchiseindiaventures.com</a></li>
             <li><a target="_blank" href="https://www.gauravmarya.com/" rel="nofollow">gauravmarya.com</a></li>
-            <li><a target="_blank" href="https://www.franchiseafrica.co/" rel="nofollow">franchiseafrica.co</a>
-            </li>
+
         </ul>
         <ul class="list-unstyled components border-bottom-1">
             <li><a href="https://www.businessex.com/" target="_blank">Sell your Business</a></li>

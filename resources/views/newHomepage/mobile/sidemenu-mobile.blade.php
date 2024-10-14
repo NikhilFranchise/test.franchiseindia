@@ -1751,8 +1751,7 @@
             <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
                     rel="nofollow">franchiseindiaventures.com</a></li>
             <li><a target="_blank" href="https://www.gauravmarya.com/" rel="nofollow">gauravmarya.com</a></li>
-            <li><a target="_blank" href="https://www.franchiseafrica.co/" rel="nofollow">franchiseafrica.co</a>
-            </li>
+
         </ul>
         <ul class="list-unstyled components border-bottom-1">
             <li><a href="https://www.businessex.com/" target="_blank">अपना व्यवसाय बेचें</a></li>
@@ -3608,8 +3607,7 @@
             <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
                     rel="nofollow">franchiseindiaventures.com</a></li>
             <li><a target="_blank" href="https://www.gauravmarya.com/" rel="nofollow">gauravmarya.com</a></li>
-            <li><a target="_blank" href="https://www.franchiseafrica.co/" rel="nofollow">franchiseafrica.co</a>
-            </li>
+
         </ul>
         <ul class="list-unstyled components border-bottom-1">
             <li><a href="https://www.businessex.com/" target="_blank">Sell your Business</a></li>
