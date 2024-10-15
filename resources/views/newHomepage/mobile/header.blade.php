@@ -16,9 +16,9 @@
 
 <link rel="stylesheet" href="{{ url('cwv-mobile/css/style.css')}}" rel="preload" as="style">
 
-<link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/bootstrap/css/bootstrap.min.css?ver=2.2" rel="preload" as="style">
+<link rel="stylesheet" href="{{ url('cwv-mobile/css/bootstrap.min.css') }}" rel="preload" as="style">
 
-<link rel="stylesheet" href="https://www.franchiseindia.com/newhomepage/assets/vendor/mCustomScrollbar/css/jquery.mCustomScrollbar.min.css?ver=2.2" rel="preload" as="style">
+<link rel="stylesheet" href="{{ url('cwv-mobile/css/jquery.mCustomScrollbar.min.css') }}" rel="preload" as="style">
 
         <!-- Google Tag Manager -->
     <script async>

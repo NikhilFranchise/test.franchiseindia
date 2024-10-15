@@ -12,10 +12,10 @@
                 alt="easy gym" width="237" height="60"></a>
     </div>
     @if (request()->segment(2) == 'hi')
-        <h1><span>20 हजार से अधिक </span> कारोबारी विक्लपों में अपने लिए तलाश करें</h1>
+        <h1><span>15 हजार से अधिक </span> कारोबारी विक्लपों में अपने लिए तलाश करें</h1>
         <h2>दुनियाभर में सबसे अधिक तलाश किया जाने वाला फ्रैंचाइज वेबसाइट नेटवर्क।</h2>
     @else
-        <h1>10000+ Business Options</h1>
+        <h1>15000+ Business Options</h1>
         <h2>World&apos;s highest visited franchise website network</h2>
     @endif
     <div class="warpper">

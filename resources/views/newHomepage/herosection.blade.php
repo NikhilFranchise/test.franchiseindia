@@ -48,12 +48,10 @@
                         width="300" alt="easy gym" height="76"></a></div>
             <div class="row">
                 <div class="col-md-12">
-                    @desktop
+                    @notmobile
                         <h1 class="hero-desktop"><span>15 हजार से अधिक </span> कारोबारी विक्लपों में अपने लिए तलाश करें</h1>
-                    @enddesktop
-                    @tablet
-                        <h1 class="hero-tablet"><span>15 हजार से अधिक </span> कारोबारी विक्लपों में अपने लिए तलाश करें</h1>
-                    @endtablet
+                    @endnotmobile
+
                     <h2>दुनियाभर में सबसे अधिक तलाश किया जाने वाला फ्रैंचाइज वेबसाइट नेटवर्क।</h2>
                 </div>
                 <div class="col-md-12">
@@ -206,15 +204,15 @@
             <img src="{{ url('cvw/assets/img/banner-expo.webp') }}" alt="Franchise India" class="banner-expo">
         </picture>
         <div class="container">
-            <div class="lnkblk"><a href="https://www.franchiseindia.com/brands/direct-english.78387" target="_blank" aria-label="easy gym" class="setpat"><img src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.png" width="300" alt="easy gym" height="76"></a></div>
+            <div class="lnkblk"><a href="https://www.franchiseindia.com/brands/direct-english.78387" target="_blank"
+                    aria-label="easy gym" class="setpat"><img
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.png" width="300"
+                        alt="easy gym" height="76"></a></div>
             <div class="row">
                 <div class="col-md-12">
-                    @desktop
+                    @notmobile
                         <h1 class="hero-desktop">Search from<span> 15000+ Business </span>options</h1>
-                    @enddesktop
-                    @tablet
-                        <h1>Search from<span> 15000+ Business </span>options</h1>
-                    @endtablet
+                    @endnotmobile
                     <h2>World&apos;s highest visited franchise website network</h2>
                 </div>
                 <div class="col-md-12">
