@@ -510,7 +510,7 @@
     <p>&nbsp;</p>
 </div>
 <!-- recent activities -->
-{{--  <style>
+<style>
     .recent-activities {
         font-family: 'Open Sans Regular', serif;
         width: 100%;
@@ -709,8 +709,8 @@
             margin-top: 0;
         }
 
-</style>  --}}
-{{--  <div id="investmentnew_tab" class="tab-section">
+</style>
+<div id="investmentnew_tab" class="tab-section">
 
     @if ($combinedDataCollection != null && $combinedDataCollection->isNotEmpty())
         <h2 class="tab-sec-ttl-recent">Recent Updates</h2>
@@ -777,5 +777,5 @@
             @endif
         @endforeach
     </div>
-</div>  --}}
+</div>
 <!-- recent activities -->
