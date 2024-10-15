@@ -1,5 +1,5 @@
 <section class="trending-videos">
-    <h2 class="brands-head">{{ Request::segment(1) == 'hi' ? 'ट्रेंडिंग वीडियो' : 'Trending Videos' }}</h2>
+    <h2 class="brands-head">{{ Request::segment(2) == 'hi' ? 'ट्रेंडिंग वीडियो' : 'Trending Videos' }}</h2>
     <div class="card-wrap">
         @php
             $videos1 = $videos;
@@ -26,7 +26,7 @@
                     <h2>{{ $video['title'] }}</h2>
                 </a>
                 <div class="video-txt">{{ strip_tags(Str::limit($video['description'], 80, '...')) }}</div>
-                <div class="showview">{{ $video['views'] }} {{ Request::segment(1) == 'hi' ? 'विचारों' : 'Views' }}
+                <div class="showview">{{ $video['views'] }} {{ Request::segment(2) == 'hi' ? 'विचारों' : 'Views' }}
                     <span>{{ date('d-M-Y', strtotime($video['date'])) }}</span>
                 </div>
             </div>

@@ -13,8 +13,8 @@
         $canonicalUrl = url()->current();
         $queryParams = request()->query();
         $queryString = '';
-        $hindiUrl = url('/hi');
-        $engUrl = url('');
+        $hindiUrl = url('/homepage/hi');
+        $engUrl = url('/homepage');
         $excludedParams = ['sortby', 'catTab', 'invTab'];
 
         if (!empty($queryParams)) {

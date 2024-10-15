@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="section-ptb">
-                    <h2>{{ Request::segment(1) == 'hi' ? 'शीर्ष फ्रैंचाइज़ अवसर' : 'Top Franchise Opportunities' }}
+                    <h2>{{ Request::segment(2) == 'hi' ? 'शीर्ष फ्रैंचाइज़ अवसर' : 'Top Franchise Opportunities' }}
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
 
                                 <div class="d-flex">
                                       <div class="card-info">
-                                        {{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment range' }}
+                                        {{ Request::segment(2) == 'hi' ? 'निवेश सीमा' : 'Investment range' }}
                                     </div>
                                     <div class="card-info-amt">
                                         ₹{{ $logoDetail['investment_range_new'] }}
@@ -52,13 +52,13 @@
                                 </div>
                                 <div class="d-flex">
                                     <div class="card-info">
-                                        {{ Request::segment(1) == 'hi' ? 'क्षेत्र की आवश्यकता है' : 'Area Required' }}
+                                        {{ Request::segment(2) == 'hi' ? 'क्षेत्र की आवश्यकता है' : 'Area Required' }}
                                     </div>
                                     <div class="card-info-amt">
                                         {{ $logoDetail['area_required'] }}
                                     </div>
                                 </div>
-                                <div class="link-section"><a href="{{ $brandUrl }}" target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a></div>
+                                <div class="link-section"><a href="{{ $brandUrl }}" target="_blank">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a></div>
                             </div>
                         </div>
                     </li>

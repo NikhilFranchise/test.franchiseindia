@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="modified-col col-md-12">
-                @if (request()->segment(1) == 'hi')
+                @if (request()->segment(2) == 'hi')
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">

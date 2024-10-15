@@ -2,15 +2,15 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="modified-col col-md-6">
-                <p>{{ Request::segment(1) == 'hi' ? 'उद्योग से नवीनतम अपडेट प्राप्त करने के लिए अपना ईमेल पता साझा करें' : 'Share your email address to get latest update from the industry' }}
+                <p>{{ Request::segment(2) == 'hi' ? 'उद्योग से नवीनतम अपडेट प्राप्त करने के लिए अपना ईमेल पता साझा करें' : 'Share your email address to get latest update from the industry' }}
                 </p>
-                <h2>{{ Request::segment(1) == 'hi' ? 'न्यूज़लेटर साइन अप' : 'Newsletter Signup' }}</h2>
+                <h2>{{ Request::segment(2) == 'hi' ? 'न्यूज़लेटर साइन अप' : 'Newsletter Signup' }}</h2>
                 <div class="main-newsletter">
                     <form id="update" method="post" action="{{ url('newslettersignup') }}">
                         @csrf
                         <ul class="newsletter">
                             <li><input type="hidden" name="site_type" value="fi"> <input type="email" class="form-control emailer-main" aria-label="Enter Mail" aria-describedby="button-addon2" name="email" required="" placeholder="Enter Email-Id"></li>
-                            <li><button class="btn btn-main" type="submit" id="button-addon2">{{ Request::segment(1) == 'hi' ? 'साइन अप' : 'SignUp' }}</button></li>
+                            <li><button class="btn btn-main" type="submit" id="button-addon2">{{ Request::segment(2) == 'hi' ? 'साइन अप' : 'SignUp' }}</button></li>
                         </ul>
                     </form>
                 </div>

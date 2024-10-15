@@ -1,14 +1,14 @@
 <style type="text/css">
-::-webkit-input-placeholder { 
+::-webkit-input-placeholder {
      color:#000000!important;
 }
-:-moz-placeholder { 
+:-moz-placeholder {
     color:#000000!important;
 }
-::-moz-placeholder { 
+::-moz-placeholder {
     color:#000000!important;
 } /* For the future */
-:-ms-input-placeholder { 
+:-ms-input-placeholder {
     color:#000000!important;
 }
 /*input:focus {
@@ -137,7 +137,7 @@ overflow: hidden;
  @php
     $states = Config('location.stateArr');
     asort($states);
-@endphp 
+@endphp
 <div id="myModal" class="modal fade" aria-hidden="true" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -150,11 +150,11 @@ overflow: hidden;
                         <div class="boxblk">
         <form class="form registration-form align-center" action="https://www.franchiseindia.net/fro/ahmedabad/register_update.php" method="post">
          <input id="ref" name="ref" type="hidden" value="FRO-Insta-Paid">
-         <input type="hidden" value="Ahmedabad September 2024" name="event_year" id="event_year">  
-         <input type="hidden" value="FRO 2024 Ahmedabad" name="event_title" id="event_title">  
-         <input type="hidden" value="Ahmedabad" name="event_city" id="event_city">       
+         <input type="hidden" value="Ahmedabad September 2024" name="event_year" id="event_year">
+         <input type="hidden" value="FRO 2024 Ahmedabad" name="event_title" id="event_title">
+         <input type="hidden" value="Ahmedabad" name="event_city" id="event_city">
          <input id="src" name="source" type="hidden" value="Popup" />
-         <input id="tfw_interest" name="tfw_interest" type="hidden" value="Visit the Expo - LP Paid">    
+         <input id="tfw_interest" name="tfw_interest" type="hidden" value="Visit the Expo - LP Paid">
 
                        <div class="sec">
                                     <div class="f1">
@@ -170,13 +170,13 @@ overflow: hidden;
                                         <input name="txtPhone" type="tel" placeholder="Contact No." class="form-control myselect" pattern="[789][0-9]{9}" minlength="10" maxlength="10" onkeypress="return isNumber(event)" required="">
                                     </div>
                                     <div class="f3">
-                                   
+
                                         <select name="txtState" onchange="getcitypopup(this)" class="form-control myselect" id="txtState" required="">
                                               <!-- <option value="new delhi">new delhi</option> -->
                                             <option value="" data-id="">Select State</option>
                                             @foreach($states as $index => $value)
                                                 <option value="{{ $value }}" data-id="{{ $index }}">{!! $value !!}</option>
-                                            @endforeach 
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -204,13 +204,13 @@ overflow: hidden;
                         </div>
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </div>
 </div>
 
-<!-- 
+<!--
 <script language="javascript">
     if(screen.width>767){
             $(window).scroll(function() {
@@ -218,14 +218,14 @@ overflow: hidden;
             $('#myModal').modal('show');
             }
             else{
-            $('#myModal').modal('hide'); 
-            $('#myModal').hide();  
+            $('#myModal').modal('hide');
+            $('#myModal').hide();
             }
         });
     }
     if(screen.width<767){
-        $('#myModal').modal('hide'); 
-            $('#myModal').hide();  
+        $('#myModal').modal('hide');
+            $('#myModal').hide();
     }
     function isNumber(evt){evt=(evt)?evt:window.event;var charCode=(evt.which)?evt.which:evt.keyCode;return !(charCode > 31 && (charCode < 48 || charCode > 57));
         }

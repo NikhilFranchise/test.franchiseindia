@@ -49,5 +49,4 @@
     @include('newHomepage.footer')
 @endnotmobile
 </body>
-
 </html>

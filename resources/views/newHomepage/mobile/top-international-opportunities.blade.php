@@ -41,7 +41,7 @@
 @endphp
 <section class="top-international-opportunities">
     <h2 class="brands-head">
-        <h2>{{ Request::segment(1) == 'hi' ? 'शीर्ष अंतरराष्ट्रीय अवसर' : 'Top International Opportunities' }}</h2>
+        <h2>{{ Request::segment(2) == 'hi' ? 'शीर्ष अंतरराष्ट्रीय अवसर' : 'Top International Opportunities' }}</h2>
         <div class="card-wrap">
             @foreach ($TopInternationalOpportunities as $top)
                 <div class="leading-card">
@@ -58,7 +58,7 @@
                     </div>
                     <div class="card-info-summary">{{ $top['description'] }}</div>
                     <a href="{{ $top['url'] }}" target="_blank" class="know-more" aria-label="{{ $top['title'] }}">
-                        <div class="link-section-main">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}
+                        <div class="link-section-main">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}
                         </div>
                     </a>
                 </div>

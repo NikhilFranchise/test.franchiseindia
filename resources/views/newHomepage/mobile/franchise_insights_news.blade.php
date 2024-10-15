@@ -1,9 +1,9 @@
 <section class="franchise-insights">
     <div class="heading-link">
         <h2 class="brands-head">
-            {{ Request::segment(1) == 'hi' ? 'फ्रैंचाइज के बारे में गहन जानकारियां और खबरें' : 'Franchise Insights and News' }}
+            {{ Request::segment(2) == 'hi' ? 'फ्रैंचाइज के बारे में गहन जानकारियां और खबरें' : 'Franchise Insights and News' }}
         </h2><a target="_blank" aria-label="view all"
-            href="{{ Request::segment(1) == 'hi' ? 'https://www.opportunityindia.com/hindi/' : 'https://www.opportunityindia.com/' }}">{{ Request::segment(1) == 'hi' ? 'सभी देखें' : 'View All' }}</a>
+            href="{{ Request::segment(2) == 'hi' ? 'https://www.opportunityindia.com/hindi/' : 'https://www.opportunityindia.com/' }}">{{ Request::segment(2) == 'hi' ? 'सभी देखें' : 'View All' }}</a>
     </div>
     <div class="news-wrap">
         <div class="news-thumb">
@@ -55,9 +55,9 @@
 
 <section class="franchise-insights news">
     <div class="heading-link">
-        <h2 class="brands-head">{{ Request::segment(1) == 'hi' ? 'साक्षात्कार' : 'Interviews' }}</h2><a target="_blank"
+        <h2 class="brands-head">{{ Request::segment(2) == 'hi' ? 'साक्षात्कार' : 'Interviews' }}</h2><a target="_blank"
             aria-label="view all"
-            href="{{ Request::segment(1) == 'hi' ? 'https://www.opportunityindia.com/hindi/tag/साक्षात्कार/' : 'https://www.opportunityindia.com/english/tag/interview/' }}">{{ Request::segment(1) == 'hi' ? 'सभी देखें' : 'View All' }}</a>
+            href="{{ Request::segment(2) == 'hi' ? 'https://www.opportunityindia.com/hindi/tag/साक्षात्कार/' : 'https://www.opportunityindia.com/english/tag/interview/' }}">{{ Request::segment(2) == 'hi' ? 'सभी देखें' : 'View All' }}</a>
     </div>
     <div class="news-wrap">
         <div class="news-thumb">
