@@ -48,8 +48,7 @@
     </div>
 </div>
 {{--  search modal start here  --}}
-<div class="modal modal-cust fade in" id="search-main" tabindex="-1" aria-labelledby="search-mainLabel"
-    aria-hidden="true">
+<div class="modal modal-cust fade in" id="search-main" tabindex="-1" aria-labelledby="search-mainLabel">
     <div class="modal-dialog modal-dialog-cust">
         <div class="modal-content modal-content-cust"><button type="button" class="close" data-dismiss="modal"
                 aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -228,7 +227,7 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            {{-- <a href="javascript:void(0)" onclick="locform.reset();">Clear All</a> --}}
+                                            
                                             <a href="#" role="button"
                                                 onclick="event.preventDefault(); locform.reset();">
                                                 Clear All
