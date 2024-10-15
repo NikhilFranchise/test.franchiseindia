@@ -13,11 +13,8 @@
         content="franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india">
 
 <link rel="preload" fetchpriority="high" as="image" href="{{ url('cwv-mobile/images/mobile-banner.webp') }}" type="image/webp">
-
 <link rel="stylesheet" href="{{ url('cwv-mobile/css/style.css')}}" rel="preload" as="style">
-
 <link rel="stylesheet" href="{{ url('cwv-mobile/css/bootstrap.min.css') }}" rel="preload" as="style">
-
 <link rel="stylesheet" href="{{ url('cwv-mobile/css/jquery.mCustomScrollbar.min.css') }}" rel="preload" as="style">
 
         <!-- Google Tag Manager -->

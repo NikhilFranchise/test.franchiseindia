@@ -1,8 +1,5 @@
 @php
-    use Jenssegers\Agent\Agent;
     use Illuminate\Support\Str;
-
-    $agent = new Agent();
     $catArr = Config('constants.CategoryArr');
     asort($catArr);
 
