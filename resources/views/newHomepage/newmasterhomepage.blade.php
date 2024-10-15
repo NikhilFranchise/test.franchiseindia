@@ -145,8 +145,7 @@
                         @include('includes.banners.popupfranchiseindiamumbai')
                     @endif
                 @endif
-            @endif <
-            !--popupmag Start of franchiseindia Zendesk Widget script popupmag-- >
+            @endif 
         @endnotmobile
     @endif
 </script>
