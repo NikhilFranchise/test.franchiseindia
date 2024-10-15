@@ -3677,3 +3677,11 @@
     </nav>
 @endif
 
+
+<style>
+    #sidebar ul li a:hover {
+    background: #fff;
+    color: #dc3545 !important;
+}
+</style>
+
