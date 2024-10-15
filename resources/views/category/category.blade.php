@@ -26,6 +26,8 @@
     
 @elseif(!empty($seoTitle))
     @section('seoTitle', $brandResults->total() . '+ ' . $seoTitle)
+
+    {{-- @dd($seoTitle); --}}
 @endif
 @if (!empty($seoDesc))
     @section('seoDesc', $seoDesc)

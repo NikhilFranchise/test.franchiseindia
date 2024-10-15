@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Cache;
 
 class BrandController extends Controller
 {
-    //
     // public function brandDetails(Request $request)
     // {
     //     // Initialize the variables
@@ -282,9 +281,9 @@ class BrandController extends Controller
         if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
-         //cache start
+         //cache start 
 
-         $cacheDuration = 604800; // 7 days cache time
+         $cacheDuration = 604800;
          // Cache key for franchisor details
          $franDetailsCacheKey = "fran_details_{$brandParamsArr[1]}";
          $franDetails = Cache::remember($franDetailsCacheKey, $cacheDuration, function () use ($brandParamsArr) {
@@ -335,7 +334,7 @@ class BrandController extends Controller
                 });
             // $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
             //dd($iobrands);
-            if (!empty($iobrands)) {
+            if (!empty($iobrands)) { 
                 $ioRedirect = Config('constants.OIDomain') . '/manufacturer/' . $iobrands->profile_name . '-' . $iobrands->brand_id;
                 return redirect($ioRedirect, 301);
             }
@@ -417,8 +416,13 @@ class BrandController extends Controller
 
         //layout image selection conditions and selection
         $layoutType = ($pageLayout == 3) ? "image_type_slider2" : "image_type_slider1";
-
-        $sliderCheck = FranchisorSliderTenure::query()->where('franchisor_id', $franDetails->franchisor_id)->first();
+        
+        $sliderCheckCacheKey = "franchisor_slider_tenure_{$franDetails->franchisor_id}";
+        $sliderCheck = Cache::remember($sliderCheckCacheKey, $cacheDuration, function () use ($franDetails) {
+            return FranchisorSliderTenure::query()->where('franchisor_id', $franDetails->franchisor_id)->first();
+        });
+        // $sliderCheck = FranchisorSliderTenure::query()->where('franchisor_id', $franDetails->franchisor_id)->first();
+        
         if (!empty($sliderCheck) && $sliderCheck->status == 1 && $sliderCheck->end_date >= date('Y-m-d H:i:s')) {
 
             if ($pageLayout == 3 || $pageLayout == 2) {
@@ -434,8 +438,12 @@ class BrandController extends Controller
                         ->get();
             }
         }
-
-        $franTradePartnerData = FranchisorTradePartner::query()->where('franchisor_id', $franDetails->franchisor_id)->get();
+        $franTradePartnerCacheKey = "fran_trade_partner_{$franDetails->franchisor_id}";
+        // Retrieve franchisor trade partner data from cache or query it
+        $franTradePartnerData = Cache::remember($franTradePartnerCacheKey, $cacheDuration, function () use ($franDetails) {
+            return FranchisorTradePartner::query()->where('franchisor_id', $franDetails->franchisor_id)->get();
+        });
+        // $franTradePartnerData = FranchisorTradePartner::query()->where('franchisor_id', $franDetails->franchisor_id)->get();
 
         if ($franDetails->franchisor_id == "FIHL231593") {
             // SEO Meta Tags
@@ -477,6 +485,7 @@ class BrandController extends Controller
             return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection'));
         }
     }
+
 
 
     /**
