@@ -33,8 +33,8 @@
                                 <select class="form-control form-control-custom-main" aria-label="Select Language"
                                     id="exampleFormControlSelect1">
                                     <option hidden="">Language</option>
-                                    <option value="{{ url('/') }}">EN - English</option>
-                                    <option value="{{ url('/hi') }}">HI - Hindi</option>
+                                    <option value="{{ url('/homepage') }}">EN - English</option>
+                                    <option value="{{ url('/homepage/hi') }}">HI - Hindi</option>
                                 </select>
                             </div>
                         </div>
