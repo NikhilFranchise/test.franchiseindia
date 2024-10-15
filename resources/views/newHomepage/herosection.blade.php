@@ -157,7 +157,7 @@
                                             </select></li>
                                         <li class="p-0 m-0"><select name="min_cost"
                                                 class="form-control form-control-custom dropdown-toogle-icon"
-                                                id="minAmount1" onchange="selectMax1(this.value)">
+                                                id="minAmount1" onchange="selectMax(this.value)">
                                                 <option value="" hidden="">Select Min Investment</option>
                                                 <option slug="10000" value="1">Rs. 10000</option>
                                                 <option slug="50000" value="3">Rs. 50000</option>
@@ -337,7 +337,7 @@
                                         <li class="p-0 m-0">
                                             <select name="min_cost" aria-label="Select Min Investment"
                                                 class="form-control form-control-custom dropdown-toogle-icon"
-                                                id="minAmount1" onchange="selectMax1(this.value)">
+                                                id="minAmount1" onchange="selectMax(this.value)">
                                                 <option value="" hidden="">Select Min Investment</option>
                                                 <option slug="10000" value="1">Rs. 10000</option>
                                                 <option slug="50000" value="3">Rs. 50000</option>
