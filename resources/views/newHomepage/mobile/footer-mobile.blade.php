@@ -1015,11 +1015,11 @@
 {{--  dashobards of mobile frnachisor or investor  end here --}}
 
 
-<script  src="{{ url('cwv-mobile/js/bootstrap.min.js') }}" defer></script>
-<script type="text/javascript" src="{{ url('cwv-mobile/js/custom.js') }}"></script>
 <script src="{{ url('cwv-mobile/js/jquery-3.1.1.min.js') }}"></script>
-<script  src="{{ url('cwv-mobile/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+<script type="text/javascript" src="{{ url('cwv-mobile/js/custom.js') }}"></script>
+<script  src="{{ url('cwv-mobile/js/bootstrap.min.js') }}" defer></script>
 <script src="{{ url('cwv-mobile/js/popper.min.js') }}"></script>
+<script  src="{{ url('cwv-mobile/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
 <!-- Font Awesome JS -->
 <script defer src="{{ url('cwv-mobile/js/solid.js') }}"></script>
 <script defer src="{{ url('cwv-mobile/js/fontawesome.js') }}"></script>

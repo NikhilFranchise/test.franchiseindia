@@ -1,3 +1,9 @@
+@php
+    $hindiUrl = url('/homepage/hi');
+    $engUrl = url('/homepage');
+@endphp
+@section('hindiUrl', $hindiUrl)
+@section('englishUrl', $engUrl)
 @if (request()->segment(2) == 'hi')
     <nav id="sidebar">
         <div id="dismiss"><i class="fas fa-arrow-left"></i></div>
@@ -22,42 +28,46 @@
             </li>
 
 
-                <li>
-                    <div class="p-2 language-main-bx">
-                        <div class="input-group input-group-custom">
-                            <span class="input-group-addon input-group-prepend-custom" id="basic-addon1">
- <img src="https://www.franchiseindia.com/newhomepage/assets/img/language-icon.svg"
-                                    alt="" width="19" height="19">
-                            </span>
-                            <div class="form-group form-group-sm">
-                                <select class="form-control form-control-custom-main" aria-label="Select Language"
-                                    id="exampleFormControlSelect1">
-                                    <option hidden="">Language</option>
-                                    <option value="{{ url('/homepage') }}">EN - English</option>
-                                    <option value="{{ url('/homepage/hi') }}">HI - Hindi</option>
-                                </select>
-                            </div>
+            <li>
+                <div class="p-2 language-main-bx">
+                    <div class="input-group input-group-custom">
+                        <span class="input-group-addon input-group-prepend-custom" id="basic-addon1">
+                            <img src="https://www.franchiseindia.com/newhomepage/assets/img/language-icon.svg"
+                                alt="" width="19" height="19">
+                        </span>
+                        <div class="form-group form-group-sm">
+                            <select class="form-control form-control-custom-main" aria-label="Select Language"
+                                id="exampleFormControlSelect1" onchange="changelanguage(this.value)">
+                                <option hidden="">Language</option>
+                                <option value="@yield('englishUrl')" @if ($engUrl == Request::url()) selected @endif>EN -
+                                    English
+                                </option>
+                                <option value="@yield('hindiUrl')" @if ($hindiUrl == Request::url()) selected @endif>HI -
+                                    Hindi
+                                </option>
+                            </select>
                         </div>
                     </div>
-                </li>
-                <li class="top-investors top-investor-mobile">
-                    <div class="dropdown policydropdown">
-                        <button class="btn dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false" style="">Investor <svg
-                                class="svg-inline--fa fa-caret-down fa-w-10" aria-hidden="true" data-prefix="fa"
-                                data-icon="caret-down" role="img" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 320 512" data-fa-i2svg="">
-                                <path fill="currentColor"
-                                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
-                                </path>
-                            </svg><!-- <i class="fa fa-caret-down"></i> --></button>
-                        <div class="dropdown-menu policydropdownmenu" aria-labelledby="btnDropdownDemo">
-                            <a class="dropdown-item" href="https://www.franchiseindia.com/ipo" target="_blank">IPO</a>
-                            <a class="dropdown-item" href="https://www.franchiseindia.com/policies"
-                                target="_blank">Policies</a>
-                        </div>
+                </div>
+            </li>
+            <li class="top-investors top-investor-mobile">
+                <div class="dropdown policydropdown">
+                    <button class="btn dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" style="">Investor <svg
+                            class="svg-inline--fa fa-caret-down fa-w-10" aria-hidden="true" data-prefix="fa"
+                            data-icon="caret-down" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 320 512" data-fa-i2svg="">
+                            <path fill="currentColor"
+                                d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
+                            </path>
+                        </svg><!-- <i class="fa fa-caret-down"></i> --></button>
+                    <div class="dropdown-menu policydropdownmenu" aria-labelledby="btnDropdownDemo">
+                        <a class="dropdown-item" href="https://www.franchiseindia.com/ipo" target="_blank">IPO</a>
+                        <a class="dropdown-item" href="https://www.franchiseindia.com/policies"
+                            target="_blank">Policies</a>
                     </div>
-                </li>
+                </div>
+            </li>
 
             <li><a target="_blank" href="/">घरेलू ब्रांड</a></li>
             <li><a target="_blank" href="/premiumbrand">प्रीमियम ब्रांड</a></li>
@@ -1847,42 +1857,42 @@
                 </div>
             </li>
 
-                <li>
-                    <div class="p-2 language-main-bx">
-                        <div class="input-group input-group-custom">
-                            <span class="input-group-addon input-group-prepend-custom" id="basic-addon1">
-                                <img src="https://www.franchiseindia.com/newhomepage/assets/img/language-icon.svg"
-                                    alt="" width="19" height="19">
-                            </span>
-                            <div class="form-group form-group-sm">
-                                <select class="form-control form-control-custom-main" aria-label="Select Language"
-                                    id="exampleFormControlSelect1">
-                                    <option hidden="">Language</option>
-                                    <option value="{{ url('/') }}">EN - English</option>
-                                    <option value="{{ url('/hi') }}">HI - Hindi</option>
-                                </select>
-                            </div>
+            <li>
+                <div class="p-2 language-main-bx">
+                    <div class="input-group input-group-custom">
+                        <span class="input-group-addon input-group-prepend-custom" id="basic-addon1">
+                            <img src="https://www.franchiseindia.com/newhomepage/assets/img/language-icon.svg"
+                                alt="" width="19" height="19">
+                        </span>
+                        <div class="form-group form-group-sm">
+                            <select class="form-control form-control-custom-main" aria-label="Select Language"
+                                id="exampleFormControlSelect1">
+                                <option hidden="">Language</option>
+                                <option value="{{ url('/homepage') }}">EN - English</option>
+                                <option value="{{ url('/homepage/hi') }}">HI - Hindi</option>
+                            </select>
                         </div>
                     </div>
-                </li>
-                <li class="top-investors top-investor-mobile">
-                    <div class="dropdown policydropdown">
-                        <button class="btn dropdown-toggle" type="button" id="btnDropdownDemo"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            style="">Investor <svg class="svg-inline--fa fa-caret-down fa-w-10"
-                                aria-hidden="true" data-prefix="fa" data-icon="caret-down" role="img"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
-                                <path fill="currentColor"
-                                    d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
-                                </path>
-                            </svg><!-- <i class="fa fa-caret-down"></i> --></button>
-                        <div class="dropdown-menu policydropdownmenu" aria-labelledby="btnDropdownDemo">
-                            <a class="dropdown-item" href="https://www.franchiseindia.com/ipo" target="_blank">IPO</a>
-                            <a class="dropdown-item" href="https://www.franchiseindia.com/policies"
-                                target="_blank">Policies</a>
-                        </div>
+                </div>
+            </li>
+            <li class="top-investors top-investor-mobile">
+                <div class="dropdown policydropdown">
+                    <button class="btn dropdown-toggle" type="button" id="btnDropdownDemo"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        style="">Investor <svg class="svg-inline--fa fa-caret-down fa-w-10"
+                            aria-hidden="true" data-prefix="fa" data-icon="caret-down" role="img"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+                            <path fill="currentColor"
+                                d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
+                            </path>
+                        </svg><!-- <i class="fa fa-caret-down"></i> --></button>
+                    <div class="dropdown-menu policydropdownmenu" aria-labelledby="btnDropdownDemo">
+                        <a class="dropdown-item" href="https://www.franchiseindia.com/ipo" target="_blank">IPO</a>
+                        <a class="dropdown-item" href="https://www.franchiseindia.com/policies"
+                            target="_blank">Policies</a>
                     </div>
-                </li>
+                </div>
+            </li>
 
             <li><a target="_blank" href="/">Domestic Brands</a></li>
             <li><a target="_blank" href="/premiumbrand">Premium Brands</a></li>
@@ -3676,4 +3686,3 @@
         </div>
     </nav>
 @endif
-
