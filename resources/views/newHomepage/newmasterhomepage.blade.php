@@ -1,4 +1,3 @@
-
 @mobile
     @include('newHomepage.mobile.header')
     @include('newHomepage.mobile.herosection')
@@ -39,7 +38,7 @@
         @include('newHomepage.f_insights_news')
         @include('newHomepage.testimonials')
         @include('newHomepage.loginmodal')
-        @include('newHomepage.popupfroahmedabad')
+        @include('newHomepage.popupfranchiseindiamumbai')
     </main>
     @include('newHomepage.sidemenu')
     <div class="overlay"></div>
@@ -49,4 +48,5 @@
     @include('newHomepage.footer')
 @endnotmobile
 </body>
+
 </html>
