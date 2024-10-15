@@ -120,7 +120,7 @@ class BusinessListingController extends Controller
         $brandResults    = $franData->paginate($count);
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
-    
+
         // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
         if ($currentPage > $lastPage) {
             // Get the current URL without query parameters
@@ -755,6 +755,8 @@ class BusinessListingController extends Controller
 
         $franData->where('unit_inv_max', '<=', $maxRangevalue);
         $franData->where('unit_inv_max', '>=', $minRangeValue);
+        dd($franData->count());
+
 // dd($maxRangeValue);
         $orderbyVal = 'membership_weightage';
         $franData->orderBy($orderbyVal, 'desc');
@@ -778,7 +780,7 @@ class BusinessListingController extends Controller
 
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
-    
+
         // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
         if ($currentPage > $lastPage) {
             // Get the current URL without query parameters
@@ -824,19 +826,19 @@ class BusinessListingController extends Controller
 
         }else{
             $cat_ids = config('constants.CategoryArr');
-            // dd($cat_ids); 
+            // dd($cat_ids);
             $categoryCounts = [];
-            
+
             foreach ($cat_ids as $id => $name) {
                 $cat_brand_count = FranchisorBusinessDetail::query()
                     ->where('profile_status', 1)
                     ->where('ind_main_cat', $id); // Use the ID here
                     // ->count();
-    
+
                     foreach ($stateNames as $stateName) {
                         $cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
                     }
-                
+
                     $cat_brand_count = $cat_brand_count->count();
                     $categoryCounts[$id] = $cat_brand_count;
                 // $categoryCounts[$id] = [
@@ -844,15 +846,15 @@ class BusinessListingController extends Controller
                 //     'count' => $cat_brand_count,
                 // ];
             }
-          
+
             // asort($categoryCounts);
             // dd($categoryCounts);
-           
-          
+
+
             $sub_cat_ids = config('constants.subCategoryArr');
             // dd($sub_cat_ids);
             $sub_categoryCounts = [];
-    
+
             // Loop through each main category
             foreach ($sub_cat_ids as $category) {
                 // Loop through each subcategory within the main category
@@ -862,7 +864,7 @@ class BusinessListingController extends Controller
                         ->where('profile_status', 1)
                         ->where('ind_cat', $id); // Use the ID here
                         // ->count();
-                    
+
                         foreach ($stateNames as $stateName) {
                             $sub_cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
                         }
@@ -871,14 +873,14 @@ class BusinessListingController extends Controller
                     $sub_categoryCounts[$id] = $sub_cat_brand_count;
                 }
             }
-            
+
             // Output the counts
             // dd($sub_categoryCounts);
-    
+
             $sub_sub_cat_ids = config('constants.subSubCategoryArr');
             // dd($sub_sub_cat_ids);
             $sub_sub_categoryCounts = [];
-    
+
             // Loop through each main category
             foreach ($sub_sub_cat_ids as $category) {
                 // Loop through each subcategory within the main category
@@ -891,16 +893,16 @@ class BusinessListingController extends Controller
                         foreach ($stateNames as $stateName) {
                             $sub_sub_cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
                         }
-                    
+
                     // Store the count in the result array
                     $sub_sub_cat_brand_count = $sub_sub_cat_brand_count->count();
                     $sub_sub_categoryCounts[$id] = $sub_sub_cat_brand_count;
                 }
             }
-           
+
         }
 
-   
+
 
 
         $view = 'category.category';
@@ -996,7 +998,7 @@ class BusinessListingController extends Controller
 
         if (in_array($cid[1], $catChk)) {
             $oiCategory = MappingCategory::query()->where('fi_category_id', $cid[1])->first();
-            //$oiCategory = MappingCategory::query()->where('fi_category', $catName)->first();			
+            //$oiCategory = MappingCategory::query()->where('fi_category', $catName)->first();
             if (!empty($oiCategory)) {
                 $ioRedirect = ($oiCategory->slug != '') ? Config('constants.OIDomain') . '/dir/' . $oiCategory->slug : Config('constants.OIDomain');
                 return redirect($ioRedirect, 301);
@@ -1075,7 +1077,7 @@ class BusinessListingController extends Controller
         // dd($brandResults);
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
-    
+
         // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
         if ($currentPage > $lastPage) {
             // Get the current URL without query parameters
@@ -1199,7 +1201,7 @@ class BusinessListingController extends Controller
         // dd($length);
         // dd($list_l[1]);
 
-       
+
 
         // preg_match('/[a-zA-Z]+(\d+)$/', $lowcost, $matches);    // Match all integers at the end of $lowcost
         $lastIntegers = $matches[1] ?? null;    // Get the last set of integers
@@ -1658,7 +1660,7 @@ class BusinessListingController extends Controller
         $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','verified_valid_date');
 
         $franData->where('profile_status', 1);
-      
+
         // $minInvestment = $franData->min('unit_inv_min');
         // $maxInvestment = $franData->max('unit_inv_max');
 
@@ -1702,7 +1704,7 @@ class BusinessListingController extends Controller
         if (!empty($franType))
             $franData->where('franchise_partner_type',  $franType);
 
-        if (count($locArrKey) > 0) {  
+        if (count($locArrKey) > 0) {
             $stateNames = [];
 
             foreach ($locArrKey as $key => $val) {
@@ -1721,17 +1723,17 @@ class BusinessListingController extends Controller
 
         // total brands count for master cat
         $cat_ids = config('constants.CategoryArr');
-        // dd($cat_ids); 
+        // dd($cat_ids);
         $categoryCounts = [];
-        // dd($stateNames)
 
-        if(empty($stateName)){
-            $categoryCounts = config('category.catCountArr');
-            $sub_categoryCounts = config('category.subcatcount');
-            $sub_sub_categoryCounts = config('category.sub_sub_cat_count');
-
-        }else{
+        if(empty($stateNames)){
+            $stateNames = config('location.stateArr' );
+            // dd('yes');
+        }
         foreach ($cat_ids as $id => $name) {
+
+            
+
             $cat_brand_count = FranchisorBusinessDetail::query()
                 ->where('profile_status', 1)
                 ->where('ind_main_cat', $id); // Use the ID here
@@ -1740,7 +1742,7 @@ class BusinessListingController extends Controller
                 foreach ($stateNames as $stateName) {
                     $cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
                 }
-            
+
                 $cat_brand_count = $cat_brand_count->count();
                 $categoryCounts[$id] = $cat_brand_count;
             // $categoryCounts[$id] = [
@@ -1748,11 +1750,11 @@ class BusinessListingController extends Controller
             //     'count' => $cat_brand_count,
             // ];
         }
-      
+
         // asort($categoryCounts);
         // dd($categoryCounts);
-       
-      
+
+
         $sub_cat_ids = config('constants.subCategoryArr');
         // dd($sub_cat_ids);
         $sub_categoryCounts = [];
@@ -1766,7 +1768,7 @@ class BusinessListingController extends Controller
                     ->where('profile_status', 1)
                     ->where('ind_cat', $id); // Use the ID here
                     // ->count();
-                
+
                     foreach ($stateNames as $stateName) {
                         $sub_cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
                     }
@@ -1775,7 +1777,7 @@ class BusinessListingController extends Controller
                 $sub_categoryCounts[$id] = $sub_cat_brand_count;
             }
         }
-        
+
         // Output the counts
         // dd($sub_categoryCounts);
 
@@ -1795,14 +1797,12 @@ class BusinessListingController extends Controller
                     foreach ($stateNames as $stateName) {
                         $sub_sub_cat_brand_count->Where('expansion_location', 'LIKE', '%' . $stateName . '%');
                     }
-                
+
                 // Store the count in the result array
                 $sub_sub_cat_brand_count = $sub_sub_cat_brand_count->count();
                 $sub_sub_categoryCounts[$id] = $sub_sub_cat_brand_count;
             }
         }
-    }
-       
         // $cat_brand_count = FranchisorBusinessDetail::query()->select('ind_main_cat')
         // ->where('profile_status', 1)
         // ->where('ind_main_cat',8)
@@ -1861,7 +1861,7 @@ class BusinessListingController extends Controller
             $orderbyVal = 'views';
             $franData->orderBy($orderbyVal, 'desc');
         }
-        
+
 
         $count           = request()->segment(1) == 'amp' ? 20 : 21;
         $brandResults    = $franData->paginate($count);
@@ -1870,7 +1870,7 @@ class BusinessListingController extends Controller
 
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
-    
+
         // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
         if ($currentPage > $lastPage) {
             // Get the current URL without query parameters
@@ -2079,7 +2079,7 @@ class BusinessListingController extends Controller
 
         if (in_array($cid[1], $catChk)) {
             $oiCategory = MappingCategory::query()->where('fi_category_id', $cid[1])->first();
-            //$oiCategory = MappingCategory::query()->where('fi_category', $catName)->first();			
+            //$oiCategory = MappingCategory::query()->where('fi_category', $catName)->first();
             if (!empty($oiCategory)) {
                 $ioRedirect = ($oiCategory->slug != '') ? Config('constants.OIDomain') . '/dir/' . $oiCategory->slug : Config('constants.OIDomain');
                 return redirect($ioRedirect, 301);
@@ -2175,7 +2175,7 @@ class BusinessListingController extends Controller
 // dd($minInvestment);
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
-    
+
         // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
         if ($currentPage > $lastPage) {
             // Get the current URL without query parameters
@@ -2272,15 +2272,15 @@ class BusinessListingController extends Controller
         $cat_ids = config('constants.CategoryArr');
         // dd($cat_ids);
         // $categoryCounts = [];
-        
+
         // foreach ($cat_ids as $id => $name) {
         //     $cat_brand_count = FranchisorBusinessDetail::query()
         //         ->where('profile_status', 1)
         //         ->where('ind_main_cat', $id) /
         //         ->count();
-        
+
         //     $categoryCounts[$id] = $cat_brand_count;
-            
+
         // }
         // dd($categoryCounts);
         $categoryCounts = config('category.catCountArr');
@@ -2298,12 +2298,12 @@ class BusinessListingController extends Controller
         //             ->where('profile_status', 1)
         //             ->where('ind_cat', $id) // Use the ID here
         //             ->count();
-                
+
         //         // Store the count in the result array
         //         $sub_categoryCounts[$id] = $sub_cat_brand_count;
         //     }
         // }
-        
+
         // // Output the counts
         // dd($sub_categoryCounts);
 $sub_categoryCounts = config('category.subcatcount');
@@ -2321,14 +2321,14 @@ $sub_categoryCounts = config('category.subcatcount');
         //             ->where('profile_status', 1)
         //             ->where('ind_sub_cat', $id) // Use the ID here
         //             ->count();
-                
+
         //         // Store the count in the result array
         //         $sub_sub_categoryCounts[$id] = $sub_sub_cat_brand_count;
         //     }
         // }
         // dd($sub_sub_categoryCounts);
         $sub_sub_categoryCounts = config('category.sub_sub_cat_count');
-       
+
         // return view($view, compact('brandResults', 'shuffledResults', 'breadCrumb', 'catName', 'mc', 'sc', 'ssc', 'loc', 'ftype', 'seoTitle', 'seoDesc', 'seoKeywords','sortby','minRangeValue','maxRangevalue','orderby','text', 'searchq', 'franImageData', 'city', 'resultType', 'reqSt', 'chk_homebased'));
 
 
