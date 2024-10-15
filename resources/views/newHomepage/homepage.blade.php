@@ -336,7 +336,7 @@
 
     @endphp
     @mobile
-    @if (request()->segment(1) == 'hi')
+    @if (request()->segment(2) == 'hi')
         @if (Auth::check())
             @if (Auth::user()->profile_type == config('constants.ProfileType.Investor'))
                 <nav id="sidebar-login" class="c-menu c-menu--slide-right myaccount sidemy is-active">

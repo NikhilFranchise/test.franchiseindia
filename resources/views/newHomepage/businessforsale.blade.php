@@ -3,9 +3,9 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="section-ptb">
-                    <h2>{{ Request::segment(1) == 'hi' ? 'बिजनेस की बिक्री का अवसर' : 'Business For Sale Opportunity' }}
+                    <h2>{{ Request::segment(2) == 'hi' ? 'बिजनेस की बिक्री का अवसर' : 'Business For Sale Opportunity' }}
                     </h2>
-                    <a href="https://www.businessex.com/businesslisting" target="_blank">{{ Request::segment(1) == 'hi' ? 'सभी देखें' : 'View All' }}</a></div>
+                    <a href="https://www.businessex.com/businesslisting" target="_blank">{{ Request::segment(2) == 'hi' ? 'सभी देखें' : 'View All' }}</a></div>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -27,7 +27,7 @@
                             </div>
                             <div class="d-flex sale-bg">
                                 <div class="card-info-sale">
-                                {{ Request::segment(1) == 'hi' ? 'कीमत' : 'Asking Price' }}
+                                {{ Request::segment(2) == 'hi' ? 'कीमत' : 'Asking Price' }}
                                 </div>
                                 <div class="card-info-amt-sale">15 Crores</div>
                             </div>
@@ -36,7 +36,7 @@
                                 <div class="sale-bg-email"><img src="{{url('cvw/images/f-email.webp')}}" loading="lazy" width="13" height="13" alt="email"> Email</div>
                                 <div class="sale-bg-map"><img src="{{url('cvw/images/f-map.webp')}}" loading="lazy" width="13" height="13" alt="map"> Bengaluru</div>
                             </div>
-                            <div class="link-section"><a href="https://www.businessex.com/business/looking-for-specialized-centralized-and-package-air-conditioning/mjzwdi" target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a></div>
+                            <div class="link-section"><a href="https://www.businessex.com/business/looking-for-specialized-centralized-and-package-air-conditioning/mjzwdi" target="_blank">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a></div>
                     </div>
                     <div class="card card-m card-p-10">
                             <div class="brand-image-section">
@@ -57,7 +57,7 @@
                             </div>
                             <div class="d-flex sale-bg">
                                 <div class="card-info-sale">
-                                {{ Request::segment(1) == 'hi' ? 'कीमत' : 'Asking Price' }}
+                                {{ Request::segment(2) == 'hi' ? 'कीमत' : 'Asking Price' }}
                                 </div>
                                 <div class="card-info-amt-sale">1 Crore</div>
                             </div>
@@ -68,7 +68,7 @@
                             </div>
                             <div class="link-section">
                                 <a href="https://www.businessex.com/business/looking-for-buyers-investors-for-an-online-vegan-ecommerce-business/lsstic"
-                                target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                                target="_blank">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
 
                             </div>
                     </div>
@@ -93,7 +93,7 @@
                             </div>
                             <div class="d-flex sale-bg">
                                 <div class="card-info-sale">
-                                {{ Request::segment(1) == 'hi' ? 'कीमत' : 'Asking Price' }}
+                                {{ Request::segment(2) == 'hi' ? 'कीमत' : 'Asking Price' }}
 
                                 </div>
                                 <div class="card-info-amt-sale">5 Crores</div>
@@ -105,7 +105,7 @@
                             </div>
                             <div class="link-section">
                                 <a href="https://www.businessex.com/business/seeking-buyers-for-marketing-and-communication-agency/mdk69z"
-                                target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                                target="_blank">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
                             </div>
                     </div>
                     <div class="card card-m card-p-10">
@@ -129,7 +129,7 @@
                         </div>
                         <div class="d-flex sale-bg">
                             <div class="card-info-sale">
-                                {{ Request::segment(1) == 'hi' ? 'कीमत' : 'Asking Price' }}
+                                {{ Request::segment(2) == 'hi' ? 'कीमत' : 'Asking Price' }}
 
                             </div>
                             <div class="card-info-amt-sale">5 Crores</div>
@@ -141,7 +141,7 @@
                         </div>
                         <div class="link-section">
                             <a href="https://www.businessex.com/business/looking-investor-for-pharma-distribution-business/ox9om1"
-                            target="_blank">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+                            target="_blank">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
                         </div>
                     </div>
                 </div>

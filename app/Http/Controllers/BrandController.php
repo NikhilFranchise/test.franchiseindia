@@ -78,7 +78,7 @@ class BrandController extends Controller
 
              //cache start
 
-             $cacheDuration = 3600;
+             $cacheDuration = 604800; // 7 days cache time
              // Cache key for franchisor details
              $franDetailsCacheKey = "fran_details_{$brandParamsArr[1]}";
              $franDetails = Cache::remember($franDetailsCacheKey, $cacheDuration, function () use ($brandParamsArr) {
