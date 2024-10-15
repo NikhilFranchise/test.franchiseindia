@@ -110,7 +110,7 @@
                         <div class="ml-auto d-flex p15">
 
                             <span data-toggle="modal" data-target="#search-main">
-                                <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/Search.svg"
+                                <img src="{{ url('cwv-mobile/images/Search.svg') }}"
                                     alt="Home Search" width="22" height="24"></span>
                             @if (Auth::check())
                                 <span class="login-text-right text-right" id="sidebarCollapse-main-login">
@@ -119,7 +119,7 @@
                                 </span>
                             @else
                                 <span data-toggle="modal" data-target="#login-pnl" id="loginselect">
-                                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/Login.svg"
+                                    <img src="{{ url('cwv-mobile/images/Login.svg') }}"
                                         alt="Login" width="21" height="21">
                                 </span>
                             @endif

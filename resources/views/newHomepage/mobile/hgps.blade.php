@@ -25,13 +25,13 @@
             </div>
             <div class="leading-card-area">
                 <div class="sale-bg-phone"><img
-                        src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/phone.webp" width="13"
+                        src="{{ url('cwv-mobile/images/phone.webp') }}" width="13"
                         height="13" alt="phone" loading="lazy">Phone</div>
                 <div class="sale-bg-email"><img
-                        src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/email.webp" width="13"
+                        src="{{ url('cwv-mobile/images/email.webp') }}" width="13"
                         height="13" alt="mobile" loading="lazy">Email</div>
                 <div class="sale-bg-map"><img
-                        src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/map.webp" width="13"
+                        src="{{ url('cwv-mobile/images/map.webp') }}" width="13"
                         height="13" alt="location" loading="lazy">Delhi</div>
             </div>
             <a href="https://www.businessex.com/startup/seeking-investment-for-adventure-and-tourism-market-place/lrgkm2"
@@ -63,13 +63,13 @@
             </div>
             <div class="leading-card-area">
                 <div class="sale-bg-phone"><img
-                        src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/phone.webp" width="13"
+                        src="{{ url('cwv-mobile/images/phone.webp') }}" width="13"
                         height="13" alt="phone" loading="lazy">Phone</div>
                 <div class="sale-bg-email"><img
-                        src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/email.webp" width="13"
+                        src="{{ url('cwv-mobile/images/email.webp') }}" width="13"
                         height="13" alt="mobile" loading="lazy">Email</div>
                 <div class="sale-bg-map"><img
-                        src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/map.webp" width="13"
+                        src="{{ url('cwv-mobile/images/map.webp') }}" width="13"
                         height="13" alt="location" loading="lazy">Kanpur</div>
             </div>
             <a href="https://www.businessex.com/startup/seeking-investor-for-high-class-sports-and-education-training-center/b0chev"
@@ -103,13 +103,13 @@
             </div>
             <div class="leading-card-area">
                 <div class="sale-bg-phone"><img
-                        src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/phone.webp"
+                        src="{{ url('cwv-mobile/images/phone.webp') }}"
                         width="13" height="13" alt="phone" loading="lazy">Phone</div>
                 <div class="sale-bg-email"><img
-                        src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/email.webp"
+                        src="{{ url('cwv-mobile/images/email.webp') }}"
                         width="13" height="13" alt="mobile" loading="lazy">Email</div>
                 <div class="sale-bg-map"><img
-                        src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/map.webp" width="13"
+                        src="{{ url('cwv-mobile/images/map.webp') }}" width="13"
                         height="13" alt="location" loading="lazy">Faridabad</div>
             </div>
             <a href="https://www.businessex.com/startup/seeking-investment-for-company-revolutionizing-solar-power-generation-and-led-based-lighting-fixtures-system/f3asef"
@@ -140,13 +140,13 @@
             </div>
             <div class="leading-card-area">
                 <div class="sale-bg-phone"><img
-                        src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/phone.webp"
+                        src="{{ url('cwv-mobile/images/phone.webp') }}"
                         width="13" height="13" alt="phone" loading="lazy">Phone</div>
                 <div class="sale-bg-email"><img
-                        src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/email.webp"
+                        src="{{ url('cwv-mobile/images/email.webp') }}"
                         width="13" height="13" alt="mobile" loading="lazy">Email</div>
                 <div class="sale-bg-map"><img
-                        src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/map.webp" width="13"
+                        src="{{ url('cwv-mobile/images/map.webp') }}" width="13"
                         height="13" alt="location" loading="lazy">Hyderabad</div>
             </div>
             <a href="https://www.businessex.com/startup/looking-for-an-investor-for-health-care-industry/sibsjr"
