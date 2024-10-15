@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\InsightList;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Cache;
 class BrandController extends Controller
 {
     //
@@ -36,43 +36,90 @@ class BrandController extends Controller
         if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
-        $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
 
-        $insightMatches = [];
+        // $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
 
-            $insightMatches = InsightList::query()
-                ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
-                ->where('status', 1)
-                ->whereIn('insight_type', ['News', 'Article']) // Only fetch 'News' and 'Article'
-                ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
-                ->orderByDesc('created_at')
-                ->limit(3)
-                ->get()
-                ->map(function ($item) {
-                    // Assuming you want the URL to be based on the slug
-                    $item->url = url('insights/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
-                    return $item;
-                });
+        // $insightMatches = [];
 
-                $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
-                $companyName = $franDetails->company_name;
-                $response= Http::get($apiUrl,['company_name'=>$companyName]);
-                if($response){
-                    $dataFromB=$response->json();
-                }
+        //     $insightMatches = InsightList::query()
+        //         ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
+        //         ->where('status', 1)
+        //         ->whereIn('insight_type', ['News', 'Article']) // Only fetch 'News' and 'Article'
+        //         ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
+        //         ->orderByDesc('created_at')
+        //         ->limit(3)
+        //         ->get()
+        //         ->map(function ($item) {
+        //             // Assuming you want the URL to be based on the slug
+        //             $item->url = url('insights/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
+        //             return $item;
+        //         });
+
+        //         $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
+        //         $companyName = $franDetails->company_name;
+        //         $response= Http::get($apiUrl,['company_name'=>$companyName]);
+        //         if($response){
+        //             $dataFromB=$response->json();
+        //         }
 
 
 
-            // // Convert both collections to arrays
-            $insightMatchesArray = $insightMatches->toArray();
-            $dataFromBArray = $dataFromB;
-            // // Combine both arrays into one
-            $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
-           // dd($combinedDataArray);
+        //     // // Convert both collections to arrays
+        //     $insightMatchesArray = $insightMatches->toArray();
+        //     $dataFromBArray = $dataFromB;
+        //     // // Combine both arrays into one
+        //     $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
+        //    // dd($combinedDataArray);
 
-            // // If you prefer to work with a collection, you can convert it back to a collection
-            $combinedDataCollection = collect($combinedDataArray);
+        //     // // If you prefer to work with a collection, you can convert it back to a collection
+        //     $combinedDataCollection = collect($combinedDataArray);
             //dd($combinedDataCollection);
+
+
+             //cache start
+
+             $cacheDuration = 3600;
+             // Cache key for franchisor details
+             $franDetailsCacheKey = "fran_details_{$brandParamsArr[1]}";
+             $franDetails = Cache::remember($franDetailsCacheKey, $cacheDuration, function () use ($brandParamsArr) {
+                 return FranchisorBusinessDetail::find($brandParamsArr[1]);
+             });
+
+         // Cache key for insight matches
+         $insightMatchesCacheKey = "insight_matches_{$franDetails->company_name}";
+         $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
+             return InsightList::query()
+                 ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
+                 ->where('status', 1)
+                 ->whereIn('insight_type', ['News', 'Article'])
+                 ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
+                 ->orderByDesc('created_at')
+                 ->limit(3)
+                 ->get()
+                 ->map(function ($item) {
+                     $item->url = url('insights/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
+                     return $item;
+                 });
+         });
+
+     // Cache key for API response
+     $apiDataCacheKey = "api_data_{$franDetails->company_name}";
+     $dataFromB = Cache::remember($apiDataCacheKey, $cacheDuration, function () use ($franDetails) {
+         $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
+         $response = Http::get($apiUrl, ['company_name' => $franDetails->company_name]);
+
+         return $response->json();
+     });
+
+     $insightMatchesArray = $insightMatches->toArray();
+     $dataFromBArray = $dataFromB;
+
+     // Combine both arrays into one
+     $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
+     $combinedDataCollection = collect($combinedDataArray);
+
+ //cache end
+
 
             //OI Redirection Start
             if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
