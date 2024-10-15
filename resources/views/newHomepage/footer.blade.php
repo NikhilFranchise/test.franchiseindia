@@ -578,40 +578,4 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script type="text/javascript" src="{{ url('newhomepage/assets/js/custom.js') }}"></script>
 <script src="{{ url('cvw/assets/js/homepagescript.js') }}"></script>
-<script>
-    function selectMax1(selectmaxheaderval) {
-        // console.log('yes');
-        let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
-        let maxAmount = $('#maxAmount1');
-        let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
-        maxAmount.html("");
-        selectmaxheaderval = parseInt(selectmaxheaderval);
-        $.each(amountConfigArr, function(key, value) {
-            if (key > selectmaxheaderval)
-                $('#maxAmount1').append($("<option></option>").attr({
-                    "value": key,
-                    "slug": getSlugAmount[key]['min']
-                }).text(value));
-        });
-        if (selectmaxheaderval === 21)
-            maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
-    }
 
-    function selectMax(selectmaxheaderval) {
-        // console.log('yes');
-        let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
-        let maxAmount = $('#maxAmount');
-        let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
-        maxAmount.html("");
-        selectmaxheaderval = parseInt(selectmaxheaderval);
-        $.each(amountConfigArr, function(key, value) {
-            if (key > selectmaxheaderval)
-                $('#maxAmount').append($("<option></option>").attr({
-                    "value": key,
-                    "slug": getSlugAmount[key]['min']
-                }).text(value));
-        });
-        if (selectmaxheaderval === 21)
-            maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
-    }
-</script>
