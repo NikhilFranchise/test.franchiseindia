@@ -426,8 +426,6 @@
                                     <div class="popleft">
                                         <span>या सोशल मीडिया के साथ साइन इन करें</span>
                                         <ul class="socl">
-                                            {{-- <li><a href="{{ Config('constants.MainDomain') }}/auth/facebook"><i
-                                                class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li> --}}
                                             <li><a href="{{ Config('constants.MainDomain') }}/auth/google"><i
                                                         aria-hidden="true"></i>
                                                     <img src="https://www.franchiseindia.com/newhomepage/assets/img/google.svg"
