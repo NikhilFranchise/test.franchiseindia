@@ -48,7 +48,6 @@
     @include('newHomepage.footer')
 @endnotmobile
 </body>
-<script>
     @if (
         !(
             !empty(request()->segment(2)) &&
@@ -80,14 +79,7 @@
                 App\Http\Controllers\CommonController::checkCampaignUrl();
             @endphp
 
-            @if (
-                $expoPopup == 1 &&
-                    request()->segment(1) != 'property-loan' &&
-                    request()->segment(1) != 'myaccount' &&
-                    request()->segment(1) != 'payment' &&
-                    request()->segment(1) != 'mailer' &&
-                    empty(request()->openpopup) &&
-                    empty(request()->popup_lead))
+            @if ($expoPopup == 1 && request()->segment(1) != 'property-loan' && request()->segment(1) != 'myaccount' && request()->segment(1) != 'payment' && request()->segment(1) != 'mailer' && empty(request()->openpopup) && empty(request()->popup_lead))
                 @if (in_array($query, $southCodes))
                     @if (request()->segment(1) == 'brands')
                         @if ($franDetails->membership_type != 1)
@@ -145,9 +137,8 @@
                         @include('includes.banners.popupfranchiseindiamumbai')
                     @endif
                 @endif
-            @endif 
+            @endif
+
         @endnotmobile
     @endif
-</script>
-
 </html>

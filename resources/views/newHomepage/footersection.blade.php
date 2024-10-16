@@ -128,6 +128,6 @@
         </div>
     </div>
 </section>
-@include('cvw/groupsites')
+@include('newHomepage/groupsites')
 
-@include('cvw/location_links')
+@include('newHomepage/location_links')

@@ -48,8 +48,7 @@
     </div>
 </div>
 {{--  search modal start here  --}}
-<div class="modal modal-cust fade in" id="search-main" tabindex="-1" aria-labelledby="search-mainLabel"
-    aria-hidden="true">
+<div class="modal modal-cust fade in" id="search-main" tabindex="-1" aria-labelledby="search-mainLabel">
     <div class="modal-dialog modal-dialog-cust">
         <div class="modal-content modal-content-cust"><button type="button" class="close" data-dismiss="modal"
                 aria-label="Close"><span aria-hidden="true">×</span></button>
@@ -228,7 +227,7 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            {{-- <a href="javascript:void(0)" onclick="locform.reset();">Clear All</a> --}}
+                                            
                                             <a href="#" role="button"
                                                 onclick="event.preventDefault(); locform.reset();">
                                                 Clear All
@@ -427,8 +426,6 @@
                                     <div class="popleft">
                                         <span>या सोशल मीडिया के साथ साइन इन करें</span>
                                         <ul class="socl">
-                                            {{-- <li><a href="{{ Config('constants.MainDomain') }}/auth/facebook"><i
-                                                class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li> --}}
                                             <li><a href="{{ Config('constants.MainDomain') }}/auth/google"><i
                                                         aria-hidden="true"></i>
                                                     <img src="https://www.franchiseindia.com/newhomepage/assets/img/google.svg"

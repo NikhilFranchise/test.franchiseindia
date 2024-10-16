@@ -13,11 +13,8 @@
         content="franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india">
 
 <link rel="preload" fetchpriority="high" as="image" href="{{ url('cwv-mobile/images/mobile-banner.webp') }}" type="image/webp">
-
 <link rel="stylesheet" href="{{ url('cwv-mobile/css/style.css')}}" rel="preload" as="style">
-
 <link rel="stylesheet" href="{{ url('cwv-mobile/css/bootstrap.min.css') }}" rel="preload" as="style">
-
 <link rel="stylesheet" href="{{ url('cwv-mobile/css/jquery.mCustomScrollbar.min.css') }}" rel="preload" as="style">
 
         <!-- Google Tag Manager -->
@@ -110,7 +107,7 @@
                         <div class="ml-auto d-flex p15">
 
                             <span data-toggle="modal" data-target="#search-main">
-                                <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/Search.svg"
+                                <img src="{{ url('cwv-mobile/images/Search.svg') }}"
                                     alt="Home Search" width="22" height="24"></span>
                             @if (Auth::check())
                                 <span id="sidebarCollapse-main-login">
@@ -119,7 +116,7 @@
                                 </span>
                             @else
                                 <span data-toggle="modal" data-target="#login-pnl" id="loginselect">
-                                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/Login.svg"
+                                    <img src="{{ url('cwv-mobile/images/Login.svg') }}"
                                         alt="Login" width="21" height="21">
                                 </span>
                             @endif

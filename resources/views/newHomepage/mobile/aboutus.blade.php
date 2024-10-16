@@ -315,56 +315,56 @@
         <p>Our Group Sites</p>
         <ul class="partner-site">
             <li><a aria-label="Read more about Entrepreneur" href="https://www.entrepreneur.com/" target="_blank">
-                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/entrepreneur.webp"
+                    <img src="{{ url('cwv-mobile/images/entrepreneur.webp') }}"
                         loading="lazy" alt="" width="179" height="104">
                 </a></li>
             <li><a aria-label="Read more about Indianretailer" href="https://www.indianretailer.com/"
                     target="_blank">
-                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/indianretailer.webp"
+                    <img src="{{ url('cwv-mobile/images/indianretailer.webp') }}"
                         loading="lazy" alt="" width="179" height="104">
                 </a></li>
             <li><a aria-label="Read more about Restaurantindia" href="https://www.restaurantindia.in/"
                     target="_blank">
-                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/restaurantindia.webp"
+                    <img src="{{ url('cwv-mobile/images/restaurantindia.webp') }}"
                         loading="lazy" alt="" width="179" height="104">
                 </a></li>
             <li><a aria-label="Read more about Franchise India Nepal" href="https://www.franchisenepal.com/"
                     target="_blank">
-                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/franchiseindia-nepal.webp"
+                    <img src="{{ url('cwv-mobile/images/franchiseindia-nepal.webp') }}"
                         loading="lazy" alt="" width="179" height="104">
                 </a></li>
             <li><a aria-label="Read more about Franchise Bangladesh" href="http://www.franchisebangladesh.com/"
                     target="_blank">
-                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/franchise-bangladesh.webp"
+                    <img src="{{ url('cwv-mobile/images/franchise-bangladesh.webp') }}"
                         loading="lazy" alt="" width="179" height="104">
                 </a></li>
             <li><a aria-label="Read more about Businessex" href="https://www.businessex.com/" target="_blank">
-                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/businessex.webp"
+                    <img src="{{ url('cwv-mobile/images/businessex.webp') }}"
                         loading="lazy" alt="" width="179" height="104">
                 </a></li>
             <li><a aria-label="Read more about License India" href="https://www.licenseindia.com/" target="_blank">
-                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/license-india.webp"
+                    <img src="{{ url('cwv-mobile/images/license-india.webp') }}"
                         loading="lazy" alt="" width="179" height="104">
                 </a></li>
             <li><a aria-label="Read more about Brandford" href="https://www.bradfordlicenseindia.com/"
                     target="_blank">
-                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/brandford.webp"
+                    <img src="{{ url('cwv-mobile/images/brandford.webp') }}"
                         loading="lazy" alt="" width="179" height="104">
                 </a></li>
             <li><a aria-label="Read more about francorp" href="https://www.francorp.in/" target="_blank">
-                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/fancorp.webp"
+                    <img src="{{ url('cwv-mobile/images/fancorp.webp') }}"
                         loading="lazy" alt="" width="179" height="104">
                 </a></li>
             <li><a aria-label="Read more about Franglobal" href="https://www.franglobal.com/" target="_blank">
-                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/fanglobal.webp"
+                    <img src="{{ url('cwv-mobile/images/fanglobal.webp') }}"
                         loading="lazy" alt="" width="179" height="104">
                 </a></li>
             <li><a aria-label="Read more about Gaurav Marya" href="https://www.gauravmarya.com/" target="_blank">
-                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/gauravmarya.webp"
+                    <img src="{{ url('cwv-mobile/images/gauravmarya.webp') }}"
                         loading="lazy" alt="" width="179" height="104">
                 </a></li>
             <li><a aria-label="Read more about ISFA" href="https://www.msme.in/" target="_blank">
-                    <img src="https://test.franchiseindia.com/dotcom-mobile-fresh-code/images/isfa.webp"
+                    <img src="{{ url('cwv-mobile/images/isfa.webp') }}"
                         loading="lazy" alt="" width="179" height="104">
                 </a></li>
         </ul>
