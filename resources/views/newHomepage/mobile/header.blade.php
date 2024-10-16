@@ -30,7 +30,7 @@
       <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india')" />
       @endif
       <link href="{{ $canonicalUrl . $queryString }}" rel="canonical">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="shortcut icon" href="https://www.franchiseindia.com/favicon.ico" type="image/x-icon" />
       <meta property="fb:pages" content="118224094883095" />
       <meta property="fb:app_id" content="110294989480112" />
