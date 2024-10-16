@@ -7,8 +7,8 @@ asort($states);
 @endphp
 <section class="hero-moblie" id="hero-mobile">
    <div class="lnkblk">
-      <a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank" class="setpat"><img
-         src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.png" alt="easy gym" width="237"
+      <a href="https://fiuat.franchiseindia.com/brands/easygym.95394" target="_blank" class="setpat"><img
+         src="https://fiuat.franchiseindia.com/newhomepage/assets/img/easygym.png" alt="easy gym" width="237"
          height="60"></a>
    </div>
    @if (request()->segment(2) == 'hi')
