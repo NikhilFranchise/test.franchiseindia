@@ -9,8 +9,8 @@
     {{--  <img src="{{ url('cwv-mobile/images/mobile-banner.webp') }}" class="hero-banner" alt="Franchise India"
         fetch-priority="high" height="590" width="412">  --}}
     <div class="lnkblk">
-        <a href="https://fiuat.franchiseindia.com/brands/easygym.95394" target="_blank" class="setpat"><img
-                src="https://fiuat.franchiseindia.com/newhomepage/assets/img/easygym.webp" alt="easy gym" width="237"
+        <a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank" class="setpat"><img
+                src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.png" alt="easy gym" width="237"
                 height="60"></a>
     </div>
     @if (request()->segment(2) == 'hi')
@@ -39,7 +39,7 @@
         @endif
         <div class="panels">
             <div class="panel" id="one-panel">
-                <form class="form-horizontal" method="get" action="https://fiuat.franchiseindia.com/category/searchby"
+                <form class="form-horizontal" method="get" action="https://www.franchiseindia.com/category/searchby"
                     onsubmit="return submitCategory1()">
                     <input type="hidden" name="catTab" value="1">
                     <ul class="hero-search-main">
@@ -89,7 +89,7 @@
                 </form>
             </div>
             <div class="panel" id="two-panel">
-                <form class="form-horizontal" method="get" action="https://fiuat.franchiseindia.com/category/searchby"
+                <form class="form-horizontal" method="get" action="https://www.franchiseindia.com/category/searchby"
                     onsubmit="return submitLocation1()">
                     <input type="hidden" name="locTab" value="1">
                     <ul class="hero-search-main">
@@ -139,7 +139,7 @@
             </div>
             <div class="panel" id="three-panel">
                 <form class="form-horizontal" method="get"
-                    action="https://fiuat.franchiseindia.com/category/searchby" onsubmit="return submitInvestment1()">
+                    action="https://www.franchiseindia.com/category/searchby" onsubmit="return submitInvestment1()">
                     <input type="hidden" name="invTab" value="1">
                     <ul class="hero-search-main">
                         <li class="p-0 m-0">
