@@ -37,7 +37,7 @@ asort($states);
       @endif
       <div class="panels">
          <div class="panel" id="one-panel">
-            <form class="form-horizontal" method="get" action="https://www.franchiseindia.com/category/searchby"
+            <form class="form-horizontal" method="get" action="https://fiuat.franchiseindia.com/category/searchby"
                onsubmit="return submitCategory1()">
                <input type="hidden" name="catTab" value="1">
                <ul class="hero-search-main">
@@ -87,7 +87,7 @@ asort($states);
             </form>
          </div>
          <div class="panel" id="two-panel">
-            <form class="form-horizontal" method="get" action="https://www.franchiseindia.com/category/searchby"
+            <form class="form-horizontal" method="get" action="https://fiuat.franchiseindia.com/category/searchby"
                onsubmit="return submitLocation1()">
                <input type="hidden" name="locTab" value="1">
                <ul class="hero-search-main">
@@ -136,7 +136,7 @@ asort($states);
          </div>
          <div class="panel" id="three-panel">
             <form class="form-horizontal" method="get"
-               action="https://www.franchiseindia.com/category/searchby" onsubmit="return submitInvestment1()">
+               action="https://fiuat.franchiseindia.com/category/searchby" onsubmit="return submitInvestment1()">
                <input type="hidden" name="invTab" value="1">
                <ul class="hero-search-main">
                   <li class="p-0 m-0">

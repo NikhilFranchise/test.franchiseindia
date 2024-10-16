@@ -1,57 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-   @php
-   $canonicalUrl = url()->current();
-   $queryParams = request()->query();
-   $queryString = '';
-   $hindiUrl = url('/homepage/hi');
-   $engUrl = url('/homepage');
-   $excludedParams = ['sortby', 'catTab', 'invTab'];
-   if (!empty($queryParams)) {
-   $queryString = '?';
-   foreach ($queryParams as $key => $value) {
-   // Skip if the parameter is in the excluded list
-   if (in_array($key, $excludedParams)) {
-   continue;
-   }
-   if (is_null($value)) {
-   $queryString .= $key . '&';
-   } else {
-   $queryString .= $key . '=' . urlencode($value) . '&';
-   }
-   // Remove the trailing '&' and the '?' if no valid query parameters are left
-   }
-   $queryString = rtrim($queryString, '&');
-   if ($queryString === '?') {
-   $queryString = '';
-   }
-   $queryString = rtrim($queryString, '&');
-   }
-   @endphp
    <head>
-      <meta charset="UTF-8">
-      <meta content="{{ request()->segment(2) == 'hi' ? 'hi-in' : 'en-in' }}" name="language" />
-      <title>@if (request()->segment(2) != 'hi')@yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities')@elseif (request()->segment(2) == 'hi')@yield('seoTitle', 'फ्रैंचाइज़ इंडिया - व्यावसायिक अवसर, फ्रैंचाइज़ अवसर')@endif</title>
-      @if (request()->segment(2) == 'hi')
-      <meta name="description" content="@yield('seoDesc', 'फ्रैंचाइज़ इंडिया फ्रैंचाइज़ी के अवसर, व्यापार के अवसर, व्यापारिक विचार, भारत में सबसे अच्छा व्यवसाय प्रदान करता है और सस्ती सीमा के साथ भारत में फ्रैंचाइज़ खरीदता है ।')" />
-      <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'भारत में फ्रैंचाइज़, फ्रैंचाइज़ी के अवसर,व्यापार के अवसर, व्यापारिक विचार, भारत में फ्रैंचाइज़ी खरीदें, छोटे व्यवसाय के विचार, फ्रैंचाइज़ भारत')" />
-      @else
-      <meta name="description" content="@yield('seoDesc', 'Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.')" />
-      <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india')" />
-      @endif
-      <link href="@yield('canonicalUrl', Request::get('page') ? url()->full() : url()->current())/" rel="canonical">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="shortcut icon" href="https://fiuat.franchiseindia.com/favicon.ico" type="image/x-icon" />
-      <meta property="fb:pages" content="118224094883095" />
-      <meta property="fb:app_id" content="110294989480112" />
-      <meta name="google-site-verification" content="8W9CXigRDmfNyf8vOfkZBefougI9sPXO4xvDBFLIjaw" />
-      <meta name="y_key" content="0f4f718975ac23ed" />
-      <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
-      <meta content="noindex,nofollow" name="robots" />
-      @if ($__env->yieldContent('prev'))
-      <link href="@yield('prev')" rel="prev">
-      <link href="@yield('next')" rel="next">
-      @endif
+    <meta charset="UTF-8">
+    <meta content="en-in" name="language">
+    <title>Franchise India</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description"
+        content="Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.">
+    <meta name="keywords" itemprop="keywords"
+        content="franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india">
       <link rel="preload" fetchpriority="high" as="image" href="{{ url('cwv-mobile/images/mobile-banner.webp') }}" type="image/webp">
       <link rel="stylesheet" href="{{ url('cwv-mobile/css/style.css')}}" rel="preload" as="style">
       <link rel="stylesheet" href="{{ url('cwv-mobile/css/bootstrap.min.css') }}" rel="preload" as="style">
