@@ -569,8 +569,8 @@ class BusinessListingController extends Controller
                 $seoDesc     = 'फ्रैंचाइजी-5 करोड़ या उससे अधिक  के बीच व्यवसाय के अवसर खोजें';
             }
         } else {
-            // $minRangeValue = 0;
-            $minRangeValue = 500000;
+            $minRangeValue = 0;
+            // $minRangeValue = 10000;
             $maxRangevalue = 100000000;
         }
 
@@ -751,11 +751,12 @@ class BusinessListingController extends Controller
 
             $maxRangevalue = Config('constants.InvestRange.' . request()->investment . '.max');
         }
+        // dd($franData->count());
         
 
         $franData->where('unit_inv_max', '<=', $maxRangevalue);
         $franData->where('unit_inv_max', '>=', $minRangeValue);
-        dd($franData->count());
+
 
 // dd($maxRangeValue);
         $orderbyVal = 'membership_weightage';
