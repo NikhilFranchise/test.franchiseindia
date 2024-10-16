@@ -20,12 +20,12 @@
       <meta charset="UTF-8">
       <meta content="{{ request()->segment(2) == 'hi' ? 'hi-in' : 'en-in' }}" name="language" />
       <title>@if (request()->segment(2) != 'hi') @yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities')
-         @elseif (request()->segment(2) == 'hi') @yield('seoTitle', 'फ्रैंचाइज़ इंडिया - व्यावसायिक अवसर, फ्रैंचाइज़ अवसर') @endif 
+         @elseif (request()->segment(2) == 'hi') @yield('seoTitle', 'फ्रैंचाइज़ इंडिया - व्यावसायिक अवसर, फ्रैंचाइज़ अवसर') @endif
       </title>
-      @if (request()->segment(2) == 'hi') 
+      @if (request()->segment(2) == 'hi')
       <meta name="description" content="@yield('seoDesc', 'फ्रैंचाइज़ इंडिया फ्रैंचाइज़ी के अवसर, व्यापार के अवसर, व्यापारिक विचार, भारत में सबसे अच्छा व्यवसाय प्रदान करता है और सस्ती सीमा के साथ भारत में फ्रैंचाइज़ खरीदता है ।')" />
       <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'भारत में फ्रैंचाइज़, फ्रैंचाइज़ी के अवसर,व्यापार के अवसर, व्यापारिक विचार, भारत में फ्रैंचाइज़ी खरीदें, छोटे व्यवसाय के विचार, फ्रैंचाइज़ भारत')" />
-      @else 
+      @else
       <meta name="description" content="@yield('seoDesc', 'Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.')" />
       <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india')" />
       @endif
@@ -63,7 +63,7 @@
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
       <script async>
          window.dataLayer = window.dataLayer || [];
-         
+
          function gtag() {
              dataLayer.push(arguments);
          }
@@ -73,7 +73,7 @@
       <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
       <script async>
          window.dataLayer = window.dataLayer || [];
-         
+
          function gtag() {
              dataLayer.push(arguments);
          }
@@ -105,6 +105,53 @@
          <img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=865253970178641&ev=PageView&noscript=1" />
       </noscript>
+      {{--  schema newly added 16-oct-2024  --}}
+      <script type="application/ld+json" async>
+        {
+          "@context": "https://schema.org/",
+          "@type": "WebSite",
+          "name": "FranchiseIndia",
+          "url": "https://www.franchiseindia.com/",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.franchiseindia.com/category/search?text={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+        </script>
+        <script type="application/ld+json" async>
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "Franchise India",
+          "url": "https://www.franchiseindia.com/",
+          "logo": "https://www.franchiseindia.com/newhomepage/assets/img/Logo.svg",
+          "alternateName": "FranchiseIndia",
+          "sameAs": [
+            "https://www.facebook.com/FranchiseIndiaMedia",
+            "https://twitter.com/FranchiseIndia",
+            "https://www.instagram.com/franchiseindia_/",
+            "https://www.youtube.com/user/FranchiseIndia",
+            "https://muckrack.com/media-outlet/franchiseindia",
+            "https://www.linkedin.com/company/franchiseindia/"
+          ],
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "1800 102 2007",
+              "contactType": "customer service",
+              "email": "advertise@franchiseindia.com",
+              "contactOption": "TollFree",
+              "areaServed": "IN",
+              "availableLanguage": [
+                "en",
+                "hi"
+              ]
+            }
+          ]
+        }
+        </script>
+        {{--  schema newly added 16-oct-2024  --}}
    </head>
    <body>
       <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
