@@ -227,7 +227,7 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            
+
                                             <a href="#" role="button"
                                                 onclick="event.preventDefault(); locform.reset();">
                                                 Clear All
