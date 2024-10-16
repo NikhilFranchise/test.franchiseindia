@@ -115,8 +115,7 @@
                             <div class="eshowblk">
                                 <div class="eshowimg">
                                     <a href="https://www.franchiseindia.net/fro-bos/visakhapatnam/" target="_blank">
-                                        <img class="" alt="Franchise Expo Vishakhapatnam"
-                                            src="https://www.franchiseindia.com/images/franchise-expo-vishakhapatnam.webp"></a>
+<img class="" alt="Franchise Expo Vishakhapatnam" src="https://www.franchiseindia.com/images/franchise-expo-vishakhapatnam.webp" loading="lazy"></a>
                                 </div>
                                 <div class="eshowcontent">
                                     <h2>Franchise Expo Vishakhapatnam</h2>
@@ -138,7 +137,7 @@
                                 <div class="eshowimg">
                                     <a href="https://www.franchiseindia.com/expo/mumbai/" target="_blank">
                                         <img class="" alt="Franchise India 2024 Mumbai"
-                                            src="https://www.franchiseindia.com/images/franchise-india.webp"></a>
+                                            src="https://www.franchiseindia.com/images/franchise-india.webp" loading="lazy"></a>
                                 </div>
                                 <div class="eshowcontent">
                                     <h2>Franchise India 2024 Mumbai</h2>
@@ -160,7 +159,7 @@
                                 <div class="eshowimg">
                                     <a href="https://www.irec.asia/mumbai/" target="_blank">
                                         <img class="" alt="IReC 2024"
-                                            src="https://www.franchiseindia.com/images/irec.webp"></a>
+                                            src="https://www.franchiseindia.com/images/irec.webp" loading="lazy"></a>
                                 </div>
                                 <div class="eshowcontent">
                                     <h2>IReC 2024</h2>
@@ -181,7 +180,7 @@
                                 <div class="eshowimg">
                                     <a href="#" onclick="return false;">
                                         <img class="" alt="Saudi Franchise Expo"
-                                            src="https://www.franchiseindia.com/images/sfe.webp">
+                                            src="https://www.franchiseindia.com/images/sfe.webp" loading="lazy">
                                     </a>
                                 </div>
                                 <div class="eshowcontent">

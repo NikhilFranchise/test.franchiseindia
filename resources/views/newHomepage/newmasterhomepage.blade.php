@@ -137,8 +137,8 @@
                         @include('includes.banners.popupfranchiseindiamumbai')
                     @endif
                 @endif
-            @endif 
-            
+            @endif
+
         @endnotmobile
     @endif
 </html>
