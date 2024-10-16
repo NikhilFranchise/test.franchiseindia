@@ -32,7 +32,11 @@ $dotUrlSelected = 'class=dropactive';
 @if (request()->segment(2) == 'hi')
 
 <section class="hero-section" id="hero-section">
-
+    <style>
+        #hero-section {
+            background: url('https://www.franchiseindia.com/cvw/assets/img/banner-expo.webp');
+        }
+    </style>
    <div class="container">
       <div class="lnkblk"><a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank"
          class="setpat"><img src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.png"
@@ -205,7 +209,7 @@ $dotUrlSelected = 'class=dropactive';
 <section class="hero-section" id="hero-section">
     <style>
         #hero-section {
-            background: url('cvw/assets/img/banner-expo.webp');
+            background: url('https://www.franchiseindia.com/cvw/assets/img/banner-expo.webp');
         }
     </style>
    <div class="container">

@@ -169,13 +169,12 @@ asort($states);
                      </select>
                   </li>
                   <li class="p-0 m-0">
-                     <select name="max_cost"
-                        class="form-control
-                        form-control-custom
-                        dropdown-toogle-icon"
-                        id="maxAmount2">
-                        <option value="" hidden=""> Select Max Investment </option>
-                     </select>
+                    <select name="max_cost"
+                                 class="form-control form-control-custom dropdown-toogle-icon"
+                                 id="maxAmount1">
+                                 <option value="" hidden="">Select Max Investment</option>
+                              </select>
+
                   </li>
                   <li class="p-0 m-0">
                      <button type="submit"
