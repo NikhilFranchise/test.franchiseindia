@@ -41,7 +41,7 @@
       @endif
       <link href="@yield('canonicalUrl', Request::get('page') ? url()->full() : url()->current())/" rel="canonical">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="shortcut icon" href="https://www.franchiseindia.com/favicon.ico" type="image/x-icon" />
+      <link rel="shortcut icon" href="https://fiuat.franchiseindia.com/favicon.ico" type="image/x-icon" />
       <meta property="fb:pages" content="118224094883095" />
       <meta property="fb:app_id" content="110294989480112" />
       <meta name="google-site-verification" content="8W9CXigRDmfNyf8vOfkZBefougI9sPXO4xvDBFLIjaw" />
