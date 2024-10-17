@@ -281,7 +281,7 @@ class BrandController extends Controller
         if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
-         //cache start 
+         //cache start
 
          $cacheDuration = 604800;
          // Cache key for franchisor details
@@ -334,7 +334,7 @@ class BrandController extends Controller
                 });
             // $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
             //dd($iobrands);
-            if (!empty($iobrands)) { 
+            if (!empty($iobrands)) {
                 $ioRedirect = Config('constants.OIDomain') . '/manufacturer/' . $iobrands->profile_name . '-' . $iobrands->brand_id;
                 return redirect($ioRedirect, 301);
             }
@@ -361,13 +361,8 @@ class BrandController extends Controller
         // dd($region, $stateList);
         $likeTableData = $franDetails->franchisorLike;
         $pageLayout = $franDetails->page_layout_type;
-        $cleanedBusinessDescCacheKey = "cleaned_business_desc_{$franDetails->franchisor_id}";
-        // Retrieve cleaned business description from cache or clean it
-            $franDetails->business_desc = Cache::remember($cleanedBusinessDescCacheKey, $cacheDuration, function () use ($franDetails) {
-                return CommonController::cleanContent($franDetails->business_desc);
-            });
 
-        // $franDetails->business_desc = CommonController::cleanContent($franDetails->business_desc);
+        $franDetails->business_desc = CommonController::cleanContent($franDetails->business_desc);
 
         // Update number of views in franchisor_business_details table
         $update = $franDetails->increment('views');
@@ -416,13 +411,10 @@ class BrandController extends Controller
 
         //layout image selection conditions and selection
         $layoutType = ($pageLayout == 3) ? "image_type_slider2" : "image_type_slider1";
-        
-        $sliderCheckCacheKey = "franchisor_slider_tenure_{$franDetails->franchisor_id}";
-        $sliderCheck = Cache::remember($sliderCheckCacheKey, $cacheDuration, function () use ($franDetails) {
-            return FranchisorSliderTenure::query()->where('franchisor_id', $franDetails->franchisor_id)->first();
-        });
-        // $sliderCheck = FranchisorSliderTenure::query()->where('franchisor_id', $franDetails->franchisor_id)->first();
-        
+
+
+        $sliderCheck = FranchisorSliderTenure::query()->where('franchisor_id', $franDetails->franchisor_id)->first();
+
         if (!empty($sliderCheck) && $sliderCheck->status == 1 && $sliderCheck->end_date >= date('Y-m-d H:i:s')) {
 
             if ($pageLayout == 3 || $pageLayout == 2) {
@@ -438,12 +430,8 @@ class BrandController extends Controller
                         ->get();
             }
         }
-        $franTradePartnerCacheKey = "fran_trade_partner_{$franDetails->franchisor_id}";
-        // Retrieve franchisor trade partner data from cache or query it
-        $franTradePartnerData = Cache::remember($franTradePartnerCacheKey, $cacheDuration, function () use ($franDetails) {
-            return FranchisorTradePartner::query()->where('franchisor_id', $franDetails->franchisor_id)->get();
-        });
-        // $franTradePartnerData = FranchisorTradePartner::query()->where('franchisor_id', $franDetails->franchisor_id)->get();
+
+        $franTradePartnerData = FranchisorTradePartner::query()->where('franchisor_id', $franDetails->franchisor_id)->get();
 
         if ($franDetails->franchisor_id == "FIHL231593") {
             // SEO Meta Tags
