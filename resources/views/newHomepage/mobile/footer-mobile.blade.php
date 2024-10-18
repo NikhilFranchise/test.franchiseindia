@@ -227,7 +227,7 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            
+
                                             <a href="#" role="button"
                                                 onclick="event.preventDefault(); locform.reset();">
                                                 Clear All
@@ -329,7 +329,7 @@
 </div>
 {{--  search modal end here --}}
 {{-- login popup modal start here  --}}
-@if (request()->segment(2) == 'hi')
+@if (request()->segment(1) == 'hi')
     <div class="modal fade lg-panel formsection" id="login-pnl" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel">
         <div class="modal-dialog" role="document">
@@ -642,7 +642,7 @@
 @endif
 {{-- login popup modal end here  --}}
 {{--  dashobards of mobile frnachisor or investor start here  --}}
-    @if (request()->segment(2) == 'hi')
+    @if (request()->segment(1) == 'hi')
         @if (Auth::check())
             @if (Auth::user()->profile_type == config('constants.ProfileType.Investor'))
                 <nav id="sidebar-login" class="c-menu c-menu--slide-right myaccount sidemy is-active">

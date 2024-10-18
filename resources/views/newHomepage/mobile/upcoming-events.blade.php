@@ -1,5 +1,5 @@
 <section class="upcoming-events">
-    <h2 class="brands-head">{{ Request::segment(2) == 'hi' ? 'आने वाले कार्यक्रम' : 'Upcoming Events' }}</h2>
+    <h2 class="brands-head">{{ Request::segment(1) == 'hi' ? 'आने वाले कार्यक्रम' : 'Upcoming Events' }}</h2>
 
     <div class="card-wrap">
         <div class="leading-card">

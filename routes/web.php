@@ -64,10 +64,10 @@ use App\Http\Controllers\cvwhomepage;
 */
 
 Auth::routes();
-Route::get('/index/hi', [NewHomePageController::class, 'cwvMobilehindiHomePage']);
-Route::get('/index', [NewHomePageController::class, 'cwvMobile']);
-Route::get('/homepage', [NewHomePageController::class, 'newhomepage']);
-Route::get('/homepage/hi', [NewHomePageController::class, 'hindinewhomepage']);
+// Route::get('/index/hi', [NewHomePageController::class, 'cwvMobilehindiHomePage']);
+// Route::get('/index', [NewHomePageController::class, 'cwvMobile']);
+// Route::get('/homepage', [NewHomePageController::class, 'newhomepage']);
+// Route::get('/homepage/hi', [NewHomePageController::class, 'hindinewhomepage']);
 
 
 Route::get('optimize', function () {

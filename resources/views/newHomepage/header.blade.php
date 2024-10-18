@@ -6,8 +6,8 @@
         $canonicalUrl = url()->current();
         $queryParams = request()->query();
         $queryString = '';
-        $hindiUrl = url('/homepage/hi');
-        $engUrl = url('/homepage');
+        $hindiUrl = url('/hi');
+        $engUrl = url('/');
         $excludedParams = ['sortby', 'catTab', 'invTab'];
 
         if (!empty($queryParams)) {
@@ -35,18 +35,12 @@
     @section('hindiUrl', $hindiUrl)
     @section('englishUrl', $engUrl)
     <meta charset="UTF-8">
-      <meta content="{{ request()->segment(2) == 'hi' ? 'hi-in' : 'en-in' }}" name="language" />
-      <title>@if (request()->segment(2) != 'hi') @yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities')
-         @elseif (request()->segment(2) == 'hi') @yield('seoTitle', 'फ्रैंचाइज़ इंडिया - व्यावसायिक अवसर, फ्रैंचाइज़ अवसर') @endif
-      </title>
-      @if (request()->segment(2) == 'hi')
-      <meta name="description" content="@yield('seoDesc', 'फ्रैंचाइज़ इंडिया फ्रैंचाइज़ी के अवसर, व्यापार के अवसर, व्यापारिक विचार, भारत में सबसे अच्छा व्यवसाय प्रदान करता है और सस्ती सीमा के साथ भारत में फ्रैंचाइज़ खरीदता है ।')" />
+      <meta content="{{ request()->segment(1) == 'hi' ? 'hi-in' : 'en-in' }}" name="language" />
+      <title>@if(request()->segment(1) != 'hi')@yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities')@elseif (request()->segment(1) == 'hi')@yield('seoTitle', 'फ्रैंचाइज़ इंडिया - व्यावसायिक अवसर, फ्रैंचाइज़ अवसर')@endif</title>
+      @if (request()->segment(1) == 'hi')<meta name="description" content="@yield('seoDesc', 'फ्रैंचाइज़ इंडिया फ्रैंचाइज़ी के अवसर, व्यापार के अवसर, व्यापारिक विचार, भारत में सबसे अच्छा व्यवसाय प्रदान करता है और सस्ती सीमा के साथ भारत में फ्रैंचाइज़ खरीदता है ।')" />
       <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'भारत में फ्रैंचाइज़, फ्रैंचाइज़ी के अवसर,व्यापार के अवसर, व्यापारिक विचार, भारत में फ्रैंचाइज़ी खरीदें, छोटे व्यवसाय के विचार, फ्रैंचाइज़ भारत')" />
-      @else
-      <meta name="description" content="@yield('seoDesc', 'Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.')" />
-      <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india')" />
-      @endif
-      <link href="{{ $canonicalUrl . $queryString }}" rel="canonical">
+      @else<meta name="description" content="@yield('seoDesc', 'Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.')" />
+      <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india')" />@endif<link href="{{ $canonicalUrl . $queryString }}" rel="canonical">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="shortcut icon" href="https://www.franchiseindia.com/favicon.ico" type="image/x-icon" />
       <meta property="fb:pages" content="118224094883095" />
@@ -187,7 +181,7 @@
     @php
         $auth = new \Illuminate\Support\Facades\Auth();
     @endphp
-    @if (request()->segment(2) == 'hi')
+    @if (request()->segment(1) == 'hi')
         <header class="header" id="header">
             <div class="topbar">
                 <div class="container-fluid">
@@ -241,13 +235,9 @@
                                             @if ($__env->yieldContent('hindiUrl'))
                                                 <select class="form-control form-control-custom-main"
                                                     onchange="changelanguage(value)" aria-label="Language">
-
-                                                    <option value="@yield('englishUrl')"
-                                                        @if ($engUrl == Request::url()) selected @endif>EN - English
-                                                    </option>
-                                                    <option value="@yield('hindiUrl')"
-                                                        @if ($hindiUrl == Request::url()) selected @endif>HI - Hindi
-                                                    </option>
+                                                    ,<option value=""hidden></option>
+                                                    <option value="@yield('englishUrl')"@if ($engUrl == Request::url()) selected @endif>EN - English</option>
+                                                    <option value="@yield('hindiUrl')"@if ($hindiUrl == Request::url()) selected @endif>HI - Hindi</option>
                                                 </select>
                                             @endif
                                         </div>
@@ -365,7 +355,6 @@
                                             @if ($__env->yieldContent('hindiUrl'))
                                                 <select class="form-control form-control-custom-main"
                                                     onchange="changelanguage(this.value)" aria-label="Language">
-                                                    {{-- <option hidden="">Language</option> --}}
                                                     <option value="@yield('englishUrl')"
                                                         @if ($engUrl == Request::url()) selected @endif>EN - English
                                                     </option>

@@ -3,7 +3,7 @@
         <div class="padset">
             <div class="setfl">
                 <div class="section-ptb">
-                    <h2>{{ Request::segment(2) == 'hi' ? 'ट्रेंडिंग वीडियो' : 'Trending Videos' }}</h2>
+                    <h2>{{ Request::segment(1) == 'hi' ? 'ट्रेंडिंग वीडियो' : 'Trending Videos' }}</h2>
                 </div>
                 <!-- slider start  -->
                 <div id="myCarouselvideo" class="carousel slide" data-ride="carousel">
@@ -58,7 +58,7 @@
 
                                         </div>
                                         <div class="showview">{{ $videos1[$firstVideoIndex]['views'] }}
-                                            {{ Request::segment(2) == 'hi' ? 'विचारों' : 'Views' }}
+                                            {{ Request::segment(1) == 'hi' ? 'विचारों' : 'Views' }}
                                             <span>{{ date('d-M-Y', strtotime($videos1[$firstVideoIndex]['date'])) }}</span>
                                         </div>
                                     </div>
@@ -90,7 +90,7 @@
 
                                             </div>
                                             <div class="showview">{{ $videos1[$secondVideoIndex]['views'] }}
-                                                {{ Request::segment(2) == 'hi' ? 'विचारों' : 'Views' }}
+                                                {{ Request::segment(1) == 'hi' ? 'विचारों' : 'Views' }}
                                                 <span>{{ date('d-M-Y', strtotime($videos1[$secondVideoIndex]['date'])) }}</span>
                                             </div>
                                         </div>
@@ -107,7 +107,7 @@
             <!-- event start here  -->
             <div class="eventblk">
                 <div class="section-ptb">
-                    <h2>{{ Request::segment(2) == 'hi' ? 'आने वाले कार्यक्रम' : 'Upcoming Events' }}</h2>
+                    <h2>{{ Request::segment(1) == 'hi' ? 'आने वाले कार्यक्रम' : 'Upcoming Events' }}</h2>
                 </div>
                 <div class="swiper-container">
                     <div class="swiper-wrapper">

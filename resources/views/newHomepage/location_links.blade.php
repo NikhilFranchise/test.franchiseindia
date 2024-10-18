@@ -1,4 +1,4 @@
-@if (request()->segment(2) == 'hi')
+@if (request()->segment(1) == 'hi')
     <section class="Our-Group-Sitessection section-30" id="Our-Group-Sitessection">
         <div class="container">
             <div class="row justify-content-center">

@@ -30,7 +30,7 @@
     }
 
 @endphp
-@if (request()->segment(2) == 'hi')
+@if (request()->segment(1) == 'hi')
     <section class="hero-section" id="hero-section">
         <img src="{{ url('cvw/assets/img/mobile-banner-expo.webp') }}" class="banner-expo mmdesk" alt="Franchise India">
         <picture class="ppdesk">

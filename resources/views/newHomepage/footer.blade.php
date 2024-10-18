@@ -95,7 +95,7 @@
 @endif
 
 
-@if (request()->segment(2) == 'hi')
+@if (request()->segment(1) == 'hi')
 <footer class="footer" id="footer">
     <div class="container">
         <div class="row">

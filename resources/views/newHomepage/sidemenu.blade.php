@@ -1,4 +1,4 @@
-@if (request()->segment(2) == 'hi')
+@if (request()->segment(1) == 'hi')
     <nav id="sidebar">
         <div id="dismiss"><i class="fas fa-arrow-left"></i></div>
         <ul class="list-unstyled components border-bottom-1 pt-35">
@@ -275,7 +275,7 @@
                         Cost Business Opportunities</a>
                 </li>
             </ol>
-           
+
         </div>
         <div class="busheadmebu martop">Our Group website</div>
         <ul class="list-unstyled components border-bottom-1">

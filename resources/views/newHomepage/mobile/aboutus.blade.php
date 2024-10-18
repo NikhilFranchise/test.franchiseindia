@@ -1,5 +1,5 @@
 <div class="footer-bottom">
-    @if (request()->segment(2) == 'hi')
+    @if (request()->segment(1) == 'hi')
         <p>फ्रैंचाइज़ इंडिया के बारे में</p>
         <div class="about-text-section">
             Franchiseindia.com दुनिया की # 1 फ्रेंचाइजी वेबसाइट और एक उद्यमी की दैनिक खुराक है।
