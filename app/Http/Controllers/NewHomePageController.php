@@ -296,10 +296,8 @@ class NewHomePageController extends Controller
             return $videosData;
         });
 
-
-        // $brands = HomePremiumPageBrand::query()->where('status', 1)->orderBy('inventory_backup', 'ASC')->get();
-
         // return view('cvw.homepage')->with(compact('articles', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
+
         return view('newHomepage.newmasterhomepage')->with(compact('articles', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
 
         // return view('layout.masternewhomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));

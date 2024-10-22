@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <p class="section-th">
-                    {{ Request::segment(2) == 'hi' ? 'हमारे समूह साइटें ' : 'Our Group Sites' }}
+                    {{ Request::segment(1) == 'hi' ? 'हमारे समूह साइटें ' : 'Our Group Sites' }}
                 </p>
                 <div class="row justify-content-center">
                     <div class="modified-col col-xs-4 col-sm-4 col-md-3 col-xl-2 col-lg-2">

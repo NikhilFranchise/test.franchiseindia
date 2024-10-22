@@ -43,7 +43,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="section-ptb">
-                    <h2>{{ Request::segment(2) == 'hi' ? 'शीर्ष अंतरराष्ट्रीय अवसर' : 'Top International Opportunities' }}</h2>
+                    <h2>{{ Request::segment(1) == 'hi' ? 'शीर्ष अंतरराष्ट्रीय अवसर' : 'Top International Opportunities' }}</h2>
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
 
                                 </div>
                                 <a href="{{ $top['url'] }}" target="_blank">
-                                    <div class="link-section-main">{{ Request::segment(2) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</div>
+                                    <div class="link-section-main">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</div>
                                 </a>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-@if  (request()->segment(2) == 'hi')
+@if  (request()->segment(1) == 'hi')
 @mobile
 <div class="modal fade lg-panel formsection" id="login-pnl" tabindex="-1" role="dialog"
 aria-labelledby="exampleModalLabel">

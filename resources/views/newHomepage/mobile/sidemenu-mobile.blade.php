@@ -1,10 +1,10 @@
 @php
-    $hindiUrl = url('/homepage/hi');
-    $engUrl = url('/homepage');
+    $hindiUrl = url('/hi');
+    $engUrl = url('/');
 @endphp
 @section('hindiUrl', $hindiUrl)
 @section('englishUrl', $engUrl)
-@if (request()->segment(2) == 'hi')
+@if (request()->segment(1) == 'hi')
     <nav id="sidebar">
         <div id="dismiss"><i class="fas fa-arrow-left"></i></div>
         <ul class="list-unstyled components border-bottom-1 pt-35">
@@ -142,8 +142,8 @@
             <li><a target="_blank" href="https://restaurant.indianretailer.com">restaurantindia.in</a></li>
             <li><a target="_blank"
                     href="https://www.opportunityindia.com/english/tag/health-and-wellness">wellnessindia.org</a></li>
-            <li><a target="_blank"
-                    href="https://www.opportunityindia.com/english/tag/education">educationbiz.com</a></li>
+            <li><a target="_blank" href="https://www.opportunityindia.com/english/tag/education">educationbiz.com</a>
+            </li>
             <li><a target="_blank" href="https://www.franchisebangladesh.com/"
                     rel="nofollow">franchisebangladesh.com</a></li>
             <li><a target="_blank" href="https://www.businessex.com/" rel="nofollow">businessex.com</a></li>
@@ -186,24 +186,24 @@
                     <ul class="sidebar-social">
                         <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img
                                     src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg"
-                                    alt="facebook-icon" class="mCS_img_loaded" width="36"
-                                    height="36"></a></li>
+                                    alt="facebook-icon" class="mCS_img_loaded" width="36" height="36"></a>
+                        </li>
                         <li><a href="https://twitter.com/FranchiseIndia" target="_blank"><img
                                     src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg"
                                     alt="twitter-icon" class="mCS_img_loaded" width="36" height="36"></a>
                         </li>
                         <li><a href="https://www.instagram.com/franchiseindia_/" target="_blank"><img
                                     src="https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg"
-                                    alt="instagram-icon" class="mCS_img_loaded" width="36"
-                                    height="36"></a></li>
+                                    alt="instagram-icon" class="mCS_img_loaded" width="36" height="36"></a>
+                        </li>
                         <li><a href="https://www.youtube.com/user/FranchiseIndia" target="_blank"><img
                                     src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg"
                                     alt="youtube-icon" class="mCS_img_loaded" width="36" height="36"></a>
                         </li>
                         <li><a href="https://www.linkedin.com/company/franchiseindia/" target="_blank"><img
                                     src="https://www.franchiseindia.com/newhomepage/assets/img/linkedin-new.svg"
-                                    alt="linkedin-icon" class="mCS_img_loaded" width="36"
-                                    height="36"></a></li>
+                                    alt="linkedin-icon" class="mCS_img_loaded" width="36" height="36"></a>
+                        </li>
                     </ul>
                 </div>
             </li>
@@ -265,8 +265,12 @@
                             <select class="form-control form-control-custom-main" aria-label="Select Language"
                                 id="exampleFormControlSelect1">
                                 <option hidden="">Language</option>
-                                <option value="{{ url('/homepage') }}">EN - English</option>
-                                <option value="{{ url('/homepage/hi') }}">HI - Hindi</option>
+                                <option value="@yield('englishUrl')" @if ($engUrl == Request::url()) selected @endif>EN
+                                    - English
+                                </option>
+                                <option value="@yield('hindiUrl')" @if ($hindiUrl == Request::url()) selected @endif>HI
+                                    - Hindi
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -274,11 +278,11 @@
             </li>
             <li class="top-investors top-investor-mobile">
                 <div class="dropdown policydropdown">
-                    <button class="btn dropdown-toggle" type="button" id="btnDropdownDemo"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        style="">Investor <svg class="svg-inline--fa fa-caret-down fa-w-10"
-                            aria-hidden="true" data-prefix="fa" data-icon="caret-down" role="img"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+                    <button class="btn dropdown-toggle" type="button" id="btnDropdownDemo" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" style="">Investor <svg
+                            class="svg-inline--fa fa-caret-down fa-w-10" aria-hidden="true" data-prefix="fa"
+                            data-icon="caret-down" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 320 512" data-fa-i2svg="">
                             <path fill="currentColor"
                                 d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z">
                             </path>
@@ -376,8 +380,8 @@
             <li><a target="_blank" href="https://restaurant.indianretailer.com">restaurantindia.in</a></li>
             <li><a target="_blank"
                     href="https://www.opportunityindia.com/english/tag/health-and-wellness">wellnessindia.org</a></li>
-            <li><a target="_blank"
-                    href="https://www.opportunityindia.com/english/tag/education">educationbiz.com</a></li>
+            <li><a target="_blank" href="https://www.opportunityindia.com/english/tag/education">educationbiz.com</a>
+            </li>
             <li><a target="_blank" href="https://www.franchisebangladesh.com/"
                     rel="nofollow">franchisebangladesh.com</a></li>
             <li><a target="_blank" href="https://www.businessex.com/" rel="nofollow">businessex.com</a></li>
@@ -464,7 +468,7 @@
 
 <style>
     #sidebar ul li a:hover {
-    background: #fff;
-    color: #dc3545 !important;
-}
+        background: #fff;
+        color: #dc3545 !important;
+    }
 </style>

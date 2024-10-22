@@ -18,11 +18,11 @@
       }
       @endphp
       <meta charset="UTF-8">
-      <meta content="{{ request()->segment(2) == 'hi' ? 'hi-in' : 'en-in' }}" name="language" />
+      <meta content="{{ request()->segment(1) == 'hi' ? 'hi-in' : 'en-in' }}" name="language" />
       <title>@if (request()->segment(2) != 'hi') @yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities')
-         @elseif (request()->segment(2) == 'hi') @yield('seoTitle', 'फ्रैंचाइज़ इंडिया - व्यावसायिक अवसर, फ्रैंचाइज़ अवसर') @endif
+         @elseif (request()->segment(1) == 'hi') @yield('seoTitle', 'फ्रैंचाइज़ इंडिया - व्यावसायिक अवसर, फ्रैंचाइज़ अवसर') @endif
       </title>
-      @if (request()->segment(2) == 'hi')
+      @if (request()->segment(1) == 'hi')
       <meta name="description" content="@yield('seoDesc', 'फ्रैंचाइज़ इंडिया फ्रैंचाइज़ी के अवसर, व्यापार के अवसर, व्यापारिक विचार, भारत में सबसे अच्छा व्यवसाय प्रदान करता है और सस्ती सीमा के साथ भारत में फ्रैंचाइज़ खरीदता है ।')" />
       <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'भारत में फ्रैंचाइज़, फ्रैंचाइज़ी के अवसर,व्यापार के अवसर, व्यापारिक विचार, भारत में फ्रैंचाइज़ी खरीदें, छोटे व्यवसाय के विचार, फ्रैंचाइज़ भारत')" />
       @else

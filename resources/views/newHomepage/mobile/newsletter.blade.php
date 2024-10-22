@@ -1,6 +1,6 @@
 <section class="newsletter">
-    <p>{{ Request::segment(2) == 'hi' ? 'उद्योग से नवीनतम अपडेट प्राप्त करने के लिए अपना ईमेल पता साझा करें' : 'Share your email address to get latest update from the industry' }}</p>
-    <h2>{{ Request::segment(2) == 'hi' ? 'न्यूज़लेटर साइन अप' : 'Newsletter Signup' }}</h2>
+    <p>{{ Request::segment(1) == 'hi' ? 'उद्योग से नवीनतम अपडेट प्राप्त करने के लिए अपना ईमेल पता साझा करें' : 'Share your email address to get latest update from the industry' }}</p>
+    <h2>{{ Request::segment(1) == 'hi' ? 'न्यूज़लेटर साइन अप' : 'Newsletter Signup' }}</h2>
     <div class="main-newsletter">
         <form id="update" method="post" action="{{ url('newslettersignup') }}">
             @csrf

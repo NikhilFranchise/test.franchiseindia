@@ -3,12 +3,12 @@
         <div class="row justify-content-center">
             <div class="modified-col col-xs-12 col-sm-6 col-md-6 col-xl-6 col-lg-6">
                 <div class="section-ptb">
-                    <h2>{{ Request::segment(2) == 'hi' ? 'फ्रैंचाइज के बारे में गहन जानकारियां और खबरें' : 'Franchise Insights and News' }}
+                    <h2>{{ Request::segment(1) == 'hi' ? 'फ्रैंचाइज के बारे में गहन जानकारियां और खबरें' : 'Franchise Insights and News' }}
                     </h2>
                     <div class="view-all-main-section">
                         <a target="_blank"
-                            href="{{ Request::segment(2) == 'hi' ? 'https://www.opportunityindia.com/hindi/' : 'https://www.opportunityindia.com/' }}"
-                            aria-label="view all">{{ Request::segment(2) == 'hi' ? 'सभी देखें' : 'View All' }}</a>
+                            href="{{ Request::segment(1) == 'hi' ? 'https://www.opportunityindia.com/hindi/' : 'https://www.opportunityindia.com/' }}"
+                            aria-label="view all">{{ Request::segment(1) == 'hi' ? 'सभी देखें' : 'View All' }}</a>
                     </div>
                     <div class="card card-m card-ptb-20">
                         <div class="row justify-content-center">
@@ -75,10 +75,10 @@
             </div>
             <div class="modified-col col-xs-12 col-sm-6 col-md-6 col-xl-6 col-lg-6">
                 <div class="section-ptb">
-                    <h2>{{ Request::segment(2) == 'hi' ? 'साक्षात्कार' : 'Interviews' }}</h2>
+                    <h2>{{ Request::segment(1) == 'hi' ? 'साक्षात्कार' : 'Interviews' }}</h2>
                     <div class="view-all-main-section">
                         <a target="_blank" aria-label="Interviews"
-                            href="{{ Request::segment(2) == 'hi' ? 'https://www.opportunityindia.com/hindi/tag/साक्षात्कार/' : 'https://www.opportunityindia.com/english/tag/interview/' }}">{{ Request::segment(2) == 'hi' ? 'सभी देखें' : 'View All' }}</a>
+                            href="{{ Request::segment(1) == 'hi' ? 'https://www.opportunityindia.com/hindi/tag/साक्षात्कार/' : 'https://www.opportunityindia.com/english/tag/interview/' }}">{{ Request::segment(1) == 'hi' ? 'सभी देखें' : 'View All' }}</a>
                     </div>
                     <div class="card card-m card-ptb-20">
                         <div class="row justify-content-center">
