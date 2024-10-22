@@ -6,11 +6,10 @@
     asort($states);
 @endphp
 <section class="hero-moblie" id="hero-mobile">
-    {{--  <img src="{{ url('cwv-mobile/images/mobile-banner.webp') }}" class="hero-banner" alt="Franchise India"
-        fetch-priority="high" height="590" width="412">  --}}
+    
     <div class="lnkblk">
         <a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank" class="setpat"><img
-                src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.png" alt="easy gym" width="237"
+                src="https://fiuat.franchiseindia.com/newhomepage/assets/img/easygym.webp" alt="easy gym" width="237"
                 height="60"></a>
     </div>
     @if (request()->segment(2) == 'hi')
@@ -176,7 +175,7 @@
                                 class="form-control
                                                    form-control-custom
                                                    dropdown-toogle-icon"
-                                id="maxAmount2">
+                                id="maxAmount1">
                                 <option value="" hidden=""> Select Max Investment </option>
 
                             </select>

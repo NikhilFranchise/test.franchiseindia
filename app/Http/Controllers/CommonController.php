@@ -42,6 +42,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
+use Intervention\Image\Facades\Image;
+
 class CommonController extends Controller
 {
 
@@ -1146,5 +1148,97 @@ class CommonController extends Controller
             // Log or echo the response for debugging
             // echo "Data saved for URL: $url\n";
         }
+    }
+
+
+    // public function convertToWebP(Request $request)
+    // {
+    //     // Validate the incoming request
+    //     $request->validate([
+    //         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //     ]);
+
+    //     // Get the uploaded file
+    //     $file = $request->file('image');
+    //     // $file = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/franchisor/template/slider/1125/2035866063.jpg';
+    //     dd($file);
+    //     // Create a new image instance
+    //     $image = Image::make($file);
+
+    //     // Define the path where you want to save the WebP image
+    //     $path = public_path('images/converted/');
+
+    //     // Ensure the directory exists
+    //     if (!file_exists($path)) {
+    //         mkdir($path, 0755, true);
+    //     }
+
+    //     // Generate a unique filename
+    //     $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+    //     $webpFilename = $filename . '.webp';
+
+    //     // Save the image in WebP format
+    //     $image->encode('webp', 100)->save($path . $webpFilename);
+
+    //     return response()->json([
+    //         'message' => 'Image converted to WebP successfully!',
+    //         'webp_image' => asset('images/converted/' . $webpFilename),
+    //     ]);
+    // }
+
+
+    public function convertToWebP(Request $request)
+{
+    // Validate the incoming request
+    $request->validate([
+        'images' => 'required|array',
+        'images.*' => 'required|url',
+    ]);
+
+    // Get the list of image URLs
+    $imageUrls = $request->input('images');
+
+    // Define the path where you want to save the WebP images
+    $path = public_path('images/converted/');
+
+    // Ensure the directory exists
+    if (!file_exists($path)) {
+        mkdir($path, 0755, true);
+    }
+
+    $convertedImages = [];
+
+    foreach ($imageUrls as $imageUrl) {
+        // Get image content from the URL
+        $imageContent = file_get_contents($imageUrl);
+        if ($imageContent === false) {
+            return response()->json(['message' => 'Failed to retrieve image from URL: ' . $imageUrl], 400);
+        }
+
+        // Create a new image instance from the content
+        $image = Image::make($imageContent);
+
+        // Generate a unique filename
+        $filename = pathinfo(parse_url($imageUrl, PHP_URL_PATH), PATHINFO_FILENAME);
+        $webpFilename = $filename . '.webp';
+
+        // Save the image in WebP format
+        $image->encode('webp', 100)->save($path . $webpFilename);
+
+        // Collect the path of the converted image
+        $convertedImages[] = asset('images/converted/' . $webpFilename);
+    }
+
+    return response()->json([
+        'message' => 'Images converted to WebP successfully!',
+        'webp_images' => $convertedImages,
+    ]);
+}
+
+
+
+
+    public function webp_conversion(){
+        return view('/img_convert');
     }
 }

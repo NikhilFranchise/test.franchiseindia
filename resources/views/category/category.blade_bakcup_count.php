@@ -8,21 +8,26 @@
 @endif --}}
 
 
+
 @if ($mc == 2)
     @section('seoTitle', 'Food and Beverage - Business Ideas and Franchise Opportunities')
+
 @elseif (URL::Current()  ==  Config('constants.MainDomain') .'/category/search' )
 
-    @php
-        $url = URL::full();
-        $parsedUrl = parse_url($url);
-        $path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '';
-        $segments = explode('/', trim($path, '/'));
-        $searchText = request()->query('text');
-    @endphp
+        @php
+            $url = URL::full();
+            $parsedUrl = parse_url($url);
+            $path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '';
+            $segments = explode('/', trim($path, '/'));
+            $searchText = request()->query('text');
+        @endphp
     @section('seoTitle','Business/Franchise Opportunities Results For '. $searchText . ' - Franchise India')
+        
     
 @elseif(!empty($seoTitle))
     @section('seoTitle', $brandResults->total() . '+ ' . $seoTitle)
+
+    {{-- @dd($seoTitle); --}}
 @endif
 @if (!empty($seoDesc))
     @section('seoDesc', $seoDesc)
@@ -192,6 +197,7 @@ $c_Url = url()->current();
                                     // dd($rate);
                                 }
                             @endphp
+
 
                             @if ($brandResult->membership_type == 1 || $brandResult->free_logo_visibility == 1)
 

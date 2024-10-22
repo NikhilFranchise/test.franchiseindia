@@ -1061,3 +1061,9 @@ Route::get('/cvwhome', [NewHomePageController::class, 'cvwhomeNew']);
 Route::get('/caturl', [CommonController::class, 'url']);
 Route::get('/subcaturl', [CommonController::class, 'subcaturl']);
 Route::get('/subsubcaturl', [CommonController::class, 'subsubcaturl']);
+
+// image conversion to webp
+Route::get('/img_convert',[CommonController::class,'webp_conversion']);
+Route::post('/convert-image', [CommonController::class, 'convertToWebP']);
+Route::get('/convert', [CommonController::class, 'convertToWebP']);
+
