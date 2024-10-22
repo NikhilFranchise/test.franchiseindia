@@ -797,125 +797,22 @@
                 <div class="col-xs-12 col-sm-6 col-md-7 mdfy"><h1 class="evn">Upcoming Events</h1></div>
                 <div class="col-xs-12 col-sm-6 col-md-5 rightp">
                     <a href="{{ Config::get('constants.MainDomain') }}/event-archives">Archives</a>
-
                 </div>
-{{-- 
-                <div class="col-xs-12 col-sm-3 col-md-2 eventserblk">
-                    <div class="dropdown">
-                        <button class="dropbtn">Location <img class="shercode" src="https://www.franchiseindia.com/images/drop-down-icon.png"/>
-                        </button>
-                        <div id="myDropdown" class="dropdown-content">
-                            <span class="eventclose">X</span>
-                            <ul class="eventlistpkg">
-                                <li>
-                                    <label>
-                                        <input type="radio" name="eventradi" value="delhi"
-                                               onclick="locationFilterSelection(this)"/>Delhi NCR
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="radio" name="eventradi" value="hyderabad"
-                                               onclick="locationFilterSelection(this)"/>Hyderabad
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label>
-                                        <input type="radio" name="eventradi" value="mumbai"
-                                               onclick="locationFilterSelection(this)"/>Mumbai
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="radio" name="eventradi" value="bangalore"
-                                               onclick="locationFilterSelection(this)"/>Bangalore
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="radio" name="eventradi" value="kolkata"
-                                               onclick="locationFilterSelection(this)"/>Kolkata
-                                    </label>
-                                </li>
-
-
-                                <li>
-                                    <label>
-                                        <input type="radio" name="eventradi" value="chennai"
-                                               onclick="locationFilterSelection(this)"/>Chennai
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label>
-                                        <input type="radio" name="eventradi" value="jammu"
-                                               onclick="locationFilterSelection(this)"/>Jammu
-                                    </label>
-                                </li>
-
-
-                                <li>
-                                    <label>
-                                        <input type="radio" name="eventradi" value="chandigarh"
-                                               onclick="locationFilterSelection(this)"/>Chandigarh
-                                    </label>
-                                </li>
-
-                                <li>
-                                    <label>
-                                        <input type="radio" name="eventradi" value="amritsar"
-                                               onclick="locationFilterSelection(this)"/>amritsar
-                                    </label>
-                                </li>
-
-
-                                <li>
-                                    <label>
-                                        <input type="radio" name="eventradi" value="ludhiana"
-                                               onclick="locationFilterSelection(this)"/>Ludhiana
-                                    </label>
-                                </li>
-
-
-
-                            </ul>
-                        </div>
-                    </div>
-                    <script>
-                        $(document).ready(function () {
-                            $(".dropbtn").click(function () {
-                                $("#myDropdown").toggle();
-                            });
-                            $(".eventclose").click(function () {
-                                $("#myDropdown").hide();
-                            });
-                        });
-                    </script>
-
-                </div> --}}
-
-
             </div>
         </div>
         <!-- Vikas  -->
-
         <style type="text/css">
             .countdays { font-size:18px; color: #fff; position: absolute; z-index:1;
                 font-weight: 700;
             }
-
-        </style>
-        <style type="text/css">
             .countdays { font-size:14px; line-height:20px;  color: #fff; position: absolute; z-index:1;
                 font-weight: 700; right:5px; top:5px;
                 background: #dc3322;
                 padding:5px; border-radius:4px;
             }
-
         </style>
         @php
-          
+
             $closed = [];
              $currentd = date("Y/m/d");
 
@@ -967,7 +864,7 @@
                         <a href="{{$event['facebook']}}" target="_blank"><i class="fa fa-facebook"></i></a>
                     </div>
                     <div class="icon social tw">
-                        <a href="{{$event['twitter']}}" target="_blank"><i class="fa fa-twitter"></i></a>
+                        <a href="{{$event['twitter']}}" target="_blank"><img src="{{ url('images/twitter.jpg') }} " style="width: 22px;margin-top: 7px;"></a>
                     </div>
                     <div class="icon social in">
                         <a href="{{$event['linkedin']}}" target="_blank"><i class="fa fa-linkedin"></i></a>
@@ -1016,7 +913,7 @@
                         <a href="{{$clos['facebook']}}" target="_blank"><i class="fa fa-facebook"></i></a>
                     </div>
                     <div class="icon social tw">
-                        <a href="{{$clos['twitter']}}" target="_blank"><i class="fa fa-twitter"></i></a>
+                        <a href="{{$clos['twitter']}}" target="_blank"><img src="{{ url('images/twitter.jpg') }} " style="width: 22px;margin-top: 7px;"></a>
                     </div>
                     <div class="icon social in">
                         <a href="{{$clos['linkedin']}}" target="_blank"><i class="fa fa-linkedin"></i></a>
