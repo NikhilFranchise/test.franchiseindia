@@ -2544,7 +2544,7 @@ class FranchisorController extends Controller
             $investor = $expData->investor;
             $userDetail = $investor->userDetail;
             $address = "Not Visible";
-            $invAmt = Config('constants.investRangeInWords.' . $investor->inv_amt);
+            $invAmt = $investor ? Config('constants.investRangeInWords.' . $investor->inv_amt) : 'Not Visible';
             $name = $userDetail->name;
             $email = "Not Visible";
             $mobile = "Not Visible";
