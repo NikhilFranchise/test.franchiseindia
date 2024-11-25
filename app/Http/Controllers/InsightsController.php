@@ -309,10 +309,6 @@ class InsightsController extends Controller
         }
 
         $allBrandMatches = [];
-<<<<<<< HEAD
-=======
-
->>>>>>> 87c755c817b3229489ddc4343300e6d60d14a8f1
         foreach ($newsDetails as $detail) {
             $title = strtolower($detail->title);
             $titleWords = preg_split('/\s+/', $title); // Split title into words using spaces
