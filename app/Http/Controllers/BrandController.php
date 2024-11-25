@@ -18,12 +18,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\InsightList;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
+
 
 class BrandController extends Controller
 {
-    //
+    
     public function brandDetails(Request $request)
     {
+
         // Initialize the variables
         // dd($request->all());
         $ratings = 0;
@@ -36,53 +39,66 @@ class BrandController extends Controller
         if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
-        $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
+         //cache start 
 
-       // $insightMatches = [];
+         $cacheDuration = 604800;
+         // Cache key for franchisor details
+        //  $franDetailsCacheKey = "fran_details_{$brandParamsArr[1]}";
+        //  $franDetails = Cache::remember($franDetailsCacheKey, $cacheDuration, function () use ($brandParamsArr) {
+        //      return FranchisorBusinessDetail::find($brandParamsArr[1]);
+        //  });
 
-        $insightMatches = InsightList::query()
-            ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
-            ->where('status', 1)
-            ->whereIn('insight_type', ['News', 'Article']) // Only fetch 'News' and 'Article'
-            ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
-            ->orderByDesc('created_at')
-            ->limit(3)
-            ->get()
-            ->map(function ($item) {
-                // Assuming you want the URL to be based on the slug
-                $item->url = url('insights/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
-                return $item;
+                $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
+                // Cache key for insight matches
+                $insightMatchesCacheKey = "insight_matches_{$franDetails->company_name}";
+                $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
+                    return InsightList::query()
+                        ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
+                        ->where('status', 1)
+                        ->whereIn('insight_type', ['News', 'Article'])
+                        ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
+                        ->orderByDesc('created_at')
+                        ->limit(3)
+                        ->get()
+                        ->map(function ($item) {
+                            $item->url = url('insights/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
+                            return $item;
+                        });
+                });
+
+            // Cache key for API response
+            $apiDataCacheKey = "api_data_{$franDetails->company_name}";
+            $dataFromB = Cache::remember($apiDataCacheKey, $cacheDuration, function () use ($franDetails) {
+                $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
+                $response = Http::get($apiUrl, ['company_name' => $franDetails->company_name]);
+
+                return $response->json();
             });
 
-            $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
-            $companyName = $franDetails->company_name;
-            $response= Http::get($apiUrl,['company_name'=>$companyName]);
-            if($response){
-                $dataFromB=$response->json();
-            }
+            $insightMatchesArray = $insightMatches->toArray();
+            $dataFromBArray = $dataFromB;
 
+            // Combine both arrays into one
+            $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
+            $combinedDataCollection = collect($combinedDataArray);
 
+            //cache end
 
-        // // Convert both collections to arrays
-        $insightMatchesArray = $insightMatches->toArray();
-        $dataFromBArray = $dataFromB;
-        // // Combine both arrays into one
-        $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
-       // dd($combinedDataArray);
-
-        // // If you prefer to work with a collection, you can convert it back to a collection
-        $combinedDataCollection = collect($combinedDataArray);
-        //dd($combinedDataCollection);
 
         //OI Redirection Start
-        if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
-            $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
-            //dd($iobrands);
-            if (!empty($iobrands)) { 
-                $ioRedirect = Config('constants.OIDomain') . '/manufacturer/' . $iobrands->profile_name . '-' . $iobrands->brand_id;
-                return redirect($ioRedirect, 301);
-            }
-        }
+        // if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
+        //     $oiBrandsCacheKey = "oi_brands_{$franDetails->franchisor_id}";
+        //      // Retrieve OI Brands data from cache or database
+        //         $iobrands = Cache::remember($oiBrandsCacheKey, $cacheDuration, function () use ($franDetails) {
+        //             return OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
+        //         });
+        //     // $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
+        //     // dd($iobrands);
+        //     if (!empty($iobrands)) { 
+        //         $ioRedirect = Config('constants.OIDomain') . '/manufacturer/' . $iobrands->profile_name . '-' . $iobrands->brand_id;
+        //         return redirect($ioRedirect, 301);
+        //     }
+        // }
         //OI Redirection Code End
 
         if (!empty($franDetails) && request()->segment(1) == 'hi' && $franDetails->is_hindi == 0)
@@ -156,8 +172,10 @@ class BrandController extends Controller
 
         //layout image selection conditions and selection
         $layoutType = ($pageLayout == 3) ? "image_type_slider2" : "image_type_slider1";
-
+        
+       
         $sliderCheck = FranchisorSliderTenure::query()->where('franchisor_id', $franDetails->franchisor_id)->first();
+        
         if (!empty($sliderCheck) && $sliderCheck->status == 1 && $sliderCheck->end_date >= date('Y-m-d H:i:s')) {
 
             if ($pageLayout == 3 || $pageLayout == 2) {
@@ -173,7 +191,7 @@ class BrandController extends Controller
                         ->get();
             }
         }
-
+       
         $franTradePartnerData = FranchisorTradePartner::query()->where('franchisor_id', $franDetails->franchisor_id)->get();
 
 
@@ -218,6 +236,10 @@ class BrandController extends Controller
             return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection'));
         }
     }
+
+
+
+ 
 
     /**
      * @param Request $request
