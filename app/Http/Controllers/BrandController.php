@@ -283,7 +283,7 @@ class BrandController extends Controller
         if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
-         //cache start 
+         //cache start
 
          $cacheDuration = 604800;
          // Cache key for franchisor details
@@ -338,7 +338,7 @@ class BrandController extends Controller
         //         });
         //     // $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
         //     // dd($iobrands);
-        //     if (!empty($iobrands)) { 
+        //     if (!empty($iobrands)) {
         //         $ioRedirect = Config('constants.OIDomain') . '/manufacturer/' . $iobrands->profile_name . '-' . $iobrands->brand_id;
         //         return redirect($ioRedirect, 301);
         //     }
@@ -351,7 +351,7 @@ class BrandController extends Controller
         if (!empty($franDetails) && $franDetails->franchisor_id == "FIHL978776")
             return redirect(Config('constants.MainDomain') . '/brands/GodrejInterio-123.8762', 301);
 
-        if (empty($franDetails) || $franDetails->profile_status != 1 && $franDetails->profile_status != 11) 
+        if (empty($franDetails) || $franDetails->profile_status != 1 && $franDetails->profile_status != 11)
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
 
         if ($franDetails->profile_name != $brandParamsArr[0] && $request->segment(1) == 'brands')
@@ -415,10 +415,10 @@ class BrandController extends Controller
 
         //layout image selection conditions and selection
         $layoutType = ($pageLayout == 3) ? "image_type_slider2" : "image_type_slider1";
-        
-       
+
+
         $sliderCheck = FranchisorSliderTenure::query()->where('franchisor_id', $franDetails->franchisor_id)->first();
-        
+
         if (!empty($sliderCheck) && $sliderCheck->status == 1 && $sliderCheck->end_date >= date('Y-m-d H:i:s')) {
 
             if ($pageLayout == 3 || $pageLayout == 2) {
@@ -434,10 +434,10 @@ class BrandController extends Controller
                         ->get();
             }
         }
-       
+
         $franTradePartnerData = FranchisorTradePartner::query()->where('franchisor_id', $franDetails->franchisor_id)->get();
 
-        
+
         if ($franDetails->franchisor_id == "FIHL231593") {
             // SEO Meta Tags
             $seoTitle = "3D Technology Dealership and Distributorship Opportunities in India";
@@ -474,16 +474,16 @@ class BrandController extends Controller
                 ->first();
 
             // return the investor data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection','fran_new_data','index_value','main_cat','url_slug'));
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection','index_value','main_cat','url_slug'));
         } else {
             // return the data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection','fran_new_data','index_value','main_cat','url_slug'));
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection','index_value','main_cat','url_slug'));
         }
     }
 
 
 
- 
+
 
     /**
      * @param Request $request
