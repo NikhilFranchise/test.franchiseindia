@@ -125,10 +125,12 @@
         '; } else{ $articleData[] = $cdata; } $counter++; } } $resultArticle = implode("\r\n", $articleData); @endphp {!! $resultArticle !!}
     </div>
     <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px;">
+        <h4 style="margin-top:15px">Interested in Franchise:</h4>
+
         @foreach ($franchiseData as $franchise)
-            <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; min-width: 150px; max-width: 200px;">
+            <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; min-width: 95px; max-width: 200px;">
                 <a href="http://franchiseindia.com/brands/{{ strtolower($franchise['profile_name']) }}.{{ $franchise['fran_detail_id'] }}" target="_blank" style="text-decoration: none; color: #333; font-weight: bold; font-size: 16px;">
-                    {{ $franchise['company_name'] }}
+                    {{ $franchise['company_name'] }}                     
                 </a>
             </div>
         @endforeach

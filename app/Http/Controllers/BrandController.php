@@ -269,6 +269,7 @@ class BrandController extends Controller
 
     public function brandDetails(Request $request)
     {
+
         // Initialize the variables
         // dd($request->all());
 
@@ -282,36 +283,16 @@ class BrandController extends Controller
         if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
-         //cache start
+         //cache start 
 
          $cacheDuration = 604800;
          // Cache key for franchisor details
-         $franDetailsCacheKey = "fran_details_{$brandParamsArr[1]}";
-         $franDetails = Cache::remember($franDetailsCacheKey, $cacheDuration, function () use ($brandParamsArr) {
-             return FranchisorBusinessDetail::find($brandParamsArr[1]);
-         });
+        //  $franDetailsCacheKey = "fran_details_{$brandParamsArr[1]}";
+        //  $franDetails = Cache::remember($franDetailsCacheKey, $cacheDuration, function () use ($brandParamsArr) {
+        //      return FranchisorBusinessDetail::find($brandParamsArr[1]);
+        //  });
 
-        //  dd($franDetails->ind_main_cat);
-        $main_cat = Config('constants.CategoryArr');
-        // dd($franDetails->ind_main_cat);
-        $a = $franDetails->ind_main_cat;
-        // dd($main_cat[$a]);
-
-        $index_value = $main_cat[$a];
-        // dd($index_value);
-        $u_slug = Config('category.SeoCategoryArr');
-        $url_slug = $u_slug[$a];
-        // dd($url_slug);
-     $fran_new_data = FranchisorBusinessDetail::query()
-    ->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name','unit_inv_min','unit_inv_max','company_logo')
-    ->where('profile_status', 1)
-    ->where('membership_type',1)
-    ->where('ind_main_cat', $franDetails->ind_main_cat)
-    ->take(9)
-    ->get();
-
-        // dd($fran_new_data);         
-        //  dd($franDetails->franchisor_id);
+                $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
                 // Cache key for insight matches
                 $insightMatchesCacheKey = "insight_matches_{$franDetails->company_name}";
                 $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
@@ -347,20 +328,21 @@ class BrandController extends Controller
 
             //cache end
 
+
         //OI Redirection Start
-        if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
-            $oiBrandsCacheKey = "oi_brands_{$franDetails->franchisor_id}";
-             // Retrieve OI Brands data from cache or database
-                $iobrands = Cache::remember($oiBrandsCacheKey, $cacheDuration, function () use ($franDetails) {
-                    return OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
-                });
-            // $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
-            //dd($iobrands);
-            if (!empty($iobrands)) {
-                $ioRedirect = Config('constants.OIDomain') . '/manufacturer/' . $iobrands->profile_name . '-' . $iobrands->brand_id;
-                return redirect($ioRedirect, 301);
-            }
-        }
+        // if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
+        //     $oiBrandsCacheKey = "oi_brands_{$franDetails->franchisor_id}";
+        //      // Retrieve OI Brands data from cache or database
+        //         $iobrands = Cache::remember($oiBrandsCacheKey, $cacheDuration, function () use ($franDetails) {
+        //             return OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
+        //         });
+        //     // $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
+        //     // dd($iobrands);
+        //     if (!empty($iobrands)) { 
+        //         $ioRedirect = Config('constants.OIDomain') . '/manufacturer/' . $iobrands->profile_name . '-' . $iobrands->brand_id;
+        //         return redirect($ioRedirect, 301);
+        //     }
+        // }
         //OI Redirection Code End
 
         if (!empty($franDetails) && request()->segment(1) == 'hi' && $franDetails->is_hindi == 0)
@@ -433,10 +415,10 @@ class BrandController extends Controller
 
         //layout image selection conditions and selection
         $layoutType = ($pageLayout == 3) ? "image_type_slider2" : "image_type_slider1";
-
-
+        
+       
         $sliderCheck = FranchisorSliderTenure::query()->where('franchisor_id', $franDetails->franchisor_id)->first();
-
+        
         if (!empty($sliderCheck) && $sliderCheck->status == 1 && $sliderCheck->end_date >= date('Y-m-d H:i:s')) {
 
             if ($pageLayout == 3 || $pageLayout == 2) {
@@ -452,8 +434,7 @@ class BrandController extends Controller
                         ->get();
             }
         }
-
-
+       
         $franTradePartnerData = FranchisorTradePartner::query()->where('franchisor_id', $franDetails->franchisor_id)->get();
 
         
@@ -502,7 +483,7 @@ class BrandController extends Controller
 
 
 
-
+ 
 
     /**
      * @param Request $request

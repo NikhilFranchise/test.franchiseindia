@@ -309,7 +309,6 @@ class InsightsController extends Controller
         }
 
         $allBrandMatches = [];
-
         foreach ($newsDetails as $detail) {
             $title = strtolower($detail->title);
             $titleWords = preg_split('/\s+/', $title); // Split title into words using spaces
@@ -330,7 +329,7 @@ class InsightsController extends Controller
                         $pattern = '/\b' . implode('\b.*?\b', $escapedWords) . '\b/';
                         return preg_match($pattern, implode(' ', $titleWords));
                     })
-                    ->take(3) // Limit the results after filtering
+                    ->take(10) // Limit the results after filtering
                     ->map(function ($item) {
                         return [
                             'fran_detail_id' => $item->fran_detail_id,
