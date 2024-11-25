@@ -149,7 +149,7 @@
             $titleUrlArr = explode('.', $titleUrl);
             if(is_numeric(end($titleUrlArr))) {
                 $ampUrl = 'http://' . $_SERVER['SERVER_NAME'].'/amp/'.request()->segment(1).'/'.request()->segment(2);
-                $ampFlag = 1;
+                $ampFlag = 1;   
             }
         }
     }

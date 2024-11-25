@@ -524,87 +524,6 @@
 </div>
 <!--galley section end  here -->
 
-{{--<script type="text/javascript">--}}
-    {{--$(document).on('scroll', function () {--}}
-
-
-        {{--scrollTop     = $(this).scrollTop();--}}
-        {{--business      = $("#business_tab").offset().top -150;--}}
-        {{--investmentnew = $("#investmentnew_tab").offset().top -150;--}}
-        {{--property      = $("#property_tab").offset().top -150;--}}
-        {{--training      = $("#training_tab").offset().top -150;--}}
-        {{--others        = $("#others_tab").offset().top -150;--}}
-
-        {{--if(scrollTop >= 118 && scrollTop < investmentnew) {--}}
-            {{--$(".tabScroll li a").removeClass("active");--}}
-            {{--$("#businessnew_tab").addClass("active");--}}
-        {{--}--}}
-        {{--if(scrollTop >= investmentnew && scrollTop < property) {--}}
-            {{--$(".tabScroll li a").removeClass("active");--}}
-            {{--$("#investmenttab_tab").addClass("active");--}}
-        {{--}--}}
-        {{--if(scrollTop >= property && scrollTop < training) {--}}
-            {{--$(".tabScroll li a").removeClass("active");--}}
-            {{--$("#propertynew_tab").addClass("active");--}}
-        {{--}--}}
-        {{--if(scrollTop >= training && scrollTop < others) {--}}
-            {{--$(".tabScroll li a").removeClass("active");--}}
-            {{--$("#trainingnew_tab").addClass("active");--}}
-        {{--}--}}
-        {{--if(scrollTop >= others) {--}}
-            {{--$(".tabScroll li a").removeClass("active");--}}
-            {{--$("#othersnew_tab").addClass("active");--}}
-        {{--}--}}
-
-        {{--console.log("scrollTop" + scrollTop + "::" + "others-" + others);--}}
-
-        {{--var $gallery = $('.gallery');--}}
-        {{--$gallery.vitGallery({--}}
-            {{--debag: true,--}}
-            {{--thumbnailMargin: 13,--}}
-
-            {{--fullscreen: true--}}
-        {{--});--}}
-
-        {{--$('#applbtn').click(function () {--}}
-            {{--var tags = $("html, body");--}}
-            {{--$('.aplbtn').hide();--}}
-            {{--tags.animate({ scrollTop: $('#show-m').offset().top-150 }, 1000);--}}
-            {{--tags.animate({ scrollTop: $('#expbtn').offset().top-150 }, 1000);--}}
-            {{--return false;--}}
-        {{--});--}}
-
-        {{--if(screen.width < 768) {--}}
-            {{--$("#myGallery").removeAttr( "id" );--}}
-        {{--}--}}
-
-    {{--});--}}
-
-    {{--function setPos(getid, id){--}}
-        {{--$(".tabScroll li a").removeClass("active");--}}
-        {{--$("#" + id).addClass("active");--}}
-        {{--var pageScroll = $("#" + getid).offset().top -150;--}}
-        {{--var body = $("html, body");--}}
-        {{--body.stop().animate({scrollTop:pageScroll}, 500, 'swing', function() {--}}
-        {{--});--}}
-    {{--}--}}
-
-    {{--if(screen.width>767) {--}}
-        {{--$(window).scroll(function() {--}}
-            {{--if ($(this).scrollTop() > 1){--}}
-                {{--$('#searchopt2').click();--}}
-                {{--$('#landfixoptiongalley').addClass("stickylandgallry");--}}
-            {{--}--}}
-            {{--else{--}}
-                {{--$('#landfixoptiongalley').removeClass("stickylandgallry");--}}
-            {{--}--}}
-        {{--});--}}
-    {{--}--}}
-
-    {{--if("{{ $checkData['message'] }}" != "") {--}}
-        {{--alert("{{ $checkData['message'] }}");--}}
-    {{--}--}}
-{{--</script>--}}
 
 <script type="text/javascript">
     $(document).on('scroll', function () {
@@ -637,7 +556,7 @@
             $(".tabScroll li a").removeClass("active");
             $("#othersnew_tab").addClass("active");
         }
-        console.log("scrollTop" + scrollTop + "::" + "others-" + others);
+        // console.log("scrollTop" + scrollTop + "::" + "others-" + others);
 
     });
 

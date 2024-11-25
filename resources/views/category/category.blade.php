@@ -1,4 +1,6 @@
 @extends('layout.master')
+{{-- @extends('listing_layout.master') --}}
+
 @php
     $brandCount = count($brandResults);
 @endphp
@@ -24,6 +26,7 @@
 @elseif(!empty($seoTitle))
     @section('seoTitle', $brandResults->total() . '+ ' . $seoTitle)
 @endif
+ 
 @if (!empty($seoDesc))
     @section('seoDesc', $seoDesc)
 @endif
@@ -114,6 +117,8 @@ $c_Url = url()->current();
                             $longbanner = 0;
                             $shortBox = 0;
                         @endphp
+                        <div  id="renderedData">
+
                         @foreach ($shuffledResults as $brandResult)
                             <!-- category list section start here-->
 
@@ -124,6 +129,7 @@ $c_Url = url()->current();
                                     $brandResult->profile_name,
                                     $brandResult->fran_detail_id,
                                 );
+                                
                                 $is_premium = 0;
                                 $imgCount = 0;
                                 $SubCatName = '';
@@ -192,6 +198,7 @@ $c_Url = url()->current();
                                     // dd($rate);
                                 }
                             @endphp
+                            
 
                             @if ($brandResult->membership_type == 1 || $brandResult->free_logo_visibility == 1)
 
@@ -446,6 +453,7 @@ $c_Url = url()->current();
                             @endif
                         @endforeach
 
+                        </div>
 
                         @include('category.final-conditions')
                         @php
@@ -1166,5 +1174,42 @@ $c_Url = url()->current();
             });
         }
     </script>
+<script>
+   $(document).ready(function() {
+      // Ensure the DOM is ready
+      console.log("Document is ready"); // Debugging statement to check if it's executing
 
+      // Trigger the AJAX request when the dropdown value changes
+      $('#sortby').change(function() {
+          alert('Dropdown value changed');  // This will show when the dropdown changes
+
+          // Get the selected value
+          var sortby = $(this).val();
+
+          // Check if 'Sort By' option is selected (value = 'x')
+          if (sortby === 'x') {
+              console.log("Sort By selected, no action taken.");
+              return; // Do nothing if "Sort By" is selected
+          }
+
+          // Send AJAX request
+          $.ajax({
+              url: '/fetch-data-ajax',  // The route URL where the request will be sent
+              type: 'GET',
+              data: { sortby: sortby }, // Send the selected sortby value
+              success: function(response) {
+                  // Handle the response (this can be any content, e.g. update the page with the sorted data)
+                  console.log("Response received:", response); // For debugging, you can check the response in the console
+
+                  // Example: you could populate the response data into an HTML element
+                  // $('#someElement').html(response);
+              },
+              error: function(xhr, status, error) {
+                  // Handle any errors here
+                  console.error("Error:", error);
+              }
+          });
+      });
+   });
+</script>
 @endsection

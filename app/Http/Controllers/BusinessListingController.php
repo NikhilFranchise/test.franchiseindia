@@ -78,9 +78,11 @@ class BusinessListingController extends Controller
         }
 
         // Fetch Brand Data
-        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified');
+        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','views','activated_at');
 
-        $franData->where('profile_status', 1);
+        // $franData->where('profile_status', 1);
+        $franData->where('profile_status', [1,11]);
+
 
         $city = "";
         if (!empty(request()->city)) {
@@ -103,7 +105,7 @@ class BusinessListingController extends Controller
             $franData->whereIn('franchisor_id', $cityArr)->get();
         }
         $orderbyVal = 'membership_weightage';
-        $franData->orderBy($orderbyVal, 'desc');
+        $franData->orderBy($orderbyVal, 'desc');  
 
         if ($orderby == 1) {
             $orderbyVal = 'fran_detail_id';
@@ -201,13 +203,15 @@ class BusinessListingController extends Controller
      */
     public function searchBusinessListing(Request $request)
     {
+        // dd($request->all());
+        // dd('a');
         $searchTerm = $request->route('searchTerm');
         $categoryIds = $request->route('categoryIds');
         $locationIds = $request->route('locationIds');
 
         // Use dd() to inspect the parameters
         // dd($searchTerm, $categoryIds, $locationIds);
-        // dd($request->getRequestUri());
+        // dd($request->getRequestUri());  
         $requestUri = $request->getRequestUri();
         $segments = explode('/', $requestUri);
         // dd($segments[3]);
@@ -223,7 +227,7 @@ class BusinessListingController extends Controller
 
         if (!empty(request()->categoryIds)) {
 
-            $this->setSearchParams(request()->categoryIds);
+            $this->setSearchParams(request()->categoryIds);   
         }
         if (!empty(request()->locationIds)) {
             // dd('hello');
@@ -652,9 +656,10 @@ class BusinessListingController extends Controller
             $catName = (request()->segment(1) == 'hi') ? 'बिज़नेस  ओप्पोर्तुनिटीज़' : 'Business Opportunities';
 
         // Fetch Brand Data
-        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified');
+        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','views','activated_at');
 
-        $franData->where('profile_status', 1);
+        // $franData->where('profile_status', 1);
+        $franData->whereIn('profile_status', [1,11]);
 
 
         if (isset(request()->text)) {
@@ -778,6 +783,7 @@ class BusinessListingController extends Controller
             return redirect($parentUrl);
         }
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
+        // dd($shuffledResults);
 
         $mc    = $mainCatId;
         $sc    = $subCatId;
@@ -853,6 +859,7 @@ class BusinessListingController extends Controller
      */
     public function getBusinessListing(Request $request)
     {
+        // dd('yes');
         // Fetch the request parameters
         $catParam      = request()->category_param;
         $mcat      = request()->catUrl;
@@ -938,7 +945,9 @@ class BusinessListingController extends Controller
             'business_desc_hindi',
             'free_logo_visibility'
         )
-            ->where('profile_status',  1);
+            // ->where('profile_status',  1);
+            ->wherein('profile_status',  [1,11]);
+
 
 
         if ($cid[0] == 'ssc') {
@@ -1081,11 +1090,12 @@ class BusinessListingController extends Controller
 
     public function searchBusinessListingnormalization(Request $request)
     {
-        // dd($request);
+        // dd($request->all());
         $url = $request->url();
         $lowcost      = request()->lowcost;
         preg_match('/[a-zA-Z]+(\d+)/', $lowcost, $matches);
         $requestUri = $request->getRequestUri();
+        // dd($requestUri);
         $segments = explode('/', $requestUri);
         // dd($segments[3]);
         // Check if the segments array has at least 4 elements
@@ -1541,10 +1551,12 @@ class BusinessListingController extends Controller
             $catName = (request()->segment(1) == 'hi') ? 'बिज़नेस  ओप्पोर्तुनिटीज़' : 'Business Opportunities';
 
         // Fetch Brand Data
-        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified');
+        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','views','activated_at');
 
-        $franData->where('profile_status', 1);
+        // $franData->where('profile_status', 1);
+        $franData->wherein('profile_status', [1,11]);
 
+  
 
         if (isset(request()->text)) {
             $text = str_replace('-or-', '/', request()->text);
@@ -1902,9 +1914,13 @@ class BusinessListingController extends Controller
             'is_hindi',
             'business_desc_hindi',
             'free_logo_visibility',
-            'brand_verified'
+            'brand_verified',
+            'views',
+            'activated_at'
         )
-            ->where('profile_status',  1);
+            // ->where('profile_status',  1);
+            ->wherein('profile_status',  [1,11]);
+
 
 
         if ($cid[0] == 'ssc') {

@@ -1241,4 +1241,44 @@ class CommonController extends Controller
     public function webp_conversion(){
         return view('/img_convert');
     }
+
+    public function listing_layout(){
+        return view('listing_layout.master');
+    }
+
+    // public function fetchDataajax(Request $request)
+    // {
+    //     // Example: Fetch all users from the 'users' table
+    //     $users = FranchisorBusinessDetail::take(5)->get();
+
+    //     // Return the data as JSON
+    //     return response()->json($users);  // or return response()->json($posts);
+    // }
+
+    public function fetchDataajax(Request $request)
+{
+    $sortby = $request->input('sortby');
+    $shuffledResults = collect($request->input('shuffledResults')); 
+ 
+    if ($sortby == 1) {
+        $shuffledResults = $shuffledResults->sortByDesc('activated_at')->values();
+
+    } elseif ($sortby == 2) {
+        // Alphabetical order
+        $shuffledResults = $shuffledResults->sortBy('company_name')->values();
+
+    } elseif ($sortby == 3) {
+        $shuffledResults = $shuffledResults->sortByDesc('views')->values();
+    }
+
+    // return response()->json($shuffledResults);
+    
+    $html = view('category.listingloop', ['shuffledResults' => $shuffledResults])->render();
+    // dd($html);
+    return response()->json(['html' => $html]); 
 }
+
+
+
+}
+

@@ -3062,6 +3062,7 @@
         }
 
         function submitInvestment1() {
+            // alert('a');
             var mainCat = $('#getMainCategoryDataHeaderInv1').val();
             var minAmount = $('#minAmount1').val();
             var maxAmount = $('#maxAmount1').val();
