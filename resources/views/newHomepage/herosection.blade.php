@@ -44,7 +44,7 @@
         </picture>
         <div class="container">
             <div class="lnkblk"><a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank"
-                    class="setpat"><img src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.png"
+                    class="setpat"><img src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.webp"
                         width="300" alt="easy gym" height="76"></a></div>
             <div class="row">
                 <div class="col-md-12">
@@ -204,7 +204,7 @@
             <img src="{{ url('cvw/assets/img/banner-expo.webp') }}" alt="Franchise India" class="banner-expo">
         </picture>
         <div class="container">
-            <div class="lnkblk"><a href="https://www.franchiseindia.com/brands/direct-english.78387" target="_blank" aria-label="easy gym" class="setpat"><img src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.png" width="300" alt="easy gym" height="76"></a></div>
+            <div class="lnkblk"><a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank" aria-label="easy gym" class="setpat"><img src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.webp" width="300" alt="easy gym" height="76"></a></div>
             <div class="row">
                 <div class="col-md-12">
                     @notmobile

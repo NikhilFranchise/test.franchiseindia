@@ -1843,6 +1843,7 @@ class AdminController extends Controller
 
     public function listinsights(Request $request)
     {
+        // dd( $request->session()->get('role'));
 
         $data = InsightList::query()
             ->where('news_type', $request->session()->get('role'))
@@ -1860,6 +1861,62 @@ class AdminController extends Controller
 
         return view('admin/insights/list-edit-insights', compact('data'));
     }
+
+    public function multilistinsights(Request $request)
+    {
+        // Fetch data with eager loading for category and subcategory
+        $data = InsightList::with(['category', 'subcategory','author'])
+            ->where('news_type', $request->session()->get('role')) // Filter by role
+            ->where(function ($query) use ($request) {
+                // Search logic
+                $query->where('title', 'LIKE', '%' . $request->search . '%')
+                    ->orWhere('news_id', $request->search);
+            })
+            ->whereIn('status', [0, 1]) // Filter status (active or inactive)
+            ->orderBy('news_id', 'DESC') // Order by descending ID
+            ->paginate(25); // Paginate results
+            // dd($data);
+        // Fetch categories for dropdowns
+        $InsightCategory = InsightCategory::query()
+            ->select('id', 'catname')
+            ->where('status', 1)
+            ->get();
+        $InsightAuthor = AuthorList::query()
+            ->select('author_id', 'title','slug')
+            ->where('status', 'A')
+            ->get();
+
+        // Return view with data
+        return view('admin/insights/multilist-edit', compact('data', 'InsightCategory','InsightAuthor'));
+    }
+
+
+    public function saveMultipleInsights(Request $request)
+{
+    // Get selected articles
+
+    $articles = $request->input('articles', []);
+    // dd($articles);
+    foreach ($articles as $newsId => $articleDetails) {
+        $existingInsight = InsightList::find($newsId);
+        if ($existingInsight) {
+            // dd($existingInsight->slug);
+            $existingInsight->insight_type = $articleDetails['insight_type'] ?? $existingInsight->insight_type;
+            $existingInsight->cat_id = $articleDetails['main_category'] ?? $existingInsight->cat_id;
+            $existingInsight->subcat_id = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
+            $existingInsight->status = $articleDetails['status'] ?? $existingInsight->status;
+            $existingInsight->author_id = $articleDetails['author'] ?? $existingInsight->author_id;
+            $existingInsight->slug = Str::slug($existingInsight->title);
+            $existingInsight->save();
+        }
+    }
+
+    return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
+}
+
+
+
+
 
     public function editInsightsView(Request $request)
     {
