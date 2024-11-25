@@ -1,6 +1,6 @@
 @include('cvw.header')
 {{-- @include('layout.newhomepage.expendfrm') --}}
-@include('cvw.herosection')
+@include('cvw.herosection') 
 <main id="main" class="main">
 @include('cvw.cardsection')
 @include('cvw.covidproof')
@@ -76,7 +76,7 @@
             <div class="modal-content modal-content-cust"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <div class="modal-body modal-body-search-custom">
                     <div class="searchbox">
-                        <form method="get" action="{{ url('category/search') }}">
+                        <form method="get" action="{{ url('category/search') }}"> 
                             <div class="input-group input-group-search-section-main">
                                 <div class="awesomplete"><input type="text" class="form-control form-control-search-custom" name="text" placeholder="Search for business opportunities" id="dealer-bar-search-top" aria-describedby="basic-addon2" autocomplete="off" aria-expanded="false"
                                         aria-owns="awesomplete_list_1" role="combobox">
@@ -152,10 +152,7 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            {{-- <a href="javascript:void(0)" onclick="catform.reset();">Clear All</a> --}}
-                                            <a href="#" role="button" onclick="event.preventDefault(); catform.reset();">
-                                                Clear All
-                                            </a>
+                                            <a href="javascript:void(0)" onclick="catform.reset();">Clear All</a>
                                         </span>
                                     </div>
                                 </div>
@@ -233,10 +230,7 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            {{-- <a href="javascript:void(0)" onclick="locform.reset();">Clear All</a> --}}
-                                            <a href="#" role="button" onclick="event.preventDefault(); locform.reset();">
-                                                Clear All
-                                            </a>
+                                            <a href="javascript:void(0)" onclick="locform.reset();">Clear All</a>
                                         </span>
                                     </div>
                                 </div>
@@ -317,10 +311,7 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            {{-- <a href="javascript:void(0)" onclick="customResetForm();">Clear All</a> --}}
-                                            <a href="#" role="button" onclick="event.preventDefault(); customResetForm();">
-                                                Clear All
-                                            </a>
+                                            <a href="javascript:void(0)" onclick="customResetForm();">Clear All</a>
                                         </span>
                                     </div>
                                 </div>
@@ -333,7 +324,7 @@
         </div>
     </div>
 
-
+    
     @endphp
     @mobile
     @if (request()->segment(1) == 'hi')
@@ -604,7 +595,7 @@
                                 <a href="{{ Config('constants.MainDomain') }}/logoutprofile"><span
                                         class="btn btn-default myacout btn-logout">Logout</span></a>
                             </div>
-
+            
                             <div class="myline"></div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding">
@@ -613,9 +604,9 @@
                                     <a href="{{ Config('constants.MainDomain') }}/franchisor/myaccount/payment-plan"
                                         class=" sidebtn">Upgrade Account </a>
                                 @endif
-
+            
                                 <div class="myline"></div>
-
+            
                                 <div class="parblk">
                                     <div class="per">You completed <span>{{ Cookie::get('franPercentage') }}%</span> Profile
                                     </div>
@@ -685,8 +676,8 @@
         @endif
     @endif
     @endmobile
-
-
+  
+    
 <div class="modal fade lg-panel formsection in" id="expandFranchisenew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1451,7 +1442,7 @@ function getCookie() {
 <!-- Custom JS -->
 <script type="text/javascript" src="{{url('newhomepage/assets/js/custom.js')}}"></script>
 @if( !(!empty(request()->segment(2)) && request()->segment(1) == "brands" && isset(explode('.', request()->segment(2))[1]) && in_array(explode('.', request()->segment(2))[1], Config('constants.popupBrands')) ))
-
+  
     @php
         $expoPopup = 0;
         if (empty(Cookie::get('expoppoup17'))) {
@@ -1530,10 +1521,10 @@ function getCookie() {
 		@endif
     @endif
     <!-- popupmag Start of franchiseindia Zendesk Widget script  popupmag -->
-
+  
 @endif
 
-{{--
+{{-- 
 popup closed --}}
 
     <link rel="stylesheet" href="{{ url('cvw/footer.css')}}" rel="preload" as="style">
@@ -1552,7 +1543,7 @@ popup closed --}}
     <link rel="stylesheet" href="{{ url('cvw/top-franchise-opportunities.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/featured-franchise-opportunities.css')}}" rel="preload" as="style">
     <link rel="stylesheet" href="{{ url('cvw/news-section.css')}}" rel="preload" as="style">
-    <link rel="stylesheet" href="{{ url('cvw/testimonial.css')}}" rel="preload" as="style">
+    <link rel="stylesheet" href="{{ url('cvw/testimonial.css')}}" rel="preload" as="style"> 
 
 
 

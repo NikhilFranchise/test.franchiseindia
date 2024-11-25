@@ -2457,63 +2457,7 @@ class FranchisorController extends Controller
      * downloading the interests
      * @return mixed
      */
-    // public function allInterestToCsv()
-    // {
-    //     if (empty(request()->user()) || request()->user()->membership_type != 1)
-    //         return "";
 
-    //     $franchisorId = request()->user()->profile_str;
-    //     $expressedInterests = UserActivity::query()
-    //         ->where('franchisor_id', $franchisorId)
-    //         ->whereNotNull('investor_id')
-    //         ->where('investor_id', '!=', 'Anonymous')
-    //         ->orderBy('clickID', 'desc')
-    //         ->get();
-    //     $filename = "/tmp/express_interest.csv";
-    //     $handle = fopen($filename, 'w+');
-    //     fputcsv($handle, array('Name', 'Email', 'Available Capital', 'Phone', 'Address', 'State', 'City', 'application date'));
-
-    //     foreach ($expressedInterests as $expData) {
-    //         $address = "Not Visible";
-    //         $invAmt = Config('constants.investRangeInWords.' . $expData->investor->inv_amt);
-    //         $name = $expData->investor->userDetail->name;
-    //         $email = "Not Visible";
-    //         $mobile = "Not Visible";
-
-    //         $state = "Not Visible";
-    //         $city = "Not Visible";
-
-    //         if (request()->user()->membership_type == 1 && $expData->franchisor_visibility == 1) {
-    //             $address = "";
-    //             if (!empty($expData->investor->inv_address))
-    //                 $address .= $expData->investor->inv_address . ", ";
-    //             if (!empty($expData->investor->inv_city))
-    //                 $address .= $expData->investor->inv_city . ", ";
-    //             if (!empty($expData->investor->inv_state))
-    //                 $address .= $expData->investor->inv_state . ", ";
-    //             if (!empty($expData->investor->inv_pincode))
-    //                 $address .= "Pin-code:-" . $expData->investor->inv_pincode . ", ";
-    //             if (!empty($expData->investor->inv_country))
-    //                 $address .= $expData->investor->inv_country;
-
-    //             $email = $expData->investor->userDetail->email;
-    //             $mobile = $expData->investor->userDetail->mobile;
-
-    //             $state = $expData->investor->inv_state;
-    //             $city = $expData->investor->inv_city;
-    //         }
-
-    //         fputcsv($handle, array($name, $email, $invAmt, $mobile, $address, $state, $city, $expData->visit_date));
-    //     }
-
-    //     fclose($handle);
-
-    //     $headers = ['Content-Type' => 'text/csv'];
-
-    //     $this->recordLeadDownload($franchisorId, 2);
-
-    //     return Response::getFacadeRoot()->download($filename, 'ExpressInterest.csv', $headers);
-    // }
     public function allInterestToCsv()
     {
         if (empty(request()->user()) || request()->user()->membership_type != 1) {
@@ -2544,7 +2488,7 @@ class FranchisorController extends Controller
             $investor = $expData->investor;
             $userDetail = $investor->userDetail;
             $address = "Not Visible";
-            $invAmt = Config('constants.investRangeInWords.' . $investor->inv_amt);
+            $invAmt = $investor ? Config('constants.investRangeInWords.' . $investor->inv_amt) : 'Not Visible';
             $name = $userDetail->name;
             $email = "Not Visible";
             $mobile = "Not Visible";
@@ -2569,10 +2513,10 @@ class FranchisorController extends Controller
                     $address .= $investor->inv_country;
                 }
 
-                $email = $userDetail->email;
-                $mobile = $userDetail->mobile;
-                $state = $investor->inv_state;
-                $city = $investor->inv_city;
+                $email = $userDetail->email ?? null;
+                $mobile = $userDetail->mobile ?? null;
+                $state = $investor->inv_state ?? null;
+                $city = $investor->inv_city ?? null;
             }
             $visitDate = date('d-M-Y', strtotime($expData->visit_date));
             $visitDate = '' . $visitDate . '"'; // Enclose the date in double quotes

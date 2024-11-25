@@ -251,91 +251,14 @@ class InsightsController extends Controller
         }
     }
 
-    // public function getInsightsDetails(Request $request)
-    // {
-
-    //     $id = $request->id;
-
-
-    //     $newsDetails        = InsightList::with(['author', 'category', 'Subcategory'])->where('status', 1)->where('news_type', 'fi')->where('news_id', $id)->get();
-    //     // If news details not found, abort with 404
-    //     if ($newsDetails->isEmpty()) {
-    //         // abort(404);
-    //         return redirect('insights/pagenotfound');
-    //     }
-    //     $author_details = AuthorList::query()->where('author_id', $newsDetails[0]['author_id'])->get();
-    //     $associatedTags = ContentTagsAssigned::query()->where('content_id', $id)->select('tag_id')->where('content_type', 2)->get();
-
-    //     foreach ($associatedTags as $tags) {
-    //         $assocTag = SeoTag::query()
-    //             ->where('tag_id', $tags->tag_id)
-    //             ->select('tag_id', 'name')
-    //             ->distinct()
-    //             ->first();
-
-    //         if ($assocTag) {
-    //             $assocTags[] = $assocTag;
-    //         }
-    //     }
-
-    //     $allBrandMatches = [];
-
-    //     // Loop through each news detail to match titles
-    //         foreach ($newsDetails as $detail) {
-    //             $title = $detail->title; // Get the title of the current news detail
-
-    //             // Find matches in FranchisorBusinessDetail based on partial match of company_name in the title
-    //             $brandMatches = FranchisorBusinessDetail::query()
-    //                 ->select('fran_detail_id', 'company_name')
-    //                 ->where('profile_status', 1)
-    //                 ->whereRaw("LOWER(?) LIKE CONCAT('%', LOWER(company_name), '%')", [$title])
-    //                 ->orderByDesc('created_at')
-    //                 ->limit(3)
-    //                 ->get()
-    //                 ->map(function ($item) {
-    //                     // Return an associative array with company name and fran_detail_id
-    //                     return [
-    //                         'fran_detail_id' => $item->fran_detail_id,
-    //                         'company_name' => $item->company_name,
-    //                     ];
-    //                 });
-
-    //             // Store the matches in the allBrandMatches array with the title
-    //             $allBrandMatches[$title] = $brandMatches;
-    //         }
-
-    //         // Prepare data for the view
-    //             $franchiseData = [];
-    //             foreach ($allBrandMatches as $title => $matches) {
-    //                 foreach ($matches as $match) {
-    //                     $franchiseData[] = [
-    //                         'fran_detail_id' => $match['fran_detail_id'],
-    //                         'company_name' => $match['company_name'],
-    //                         'title' => $title // Optionally include the title if needed
-    //                     ];
-    //                 }
-    //             }
-            
-    //         //  dd($franchiseData); // This will show the flattened array
-    //         //  dd($allBrandMatches);
-    //         //  dd($newsDetails);
-
-    //     if (empty($newsDetails)) {
-    //         return redirect('/insights');
-    //     } else {
-
-    //         return view('insights.insight_detail')->with(compact('newsDetails', 'author_details','franchiseData'));
-    //     }
-    // }
-
     public function getInsightsDetails(Request $request)
     {
         $id = $request->id;
         $cacheDuration = 3600; // Cache duration in seconds (1 hour)
-    
+
         // Cache key for the news details
         $newsCacheKey = "news_details_{$id}";
-    
+
         // Retrieve or cache news details
         $newsDetails = Cache::remember($newsCacheKey, $cacheDuration, function () use ($id) {
             return InsightList::with(['author', 'category', 'Subcategory'])
@@ -344,21 +267,21 @@ class InsightsController extends Controller
                 ->where('news_id', $id)
                 ->get();
         });
-    
+
         if ($newsDetails->isEmpty()) {
             return redirect('insights/pagenotfound');
         }
-    
+
         // Cache key for the author details
         $authorCacheKey = "author_details_{$newsDetails[0]['author_id']}";
-    
+
         $author_details = Cache::remember($authorCacheKey, $cacheDuration, function () use ($newsDetails) {
             return AuthorList::query()->where('author_id', $newsDetails[0]['author_id'])->get();
         });
-    
+
         // Cache key for associated tags
         $tagsCacheKey = "associated_tags_{$id}";
-    
+
         $associatedTags = Cache::remember($tagsCacheKey, $cacheDuration, function () use ($id) {
             return ContentTagsAssigned::query()
                 ->where('content_id', $id)
@@ -366,12 +289,12 @@ class InsightsController extends Controller
                 ->where('content_type', 2)
                 ->get();
         });
-    
+
         // Get associated SEO tags
         $assocTags = [];
         foreach ($associatedTags as $tags) {
             $tagCacheKey = "seo_tag_{$tags->tag_id}";
-    
+
             $assocTag = Cache::remember($tagCacheKey, $cacheDuration, function () use ($tags) {
                 return SeoTag::query()
                     ->where('tag_id', $tags->tag_id)
@@ -379,17 +302,21 @@ class InsightsController extends Controller
                     ->distinct()
                     ->first();
             });
-    
+
             if ($assocTag) {
                 $assocTags[] = $assocTag;
             }
         }
-    
+
         $allBrandMatches = [];
+<<<<<<< HEAD
+=======
+
+>>>>>>> 87c755c817b3229489ddc4343300e6d60d14a8f1
         foreach ($newsDetails as $detail) {
             $title = strtolower($detail->title);
             $titleWords = preg_split('/\s+/', $title); // Split title into words using spaces
-    
+
             $brandMatches = Cache::remember("brand_matches_" . md5($title), $cacheDuration, function () use ($title, $titleWords) {
                 // Fetch company details and filter based on exact matches in title words
                 return FranchisorBusinessDetail::where('profile_status', 1)
@@ -415,10 +342,10 @@ class InsightsController extends Controller
                         ];
                     });
             });
-    
+
             $allBrandMatches[$title] = $brandMatches;
         }
-    
+
         $franchiseData = [];
         foreach ($allBrandMatches as $title => $matches) {
             foreach ($matches as $match) {
@@ -431,8 +358,8 @@ class InsightsController extends Controller
                 ];
             }
         }
-        // dd($franchiseData);
-    
+       // dd($newsDetails);
+
         return view('insights.insight_detail')->with(compact('newsDetails', 'author_details', 'franchiseData'));
     }
 

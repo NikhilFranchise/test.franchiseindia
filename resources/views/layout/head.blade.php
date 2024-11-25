@@ -149,7 +149,7 @@
             $titleUrlArr = explode('.', $titleUrl);
             if(is_numeric(end($titleUrlArr))) {
                 $ampUrl = 'http://' . $_SERVER['SERVER_NAME'].'/amp/'.request()->segment(1).'/'.request()->segment(2);
-                $ampFlag = 1;
+                $ampFlag = 1;   
             }
         }
     }
@@ -281,3 +281,51 @@ $(document).ready(function(){
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "gnbfg0nm67");
 </script> --}}
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "WebSite",
+      "name": "FranchiseIndia",
+      "url": "https://www.franchiseindia.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.franchiseindia.com/category/search?text={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Franchise India",
+      "url": "https://www.franchiseindia.com/",
+      "logo": "https://www.franchiseindia.com/newhomepage/assets/img/Logo.svg",
+      "alternateName": "FranchiseIndia",
+      "sameAs": [
+        "https://www.facebook.com/FranchiseIndiaMedia",
+        "https://twitter.com/FranchiseIndia",
+        "https://www.instagram.com/franchiseindia_/",
+        "https://www.youtube.com/user/FranchiseIndia",
+                    "https://muckrack.com/media-outlet/franchiseindia",
+        "https://www.linkedin.com/company/franchiseindia/"
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "1800 102 2007",
+          "contactType": "customer service",
+          "email": "advertise@franchiseindia.com",
+          "contactOption": "TollFree",
+          "areaServed": "IN",
+          "availableLanguage": [
+            "en",
+            "hi"
+          ]
+        }
+      ]
+    }
+    </script>
+    
+    

@@ -79,6 +79,7 @@
                 <ul>
                     <li><a href="/admin/create-insights">Create Insights</a></li>
                     <li><a href="/admin/list-insights">List & Edit Insights</a></li>
+                    <li><a href="/admin/multilist-insights">Multiple Insights Data Edit</a></li>
                 </ul>
             </li>
         @endif

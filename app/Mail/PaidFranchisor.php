@@ -40,9 +40,9 @@ class PaidFranchisor extends Mailable
      */
     public function build()
     {
-		
+
 		return $this->from('no-reply@franchiseindia.com')
-		    //->bcc('techsupport@franchiseindia.com')			
+		    //->bcc('techsupport@franchiseindia.com')
 			->subject('you have received an enquiry at FranchiseIndia.com')
 			->view('mail.paidfranchisor')
 			->with([

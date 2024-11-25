@@ -113,7 +113,7 @@
             </div>
         </div>
         <div class="custpagin">
-            {!! $kickers->appends([ 'search' => request()->search ])->render() !!}
+            {!! $kickers->appends([ 'search' => request()->search ])->render('pagination::bootstrap-4') !!}
         </div>
     </div>
 </div>

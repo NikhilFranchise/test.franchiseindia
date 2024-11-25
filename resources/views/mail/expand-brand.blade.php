@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        
+
 
         @media screen and (max-width: 767px) {
             #mainTbl { width: 100% !important; }
@@ -41,7 +41,7 @@
                    style="padding-left:20px; border-top:1px solid #eaeaea; border-bottom:1px solid #eaeaea; padding-top:12px; padding-bottom:12px; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#333;">
                 <tr>
                     <td valign="top" class="menu-item" width="100%" style="line-height: 24px;">
-                        <a href="{{Config('constants.MainDomain')}}" style="text-decoration: none; color: black;">13,000+ Business Opportunities</a> &nbsp; | &nbsp;
+                        <a href="{{Config('constants.MainDomain')}}" style="text-decoration: none; color: black;">15,000+ Business Opportunities</a> &nbsp; | &nbsp;
                         <a href="{{Config('constants.MainDomain')}}/content" style="text-decoration: none; color: black;">What's New</a> &nbsp; | &nbsp;
                         <a href="http://news.franchiseIndia.com/" style="text-decoration: none; color: black;">News</a>&nbsp; | &nbsp;
                         <a href="http://video.franchiseIndia.com/" style="text-decoration: none; color: black;">Videos</a> &nbsp; | &nbsp;

@@ -95,7 +95,7 @@ class AdviceController extends Controller
         // dd($request->all()); // or dd($newsLetter); for checking the value of $newsLetter
 
         // Send email
-        // Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
+        Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
 
         // Subscribe to newsletter if requested
         if ($newsLetter == 1) {

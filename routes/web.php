@@ -47,10 +47,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\InsightSitemapController;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\cvwhomepage;
-
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -64,16 +60,6 @@ use App\Http\Controllers\cvwhomepage;
 */
 
 Auth::routes();
-
-Route::get('/js/gtag.js', function () {
-    return response()->file(public_path('js/gtag.js'));
-});
-
-Route::get('/js/gtm.js', function () {
-    return response()->file(public_path('js/gtm.js'));
-});
-
-
 
 Route::get('optimize', function () {
     // Run the artisan commands
@@ -98,12 +84,9 @@ Route::get('content/{slug_and_id}', function ($slug_and_id) {
         // dd($slug_and_id);
 
         return redirect("https://www.opportunityindia.com/article/{$slug_and_id}", 301);
-
-    }
-    else{
+    } else {
         $slug = $slug_and_id;
         return redirect("https://www.opportunityindia.com/english/tag/{$slug}", 301);
-
     }
 
     // Handle invalid format
@@ -135,9 +118,9 @@ Route::get('/contact/site', function () {
 Route::get('pagenotfound', function () {
     return view('static.404');
 }); //404 ERROR PAGE
-Route::get('/index1', function(){
+Route::get('/index1', function () {
     return view('index');
-   });
+});
 Route::get('/hi', [NewHomePageController::class, 'hindiHomePage']); //checck
 Route::get('about', [StaticPageController::class, 'aboutus']);
 Route::get('contact', [ContactUsController::class, 'contactUsForm']);
@@ -160,13 +143,13 @@ Route::get('validate-email', [CommonController::class, 'emailValidation']);
 Route::get('thanks-advice-form', function () {
     return view('thanks.advice-form');
 });
-Route::get('/ipo', function(){
+Route::get('/ipo', function () {
     return view('static.ipo');
 });
-Route::get('/policies', function(){
+Route::get('/policies', function () {
     return view('static.policies');
 });
-Route::get('/corporate-governance', function(){
+Route::get('/corporate-governance', function () {
     return view('static.corporate-governance');
 });
 Route::get('cat-brand-images',               [BusinessListingController::class, 'getbrandSliderImages']); // Business Listing Page Gallery section
@@ -215,7 +198,7 @@ Route::post('loginform', [LoginController::class, 'login'])->name('franchise.log
 Route::get('logoutprofile', [LoginController::class, 'logoutProfile']);
 Route::get('fihl/login', [LoginController::class, 'fihlLogin']);  // FIHL brand routes
 Route::post('fihl/login', [LoginController::class, 'fihlLoginCheck']);  // FIHL brand routes
-Route::get('/getrecord',[LoginController::class,'getFranRecords']);
+Route::get('/getrecord', [LoginController::class, 'getFranRecords']);
 
 Route::get('fibl/login', [LoginController::class, 'fiblLogin']);  // FIBL brand routes
 Route::post('fibl/login', [LoginController::class, 'fiblLoginCheck']);
@@ -512,13 +495,13 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
-     Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
+    Route::get('{searchTerm}/{franchiseType}/{categoryIds}/{locationIds}/{range}', [BusinessListingController::class, 'searchBusinessListingnormalization']);
     Route::get('{catUrl}.{category_param}', [BusinessListingController::class, 'getBusinessListingnormalization']);
     Route::get('{lowcost}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('/lowcost', [BusinessListingController::class, 'searchBusinessListing'])
         ->defaults('lowcost', 'lowcost');
     Route::get('{code}/all/all', function () {
-        return redirect('business-opportunities/all/all', 301);
+        return redirect('business-opportunities/all/all', 301);  
     });
     Route::get('all/{code}/all/', function () {
         return redirect('business-opportunities/all/all', 301);
@@ -527,15 +510,15 @@ Route::group(['prefix' => 'business-opportunities'], function () {
 // /Category Page Routes
 Route::group(['prefix' => 'category'], function () {
     Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('search', [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get(' ', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('searchby', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('index', function () {
         return redirect('business-opportunities/all/all', 301);
     });
 });
 Route::get('sitemapgenerate', [SitemapController::class, 'sitemap']); // Sitemap Generator route
-Route::get('sitemap',   [StaticPageController::class,'siteMap']);
-Route::get('sitemap/content/{year}/{month}', [StaticPageController::class,'getArticleList']);
+Route::get('sitemap',   [StaticPageController::class, 'siteMap']);
+Route::get('sitemap/content/{year}/{month}', [StaticPageController::class, 'getArticleList']);
 Route::post('invsuccess', [PaymentController::class, 'investorPaymentSuccess']);        // Investor Payment success routes
 Route::post('bookpaymentsubmit', [PaymentController::class, 'bookPayment']);                   // Books & Reports Payment section routes
 Route::post('payment/booksuccess', [PaymentController::class, 'bookPaymentSuccess']);            // Books & Reports Payment section routes
@@ -769,7 +752,9 @@ Route::group(['prefix' => 'entrepreneur'], function () {
     });
 });
 Route::get('event', [EventController::class, 'event']);
-Route::get('event-archives',   function() { return view('static.event-archives');});
+Route::get('event-archives',   function () {
+    return view('static.event-archives');
+});
 
 //Rss Route
 Route::get('rss', [FacebookArticleController::class, 'rss']); // Facebook Instant Articles RSS feed route
@@ -975,10 +960,12 @@ Route::group(['prefix' => 'admin'], function () {
     // insights get routes code by gp
     Route::get('create-insights',                      [AdminController::class, 'createinsightsView']);
     Route::get('list-insights',                        [AdminController::class, 'listinsights']);
+    Route::get('multilist-insights',                        [AdminController::class, 'multilistinsights']);
     Route::get('edit-insights-view/{id}',              [AdminController::class, 'editInsightsView']);
     // insights post routes
-    Route::post('/create-insights',                      [AdminController::class, 'createInsights']);
+    Route::post('/create-insights',                     [AdminController::class, 'createInsights']);
     Route::post('update-insights',                      [AdminController::class, 'updateInsights']);
+    Route::post('/save-multiple-insights',              [AdminController::class, 'saveMultipleInsights'])->name('saveMultipleInsights');
     Route::post('updateinsightstatus',                  [AdminController::class, 'updateInsightStatus']);
     Route::post('deleteinsights',                       [AdminController::class, 'deleteInsights']);
     // insights post routes end here
@@ -998,21 +985,20 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::get('location/{city}',              [BusinessListingController::class, 'listingLocation']);
 // INSIGHTS ROUTES START HERE //
-Route::get('insights/sitemap.xml', function(){
-    return response()->view('insights.sitemaps.sitemap')->header('Content-type','text/xml');
+Route::get('insights/sitemap.xml', function () {
+    return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
 });
-Route::group(['prefix'=>'insights'], function(){
-    Route::get('news.xml',                      [InsightSitemapController::class,'newssitemap']);
-    Route::get('article.xml',                   [InsightSitemapController::class,'articlesitemap'])->name('article.xml');
-    Route::get('interview.xml',                 [InsightSitemapController::class,'interviewsitemap'])->name('interview.xml');
-    Route::get('event.xml',                     [InsightSitemapController::class,'eventsitemap'])->name('event.xml');
-    Route::get('report.xml',                    [InsightSitemapController::class,'reportsitemap'])->name('report.xml');
-    Route::get('categories.xml',                [InsightSitemapController::class,'categorysitemap'])->name('categories.xml');
-    Route::get('subcategories.xml',             [InsightSitemapController::class,'subcategorysitemap'])->name('subcategories.xml');
-    Route::get('kickers.xml',                   [InsightSitemapController::class,'kickersitemap']);
-    Route::get('tags.xml',                      [InsightSitemapController::class,'tagsitemap'])->name('tags.xml');
-
-    });
+Route::group(['prefix' => 'insights'], function () {
+    Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
+    Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
+    Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
+    Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap'])->name('event.xml');
+    Route::get('report.xml',                    [InsightSitemapController::class, 'reportsitemap'])->name('report.xml');
+    Route::get('categories.xml',                [InsightSitemapController::class, 'categorysitemap'])->name('categories.xml');
+    Route::get('subcategories.xml',             [InsightSitemapController::class, 'subcategorysitemap'])->name('subcategories.xml');
+    Route::get('kickers.xml',                   [InsightSitemapController::class, 'kickersitemap']);
+    Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap'])->name('tags.xml');
+});
 Route::middleware('TrailingSlashRedirect')->group(function () {
     Route::get('/search/insights',                      [InsightsController::class, 'insightSearch']);
     Route::group(['prefix' => 'insights'], function () {
@@ -1036,7 +1022,6 @@ Route::middleware('TrailingSlashRedirect')->group(function () {
         Route::get('{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
         Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
         Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
-
     });
 });
 Route::get('categoryall',       [StaticPageController::class, 'categoryAll']);
@@ -1058,20 +1043,27 @@ Route::get('reload-captcha', [AdviceController::class, 'reloadCaptcha']);
 Route::get('reload-captcha-contact', [ContactUsController::class, 'reloadCaptcha']);
 
 Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('form.submit');
-Route::get('/brand-total-count',[CommonController::class,'brand_total_count']);
+Route::get('/brand-total-count', [CommonController::class, 'brand_total_count']);
 
 Route::post('/submit-form1', [AdviceController::class, 'freeadviceHome_popup'])->name('form.submithome');
 
 
 // Route::get('/cvwhome/hi',[NewHomePageController::class,'cvwhindiHomePage']);
-Route::get('/index/hi',[NewHomePageController::class,'cwvMobilehindiHomePage']);
-Route::get('/cvwhome',[NewHomePageController::class,'cvwhomeNew']);
-Route::get('/index', [NewHomePageController::class, 'cwvMobile']);
-Route::get('/index1', [NewHomePageController::class, 'cwvMobile']);
+Route::get('/cvwhome', [NewHomePageController::class, 'cvwhomeNew']);
 
+Route::get('/caturl', [CommonController::class, 'url']);
+Route::get('/subcaturl', [CommonController::class, 'subcaturl']);
+Route::get('/subsubcaturl', [CommonController::class, 'subsubcaturl']);
 
-Route::get('/caturl',[CommonController::class,'url']);
-Route::get('/subcaturl',[CommonController::class,'subcaturl']);
-Route::get('/subsubcaturl',[CommonController::class,'subsubcaturl']);
+// image conversion to webp
+Route::get('/img_convert',[CommonController::class,'webp_conversion']);
+Route::post('/convert-image', [CommonController::class, 'convertToWebP']);
+Route::get('/convert', [CommonController::class, 'convertToWebP']);
 
+// Listing page structure 
+Route::get('/l_layout',[CommonController::class,'listing_layout']);
+
+// Ajax routes
+
+Route::post('/fetch-data', [CommonController::class, 'fetchDataajax']);
 

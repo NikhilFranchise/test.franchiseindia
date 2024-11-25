@@ -47,7 +47,7 @@
 <div id="content">
     <!--breadcrumbs-->
     <div id="content-header">
-        <div id="breadcrumb"> <a href="{{url('admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="tip-bottom">Main Category/Sub Category</a> 
+        <div id="breadcrumb"> <a href="{{url('admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="tip-bottom">Main Category/Sub Category</a>
         <a href="#" class="current">List Main Category</a> </div>
         <h1>Main Category Listing</h1>
     </div>
@@ -116,7 +116,7 @@
             </div>
         </div>
         <div class="custpagin">
-            {!! $catdata->appends([ 'search' => request()->search ])->render() !!}
+            {!! $catdata->appends([ 'search' => request()->search ])->render('pagination::bootstrap-4') !!}
         </div>
     </div>
 </div>
@@ -170,9 +170,9 @@
             "closeButton":true,
             "progressBar":true,
         }
-        toastr.error(" {{session('error')}}") 
+        toastr.error(" {{session('error')}}")
     @endif
-    
+
 </script>
 </body>
 </html>

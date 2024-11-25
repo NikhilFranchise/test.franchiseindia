@@ -120,7 +120,7 @@
             if($minValue < 100000 && $minValue > 10000)
                 $minValue = substr(($minValue/1000),0,5).' K';
 
-            if($minValue <= 9999999 && $minValue > 100000)
+            if(is_numeric($minValue) && $minValue <= 9999999 && $minValue > 100000)
                 $minValue = substr(($minValue/100000),0,5).' Lakh';
 
             if($minValue > 9999999)

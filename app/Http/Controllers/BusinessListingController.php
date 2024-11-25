@@ -78,9 +78,11 @@ class BusinessListingController extends Controller
         }
 
         // Fetch Brand Data
-        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','verified_valid_date');
+        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','views','activated_at');
 
-        $franData->where('profile_status', 1);
+        // $franData->where('profile_status', 1);
+        $franData->where('profile_status', [1,11]);
+
 
         $city = "";
         if (!empty(request()->city)) {
@@ -103,7 +105,7 @@ class BusinessListingController extends Controller
             $franData->whereIn('franchisor_id', $cityArr)->get();
         }
         $orderbyVal = 'membership_weightage';
-        $franData->orderBy($orderbyVal, 'desc');
+        $franData->orderBy($orderbyVal, 'desc');  
 
         if ($orderby == 1) {
             $orderbyVal = 'fran_detail_id';
@@ -201,14 +203,15 @@ class BusinessListingController extends Controller
      */
     public function searchBusinessListing(Request $request)
     {
-        // dd('searchBusinessListing');
+        // dd($request->all());
+        // dd('a');
         $searchTerm = $request->route('searchTerm');
         $categoryIds = $request->route('categoryIds');
         $locationIds = $request->route('locationIds');
 
         // Use dd() to inspect the parameters
         // dd($searchTerm, $categoryIds, $locationIds);
-        // dd($request->getRequestUri());
+        // dd($request->getRequestUri());  
         $requestUri = $request->getRequestUri();
         $segments = explode('/', $requestUri);
         // dd($segments[3]);
@@ -224,7 +227,7 @@ class BusinessListingController extends Controller
 
         if (!empty(request()->categoryIds)) {
 
-            $this->setSearchParams(request()->categoryIds);
+            $this->setSearchParams(request()->categoryIds);   
         }
         if (!empty(request()->locationIds)) {
             // dd('hello');
@@ -566,11 +569,10 @@ class BusinessListingController extends Controller
             if (request()->segment(1) == 'hi') {
                 $seoTitle    = 'फ्रैंचाइजी के बीच व्यवसाय के अवसर- 5 करोड़ से ऊपर - फ्रेंचाइज इंडिया';
                 $seoKeywords = 'व्यापार के अवसर, फ्रेंचाइजी के बीच व्यापार के अवसर - 5 करोड़ - या - ऊपर';
-                $seoDesc     = 'फ्रैंचाइजी-5 करोड़ या उससे अधिक  के बीच व्यवसाय के अवसर खोजें';
+                $seoDesc     = 'फ्रैंचाइजी-5 करोड़ या उससे अधिक के बीच व्यवसाय के अवसर खोजें';
             }
         } else {
-            // $minRangeValue = 0;
-            $minRangeValue = 500000;
+            $minRangeValue = 0;
             $maxRangevalue = 100000000;
         }
 
@@ -654,9 +656,10 @@ class BusinessListingController extends Controller
             $catName = (request()->segment(1) == 'hi') ? 'बिज़नेस  ओप्पोर्तुनिटीज़' : 'Business Opportunities';
 
         // Fetch Brand Data
-        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','verified_valid_date');
+        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','views','activated_at');
 
-        $franData->where('profile_status', 1);
+        // $franData->where('profile_status', 1);
+        $franData->whereIn('profile_status', [1,11]);
 
 
         if (isset(request()->text)) {
@@ -767,12 +770,9 @@ class BusinessListingController extends Controller
             $orderbyVal = 'views';
             $franData->orderBy($orderbyVal, 'desc');
         }
+
         $count           = request()->segment(1) == 'amp' ? 20 : 21;
         $brandResults    = $franData->paginate($count);
-        // dd($brandResults->pluck('company_name'));
-        $minInvestment = $brandResults->min('unit_inv_min');
-        $maxInvestment = $brandResults->max('unit_inv_max');
-
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
     
@@ -783,6 +783,7 @@ class BusinessListingController extends Controller
             return redirect($parentUrl);
         }
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
+        // dd($shuffledResults);
 
         $mc    = $mainCatId;
         $sc    = $subCatId;
@@ -849,9 +850,7 @@ class BusinessListingController extends Controller
             'minCost',
             'maxCost',
             'franImageData',
-            'city',
-            'minInvestment',
-            'maxInvestment'
+            'city'
         ));
     }
 
@@ -860,7 +859,7 @@ class BusinessListingController extends Controller
      */
     public function getBusinessListing(Request $request)
     {
-        // dd('get');
+        // dd('yes');
         // Fetch the request parameters
         $catParam      = request()->category_param;
         $mcat      = request()->catUrl;
@@ -946,7 +945,9 @@ class BusinessListingController extends Controller
             'business_desc_hindi',
             'free_logo_visibility'
         )
-            ->where('profile_status',  1);
+            // ->where('profile_status',  1);
+            ->wherein('profile_status',  [1,11]);
+
 
 
         if ($cid[0] == 'ssc') {
@@ -980,7 +981,6 @@ class BusinessListingController extends Controller
         $count = request()->segment(1) == 'amp' ? 20 : 21;
 
         $brandResults = $franData->orderby('membership_weightage', 'desc')->paginate($count);
-        // dd($brandResults);
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
     
@@ -1090,11 +1090,12 @@ class BusinessListingController extends Controller
 
     public function searchBusinessListingnormalization(Request $request)
     {
-        // dd('searchBusinessListingnormalization');
+        // dd($request->all());
         $url = $request->url();
         $lowcost      = request()->lowcost;
         preg_match('/[a-zA-Z]+(\d+)/', $lowcost, $matches);
         $requestUri = $request->getRequestUri();
+        // dd($requestUri);
         $segments = explode('/', $requestUri);
         // dd($segments[3]);
         // Check if the segments array has at least 4 elements
@@ -1550,15 +1551,12 @@ class BusinessListingController extends Controller
             $catName = (request()->segment(1) == 'hi') ? 'बिज़नेस  ओप्पोर्तुनिटीज़' : 'Business Opportunities';
 
         // Fetch Brand Data
-        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','verified_valid_date');
+        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','views','activated_at');
 
-        $franData->where('profile_status', 1);
-      
-        // $minInvestment = $franData->min('unit_inv_min');
-        // $maxInvestment = $franData->max('unit_inv_max');
+        // $franData->where('profile_status', 1);
+        $franData->wherein('profile_status', [1,11]);
 
-        // dd($minInvestment);
-
+  
 
         if (isset(request()->text)) {
             $text = str_replace('-or-', '/', request()->text);
@@ -1666,13 +1664,9 @@ class BusinessListingController extends Controller
             $orderbyVal = 'views';
             $franData->orderBy($orderbyVal, 'desc');
         }
-        
 
         $count           = request()->segment(1) == 'amp' ? 20 : 21;
         $brandResults    = $franData->paginate($count);
-        $minInvestment = $brandResults->min('unit_inv_min');
-        $maxInvestment = $brandResults->max('unit_inv_max');
-
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
     
@@ -1742,14 +1736,12 @@ class BusinessListingController extends Controller
             'minCost',
             'maxCost',
             'franImageData',
-            'city',
-            'minInvestment',
-            'maxInvestment'
+            'city'
         ));
     }
     public function getBusinessListingnormalization(Request $request)
     {
-        // dd('getBusinessListingnormalization');
+        // dd($request);
         // $lowcost = $request->route('lowcost');
 
         // Fetch the request parameters
@@ -1923,21 +1915,14 @@ class BusinessListingController extends Controller
             'business_desc_hindi',
             'free_logo_visibility',
             'brand_verified',
-            'verified_valid_date'
+            'views',
+            'activated_at'
         )
-            ->where('profile_status',  1);
+            // ->where('profile_status',  1);
+            ->wherein('profile_status',  [1,11]);
 
-            // $minInvestment = $franData->min('unit_inv_min');
-            // $maxInvestment = $franData->max('unit_inv_max');
 
-            // $bname = $franData->select('profile_name')->where('unit_inv_min',0)->get();
-            // SELECT `profile_name` FROM `franchisor_business_details` WHERE unit_inv_min = 0;
 
-            // $average_inv = FranchisorBusinessDetail::selectRaw('MIN(unit_inv_min) as min_inv, MAX(unit_inv_max) as max_inv')
-            // ->where('profile_status',  1)
-            // ->first();
-
-            // dd($minInvestment);
         if ($cid[0] == 'ssc') {
             //$franData->where('ind_sub_cat', $cid[1])->orderby('membership_type', 'desc');
             $franData->where('ind_sub_cat', $cid[1]);
@@ -1970,11 +1955,6 @@ class BusinessListingController extends Controller
 
         $brandResults = $franData->orderby('membership_weightage', 'desc')->paginate($count);
            // Get the current page and last page
-        // dd($brandResults->pluck('company_name'));
-        $minInvestment = $brandResults->min('unit_inv_min');
-        $maxInvestment = $brandResults->max('unit_inv_max');
-// dd($maxInvestment);
-// dd($minInvestment);
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
     
@@ -2074,7 +2054,7 @@ class BusinessListingController extends Controller
         // return view($view, compact('brandResults', 'shuffledResults', 'breadCrumb', 'catName', 'mc', 'sc', 'ssc', 'loc', 'ftype', 'seoTitle', 'seoDesc', 'seoKeywords','sortby','minRangeValue','maxRangevalue','orderby','text', 'searchq', 'franImageData', 'city', 'resultType', 'reqSt', 'chk_homebased'));
 
 
-        return view($view, compact('brandResults', 'shuffledResults', 'breadCrumb', 'catName', 'mc', 'sc', 'ssc', 'loc', 'ftype', 'seoTitle', 'seoDesc', 'seoKeywords', 'sortby', 'minRangeValue', 'maxRangevalue', 'orderby', 'text', 'searchq', 'franImageData', 'city', 'chk_homebased','minInvestment','maxInvestment'));
+        return view($view, compact('brandResults', 'shuffledResults', 'breadCrumb', 'catName', 'mc', 'sc', 'ssc', 'loc', 'ftype', 'seoTitle', 'seoDesc', 'seoKeywords', 'sortby', 'minRangeValue', 'maxRangevalue', 'orderby', 'text', 'searchq', 'franImageData', 'city', 'chk_homebased'));
     }
 
     /**

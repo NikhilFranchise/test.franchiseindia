@@ -46,7 +46,7 @@
                                     <li>
                                         <div class="row justify-content-center">
                                             <div class="modified-col col-xs-4 col-sm-4 col-md-4 col">  
-                                                <img loading="lazy" src="{{ \App\Http\Controllers\NewHomePageController::getImageUrl($articles['article'][$i]['image_path']) }}" class="img-z-fluid" alt="Preview image for article'{{ $articles['article'][$i]['title'] }}'" width="89" height="50"></a>
+                                                <img loading="lazy" src="{{ \App\Http\Controllers\NewHomePageController::getImageUrl($articles['article'][$i]['image_path']) }}" class="img-z-fluid" alt="{{ $articles['article'][$i]['title'] }}" width="89" height="50"></a>
                                             </div>
                                             <div
                                                 class="modified-col col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">

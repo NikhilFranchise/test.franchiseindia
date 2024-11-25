@@ -36,7 +36,7 @@ class DealersAndDistributorController extends Controller
      * Get international home page brands
      */
     public function getDealersBrands($count)
-  	{	
+  	{
     	$franchisors = DealersFranchisor::query()->select('franchisor_id')->where('status', 1)->take($count)->get()->pluck('franchisor_id');
     	return FranchisorBusinessDetail::query()->select('fran_detail_id', 'profile_name', 'company_logo', 'unit_inv_min', 'unit_inv_max')->whereIn('franchisor_id', $franchisors)->get();
   	}
@@ -46,6 +46,7 @@ class DealersAndDistributorController extends Controller
      */
     public function searchForDealerHomePage()
     {
+        // dd(request()->search);
         $companies = FranchisorBusinessDetail::query()
             ->select(DB::raw("CONCAT(franchisor_business_details.company_name, ' - <strong> in ', category_final.catname,'<%2Fstrong>') AS name"))
             ->where('profile_status', 1)
@@ -53,7 +54,7 @@ class DealersAndDistributorController extends Controller
             ->leftJoin('category_final', 'category_final.catid', '=', 'franchisor_business_details.ind_sub_cat');
 
         $result = CategoryFinal::query()
-            ->select("catname as name") 
+            ->select("catname as name")
             ->where('category_final.catname', 'LIKE', "%".request()->search."%")
             ->union($companies)
             ->take(20)
@@ -64,14 +65,14 @@ class DealersAndDistributorController extends Controller
             $result[$i]['name'] = str_replace('%2F', '/', $result[$i]['name']);
             $i++;
         }
-
+        // dd($result);
         return response()->json($result, 200);
     }
 
     /**
      * result for search submit
      */
-    
+
     public function searchDealer()
     {
         request()->search = str_replace('-or-', '/', request()->search);

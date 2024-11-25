@@ -319,8 +319,8 @@
         </div>
 
 
-        
-     
+
+
     </div>
 </div>
 
@@ -713,7 +713,7 @@
 <div id="investmentnew_tab" class="tab-section">
 
     @if ($combinedDataCollection != null && $combinedDataCollection->isNotEmpty())
-        <h2 class="tab-sec-ttl-recent">Recent Updates</h2>
+        <h2 class="tab-sec-ttl-recent">{{$franDetails->company_name}} Latest Updates</h2>
         <div class="recent-activities">
             <div class="box">
                 <div class="container">
@@ -729,11 +729,11 @@
                         @foreach ($combinedDataCollection as $index => $data)
                             <div class="card">
                                 @if (is_array($data))
-                                    <div class="recent-date">{{ date('d-M-Y', strtotime($data['created_at'])) }}</div>
-                                    <p><a href="{{ $data['url'] }}" target="_blank">{{ ucwords($data['title']) }}</a></p>
+                                    <div class="recent-date" style="font-size: 12px !important;">{{ date('d-M-Y', strtotime($data['created_at'])) }}</div>
+                                    <p ><a href="{{ $data['url'] }}" target="_blank" style="font-size: 12px !important; color:#3e34ff">{{ ucwords($data['title']) }}</a></p>
                                 @elseif(is_object($data))
-                                    <div class="recent-date">{{ date('d-M-Y', strtotime($data->created_at)) }}</div>
-                                    <p><a href="{{ $data->url }}" target="_blank">{{ ucwords($data->title) }}</a></p>
+                                    <div class="recent-date" style="font-size: 12px !important;">{{ date('d-M-Y', strtotime($data->created_at)) }}</div>
+                                    <p><a href="{{ $data->url }}" target="_blank" style="font-size: 12px !important; color:#3e34ff">{{ ucwords($data->title) }}</a></p>
                                 @endif
                             </div>
                         @endforeach
@@ -755,27 +755,101 @@
         <span><strong>Tags:</strong></span>
         @php
             $maincat = Config('constants.CategoryArr.' . $franDetails->ind_main_cat);
-            $renderedStates = []; // To keep track of already rendered states
+            $renderedStates = [];
         @endphp
-        @foreach ($stateList as $state)
+        {{-- @foreach ($stateList as $state)
             @php
-                // Find the key of the matching state in stateArr
+
                 $stateKey = array_search($state['state'], Config::get('location.stateArr'));
             @endphp
-            
+
             @if ($stateKey !== false && !in_array($state['state'], $renderedStates))
-                {{-- Add the state to the renderedStates array to avoid duplicate rendering --}}
+
                 @php
                     $renderedStates[] = $state['state'];
                 @endphp
 
-                {{-- Generate the URL for the matching state --}}
+
                 <a
                     href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc-' . $stateKey) }}">
                     {{ $maincat . ' Business Franchise in ' . $state['state'] }}
-                </a>&nbsp;<span class="dots"></span>&nbsp;
+                </a>&nbsp; | &nbsp;
             @endif
-        @endforeach
+        @endforeach --}}
+        @php
+    // Define how many states to show initially
+    $hiddenStates = [];
+    $maxStatesToShow = 5;
+    $renderedStates = [];
+@endphp
+
+@foreach ($stateList as $index => $state)
+    @php
+        $stateKey = array_search($state['state'], Config::get('location.stateArr'));
+    @endphp
+
+    @if ($stateKey !== false && !in_array($state['state'], $renderedStates))
+        @php
+            $renderedStates[] = $state['state'];
+        @endphp
+
+        @if ($index < $maxStatesToShow)
+            <!-- Show the business opportunity link -->
+            <a
+                href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc-' . $stateKey) }}">
+                {{ $maincat . ' Business Franchise in ' . $state['state'] }}
+            </a>&nbsp; | &nbsp;
+        @else
+            <!-- Hide extra states -->
+            @php
+                $hiddenStates[] = $state;
+            @endphp
+        @endif
+    @endif
+@endforeach
+
+<!-- Show "Show more" link if there are more states hidden -->
+@if (isset($hiddenStates) && count($hiddenStates) > 0)
+    <a href="javascript:void(0);" id="showMore" onclick="toggleStates(true)"><strong>Show more...</strong></a>
+@endif
+
+<!-- Include the hidden states (hidden by default) -->
+<div id="moreStates" style="display:none;">
+    @foreach ($hiddenStates as $state)
+        @php
+            $stateKey = array_search($state['state'], Config::get('location.stateArr'));
+        @endphp
+
+        @if ($stateKey !== false)
+            <a
+                href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc-' . $stateKey) }}">
+                {{ $maincat . ' Business Franchise in ' . $state['state'] }}
+            </a>&nbsp; | &nbsp;
+        @endif
+    @endforeach
+
+    <!-- Show "Show less" link -->
+    <br>
+    <a href="javascript:void(0);" id="showLess" onclick="toggleStates(false)" style="display:none;"><strong>show less...</strong></a>
+</div>
+
+<script>
+    // Function to toggle between "Show more" and "Show less"
+    function toggleStates(showMore) {
+        if (showMore) {
+            // Show the additional states
+            document.getElementById('moreStates').style.display = 'block';
+            document.getElementById('showMore').style.display = 'none'; // Hide the "Show more" link
+            document.getElementById('showLess').style.display = 'inline'; // Show the "Show less" link
+        } else {
+            // Hide the additional states
+            document.getElementById('moreStates').style.display = 'none';
+            document.getElementById('showMore').style.display = 'inline'; // Show the "Show more" link
+            document.getElementById('showLess').style.display = 'none'; // Hide the "Show less" link
+        }
+    }
+</script>
+
     </div>
 </div>
 <!-- recent activities -->
