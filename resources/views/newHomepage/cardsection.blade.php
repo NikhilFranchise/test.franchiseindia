@@ -123,7 +123,7 @@
     </div>
 </section>
 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+{{--  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script>
     $(document).ready(function() {
         $("#btnhome").click(function() {
@@ -169,7 +169,7 @@
                 _token: csrf_token, // Add CSRF token
                 optionsRadios: type,
                 name: '--',
-                pincode: '000000',
+                pincode: '--',
                 email: email,
                 mobile: mobile,
                 details: '--',
@@ -194,4 +194,4 @@
             });
         });
     });
-</script>
+</script>  --}}

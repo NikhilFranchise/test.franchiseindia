@@ -24,19 +24,20 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\RawMail;
+
 class CronController extends Controller
 {
 
     public function leadVisibilityCron()
     {
-//        $franchisors = FranPaymentHistory::query()->distinct()->select('franchisor_id')->get();
+        //        $franchisors = FranPaymentHistory::query()->distinct()->select('franchisor_id')->get();
         $franchisors = FranPaymentHistory::query()->distinct()->select('franchisor_id')->skip(3000)->take(300)->get();
 
         foreach ($franchisors as $franchisor) {
             $franchisorId = $franchisor->franchisor_id;
-            Storage::append('setting-flags.txt', $franchisorId.",");
+            Storage::append('setting-flags.txt', $franchisorId . ",");
 
-//            $franchisorId = "FIHL9389997";
+            //            $franchisorId = "FIHL9389997";
             $premiumDays = FranPaymentHistory::query()->select('start_date', 'end_date')->where('franchisor_id', $franchisorId)->get();
             $updateExpressInsta = ExpressInstaApply::query()->where('franchisor_id', $franchisorId);
             $updateExpressInsta->where(function ($query) use ($premiumDays, $franchisorId) {
@@ -236,7 +237,7 @@ class CronController extends Controller
             'mobile_status' => 'S'
         ]);
 
-        if(!empty($leadId)) {
+        if (!empty($leadId)) {
             InsertLead::query()->where('lead_id', $leadId)->increment('generated_leads');
             InsertLead::query()->where('lead_id', $leadId)->increment('daily_generated_leads');
         }
@@ -321,7 +322,7 @@ class CronController extends Controller
             if (!empty($UserData) && !empty($franData)) {
                 $months = 0;
                 foreach ($paidFranData as $data) {
-                    if($data->franchisor_id == $franData->franchisor_id) {
+                    if ($data->franchisor_id == $franData->franchisor_id) {
                         $date1 = strtotime($data->start_date);
                         $date2 = strtotime(date('Y-m-d h:i:s'));
                         $months = 0;
@@ -386,13 +387,13 @@ class CronController extends Controller
      */
     public function expireBrands()
     {
-        $paidCurrentFranchisors = FranPaymentHistory::query()->where('status', 1)->whereDate('end_date','>', date('Y-m-d',  strtotime('-1 day')))->get()->pluck('franchisor_id')->unique()->toArray();
+        $paidCurrentFranchisors = FranPaymentHistory::query()->where('status', 1)->whereDate('end_date', '>', date('Y-m-d',  strtotime('-1 day')))->get()->pluck('franchisor_id')->unique()->toArray();
         //@var $expiringToday  is getting all the franchisors who are getting expired today
-        $expiringToday = FranPaymentHistory::query()->where('status', 1)->where('expire_after_leads', 0)->whereDate('end_date','<', date('Y-m-d'))->whereNotIn('franchisor_id', $paidCurrentFranchisors)->get()->pluck('franchisor_id')->unique()->toArray();
+        $expiringToday = FranPaymentHistory::query()->where('status', 1)->where('expire_after_leads', 0)->whereDate('end_date', '<', date('Y-m-d'))->whereNotIn('franchisor_id', $paidCurrentFranchisors)->get()->pluck('franchisor_id')->unique()->toArray();
         $this->brandExpiration($expiringToday);
         $this->expireBrandsCompletedBrands();
         FranchisorBusinessDetail::query()
-            ->where('membership_type' ,0)
+            ->where('membership_type', 0)
             ->update([
                 'membership_plan' => 100,
                 // 'membership_weightage' => 0,
@@ -408,10 +409,10 @@ class CronController extends Controller
     {
         $brandToBeExpired = [];
         //@var $expiringToday  is getting all the franchisors who are getting expired today
-        $expiringBrands = FranPaymentHistory::query()->where('status', 1)->where('expire_after_leads', 1)->whereDate('end_date','<=', date('Y-m-d',  strtotime('-1 day')))->get();
+        $expiringBrands = FranPaymentHistory::query()->where('status', 1)->where('expire_after_leads', 1)->whereDate('end_date', '<=', date('Y-m-d',  strtotime('-1 day')))->get();
         foreach ($expiringBrands as $brand) {
             $totalLeads = UserActivity::query()->where('franchisor_id', $brand->franchisor_id)->where('visit_date', '>=', $brand->start_date)->count() + ExpressInstaApply::query()->where('franchisor_id', $brand->franchisor_id)->where('create_date', '>=', $brand->start_date)->count();
-            if($totalLeads >= $brand->committed_leads)
+            if ($totalLeads >= $brand->committed_leads)
                 array_push($brandToBeExpired, $brand->franchisor_id);
         }
         $this->brandExpiration($brandToBeExpired);
@@ -428,10 +429,10 @@ class CronController extends Controller
             $allBrands = json_encode($expiringToday);
 
             //logging the expiring brands
-            Storage::append('Expiring-franchisors.txt', "\n".date('d-m-Y'));
-            Storage::append('Expiring-franchisors.txt', "All brands expiring today = ". $allBrands);
+            Storage::append('Expiring-franchisors.txt', "\n" . date('d-m-Y'));
+            Storage::append('Expiring-franchisors.txt', "All brands expiring today = " . $allBrands);
 
-            $data = "FranchisorId's = ".$allBrands;
+            $data = "FranchisorId's = " . $allBrands;
             Mail::getFacadeRoot()->to(['service@franchiseindia.net', 'techsupport@franchiseindia.net'])->send(new RawMail($data, array('subject' => 'Franchisors expiring today', 'from' => 'franchisor-update@franchiseindia.com', 'attachment' => '')));
             //Changing membership status from the user_accounts, franchisor_business_details and franchisor_slider_tenure tables
             UserAccount::query()->whereIn('profile_str', $expiringToday)->update(['membership_type' => 0, 'membership_plan' => 100]);
@@ -447,36 +448,36 @@ class CronController extends Controller
                 $expiringBannerBrand =  HomePremiumPageBrand::query()->where('fihl_id', $franchisor)->where('status', 1)->where('inventory_backup', 0)->get();
 
                 //If count of banners of expiring brands on home or premium page is freater than 0 then check the replacable brand if exists
-                if(count($expiringBannerBrand) > 0) {
+                if (count($expiringBannerBrand) > 0) {
 
                     //logging down the brands havings active banner on home or premium page
-                    Storage::append('Expiring-franchisors.txt', "Brand having banners active = ". json_encode($expiringBannerBrand));
+                    Storage::append('Expiring-franchisors.txt', "Brand having banners active = " . json_encode($expiringBannerBrand));
 
                     foreach ($expiringBannerBrand as $brand) {
 
                         //Logging every single brand for replacement
-                        Storage::append('Expiring-franchisors.txt', "Brand for replacement = ". json_encode($brand));
+                        Storage::append('Expiring-franchisors.txt', "Brand for replacement = " . json_encode($brand));
 
                         //check for backup brand
                         $invBrand = HomePremiumPageBrand::query()->where('status', 0)->where('inventory_backup', 1)->where('page_type', $brand->page_type)->where('brand_section', $brand->brand_section)->where('fihl_id', '!=', $brand->fihl_id)->orderBy('weightage', 'DESC')->first();
 
                         if (!empty($invBrand)) {
 
-                            $data = "FranchisorId from    =   ".$brand->fihl_id." to ".$invBrand->fihl_id;
+                            $data = "FranchisorId from    =   " . $brand->fihl_id . " to " . $invBrand->fihl_id;
                             Mail::getFacadeRoot()->to(['service@franchiseindia.net', 'techsupport@franchiseindia.net'])->send(new RawMail($data, array('subject' => 'Franchisors banner replaced', 'from' => 'franchisor-update@franchiseindia.com', 'attachment' => '')));
                             //logging brands if found for replacement
-                            Storage::append('Expiring-franchisors', "Found Brand in inventory as replacement = ". json_encode($invBrand));
+                            Storage::append('Expiring-franchisors', "Found Brand in inventory as replacement = " . json_encode($invBrand));
 
                             //if backup brand found then replace it with expiring brand
                             HomePremiumPageBrand::query()->where('brand_id', $brand->brand_id)->update(['status' => 0]);
                             HomePremiumPageBrand::query()->where('brand_id', $invBrand->brand_id)->update(['status' => 1]);
                         } else {
 
-                            $data = "FranchisorId    =   ".$brand->fihl_id;
+                            $data = "FranchisorId    =   " . $brand->fihl_id;
 
                             Mail::getFacadeRoot()->to(['service@franchiseindia.net', 'techsupport@franchiseindia.net'])->send(new RawMail($data, array('subject' => 'Franchisors banner replacement not found', 'from' => 'franchisor-update@franchiseindia.com', 'attachment' => '')));
 
-                            Storage::append('Expiring-franchisors.txt', "Not Found a replacement brand in inventory ".$data);
+                            Storage::append('Expiring-franchisors.txt', "Not Found a replacement brand in inventory " . $data);
                         }
                     }
                 }
@@ -489,22 +490,52 @@ class CronController extends Controller
      */
     public function sendInvestorPaidData()
     {
-        $investors =  PgInvestorPayment::query()->select('investor_id', 'amount')->whereDate('pay_date', date('Y-m-d',  strtotime('-1 day')))->where('order_status', 1)->where('payment_status', 1)->get();
-        $filename = "/tmp/Paid-investor.csv";
-        $handle = fopen($filename, 'w+');
-        fputcsv($handle, array('Name', 'Email', 'Amount', 'Address', 'City', 'Pin code', 'State', 'Phone'));
+        // Get investors' data for the previous day with order and payment status as completed
+        $investors = PgInvestorPayment::query()
+            ->select('investor_id', 'amount')
+            ->whereDate('pay_date', now()->subDay(-1))
+            ->where('order_status', 1)
+            ->where('payment_status', 1)
+            ->get();
+            // dd($investors);
+        if ($investors->isEmpty()) {
+            return; // Exit early if no data
+        }
+
+        $filename = storage_path('app/tmp/Paid-investor.csv'); // Use Laravel storage for better path management
+        $file = fopen($filename, 'w+');
+        fputcsv($file, ['Name', 'Email', 'Amount', 'Address', 'City', 'Pin code', 'State', 'Phone']);
 
         foreach ($investors as $investor) {
-            $userAccData = UserAccount::query()->where('profile_str', $investor->investor_id)->first();
-            $investorDetails = InvestorDetails::query()->where('investor_id', $investor->investor_id)->first();
+            $userAccData = UserAccount::where('profile_str', $investor->investor_id)->first();
+            $investorDetails = InvestorDetails::where('investor_id', $investor->investor_id)->first();
 
-            if(count($userAccData) > 0 && count($investorDetails) > 0)
-                fputcsv($handle, array($userAccData->name, $userAccData->email, $investor->amount, $investorDetails->inv_address, $investorDetails->inv_city, $investorDetails->inv_pincode, $investorDetails->inv_state, $userAccData->mobile));
+            // Only add rows for valid user and investor details
+            if ($userAccData && $investorDetails) {
+                fputcsv($file, [
+                    $userAccData->name,
+                    $userAccData->email,
+                    $investor->amount,
+                    $investorDetails->inv_address,
+                    $investorDetails->inv_city,
+                    $investorDetails->inv_pincode,
+                    $investorDetails->inv_state,
+                    $userAccData->mobile,
+                ]);
+            }
         }
-        fclose($handle);
-        $custSubject = 'Paid Investor for the date: '.date('d-m-Y');
-        $data = "Please find the investors in attachment for the date: ".date('d-m-Y');
-        Mail::getFacadeRoot()->to(['service@franchiseindia.net', 'complain@franchiseindia.net', 'techsupport@franchiseindia.net'])->send(new RawMail($data, array('subject' => $custSubject, 'from' => 'franchisor-update@franchiseindia.com', 'attachment' => $filename)));
+        fclose($file);
+
+        // Prepare and send the email
+        $subject = 'Paid Investor for the date: ' . now()->format('d-m-Y');
+        $message = "Please find the investors in attachment for the date: " . now()->format('d-m-Y');
+        // dd($userAccData, $investorDetails);
+        Mail::to(['techsupport@franchiseindia.net'])
+            ->send(new RawMail($message, [
+                'subject' => $subject,
+                'from' => 'franchisor-update@franchiseindia.com',
+                'attachment' => $filename,
+            ]));
     }
 
     /**
@@ -666,16 +697,13 @@ class CronController extends Controller
 
                         $franSmsMsg = sprintf(config('txtlocal.GuestInv'), $data->name);
                         CommonController::sendTxtSms($data->phone, $franSmsMsg);
-
                     }
                 } else {
-                    echo "Not Found for franchisor- id- ".$franchisor->franchisor_id."<br>";
+                    echo "Not Found for franchisor- id- " . $franchisor->franchisor_id . "<br>";
                 }
-
             } catch (\Exception $e) {
-                echo "Failed For franchisor- id- ".$franchisor->franchisor_id;
+                echo "Failed For franchisor- id- " . $franchisor->franchisor_id;
             }
-
         }
 
         $logMessage = $startMessage . ' End Time : ' . date('Y-m-d H:i:s');
@@ -701,72 +729,73 @@ class CronController extends Controller
      * @param $city
      * @param $state
      */
-    public static function saveAPI($fullname, $email_id, $mobile_no, $category, $brand_name, $city, $state) {
+    public static function saveAPI($fullname, $email_id, $mobile_no, $category, $brand_name, $city, $state)
+    {
 
-        $brand_id=0;
+        $brand_id = 0;
 
-        if(isset($brand_name))
+        if (isset($brand_name))
             $brand_id = CronController::getBrandIdAPI($brand_name);
 
 
-        $city_id=0;
+        $city_id = 0;
 
-        if(isset($city) && !empty($city))
+        if (isset($city) && !empty($city))
             $city_id = CronController::getCityAPI($city);
 
-        $stateArrFibl = Array("1" => "Andhra Pradesh","2" => "Arunachal Pradesh","3" => "Assam","4" => "Bihar","5" => "chandigarh","6" => "Chhattisgarh","7" => "Daman & Diu","9" => "Goa","10" => "Gujarat","11" => "Haryana","12" => "Himachal Pradesh","13" => "Jammu and Kashmir","14" => "Jharkhand","15" => "Karnataka","16" => "Kerala","17" => "Lakshadweep","18" => "Madhya Pradesh","19" => "Maharashtra","20" => "Manipur","21" => "Meghalaya","22" => "Mizoram","23" => "Nagaland","24" => "Nepal","25" => "Delhi/NCR","26" => "Odisha","27" => "Puducherry","28" => "Punjab","29" => "Rajasthan","30" => "Sikkim","31" => "Tripura","32" => "Uttarakhand","33" => "Uttar radesh","34" => "West Bengal","35" => "Tamil Nadu","36" => "Telangana","37" => "Andaman and Nicobar Islands","38" => "Bangladesh","39" => "UAE");
+        $stateArrFibl = array("1" => "Andhra Pradesh", "2" => "Arunachal Pradesh", "3" => "Assam", "4" => "Bihar", "5" => "chandigarh", "6" => "Chhattisgarh", "7" => "Daman & Diu", "9" => "Goa", "10" => "Gujarat", "11" => "Haryana", "12" => "Himachal Pradesh", "13" => "Jammu and Kashmir", "14" => "Jharkhand", "15" => "Karnataka", "16" => "Kerala", "17" => "Lakshadweep", "18" => "Madhya Pradesh", "19" => "Maharashtra", "20" => "Manipur", "21" => "Meghalaya", "22" => "Mizoram", "23" => "Nagaland", "24" => "Nepal", "25" => "Delhi/NCR", "26" => "Odisha", "27" => "Puducherry", "28" => "Punjab", "29" => "Rajasthan", "30" => "Sikkim", "31" => "Tripura", "32" => "Uttarakhand", "33" => "Uttar radesh", "34" => "West Bengal", "35" => "Tamil Nadu", "36" => "Telangana", "37" => "Andaman and Nicobar Islands", "38" => "Bangladesh", "39" => "UAE");
 
         $stateId = 0;
 
-        if(array_search( $state, $stateArrFibl)) {
-            $stateId = array_search( $state, $stateArrFibl);
+        if (array_search($state, $stateArrFibl)) {
+            $stateId = array_search($state, $stateArrFibl);
         }
 
         ## service section start ##
 
-        $requestParamList=array();
+        $requestParamList = array();
 
-        $requestParamList['fullname']=trim($fullname);
+        $requestParamList['fullname'] = trim($fullname);
 
-        $requestParamList['email_id']=trim($email_id);
+        $requestParamList['email_id'] = trim($email_id);
 
-        $requestParamList['mobile_no']=trim($mobile_no);
+        $requestParamList['mobile_no'] = trim($mobile_no);
 
-        $requestParamList['city']=trim($city_id);
+        $requestParamList['city'] = trim($city_id);
 
-        $requestParamList['state']=trim($stateId);
+        $requestParamList['state'] = trim($stateId);
 
         // Source //
 
-        $requestParamList['lead_source']=18;
+        $requestParamList['lead_source'] = 18;
 
         // Business Vertical //
 
-        $requestParamList['business_vertical']=18;
+        $requestParamList['business_vertical'] = 18;
 
         // CategoryFranchise//
 
-        $requestParamList['category']=trim($category);
+        $requestParamList['category'] = trim($category);
 
         // Brand //
 
-        $requestParamList['brand_id']=trim($brand_id);
+        $requestParamList['brand_id'] = trim($brand_id);
 
         // Investment Range//
 
-        $requestParamList['investment_range']=0;
+        $requestParamList['investment_range'] = 0;
 
         // Event Flag //
 
-        $requestParamList['event_lead_flag']=0;
+        $requestParamList['event_lead_flag'] = 0;
 
         // if lead coming from brand landing page then this//
 
-        $requestParamList['lead_type_name']="2";
+        $requestParamList['lead_type_name'] = "2";
 
         // else if lead coming for IA then //
 
-        $paramjson=json_encode($requestParamList,true);
+        $paramjson = json_encode($requestParamList, true);
 
 
         $curl = curl_init();
@@ -810,15 +839,16 @@ class CronController extends Controller
      * @param $brand_name
      * @return bool|string
      */
-    public static function getBrandIdAPI($brand_name) {
+    public static function getBrandIdAPI($brand_name)
+    {
 
         ## service section start ##
 
-        $requestParamList=array();
+        $requestParamList = array();
 
-        $requestParamList['brand_name']=trim($brand_name);
+        $requestParamList['brand_name'] = trim($brand_name);
 
-        $paramjson=json_encode($requestParamList,true);
+        $paramjson = json_encode($requestParamList, true);
 
         $curl = curl_init();
 
@@ -862,22 +892,22 @@ class CronController extends Controller
             return $response;
 
         return $response;
-
     }
 
     /**
      * @param $city_name
      * @return bool|string
      */
-    public static function getCityAPI($city_name) {
+    public static function getCityAPI($city_name)
+    {
 
         ## service section start ##
 
-        $requestParamList=array();
+        $requestParamList = array();
 
-        $requestParamList['city_name']=trim($city_name);
+        $requestParamList['city_name'] = trim($city_name);
 
-        $paramjson=json_encode($requestParamList,true);
+        $paramjson = json_encode($requestParamList, true);
 
         $curl = curl_init();
 
@@ -922,15 +952,15 @@ class CronController extends Controller
             return $response;
 
         return $response;
-
     }
 
     /**
      * Weekly report of registration to Ashita Ma'am
      */
-    public function weeklyRegistrationReport() {
-        $time = strtotime(date('Y-m-d')." 00:00:00");
-        $final = date("Y-m-d", strtotime("-1 week", $time))." 00:00:00";
+    public function weeklyRegistrationReport()
+    {
+        $time = strtotime(date('Y-m-d') . " 00:00:00");
+        $final = date("Y-m-d", strtotime("-1 week", $time)) . " 00:00:00";
         $oneWeekRegistration = UserAccount::query()->where('created_at', '>', $final)->get();
 
         $stepOneCompleted = 0;
@@ -939,64 +969,59 @@ class CronController extends Controller
         $stepFourCompleted = 0;
         $stepFiveCompleted = 0;
         $stepSixCompleted = 0;
-        foreach($oneWeekRegistration->where('profile_type', 1) as $singleRecord) {
-            if($singleRecord->franchisor->step_completed == 1)
+        foreach ($oneWeekRegistration->where('profile_type', 1) as $singleRecord) {
+            if ($singleRecord->franchisor->step_completed == 1)
                 $stepOneCompleted++;
-            if($singleRecord->franchisor->step_completed == 2)
+            if ($singleRecord->franchisor->step_completed == 2)
                 $stepTwoCompleted++;
-            if($singleRecord->franchisor->step_completed == 3)
+            if ($singleRecord->franchisor->step_completed == 3)
                 $stepThreeCompleted++;
-            if($singleRecord->franchisor->step_completed == 4)
+            if ($singleRecord->franchisor->step_completed == 4)
                 $stepFourCompleted++;
-            if($singleRecord->franchisor->step_completed == 5)
+            if ($singleRecord->franchisor->step_completed == 5)
                 $stepFiveCompleted++;
-            if($singleRecord->franchisor->step_completed == 6)
+            if ($singleRecord->franchisor->step_completed == 6)
                 $stepSixCompleted++;
         }
 
-        $data = "<----Franchisors All Time Data---->".PHP_EOL.
-                "Franchisors Count(Active) = ".UserAccount::query()->where('profile_type', 1)->where('profile_status', 1)->count().PHP_EOL.
-                "Franchisors Count(Not Active) = ".UserAccount::query()->where('profile_type', 1)->where('profile_status', '!=',1)->count().PHP_EOL.
-                PHP_EOL.
-                "<----Franchisors Weekly Data---->".PHP_EOL.
-                "Total Franchisors      = ".count($oneWeekRegistration->where("profile_type", 1)).PHP_EOL.
-                "Active Franchisors     = ".count($oneWeekRegistration->where("profile_type", 1)->where("profile_status", Config("constants.ProfileStatus.Active"))).PHP_EOL.
-//                "Inactive Franchisors   = ".count($oneWeekRegistration->where("profile_type", 1)->where("profile_status", Config("constants.ProfileStatus.Inactive"))).PHP_EOL.
-                "Pending Franchisors    = ".count($oneWeekRegistration->where("profile_type", 1)->where("profile_status", Config("constants.ProfileStatus.Pending"))).PHP_EOL.
-                "Awaiting Franchisors   = ".count($oneWeekRegistration->where("profile_type", 1)->where("profile_status", Config("constants.ProfileStatus.Awaiting"))).PHP_EOL.
-//                "Hidden Franchisors     = ".count($oneWeekRegistration->where("profile_type", 1)->where("profile_status", Config("constants.ProfileStatus.Hidden"))).PHP_EOL.
-                "One Step Completed     = ".$stepOneCompleted.PHP_EOL.
-                "Two Step Completed     = ".$stepTwoCompleted.PHP_EOL.
-                "Three Step Completed   = ".$stepThreeCompleted.PHP_EOL.
-                "Four Step Completed    = ".$stepFourCompleted.PHP_EOL.
-                "Five Step Completed    = ".$stepFiveCompleted.PHP_EOL.
-                "Six Step Completed     = ".$stepSixCompleted.PHP_EOL.
-                PHP_EOL.
-                "<----Investors All Time Data---->".PHP_EOL.
-                "Total Investors Count (Active) = ".UserAccount::query()->where('profile_type', 2)->where('profile_status', 1)->count().PHP_EOL.
-                "Total Investors Count (Not Active) = ".UserAccount::query()->where('profile_type', 2)->where('profile_status', '!=',1)->count().PHP_EOL.
-                "Investors Count Before No Auto Registration Process(Active) = ".UserAccount::query()->where('profile_type', 2)->whereNull('reg_source')->where('profile_status', 1)->count().PHP_EOL.
-                "Investors Count Before No Auto Registration Process(Not Active) = ".UserAccount::query()->where('profile_type', 2)->whereNull('reg_source')->where('profile_status', '!=',1)->count().PHP_EOL.
+        $data = "<----Franchisors All Time Data---->" . PHP_EOL .
+            "Franchisors Count(Active) = " . UserAccount::query()->where('profile_type', 1)->where('profile_status', 1)->count() . PHP_EOL .
+            "Franchisors Count(Not Active) = " . UserAccount::query()->where('profile_type', 1)->where('profile_status', '!=', 1)->count() . PHP_EOL .
+            PHP_EOL .
+            "<----Franchisors Weekly Data---->" . PHP_EOL .
+            "Total Franchisors      = " . count($oneWeekRegistration->where("profile_type", 1)) . PHP_EOL .
+            "Active Franchisors     = " . count($oneWeekRegistration->where("profile_type", 1)->where("profile_status", Config("constants.ProfileStatus.Active"))) . PHP_EOL .
+            //                "Inactive Franchisors   = ".count($oneWeekRegistration->where("profile_type", 1)->where("profile_status", Config("constants.ProfileStatus.Inactive"))).PHP_EOL.
+            "Pending Franchisors    = " . count($oneWeekRegistration->where("profile_type", 1)->where("profile_status", Config("constants.ProfileStatus.Pending"))) . PHP_EOL .
+            "Awaiting Franchisors   = " . count($oneWeekRegistration->where("profile_type", 1)->where("profile_status", Config("constants.ProfileStatus.Awaiting"))) . PHP_EOL .
+            //                "Hidden Franchisors     = ".count($oneWeekRegistration->where("profile_type", 1)->where("profile_status", Config("constants.ProfileStatus.Hidden"))).PHP_EOL.
+            "One Step Completed     = " . $stepOneCompleted . PHP_EOL .
+            "Two Step Completed     = " . $stepTwoCompleted . PHP_EOL .
+            "Three Step Completed   = " . $stepThreeCompleted . PHP_EOL .
+            "Four Step Completed    = " . $stepFourCompleted . PHP_EOL .
+            "Five Step Completed    = " . $stepFiveCompleted . PHP_EOL .
+            "Six Step Completed     = " . $stepSixCompleted . PHP_EOL .
+            PHP_EOL .
+            "<----Investors All Time Data---->" . PHP_EOL .
+            "Total Investors Count (Active) = " . UserAccount::query()->where('profile_type', 2)->where('profile_status', 1)->count() . PHP_EOL .
+            "Total Investors Count (Not Active) = " . UserAccount::query()->where('profile_type', 2)->where('profile_status', '!=', 1)->count() . PHP_EOL .
+            "Investors Count Before No Auto Registration Process(Active) = " . UserAccount::query()->where('profile_type', 2)->whereNull('reg_source')->where('profile_status', 1)->count() . PHP_EOL .
+            "Investors Count Before No Auto Registration Process(Not Active) = " . UserAccount::query()->where('profile_type', 2)->whereNull('reg_source')->where('profile_status', '!=', 1)->count() . PHP_EOL .
 
-                PHP_EOL.
-                "<----Investors Weekly Data---->".PHP_EOL.
-                "Total Investors        = ".count($oneWeekRegistration->where('profile_type', 2)).PHP_EOL.
-                "Active Investors       = ".count($oneWeekRegistration->where('profile_type', 2)->where('profile_status', Config('constants.ProfileStatus.Active'))).PHP_EOL.
-                "Pending Investors      = ".count($oneWeekRegistration->where('profile_type', 2)->where('profile_status', Config('constants.ProfileStatus.Pending'))).PHP_EOL.
-                "FORM Registration      = ".count($oneWeekRegistration->where('profile_type', 2)->where('reg_source', "")).PHP_EOL.
-                "FRO Registration       = ".count($oneWeekRegistration->where('profile_type', 2)->where('reg_source', Config('constants.leadSource.FRO'))).PHP_EOL.
-                "BOS Registration       = ".count($oneWeekRegistration->where('profile_type', 2)->where('reg_source', Config('constants.leadSource.BOS'))).PHP_EOL.
-                "Instant Apply Reg.     = ".count($oneWeekRegistration->where('profile_type', 2)->where('reg_source', Config('constants.leadSource.FiInstantApply'))).PHP_EOL.
-                "MAGAZINE(Online) Reg.  = ".count($oneWeekRegistration->where('profile_type', 2)->where('reg_source', Config('constants.leadSource.MAGAZINE'))).PHP_EOL;
+            PHP_EOL .
+            "<----Investors Weekly Data---->" . PHP_EOL .
+            "Total Investors        = " . count($oneWeekRegistration->where('profile_type', 2)) . PHP_EOL .
+            "Active Investors       = " . count($oneWeekRegistration->where('profile_type', 2)->where('profile_status', Config('constants.ProfileStatus.Active'))) . PHP_EOL .
+            "Pending Investors      = " . count($oneWeekRegistration->where('profile_type', 2)->where('profile_status', Config('constants.ProfileStatus.Pending'))) . PHP_EOL .
+            "FORM Registration      = " . count($oneWeekRegistration->where('profile_type', 2)->where('reg_source', "")) . PHP_EOL .
+            "FRO Registration       = " . count($oneWeekRegistration->where('profile_type', 2)->where('reg_source', Config('constants.leadSource.FRO'))) . PHP_EOL .
+            "BOS Registration       = " . count($oneWeekRegistration->where('profile_type', 2)->where('reg_source', Config('constants.leadSource.BOS'))) . PHP_EOL .
+            "Instant Apply Reg.     = " . count($oneWeekRegistration->where('profile_type', 2)->where('reg_source', Config('constants.leadSource.FiInstantApply'))) . PHP_EOL .
+            "MAGAZINE(Online) Reg.  = " . count($oneWeekRegistration->where('profile_type', 2)->where('reg_source', Config('constants.leadSource.MAGAZINE'))) . PHP_EOL;
 
-        Mail::getFacadeRoot()->raw($data, function ($message){
+        Mail::getFacadeRoot()->raw($data, function ($message) {
             $message->subject('Weekly Registration Report - Franchiseindia.com');
             $message->to(['service@franchiseindia.net', 'ashita@franchiseindia.com']);
-
         });
-
-
     }
-
-    
 }

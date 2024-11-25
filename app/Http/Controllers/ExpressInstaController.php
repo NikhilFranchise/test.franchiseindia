@@ -746,7 +746,7 @@ class ExpressInstaController extends Controller
             $chkRec = ExpressInstaApply::query()->where('franchisor_id', '=', $franId)->where('email', '=', $email)->count();
 
             // Fetch Franchisor Details
-            $franchisorDetail = FranchisorBusinessDetail::query()->where('franchisor_id', $franId)->select('company_name', 'membership_type', 'ind_main_cat')->first();
+            $franchisorDetail = FranchisorBusinessDetail::query()->where('franchisor_id', $franId)->select('company_name', 'membership_type', 'ind_main_cat' , 'ceo_name')->first();
 
             // If record already exists
             if ($chkRec > 0 && !empty(request()->check_lead_popup) && request()->check_lead_popup == 'lead') {

@@ -150,7 +150,7 @@ class AdviceController extends Controller
         }
 
         // Send email
-        // Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
+        Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
 
         // Subscribe to newsletter if requested
         if ($newsLetter == 1) {
