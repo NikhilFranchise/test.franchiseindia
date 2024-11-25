@@ -501,7 +501,7 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('/lowcost', [BusinessListingController::class, 'searchBusinessListing'])
         ->defaults('lowcost', 'lowcost');
     Route::get('{code}/all/all', function () {
-        return redirect('business-opportunities/all/all', 301);
+        return redirect('business-opportunities/all/all', 301);  
     });
     Route::get('all/{code}/all/', function () {
         return redirect('business-opportunities/all/all', 301);
@@ -510,7 +510,7 @@ Route::group(['prefix' => 'business-opportunities'], function () {
 // /Category Page Routes
 Route::group(['prefix' => 'category'], function () {
     Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('search', [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get(' ', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('searchby', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('index', function () {
         return redirect('business-opportunities/all/all', 301);
@@ -1059,4 +1059,11 @@ Route::get('/subsubcaturl', [CommonController::class, 'subsubcaturl']);
 Route::get('/img_convert',[CommonController::class,'webp_conversion']);
 Route::post('/convert-image', [CommonController::class, 'convertToWebP']);
 Route::get('/convert', [CommonController::class, 'convertToWebP']);
+
+// Listing page structure 
+Route::get('/l_layout',[CommonController::class,'listing_layout']);
+
+// Ajax routes
+
+Route::post('/fetch-data', [CommonController::class, 'fetchDataajax']);
 

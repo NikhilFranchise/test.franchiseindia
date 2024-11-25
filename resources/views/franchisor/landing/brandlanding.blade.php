@@ -1,4 +1,6 @@
 @extends('layout.master') 
+{{-- @extends('listing_layout.master') --}}
+
 @section('seoTitle', $seoTitle)
 @if (!empty($seoDesc))
     @section('seoDesc', $seoDesc)

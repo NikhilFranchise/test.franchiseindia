@@ -436,7 +436,7 @@
             $(".tabScroll li a").removeClass("active");
             $("#othersnew_tab").addClass("active");
         }
-        console.log("scrollTop" + scrollTop + "::" + "others-" + others);
+        // console.log("scrollTop" + scrollTop + "::" + "others-" + others);
 
     });
 
@@ -488,3 +488,111 @@
         })
     })
 </script>
+
+
+
+<!-- INACTIVE BRANDS POPUP -->
+@if($franDetails->profile_status == 11)
+<div id="inactive-brands" >
+    <style>
+    :not(#inactive-brands){overflow-y: hidden;}
+    .inb{overflow-y: scroll!important;}
+    .inb-inner{background: url({{asset('images/inactivebgnew.jpg')}});background-repeat: repeat;position: 
+    relative;width: 600px;height: 550px;margin: 0px auto;background-repeat: no-repeat;}
+    .inb-top{text-align: center;}
+    .inb{position: fixed;width: 100%;height: 100%;background: rgba(0,0,0,0.5);top: 0px;left: 0px;overflow: hidden;z-index: 9999;}
+    .inb-headline{display: inline-block;margin-top: 10px;background: #fff;padding: 4px 41px;border-radius: 0px 0px 15px 15px;color: #e83a21;font-weight: 800;font-size: 17px;}
+    .inb-cont{color: #fff;padding: 0px 0px;text-align: center;margin: 10px auto auto auto;font-weight: 300;font-size: 15px;width: 460px;max-width: 100%;line-height: 20px;}
+    .inb-view{position: absolute;bottom:12px;text-align: center;width: 100%;}
+    .inb-view a{background: #f00;padding: 6px 20px;color: #fff;font-weight: bold;display: inline-block;font-size: 13px;}
+    .inb-brands ul li{background: #e9e9e9;border-radius: 0px 0px 30px 30px;width: 32%;height: 98px;margin-bottom: 9px;}
+    .inb-brands ul li img{max-width: 100%;}
+    .inb-brands{padding: 0px 30px;margin-top: 0px;}
+    .inb-brands ul{display: flex;justify-content: space-between;margin-top: 40px;flex-wrap: wrap;padding: 0px 8px;}
+    .inb-brand-title{text-align: center;
+      font-weight: bold;color: #222222;font-size: 14px;line-height: 15px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;display: block;width: 125px;margin: auto;}
+    .inb-brand-inv{text-align: center;font-size: 11px;}
+    .inb-brand-pic{width: 95px;display: block;margin: 10px auto 4px auto;border: 1px solid #e3e3e3;border-radius: 5px;padding: 5px;background: #fff;}
+    
+    @media screen and (max-width:599px){
+    .inb-inner{background: url({{asset('images/inbback.jpg')}});background-repeat: no-repeat;background-repeat: no-repeat;border: 1px solid #f00;max-width: 95%;height: auto;background-size: cover;background-position: center;}
+    .inb-brands ul{background: url({{asset('images/inbmobilebg.png')}});background-size:100% 100%;display: block;background-position: center;background-repeat: no-repeat;text-align: center;padding: 20px 5px;margin-bottom: 60px;margin-top: 15px;}
+    .inb-brands ul li{display: inline-block;background: #E9E9E9;border-radius: 0px 0px 30px 30px;width: 44%;margin: 2px 0px;}
+    .inb-brand-title{font-size: 13px;width: 78px;}
+    .inb-brand-inv{font-size: 11px;width: 80px;margin: auto;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
+    .inb-cont {font-size: 14px;width: 100%;padding:3px 10px;line-height: 19px;margin: 6px auto auto auto;}
+    .inb-headline{font-size: 15px;}
+    .inb-view a{font-size: 11px;}
+    .inb-inner{margin-top:10px;}
+    }
+    </style>
+    
+    <div class="inb" id="inactive-brands">
+          <div class="inb-inner">
+            <div class="inb-top">
+            <div class="inb-headline">Top <span>{{$index_value}}</span> Brands</div>
+            </div>
+            <div class="inb-cont">This brand is currently not accepting franchise applications. However, you can explore the brands with similar category that offer franchising opportunities.</div>
+          <div class="inb-brands">
+            <ul>
+                @php
+                $cat_url = Config('constants.MainDomain').'/business-opportunities/' .$url_slug .'.m' .$franDetails->ind_main_cat;;
+                @endphp
+                
+                @foreach($fran_new_data as $brands)
+                @php
+                 $brandImagepath = Config('constants.franAwsImgPath').$brands->company_logo;
+                 $brandUrl       = sprintf(Config('constants.brandPagePattern'), Config('constants.MainDomain'), $brands->profile_name, $brands->fran_detail_id);
+                 $minValue = $brands->unit_inv_min;
+                        if (is_numeric($minValue)) {
+                            if ($minValue < 100000 && $minValue > 10000) {
+                                $minValue = substr($minValue / 1000, 0, 5) . ' K';
+                            } elseif ($minValue <= 9999999 && $minValue > 100000) {
+                                $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
+                            } elseif ($minValue > 9999999) {
+                                $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
+                            }
+                        }
+
+                        $maxValue = $brands->unit_inv_max;
+                        if (is_numeric($maxValue)) {
+                            if ($maxValue < 100000 && $maxValue > 10000) {
+                                $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
+                            } elseif ($maxValue <= 9999999 && $maxValue > 100000) {
+                                $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
+                            } elseif ($maxValue > 9999999) {
+                                $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
+                            }
+                        }
+                @endphp
+                <li>
+                    <div class="inb-brand-pic">
+                        <a href="{{$brandUrl}}" target="_blank"><img src="{{$brandImagepath}}" alt="Grow Inn Steps"></a>
+                    </div>
+                    <div class="inb-brand-title">
+                        <a href="{{$brandUrl}}" target="_blank">{{$brands->company_name}} </a>
+                    </div>
+                    <div class="inb-brand-inv">
+                        INR {{ $minValue }} - {{ $maxValue }}
+                    </div>
+                </li>
+                @endforeach
+               
+            </ul>
+          </div>
+          <div class="inb-view">
+            <a href="{{$cat_url}}" target="_blank">VIEW MORE</a>
+            {{-- <a href="" target="_blank">VIEW MORE</a> --}}
+
+          </div>
+        </div>
+    
+    <script>
+      setTimeout(function() {
+        $('#inactive-brands').inb();
+    }, 100);
+    </script>
+    </div>   
+    @endif
+    <!-- INACTIVE BRANDS POPUP -->
+    

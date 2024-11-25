@@ -451,7 +451,8 @@ return [
         'Pending' => 2,           // Email verification pending
         'Awaiting' => 3,           // Awaiting Moderator's approval
         'Rejected' => 4,
-        'Incomplete' => 5           // Registration in progress
+        'Incomplete' => 5 ,          // Registration in progress
+        'Hidden' => 11  
     ],
 
     // Payment Source
@@ -1380,7 +1381,9 @@ return [
             "346" => "Bike Showroom",
             "349" => "Bike Wash",
             "351" => "Biker's Accessories",
-            "350" => "Electric Two Wheelers",
+            // "350" => "Electric Two Wheelers",
+            "350" => "Electric Vehicles Two Wheelers (EV)",
+
 
         ),
         "342" => array(
@@ -1392,12 +1395,15 @@ return [
             "356" => "Car Reselling",
             "352" => "Car Showroom",
             "358" => "Car Wash / Ceramic Coating / Detailing",
-            "359" => "Electric Four Wheelers",
+            // "359" => "Electric Four Wheelers",
+            "359" => "Electric Vehicles Four Wheelers (EV)",
+
         ),
         "343" => array(
             "364" => "Agriculture Utility Vehicles",
             "361" => "Commercial Vehicles Bus/Trucks",
-            "725" => "Electric Vehicles (E-Vehicles)",
+            // "725" => "Electric Vehicles (E-Vehicles)",
+            "725" => "Commercial Electric Vehicles (EV)",
             "365" => "Off Road / All Terrain Vehicles",
             "360" => "Three Wheeler (Auto) Showroom",
             "363" => "Tractors",

@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding sec-slide-effect">
+<div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding sec-slide-effect" >
     <div class="comparechk">
         <input type="checkbox" id="compare{{ $loop->index }}" class="brandCompareCheckbox" name="compareCheckbox"
             onClick="getBrandsForComparison()" value="{{ $brandResult->franchisor_id }}">

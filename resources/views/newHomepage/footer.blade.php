@@ -577,7 +577,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 <script src="{{ url('cvw/assets/js/homepagescript.js') }}"></script>
 <script>
     function selectMax1(selectmaxheaderval) {
-        // console.log('yes');
+        console.log('yes');
         let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
         let maxAmount = $('#maxAmount1');
         let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
@@ -590,8 +590,14 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                     "slug": getSlugAmount[key]['min']
                 }).text(value));
         });
+        console.log(selectmaxheaderval);
+        // console.log($('#maxAmount1'));
         if (selectmaxheaderval === 21)
-            maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
+            // maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
+            $('#maxAmount1').append($("<option></option>").attr({
+                    "value": 21,
+                    "slug": getSlugAmount[21]['max']
+                }).text("Above"));
     }
 
     function selectMax(selectmaxheaderval) {
@@ -609,6 +615,10 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                 }).text(value));
         });
         if (selectmaxheaderval === 21)
-            maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
+            // maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
+            $('#maxAmount').append($("<option></option>").attr({
+                    "value": 21,
+                    "slug": getSlugAmount[21]['max']
+                }).text("Above"));
     }
 </script>

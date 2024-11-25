@@ -417,6 +417,8 @@ function submitInvestment1() {
     ).attr("slug");
     var minAmountText = $("option:selected", $("#minAmount1")).attr("slug");
     var maxAmountText = $("option:selected", $("#maxAmount1")).attr("slug");
+    alert(maxAmountText);   
+
     var url = "/business-opportunities/";
     if (mainCat != "" && minAmount != "" && maxAmount != "") {
         url =
