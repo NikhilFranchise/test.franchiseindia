@@ -47,10 +47,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\InsightSitemapController;
 use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\cvwhomepage;
-
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -64,11 +60,6 @@ use App\Http\Controllers\cvwhomepage;
 */
 
 Auth::routes();
-// Route::get('/index/hi', [NewHomePageController::class, 'cwvMobilehindiHomePage']);
-// Route::get('/index', [NewHomePageController::class, 'cwvMobile']);
-// Route::get('/homepage', [NewHomePageController::class, 'newhomepage']);
-// Route::get('/homepage/hi', [NewHomePageController::class, 'hindinewhomepage']);
-
 
 Route::get('optimize', function () {
     // Run the artisan commands
@@ -969,10 +960,12 @@ Route::group(['prefix' => 'admin'], function () {
     // insights get routes code by gp
     Route::get('create-insights',                      [AdminController::class, 'createinsightsView']);
     Route::get('list-insights',                        [AdminController::class, 'listinsights']);
+    Route::get('multilist-insights',                        [AdminController::class, 'multilistinsights']);
     Route::get('edit-insights-view/{id}',              [AdminController::class, 'editInsightsView']);
     // insights post routes
-    Route::post('/create-insights',                      [AdminController::class, 'createInsights']);
+    Route::post('/create-insights',                     [AdminController::class, 'createInsights']);
     Route::post('update-insights',                      [AdminController::class, 'updateInsights']);
+    Route::post('/save-multiple-insights',              [AdminController::class, 'saveMultipleInsights'])->name('saveMultipleInsights');
     Route::post('updateinsightstatus',                  [AdminController::class, 'updateInsightStatus']);
     Route::post('deleteinsights',                       [AdminController::class, 'deleteInsights']);
     // insights post routes end here
