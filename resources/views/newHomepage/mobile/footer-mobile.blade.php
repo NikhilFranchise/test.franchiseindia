@@ -8,8 +8,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <p class="copy-right">Copyright © 2009 - 2024 Franchise India
-                    Holdings Ltd.
+                <p class="copy-right">Copyright © 2009 - 2024 Franchiseindia.com Ltd.
                 </p>
             </div>
             <div class="col-md-7">

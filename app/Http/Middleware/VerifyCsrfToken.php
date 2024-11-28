@@ -27,7 +27,7 @@ class VerifyCsrfToken extends Middleware
         'reload-captcha',
         'getfreeinfo',
         // 'loginform',
-        'fetch-data'
+        'fetch-data',
 
       
         
