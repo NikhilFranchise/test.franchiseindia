@@ -539,9 +539,7 @@
         })
     })
 </script>
-
-
-
+ 
 <!-- INACTIVE BRANDS POPUP -->
 @if($franDetails->profile_status == 11)
 <div id="inactive-brands" >
