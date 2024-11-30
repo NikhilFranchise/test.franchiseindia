@@ -42,7 +42,7 @@
                 <a href="list-insights" class="tip-bottom">Insights</a>
                 <a href="" class="current">Create-Insights</a>
             </div>
-            <h1>Create Insights</h1>
+            <h1>Create English Insights</h1>
         </div>
 
         <!--End-breadcrumbs-->
@@ -56,7 +56,7 @@
 
                     <div class="widget-content nopadding">
                         <form method="POST" class="form-horizontal" enctype="multipart/form-data"
-                            action="{{ Config('constants.MainDomain') }}/admin/create-insights" id="editform"
+                            action="{{ Config('constants.MainDomain') }}/admin/en/create-insights" id="editform"
                             novalidate />
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -366,7 +366,7 @@
                     $('#showImage_msg').css('display', 'block');
                     setTimeout(function() {
                         $('#showImage_msg').css('display', 'none');
-                    }, 5000); 
+                    }, 5000);
                     $('#newssubmit').prop('disabled', true);
                     break;
             }
@@ -404,7 +404,7 @@
                 $('#showImage_msg_size').css('display', 'block');
                 setTimeout(function() {
                     $('#showImage_msg_size').css('display', 'none');
-                }, 5000); 
+                }, 5000);
                 $('#newssubmit').prop('disabled', true);
             } else {
                 // toastr.success('Image size is valid. You can proceed.');

@@ -8,6 +8,7 @@ use App\Models\HindiNewsRef;
 use App\Models\SeoTag;
 use App\Models\NewsList;
 use App\Models\InsightList;
+use App\Models\InsightListHindi;
 use App\Models\InsightCategory;
 use App\Models\InsightSubcategory;
 use App\Models\AdminUser;
@@ -450,7 +451,7 @@ class AdminController extends Controller
 
         //increasing frequency of uploaded tags
         if (!empty($request->associated_tags))
-            $this->insertAssociatedTags($request->associated_tags, $contentId, 1, 0);
+            $this->insertAssociatedTags($request->associated_tags, $contentId, 1, 0, '');
 
         return redirect("admin/list-article-interview")->with('success', 'Data Saved Successfully.');
     }
@@ -604,7 +605,7 @@ class AdminController extends Controller
 
         //deleting and reinserting tags
         if (!empty($request->associated_tags))
-            $this->insertAssociatedTags($request->associated_tags, $request->artical_interview_id, 1, 1);
+            $this->insertAssociatedTags($request->associated_tags, $request->artical_interview_id, 1, 1, '');
 
         // return redirect();
         return redirect("admin/list-article-interview")->with('success', 'Data Updated Successfully.');
@@ -663,9 +664,18 @@ class AdminController extends Controller
         $data = [];
         if ($request->has('q')) {
             $search = $request->q;
-            $data = SeoTag::query()->select("tag_id", "name")
-                ->where('name', 'LIKE', "%$search%")
-                ->get();
+
+            if ($request->segment(1) == 'en') {
+                dd('yes');
+                $data = SeoTag::query()->select("tag_id", "name")
+                    ->where('name', 'LIKE', "%$search%")
+                    ->get();
+            } else {
+                // dd('no');
+                $data = SeoTagHindi::query()->select("tag_id", "name")
+                    ->where('name', 'LIKE', "%$search%")
+                    ->get();
+            }
         }
         return response()->json($data);
     }
@@ -756,7 +766,7 @@ class AdminController extends Controller
 
         //increasing frequency count of kickers
         if (!empty($request->associated_tags))
-            $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0);
+            $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, '');
 
         return redirect('admin/list-news');
     }
@@ -865,7 +875,7 @@ class AdminController extends Controller
 
         //increasing frequency count of kickers & inserting associative tags
         if (!empty($request->associated_tags))
-            $this->insertAssociatedTags($request->associated_tags, $request->news_id, 2, 1);
+            $this->insertAssociatedTags($request->associated_tags, $request->news_id, 2, 1, '');
 
         return redirect('admin/list-news')->with('success', "News Updated Successfully.");
     }
@@ -1126,7 +1136,7 @@ class AdminController extends Controller
 
         //updating the frequency of tags used in articles
         if (!empty($request->tags))
-            $this->insertAssociatedTags($request->tags, $articleId->item_id, 3, 0);
+            $this->insertAssociatedTags($request->tags, $articleId->item_id, 3, 0, '');
 
         return redirect('admin/list-magazine-articles/' . $caregoryId);
     }
@@ -1228,7 +1238,7 @@ class AdminController extends Controller
 
         //tags frequency updating
         if (!empty($request->tags))
-            $this->insertAssociatedTags($request->tags, $request->item_id, 3, 1);
+            $this->insertAssociatedTags($request->tags, $request->item_id, 3, 1, '');
 
         return redirect('admin/list-magazine-articles/' . $caregoryId);
     }
@@ -1647,7 +1657,7 @@ class AdminController extends Controller
     {
         //thumbnail creation
         $sourcePhoto     = public_path($imageUrl);
-
+        // dd($width, $height, $type, $imageUrl);
         if ($type == 'Gallery')
             $sourcePhoto = $imageUrl;
 
@@ -1676,11 +1686,12 @@ class AdminController extends Controller
         }
 
         try {
+            // dd($destinationPath);
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0777, true);
             }
             $image = Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 80);
-            //dd($image);
+            // dd($image);
 
         } catch (\Exception $e) {
             $this->setLog('Thumbnail creation error ' . $e->getMessage());
@@ -1742,33 +1753,54 @@ class AdminController extends Controller
      * @param $type
      * @param $isDelete
      */
-    private function insertAssociatedTags($tags, $id, $type, $isDelete)
+    private function insertAssociatedTags($tags, $id, $type, $isDelete, $isHindi)
     {
         //deleting and reinserting tags
-        if ($isDelete == 1)
-            ContentTagsAssigned::query()->where('content_id', $id)->where('content_type', $type)->delete();
+        if ($isHindi == 'en') {
+            if ($isDelete == 1)
+                ContentTagsAssigned::query()->where('content_id', $id)->where('content_type', $type)->delete();
 
-        foreach ($tags as $associatedTagsNew) {
-            ContentTagsAssigned::query()->insert(['content_type' => $type, 'content_id' => $id, 'tag_id' => $associatedTagsNew]);
+            foreach ($tags as $associatedTagsNew) {
+                ContentTagsAssigned::query()->insert(['content_type' => $type, 'content_id' => $id, 'tag_id' => $associatedTagsNew]);
 
-            //increasing frequency count
-            SeoTag::query()->where('tag_id', $associatedTagsNew)->increment('frequency');
+                //increasing frequency count
+                SeoTag::query()->where('tag_id', $associatedTagsNew)->increment('frequency');
+            }
+        } elseif ($isHindi == 'hi') {
+            if ($isDelete == 1)
+                ContentTagsAssignedHindi::query()->where('content_id', $id)->where('content_type', $type)->delete();
+
+            foreach ($tags as $associatedTagsNew) {
+                ContentTagsAssignedHindi::query()->insert(['content_type' => $type, 'content_id' => $id, 'tag_id' => $associatedTagsNew]);
+
+                //increasing frequency count
+                SeoTagHindi::query()->where('tag_id', $associatedTagsNew)->increment('frequency');
+            }
         }
     }
 
-    public function createinsightsView()
+    public function createinsightsView(Request $request)
     {
-        $kickerData = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
-        $kicker     = array_column($kickerData, 'name');
-        $authors    = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
+        if ($request->segment(2) == 'en') {
+            $kickerData = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
+            $kicker     = array_column($kickerData, 'name');
+            $authors    = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
 
-        $InsightCategory    = InsightCategory::query()->select('id', 'catname')->where('status', 1)->get();
+            $InsightCategory    = InsightCategory::query()->select('id', 'catname')->where('status', 1)->get();
+            return view('admin/insights/create_insights', compact('kicker', 'authors', 'InsightCategory'));
+        } else {
+            $kickerData = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
+            $kicker     = array_column($kickerData, 'name');
+            $authors    = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
 
-        return view('admin/insights/create_insights', compact('kicker', 'authors', 'InsightCategory'));
+            $InsightCategory    = InsightCategory::query()->select('id', 'catname')->where('status', 1)->get();
+            return view('admin/insights/create_hindi_insights', compact('kicker', 'authors', 'InsightCategory'));
+        }
     }
 
     public function createInsights(Request $request)
-    {   //dd($request->all());
+    {
+        // dd($request->all());
         $this->validate($request, [
 
             'insights_publisher' => 'required',
@@ -1806,113 +1838,198 @@ class AdminController extends Controller
             // dd('image');
         }
 
-        //inserting into newslist table
-        $newsData                = new InsightList;
-        $newsData->title         = $title;
-        // $newsData->kicker        = $kicker;
-        $newsData->news_type     = $role;
-        $newsData->homeTitle     = $homeTitle;
-        $newsData->shortDesc     = $subTitle;
-        $newsData->content       = $desc;
-        $newsData->insight_type  = $insights_type;
-        $newsData->cat_id        = $cat_id;
-        $newsData->subcat_id     = $subcat_id;
-        $newsData->related_brand = $brand;
-        $newsData->image         = $imageUrl;
-        $newsData->slug          = $slug;
-        $newsData->is_intl       = $isInternational;
-        $newsData->author_id     = request()->insights_publisher;
+        if ($request->segment(2) == 'en') {
+            $newsData                = new InsightList;
+            $newsData->title         = $title;
+            // $newsData->kicker        = $kicker;
+            $newsData->news_type     = $role;
+            $newsData->homeTitle     = $homeTitle;
+            $newsData->shortDesc     = $subTitle;
+            $newsData->content       = $desc;
+            $newsData->insight_type  = $insights_type;
+            $newsData->cat_id        = $cat_id;
+            $newsData->subcat_id     = $subcat_id;
+            $newsData->related_brand = $brand;
+            $newsData->image         = $imageUrl;
+            $newsData->slug          = $slug;
+            $newsData->is_intl       = $isInternational;
+            $newsData->author_id     = request()->insights_publisher;
 
 
-        if ($newsData->save()) {
-            $newsId = $newsData->news_id;
-        } else {
-            return redirect('admin/list-insights')->with('error', "Insights Data Can't Save. ");
+            if ($newsData->save()) {
+                $newsId = $newsData->news_id;
+            } else {
+                return redirect('admin/en/list-insights')->with('error', "Insights Data Can't Save. ");
+            }
+
+
+            //increasing frequency count of kickers
+            if ($request->associated_tags != null)
+                $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
+
+            return redirect('admin/en/list-insights')->with('success', 'Insights Data Save Successfully.');
+        } elseif ($request->segment(2) == 'hi') {
+            $newsData                = new InsightListHindi;
+            $newsData->title         = $title;
+            // $newsData->kicker        = $kicker;
+            $newsData->news_type     = $role;
+            $newsData->homeTitle     = $homeTitle;
+            $newsData->shortDesc     = $subTitle;
+            $newsData->content       = $desc;
+            $newsData->insight_type  = $insights_type;
+            $newsData->cat_id        = $cat_id;
+            $newsData->subcat_id     = $subcat_id;
+            $newsData->related_brand = $brand;
+            $newsData->image         = $imageUrl;
+            $newsData->slug          = $slug;
+            $newsData->is_intl       = $isInternational;
+            $newsData->author_id     = request()->insights_publisher;
+
+
+            if ($newsData->save()) {
+                $newsId = $newsData->news_id;
+            } else {
+                return redirect('admin/hi/list-insights')->with('error', "Insights Data Can't Save. ");
+            }
+
+
+            //increasing frequency count of kickers
+            if ($request->associated_tags != null)
+                // dd($request->associatedTags);
+                $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
+
+            return redirect('admin/hi/list-insights')->with('success', 'Insights Data Save Successfully.');
         }
-
-        //increasing frequency count of kicker or inserting new kicker
-        // if (!empty($request->kicker))
-        //     $this->insertKickers($request->kicker, $newsId, 2);
-
-        //increasing frequency count of kickers
-        if (!empty($request->associated_tags))
-            $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0);
-
-        return redirect('admin/list-insights')->with('success', 'Insights Data Save Successfully.');
     }
 
     public function listinsights(Request $request)
     {
-        // dd( $request->session()->get('role'));
+        if ($request->segment(2) == 'en') {
 
-        $data = InsightList::query()
-            ->where('news_type', $request->session()->get('role'))
-            ->where(function ($query) use ($request) {
-                $query->where('title', 'LIKE', '%' . $request->search . '%')
-                    ->where(function ($query) use ($request) {
-                        $query->where('status', 1)
-                            ->orWhere('status', 0);
-                    })
-                    ->orWhere('news_id', $request->search);
-            })
-            ->orderBy('news_id', 'DESC')
-            ->paginate(25);
+            $data = InsightList::query()
+                ->whereNotIn('news_type', ['ri','ir'])
+                ->where(function ($query) use ($request) {
+                    $query->where('title', 'LIKE', '%' . $request->search . '%')
+                        // ->where(function ($query) use ($request) {
+                        //     $query->where('status', 1)
+                        //         ->orWhere('status', 0);
+                        // })
+                        ->orWhere('news_id', $request->search);
+                })
+                ->orderBy('news_id', 'DESC')
+                ->paginate(25);
+            return view('admin/insights/list-edit-insights', compact('data'));
+        } elseif ($request->segment(2) == 'hi') {
+            // dd('hello');
+            $data = InsightListHindi::query()
+                ->whereNotIn('news_type', ['ri', 'ir'])
+                ->where(function ($query) use ($request) {
+                    $query->where('title', 'LIKE', '%' . $request->search . '%')
+                        // ->where(function ($query) use ($request) {
+                        //     $query->where('status', 1)
+                        //         ->orWhere('status', 0);
+                        // })
+                        ->orWhere('news_id', $request->search);
+                })
+                ->orderBy('news_id', 'DESC')
+                ->paginate(25);
 
 
-        return view('admin/insights/list-edit-insights', compact('data'));
+            return view('admin/insights/hindilist-edit-insights', compact('data'));
+        }
     }
 
     public function multilistinsights(Request $request)
     {
         // Fetch data with eager loading for category and subcategory
-        $data = InsightList::with(['category', 'subcategory','author'])
-            ->where('news_type', $request->session()->get('role')) // Filter by role
-            ->where(function ($query) use ($request) {
-                // Search logic
-                $query->where('title', 'LIKE', '%' . $request->search . '%')
-                    ->orWhere('news_id', $request->search);
-            })
-            ->whereIn('status', [0, 1]) // Filter status (active or inactive)
-            ->orderBy('news_id', 'DESC') // Order by descending ID
-            ->paginate(25); // Paginate results
-            // dd($data);
-        // Fetch categories for dropdowns
-        $InsightCategory = InsightCategory::query()
-            ->select('id', 'catname')
-            ->where('status', 1)
-            ->get();
-        $InsightAuthor = AuthorList::query()
-            ->select('author_id', 'title','slug')
-            ->where('status', 'A')
-            ->get();
+        if ($request->segment(2) == 'en') {
 
+            $data = InsightList::with(['category', 'subcategory', 'author'])
+                ->whereNotIn('news_type', ['ri', 'ir']) // Exclude 'ri' and 'ir'
+                ->where(function ($query) use ($request) {
+                    // Search logic
+                    $query->where('title', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('news_id', $request->search);
+                })
+                // ->whereIn('status', [0, 1]) // Filter status (active or inactive)
+                ->orderBy('news_id', 'DESC') // Order by descending ID
+                ->paginate(30); // Paginate results
+
+            // Fetch categories for dropdowns
+            $InsightCategory = InsightCategory::query()
+                ->select('id', 'catname')
+                ->where('status', 1)
+                ->get();
+            $InsightAuthor = AuthorList::query()
+                ->select('author_id', 'title', 'slug')
+                ->where('status', 'A')
+                ->get();
+        } else {
+            $data = InsightListHindi::with(['category', 'subcategory', 'author'])
+                ->whereNotIn('news_type', ['ri', 'ir']) // Exclude 'ri' and 'ir'
+                ->where(function ($query) use ($request) {
+                    // Search logic
+                    $query->where('title', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('news_id', $request->search);
+                })
+                //->whereIn('status', [0, 1]) // Filter status (active or inactive)
+                ->orderBy('news_id', 'DESC') // Order by descending ID
+                ->paginate(30); // Paginate results
+
+            // Fetch categories for dropdowns
+            $InsightCategory = InsightCategory::query()
+                ->select('id', 'catname')
+                ->where('status', 1)
+                ->get();
+            $InsightAuthor = AuthorList::query()
+                ->select('author_id', 'title', 'slug')
+                ->where('status', 'A')
+                ->get();
+        }
         // Return view with data
-        return view('admin/insights/multilist-edit', compact('data', 'InsightCategory','InsightAuthor'));
+        return view('admin/insights/multilist-edit', compact('data', 'InsightCategory', 'InsightAuthor'));
     }
 
 
     public function saveMultipleInsights(Request $request)
-{
-    // Get selected articles
+    {
+        // Get selected articles
+        if ($request->segment(2) == 'en') {
 
-    $articles = $request->input('articles', []);
-    // dd($articles);
-    foreach ($articles as $newsId => $articleDetails) {
-        $existingInsight = InsightList::find($newsId);
-        if ($existingInsight) {
-            // dd($existingInsight->slug);
-            $existingInsight->insight_type = $articleDetails['insight_type'] ?? $existingInsight->insight_type;
-            $existingInsight->cat_id = $articleDetails['main_category'] ?? $existingInsight->cat_id;
-            $existingInsight->subcat_id = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
-            $existingInsight->status = $articleDetails['status'] ?? $existingInsight->status;
-            $existingInsight->author_id = $articleDetails['author'] ?? $existingInsight->author_id;
-            $existingInsight->slug = Str::slug($existingInsight->title);
-            $existingInsight->save();
+            $articles = $request->input('articles', []);
+            // dd($articles);
+            foreach ($articles as $newsId => $articleDetails) {
+                $existingInsight = InsightList::find($newsId);
+                if ($existingInsight) {
+                    // dd($existingInsight->slug);
+                    $existingInsight->insight_type = $articleDetails['insight_type'] ?? $existingInsight->insight_type;
+                    $existingInsight->cat_id = $articleDetails['main_category'] ?? $existingInsight->cat_id;
+                    $existingInsight->subcat_id = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
+                    $existingInsight->status = $articleDetails['status'] ?? $existingInsight->status;
+                    $existingInsight->author_id = $articleDetails['author'] ?? $existingInsight->author_id;
+                    $existingInsight->slug = Str::slug($existingInsight->title);
+                    $existingInsight->save();
+                }
+            }
+        } else {
+            $articles = $request->input('articles', []);
+            // dd($articles);
+            foreach ($articles as $newsId => $articleDetails) {
+                $existingInsight = InsightListHindi::find($newsId);
+                if ($existingInsight) {
+                    // dd($existingInsight->slug);
+                    $existingInsight->insight_type = $articleDetails['insight_type'] ?? $existingInsight->insight_type;
+                    $existingInsight->cat_id = $articleDetails['main_category'] ?? $existingInsight->cat_id;
+                    $existingInsight->subcat_id = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
+                    $existingInsight->status = $articleDetails['status'] ?? $existingInsight->status;
+                    $existingInsight->author_id = $articleDetails['author'] ?? $existingInsight->author_id;
+                    $existingInsight->slug = Str::slug($existingInsight->title);
+                    $existingInsight->save();
+                }
+            }
         }
+        return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
     }
-
-    return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
-}
 
 
 
@@ -1920,31 +2037,61 @@ class AdminController extends Controller
 
     public function editInsightsView(Request $request)
     {
-        $newsId             = $request->id;
-        $kickerData         = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
-        $kicker             = array_column($kickerData, 'name');
-        $data               = InsightList::query()->where('news_id', $newsId)->first();
+        if ($request->segment(2) == 'en') {
 
-        $InsightCategory    = InsightCategory::query()->where('status', '1')->get();
-        $InsightSubcategory    = InsightSubcategory::all();
+            $newsId             = $request->id;
+            $kickerData         = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
+            $kicker             = array_column($kickerData, 'name');
+            $data               = InsightList::query()->where('news_id', $newsId)->first();
 
-        $brands             = explode(",", $data->related_brand);
+            $InsightCategory    = InsightCategory::query()->where('status', '1')->get();
+            $InsightSubcategory    = InsightSubcategory::all();
 
-        $authors            = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
+            $brands             = explode(",", $data->related_brand);
 
-        //getting brand names to a array
-        foreach ($brands as $value) {
-            $company[]        = FranchisorBusinessDetail::query()->where('franchisor_id', $value)->select('franchisor_id', 'company_name')->first();
-        }
-        // dd($company);
-        $associatedTags     = ContentTagsAssigned::query()->where('content_id', $newsId)->where('content_type', 2)->select('tag_id')->get();
-        $assocTags = [];
-        //fetching associated tags to a array
-        if ($associatedTags != null) {
-            foreach ($associatedTags as $tags) {
-                $assocTags[]    = SeoTag::query()->where('tag_id', $tags->tag_id)->select('tag_id', 'name')->first();
+            $authors            = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
+
+            //getting brand names to a array
+            foreach ($brands as $value) {
+                $company[]        = FranchisorBusinessDetail::query()->where('franchisor_id', $value)->select('franchisor_id', 'company_name')->first();
             }
-            return view('admin/insights/edit-insights', compact('kicker', 'data', 'assocTags', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
+            // dd($company);
+            $associatedTags     = ContentTagsAssigned::query()->where('content_id', $newsId)->where('content_type', 2)->select('tag_id')->get();
+            $assocTags = [];
+            //fetching associated tags to a array
+            if ($associatedTags != null) {
+                foreach ($associatedTags as $tags) {
+                    $assocTags[]    = SeoTag::query()->where('tag_id', $tags->tag_id)->select('tag_id', 'name')->first();
+                }
+                return view('admin/insights/edit-insights', compact('kicker', 'data', 'assocTags', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
+            }
+        } elseif ($request->segment(2) == 'hi') {
+            $newsId             = $request->id;
+            $kickerData         = SeoTagHindi::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
+            $kicker             = array_column($kickerData, 'name');
+            $data               = InsightListHindi::query()->where('news_id', $newsId)->first();
+
+            $InsightCategory    = InsightCategory::query()->where('status', '1')->get();
+            $InsightSubcategory    = InsightSubcategory::all();
+
+            $brands             = explode(",", $data->related_brand);
+
+            $authors            = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
+
+            //getting brand names to a array
+            foreach ($brands as $value) {
+                $company[]        = FranchisorBusinessDetail::query()->where('franchisor_id', $value)->select('franchisor_id', 'company_name')->first();
+            }
+            // dd($company);
+            $associatedTags     = ContentTagsAssignedHindi::query()->where('content_id', $newsId)->where('content_type', 2)->select('tag_id')->get();
+            $assocTags = [];
+            //fetching associated tags to a array
+            if ($associatedTags != null) {
+                foreach ($associatedTags as $tags) {
+                    $assocTags[]    = SeoTagHindi::query()->where('tag_id', $tags->tag_id)->select('tag_id', 'name')->first();
+                }
+                return view('admin/insights/edit_hindi_insights', compact('kicker', 'data', 'assocTags', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
+            }
         }
     }
 
@@ -1953,14 +2100,17 @@ class AdminController extends Controller
     {
         $newsId    = $request->News;
         $status    = $request->contentStatus;
-
-        InsightList::query()->where('news_id', $newsId)->update(['status' => $status]);
+        if ($request->segment(2) == 'en') {
+            InsightList::query()->where('news_id', $newsId)->update(['status' => $status]);
+        } else {
+            InsightListHindi::query()->where('news_id', $newsId)->update(['status' => $status]);
+        }
         return response()->json(array('status' => $status), 200);
     }
 
     public function updateInsights(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         $this->validate($request, [
 
             'insights_publisher' => 'required',
@@ -2005,39 +2155,73 @@ class AdminController extends Controller
             $this->thumbnailCreation($imageUrl, 'News', 247, 139);
         }
 
+        if ($request->segment(2) == 'en') {
+            $update = [
+                'title'         => $title,
+                // 'kicker'        => $kicker,
+                'news_type'     => $role,
+                'homeTitle'     => $homeTitle,
+                'shortDesc'     => $subTitle,
+                'content'       => $desc,
+                'insight_type'  => $insight_type,
+                'cat_id'       => $cat_id,
+                'subcat_id'   => $subcat_id,
+                //
+                'related_brand' => $brand,
+                'slug'          => $slug,
+                'is_intl'       => $isInternational,
+                'updated_by'    => $request->session()->get('adminEmail'),
+                'author_id'     => request()->insights_publisher
+            ];
 
-        $update = [
-            'title'         => $title,
-            // 'kicker'        => $kicker,
-            'news_type'     => $role,
-            'homeTitle'     => $homeTitle,
-            'shortDesc'     => $subTitle,
-            'content'       => $desc,
-            'insight_type'  => $insight_type,
-            'cat_id'       => $cat_id,
-            'subcat_id'   => $subcat_id,
-            //
-            'related_brand' => $brand,
-            'slug'          => $slug,
-            'is_intl'       => $isInternational,
-            'updated_by'    => $request->session()->get('adminEmail'),
-            'author_id'     => request()->insights_publisher
-        ];
+            if ($request->hasFile('image'))
+                $update['image'] = $imageUrl;
 
-        if ($request->hasFile('image'))
-            $update['image'] = $imageUrl;
+            InsightList::query()->where('news_id', $request->news_id)->update($update);
 
-        InsightList::query()->where('news_id', $request->news_id)->update($update);
+            //increasing frequency count of kickers
+            if (!empty($request->kicker))
+                $this->insertKickers($request->kicker, $request->news_id, 2);
 
-        //increasing frequency count of kickers
-        if (!empty($request->kicker))
-            $this->insertKickers($request->kicker, $request->news_id, 2);
+            //increasing frequency count of kickers & inserting associative tags
+            if (!empty($request->associated_tags))
+                $this->insertAssociatedTags($request->associated_tags, $request->news_id, 2, 1, $request->segment(2));
 
-        //increasing frequency count of kickers & inserting associative tags
-        if (!empty($request->associated_tags))
-            $this->insertAssociatedTags($request->associated_tags, $request->news_id, 2, 1);
+            return redirect('admin/en/list-insights')->with('success', "Insights Data Updated Successfully.");
+        } else {
+            $update = [
+                'title'         => $title,
+                // 'kicker'        => $kicker,
+                'news_type'     => $role,
+                'homeTitle'     => $homeTitle,
+                'shortDesc'     => $subTitle,
+                'content'       => $desc,
+                'insight_type'  => $insight_type,
+                'cat_id'       => $cat_id,
+                'subcat_id'   => $subcat_id,
+                //
+                'related_brand' => $brand,
+                'slug'          => $slug,
+                'is_intl'       => $isInternational,
+                'updated_by'    => $request->session()->get('adminEmail'),
+                'author_id'     => request()->insights_publisher
+            ];
 
-        return redirect('admin/list-insights')->with('success', "Insights Data Updated Successfully.");
+            if ($request->hasFile('image'))
+                $update['image'] = $imageUrl;
+
+            InsightListHindi::query()->where('news_id', $request->news_id)->update($update);
+
+            //increasing frequency count of kickers
+            if (!empty($request->kicker))
+                $this->insertKickers($request->kicker, $request->news_id, 2);
+
+            //increasing frequency count of kickers & inserting associative tags
+            if (!empty($request->associated_tags))
+                $this->insertAssociatedTags($request->associated_tags, $request->news_id, 2, 1, $request->segment(2));
+
+            return redirect('admin/hi/list-insights')->with('success', "Insights Data Updated Successfully.");
+        }
     }
 
 
@@ -2046,7 +2230,11 @@ class AdminController extends Controller
 
         $contentId    = $request->contentId;
         $request->contentStatus;
-        $Content      = InsightList::query()->where('news_id', $contentId)->delete();
+        if ($request->segment(2) == 'en') {
+            $Content      = InsightList::query()->where('news_id', $contentId)->delete();
+        } else {
+            $Content      = InsightListHindi::query()->where('news_id', $contentId)->delete();
+        }
         return response()->json(array('Content' => $Content), 200);
     }
 

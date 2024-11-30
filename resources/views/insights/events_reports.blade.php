@@ -2,15 +2,15 @@
 @section('content')
 <div class="maininnver homeh">
    <div class="container">
-      <h1 class="cathead">Events & Reports</h1>
+      <h1 class="cathead">@if(App::getLocale() == 'en') Events & Reports @else इवेंट और रिपोर्ट @endif</h1>
    </div>
    <div class="listblk">
       <div class="container">
          <ul class="artilsit">
             @foreach($events_reports as $article)
             @php
-            $image = Config('constants.awsS3Url') . $article->image;
-            $url = Config('constants.MainDomain') . '/insights/' . strtolower($article->insight_type) . '/' . $article->slug . '.' . $article->news_id;
+            $locale = App::getLocale();
+            $url = Config('constants.MainDomain') . '/insights/' . $locale . '/' . strtolower($article->insight_type) . '/' . $article->slug . '.' . $article->news_id;
 
             // Initialize default author values
             $authorname = '';
@@ -21,7 +21,7 @@
             @foreach($article->author as $author)
             @php
             $authorname = $author->title;
-            $authorUrl = Config('constants.MainDomain') . '/insights/author/' . $author->slug . '-' . $author->author_id;
+            $authorUrl = Config('constants.MainDomain') . '/insights/'. $locale . '/author/'  . $author->slug . '-' . $author->author_id;
             if(!empty($author->image)){
                $author_image = 'https://franchiseindia.s3.ap-south-1.amazonaws.com'. $author->image;
             }
@@ -30,7 +30,7 @@
 
             <li>
                <div class="artimgblk">
-                  <a href="{{$url}}"><img src="{{$image}}" alt="{{$article->title . ' image'}}" /></a>
+                  <a href="{{$url}}"><img src="{{\App\Http\Controllers\InsightsController::createimgurl($article->image)}}" alt="{{$article->title . ' image'}}" /></a>
                </div>
                <div class="artcontent">
                   <div class="haedname"><a href="{{$url}}">{{$article->title}}</a></div>

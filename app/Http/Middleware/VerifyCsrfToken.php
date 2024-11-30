@@ -29,7 +29,7 @@ class VerifyCsrfToken extends Middleware
         // 'loginform',
         'fetch-data',
 
-      
-        
+
+
     ];
 }

@@ -69,6 +69,7 @@
         th {
             text-align: center;
             border: 1px solid black;
+            {{--  width: 120px;  --}}
         }
 
         .gradeX th {
@@ -145,16 +146,20 @@
             border-radius: 6px;
             border: 1px;
         }
-        .form-control{
+
+        .form-control {
             width: 16%;
             align-items: center;
         }
-        .bulk-actions{
+
+        .bulk-actions {
             width: 100%;
             padding: 10px;
         }
-        #apply_bulk{
-            margin-left: 8px;margin-bottom: 10px;
+
+        #apply_bulk {
+            margin-left: 8px;
+            margin-bottom: 10px;
         }
     </style>
 
@@ -174,14 +179,27 @@
     <!--sidebar-menu-->
 
     <div id="content">
-
+        @if (Request::is('admin/hi/multilist-insights'))
+        @php
+            $url = 'admin/hi/save-multiple-insights';
+            $hi = 'Hindi';
+            $type = 'hi';
+        @endphp
+    @else
+        @php
+            $url = 'admin/en/save-multiple-insights';
+            $hi = 'English';
+            $type = 'en';
+        @endphp
+        {{--  @dd($url);  --}}
+    @endif
         <!--breadcrumbs-->
         <div id="content-header">
             <div id="breadcrumb"> <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
-                        class="icon-home"></i> Home</a> <a href="list-insights" class="tip-bottom">Insights</a>
-                <a href="" class="current">List-Insights</a>
+                        class="icon-home"></i> Home</a> <a href="list-insights" class="tip-bottom">List Insights</a>
+                <a href="" class="current">{{'Multiple '. $hi .' Insights'}}</a>
             </div>
-            <h1>Insights Listing</h1>
+            <h1>{{'Multiple '. $hi .' Insights'}}</h1>
         </div>
         <!--End-breadcrumbs-->
 
@@ -196,18 +214,18 @@
             </form>
         </div>
 
-
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="span12">
                     <div class="widget-box">
                         <div class="widget-content nopadding">
-                            <form method="POST" action="{{ route('saveMultipleInsights') }}">
+                            <form method="POST" action="{{ url($url) }}">
                                 @csrf <!-- Include CSRF token for security -->
                                 <!-- Global Select Boxes -->
-                                <h3 style="text-align:center">Multiple Insights Edit</h3>
+                                <h3 style="text-align:center">{{ 'Multiple '. $hi .' Insights' }}</h3>
                                 <div class="bulk-actions">
-                                    <select required id="global_insight_type" name="global_insight_type[]" class="form-control">
+                                    <select required id="global_insight_type" name="global_insight_type[]"
+                                        class="form-control">
                                         <option value="">Select Insight Type</option>
                                         <option value="News">News</option>
                                         <option value="Article">Article</option>
@@ -217,8 +235,8 @@
                                         <option value="Terms">Terms</option>
                                     </select>
 
-                                    <select required id="global_main_category" name="global_main_category[]" class="form-control"
-                                        onchange="Subcategoriesdata(this.value)">
+                                    <select required id="global_main_category" name="global_main_category[]"
+                                        class="form-control" onchange="Subcategoriesdata(this.value)">
                                         <option value="">Select Main Category</option>
                                         @foreach ($InsightCategory as $category)
                                             <option value="{{ $category->id }}">{{ $category->catname }}</option>
@@ -250,7 +268,7 @@
                                 <table>
                                     <thead>
                                         <tr class="gradeX">
-                                            <th>Check all<input type="checkbox" id="select_all"></th>
+                                            <th style="width:6%;">Check all<input type="checkbox" id="select_all"></th>
                                             <th>News ID</th>
                                             <th>Title</th>
                                             <th>Insight Type</th>
@@ -276,7 +294,8 @@
                                                 <td>
                                                     <input type="checkbox" class="bulk-checkbox"
                                                         value="{{ $insights->news_id }}" name="selected_articles[]">
-                                                        <input type="hidden" name="insights_slug[]" value="{{ $insights->slug }}">
+                                                    <input type="hidden" name="insights_slug[]"
+                                                        value="{{ $insights->slug }}">
                                                 </td>
                                                 <td>{{ $insights->news_id }}</td>
                                                 <td>{{ $insights->title }}</td>
@@ -297,11 +316,11 @@
                                                                 target="_blank" class="round-button">Go</a></div>
                                                     </div>
                                                 </td>
-                                                <td>@foreach ($insights->author as $author)
-                                                    {{ $author->title }}
+                                                <td>
+                                                    @foreach ($insights->author as $author)
+                                                        {{ $author->title }}
                                                     @endforeach
-                                                    {{--  <button type="button" class="btn btn-danger deleteauthor"
-                                                    data-value="{{ $insights->news_id }}">Delete</button>  --}}
+
                                                 </td>
                                                 <td>
                                                     <center>
@@ -370,13 +389,14 @@
             $(document).on('click', '.activestate', function() {
 
                 var id = this.value;
+                var type = '{{ $type }}';
                 var status = 0;
                 if (this.checked)
                     status = 1;
 
                 $.ajax({
                     type: "POST",
-                    url: '/admin/updateinsightstatus',
+                    url: '/admin/'+ type +'/updateinsightstatus',
                     data: {
                         "News": id,
                         "contentStatus": status,
@@ -444,21 +464,21 @@
             });
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Select All Checkbox Functionality
-            $('#select_all').on('change', function () {
+            $('#select_all').on('change', function() {
                 const isChecked = $(this).prop('checked');
                 $('.bulk-checkbox').prop('checked', isChecked); // Check or uncheck all rows
             });
 
             // Synchronize "Select All" with Individual Checkboxes
-            $('.bulk-checkbox').on('change', function () {
+            $('.bulk-checkbox').on('change', function() {
                 const allChecked = $('.bulk-checkbox').length === $('.bulk-checkbox:checked').length;
                 $('#select_all').prop('checked', allChecked); // Update Select All status
             });
 
             // Apply Bulk Changes Functionality
-            $('#apply_bulk').on('click', function (e) {
+            $('#apply_bulk').on('click', function(e) {
                 e.preventDefault(); // Prevent the default form submission
 
                 const selectedArticles = $('.bulk-checkbox:checked');
@@ -473,9 +493,9 @@
                 const bulkSubCategory = $('#global_sub_category').val();
                 const bulkStatus = $('#global_status').val();
                 const bulkAuthor = $('#global_author').val();
-               // alert(bulkInsightType +'--'+ bulkMainCategory +'--'+ bulkSubCategory +'--'+ bulkStatus +'--'+ bulkAuthor);
+                // alert(bulkInsightType +'--'+ bulkMainCategory +'--'+ bulkSubCategory +'--'+ bulkStatus +'--'+ bulkAuthor);
                 // Attach these values to each selected article
-                selectedArticles.each(function () {
+                selectedArticles.each(function() {
                     const row = $(this).closest('tr');
                     const articleId = $(this).val();
 
@@ -520,7 +540,6 @@
                 $(this).closest('form').submit();
             });
         });
-
     </script>
     <script src="{{ url('admin/js/jquery.ui.custom.js') }}"></script>
     <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>

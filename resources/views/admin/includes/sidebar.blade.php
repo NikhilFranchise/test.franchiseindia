@@ -77,9 +77,13 @@
             <li class="submenu @yield('IN')"> <a href="#"><i class="icon icon-th-list"></i>
                     <span>Insights</span></a>
                 <ul>
-                    <li><a href="/admin/create-insights">Create Insights</a></li>
-                    <li><a href="/admin/list-insights">List & Edit Insights</a></li>
-                    <li><a href="/admin/multilist-insights">Multiple Insights Data Edit</a></li>
+                    <li><a href="/admin/en/create-insights">Create Insights English</a></li>
+                    <li><a href="/admin/en/list-insights">List & Edit Insights Englsih</a></li>
+                    <li><a href="/admin/en/multilist-insights">Multiple Insights English Data Edit</a></li>
+                </ul><ul>
+                    <li><a href="/admin/hi/create-insights">Create Insights Hindi</a></li>
+                    <li><a href="/admin/hi/list-insights">List & Edit Insights Hindi</a></li>
+                    <li><a href="/admin/hi/multilist-insights">Multiple Insights Hindi Data Edit</a></li>
                 </ul>
             </li>
         @endif

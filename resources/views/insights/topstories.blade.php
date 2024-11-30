@@ -3,7 +3,13 @@
 @section('content')
     <div class="maininnver homeh">
         <div class="container">
-            <h1 class="cathead">Top Trending Stories</h1>
+            <h1 class="cathead">
+                @if (App::getLocale() == 'en')
+                    Trending Stories
+                @else
+                    शीर्ष रुझान वाले लेख
+                @endif
+            </h1>
         </div>
 
         <div class="listblk">
@@ -11,16 +17,26 @@
                 <ul class="artilsit">
                     @foreach ($insightstories as $article)
                         @php
-                            $image = Config('constants.awsS3Url') . $article->image;
-                            $url =
-                                Config('constants.MainDomain') .
-                                '/insights/' .
-                                strtolower($article->insight_type) .
-                                '/' .
-                                $article->slug .
-                                '.' .
-                                $article->news_id;
-
+                            //$image = Config('constants.awsS3Url') . $article->image;
+                            if (App::getLocale() == 'en') {
+                                $url =
+                                    Config('constants.MainDomain') .
+                                    '/insights/en/' .
+                                    strtolower($article->insight_type) .
+                                    '/' .
+                                    $article->slug .
+                                    '.' .
+                                    $article->news_id;
+                            } else {
+                                $url =
+                                    Config('constants.MainDomain') .
+                                    '/insights/hi/' .
+                                    strtolower($article->insight_type) .
+                                    '/' .
+                                    $article->slug .
+                                    '.' .
+                                    $article->news_id;
+                            }
                             // Initialize default values
                             $authorname = '';
                             $authorUrl = '';
@@ -54,7 +70,8 @@
                         @endphp
                         <li>
                             <div class="artimgblk">
-                                <a href="{{ $url }}"><img src="{{ $image }}"
+                                <a href="{{ $url }}"><img
+                                        src="{{ \App\Http\Controllers\InsightsController::createimgurl($article->image) }}"
                                         alt="{{ $article->title . ' image' }}" /></a>
                             </div>
                             <div class="artcontent">
@@ -84,7 +101,8 @@
                                                     </div>
                                                     <div class="innersfv"
                                                         onclick="window.open('https://twitter.com/FranchiseIndia','_blank')">
-                                                        <img src="{{ url('insight-new/images/twittercard.svg') }}" /></div>
+                                                        <img src="{{ url('insight-new/images/twittercard.svg') }}" />
+                                                    </div>
                                                     <div class="innersfv"
                                                         onclick="window.open('https://www.instagram.com/franchiseindia_/','_blank')">
                                                         <img

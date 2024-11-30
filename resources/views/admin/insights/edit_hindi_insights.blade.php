@@ -57,10 +57,10 @@
             <div id="breadcrumb">
                 <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
                         class="icon-home"></i>Home</a>
-                <a href="{{ url('admin/list-insights') }}" class="tip-bottom">Insights</a>
-                <a href="" class="current">Edit-Insights</a>
+                <a href="{{ url('admin/list-insights') }}" class="tip-bottom">Hindi Insights</a>
+                <a href="" class="current">Edit-Hindi Insights</a>
             </div>
-            <h1>Edit Insights</h1>
+            <h1>Edit Hindi Insights</h1>
         </div>
         <!--End-breadcrumbs-->
         <div class="container-fluid">
@@ -68,11 +68,11 @@
             <div class="row-fluid">
                 <div class="widget-box">
                     <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-                        <h5>Insights Details</h5>
+                        <h5>Insights Hindi Details</h5>
                     </div>
                     <div class="widget-content nopadding">
                         <form method="POST" class="form-horizontal" enctype="multipart/form-data"
-                            action="{{ url('admin/en/update-insights') }}" id="editform" />
+                            action="{{ url('admin/hi/update-insights') }}" id="editform" />
                         <input type="hidden" name="news_id" value="{{ $data->news_id }}" />
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
