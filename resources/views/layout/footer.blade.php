@@ -522,8 +522,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <p class="copy-right">Copyright © 2009 - {{ date('Y') }} Franchise India
-                    Holdings Ltd.
+                <p class="copy-right">Copyright © 2009 - {{ date('Y') }} Franchiseindia.com Pvt Ltd.
                 </p>
             </div>
             <div class="col-md-7">

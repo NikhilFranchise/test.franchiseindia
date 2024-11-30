@@ -27,6 +27,7 @@ class BrandController extends Controller
     {
         // Initialize the variables
         // dd($request->all());
+        // dd('yes');
         $ratings = 0;
         $likesCnt = 0;
         $brandUrlParam = $request->profileName;         // Fetch the request parameter
@@ -34,6 +35,8 @@ class BrandController extends Controller
         $images = [];
         $view = "brandlanding";
         // return dd($request);
+
+        // dd($brandParamsArr);
         if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
@@ -48,6 +51,22 @@ class BrandController extends Controller
                  $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
 
 
+                 $main_cat = Config('constants.CategoryArr');
+                 // dd($franDetails->ind_main_cat);
+                 $a = $franDetails->ind_main_cat;
+                 // dd($main_cat[$a]);
+                 $index_value = $main_cat[$a];
+                 // dd($index_value);
+                 $u_slug = Config('category.SeoCategoryArr');
+                 $url_slug = $u_slug[$a];
+                 // dd($url_slug);
+              $fran_new_data = FranchisorBusinessDetail::query()
+             ->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name','unit_inv_min','unit_inv_max','company_logo')
+             ->where('profile_status', 1)
+             ->where('membership_type',1)
+             ->where('ind_main_cat', $franDetails->ind_main_cat)
+             ->take(9)
+             ->get();
                 // Cache key for insight matches
                 $insightMatchesCacheKey = "insight_matches_{$franDetails->company_name}";
                 $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
@@ -106,8 +125,8 @@ class BrandController extends Controller
         if (!empty($franDetails) && $franDetails->franchisor_id == "FIHL978776")
             return redirect(Config('constants.MainDomain') . '/brands/GodrejInterio-123.8762', 301);
 
-        if (empty($franDetails) || $franDetails->profile_status != 1)
-            return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
+         if (empty($franDetails) || ($franDetails->profile_status != 1 && $franDetails->profile_status != 11)) 
+                return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
 
         if ($franDetails->profile_name != $brandParamsArr[0] && $request->segment(1) == 'brands')
             return redirect('brands/' . $franDetails->profile_name . '.' . $brandParamsArr[1], 301);
@@ -231,7 +250,7 @@ class BrandController extends Controller
             return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection'));
         } else {
             // return the data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection'));
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection','fran_new_data','index_value','main_cat','url_slug'));
         }
     }
 
