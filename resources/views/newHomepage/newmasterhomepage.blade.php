@@ -140,5 +140,5 @@
             @endif
 
         @endnotmobile
-    @endif  
+    @endif
 </html>
