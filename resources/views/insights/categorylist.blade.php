@@ -10,16 +10,27 @@
                     @foreach ($insightcategories as $article)
                         @php
                             $catgry = Config('constants.MainDomain') . '/insights/' . $category['slug'];
-                            $image = Config('constants.awsS3Url') . $article->image;
-                            $url =
-                                Config('constants.MainDomain') .
-                                '/insights/' .
-                                strtolower($article->insight_type) .
-                                '/' .
-                                $article->slug .
-                                '.' .
-                                $article->news_id;
-
+                            //$image = Config('constants.awsS3Url') . $article->image;
+                            $image = \App\Http\Controllers\InsightsController::createimgurl($article->image);
+                            if (App::getLocale() == 'en') {
+                                $url =
+                                    Config('constants.MainDomain') .
+                                    '/insights/en/' .
+                                    strtolower($article->insight_type) .
+                                    '/' .
+                                    $article->slug .
+                                    '.' .
+                                    $article->news_id;
+                            } else {
+                                $url =
+                                    Config('constants.MainDomain') .
+                                    '/insights/hi/' .
+                                    strtolower($article->insight_type) .
+                                    '/' .
+                                    $article->slug .
+                                    '.' .
+                                    $article->news_id;
+                            }
                             // Initialize default values
                             $authorname = '';
                             $authorUrl = '';
@@ -29,15 +40,27 @@
                             if ($article->author->isNotEmpty()) {
                                 $author = $article->author->first();
                                 $authorname = $author->title;
-                                $authorUrl =
-                                    Config('constants.MainDomain') .
-                                    '/insights/author/' .
-                                    $author->slug .
-                                    '-' .
-                                    $author->author_id;
+                                if (App::getLocale() == 'en') {
+                                    $authorUrl =
+                                        Config('constants.MainDomain') .
+                                        '/insights/en/author/' .
+                                        $author->slug .
+                                        '-' .
+                                        $author->author_id;
+                                } else {
+                                    $authorUrl =
+                                        Config('constants.MainDomain') .
+                                        '/insights/hi/author/' .
+                                        $author->slug .
+                                        '-' .
+                                        $author->author_id;
+                                }
                                 if (!empty($author->image)) {
-                                    $author_image =
-                                        'https://www.franchiseindia.s3.ap-south-1.amazonaws.com' . $author->image;
+                                    // $author_image = 'https://www.franchiseindia.s3.ap-south-1.amazonaws.com' . $author->image;
+                                    $author_image = \App\Http\Controllers\InsightsController::authorImageurl(
+                                        $author->image,
+                                    );
+                                    //dd($author_image);
                                 }
                             }
                         @endphp
@@ -75,7 +98,8 @@
                                                     </div>
                                                     <div class="innersfv"
                                                         onclick="window.open('https://twitter.com/FranchiseIndia','_blank')">
-                                                        <img src="{{ url('insight-new/images/twittercard.svg') }}" /></div>
+                                                        <img src="{{ url('insight-new/images/twittercard.svg') }}" />
+                                                    </div>
                                                     <div class="innersfv"
                                                         onclick="window.open('https://www.instagram.com/franchiseindia_/','_blank')">
                                                         <img

@@ -47,7 +47,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\InsightSitemapController;
 use Illuminate\Support\Facades\Artisan;
-
+use Illuminate\Support\Facades\App;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -895,6 +895,7 @@ Route::post('deletearticle',                  [AdminController::class, 'deleteAr
 Route::post('deletenews',                     [AdminController::class, 'deleteNews']);
 Route::get('relatedbrands',                   [AdminController::class, 'relatedBrands']);
 Route::get('associatedtags',                  [AdminController::class, 'associatedTags']);
+Route::get('hi/associatedtags',                  [AdminController::class, 'associatedTags']);
 Route::get('publisher',                       [AdminController::class, 'publisher']);
 Route::get('find',                            [AdminController::class, 'find']);
 Route::get('searcharticleinterview',          [AdminController::class, 'searchArticleInterview']);
@@ -958,16 +959,34 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('delete-kicker',                       [AdminController::class, 'deleteKicker']);
     Route::post('hindi/create',                        [AdminController::class, 'createUpdateHindiArticle']);
     // insights get routes code by gp
-    Route::get('create-insights',                      [AdminController::class, 'createinsightsView']);
-    Route::get('list-insights',                        [AdminController::class, 'listinsights']);
-    Route::get('multilist-insights',                        [AdminController::class, 'multilistinsights']);
-    Route::get('edit-insights-view/{id}',              [AdminController::class, 'editInsightsView']);
+    Route::group(['prefix' => 'en'], function () {
+        Route::get('create-insights',                      [AdminController::class, 'createinsightsView']);
+        Route::get('list-insights',                        [AdminController::class, 'listinsights']);
+        Route::get('multilist-insights',                   [AdminController::class, 'multilistinsights']);
+        Route::get('edit-insights-view/{id}',              [AdminController::class, 'editInsightsView']);
+
+        //post routes
+        Route::post('create-insights',                     [AdminController::class, 'createInsights']);
+        Route::post('update-insights',                      [AdminController::class, 'updateInsights']);
+        Route::post('save-multiple-insights',              [AdminController::class, 'saveMultipleInsights']);
+        Route::post('updateinsightstatus',                  [AdminController::class, 'updateInsightStatus']);
+        Route::post('deleteinsights',                       [AdminController::class, 'deleteInsights']);
+    });
+    Route::group(['prefix' => 'hi'], function () {
+        Route::get('create-insights',                      [AdminController::class, 'createinsightsView']);
+        Route::get('list-insights',                        [AdminController::class, 'listinsights']);
+        Route::get('multilist-insights',                        [AdminController::class, 'multilistinsights']);
+        Route::get('edit-insights-view/{id}',              [AdminController::class, 'editInsightsView']);
+
+        //post routes
+        Route::post('create-insights',                     [AdminController::class, 'createInsights']);
+        Route::post('update-insights',                      [AdminController::class, 'updateInsights']);
+        Route::post('save-multiple-insights',              [AdminController::class, 'saveMultipleInsights']);
+        Route::post('updateinsightstatus',                  [AdminController::class, 'updateInsightStatus']);
+        Route::post('deleteinsights',                       [AdminController::class, 'deleteInsights']);
+    });
     // insights post routes
-    Route::post('/create-insights',                     [AdminController::class, 'createInsights']);
-    Route::post('update-insights',                      [AdminController::class, 'updateInsights']);
-    Route::post('/save-multiple-insights',              [AdminController::class, 'saveMultipleInsights'])->name('saveMultipleInsights');
-    Route::post('updateinsightstatus',                  [AdminController::class, 'updateInsightStatus']);
-    Route::post('deleteinsights',                       [AdminController::class, 'deleteInsights']);
+
     // insights post routes end here
     // category and sub category get routes code by gp
     Route::get('cat/create',                      [AdminController::class, 'categoryform']);
@@ -988,6 +1007,8 @@ Route::get('location/{city}',              [BusinessListingController::class, 'l
 Route::get('insights/sitemap.xml', function () {
     return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
 });
+/*Language setter*/
+
 Route::group(['prefix' => 'insights'], function () {
     Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
     Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
@@ -999,31 +1020,65 @@ Route::group(['prefix' => 'insights'], function () {
     Route::get('kickers.xml',                   [InsightSitemapController::class, 'kickersitemap']);
     Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap'])->name('tags.xml');
 });
-Route::middleware('TrailingSlashRedirect')->group(function () {
-    Route::get('/search/insights',                      [InsightsController::class, 'insightSearch']);
+
+Route::middleware(['TrailingSlashRedirect'])->group(function () {
+
+
     Route::group(['prefix' => 'insights'], function () {
-        Route::get('author/{slug}',                         [InsightsController::class, 'authordata']);
-        Route::get('thanks', function () {
-            return view('insights.thanks');
-        })->name('insights.thanks');
-        Route::get('pagenotfound', function () {
-            // dd('hello');
-            return view('static.404');
-        }); //404 ERROR PAGE
-        Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
-        Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
-        Route::get('/',                             [InsightsController::class, 'insightshome']);
-        Route::get('topstories',                    [InsightsController::class, 'getinsightstories']);
-        Route::get('trendstories',                  [InsightsController::class, 'trendstories']);
-        Route::get('interviews',                    [InsightsController::class, 'getinsightsinterviews']);
-        Route::get('events_reports',                [InsightsController::class, 'geteventsreports']);
-        Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
-        Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
-        Route::get('{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
-        Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
-        Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
+        Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
+            Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
+        Route::group(['prefix' => 'en'] , function () {
+            Route::get('/search',               [InsightsController::class, 'insightSearch']);
+            Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
+            Route::get('thanks', function () {
+                return view('insights.thanks');
+            })->name('insights.thanks');
+            Route::get('pagenotfound', function () {
+                return view('static.404');
+            }); //404 ERROR PAGE
+            Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
+            Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
+            // Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
+            // Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
+            Route::get('topstories',                    [InsightsController::class, 'getinsightstories']);
+            Route::get('trendstories',                  [InsightsController::class, 'trendstories']);
+            Route::get('interviews',                    [InsightsController::class, 'getinsightsinterviews']);
+            Route::get('events_reports',                [InsightsController::class, 'geteventsreports']);
+            Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
+            Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
+            Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
+            Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
+            Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
+        });
+
+        /*Language setter*/
+        Route::group(['prefix' => 'hi'], function () {
+            Route::get('/search',               [InsightsController::class, 'insightSearch']);
+            Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
+            Route::get('thanks', function () {
+                return view('insights.thanks');
+            })->name('insights.thanks');
+            Route::get('pagenotfound', function () {
+                return view('static.404');
+            }); //404 ERROR PAGE
+            Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
+            Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
+
+            Route::get('topstories',                    [InsightsController::class, 'getinsightstories']);
+            Route::get('trendstories',                  [InsightsController::class, 'trendstories']);
+            Route::get('interviews',                    [InsightsController::class, 'getinsightsinterviews']);
+            Route::get('events_reports',                [InsightsController::class, 'geteventsreports']);
+            Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
+            Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
+            Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
+            Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
+            Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
+        });
+
+        /*Language setter*/
     });
 });
+// });
 Route::get('categoryall',       [StaticPageController::class, 'categoryAll']);
 Route::get('search',                                 function () {
     return view('site.google-search-result');
@@ -1056,14 +1111,13 @@ Route::get('/subcaturl', [CommonController::class, 'subcaturl']);
 Route::get('/subsubcaturl', [CommonController::class, 'subsubcaturl']);
 
 // image conversion to webp
-Route::get('/img_convert',[CommonController::class,'webp_conversion']);
+Route::get('/img_convert', [CommonController::class, 'webp_conversion']);
 Route::post('/convert-image', [CommonController::class, 'convertToWebP']);
 Route::get('/convert', [CommonController::class, 'convertToWebP']);
 
 // Listing page structure
-Route::get('/l_layout',[CommonController::class,'listing_layout']);
+Route::get('/l_layout', [CommonController::class, 'listing_layout']);
 
 // Ajax routes
 
 Route::post('/fetch-data', [CommonController::class, 'fetchDataajax']);
-

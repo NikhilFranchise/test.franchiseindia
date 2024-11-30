@@ -10,7 +10,7 @@ use App\Models\InsightSubcategory;
 class InsightList extends Model
 {
     use HasFactory;
-    protected $table = 'insights_list_new';
+    protected $table = 'insights_list_english';
     protected $primaryKey = 'news_id';
 
     public function author()

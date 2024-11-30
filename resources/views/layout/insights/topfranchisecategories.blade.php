@@ -3,7 +3,7 @@
         <div class="topfranchisecontent">
         <div class="topfranchise-left">
             <div class="tplogos"><a href="https://www.franchiseindia.com/"><img src="{{url('images/logo.svg')}}" alt="Franchise India"></a></div>
-            <div class="tphead">To Get Access To Over 10000+ Franchise Business Opportunities.</div>
+            <div class="tphead">To Get Access To Over 15000+ Franchise Business Opportunities.</div>
             <div class="tpbtn"><a href="https://www.franchiseindia.com/" target="_blank">View All</a></div>
         </div>
         <div class="topfranchise-right">

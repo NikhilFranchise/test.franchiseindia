@@ -161,15 +161,15 @@
         <!--breadcrumbs-->
         <div id="content-header">
             <div id="breadcrumb"> <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
-                        class="icon-home"></i> Home</a> <a href="list-insights" class="tip-bottom">Insights</a>
-                <a href="" class="current">List-Insights</a>
+                        class="icon-home"></i> Home</a> <a href="list-insights" class="tip-bottom">Hindi Insights</a>
+                <a href="" class="current">Hindi List-Insights</a>
             </div>
-            <h1>Insights Listing</h1>
+            <h1> Hindi List Insights</h1>
         </div>
         <!--End-breadcrumbs-->
 
         <div style="margin-top: 5%;float: right;" class="container-fluid">
-            <form action="{{ url('admin/en/list-insights') }}" method="get">
+            <form action="{{ url('admin/hi/list-insights') }}" method="get">
                 Search Keyword : <input type="text" name="search"class="span7"
                     placeholder="Enter Title or Insights Id to search"
                     @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
@@ -312,7 +312,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: '/admin/en/updateinsightstatus',
+                    url: '/admin/hi/updateinsightstatus',
                     data: {
                         "News": id,
                         "contentStatus": status,
@@ -329,7 +329,7 @@
             confirmDialog(YOUR_MESSAGE_STRING_CONST, function() {
                 $.ajax({
                     type: "POST",
-                    url: '/admin/en/deleteinsights',
+                    url: '/admin/hi/deleteinsights',
                     data: {
                         "contentId": x,
                         "_token": "{{ csrf_token() }}"

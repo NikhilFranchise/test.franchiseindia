@@ -1,12 +1,12 @@
 <div class="slidercomman">
    <div class="container">
-      <div class="comhead"><a href="#">Popular Content</a></div>
+      <div class="comhead"><a href="#">@if(App::getLocale() == 'en') Popular Content @else लोकप्रिय कंटेंट @endif</a></div>
       <div class="swiper-container">
          <div class="swiper-wrapper">
             @foreach ($trendArticles as $article)
             @php
 
-            $image = Config('constants.awsS3Url') . $article['image'];
+            //$image = Config('constants.awsS3Url') . $article['image'];
             $url = Config('constants.MainDomain') . '/insights/' . strtolower($article['insight_type']) . '/' . $article['slug'] . '.' . $article['news_id'];
             @endphp
 
@@ -14,7 +14,7 @@
             <!-- below list start here  1-->
             <div class="swiper-slide">
                <div class="innerlist">
-                  <div class="imgbl"><a href="{{$url}}"><img src="{{$image}}" alt="{{$article['title'] . ' image'}}"></a></div>
+                  <div class="imgbl"><a href="{{$url}}"><img src="{{\App\Http\Controllers\InsightsController::createimgurl($article['image'])}}" alt="{{$article['title'] . ' image'}}"></a></div>
                   <div class="conblk">
                      @foreach($article->category as $cat)
                      <div class="tagl">{{$cat->catname}}</div>
