@@ -6,8 +6,8 @@
             @foreach ($trendArticles as $article)
             @php
 
-            //$image = Config('constants.awsS3Url') . $article['image'];
-            $url = Config('constants.MainDomain') . '/insights/' . strtolower($article['insight_type']) . '/' . $article['slug'] . '.' . $article['news_id'];
+            $locale = App::getLocale();
+            $url = Config('constants.MainDomain') . '/insights/' . $locale . '/' . strtolower($article['insight_type']) . '/' . $article['slug'] . '.' . $article['news_id'];
             @endphp
 
             @if ($loop->index < 8)
