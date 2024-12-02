@@ -336,28 +336,30 @@ class InsightsController extends Controller
 
     public function insightscategorydata(Request $request)
     {
-        $slug      = $request->slug;
+        $slug = $request->slug;
         $slugr = str_replace(' ', '-', $slug);
         $slugarr = strtolower($slugr);
+        // dd($slugarr);
 
         if (request()->segment(2) == 'en') {
             $category = InsightCategory::query()
-                ->where('slug', 'LIKE', '%' . $slugarr . '%')
+                ->where('slug', $slugarr)
                 ->where('status', '1')
                 ->first();
-
+            // dd($category);
             if ($category) {
                 $insightcategories = InsightList::with('author')
                     ->where('cat_id', $category->id)
                     ->where('status', 1)
                     ->whereNotIn('news_type', ['ri','ir'])
                     ->orderByDesc('news_id')
-                    ->paginate(6);
+                    ->paginate(10);
                 $insightcategories = CommonController::contentUrlSlug($insightcategories);
+               // dd($insightcategories);
             }
         } else {
             $category = InsightCategory::query()
-                ->where('slug', 'LIKE', '%' . $slugarr . '%')
+                ->where('slug', $slugarr)
                 ->where('status', '1')
                 ->first();
 
@@ -367,14 +369,14 @@ class InsightsController extends Controller
                     ->where('status', 1)
                     ->whereNotIn('news_type', ['ri','ir'])
                     ->orderByDesc('news_id')
-                    ->paginate(6);
+                    ->paginate(10);
                 $insightcategories = CommonController::contentUrlSlug($insightcategories);
             }
         }
         if ($insightcategories->count() > 0) {
             return view('insights.categorylist', compact('insightcategories', 'category'));
         } else {
-            return redirect('/insights');
+            return redirect('/insights/hindi');
         }
     }
 
