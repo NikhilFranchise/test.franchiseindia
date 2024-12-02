@@ -1499,8 +1499,7 @@ class BusinessListingController extends Controller
             $minRangeValue = '10000';
         }
 
-        $orderby = request()->sortby;
-
+        $orderby = request()->sortby
         // Fetch the request parameters
         if (!empty(request()->state_code)) {
             $locId       = preg_split('#(?<=[a-z])(?=\d)#i', request()->state_code);
