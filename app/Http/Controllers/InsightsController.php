@@ -25,7 +25,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class InsightsController extends Controller
 {
 
-
     public function insightshome()
     {
         if (request()->segment(2) != 'hindi') {
@@ -310,10 +309,10 @@ class InsightsController extends Controller
         if ($request->segment(2) == 'en') {
             $author = AuthorList::find($id);
             $articleCount = InsightList::where('author_id', $id)
-                ->where('news_type', 'fi')->count();
+                ->whereNotIn('news_type', ['ri', 'ir'])->count();
             $article = InsightList::where('author_id', $id)
                 ->where('status', 1)
-                ->where('news_type', 'fi')
+                ->whereNotIn('news_type', ['ri', 'ir'])
                 ->whereNotNull('image')
                 ->whereNotNull('cat_id')
                 ->orderByDesc('created_at')
@@ -322,10 +321,10 @@ class InsightsController extends Controller
         } else {
             $author = AuthorList::find($id);
             $articleCount = InsightListHindi::where('author_id', $id)
-                ->where('news_type', 'fi')->count();
+                ->whereNotIn('news_type', ['ri', 'ir'])->count();
             $article = InsightListHindi::where('author_id', $id)
                 ->where('status', 1)
-                ->where('news_type', 'fi')
+                ->whereNotIn('news_type', ['ri', 'ir'])
                 ->whereNotNull('image')
                 ->whereNotNull('cat_id')
                 ->orderByDesc('created_at')
@@ -351,7 +350,7 @@ class InsightsController extends Controller
                 $insightcategories = InsightList::with('author')
                     ->where('cat_id', $category->id)
                     ->where('status', 1)
-                    ->where('news_type', 'fi')
+                    ->whereNotIn('news_type', ['ri','ir'])
                     ->orderByDesc('news_id')
                     ->paginate(6);
                 $insightcategories = CommonController::contentUrlSlug($insightcategories);
@@ -366,7 +365,7 @@ class InsightsController extends Controller
                 $insightcategories = InsightListHindi::with('author')
                     ->where('cat_id', $category->id)
                     ->where('status', 1)
-                    ->where('news_type', 'fi')
+                    ->whereNotIn('news_type', ['ri','ir'])
                     ->orderByDesc('news_id')
                     ->paginate(6);
                 $insightcategories = CommonController::contentUrlSlug($insightcategories);
@@ -384,7 +383,7 @@ class InsightsController extends Controller
 
         $trendstories = InsightList::with('author')
             ->where('insight_type', 'News')
-            ->where('news_type', 'fi')
+            ->whereNotIn('news_type', ['ri','ir'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->where('status', 1)
@@ -411,7 +410,7 @@ class InsightsController extends Controller
     //     $newsDetails = Cache::remember($newsCacheKey, $cacheDuration, function () use ($id) {
     //         return InsightList::with(['author', 'category', 'Subcategory'])
     //             ->where('status', 1)
-    //             ->where('news_type', 'fi')
+    //             ->whereNotIn('news_type', ['ri','ir'])
     //             ->where('news_id', $id)
     //             ->first();
     //     });
@@ -522,7 +521,7 @@ class InsightsController extends Controller
             $newsDetails = Cache::remember($newsCacheKey, $cacheDuration, function () use ($id) {
                 return InsightList::with(['author', 'category', 'Subcategory'])
                     ->where('status', 1)
-                    ->where('news_type', 'fi')
+                    ->whereNotIn('news_type', ['ri','ir'])
                     ->where('news_id', $id)
                     ->first();
             });
@@ -530,7 +529,7 @@ class InsightsController extends Controller
             $newsDetails = Cache::remember($newsCacheKey, $cacheDuration, function () use ($id) {
                 return InsightListHindi::with(['author', 'category', 'Subcategory'])
                     ->where('status', 1)
-                    ->where('news_type', 'fi')
+                    ->whereNotIn('news_type', ['ri','ir'])
                     ->where('news_id', $id)
                     ->first();
             });

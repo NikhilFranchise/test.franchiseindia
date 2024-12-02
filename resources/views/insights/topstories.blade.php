@@ -5,9 +5,9 @@
         <div class="container">
             <h1 class="cathead">
                 @if (App::getLocale() == 'en')
-                    Trending Stories
+                   Top Trending Stories
                 @else
-                    शीर्ष रुझान वाले लेख
+                    शीर्ष रुझान वाले प्रमुख समाचार (लेख)
                 @endif
             </h1>
         </div>
