@@ -18,7 +18,9 @@
                             $author = $article->author[0] ?? null;
                             $authorname = $author->title ?? 'Franchise India Bureau';
                             $slug = $author && $author->slug ? $author->slug : strtolower(str_replace(' ', '-', $authorname));
-                            $authorUrl = Config('constants.MainDomain') . "/insights/{$locale}/author/{$slug}-{$author->author_id}";
+                            $authorUrl =  $author
+                            ? Config('constants.MainDomain') . "/insights/{$locale}/author/{$slug}-{$author->author_id}"
+                            : '#';
                             $author_image = $author && !empty($author->image)
                                 ? \App\Http\Controllers\InsightsController::authorImageurl($author->image)
                                 : url('images/defaultuser.png');
