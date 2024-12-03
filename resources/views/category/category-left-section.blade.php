@@ -275,9 +275,16 @@ use Illuminate\Support\Str;
     function getMainCatId(){var mainCatId=$("input:radio[name=mainCat]:checked").val();return(mainCatId!==undefined)?mainCatId:'';}
     function getSubCatId(){var subCatId=$("input:radio[name=subcat]:checked").val();return(subCatId!==undefined)?subCatId:'';}
     function getSubSubCatId(){var subSubCat=[];$('input[name="subSubCat[]"]:checked').each(function(){subSubCat.push($(this).val());});return subSubCat;}
-    function getPriceRange(a,b){var minvaluerange=a;var maxvaluerange=b;$('#minvaluerange').prop('value',minvaluerange);$('#maxvaluerange').prop('value',maxvaluerange);}
+    function getPriceRange(a,b){var minvaluerange=a;var maxvaluerange=b;
+        console.log(a,b);
+        $('#minvaluerange').prop('value',minvaluerange);$('#maxvaluerange').prop('value',maxvaluerange);
+        // alert(maxvaluerange);
+    }
     function getsortby(){return $('#sortbynew :selected').val();}
-    function getCategoryList(){var locStr=getLocationType();var franchiseType=getFranchiseType();var mainCatmId=getMainCatId();var subCat=getSubCatId();var subSubCat=getSubSubCatId();var sortby=getsortby();var rangeMin=$('#minvaluerange').val();var rangeMax=$('#maxvaluerange').val();var sort=(sortby&&sortby!='x')?"?sortby="+sortby:"";locStr.sort(function(a,b){return parseInt(a)-parseInt(b);});if(franchiseType==""&&subSubCat.length===0&&mainCatmId==''&&locStr.length===0&&(rangeMin!=10000||rangeMax!=100000000)){window.location="/business-opportunities/business/range-"+rangeMin+"-"+rangeMax;return;}
+    function getCategoryList(){
+        var locStr=getLocationType();var franchiseType=getFranchiseType();var mainCatmId=getMainCatId();var subCat=getSubCatId();var subSubCat=getSubSubCatId();var sortby=getsortby();var rangeMin=$('#minvaluerange').val();var rangeMax=$('#maxvaluerange').val();
+        // console.log(rangeMin);
+        var sort=(sortby&&sortby!='x')?"?sortby="+sortby:"";locStr.sort(function(a,b){return parseInt(a)-parseInt(b);});if(franchiseType==""&&subSubCat.length===0&&mainCatmId==''&&locStr.length===0&&(rangeMin!=10000||rangeMax!=100000000)){window.location="/business-opportunities/business/range-"+rangeMin+"-"+rangeMax;return;}
         if(franchiseType==""&&subSubCat.length===0&&mainCatmId==''&&locStr.length===0&&rangeMin==10000&&rangeMax==100000000){window.location="/business-opportunities/all/all";return;}
         if(franchiseType>=1&&subSubCat.length===0&&mainCatmId==''&&locStr.length===0&&rangeMin==10000&&rangeMax==100000000){window.location=$("input:radio[value='"+franchiseType+"'][class='franType']").attr('url');return;}
         if(subSubCat.length===1&&locStr.length===0&&franchiseType==''&&rangeMin==10000&&rangeMax==100000000){window.location=$("input:checkbox[value='"+subSubCat[0]+"'][class='subSubCat']").attr('url')+sort;return;}
@@ -298,7 +305,9 @@ use Illuminate\Support\Str;
         if(rangeMin!=10000||rangeMax!=100000000){url+="/range-"+rangeMin+"-"+rangeMax;}
         window.location=url+sort;$('#loading').css('display','block');}
     $(".franType, .statecheckbox, #price-range").click(function(){getCategoryList();});$(".mainCat").click(function(){$('.subcatselect').prop('checked',false);$('.subSubCat').prop('checked',false);getCategoryList();});$(".subcatselect").click(function(){$('.subSubCat').prop('checked',false);var mainCat=$(this).attr('mainCat');$('#optionsRadios'+mainCat).prop('checked',true);getCategoryList();});$(".subSubCat").click(function(){var mainCat=$(this).attr('mainCat');var subCat=$(this).attr('subCat');var subsubCatid='cat-'+mainCat+'-'+subCat+'_1';$('#optionsRadiosSub'+mainCat+'_'+subCat).prop('checked',true);$('#optionsRadios'+mainCat).prop('checked',true);$("#categoryunselect input[type=checkbox]").each(function(){if($(this).parent().parent().parent().parent().attr('id')!=subsubCatid)
-        $(this).attr("checked",false);});getCategoryList();});$('#price-range').mouseup(function(){getCategoryList();});function changeFunction(){getCategoryList();}
+        $(this).attr("checked",false);});getCategoryList();});
+        $('#price-range').mouseup(function(){getCategoryList();});
+        function changeFunction(){getCategoryList();}
     $('.trigger').click(function(){$('.content').hide();$('.'+$(this).data('rel')).show();$("input.group1").removeAttr("disabled").removeAttr("checked");});$('.subtrigger').click(function(){$('.subcontent').hide();$('.'+$(this).data('rel')).show();});/*]]>*/
 
     @if(isset($mc) && $mc == 5)

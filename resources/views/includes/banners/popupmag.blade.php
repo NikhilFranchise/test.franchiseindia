@@ -93,6 +93,7 @@ float: left;
 <div class="dot-bod"></div>
 <div class="sp10"></div>
 <form id="update" method="post" action="{{Config::get('constants.MainDomain')}}/newslettersignup">
+    {{-- @csrf --}}
 <input type="hidden" name="site_type" value="fi">
 <input  required  name="email"   value="" placeholder="Enter your Email Id" type="email" >
 <input type="submit" value="Subscribe Now" class="newsletter-btn fl"  id="btnupdate"/>
