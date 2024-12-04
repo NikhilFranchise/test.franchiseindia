@@ -14,48 +14,10 @@
                         @php
 
                             //$image = Config('constants.awsS3Url') . $article->image;
-                            $url =
-                                Config('constants.MainDomain') .
-                                '/insights/' .
-                                strtolower($article->insight_type) .
-                                '/' .
-                                $article->slug .
-                                '.' .
-                                $article->news_id;
+                            $locale = App::getLocale();
+                            $url = Config('constants.MainDomain') . '/insights/' . $locale . '/' . strtolower($article->insight_type) .
+                                '/' . $article->slug . '.' . $article->news_id;
                         @endphp
-                        {{--  @if (!empty($article->author))
-                            @foreach ($article->author as $author)
-                                @php
-                                    $authorname = $author->title;
-                                    if (!empty($author->image)) {
-                                        // Call the authorImageurl method directly
-                                        $author_image = \App\Http\Controllers\InsightsController::authorImageurl(
-                                            $author->image,
-                                        );
-                                        //    dd($author_image);
-                                    } else {
-                                        $author_image = url('images/defaultuser.png');
-                                    }
-
-                                    if (!empty($author->slug)) {
-                                        $authorUrl =
-                                            Config('constants.MainDomain') .
-                                            '/insights/author/' .
-                                            $author->slug .
-                                            '-' .
-                                            $author->author_id;
-                                    } else {
-                                        $slug = strtolower(str_replace(' ', '-', $author->title));
-                                        $authorUrl =
-                                            Config('constants.MainDomain') .
-                                            '/insights/author/' .
-                                            $slug .
-                                            '-' .
-                                            $author->author_id;
-                                    }
-                                @endphp
-                            @endforeach
-                        @endif  --}}
                         <li>
                             <div class="artimgblk">
                                 <a href="{{ $url }}"><img
@@ -74,12 +36,12 @@
 
                                             $authorUrl = !empty($author->slug)
                                                 ? Config('constants.MainDomain') .
-                                                    '/insights/author/' .
+                                                    '/insights/' . $locale . '/author/' .
                                                     $author->slug .
                                                     '-' .
                                                     $author->author_id
                                                 : Config('constants.MainDomain') .
-                                                    '/insights/author/' .
+                                                    '/insights/' . $locale . '/author/' .
                                                     strtolower(str_replace(' ', '-', $author->title)) .
                                                     '-' .
                                                     $author->author_id;

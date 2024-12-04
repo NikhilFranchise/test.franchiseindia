@@ -14,155 +14,9 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
-
-    <style>
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .switch input {
-            display: none;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
-
-        input:checked+.slider {
-            background-color: #2196F3;
-        }
-
-        input:focus+.slider {
-            box-shadow: 0 0 1px #2196F3;
-        }
-
-        input:checked+.slider:before {
-            -webkit-transform: translateX(26px);
-            -ms-transform: translateX(26px);
-            transform: translateX(26px);
-        }
-
-        .gradeX td,
-        th {
-            text-align: center;
-            border: 1px solid black;
-            {{--  width: 120px;  --}}
-        }
-
-        .gradeX th {
-            background-color: lightgray;
-        }
-
-        /* Rounded sliders */
-        .slider.round {
-            border-radius: 34px;
-        }
-
-        .slider.round:before {
-            border-radius: 50%;
-        }
-
-        .round-button-circle {
-            width: 45px;
-            border-radius: 50%;
-            overflow: hidden;
-            background: #4679BD;
-            box-shadow: 0 0 3px gray;
-        }
-
-        .round-button-circle:hover {
-            background: #30588e;
-        }
-
-        .round-button a {
-            display: block;
-            float: left;
-            width: 100%;
-            padding-top: 35%;
-            padding-bottom: 50%;
-            line-height: 1em;
-            margin-top: -0.5em;
-            text-align: center;
-            color: #e2eaf3;
-            font-family: "Verdana", "serif";
-            font-size: 1.2em;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .custpagin {
-            background-color: #dfdfdf;
-            margin-bottom: 10px;
-        }
-
-        .custpagin .pagination li {
-            display: inline-grid;
-            font-size: 20px;
-            margin-left: 1px;
-            margin-right: 1px;
-            border-width: 1px;
-            border-radius: 6px;
-        }
-
-        .custpagin .pagination {
-            text-align: right;
-        }
-
-        .custpagin .pagination li.active {
-            background-color: #faa732;
-            color: #fff;
-            padding: 3px 7px;
-            border-radius: 6px;
-            border: 1px;
-        }
-
-        .custpagin .pagination li a {
-            padding: 3px 7px;
-            background-color: #41BEDD;
-            color: #fff;
-            border-radius: 6px;
-            border: 1px;
-        }
-
-        .form-control {
-            width: 16%;
-            align-items: center;
-        }
-
-        .bulk-actions {
-            width: 100%;
-            padding: 10px;
-        }
-
-        #apply_bulk {
-            margin-left: 8px;
-            margin-bottom: 10px;
-        }
-    </style>
-
+<style>
+   .switch input{display:none}.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s}.slider:before{position:absolute;content:"";height:26px;width:26px;left:4px;bottom:4px;background-color:#fff;-webkit-transition:.4s;transition:.4s}input:checked+.slider{background-color:#2196f3}input:focus+.slider{box-shadow:0 0 1px #2196f3}input:checked+.slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translateX(26px)}.gradeX td,th{text-align:center;border:1px solid #000}.slider.round{border-radius:34px}.slider.round:before{border-radius:50%}.round-button-circle{width:45px;border-radius:50%;overflow:hidden;background:#4679bd;box-shadow:0 0 3px gray}.round-button-circle:hover{background:#30588e}.round-button a{display:block;float:left;width:100%;padding-top:35%;padding-bottom:50%;line-height:1em;margin-top:-.5em;text-align:center;color:#e2eaf3;font-family:Verdana,"serif";font-size:1.2em;font-weight:700;text-decoration:none}.custpagin{background-color:#dfdfdf;margin-bottom:10px}.custpagin .pagination li{display:inline-grid;font-size:20px;margin-left:1px;margin-right:1px;border-width:1px;border-radius:6px}.custpagin .pagination{text-align:right}.custpagin .pagination li.active{background-color:#faa732;color:#fff;padding:3px 7px;border-radius:6px;border:1px}.custpagin .pagination li a{padding:3px 7px;background-color:#41bedd;color:#fff;border-radius:6px;border:1px}.form-control{width:16%;align-items:center}.bulk-actions{width:100%;padding:10px}#apply_bulk{margin-left:8px;margin-bottom:10px}
+</style>
 </head>
 
 <body>
@@ -191,7 +45,6 @@
             $hi = 'English';
             $type = 'en';
         @endphp
-        {{--  @dd($url);  --}}
     @endif
         <!--breadcrumbs-->
         <div id="content-header">
@@ -204,7 +57,7 @@
         <!--End-breadcrumbs-->
 
         <div style="margin-top: 5%;float: right;" class="container-fluid">
-            <form action="{{ url('admin/list-insights') }}" method="get">
+            <form action="{{ url('admin/'. $type. '/list-insights') }}" method="get">
                 Search Keyword : <input type="text" name="search"class="span7"
                     placeholder="Enter Title or Insights Id to search"
                     @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
@@ -284,7 +137,7 @@
                                             <tr class="gradeX">
                                                 @php
                                                     $url =
-                                                        '/insights/' .
+                                                        '/insights/en/' .
                                                         strtolower($insights->insight_type) .
                                                         '/' .
                                                         $insights->slug .
