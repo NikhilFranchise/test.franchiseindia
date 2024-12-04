@@ -85,7 +85,7 @@
                 @if (request()->segment(1) == 'brands' && $franDetails->membership_type == 1)
                     @continue
                 @endif
-                @include('includes.banners.popupfroahmedabad')
+                @include('includes.banners.popupmag ')
             @break
         @endif
     @endforeach
