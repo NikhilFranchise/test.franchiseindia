@@ -28,8 +28,12 @@ class VerifyCsrfToken extends Middleware
         'getfreeinfo',
         // 'loginform',
         'fetch-data',
+<<<<<<< HEAD
+=======
+        'newslettersignup',
 
-      
-        
+
+>>>>>>> 39fe255a75fc926af81112709aab6e5df0553b57
+
     ];
 }

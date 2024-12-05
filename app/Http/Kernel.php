@@ -38,7 +38,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\TrailingSlashRedirect::class,
-
+            \App\Http\Middleware\Localization::class,
         ],
 
         'api' => [
@@ -71,39 +71,16 @@ class Kernel extends HttpKernel
         'franAuth' => \App\Http\Middleware\franAuth::class,
         'ContentAdmin' => \App\Http\Middleware\ContentAdmin::class,
         'TrailingSlashRedirect' => \App\Http\Middleware\TrailingSlashRedirect::class,
+        'Localization' => \App\Http\Middleware\Localization::class,
 
 
 
     ];
 
-
-    protected function schedule(Schedule $schedule)
-    {
-        // $schedule->command('inspire')->hourly();
-        //$schedule->call('\App\Http\Controllers\TestController@testDrive')->dailyAt('13:24')->timezone('Asia/Kolkata');
-        //$schedule->call('\App\Http\Controllers\CronController@insertLeads')->hourly()->between('7:00', '23:00');
-        //$schedule->call('\App\Http\Controllers\CronController@resetDailyFlag')->dailyAt('02:00')->timezone('Asia/Kolkata');
-        //$schedule->call('\App\Http\Controllers\CronController@fixingDangerZonesBrands')->dailyAt('04:00')->timezone('Asia/Kolkata');
-	    //$schedule->call('\App\Http\Controllers\CronController@freeFranchisorLeadInsertion')->dailyAt('02:30')->timezone('Asia/Kolkata');
-        //$schedule->call('\App\Http\Controllers\CronController@feedbackMail')->dailyAt('11:30')->timezone('Asia/Kolkata');
-        $schedule->call([SitemapController::class, 'sitemap'])->dailyAt('05:48')->timezone('Asia/Kolkata');
-       // $schedule->call('\App\Http\Controllers\CronController@getSscArray')->dailyAt('05:00')->timezone('Asia/Kolkata');
-
-      //stop for some time pankaj
+    protected $routeMiddleware = [
+        // Other middlewares
+        'Localization' => \App\Http\Middleware\Localization::class,
+    ];
 
 
-    //    $schedule->call(\App\Http\Controllers\CronController::class, 'investorMembershipExpiration')->dailyAt('03:00')->timezone('Asia/Kolkata');
-    //    $schedule->call(\App\Http\Controllers\CronController::class, 'expireBrands')->dailyAt('02:49')->timezone('Asia/Kolkata');
-    //    $schedule->call(\App\Http\Controllers\CronController::class, 'sendInvestorPaidData')->dailyAt('10:36')->timezone('Asia/Kolkata');
-    //    $schedule->call(\App\Http\Controllers\CronController::class, 'weeklyRegistrationReport')->weeklyOn(1,'08:00')->timezone('Asia/Kolkata');
-    //    $schedule->call(\App\Http\Controllers\CronController::class, 'insertLeads')->hourly()->between('7:00', '23:00')->timezone('Asia/Kolkata');
-
-       ///end stop
-
-
-
-       //$schedule->call('\App\Http\Controllers\CronController@leadVisibilityCron')->dailyAt('10:19')->timezone('Asia/Kolkata');
-
-
-    }
 }

@@ -25,7 +25,8 @@
                     <li class="bg_lg"> <a href="list-magazine"> <i class="icon-th"></i>Magazine</a> </li>
                     <li class="bg_lb"> <a href="list-comments"> <i class="icon-th"></i>Comments</a> </li>
                 @endif
-                <li class="bg_lb"> <a href="list-insights"> <i class="icon-th"></i>Insights</a> </li>
+                <li class="bg_lb"> <a href="en/list-insights"> <i class="icon-list-alt"></i>English Insights</a> </li>
+                <li class="bg_lb"> <a href="hi/list-insights"> <i class="icon-list-alt"></i>Hindi Insights</a> </li>
             </ul>
         </div>
     </div>

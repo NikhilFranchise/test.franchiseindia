@@ -50,7 +50,6 @@ class BrandController extends Controller
         //  });
                  $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
 
-
                  $main_cat = Config('constants.CategoryArr');
                  // dd($franDetails->ind_main_cat);
                  $a = $franDetails->ind_main_cat;
