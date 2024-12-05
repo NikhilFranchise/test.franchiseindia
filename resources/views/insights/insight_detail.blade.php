@@ -155,7 +155,7 @@
                         $tagslug = strtolower($tags);
                     @endphp
                     <li><a
-                            href="{{ Config('constants.MainDomain') . '/insights/tag/' . $tagslug }}">{{ $assocTagsData->name }}</a>
+                            href="{{ Config('constants.MainDomain') . '/insights/'. $locale .'/tag/' . $tagslug }}">{{ $assocTagsData->name }}</a>
                     </li>
                 @endforeach
             @endif
