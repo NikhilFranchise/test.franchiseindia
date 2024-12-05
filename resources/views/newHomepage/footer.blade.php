@@ -136,7 +136,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <p class="copy-right">Copyright © 2009 - 2024  Franchiseindia.com Pvt Ltd</p>
+                <p class="copy-right">Copyright © 2009 - 2024 Franchiseindia.com Pvt Ltd</p>
             </div>
             <div class="col-md-7">
                 <ul class="fihl-footer-bottom-links">
@@ -595,9 +595,9 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
         if (selectmaxheaderval === 21)
             // maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
             $('#maxAmount1').append($("<option></option>").attr({
-                    "value": 21,
-                    "slug": getSlugAmount[21]['max']
-                }).text("Above"));
+                "value": 21,
+                "slug": getSlugAmount[21]['max']
+            }).text("Above"));
     }
 
     function selectMax(selectmaxheaderval) {
@@ -617,8 +617,8 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
         if (selectmaxheaderval === 21)
             // maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
             $('#maxAmount').append($("<option></option>").attr({
-                    "value": 21,
-                    "slug": getSlugAmount[21]['max']
-                }).text("Above"));
+                "value": 21,
+                "slug": getSlugAmount[21]['max']
+            }).text("Above"));
     }
 </script>

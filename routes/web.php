@@ -1026,8 +1026,8 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
 
     Route::group(['prefix' => 'insights'], function () {
         Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
-            Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
-        Route::group(['prefix' => 'en'] , function () {
+        Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
+        Route::group(['prefix' => 'en'], function () {
             Route::get('/search',               [InsightsController::class, 'insightSearch']);
             Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
             Route::get('thanks', function () {
