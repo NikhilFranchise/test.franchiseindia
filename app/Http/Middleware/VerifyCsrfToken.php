@@ -29,6 +29,7 @@ class VerifyCsrfToken extends Middleware
         // 'loginform',
         'fetch-data',
         'newslettersignup',
+        'price_filter',
 
 
 

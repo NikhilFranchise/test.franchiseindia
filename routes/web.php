@@ -1121,3 +1121,4 @@ Route::get('/l_layout', [CommonController::class, 'listing_layout']);
 // Ajax routes
 
 Route::post('/fetch-data', [CommonController::class, 'fetchDataajax']);
+Route::post('/price_filter', [BusinessListingController::class,'pricefilter']);
