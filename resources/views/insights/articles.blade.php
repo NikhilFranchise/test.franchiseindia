@@ -88,7 +88,7 @@
         @include('layout.insights.magblock')
         @include('layout.insights.brandlist')
     </div>
-    {{--  <script>
+    <script>
         $(function() {
             let page = 2;
             $('.readmore').click(function() {
@@ -110,5 +110,5 @@
                 });
             });
         });
-    </script>  --}}
+    </script>
 @endsection

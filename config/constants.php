@@ -663,6 +663,21 @@ return [
             "478" => "Office Supplies",
             "860" => "Security & Protection",
             "761" => "Sports, Fitness & Entertainment",
+            //Adding new categories by pankaj
+            "1001"=>"Business Services",
+            "1002"=>"Chemicals",
+            "1003"=>"Furniture",
+            "1004"=>"Hotel supplies & Equipments",
+            "1005"=>"Jewellery, Gemstones & Astrology",
+            "1006"=>"Packaging, Paper & Plastic Products",
+            "1007"=>"Pharmaceuticals",
+            "1008"=>"Printing & Publishing",
+            "1009"=>"Retail & E-Retail",
+            "1010"=>"Scientific & Laboratory Instruments",
+            "1011"=>"Telecommunications",
+            "1012"=>"Textile, Fabrics & accessories",
+            "1013"=>"Toys & Games",
+            "1014"=>"Machinery, Machine Tools & Equipments",
         ),
 
         "6" => array(
@@ -916,6 +931,13 @@ return [
             //"454" => "Heavy Vehicle Showrooms & Dealership",
             //"455" => "Automobile Resellers",
             //"801" => "Parking Systems",
+            //subcate id created by pankaj
+            "1027" => "Four Wheeler & Parts",
+            "1028" => "Garage & Service Station Equipment",
+            "1029" => "Parking System",
+            "1030" => "Three Wheeler & Parts",
+            "1031" => "Two Wheeler & Parts",
+            "1032" => "Used Auto Parts",
         ),
 
         "444" => array(
@@ -949,6 +971,18 @@ return [
             //"472" => "Denim - Garments, Fabrics, Bags",
             //"809" => "Athletic Wear",
             //"958" => "Others"
+            //category id created by pankaj
+            "1096" => "Animal Clothing & Accessories",
+            "1097" => "Dummies & Mannequins",
+            "1098" => "Military & Defence Supplies",
+            "1099" => "Party, Wedding, Western & Formal Wear",
+            "1100" => "Scarves, Shawls, Stoles & Bandanas",
+            "1101" => "Towels, Napkins & Handkerchiefs",
+            "1102" => "Uniforms & Workwear",
+            "1103" => "Wallets, Handbags & Backpacks",
+            "1104" => "Winter Wear",
+            "1105" => "Yarns & Threads",
+
         ),
 
         "476" => array(
@@ -998,9 +1032,168 @@ return [
             //"836" => "Construction Equipments",
             //"837" => "Fooring/Ceiling",
             //"838" => "Granite"
+            //categoryid created by pankaj,
+            "1033" => "Building panel & Cladding Materials",
+            "1034" => "Ceramic, Glass & Verified Tiles",
+            "1035" => "FRP Lining, PU & Powder Coating",
+            "1036" => "Gazebos, Awnings, Canopies & Sheds",
+            "1037" => "Landscape Structure & Designing",
+            "1038" => "Marble, Granite & Stones",
+            "1039" => "Metals & Minerals",
+            "1040" => "Prefabricated Houses & Structures",
+            "1041" => "PVC, CPVC, HDPE Water Pipe Fittings",
+            "1042" => "PVC, LDPE, HDPE & Plastic Sheets",
+            "1043" => "Scaffolding Pipes & Fittings",
+            "1044" => "Surface Coating & Paint Equipment",
+            "1045" => "Waterproof Materials",
+            "1046" => "Wood, Plywood, Timber & laminates",
 
 
         ),
+        "1001" => array(
+            "1047" => "Architecture & Interiors",
+            "1048" => "Banking & ATMs",
+            "1049" => "Business & Audit Services",
+            "1050" => "Call Center & BPO Services",
+            "1051" => "Contractors & Freelancers",
+            "1052" => "Digital Marketing Services",
+            "1053" => "Event Planner & Organizer",
+            "1054" => "Export Import",
+            "1055" => "Financial & Legal Services",
+            "1056" => "Flooring/Ceiling",
+            "1057" => "Foreign Exchange",
+            "1058" => "Housekeeping Services",
+            "1059" => "IT & Telecom Services",
+            "1060" => "Product Rental & Leasing",
+            "1061" => "R&D and Testing Labs",
+            "1062" => "Real Estate",
+            "1063" => "Software development & IT Consultants",
+            "1064" => "Transportation & Logistics",
+            "1065" => "Travel, Tourism & Hotels",
+            "1066" => "Web Designing & Development Services",
+
+        ),
+        "1002" => array(
+            "1067" => "Adhesives, Glue & Sealants",
+            "1068" => "Fertilizers & Soil Additives",
+            "1069" => "Industrial Chemicals & Supplies",
+            "1070" => "Insecticides & pesticides",
+            "1071" => "Natural & Synthetic Resins",
+            "1072" => "Natural, Medical & Industrial Gases",
+            "1073" => "Organic & Inorganic Solvents",
+            "1074" => "Petroleum and Petro Chemical Products",
+            "1075" => "Waterproofing Chemicals",
+
+        ),
+        "1003" => array(
+            "1116" => "Bamboo Furniture",
+            "1117" => "Doors & Windows",
+            "1118" => "Furniture Fittings & Fixtures",
+            "1119" => "Hotel, Restaurant & Cafeteria Furniture",
+            "1120" => "Leather Furniture",
+            "1121" => "Metal Furniture",
+            "1122" => "Office, School & Commercial Furniture",
+            "1123" => "Retail Display Stands & Fixtures",
+            "1124" => "Wooden Sofa, Wardrobes & Furniture",
+
+        ),
+        "1004" => array(
+            "1135" => "Bakery Machines & Equipments",
+            "1136" => "Barbecue & Outdoor Cooking Equipments",
+            "1137" => "Barware & Bar Accessories",
+            "1138" => "Commercial Kitchen Equipments",
+            "1139" => "Food Processing Machines & cooking equipments",
+            "1140" => "Hotel Appliances",
+            "1141" => "Ice Buckets & Machines",
+            "1142" => "Restaurant Equipments",
+
+        ),
+        "1005" => array(
+            "1156" => "Artificial & Fashion Jewellery",
+            "1157" => "Gold, Silver & Precious Jewellery",
+
+        ),
+        "1006" => array(
+            "1177"=>"Food Packaging Material & Supplies",
+            "1178"=>"Packaging & Labeling Services",
+            "1179"=>"Packaging & Lamination Tools & Machinery",
+            "1180"=>"Packaging Material & Supplies",
+            "1181"=>"Packaging Pouches & Envelops",
+            "1182"=>"Plastic Boxes, Bags",
+            "1183"=>"Plastic Containers & Pet Bottles",
+            "1184"=>"Plastic Raw Material",
+            "1185"=>"Woven & Non Woven Bags",
+        ),
+        "1007" => array(
+            "1186"=>"Cancer, TB, Tumor Drugs",
+            "1187"=>"Common Medicines & Drugs",
+            "1188"=>"Flavours & Frangrances",
+            "1189"=>"Generic Drugs & Pharmaceuticals",
+            "1190"=>"Neutraceuticals & Dietary Supplements",
+            "1191"=>"Pain Relief Drugs & Medicines",
+            "1192"=>"PCD Pharma",
+            "1193"=>"Pediatric Medicines",
+            "1194"=>"Pharmaceutical Ointments & Creams",
+            "1195"=>"Respiratory System Drugs",
+        ),
+        "1008" => array(
+            "1196"=>"Banners, Signboards, Nameplates & Flex",
+            "1197"=>"Branding & Advertising Agencies",
+            "1198"=>"Film & Media Production Services",
+            "1199"=>"Metal, Plastic & Industrial Printing",
+            "1200"=>"Offset Printing Machines",
+        ),
+        "1009" => array(
+            "1201"=>"Books, Toys & Gifts",
+            "1202"=>"Consumer Durables & IT",
+            "1203"=>"E-Retail",
+            "1204"=>"Fashion",
+            "1205"=>"Home & Office",
+            "1206"=>"Supermarkets & Marts",
+        ),
+        "1010" => array(
+            "1207"=>"Cleanroom Equipments & Supplies",
+            "1208"=>"Compass, Telescopes & Survey Tools",
+            "1209"=>"Scientific Instruments & Devices",
+        ),
+        "1011" => array(
+            "1229"=>"Telecom Services, Engg & Maintenance",
+            "1230"=>"Telecommunication equipment & parts",
+            "1231"=>"Wireless Communication Devices",
+
+
+        ),
+        "1012" => array(
+            "1232"=>"Apparel Fabrics & Dress Material",
+            "1233"=>"Fabrics & Accessories",
+            "1234"=>"Handloom products",
+            "1235"=>"Industrial Fabrics & Textile",
+            "1236"=>"Sewing Thread, Laces & accessories",
+            "1237"=>"Textile and Garments Machinery & equipments",
+            "1238"=>"Textile, Dyeing & Finishing Chemical",
+
+        ),
+        "1013" => array(
+            "1239"=>"Amusement Games & Equipments",
+            "1240"=>"Electrical and Battery opertaed Toys",
+            "1241"=>"Figure Toys & Vehicle Toys",
+            "1242"=>"Plastic & Wooden Toys",
+            "1243"=>"Stuffed Toys",
+            "1244"=>"Toy Accessories",
+            "1245"=>"Toy Cars & Bikes",
+
+        ),
+        "1014" => array(
+            "1158" => "Cleaning Machines & Equipments",
+            "1159" => "Horticulture, Gardening & Irrigation Machinery",
+            "1160" => "Ice Cream Plants",
+            "1161" => "Marking & Coding",
+            "1162" => "Sewing, Knitting & Embroidery Machines",
+            "1163" => "Tyres Repair & Retreading Machinery",
+            "1164" => "Water & Air Purifiers",
+
+        ),
+
 
         "478" => array(
             "508" => "Electrical Equipments",
@@ -1019,6 +1212,15 @@ return [
             //"842" => "Video Conferencing Equipments",
             //"844" => "Finger Scanning Machine",
             //"845" => "Printing Paper",
+            //category id created by pankaj,
+            "1170" => "Billing Machines",
+            "1171" => "Books",
+            "1172" => "Educational Aids",
+            "1173" => "Newspaper, Books & Magazines",
+            "1174" => "Photography & Film Making Equipments",
+            "1175" => "School Stationery",
+            "1176" => "Study material & Note Books",
+
         ),
 
         "479" => array(
@@ -1050,6 +1252,14 @@ return [
             //"892" => "Disposables ",
             //"893" => "Pest Control Products",
             //"895" => "Kitchen Utensils"
+            //category id created by pankaj,,
+            "1129" => "Aqua Culture, Aquarium & Supplies",
+            "1130" => "Domestic Water and Air Purifiers & Filters",
+            "1131" => "Gifts, Crafts, Handicrafts & Artifacts",
+            "1132" => "Mirrors & Glasswares",
+            "1133" => "Mosquito & Insect Repellent",
+            "1134" => "Musical equipments & Accessories",
+
         ),
 
         "738" => array(
@@ -1079,6 +1289,21 @@ return [
             //"757" => "Industrial Blowers",
             //"758" => "Weighing Scales",
             //"759" => "Plastic Pet Products",
+            //category id created by pankaj,
+            "1143" => "Drills, Grinders, Saws & Power Tools",
+            "1144" => "Dryers & Evaporators",
+            "1145" => "Freezers, Refrigerators & Chillers",
+            "1146" => "Industrial & Engineering Goods",
+            "1147" => "Industrial Racks & Storage System",
+            "1148" => "Laundry Equipments",
+            "1149" => "Lubrication System & Equipments",
+            "1150" => "Painting & Coating Equipments & Services",
+            "1151" => "Seals, Oil Seals & Industrial Seals",
+            "1152" => "Steel & Stainless Steel Products",
+            "1153" => "Steel & Steel Products",
+            "1154" => "Steel Bars, Rods, Plates & Sheets",
+            "1155" => "Storage Tanks, Drums & Containers",
+            "1169" => "Pumps, Pumping Machine & Equipments",
 
         ),
 
@@ -1091,7 +1316,20 @@ return [
             "767" => "Camping Equipments",
             "768" => "Musical Instruments",
             "769" => "Meat & Poultry",
-            "961" => "Others"*/),
+            "961" => "Others"*/
+        //category id created by pankaj,
+            "1219"=>"Adventure Sporting & Tracking Goods",
+            "1220"=>"Awards, Trophies & Memetoes",
+            "1221"=>"Fitness and Gym Equipments",
+            "1222"=>"Playground Equipments",
+            "1223"=>"Sports Bags, Duffel Bags & Kit Bags",
+            "1224"=>"Sports Goods & Equipments",
+            "1225"=>"Sports Safety Products & Equipments",
+            "1226"=>"Sports Wear & Athletic Accessories",
+            "1227"=>"Swimming Pool and water Sports Goods & Accessories",
+            "1228"=>"Swimming Pool Construction & Material",
+
+        ),
 
         "770" => array(
             "775" => "Computer Cable & Connectors",
@@ -1104,6 +1342,14 @@ return [
             //"776" => "UPS & Power Supply",
             //"778" => "Drives & Storage Devices",
             //"779" => "Mobile Handset",
+            //category id created by pankaj
+            "1076" => "CAD CAM Design & Consultancy",
+            "1077" => "Computer & Mobile Softwares & Apps",
+            "1078" => "Computer IT & Software Training",
+            "1079" => "Office Automation Products & Devices",
+            "1080" => "Routers, Cables & Networking Devices",
+            "1081" => "Web development & Marketing Services",
+
         ),
 
         "780" => array(
@@ -1113,6 +1359,11 @@ return [
             //"783" => "Surgical Instruments",
             //"785" => "Surgical Dressings & Disposables",
             //"786" => "Hospital Furniture"
+            //category id created by pankaj,
+            "1165" => "Face Mask & Medical PPE Kits",
+            "1166" => "Medical & Surgical Clothing",
+            "1167" => "Orthopaedic & Surgical Instruments",
+
         ),
 
         "787" => array(
@@ -1128,6 +1379,15 @@ return [
             //"797" => "Grain",
             //"798" => "Eggs",
             //"799" => "Cereals"
+            
+            //Sub cat id created by pankaj
+            "1021" => "Farming Tools, equipments & Machines",
+            "1022" => "Fishery",
+            "1023" => "Fishery Products",
+            "1024" => "Greenhouse Supplies & Equipments",
+            "1025" => "Seeds & Plant Saplings",
+            "1026" => "Tractor, Tractor Parts & Assemblies",
+
         ),
 
 
@@ -1148,6 +1408,12 @@ return [
             //"858" => "Weight Loss/Gain Products",
             //"464" => "Personal Care Products",
             //"468" => "Fragrances & Perfumes"
+            //category id created by pankaj,
+            "1125" => "Contraceptives & Condoms",
+            "1126" => "Essential & Aromatic Oils",
+            "1127" => "Salon, Spa Kits & equipments",
+            "1128" => "Soap, Detergent Powder & Cakes",
+
         ),
 
         "860" => array(
@@ -1160,6 +1426,17 @@ return [
             //"867" => "Roadway Safety",
             //"960" => "Others",
             //"970" => "Life Saving Products & Equipments"
+            //category id created by pankaj,
+            "1210"=>"Biometrics & Access Control Cards",
+            "1211"=>"CCTV Camera, Surveillance Equipments & Parts",
+            "1212"=>"Door Lock, Electronic Locks and Latches",
+            "1213"=>"Intelligence & Spying Devices",
+            "1214"=>"Life Safety Equipments",
+            "1215"=>"Residential & Commercial security",
+            "1216"=>"Safety Equipment & Systems",
+            "1217"=>"Surveillance Equipments & Parts",
+            "1218"=>"Vehicle Security System & Protection Device",
+
         ),
 
         "868" => array(
@@ -1183,6 +1460,16 @@ return [
             //"871" => "Healthcare Products",
             //"882" => "Mouth Freshers",
             //"884" => "Saffrons",
+            "1106" => "Chocolates, Biscuits & Cookies",
+            "1107" => "Edible Oil & Allied Products",
+            "1108" => "Flour",
+            "1109" => "Milk & Dairy Products",
+            "1110" => "Namkeen & Snacks",
+            "1111" => "Organic Food",
+            "1112" => "Ready to Eat & Instant Food Mixes",
+            "1113" => "Rice, Cereals, Food Grains & Pulses",
+            "1114" => "Sugar & Sweeteners",
+            "1115" => "Sweets & Deserts",
 
         ),
 
@@ -1223,6 +1510,19 @@ return [
             //"923" => "Electric Fitting & Accessories",
             //"967" => "3D Technology",
             //"971" => "Audio & Video Products/Home Theatre",
+            //category id created by pankaj
+            "1085" => "Batteries, Chargers & Storage Devices",
+            "1086" => "Domestic RO water Purifiers & Filters",
+            "1087" => "Electronic Security & Safety Systems",
+            "1088" => "Generator Parts & Accessories",
+            "1089" => "Heater, Thermostat & Heating Devices",
+            "1090" => "Home Automation Systems",
+            "1091" => "Lantern, Chandeliers & Hanging Lamps",
+            "1092" => "Measurig Equipments & Instruments",
+            "1093" => "Solar & Renewable Energy Products & Components",
+            "1094" => "Transformer & Transformer Components",
+            "1095" => "Vaoltage Stabilizers",
+
         ),
 
         "925" => array(
@@ -1258,6 +1558,11 @@ return [
             "951" => "Educational Material",
             "953" => "School Supplies",
             "952" => "Smart Classes Material",
+            //category id created by pankaj
+            "1082" => "Digital Education & Smart Class Material",
+            "1083" => "Educational, Religious & Cultural Books",
+            "1084" => "Projectors, Presentation Board & Accessories",
+
         ),
 
         "954" => array(

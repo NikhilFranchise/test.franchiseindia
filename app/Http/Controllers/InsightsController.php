@@ -21,6 +21,9 @@ use App\Models\InsightListHindi;
 use App\Models\SeoTagHindi;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\File;
 
 class InsightsController extends Controller
 {
@@ -351,11 +354,11 @@ class InsightsController extends Controller
                 $insightcategories = InsightList::with('author')
                     ->where('cat_id', $category->id)
                     ->where('status', 1)
-                    ->whereNotIn('news_type', ['ri','ir'])
+                    ->whereNotIn('news_type', ['ri', 'ir'])
                     ->orderByDesc('news_id')
                     ->paginate(10);
                 $insightcategories = CommonController::contentUrlSlug($insightcategories);
-               // dd($insightcategories);
+                // dd($insightcategories);
             }
         } else {
             $category = InsightCategory::query()
@@ -367,7 +370,7 @@ class InsightsController extends Controller
                 $insightcategories = InsightListHindi::with('author')
                     ->where('cat_id', $category->id)
                     ->where('status', 1)
-                    ->whereNotIn('news_type', ['ri','ir'])
+                    ->whereNotIn('news_type', ['ri', 'ir'])
                     ->orderByDesc('news_id')
                     ->paginate(10);
                 $insightcategories = CommonController::contentUrlSlug($insightcategories);
@@ -385,7 +388,7 @@ class InsightsController extends Controller
 
         $trendstories = InsightList::with('author')
             ->where('insight_type', 'News')
-            ->whereNotIn('news_type', ['ri','ir'])
+            ->whereNotIn('news_type', ['ri', 'ir'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->where('status', 1)
@@ -523,15 +526,16 @@ class InsightsController extends Controller
             $newsDetails = Cache::remember($newsCacheKey, $cacheDuration, function () use ($id) {
                 return InsightList::with(['author', 'category', 'Subcategory'])
                     ->where('status', 1)
-                    ->whereNotIn('news_type', ['ri','ir'])
+                    ->whereNotIn('news_type', ['ri', 'ir'])
                     ->where('news_id', $id)
                     ->first();
             });
+            // dd($newsDetails->author[0]->title);
         } else {
             $newsDetails = Cache::remember($newsCacheKey, $cacheDuration, function () use ($id) {
                 return InsightListHindi::with(['author', 'category', 'Subcategory'])
                     ->where('status', 1)
-                    ->whereNotIn('news_type', ['ri','ir'])
+                    ->whereNotIn('news_type', ['ri', 'ir'])
                     ->where('news_id', $id)
                     ->first();
             });
@@ -541,12 +545,12 @@ class InsightsController extends Controller
         }
 
         // Retrieve author details if available, or fallback to default author
-        $author_details = null;
-        if (!empty($newsDetails->author->author_id)) {
-            $authorCacheKey = "author_details_{$newsDetails->author->author_id}";
+        // $author_details = null;
+        if (!empty($newsDetails->author[0]->author_id)) {
+            $authorCacheKey = "author_details_{$newsDetails->author[0]->author_id}";
             $author_details = Cache::remember($authorCacheKey, $cacheDuration, function () use ($newsDetails) {
                 return AuthorList::query()
-                    ->where('author_id', $newsDetails->author->author_id)
+                    ->where('author_id', $newsDetails->author[0]->author_id)
                     ->first(); // Use `first()` instead of `get()` for a single record
             });
         }
@@ -560,6 +564,8 @@ class InsightsController extends Controller
                     ->first();
             });
         }
+        //dd($author_details);
+
 
         // Retrieve associated tags
         $tagsCacheKey = "associated_tags_{$id}";

@@ -757,7 +757,6 @@ class CommonController extends Controller
         $result = Ip2Location::query()->select('region_name')->where('ip_from', '<=', $ip)->where('ip_to', '>=', $ip)->first();
         if (empty($result))
             return "noresult";
-
         return $result->region_name;
     }
 
@@ -989,23 +988,23 @@ class CommonController extends Controller
     {
         $date = Carbon::now();
         $formattedDate = $date->format('Y-m-d'); // Use 'Y-m-d' format for consistency
-    
+
         // Get the count of visits by franchisor for the current date
         $brand_count = UniqueVisit::select('franchisor_id', DB::raw('COUNT(*) AS visit_count'))
             ->groupBy('franchisor_id')
             ->whereDate('date', $formattedDate)
             ->get();
-    
+
         // Aggregate visit counts
         foreach ($brand_count as $item) {
             $franchisorId = $item->franchisor_id;
             $visitCount = $item->visit_count;
-    
+
             // Check if there is already a record for this franchisor_id and record_date
             $existingRecord = FranchisorVisitCount::where('franchisor_id', $franchisorId)
                 ->where('record_date', $formattedDate)
                 ->first();
-    
+
             if ($existingRecord) {
                 // Update the existing record with the new count
                 $existingRecord->total += $visitCount; // Add new count to the existing total
@@ -1019,44 +1018,44 @@ class CommonController extends Controller
                 ]);
             }
         }
-    
+
         // Optional: log success message or handle additional actions
-        \Log::info('Brand visit counts updated successfully for date: ' . $formattedDate);
+        Log::info('Brand visit counts updated successfully for date: ' . $formattedDate);
     }
 
 
     public function url(){
         $m_cat = Config('constants.CategoryArr');
         $loc = Config('location.stateArr');
-        
+
         $baseUrl = Config('constants.MainDomain') . '/business-opportunities/';
-        
+
         $urls = []; // Array to hold the generated URLs
-        
+
         foreach ($m_cat as $key => $category) {
             foreach ($loc as $index => $location) {
                 // Replace spaces and commas with hyphens and remove multiple hyphens
                 $locationSlug = preg_replace('/[ ,]+/', '-', $location);
                 $categorySlug = preg_replace('/[ ,]+/', '-', $category);
-                
+
                 // Trim hyphens from the start and end
                 $locationSlug = trim($locationSlug, '-');
                 $categorySlug = trim($categorySlug, '-');
-        
+
                 // Use the index directly as the location ID
                 $locationId = $index;
-        
+
                 // Create the URL by appending the modified category, location, key, and location ID
                 $url = $baseUrl . urlencode($categorySlug) . '-in-' . urlencode($locationSlug) . '/mc-' . $key . '/loc-' .$locationId;
                 $urls[] = $url; // Add the URL to the array
             }
         }
-        
-       
+
+
         dd($urls);
         // $this->saveUrlData($urls);
-        
-        
+
+
 
     }
 
@@ -1091,8 +1090,8 @@ class CommonController extends Controller
 
             // To check the generated URLs
             dd($urls);
-        
-        
+
+
 
     }
 
@@ -1127,8 +1126,8 @@ class CommonController extends Controller
 
             // To check the generated URLs
             dd($urls);
-        
-        
+
+
 
     }
 
@@ -1137,14 +1136,14 @@ class CommonController extends Controller
         foreach ($urls as $url) {
             // Here you can use file_get_contents or cURL to fetch data from the URL
             $response = file_get_contents($url); // Fetch data from the URL
-            
+
             // Process the response as needed
             // For example, decode JSON data if that's what you expect
             // $data = json_decode($response, true);
-            
+
             // Here you can save the data to your database or perform other actions
             // Example: saveToDatabase($data);
-            
+
             // Log or echo the response for debugging
             // echo "Data saved for URL: $url\n";
         }
@@ -1258,8 +1257,8 @@ class CommonController extends Controller
     public function fetchDataajax(Request $request)
 {
     $sortby = $request->input('sortby');
-    $shuffledResults = collect($request->input('shuffledResults')); 
- 
+    $shuffledResults = collect($request->input('shuffledResults'));
+
     if ($sortby == 1) {
         $shuffledResults = $shuffledResults->sortByDesc('activated_at')->values();
 
@@ -1272,10 +1271,10 @@ class CommonController extends Controller
     }
 
     // return response()->json($shuffledResults);
-    
+
     $html = view('category.listingloop', ['shuffledResults' => $shuffledResults])->render();
     // dd($html);
-    return response()->json(['html' => $html]); 
+    return response()->json(['html' => $html]);
 }
 
 

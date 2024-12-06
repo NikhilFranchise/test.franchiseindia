@@ -1951,7 +1951,7 @@ class AdminController extends Controller
                     $query->where('title', 'LIKE', '%' . $request->search . '%')
                         ->orWhere('news_id', $request->search);
                 })
-                // ->whereIn('status', [0, 1]) // Filter status (active or inactive)
+                ->whereIn('status', [0, 1]) // Filter status (active or inactive)
                 ->orderBy('news_id', 'DESC') // Order by descending ID
                 ->paginate(30); // Paginate results
 
@@ -1972,7 +1972,7 @@ class AdminController extends Controller
                     $query->where('title', 'LIKE', '%' . $request->search . '%')
                         ->orWhere('news_id', $request->search);
                 })
-                //->whereIn('status', [0, 1]) // Filter status (active or inactive)
+                ->whereIn('status', [0, 1]) // Filter status (active or inactive)
                 ->orderBy('news_id', 'DESC') // Order by descending ID
                 ->paginate(30); // Paginate results
 
