@@ -2127,4 +2127,29 @@ class BusinessListingController extends Controller
             request()->route()->setParameter('city', str_replace('-', ' ', $_city));
         }
     }
+
+
+    public function pricefilter(Request $request)
+{
+    $minrange = $request->input('minvaluerange');
+    $maxrange = $request->input('maxvaluerange');
+
+    // dd($minrange);
+
+    $shuffledResults = collect($request->input('shuffledResults')); 
+
+    $shuffledResults = $shuffledResults->filter(function ($item) use ($minrange, $maxrange) {
+        return ($item['unit_inv_min'] >= $minrange && $item['unit_inv_max'] <= $maxrange);
+    });
+ 
+   
+
+    // return response()->json($shuffledResults);
+    
+    $html = view('category.listingloop', ['shuffledResults' => $shuffledResults])->render();
+    // dd($html);
+    return response()->json(['html' => $html]); 
 }
+
+}
+
