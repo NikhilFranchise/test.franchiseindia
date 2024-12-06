@@ -23,7 +23,7 @@
                             if ($article->author->isNotEmpty()) {
                                 $author = $article->author->first();
                                 $authorname = $author->title ?? 'Franchise India Bureau';
-                                $authorUrl = Config('constants.MainDomain') . "/author/{$locale}/" . "{$author->slug}-{$author->author_id}";
+                                $authorUrl = Config('constants.MainDomain') . "/insights/{$locale}". "/author/{$author->slug}-{$author->author_id}";
                                 $author_image = $author->image
                                     ? \App\Http\Controllers\InsightsController::authorImageurl($author->image)
                                     : $author_image;
@@ -88,27 +88,4 @@
         @include('layout.insights.magblock')
         @include('layout.insights.brandlist')
     </div>
-    <script>
-        $(function() {
-            let page = 2;
-            $('.readmore').click(function() {
-                const newsId = "{{ $insArticles[0]['news_id'] }}";
-                $.ajax({
-                    url: `/article/${newsId}/${page}`,
-                    method: "GET",
-                }).done(function(data) {
-                    if (data) {
-                        page++;
-                        $('.readmore').before(data);
-                        if ($('.readmore').attr('data-page') == page) {
-                            $('.readmore').hide();
-                        }
-                        if (typeof addthis !== 'undefined') {
-                            addthis.layers.refresh();
-                        }
-                    }
-                });
-            });
-        });
-    </script>
 @endsection
