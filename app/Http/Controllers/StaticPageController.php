@@ -129,6 +129,10 @@ class StaticPageController extends Controller
         return view('static.terms');
     }
 
+    public function p_popicy(){
+        return view('.static.privacy_policy');
+    }
+
     /**
      * events page
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

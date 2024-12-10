@@ -335,7 +335,7 @@ use Illuminate\Support\Str;
         data: {
             minvaluerange: minvaluerange,
             maxvaluerange: maxvaluerange,
-            shuffledResults: shuffledResults // Pass the dataset, if needed
+            // shuffledResults: shuffledResults // Pass the dataset, if needed
         },
         dataType: 'json', // Expecting JSON response
         headers: {
@@ -349,9 +349,9 @@ use Illuminate\Support\Str;
 
             // Check if response is empty
             if (response.length === 0) {
-                $('#renderedData').html('<p>No data available.</p>');
+                $('#prannge').html('<p>No data available.</p>');
             } else {
-                $('#renderedData').html(response.html);
+                $('#prannge').html(response.html);
             }
         },
         error: function (xhr, status, error) {
