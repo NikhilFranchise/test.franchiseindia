@@ -712,69 +712,45 @@ class InsightsController extends Controller
         $tag = $request->tagslug;
         $tagstr = str_replace('-', ' ', $tag);
 
-        if ($request->segment(2) == 'en') {
-            $data = SeoTag::query()->where('name', $tagstr)->first();
+        // Determine the language and set table/model dynamically
+        $isEnglish = $request->segment(2) == 'en';
+        $redirectPath = $isEnglish ? '/insights' : '/insights/hindi';
+        $insightModel = $isEnglish ? InsightList::class : InsightListHindi::class;
 
-            if (is_null($data)) {
-                return redirect('/insights');
-            }
-
-            $articleIds = ContentTagsAssigned::where([
-                ['tag_id', $data->tag_id],
-                ['content_type', 2]
-            ])
-                ->pluck('content_id')
-                ->unique()
-                ->toArray();
-
-            // Debug only if necessary
-            // dd($articleIds);
-
-            $articlesList = InsightList::query()->with('author')
-                ->whereIn('news_id', $articleIds)
-                //->get();
-                //dd($articlesList);
-                ->where('status', 1)
-                ->whereNotIn('news_type', ['ri', 'ir'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('created_at')
-                ->paginate(10);
-
-            $articlesList = CommonController::contentUrlSlug($articlesList);
-        } else {
-
-            $data = SeoTag::query()->where('name', $tagstr)->first();
-            if (is_null($data)) {
-                return redirect('/insights/hindi');
-            }
-
-            $articleIds = ContentTagsAssigned::where([
-                ['tag_id', $data->tag_id],
-                ['content_type', 2]
-            ])
-                ->pluck('content_id')
-                ->unique()
-                ->toArray();
-
-            $articlesList = InsightListHindi::with('author')
-                ->whereIn('news_id', $articleIds)
-                ->where('status', 1)
-                ->whereNotIn('news_type', ['ri', 'ir'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('created_at')
-                ->paginate(10);
-
-            $articlesList = CommonController::contentUrlSlug($articlesList);
+        // Fetch the tag data
+        $seoTag = SeoTag::query()->where('name', $tagstr)->first();
+        if (is_null($seoTag)) {
+            return redirect($redirectPath);
         }
-        // dd($articlesList);
+
+        // Fetch the associated content IDs
+        $articleIds = ContentTagsAssigned::where([
+            ['tag_id', $seoTag->tag_id],
+            ['content_type', 2]
+        ])->pluck('content_id')->unique()->toArray();
+
+        // Fetch the articles with conditions
+        $articlesList = $insightModel::query()
+            ->with('author')
+            ->whereIn('news_id', $articleIds)
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->paginate(10);
+
+        // Apply URL slugs
+        $articlesList = CommonController::contentUrlSlug($articlesList);
+
+        // Check for results and return the view or redirect
         if ($articlesList->count() > 0) {
-            return view('insights.insightstags', compact('articlesList', 'data'));
-        } else {
-            return redirect('/insights');
+            return view('insights.insightstags', compact('articlesList', 'seoTag'));
         }
+
+        return redirect($redirectPath);
     }
+
 
 
     // STATIC FUNCTIONS START HERE

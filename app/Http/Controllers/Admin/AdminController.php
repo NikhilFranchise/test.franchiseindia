@@ -1910,10 +1910,10 @@ class AdminController extends Controller
                 ->whereNotIn('news_type', ['ri','ir'])
                 ->where(function ($query) use ($request) {
                     $query->where('title', 'LIKE', '%' . $request->search . '%')
-                        // ->where(function ($query) use ($request) {
-                        //     $query->where('status', 1)
-                        //         ->orWhere('status', 0);
-                        // })
+                        ->where(function ($query) use ($request) {
+                            $query->where('status', 1)
+                                ->orWhere('status', 0);
+                        })
                         ->orWhere('news_id', $request->search);
                 })
                 ->orderBy('news_id', 'DESC')
@@ -1925,10 +1925,10 @@ class AdminController extends Controller
                 ->whereNotIn('news_type', ['ri', 'ir'])
                 ->where(function ($query) use ($request) {
                     $query->where('title', 'LIKE', '%' . $request->search . '%')
-                        // ->where(function ($query) use ($request) {
-                        //     $query->where('status', 1)
-                        //         ->orWhere('status', 0);
-                        // })
+                        ->where(function ($query) use ($request) {
+                            $query->where('status', 1)
+                                ->orWhere('status', 0);
+                        })
                         ->orWhere('news_id', $request->search);
                 })
                 ->orderBy('news_id', 'DESC')
@@ -1940,96 +1940,118 @@ class AdminController extends Controller
     }
 
     public function multilistinsights(Request $request)
-    {
-        // Fetch data with eager loading for category and subcategory
-        if ($request->segment(2) == 'en') {
+{
+    // Determine the model based on language segment
+    $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
 
-            $data = InsightList::with(['category', 'subcategory', 'author'])
-                ->whereNotIn('news_type', ['ri', 'ir']) // Exclude 'ri' and 'ir'
-                ->where(function ($query) use ($request) {
+    // Fetch data with filters and eager loading
+    $data = $model::with(['category', 'subcategory', 'author'])
+        ->whereNotIn('news_type', ['ri', 'ir']) // Exclude 'ri' and 'ir'
+       // ->whereNull(['insight_type', 'cat_id', 'subcat_id']) // Check for null fields
+        ->where(function ($query) use ($request) {
+            $query->where(function ($subQuery) use ($request) {
                     // Search logic
-                    $query->where('title', 'LIKE', '%' . $request->search . '%')
+                    $subQuery->where('title', 'LIKE', '%' . $request->search . '%')
                         ->orWhere('news_id', $request->search);
-                })
-                ->whereIn('status', [0, 1]) // Filter status (active or inactive)
-                ->orderBy('news_id', 'DESC') // Order by descending ID
-                ->paginate(30); // Paginate results
+                });
+        })
+        ->whereIn('status', [0, 1]) // Filter status (active or inactive)
+        ->orderByDesc('news_id') // Order by descending ID
+        ->paginate(30); // Paginate results
 
-            // Fetch categories for dropdowns
-            $InsightCategory = InsightCategory::query()
-                ->select('id', 'catname')
-                ->where('status', 1)
-                ->get();
-            $InsightAuthor = AuthorList::query()
-                ->select('author_id', 'title', 'slug')
-                ->where('status', 'A')
-                ->get();
-        } else {
-            $data = InsightListHindi::with(['category', 'subcategory', 'author'])
-                ->whereNotIn('news_type', ['ri', 'ir']) // Exclude 'ri' and 'ir'
-                ->where(function ($query) use ($request) {
-                    // Search logic
-                    $query->where('title', 'LIKE', '%' . $request->search . '%')
-                        ->orWhere('news_id', $request->search);
-                })
-                ->whereIn('status', [0, 1]) // Filter status (active or inactive)
-                ->orderBy('news_id', 'DESC') // Order by descending ID
-                ->paginate(30); // Paginate results
+    // Fetch common dropdown data
+    $InsightCategory = InsightCategory::query()
+        ->select('id', 'catname')
+        ->where('status', 1)
+        ->get();
 
-            // Fetch categories for dropdowns
-            $InsightCategory = InsightCategory::query()
-                ->select('id', 'catname')
-                ->where('status', 1)
-                ->get();
-            $InsightAuthor = AuthorList::query()
-                ->select('author_id', 'title', 'slug')
-                ->where('status', 'A')
-                ->get();
-        }
-        // Return view with data
-        return view('admin/insights/multilist-edit', compact('data', 'InsightCategory', 'InsightAuthor'));
-    }
+    $InsightAuthor = AuthorList::query()
+        ->select('author_id', 'title', 'slug')
+        ->where('status', 'A')
+        ->get();
 
+    // Return view with data
+    return view('admin/insights/multilist-edit', compact('data', 'InsightCategory', 'InsightAuthor'));
+}
+
+
+
+    // public function saveMultipleInsights(Request $request)
+    // {
+    //     // Get selected articles
+    //     if ($request->segment(2) == 'en') {
+
+    //         $articles = $request->input('articles', []);
+    //         // dd($articles);
+    //         foreach ($articles as $newsId => $articleDetails) {
+    //             $existingInsight = InsightList::find($newsId);
+    //             if ($existingInsight) {
+    //                 // dd($existingInsight->slug);
+    //                 $existingInsight->insight_type = $articleDetails['insight_type'] ?? $existingInsight->insight_type;
+    //                 $existingInsight->cat_id = $articleDetails['main_category'] ?? $existingInsight->cat_id;
+    //                 $existingInsight->subcat_id = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
+    //                 $existingInsight->status = $articleDetails['status'] ?? $existingInsight->status;
+    //                 $existingInsight->author_id = $articleDetails['author'] ?? $existingInsight->author_id;
+    //                 $existingInsight->slug = Str::slug($existingInsight->title);
+    //                 $existingInsight->save();
+    //             }
+    //         }
+    //     } else {
+    //         $articles = $request->input('articles', []);
+    //         // dd($articles);
+    //         foreach ($articles as $newsId => $articleDetails) {
+    //             $existingInsight = InsightListHindi::find($newsId);
+    //             if ($existingInsight) {
+    //                 // dd($existingInsight->slug);
+    //                 $existingInsight->insight_type = $articleDetails['insight_type'] ?? $existingInsight->insight_type;
+    //                 $existingInsight->cat_id = $articleDetails['main_category'] ?? $existingInsight->cat_id;
+    //                 $existingInsight->subcat_id = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
+    //                 $existingInsight->status = $articleDetails['status'] ?? $existingInsight->status;
+    //                 $existingInsight->author_id = $articleDetails['author'] ?? $existingInsight->author_id;
+    //                 $existingInsight->slug = Str::slug($existingInsight->title);
+    //                 $existingInsight->save();
+    //             }
+    //         }
+    //     }
+    //     return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
+    // }
 
     public function saveMultipleInsights(Request $request)
-    {
-        // Get selected articles
-        if ($request->segment(2) == 'en') {
+{
+    // Determine the model based on language segment
+    $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
 
-            $articles = $request->input('articles', []);
-            // dd($articles);
-            foreach ($articles as $newsId => $articleDetails) {
-                $existingInsight = InsightList::find($newsId);
-                if ($existingInsight) {
-                    // dd($existingInsight->slug);
-                    $existingInsight->insight_type = $articleDetails['insight_type'] ?? $existingInsight->insight_type;
-                    $existingInsight->cat_id = $articleDetails['main_category'] ?? $existingInsight->cat_id;
-                    $existingInsight->subcat_id = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
-                    $existingInsight->status = $articleDetails['status'] ?? $existingInsight->status;
-                    $existingInsight->author_id = $articleDetails['author'] ?? $existingInsight->author_id;
-                    $existingInsight->slug = Str::slug($existingInsight->title);
-                    $existingInsight->save();
-                }
+    // Get selected articles
+    $articles = $request->input('articles', []);
+
+    foreach ($articles as $newsId => $articleDetails) {
+        $existingInsight = $model::find($newsId);
+        if ($existingInsight) {
+            // Update fields dynamically
+            $fieldsToUpdate = [
+                'insight_type' => $articleDetails['insight_type'] ?? $existingInsight->insight_type,
+                'cat_id' => $articleDetails['main_category'] ?? $existingInsight->cat_id,
+                'subcat_id' => $articleDetails['sub_category'] ?? $existingInsight->subcat_id,
+                'status' => $articleDetails['status'] ?? $existingInsight->status,
+                'author_id' => $articleDetails['author'] ?? $existingInsight->author_id,
+            ];
+
+            // Apply updates
+            foreach ($fieldsToUpdate as $field => $value) {
+                $existingInsight->{$field} = $value;
             }
-        } else {
-            $articles = $request->input('articles', []);
-            // dd($articles);
-            foreach ($articles as $newsId => $articleDetails) {
-                $existingInsight = InsightListHindi::find($newsId);
-                if ($existingInsight) {
-                    // dd($existingInsight->slug);
-                    $existingInsight->insight_type = $articleDetails['insight_type'] ?? $existingInsight->insight_type;
-                    $existingInsight->cat_id = $articleDetails['main_category'] ?? $existingInsight->cat_id;
-                    $existingInsight->subcat_id = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
-                    $existingInsight->status = $articleDetails['status'] ?? $existingInsight->status;
-                    $existingInsight->author_id = $articleDetails['author'] ?? $existingInsight->author_id;
-                    $existingInsight->slug = Str::slug($existingInsight->title);
-                    $existingInsight->save();
-                }
-            }
+
+            // Generate slug dynamically
+            $existingInsight->slug = Str::slug($existingInsight->title);
+
+            // Save the updated record
+            $existingInsight->save();
         }
-        return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
     }
+
+    return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
+}
+
 
 
 

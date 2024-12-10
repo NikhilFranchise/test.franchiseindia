@@ -137,7 +137,7 @@
                                             <tr class="gradeX">
                                                 @php
                                                     $url =
-                                                        '/insights/en/' .
+                                                        '/insights/'. $type .'/' .
                                                         strtolower($insights->insight_type) .
                                                         '/' .
                                                         $insights->slug .
