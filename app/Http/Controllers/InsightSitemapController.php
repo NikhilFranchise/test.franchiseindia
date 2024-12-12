@@ -28,7 +28,7 @@ class InsightSitemapController extends Controller
         $articlesitemap = InsightList::where('insight_type', 'Article')
             ->where('cat_id', '!=', '')
             ->where('status', 1)->get();
-         dd($articlesitemap->count());
+         dd($articlesitemap);
         return response()->view('insights.sitemaps.art_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
     }
     public function hindiarticlesitemap()
