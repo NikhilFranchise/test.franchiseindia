@@ -27,7 +27,7 @@ class InsightSitemapController extends Controller
         $articlesitemap = InsightList::query()
         ->where('insight_type', 'Article')
             ->where('cat_id', '!=', '')
-            ->where('status', 1)->limit(12000)
+            ->where('status', 1)->limit(10000)
             ->get();
 
         //  dd($articlesitemap);
@@ -39,8 +39,8 @@ class InsightSitemapController extends Controller
         ->where('insight_type', 'Article')
             ->where('cat_id', '!=', '')
             ->where('status', 1)
-            ->offset(12000) // Skip the first 12,000 records
-            ->limit(5000)   // Fetch the next 5,000 records
+            ->offset(10000) // Skip the first 12,000 records
+            ->limit(7000)   // Fetch the next 5,000 records
             ->get();
 
         //  dd($articlesitemap);
