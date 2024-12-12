@@ -34,7 +34,7 @@ class InsightSitemapController extends Controller
             ->where('status', 1)->limit(1)
             ->get();
 
-         dd($articlesitemap);
+        //  dd($articlesitemap);
         return response()->view('insights.sitemaps.art_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
     }
     public function hindiarticlesitemap()
