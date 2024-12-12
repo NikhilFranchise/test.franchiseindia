@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\AuthorList;
 use App\Models\InsightsHindiCategory;
-use App\Models\InsightsHindiSubcategory;
+use App\Models\InsightsHindiSubCategory;
 
 class InsightListHindi extends Model
 {
@@ -24,7 +24,7 @@ class InsightListHindi extends Model
     }
     public function Subcategory()
     {
-        return $this->hasMany(InsightsHindiSubcategory::class, 'id', 'subcat_id');
+        return $this->hasMany(InsightsHindiSubCategory::class, 'id', 'subcat_id');
     }
 
     public function ContentTagsAssignedHindi()
