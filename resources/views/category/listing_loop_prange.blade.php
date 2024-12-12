@@ -1,9 +1,21 @@
+@include('category.navigation_searchby_ssr')
+
+                    @include('category.top-paid-cat-banner')
+
+                    <!-- category list section start here-pawan-->
+                    <div class="row row-no-margin catpadtop20">
+                        @if (session()->has('freeinfomsg'))
+                            <div class="alert alert-info">{!! session()->get('freeinfomsg') !!}</div>
+                        @endif
+
 @php
 $i = 0;
 $banner = 1;
 $longbanner = 0;    
 $shortBox = 0;
 @endphp
+
+<div id="renderedData1">
 @foreach ($shuffledResults as $item)
 @php
 $brandUrl = sprintf(
@@ -12,6 +24,7 @@ $brandUrl = sprintf(
     $item['profile_name'],  // Array access
     $item['fran_detail_id'] // Array access
 );
+
 $is_premium = 0;
 $imgCount = 0;
 $SubCatName = '';
@@ -90,6 +103,7 @@ if (!empty($item['franchisorLike'])) {  // Array access
 @endphp
 
 @if ($item['membership_type'] == 1 || $item['free_logo_visibility'] == 1)
+
 
 <div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding sec-slide-effect" >
     <div class="comparechk">
@@ -607,3 +621,5 @@ if (!empty($item['franchisorLike'])) {  // Array access
 @endif
 
 @endforeach
+</div>
+</div>

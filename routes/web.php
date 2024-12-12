@@ -132,6 +132,9 @@ Route::get('testimonials-reviews', [StaticPageController::class, 'getTestimonial
 Route::get('sitemap/brands', [BrandFilterController::class, 'brandsitemap']);
 Route::get('sitemap/brands/{abre}',           [BrandFilterController::class, 'brandfilter']);
 Route::get('terms', [StaticPageController::class, 'mainTerm']);
+
+Route::get('privacy_policy', [StaticPageController::class, 'p_popicy']);
+
 Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBystateName']);
 Route::get('invester-verifyformmobilenumber', [MobileVerificationController::class, 'investerverifyMobile']);
 Route::get('/user/check-mobile-status', [CommonController::class, 'verifyMobile']);
@@ -1138,3 +1141,5 @@ Route::get('/l_layout', [CommonController::class, 'listing_layout']);
 
 Route::post('/fetch-data', [CommonController::class, 'fetchDataajax']);
 Route::post('/price_filter', [BusinessListingController::class, 'pricefilter']);
+Route::post('/fetch-data2', [CommonController::class, 'fetchDataajax2']);
+Route::post('/price_filter', [BusinessListingController::class,'pricefilter']);

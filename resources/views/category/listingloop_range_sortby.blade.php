@@ -12,6 +12,7 @@ $brandUrl = sprintf(
     $item['profile_name'],  // Array access
     $item['fran_detail_id'] // Array access
 );
+
 $is_premium = 0;
 $imgCount = 0;
 $SubCatName = '';

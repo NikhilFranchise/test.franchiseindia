@@ -2133,20 +2133,36 @@ class BusinessListingController extends Controller
 {
     $minrange = $request->input('minvaluerange');
     $maxrange = $request->input('maxvaluerange');
-
     // dd($minrange);
+    // $shuffledResults = collect($request->input('shuffledResults')); 
 
-    $shuffledResults = collect($request->input('shuffledResults')); 
+    // $shuffledResults = $shuffledResults->filter(function ($item) use ($minrange, $maxrange) {
+    //     return ($item['unit_inv_min'] >= $minrange && $item['unit_inv_max'] <= $maxrange);
+    // })->sortByDesc('membership_weightage');;
 
-    $shuffledResults = $shuffledResults->filter(function ($item) use ($minrange, $maxrange) {
-        return ($item['unit_inv_min'] >= $minrange && $item['unit_inv_max'] <= $maxrange);
-    });
- 
-   
+    $shuffledResults = FranchisorBusinessDetail::query()
+    ->select(
+        'fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 
+        'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 
+        'looking_franchise', 'membership_weightage', 'franchise_start_year', 
+        'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 
+        'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 
+        'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 
+        'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 
+        'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 
+        'free_logo_visibility', 'brand_verified', 'views', 'activated_at'
+    )
+    ->whereIn('profile_status', [1, 11])
+    ->orderByDesc('membership_weightage') // Correct sorting method
+    ->limit(10) // Limit the number of results
+    ->get();
+
+
+// dd($shuffledResults);
 
     // return response()->json($shuffledResults);
     
-    $html = view('category.listingloop', ['shuffledResults' => $shuffledResults])->render();
+    $html = view('category.listing_loop_prange', ['shuffledResults' => $shuffledResults])->render();
     // dd($html);
     return response()->json(['html' => $html]); 
 }
