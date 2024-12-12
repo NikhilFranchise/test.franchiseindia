@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class InsightCategory extends Model
+class InsightsHindiCategory extends Model
 {
     use HasFactory;
-    protected $table = 'insights_category';
+    protected $table = 'insights_hindi_categories';
     protected $primaryKey = 'id';
+
 }

@@ -204,14 +204,27 @@
                                     @foreach ($data as $insights)
                                         <tr class="gradeX">
                                             @php
-                                                $url =
-                                                    '/insights/en/' .
-                                                    strtolower($insights->insight_type) .
-                                                    '/' .
-                                                    $insights->slug .
-                                                    '.' .
-                                                    $insights->news_id;
+                                                if (!empty($insights->slug)) {
+
+                                                    $url =
+                                                        '/insights/en/' .
+                                                        strtolower($insights->insight_type) .
+                                                        '/' .
+                                                        $insights->slug .
+                                                        '.' .
+                                                        $insights->news_id;
+                                                } else {
+                                                    $slug = Str::slug($insights->title);
+                                                    $url =
+                                                        '/insights/en/' .
+                                                        strtolower($insights->insight_type) .
+                                                        '/' .
+                                                        $slug .
+                                                        '.' .
+                                                        $insights->news_id;
+                                                }
                                             @endphp
+
                                             <td>{{ $insights->news_id }}</td>
                                             <td>{{ $insights->title }}</td>
                                             <td>

@@ -13,7 +13,7 @@
         .tt-suggestion { font-size: 22px; padding: 3px 20px; }
         .tt-suggestion:hover { cursor: pointer; background-color: #0097CF; color: #FFFFFF; }
         .tt-suggestion p { margin: 0; }
-        
+
         .select2-container .select2-selection {
             box-sizing: border-box;
             cursor: pointer;
@@ -28,7 +28,7 @@
             display: none;
         }
     </style>
-    
+
 </head>
 <body>
 <!--Header-part-->
@@ -43,12 +43,16 @@
 <!--sidebar-menu-->
 <div id="content">
     <!--breadcrumbs-->
+    @php
+        $locale = request()->segment(2);
+        $lang = $locale == 'en' ? 'English' : 'Hindi';
+    @endphp
     <div id="content-header">
         <div id="breadcrumb">
             <a href="{{url('admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a>
-            <a href="#" class="tip-bottom">Main Category/Sub Category</a>
-            <a href="#" class="current">Create Sub Category</a> </div>
-        <h1>Create Sub Category</h1>
+            <a href="#" class="tip-bottom">{{ $lang }} Main Category/{{ $lang }} Sub Category</a>
+            <a href="#" class="current">Create {{ $lang }} Sub Category</a> </div>
+        <h1>Create {{ $lang }} Sub Category</h1>
     </div>
     <div class="container-fluid">
         <hr>
@@ -67,14 +71,14 @@
                         <div class="control-group">
                             <label class="control-label">Main Category :</label>
                             <div class="controls">
-                                
+
                                 <select class="span11" name="maincat" spellcheck="false">
                                     <option selected>Select Main Category</option>
                                 @foreach ($cat as $value)
                                     <option value="{{$value->id}}">{{$value->catname}}</option>
                                 @endforeach
                                 </select>
-                                
+
                             </div>
                         </div>
                          <div class="control-group">
@@ -83,7 +87,7 @@
                                <select multiple required style="display: none;" name="sub_categories[]" id="select3"></select>
                             </div>
                         </div>
-                        
+
 
                         <div class="form-actions" style="text-align: center;">
                             <button type="submit" id="ariclesubmit" class="btn btn-success">Create</button>
@@ -133,7 +137,7 @@ var tagArray = businessCategories.map(function (category, index) {
 
         // Initialize Select2 with the array data
         $('#select3').select2({
-            placeholder: "Choose tags...",
+            placeholder: "Choose Subcategories...",
             minimumInputLength: 2,
             data: $.map(tagArray, function (item) {
                 return {

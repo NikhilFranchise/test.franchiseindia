@@ -3,9 +3,11 @@
     <div class="topmenu">
         <div class="container-fluid">
             <div class="row">
+                @notmobile
                 <div class="col-lg-3 col-md-3 col-xl-2 offset-xl-1">
                     <span class="top1">#ApneBrandsKiNayiMarket</span>
                 </div>
+                @endnotmobile
                 <div class="col-lg-5 col-xl-5 col-md-5 text-right">
                     <ul class="top-ul">
                         <li><a data-toggle="modal" data-target="#myModal">EXPAND YOUR BUSINESS</a> <span>|</span> </li>
@@ -68,7 +70,7 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="categoryList">
                                         @php
-                                            $categories = \App\Http\Controllers\InsightsController::insightcategory();
+                                            $categories = \App\Http\Controllers\InsightsController::insightcategory($locale);
                                         @endphp
                                         @foreach ($categories as $cat)
                                             <a class="dropdown-item" data-id="{{ $cat['id'] }}"

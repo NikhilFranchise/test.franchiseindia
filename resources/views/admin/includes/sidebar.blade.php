@@ -28,10 +28,16 @@
             <li class="submenu @yield('CAT')"> <a href="#"><i class="icon icon-th-list"></i> <span>Main
                         Category/Sub Category</span></a>
                 <ul>
-                    <li><a href="/admin/cat/create">Create Main Category</a></li>
-                    <li><a href="/admin/cat/list">List Main Category</a></li>
-                    <li><a href="/admin/subcat/create">Create Sub Category</a></li>
-                    <li><a href="/admin/subcat/list">List Sub Category</a></li>
+                    <li><a href="/admin/en/cat/create">Create Main Category</a></li>
+                    <li><a href="/admin/en/cat/list">List Main Category</a></li>
+                    <li><a href="/admin/en/subcat/create">Create Sub Category</a></li>
+                    <li><a href="/admin/en/subcat/list">List Sub Category</a></li>
+                </ul>
+                <ul>
+                    <li><a href="/admin/hi/cat/create">Create Hindi Main Category</a></li>
+                    <li><a href="/admin/hi/cat/list">List Hindi Main Category</a></li>
+                    <li><a href="/admin/hi/subcat/create">Create Hindi Sub Category</a></li>
+                    <li><a href="/admin/hi/subcat/list">List Hindi Sub Category</a></li>
                 </ul>
             </li>
         @endif

@@ -989,17 +989,33 @@ Route::group(['prefix' => 'admin'], function () {
 
     // insights post routes end here
     // category and sub category get routes code by gp
-    Route::get('cat/create',                      [AdminController::class, 'categoryform']);
-    Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
-    Route::get('cat/list',                        [AdminController::class, 'catlist']);
-    Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
-    Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
-    // routes/web.php
-    // insights post routes
-    Route::post('create/cat',                      [AdminController::class, 'storecat']);
-    Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
-    Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
-    Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
+    Route::group(['prefix' => 'en'], function () {
+        Route::get('cat/create',                      [AdminController::class, 'categoryform']);
+        Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
+        Route::get('cat/list',                        [AdminController::class, 'catlist']);
+        Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
+        Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
+        // routes/web.php
+        // insights post routes
+        Route::post('create/cat',                      [AdminController::class, 'storecat']);
+        Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
+        Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
+        Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
+    });
+
+    Route::group(['prefix' => 'hi'], function () {
+        Route::get('cat/create',                      [AdminController::class, 'categoryform']);
+        Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
+        Route::get('cat/list',                        [AdminController::class, 'catlist']);
+        Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
+        Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
+        // routes/web.php
+        // insights post routes
+        Route::post('create/cat',                      [AdminController::class, 'storecat']);
+        Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
+        Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
+        Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
+    });
 });
 
 Route::get('location/{city}',              [BusinessListingController::class, 'listingLocation']);
@@ -1121,4 +1137,4 @@ Route::get('/l_layout', [CommonController::class, 'listing_layout']);
 // Ajax routes
 
 Route::post('/fetch-data', [CommonController::class, 'fetchDataajax']);
-Route::post('/price_filter', [BusinessListingController::class,'pricefilter']);
+Route::post('/price_filter', [BusinessListingController::class, 'pricefilter']);
