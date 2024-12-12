@@ -204,6 +204,12 @@ use Illuminate\Support\Str;
                                 <div class="pull-right" name="maxval" id="maxval" value="">{{$maxvalueSlider}}</div>
                             </div>
                         </div>
+                        <form action="{{ route('price_filter') }}" method="post">
+                            @csrf 
+                            <input type="text" name="min_range" value="{{ $minRangeValue }}" >
+                            <button type="submit">Apply</button>
+                        </form>
+                        
                         <div class="filter-type LocFltr">
                             <div class="filter-ttl rm-bdr">Location</div>
                             <div class="category-fltr">
@@ -276,7 +282,7 @@ use Illuminate\Support\Str;
     function getSubSubCatId(){var subSubCat=[];$('input[name="subSubCat[]"]:checked').each(function(){subSubCat.push($(this).val());});return subSubCat;}
     function getPriceRange(a,b){var minvaluerange=a;var maxvaluerange=b;
         console.log(a,b);
-        fetchPriceData(minvaluerange, maxvaluerange);
+        // fetchPriceData(minvaluerange, maxvaluerange);
         // $('#minvaluerange').prop('value',minvaluerange);$('#maxvaluerange').prop('value',maxvaluerange);
         // alert(maxvaluerange);
     }
@@ -331,7 +337,7 @@ use Illuminate\Support\Str;
     // AJAX request to fetch the data
     $.ajax({
         url: '/price_filter', // The URL to call
-        type: 'POST', // Method type
+        type: 'get', // Method type
         data: {
             minvaluerange: minvaluerange,
             maxvaluerange: maxvaluerange,

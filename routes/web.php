@@ -1125,4 +1125,12 @@ Route::get('/l_layout', [CommonController::class, 'listing_layout']);
 
 Route::post('/fetch-data', [CommonController::class, 'fetchDataajax']);
 Route::post('/fetch-data2', [CommonController::class, 'fetchDataajax2']);
-Route::post('/price_filter', [BusinessListingController::class,'pricefilter']);
+Route::get('/price_filter', [BusinessListingController::class,'pricefilter']);
+Route::post('/price_filter', [BusinessListingController::class,'pricefilter'])->name('price_filter');;
+
+Route::get('/ajax',[BusinessListingController::class,'fetchtest']);
+Route::get('/getajax',[BusinessListingController::class,'fetchtest']);
+// Route::get('/getajax', [BusinessListingController::class, 'fetchtest'])->name('getajax');
+
+
+Route::get('/items', [BusinessListingController::class, 'index'])->name('items.index');
