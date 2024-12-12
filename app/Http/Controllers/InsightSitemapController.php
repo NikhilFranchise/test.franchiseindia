@@ -24,13 +24,14 @@ class InsightSitemapController extends Controller
     }
     public function articlesitemap()
     {
-        // dd('tesxt');
+        // print_r('yes');
+        dd('tesxt');
         // $articlesitemap = InsightList::whereNotIn('news_type', ['ri','ir'])
         // $articlesitemap = InsightList::where('insight_type', 'Article')
         //     ->where('cat_id', '!=', '')
         //     ->where('status', 1)->get();
         $articlesitemap= InsightList::query()->where('status',1)->get();
-         dd($articlesitemap);
+        //  dd($articlesitemap);
         return response()->view('insights.sitemaps.art_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
     }
     public function hindiarticlesitemap()
