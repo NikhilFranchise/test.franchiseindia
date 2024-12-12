@@ -28,9 +28,9 @@ class InsightSitemapController extends Controller
         // dd('tesxt');
         // $articlesitemap = InsightList::whereNotIn('news_type', ['ri','ir'])
 
-        $articlesitemap = InsightList::where('insight_type', 'Article')
-            ->where('cat_id', '!=', '')
-            ->where('status', 1)->get();
+        $articlesitemap = InsightList::where('status', 1)
+            ->where('insight_type', 'Article')
+            ->where('cat_id', '!=', '')->get();
 
          dd($articlesitemap);
         return response()->view('insights.sitemaps.art_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
