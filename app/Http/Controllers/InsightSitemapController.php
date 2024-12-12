@@ -24,8 +24,8 @@ class InsightSitemapController extends Controller
     }
     public function articlesitemap()
     {
-        $articlesitemap = InsightList::whereNotIn('news_type', ['ri','ir'])
-            ->where('insight_type', 'Article')
+        // $articlesitemap = InsightList::whereNotIn('news_type', ['ri','ir'])
+        $articlesitemap = InsightList::where('insight_type', 'Article')
             ->where('cat_id', '!=', '')
             ->where('status', 1)->get();
          dd($articlesitemap->count());
