@@ -30,7 +30,7 @@ class InsightSitemapController extends Controller
 
         $articlesitemap = InsightList::where('news_type', 'fi')
 
-        // $articlesitemap = InsightList::where('insight_type', 'Article')
+        ->where('insight_type', 'Article')
             ->where('cat_id', '!=', '')
             ->where('status', 1)->get();
 
