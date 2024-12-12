@@ -6,6 +6,9 @@
         <loc>{{url('/')}}/insights/en/article.xml</loc>
     </sitemap>
     <sitemap>
+        <loc>{{url('/')}}/insights/en/article2.xml</loc>
+    </sitemap>
+    <sitemap>
         <loc>{{url('/')}}/insights/en/interview.xml</loc>
     </sitemap>
     <sitemap>

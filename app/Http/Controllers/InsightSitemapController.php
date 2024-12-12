@@ -24,14 +24,23 @@ class InsightSitemapController extends Controller
     }
     public function articlesitemap()
     {
-        // print_r('yes');
-        // dd('tesxt');
-        // $articlesitemap = InsightList::whereNotIn('news_type', ['ri','ir'])
-
         $articlesitemap = InsightList::query()
         ->where('insight_type', 'Article')
             ->where('cat_id', '!=', '')
             ->where('status', 1)->limit(12000)
+            ->get();
+
+        //  dd($articlesitemap);
+        return response()->view('insights.sitemaps.art_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
+    }
+    public function articlesitemaptwo()
+    {
+        $articlesitemap = InsightList::query()
+        ->where('insight_type', 'Article')
+            ->where('cat_id', '!=', '')
+            ->where('status', 1)
+            ->offset(12000) // Skip the first 12,000 records
+            ->limit(5000)   // Fetch the next 5,000 records
             ->get();
 
         //  dd($articlesitemap);
