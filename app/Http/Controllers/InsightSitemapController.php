@@ -31,7 +31,8 @@ class InsightSitemapController extends Controller
         $articlesitemap = InsightList::query()
         ->where('insight_type', 'Article')
             ->where('cat_id', '!=', '')
-            ->where('status', 1)->get();
+            ->where('status', 1)->limit(1)
+            ->get();
 
          dd($articlesitemap);
         return response()->view('insights.sitemaps.art_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
