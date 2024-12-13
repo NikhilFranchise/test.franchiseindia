@@ -809,12 +809,12 @@ class InsightsController extends Controller
         if (!$subcatData) {
             return redirect('/insights');  // Redirect if subcategory not found
         }
-
+        // dd($subcatData);
         $catData = $insightCatModel::query()
             ->where('slug', $categorySlug)
             ->where('id', $subcatData->mcat_id) // Ensure correct category based on subcategory
             ->first();
-
+        // dd($catData);
         if (!$catData) {
             return redirect('/insights');  // Redirect if category not found
         }
@@ -828,7 +828,7 @@ class InsightsController extends Controller
             ->whereNotNull('cat_id')  // Ensure category ID is present
             ->whereNotNull('subcat_id')  // Ensure subcategory ID is present
             ->paginate(10);
-
+        // dd($contentData);
         // Return the view with the appropriate language data
         return view('insights.subcatdata', compact('contentData', 'subcatData', 'catData'));
     }
