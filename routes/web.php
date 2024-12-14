@@ -1035,6 +1035,8 @@ Route::group(['prefix' => 'insights'], function () {
     Route::group(['prefix' => 'en'], function () {
         Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
         Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
+        Route::get('article2.xml',                   [InsightSitemapController::class, 'articlesitemaptwo'])->name('article2.xml');
+
         Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
         Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap'])->name('event.xml');
         Route::get('report.xml',                    [InsightSitemapController::class, 'reportsitemap'])->name('report.xml');

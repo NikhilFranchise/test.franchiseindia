@@ -62,7 +62,7 @@
             <div class="listblk">
                 <div class="container">
                     <ul class="artilsit">
-                        @foreach ($article as $art)
+                        @foreach ($articles as $art)
                             @php
 
                                 //$image = Config('constants.awsS3Url') . $art->image;
@@ -189,7 +189,7 @@
                         @endforeach
                     </ul>
                     <div class="d-felx justify-content-center">
-                        {{ $article->links('pagination::bootstrap-4') }}
+                        {{ $articles->links('pagination::bootstrap-4') }}
                     </div>
                 </div>
             </div>

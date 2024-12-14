@@ -8,7 +8,8 @@ use App\Models\InsightList;
 use App\Models\InsightCategory;
 use App\Models\InsightsHindiCategory;
 use App\Models\InsightSubcategory;
-use App\Models\InsightsHindiSubcategory;
+use App\Models\InsightsHindiSubCategory;
+use App\Models\Insights;
 use App\Models\AuthorList;
 use App\Models\InstaSubscribe;
 use App\Models\FiNewsLetter;
@@ -801,7 +802,7 @@ class InsightsController extends Controller
         session()->put('locale', $isEnglish);
         // Determine models based on the language (English or Hindi)
         $insightListModel = $isEnglish ? InsightList::class : InsightListHindi::class;
-        $insightSubCatModel = $isEnglish ? InsightSubcategory::class : InsightsHindiSubcategory::class;
+        $insightSubCatModel = $isEnglish ? InsightSubcategory::class : InsightsHindiSubCategory::class;
         $insightCatModel = $isEnglish ? InsightCategory::class : InsightsHindiCategory::class;
 
         // Fetch subcategory and category data
@@ -809,12 +810,12 @@ class InsightsController extends Controller
         if (!$subcatData) {
             return redirect('/insights');  // Redirect if subcategory not found
         }
-
+        // dd($subcatData);
         $catData = $insightCatModel::query()
             ->where('slug', $categorySlug)
             ->where('id', $subcatData->mcat_id) // Ensure correct category based on subcategory
             ->first();
-
+        // dd($catData);
         if (!$catData) {
             return redirect('/insights');  // Redirect if category not found
         }
@@ -828,7 +829,7 @@ class InsightsController extends Controller
             ->whereNotNull('cat_id')  // Ensure category ID is present
             ->whereNotNull('subcat_id')  // Ensure subcategory ID is present
             ->paginate(10);
-
+        // dd($contentData);
         // Return the view with the appropriate language data
         return view('insights.subcatdata', compact('contentData', 'subcatData', 'catData'));
     }

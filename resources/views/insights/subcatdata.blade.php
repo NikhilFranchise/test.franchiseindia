@@ -3,15 +3,15 @@
 @section('content')
     <div class="maininnver homeh">
         <div class="container">
-
-            <h1 class="cathead">{{ $subcat_data->subcat_name }}</h1>
+            {{--  @dd($subcatData)  --}}
+            <h1 class="cathead">{{ $subcatData->subcat_name }}</h1>
 
         </div>
         <div class="listblk">
             <div class="container">
                 <ul class="artilsit">
 
-                    @foreach ($contentdata as $article)
+                    @foreach ($contentData as $article)
                         @php
                             // Generate article details
                             $image = \App\Http\Controllers\InsightsController::createimgurl($article->image);
@@ -105,7 +105,7 @@
                 </ul>
                 <div class="d-felx justify-content-center">
 
-                    {{ $contentdata->links('pagination::bootstrap-4') }}
+                    {{ $contentData->links('pagination::bootstrap-4') }}
 
                 </div>
             </div>
