@@ -16,7 +16,7 @@
                     'Franchise 100' => 'फ्रेंचाइज़ 100',
                     'investment' => 'व्यापार में निवेश',
                 ];
-                $displayName = $locale == 'en' ? ucwords($data->name) : $hindiCategoryNames[$data->name] ?? $data->name;
+                $displayName = $locale == 'en' ? ucwords($data->name) : $hindiCategoryNames[$seoTag->name] ?? $seoTag->name;
             @endphp
 
             <h1 class="cathead">{{ $displayName }}</h1>
