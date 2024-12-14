@@ -44,7 +44,7 @@
                     @endforeach
                 </ul>
                 <div class="video-pagination">
-                    {{ $videos->links('pagination::bootstrap-4') }}
+                    {{ $listVideo->links('pagination::bootstrap-4') }}
                 </div>
             </div>
         </div>
@@ -55,9 +55,9 @@
                         $locale = App::getLocale();
 
                     @endphp
-                    <a href="#">Latest Podcast</a>
+                    <a href="#">{{ App::getLocale() == 'en' ? 'Latest Podcast' : 'नवीनतम पॉडकास्ट' }}</a>
                     <span class="slidervall">
-                        <a href="{{ url('insights/' . $locale . '/podcast') }}" target="_blank">View All</a>
+                        <a href="{{ url('insights/' . $locale . '/podcast') }}" target="_blank">{{ App::getLocale() == 'en' ? 'View All' : 'सभी को देखें' }}</a>
                     </span>
                 </div>
             </div>

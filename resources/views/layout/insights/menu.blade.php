@@ -17,8 +17,8 @@
                     </ul>
                 </div>
                 <div class="col-lg-2 col-xl-2 col-md-2">
-                    <span class="call">1800 102 2007 <span class="tel-img"><img
-                                src="{{ url('insight-new/images/tel.png') }}" alt="tel.png"></span> </span>
+                    {{--  <span class="call">1800 102 2007 <span class="tel-img"><img
+                                src="{{ url('insight-new/images/tel.png') }}" alt="tel.png"></span> </span>  --}}
                 </div>
                 <div class="col-lg-2 col-md-2">
                     <div class="topright">

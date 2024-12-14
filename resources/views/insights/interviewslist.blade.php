@@ -56,12 +56,12 @@
                                                 <img src="{{ url('insight-new/images/smallshare.svg') }}" class="inimg" />Share
                                                 <div class="sfv">
                                                     @foreach ([
-                                                        'facebook' => 'facebookcard.svg',
-                                                        'twitter' => 'twittercard.svg',
+                                                        'facebook' => '/insight-new/images/facebookcard.svg',
+                                                        'twitter' => '/insight-new/images/twittercard.svg',
                                                         'instagram' => 'https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg',
                                                         'youtube' => 'https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg'
                                                     ] as $platform => $icon)
-                                                        <div class="innersfv" onclick="window.open('https://{{ $platform }}.com/FranchiseIndia', '_blank')">
+                                                        <div class="innersfv" onclick="window.open('https://www.{{ $platform }}.com/FranchiseIndia', '_blank')">
                                                             <img src="{{ $icon }}" />
                                                         </div>
                                                     @endforeach

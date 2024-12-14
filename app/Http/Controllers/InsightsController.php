@@ -23,7 +23,8 @@ use App\Models\InsightListHindi;
 use App\Models\SeoTagHindi;
 use App\Models\FihlPodcastVideo;
 use App\Models\FihlVideoCategory;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class InsightsController extends Controller
 {
@@ -636,7 +637,7 @@ class InsightsController extends Controller
         return round($articlelen / 200);
     }
 
-    public static function insightCategory($locale)
+    public static function insightcategory($locale)
     {
         $model = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
 
@@ -835,31 +836,102 @@ class InsightsController extends Controller
         return view('insights.subcatdata', compact('contentData', 'subcatData', 'catData'));
     }
 
-    public  function getvideopodcast(Request $request)
+    // public  function getvideopodcast(Request $request)
+    // {
+    //     //dd('hello');
+    //     $isEnglish = request()->segment(2) == 'en' ? 'en' : 'hi';
+    //     $redirectPath = $isEnglish == 'en' ? '/insights' : '/insights/hindi';
+    //     app()->setLocale($isEnglish);
+    //     session()->put('locale', $isEnglish);
+    //     if ($isEnglish == 'en') {
+
+    //         $listVideo = FihlPodcastVideo::with('category')->where('podcast_type', 'V')->where('pod_lang', 'en')->where('status', 'A')
+    //             ->orderBy('created_at', 'DESC')
+    //             ->paginate(10);
+    //         $podcast = FihlPodcastVideo::query()->where('pod_lang', 'en')->where('podcast_type', 'A')->where('status', 'A')->orderByDesc('created_at')->where('podcast_id', '!=', '')->limit(4)->get();
+    //     } else {
+
+    //         $listVideo = FihlPodcastVideo::with('category')->where('podcast_type', 'V')->where('pod_lang', 'hi')->where('status', 'A')
+    //             ->orderBy('created_at', 'DESC')
+    //             ->paginate(10);
+    //         $podcast = FihlPodcastVideo::query()->where('pod_lang', 'hi')->where('podcast_type', 'A')->where('status', 'A')->orderByDesc('created_at')->where('podcast_id', '!=', '')->limit(4)->get();
+    //     }
+
+    //     // Add a limit as needed
+    //     dd($listVideo);
+    //     return view('insights.video', compact('listVideo', 'podcast'));
+    // }
+
+    public function getVideoPodcast(Request $request)
     {
-        //dd('hello');
-        $isEnglish = request()->segment(2) == 'en' ? 'en' : 'hi';
+        // Determine the language based on the URL segment
+        $isEnglish = $request->segment(2) == 'en' ? 'en' : 'hi';
         $redirectPath = $isEnglish == 'en' ? '/insights' : '/insights/hindi';
+
+        // Set application locale and session locale
         app()->setLocale($isEnglish);
         session()->put('locale', $isEnglish);
-        if ($isEnglish == 'en') {
-            $response = Http::get('https://www.opportunityindia.com/api/VideosAPI.php?page=videosAll&limit=40');
-            if ($response->ok()) {
-                $listVideo = $response->json();
-            }
-            $videos = FihlPodcastVideo::query()->where('podcast_type', 'V')->where('pod_lang', 'en')->where('status', 'A')->paginate(6);
-            $podcast = FihlPodcastVideo::query()->where('pod_lang', 'en')->where('podcast_type', 'A')->where('status', 'A')->orderByDesc('created_at')->where('podcast_id', '!=', '')->limit(4)->get();
-        } else {
-            $response = Http::get('https://www.opportunityindia.com/api/VideosAPIHindi.php?page=videosAll&limit=40');
-            if ($response->ok()) {
-                $listVideo = $response->json();
-            }
-            $videos = FihlPodcastVideo::query()->where('podcast_type', 'V')->where('pod_lang', 'hi')->where('status', 'A')->paginate(6);
-            $podcast = FihlPodcastVideo::query()->where('pod_lang', 'hi')->where('podcast_type', 'A')->where('status', 'A')->orderByDesc('created_at')->where('podcast_id', '!=', '')->limit(4)->get();
-        }
-        // dd($listVideo,$podcast);
-        return view('insights.video', compact('listVideo', 'videos', 'podcast'));
+
+        // Set YouTube URL and Image Path for video formatting
+        $YOUTUBE_IMAGE_PATH = "https://img.youtube.com/vi/%s/mqdefault.jpg";
+        $YOUTUBE_URL = "https://www.youtube.com/watch?v=%s";
+
+        // Determine query parameters
+        $offset = $request->input('offset', 0);
+        $limit = $request->input('limit', 4);
+        $limit = ($limit > 50) ? 50 : $limit; // Ensure limit doesn't exceed 50
+
+        // Fetch video podcasts and additional podcast data
+        $listVideoQuery = FihlPodcastVideo::with('category')
+            ->where('podcast_type', 'V')
+            ->where('pod_lang', $isEnglish)
+            ->where('status', 'A')
+            ->orderBy('created_at', 'DESC');
+
+        // Get total records count for pagination
+        $total = $listVideoQuery->count();
+
+        // Apply offset and limit
+        $videos = $listVideoQuery->offset($offset)->limit($limit)->get();
+
+        // Map and format results
+        $mappedVideos = $videos->map(function ($video) use ($YOUTUBE_IMAGE_PATH, $YOUTUBE_URL) {
+            return [
+                'sno' => $video->sno,
+                'title' => $video->title,
+                'pod_lang' => $video->pod_lang,
+                'description' => $video->description,
+                'url' => sprintf($YOUTUBE_URL, $video->videoID),
+                'image' => sprintf($YOUTUBE_IMAGE_PATH, $video->videoID),
+                'views' => $video->views,
+                'createDate' => $video->createDate,
+                'category' => $video->category->catname ?? null, // Ensure category is safely accessed
+            ];
+        });
+
+        // Create a paginated response
+        $listVideo = new LengthAwarePaginator(
+            $mappedVideos, // Items for the current page
+            $total,        // Total number of items
+            $limit,        // Items per page
+            ($offset / $limit) + 1, // Current page
+            ['path' => request()->url(), 'query' => request()->query()] // Path and query params for pagination links
+        );
+
+        $podcast = FihlPodcastVideo::query()
+            ->where('pod_lang', $isEnglish)
+            ->where('podcast_type', 'A')
+            ->where('status', 'A')
+            ->where('podcast_id', '!=', '')
+            ->orderByDesc('created_at')
+            ->limit(4)
+            ->get();
+
+            dd($videos);
+        // Return the view with videos and podcast data
+        return view('insights.video', compact('listVideo', 'podcast'));
     }
+
 
     public function getpodcast(Request $request)
     {
