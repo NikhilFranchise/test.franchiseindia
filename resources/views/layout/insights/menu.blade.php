@@ -60,6 +60,7 @@
                                 $insightsLabel = $locale == 'en' ? 'Insights' : 'इनसाइट्स';
                                 $interviewsLabel = $locale == 'en' ? 'Executive Interviews' : 'कार्यकारी साक्षात्कार';
                                 $eventsReportsLabel = $locale == 'en' ? 'Events & Reports' : 'इवेंट और रिपोर्ट';
+                                $videoPodcastLabel = $locale == 'en' ? 'Video & Podcast' : 'वीडियो और पॉडकास्ट';
                             @endphp
 
                             <li>
@@ -84,6 +85,7 @@
                             <li><a href="{{ $categoryUrlPrefix }}industryfocus">{{ $insightsLabel }}</a></li>
                             <li><a href="{{ $categoryUrlPrefix }}interviews">{{ $interviewsLabel }}</a></li>
                             <li><a href="{{ $categoryUrlPrefix }}events_reports">{{ $eventsReportsLabel }}</a></li>
+                            <li><a href="{{ $categoryUrlPrefix }}video_podcast">{{ $videoPodcastLabel }}</a></li>
 
                         </ul>
                     </nav>

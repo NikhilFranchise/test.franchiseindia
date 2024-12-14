@@ -80,11 +80,12 @@
                         </li>
                     @endforeach
                 </ul>
-                <div class="d-flex justify-content-center">
+                <div class="video-pagination">
                     {{ $insArticles->links('pagination::bootstrap-4') }}
                 </div>
             </div>
         </div>
+
         <!-- Include additional blocks -->
         @include('layout.insights.magblock')
         @include('layout.insights.brandlist')

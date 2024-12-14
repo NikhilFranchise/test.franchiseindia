@@ -81,7 +81,7 @@
                         </li>
                     @endforeach
                 </ul>
-                <div class="d-flex justify-content-center">
+                <div class="video-pagination">
                     {{ $insightcategories->links('pagination::bootstrap-4') }}
                 </div>
             </div>

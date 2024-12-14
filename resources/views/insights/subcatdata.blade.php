@@ -103,7 +103,7 @@
 
 
                 </ul>
-                <div class="d-felx justify-content-center">
+                <div class="video-pagination">
 
                     {{ $contentData->links('pagination::bootstrap-4') }}
 

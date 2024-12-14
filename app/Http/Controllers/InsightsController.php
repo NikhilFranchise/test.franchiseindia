@@ -9,7 +9,6 @@ use App\Models\InsightCategory;
 use App\Models\InsightsHindiCategory;
 use App\Models\InsightSubcategory;
 use App\Models\InsightsHindiSubCategory;
-use App\Models\Insights;
 use App\Models\AuthorList;
 use App\Models\InstaSubscribe;
 use App\Models\FiNewsLetter;
@@ -22,7 +21,9 @@ use Illuminate\Support\Facades\Log;
 use App\Models\FranchisorBusinessDetail;
 use App\Models\InsightListHindi;
 use App\Models\SeoTagHindi;
-use function PHPUnit\Framework\isNull;
+use App\Models\FihlPodcastVideo;
+use App\Models\FihlVideoCategory;
+use Illuminate\Support\Facades\Http;
 
 class InsightsController extends Controller
 {
@@ -562,9 +563,9 @@ class InsightsController extends Controller
         $redirectPath = $locale == 'en' ? '/insights' : '/insights/hindi';
         app()->setLocale($locale);
         session()->put('locale', $locale);
-        $insightModel = $locale =='en' ? InsightList::class : InsightListHindi::class;
-        $tagModel = $locale =='en' ? SeoTag::class : SeoTagHindi::class;
-        $contentModel = $locale =='en' ? ContentTagsAssigned::class : ContentTagsAssignedHindi::class;
+        $insightModel = $locale == 'en' ? InsightList::class : InsightListHindi::class;
+        $tagModel = $locale == 'en' ? SeoTag::class : SeoTagHindi::class;
+        $contentModel = $locale == 'en' ? ContentTagsAssigned::class : ContentTagsAssignedHindi::class;
 
         // Fetch the tag data
         $seoTag = $tagModel::query()->where('name', $tagstr)->first();
@@ -834,7 +835,47 @@ class InsightsController extends Controller
         return view('insights.subcatdata', compact('contentData', 'subcatData', 'catData'));
     }
 
+    public  function getvideopodcast(Request $request)
+    {
+        //dd('hello');
+        $isEnglish = request()->segment(2) == 'en' ? 'en' : 'hi';
+        $redirectPath = $isEnglish == 'en' ? '/insights' : '/insights/hindi';
+        app()->setLocale($isEnglish);
+        session()->put('locale', $isEnglish);
+        if ($isEnglish == 'en') {
+            $response = Http::get('https://www.opportunityindia.com/api/VideosAPI.php?page=videosAll&limit=40');
+            if ($response->ok()) {
+                $listVideo = $response->json();
+            }
+            $videos = FihlPodcastVideo::query()->where('podcast_type', 'V')->where('pod_lang', 'en')->where('status', 'A')->paginate(6);
+            $podcast = FihlPodcastVideo::query()->where('pod_lang', 'en')->where('podcast_type', 'A')->where('status', 'A')->orderByDesc('created_at')->where('podcast_id', '!=', '')->limit(4)->get();
+        } else {
+            $response = Http::get('https://www.opportunityindia.com/api/VideosAPIHindi.php?page=videosAll&limit=40');
+            if ($response->ok()) {
+                $listVideo = $response->json();
+            }
+            $videos = FihlPodcastVideo::query()->where('podcast_type', 'V')->where('pod_lang', 'hi')->where('status', 'A')->paginate(6);
+            $podcast = FihlPodcastVideo::query()->where('pod_lang', 'hi')->where('podcast_type', 'A')->where('status', 'A')->orderByDesc('created_at')->where('podcast_id', '!=', '')->limit(4)->get();
+        }
+        // dd($listVideo,$podcast);
+        return view('insights.video', compact('listVideo', 'videos', 'podcast'));
+    }
 
+    public function getpodcast(Request $request)
+    {
+        $isEnglish = request()->segment(2) == 'en' ? 'en' : 'hi';
+        $redirectPath = $isEnglish == 'en' ? '/insights' : '/insights/hindi';
+        app()->setLocale($isEnglish);
+        session()->put('locale', $isEnglish);
+        if ($isEnglish == 'en') {
+            $podcasts = FihlPodcastVideo::query()->where('podcast_type', 'A')->where('pod_lang', 'en')->where('status', 'A')->where('podcast_id', '!=', '')->orderByDesc('created_at')->paginate(6);
+            $podcastcount = FihlPodcastVideo::query()->where('podcast_type', 'A')->where('pod_lang', 'en')->where('status', 'A')->where('podcast_id', '!=', '')->count();
+        } else {
+            $podcasts = FihlPodcastVideo::query()->where('podcast_type', 'A')->where('pod_lang', 'hi')->where('status', 'A')->where('podcast_id', '!=', '')->orderByDesc('created_at')->paginate(6);
+            $podcastcount = FihlPodcastVideo::query()->where('podcast_type', 'A')->where('pod_lang', 'hi')->where('status', 'A')->where('podcast_id', '!=', '')->count();
+        }
+        return view('insights.podcast', compact('podcasts', 'podcastcount'));
+    }
 
     public static function createTagSlugUrl($slug)
     {
