@@ -8,7 +8,8 @@ use App\Models\InsightList;
 use App\Models\InsightCategory;
 use App\Models\InsightsHindiCategory;
 use App\Models\InsightSubcategory;
-use App\Models\InsightsHindiSubcategory;
+use App\Models\InsightsHindiSubCategory;
+use App\Models\Insights;
 use App\Models\AuthorList;
 use App\Models\InstaSubscribe;
 use App\Models\FiNewsLetter;
@@ -801,7 +802,7 @@ class InsightsController extends Controller
         session()->put('locale', $isEnglish);
         // Determine models based on the language (English or Hindi)
         $insightListModel = $isEnglish ? InsightList::class : InsightListHindi::class;
-        $insightSubCatModel = $isEnglish ? InsightSubcategory::class : InsightsHindiSubcategory::class;
+        $insightSubCatModel = $isEnglish ? InsightSubcategory::class : InsightsHindiSubCategory::class;
         $insightCatModel = $isEnglish ? InsightCategory::class : InsightsHindiCategory::class;
 
         // Fetch subcategory and category data
