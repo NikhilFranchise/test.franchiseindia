@@ -4,17 +4,18 @@
 @section('seoDesc', $newsDetails->shortDesc)
 @section('seoKeywords', $newsDetails->kicker)
 @section('canonicalUrl', url()->current())
-
 @php
+
     $ogimage = \App\Http\Controllers\InsightsController::createimgurl($newsDetails->image);
     $imageDetails = @getimagesize($ogimage);
-    $width = $imageDetails[0] ?? 0;
-    $height = $imageDetails[1] ?? 0;
+
+    $width = $imageDetails[0] ? $imageDetails[0] : 0;
+    $height = $imageDetails[1] ? $imageDetails[1] : 0;
 
     $locale = App::getLocale();
     $baseUrl = Config('constants.MainDomain') . "/insights/$locale/";
     $newsUrl = $baseUrl . $newsDetails->slug . '.' . $newsDetails->news_id;
-
+    //$author_details
     $authorSlug = $author_details->slug ?? strtolower(str_replace(' ', '-', $author_details->title));
     //dd($authorSlug);
     $authorUrl = $baseUrl . 'author/' . $authorSlug . '-' . $author_details->author_id;

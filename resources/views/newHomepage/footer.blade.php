@@ -68,7 +68,7 @@
 
 @endphp
 
-@if (
+{{-- @if (
     !(request()->segment(1) == 'brands' &&
         !empty(request()->segment(2)) &&
         in_array(explode('.', request()->segment(2))[1], Config('constants.popupBrands'))
@@ -90,9 +90,9 @@
         @endif
     @endforeach
 
-@endif
+@endif --}}
 
-@endif
+{{-- @endif --}}
 
 
 @if (request()->segment(1) == 'hi')

@@ -17,10 +17,10 @@
         @include('ssr.pagination', ['items' => $items])
     </div>
 
-    <div class="pagination">
+    {{-- <div class="pagination">
         <!-- Pagination links will be rendered here -->
         {{ $items->links() }}
-    </div>
+    </div> --}}
 
     <script>
         $(document).ready(function() {

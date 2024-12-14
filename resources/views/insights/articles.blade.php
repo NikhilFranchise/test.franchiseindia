@@ -3,6 +3,7 @@
     <div class="maininnver homeh">
         <div class="container">
             <h1 class="cathead">
+                {{--  @dd(App::getLocale());  --}}
                 {{ App::getLocale() == 'en' ? 'Insights' : 'इनसाइट्स' }}
             </h1>
         </div>

@@ -29,24 +29,29 @@
 <div id="content">
     <!--breadcrumbs-->
     <div id="content-header">
+        @php
+            $lang = request()->segment(2);
+            //echo $lang; die;
+            $locale = $lang == 'en' ? 'English' : 'Hindi';
+        @endphp
         <div id="breadcrumb">
             <a href="{{url('admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a>
-            <a href="{{url('admin/cat/list')}}" class="tip-bottom">Main Category/Sub Category</a>
-            <a href="" class="current">Create Main Category</a> </div>
-        <h1>Create Main Category</h1>
+            <a href="{{url('admin/cat/list')}}" class="tip-bottom">{{ $locale }} Main Category/{{ $locale }} Sub Category</a>
+            <a href="" class="current">Create {{ $locale }} Main Category</a> </div>
+        <h1>Create {{ $locale }} Main Category</h1>
     </div>
     <div class="container-fluid">
         <hr>
         <div class="row-fluid">
             <div class="widget-box">
                 <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-                    <h5>Main Category Details</h5>
+                    <h5>{{ $locale }} Main Category Details</h5>
                 </div>
                 <div class="widget-content nopadding">
                     @if (!empty(session()->get('failed')))
                         <div class="alert alert-danger">{{ session()->get('failed') }}</div>
                     @endif
-                    <form method="POST" class="form-horizontal" action="{{url('admin/create/cat')}}">
+                    <form method="POST" class="form-horizontal" action="{{url('admin/' .$lang.'/create/cat')}}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="control-group">
@@ -56,7 +61,7 @@
                                 <div id="error-message" style="color: red;"></div>
                             </div>
                         </div>
-                        
+
 
                         <div class="form-actions" style="text-align: center;">
                             <button type="submit" id="ariclesubmit" class="btn btn-success">Create</button>

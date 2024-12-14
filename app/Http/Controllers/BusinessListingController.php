@@ -2133,45 +2133,60 @@ class BusinessListingController extends Controller
 {
     $minrange = $request->input('minvaluerange');
     $maxrange = $request->input('maxvaluerange');
-    // dd($minrange);
-//     $shuffledResults = FranchisorBusinessDetail::query()
-//     ->select(
-//         'fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 
-//         'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 
-//         'looking_franchise', 'membership_weightage', 'franchise_start_year', 
-//         'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 
-//         'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 
-//         'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 
-//         'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 
-//         'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 
-//         'free_logo_visibility', 'brand_verified', 'views', 'activated_at'
-//     )
-//     ->whereIn('profile_status', [1, 11])
-//     ->orderByDesc('membership_weightage') // Correct sorting method
-//     ->limit(10) // Limit the number of results
-//     ->get();
+   
+$shuffledResults = FranchisorBusinessDetail::query()->select(
+    'fran_detail_id',
+    'franchisor_id',
+    'profile_name',
+    'company_name',
+    'state',
+    'ind_sub_cat',
+    'operations_start_year',
+    'looking_tradepartner',
+    'looking_franchise',
+    'membership_weightage',
+    'franchise_start_year',
+    'no_fran_outlets',
+    'franchise_partner_type',
+    'city',
+    'unit_investment',
+    'expansion_loc_type',
+    'business_desc',
+    'membership_plan',
+    'prop_area_min',
+    'prop_area_max',
+    'profile_status',
+    'business_desc',
+    'ind_main_cat',
+    'ind_cat',
+    'ind_sub_cat',
+    'membership_type',
+    'company_logo',
+    'unit_inv_min',
+    'unit_inv_max',
+    'is_hindi',
+    'business_desc_hindi',
+    'free_logo_visibility',
+    'brand_verified',
+    'views',
+    'activated_at'
+)
+->whereIn('profile_status', [1, 11])
+->where('membership_type', 1)
+// ->sortByDesc('membership_weightage')
+// ->get();
+->paginate(10); // Fetch the results as a collection
+
+// $shuffledResults = $franData->shuffle()->sortByDesc('membership_weightage');
 
 
-// // dd($shuffledResults);
-
-//     // return response()->json($shuffledResults);
-    
-//     $html = view('category.listing_loop_prange', ['shuffledResults' => $shuffledResults])->render();
-//     // dd($html);
-//     return response()->json(['html' => $html]); 
-
-// dd('yes');
-$shuffledResults = FranchisorBusinessDetail::paginate(5); // 10 items per page
-
-    // If the request is an AJAX request
     if ($request->ajax()) {
         return response()->json([
-            'html' => view('ssr.pagination', compact('items'))->render(),
+            'html' => view('ssr.listing', compact('shuffledResults'))->render(),
             'next_page' => $shuffledResults->nextPageUrl(), // Next page URL for AJAX request
         ]);
     }
-
-    return view('category.ssr', compact('shuffledResults'));
+    return view('ssr.category', compact('shuffledResults'));
 }
 
 public function getajax(){

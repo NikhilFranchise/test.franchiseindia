@@ -1304,17 +1304,6 @@ public function fetchDataajax2(Request $request)
 }
 
 
-public function fetchtest(Request $request)
-{
-    $data = YourModel::paginate(10); // Adjust the pagination size as needed
 
-    if ($request->ajax()) {
-        return response()->json([
-            'html' => view('partials.data', compact('data'))->render()
-        ]);
-    }
-
-    return view('your_main_view', compact('data'));
-}
 }
 

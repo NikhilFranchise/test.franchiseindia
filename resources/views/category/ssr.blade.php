@@ -1,9 +1,9 @@
 @extends('layout.master')
 {{-- @extends('listing_layout.master') --}}
 
-@php
+{{-- @php
     $shuffledResults = count($shuffledResults);
-@endphp
+@endphp --}}
 
 {{-- @if ($brandCount < 2)
     @section('robot', 'noindex, nofollow')
@@ -117,6 +117,7 @@ $c_Url = url()->current();
                             $shortBox = 0;
                         @endphp
                         <div  id="renderedData">
+                            {{-- @dd($shuffledResults); --}}
 
                         @foreach ($shuffledResults as $brandResult)
                             <!-- category list section start here-->
@@ -165,13 +166,13 @@ $c_Url = url()->current();
                                         $SubCatName = $abc[$brandResult->ind_sub_cat];
                                     }
                                 }
-                                foreach ($franImageData as $imgData) {
-                                    if ($imgData->franchisor_id == $brandResult->franchisor_id) {
-                                        $image = $imgData->image_type_slider2;
-                                        $is_premium = 1;
-                                        $imgCount = $imgData->count;
-                                    }
-                                }
+                                // foreach ($franImageData as $imgData) {
+                                //     if ($imgData->franchisor_id == $brandResult->franchisor_id) {
+                                //         $image = $imgData->image_type_slider2;
+                                //         $is_premium = 1;
+                                //         $imgCount = $imgData->count;
+                                //     }
+                                // }
                                 if (!empty($brandResult->prop_area_max)) {
                                     $area = $brandResult->prop_area_min . ' - ' . $brandResult->prop_area_max;
                                 }
@@ -455,7 +456,7 @@ $c_Url = url()->current();
                         </div>
 
                         @include('category.final-conditions')
-                        @php
+                        {{-- @php
                             $params = ['sortby' => $orderby];
                             if (!empty($text)) {
                                 $params['text'] = $text;
@@ -463,19 +464,17 @@ $c_Url = url()->current();
                             if (!empty($searchq)) {
                                 $params['searchq'] = $searchq;
                             }
-                        @endphp
-                        <div class="row">
+                        @endphp --}}
+                        {{-- <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 @if (count($brandResults) == 0)
                                     <div class="noresults">No result found</div>
                                 @endif
-                                {{-- {!! $brandResults
-                                ->appends($params)
-                                ->render() !!} --}}
+                               
                                 {!! $brandResults->appends($params)->links('vendor.pagination.custom') !!}
 
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- category list section end here-->
                 </div>
@@ -485,7 +484,7 @@ $c_Url = url()->current();
     <!--runner end here 1 -->
 
     <!--Landing page seo heading start here -->
-    @include('category.seo-desc')
+    {{-- @include('category.seo-desc') --}}
     <!--Landing page seo heading end here -->
 
     <div id="comparebottom" class="ttl-brnd-list">

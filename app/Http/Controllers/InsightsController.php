@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\SeoTag;
 use App\Models\InsightList;
 use App\Models\InsightCategory;
+use App\Models\InsightsHindiCategory;
 use App\Models\InsightSubcategory;
+use App\Models\InsightsHindiSubcategory;
 use App\Models\AuthorList;
 use App\Models\InstaSubscribe;
 use App\Models\FiNewsLetter;
@@ -19,11 +21,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\FranchisorBusinessDetail;
 use App\Models\InsightListHindi;
 use App\Models\SeoTagHindi;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\File;
+use function PHPUnit\Framework\isNull;
 
 class InsightsController extends Controller
 {
@@ -184,82 +182,71 @@ class InsightsController extends Controller
 
     public function getinsightstories()
     {
-        if (request()->segment(2) == 'en') {
-            $insightstories = InsightList::with('author')
-                ->where('insight_type', 'News')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->where('status', 1)
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('created_at')->paginate(10);
-            $insightstories = CommonController::contentUrlSlug($insightstories);
-        } else {
-            $insightstories = InsightListHindi::with('author')
-                ->where('insight_type', 'News')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->where('status', 1)
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('created_at')->paginate(10);
-            $insightstories = CommonController::contentUrlSlug($insightstories);
-        }
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+
+        $insightstories = $model::with('author')
+            ->where('insight_type', 'News')
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->where('status', 1)
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')->paginate(10);
+        $insightstories = CommonController::contentUrlSlug($insightstories);
         return view('insights.topstories', compact('insightstories'));
     }
 
     public function industryfocus()
     {
-        if (request()->segment(2) == 'en') {
-            $insArticles = InsightList::with('author')
-                ->where('insight_type', '=', 'Article')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->where('status', 1)
-                ->orderByDesc('created_at')
-                ->paginate(10);
-            // dd($insArticles);
-            $insArticles      = CommonController::contentUrlSlug($insArticles);
-        } else {
-            $insArticles = InsightListHindi::with('author')
-                ->where('insight_type', '=', 'Article')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->where('status', 1)
-                ->orderByDesc('created_at')
-                ->paginate(10);
-            // dd($insArticles);
-            $insArticles      = CommonController::contentUrlSlug($insArticles);
-        }
+        // Set the language
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+
+        // Choose the appropriate model based on the locale
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+
+        // Fetch the insights articles
+        $insArticles = $model::with('author')
+            ->where('insight_type', 'Article')
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->paginate(10);
+
+        // Handle empty results
         if ($insArticles->isEmpty()) {
             return redirect('/insights');
-        } else {
-            return view('insights.articles', compact('insArticles'));
         }
+
+        // Apply the content URL slug logic
+        $insArticles = CommonController::contentUrlSlug($insArticles);
+
+        // Return the view with the articles
+        return view('insights.articles', compact('insArticles'));
     }
 
     public function getinsightsinterviews()
     {
-        if (request()->segment(2) == 'en') {
-            $interviews  = InsightList::with('author')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->where('insight_type', 'Interview')
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->where('status', 1)
-                ->orderByDesc('created_at')
-                ->paginate(10);
-            $interviews = CommonController::contentUrlSlug($interviews);
-        } else {
-            $interviews  = InsightListHindi::with('author')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->where('insight_type', 'Interview')
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->where('status', 1)
-                ->orderByDesc('created_at')
-                ->paginate(10);
-        }
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+
+        // Choose the appropriate model based on the locale
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+        $interviews  = $model::with('author')
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->where('insight_type', 'Interview')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->paginate(10);
+        $interviews = CommonController::contentUrlSlug($interviews);
         if ($interviews->isEmpty()) {
             return redirect('/insights');
         } else {
@@ -269,29 +256,23 @@ class InsightsController extends Controller
 
     public function geteventsreports()
     {
-        if (request()->segment(2) == 'en') {
-            $events_reports = InsightList::with('author')
-                ->where('status', 1)
-                ->whereNotIn('news_type', ['ri', 'ir'])
-                ->where('insight_type', 'Event')
-                ->orWhere('insight_type', 'Report')
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('news_id')
-                ->paginate(10);
-            $events_reports = CommonController::contentUrlSlug($events_reports);
-        } else {
-            $events_reports = InsightListHindi::with('author')
-                ->where('status', 1)
-                ->whereNotIn('news_type', ['ri', 'ir'])
-                ->where('insight_type', 'Event')
-                ->orWhere('insight_type', 'Report')
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('news_id')
-                ->paginate(10);
-            $events_reports = CommonController::contentUrlSlug($events_reports);
-        }
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+
+        // Choose the appropriate model based on the locale
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+        $events_reports = $model::with('author')
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->where('insight_type', 'Event')
+            ->orWhere('insight_type', 'Report')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('news_id')
+            ->paginate(10);
+        $events_reports = CommonController::contentUrlSlug($events_reports);
+
         if ($events_reports->isEmpty()) {
             return redirect('/insights');
         } else {
@@ -300,100 +281,145 @@ class InsightsController extends Controller
     }
 
 
+    // public function authordata(Request $request)
+    // {
+
+    //     $author_id =  explode('-', $request->slug);
+    //     $id = end($author_id);
+    //     if (!is_int($id)) {
+    //         $id = (int)$id;
+    //         if ($id == 0) return redirect('/insight');
+    //     }
+    //     if ($request->segment(2) == 'en') {
+    //         $author = AuthorList::find($id);
+    //         $articleCount = InsightList::where('author_id', $id)
+    //             ->whereNotIn('news_type', ['ri', 'ir'])->count();
+    //         $article = InsightList::where('author_id', $id)
+    //             ->where('status', 1)
+    //             ->whereNotIn('news_type', ['ri', 'ir'])
+    //             ->whereNotNull('image')
+    //             ->whereNotNull('cat_id')
+    //             ->orderByDesc('created_at')
+    //             ->paginate(6);
+    //         $article = CommonController::contentUrlSlug($article);
+    //     } else {
+    //         $author = AuthorList::find($id);
+    //         $articleCount = InsightListHindi::where('author_id', $id)
+    //             ->whereNotIn('news_type', ['ri', 'ir'])->count();
+    //         $article = InsightListHindi::where('author_id', $id)
+    //             ->where('status', 1)
+    //             ->whereNotIn('news_type', ['ri', 'ir'])
+    //             ->whereNotNull('image')
+    //             ->whereNotNull('cat_id')
+    //             ->orderByDesc('created_at')
+    //             ->paginate(6);
+    //         $article = CommonController::contentUrlSlug($article);
+    //     }
+    //     return view('insights.author', compact('author', 'article', 'articleCount'));
+    // }
+
     public function authordata(Request $request)
     {
+        // Extract and validate the author ID from the slug
+        $author_id = explode('-', $request->slug);
+        $id = (int) end($author_id);
 
-        $author_id =  explode('-', $request->slug);
-        $id = end($author_id);
-        if (!is_int($id)) {
-            $id = (int)$id;
-            if ($id == 0) return redirect('/insight');
+        // Redirect if the ID is invalid
+        if ($id == 0) {
+            return redirect('/insight');
         }
-        if ($request->segment(2) == 'en') {
-            $author = AuthorList::find($id);
-            $articleCount = InsightList::where('author_id', $id)
-                ->whereNotIn('news_type', ['ri', 'ir'])->count();
-            $article = InsightList::where('author_id', $id)
-                ->where('status', 1)
-                ->whereNotIn('news_type', ['ri', 'ir'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('created_at')
-                ->paginate(6);
-            $article = CommonController::contentUrlSlug($article);
-        } else {
-            $author = AuthorList::find($id);
-            $articleCount = InsightListHindi::where('author_id', $id)
-                ->whereNotIn('news_type', ['ri', 'ir'])->count();
-            $article = InsightListHindi::where('author_id', $id)
-                ->where('status', 1)
-                ->whereNotIn('news_type', ['ri', 'ir'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('created_at')
-                ->paginate(6);
-            $article = CommonController::contentUrlSlug($article);
-        }
-        return view('insights.author', compact('author', 'article', 'articleCount'));
+
+        // Set the appropriate model and fetch data based on the language
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+
+        // Choose the appropriate model based on the locale
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+        $author = AuthorList::find($id);
+
+        // Count the articles
+        $articleCount = $model::where('author_id', $id)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->count();
+
+        // Fetch articles with the necessary conditions
+        $articles = $model::where('author_id', $id)
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->paginate(6);
+
+        // Apply URL slug transformation
+        $articles = CommonController::contentUrlSlug($articles);
+
+        // Return the view with the author data and articles
+        return view('insights.author', compact('author', 'articles', 'articleCount'));
     }
+
 
     public function insightscategorydata(Request $request)
     {
-        $slug = $request->slug;
-        $slugr = str_replace(' ', '-', $slug);
-        $slugarr = strtolower($slugr);
-        // dd($slugarr);
+        $slug = strtolower(str_replace(' ', '-', $request->slug));
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
 
-        if (request()->segment(2) == 'en') {
-            $category = InsightCategory::query()
-                ->where('slug', $slugarr)
-                ->where('status', '1')
-                ->first();
-            // dd($category);
-            if ($category) {
-                $insightcategories = InsightList::with('author')
-                    ->where('cat_id', $category->id)
-                    ->where('status', 1)
-                    ->whereNotIn('news_type', ['ri', 'ir'])
-                    ->orderByDesc('news_id')
-                    ->paginate(10);
-                $insightcategories = CommonController::contentUrlSlug($insightcategories);
-                // dd($insightcategories);
-            }
-        } else {
-            $category = InsightCategory::query()
-                ->where('slug', $slugarr)
-                ->where('status', '1')
-                ->first();
+        // Choose the appropriate model based on the locale
 
-            if ($category) {
-                $insightcategories = InsightListHindi::with('author')
-                    ->where('cat_id', $category->id)
-                    ->where('status', 1)
-                    ->whereNotIn('news_type', ['ri', 'ir'])
-                    ->orderByDesc('news_id')
-                    ->paginate(10);
-                $insightcategories = CommonController::contentUrlSlug($insightcategories);
-            }
+        // Determine the appropriate models based on the language
+        $categoryModel = $locale == 'hi' ? InsightsHindiCategory::class : InsightCategory::class;
+        $insightListModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+
+        // Fetch the category
+        $category = $categoryModel::query()
+            ->where('slug', $slug)
+            ->where('status', 1)
+            ->first();
+
+        if (!$category) {
+            return redirect('/insights');
         }
-        if ($insightcategories->count() > 0) {
-            return view('insights.categorylist', compact('insightcategories', 'category'));
-        } else {
-            return redirect('/insights/hindi');
+
+        // Fetch the insights for the category
+        $insightcategories = $insightListModel::with('author')
+            ->where('cat_id', $category->id)
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByDesc('news_id')
+            ->paginate(10);
+
+        // Apply content URL slug transformation
+        $insightcategories = CommonController::contentUrlSlug($insightcategories);
+
+        // Check if insights are available
+        if ($insightcategories->isEmpty()) {
+            return redirect('/insights');
         }
+
+        // Return the view with compacted data
+        return view('insights.categorylist', compact('insightcategories', 'category'));
     }
+
 
     public function trendstories()
     {
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
 
-        $trendstories = InsightList::with('author')
+        // Choose the appropriate model based on the locale
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+        $trendstories = $model::with('author')
             ->where('insight_type', 'News')
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->where('status', 1)
             ->orderByDesc('created_at')
-            ->paginate(6);
+            ->paginate(8);
 
         $trendstories = CommonController::contentUrlSlug($trendstories);
         if ($trendstories->isEmpty()) {
@@ -403,233 +429,71 @@ class InsightsController extends Controller
         }
     }
 
-    // public function getInsightsDetails(Request $request)
-    // {
-    //     $id = $request->id;
-    //     $cacheDuration = 3600;
-
-    //     // Cache key for the news details
-    //     $newsCacheKey = "news_details_{$id}";
-
-    //     // Retrieve or cache news details
-    //     $newsDetails = Cache::remember($newsCacheKey, $cacheDuration, function () use ($id) {
-    //         return InsightList::with(['author', 'category', 'Subcategory'])
-    //             ->where('status', 1)
-    //             ->whereNotIn('news_type', ['ri','ir'])
-    //             ->where('news_id', $id)
-    //             ->first();
-    //     });
-    //     // dd($newsDetails->author);
-
-    //     if (empty($newsDetails)) {
-    //         return redirect('insights/pagenotfound');
-    //     }
-
-    //     // Cache key for the author details
-    //     $authorCacheKey = "author_details_{$newsDetails['author_id']}";
-    //     if (!empty($newsDetails->author->author_id)) {
-    //         $author_details = Cache::remember($authorCacheKey, $cacheDuration, function () use ($newsDetails) {
-    //             return AuthorList::query()->where('author_id', $newsDetails->author->author_id)->get();
-    //         });
-    //     }
-
-    //     // Cache key for associated tags
-    //     $tagsCacheKey = "associated_tags_{$id}";
-
-    //     $associatedTags = Cache::remember($tagsCacheKey, $cacheDuration, function () use ($id) {
-    //         return ContentTagsAssigned::query()
-    //             ->where('content_id', $id)
-    //             ->select('tag_id')
-    //             ->where('content_type', 2)
-    //             ->get();
-    //     });
-
-    //     // Get associated SEO tags
-    //     $assocTags = [];
-    //     foreach ($associatedTags as $tags) {
-    //         $tagCacheKey = "seo_tag_{$tags->tag_id}";
-
-    //         $assocTag = Cache::remember($tagCacheKey, $cacheDuration, function () use ($tags) {
-    //             return SeoTag::query()
-    //                 ->where('tag_id', $tags->tag_id)
-    //                 ->select('tag_id', 'name')
-    //                 ->distinct()
-    //                 ->first();
-    //         });
-
-    //         if ($assocTag) {
-    //             $assocTags[] = $assocTag;
-    //         }
-    //     }
-
-    //     $allBrandMatches = [];
-    //     //    foreach ($newsDetails as $detail) {
-    //     $title = strtolower($newsDetails->title);
-    //     $titleWords = preg_split('/\s+/', $title); // Split title into words using spaces
-
-    //     $brandMatches = Cache::remember("brand_matches_" . md5($title), $cacheDuration, function () use ($title, $titleWords) {
-    //         // Fetch company details and filter based on exact matches in title words
-    //         return FranchisorBusinessDetail::where('profile_status', 1)
-    //             ->select('fran_detail_id', 'company_name', 'profile_name')
-    //             ->get()
-    //             ->filter(function ($item) use ($titleWords) {
-    //                 // Split the company name into words and ensure each word is exactly in the title words
-    //                 $companyWords = explode(' ', strtolower($item->company_name));
-    //                 // Escape regex characters in company words
-    //                 $escapedWords = array_map(function ($word) {
-    //                     return preg_quote($word, '/');
-    //                 }, $companyWords);
-    //                 // Form a regex pattern to match words in sequence within the title
-    //                 $pattern = '/\b' . implode('\b.*?\b', $escapedWords) . '\b/';
-    //                 return preg_match($pattern, implode(' ', $titleWords));
-    //             })
-    //             ->take(10) // Limit the results after filtering
-    //             ->map(function ($item) {
-    //                 return [
-    //                     'fran_detail_id' => $item->fran_detail_id,
-    //                     'company_name' => $item->company_name,
-    //                     'profile_name' => $item->profile_name,
-    //                 ];
-    //             });
-    //     });
-
-    //     $allBrandMatches[$title] = $brandMatches;
-    //     // }
-
-    //     $franchiseData = [];
-    //     foreach ($allBrandMatches as $title => $matches) {
-    //         foreach ($matches as $match) {
-    //             $franchiseData[] = [
-    //                 'fran_detail_id' => $match['fran_detail_id'],
-    //                 'company_name' => $match['company_name'],
-    //                 'profile_name' => $match['profile_name'],
-    //                 'title' => $title
-
-    //             ];
-    //         }
-    //     }
-    //     // dd($newsDetails. $author_details,);
-
-    //     return view('insights.insight_detail')->with(compact('newsDetails', 'author_details', 'franchiseData'));
-    // }
-
-
     public function getInsightsDetails(Request $request)
     {
         $id = $request->id;
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+        $newsModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+        $tagTable = $locale == 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
+        $seoTagModel = $locale == 'hi' ? SeoTagHindi::class : SeoTag::class;
         // dd($id);
-        $cacheDuration = 3600;
-
-        // Cache key for news details
-        $newsCacheKey = "news_details_{$id}";
-        if ($request->segment(2) == 'en') {
-            $newsDetails = Cache::remember($newsCacheKey, $cacheDuration, function () use ($id) {
-                return InsightList::with(['author', 'category', 'Subcategory'])
-                    ->where('status', 1)
-                    ->whereNotIn('news_type', ['ri', 'ir'])
-                    ->where('news_id', $id)
-                    ->first();
-            });
-            // dd($newsDetails->author[0]->title);
-        } else {
-            $newsDetails = Cache::remember($newsCacheKey, $cacheDuration, function () use ($id) {
-                return InsightListHindi::with(['author', 'category', 'Subcategory'])
-                    ->where('status', 1)
-                    ->whereNotIn('news_type', ['ri', 'ir'])
-                    ->where('news_id', $id)
-                    ->first();
-            });
-        }
+        // Fetch news details
+        $newsDetails = $newsModel::with(['author', 'category', 'Subcategory'])
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->where('news_id', $id)
+            ->first();
+        // print_r($newsDetails->toSql());die;
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
         }
-
-        // Retrieve author details if available, or fallback to default author
-        // $author_details = null;
-        if (!empty($newsDetails->author[0]->author_id)) {
-            $authorCacheKey = "author_details_{$newsDetails->author[0]->author_id}";
-            $author_details = Cache::remember($authorCacheKey, $cacheDuration, function () use ($newsDetails) {
-                return AuthorList::query()
-                    ->where('author_id', $newsDetails->author[0]->author_id)
-                    ->first(); // Use `first()` instead of `get()` for a single record
-            });
-        }
-
-        // Fallback to default author if no author details
-        if (!$author_details) {
-            $defaultAuthorCacheKey = "default_author_437";
-            $author_details = Cache::remember($defaultAuthorCacheKey, $cacheDuration, function () {
-                return AuthorList::query()
-                    ->where('author_id', 437) // Default author_id for "franchiseindia bureau"
-                    ->first();
-            });
-        }
-        //dd($author_details);
-
-
-        // Retrieve associated tags
-        $tagsCacheKey = "associated_tags_{$id}";
-        if ($request->segment(2) == 'en') {
-            $associatedTags = Cache::remember($tagsCacheKey, $cacheDuration, function () use ($id) {
-                return ContentTagsAssigned::query()
-                    ->where('content_id', $id)
-                    ->where('content_type', 2)
-                    ->pluck('tag_id'); // Use `pluck` to directly get `tag_id` values
-            });
+        // dd($newsDetails->author);
+        // Fetch author details
+        if (empty($newsDetails->author)) {
+            $defaultauthor = 466;
         } else {
-            $associatedTags = Cache::remember($tagsCacheKey, $cacheDuration, function () use ($id) {
-                return ContentTagsAssignedHindi::query()
-                    ->where('content_id', $id)
-                    ->where('content_type', 2)
-                    ->pluck('tag_id'); // Use `pluck` to directly get `tag_id` values
-            });
+            $defaultauthor = $newsDetails->author[0]->author_id;
         }
+        $authorId = $defaultauthor; // Default author_id
+        $author_details = AuthorList::query()
+            ->where('author_id', $authorId)
+            ->first();
 
-        // Fetch SEO tags
-        if ($request->segment(2) == 'en') {
-            $assocTags = Cache::remember("seo_tags_{$id}", $cacheDuration, function () use ($associatedTags) {
-                return SeoTag::query()
-                    ->whereIn('tag_id', $associatedTags)
-                    ->select('tag_id', 'name')
-                    ->distinct()
-                    ->get();
-            });
-        } else {
-            $assocTags = Cache::remember("seo_tags_{$id}", $cacheDuration, function () use ($associatedTags) {
-                return SeoTagHindi::query()
-                    ->whereIn('tag_id', $associatedTags)
-                    ->select('tag_id', 'name')
-                    ->distinct()
-                    ->get();
-            });
-        }
+        // Fetch associated tags
+        $associatedTags = $tagTable::query()
+            ->where('content_id', $id)
+            ->where('content_type', 2)
+            ->pluck('tag_id');
+
+        $assocTags = $seoTagModel::query()
+            ->whereIn('tag_id', $associatedTags)
+            ->select('tag_id', 'name')
+            ->distinct()
+            ->get();
 
         // Find brand matches
         $title = strtolower($newsDetails->title);
-        $brandMatchesCacheKey = "brand_matches_" . md5($title);
+        $titleWords = preg_split('/\s+/', $title);
 
-        $brandMatches = Cache::remember($brandMatchesCacheKey, $cacheDuration, function () use ($title) {
-            $titleWords = preg_split('/\s+/', $title); // Split title into words
-            return FranchisorBusinessDetail::where('profile_status', 1)
-                ->select('fran_detail_id', 'company_name', 'profile_name')
-                ->get()
-                ->filter(function ($item) use ($titleWords) {
-                    $companyWords = array_map('strtolower', explode(' ', $item->company_name));
-                    $pattern = '/\b' . implode('\b.*?\b', array_map(function ($word) {
-                        return preg_quote($word, '/');
-                    }, $companyWords)) . '\b/';
-                    return preg_match($pattern, implode(' ', $titleWords));
-                })
-                ->take(10)
-                ->map(function ($item) {
-                    return [
-                        'fran_detail_id' => $item->fran_detail_id,
-                        'company_name' => $item->company_name,
-                        'profile_name' => $item->profile_name,
-                    ];
-                })
-                ->values(); // Reset array keys
-        });
+        $brandMatches = FranchisorBusinessDetail::where('profile_status', 1)
+            ->select('fran_detail_id', 'company_name', 'profile_name')
+            ->get()
+            ->filter(function ($item) use ($titleWords) {
+                $companyWords = array_map('strtolower', explode(' ', $item->company_name));
+                $pattern = '/\b' . implode('\b.*?\b', array_map('preg_quote', $companyWords, array_fill(0, count($companyWords), '/'))) . '\b/';
+                return preg_match($pattern, implode(' ', $titleWords));
+            })
+            ->take(10)
+            ->map(function ($item) {
+                return [
+                    'fran_detail_id' => $item->fran_detail_id,
+                    'company_name' => $item->company_name,
+                    'profile_name' => $item->profile_name,
+                ];
+            })
+            ->values();
 
         // Prepare franchise data
         $franchiseData = $brandMatches->map(function ($match) use ($title) {
@@ -646,65 +510,45 @@ class InsightsController extends Controller
     }
 
 
+
     public function insightSearch(Request $request)
     {
         $search = $request->search;
-        if ($request->segment(2) == 'en') {
-            $articleCount = InsightList::with('author')
-                ->where('status', 1)
-                ->where(function ($query) use ($search) {
-                    $query->where('title', 'LIKE', '%' . $search . '%')
-                        ->orWhere('kicker', 'LIKE', '%' . $search . '%');
-                })
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('created_at')->count();
-        } else {
-            $articleCount = InsightListHindi::with('author')
-                ->where('status', 1)
-                ->where(function ($query) use ($search) {
-                    $query->where('title', 'LIKE', '%' . $search . '%')
-                        ->orWhere('kicker', 'LIKE', '%' . $search . '%');
-                })
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('created_at')->count();
-        }
-        if (($articleCount < 1)) {
+        // $isEnglish = $request->segment(2) == 'en';
+
+        // Determine the appropriate model
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+        $insightModel = $locale == 'en' ? InsightList::class : InsightListHindi::class;
+        // Build the base query
+        $query = $insightModel::with('author')
+            ->where('status', 1)
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'LIKE', '%' . $search . '%');
+                //->orWhere('kicker', 'LIKE', '%' . $search . '%');
+            })
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id');
+
+        // Count matching articles
+        $articleCount = $query->count();
+
+        // Redirect if no articles are found
+        if ($articleCount < 1) {
             return redirect('/insights');
         }
-        if ($request->segment(2) == 'en') {
-            $articlesList = InsightList::with('author')
-                ->where('status', 1)
-                ->where(function ($query) use ($search) {
-                    $query->where('title', 'LIKE', '%' . $search . '%')
-                        ->orWhere('kicker', 'LIKE', '%' . $search . '%');
-                })
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->whereNotNull('image')
-                ->orderByDesc('created_at')
-                ->paginate(10);
-            $articlesList      = CommonController::contentUrlSlug($articlesList);
-        } else {
-            $articlesList = InsightListHindi::with('author')
-                ->where('status', 1)
-                ->where(function ($query) use ($search) {
-                    $query->where('title', 'LIKE', '%' . $search . '%')
-                        ->orWhere('kicker', 'LIKE', '%' . $search . '%');
-                })
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->whereNotNull('image')
-                ->orderByDesc('created_at')
-                ->paginate(10);
-            $articlesList      = CommonController::contentUrlSlug($articlesList);
-        }
-        // dd($articlesList);
+
+        // Fetch paginated articles
+        $articlesList = $query->orderByDesc('created_at')->paginate(10);
+
+        // Process articles for URL slug
+        $articlesList = CommonController::contentUrlSlug($articlesList);
+
+        // Return the view
         return view('insights.search', compact('articleCount', 'articlesList', 'search'));
     }
-
-
 
 
     public function insightstags(Request $request)
@@ -713,18 +557,22 @@ class InsightsController extends Controller
         $tagstr = str_replace('-', ' ', $tag);
 
         // Determine the language and set table/model dynamically
-        $isEnglish = $request->segment(2) == 'en';
-        $redirectPath = $isEnglish ? '/insights' : '/insights/hindi';
-        $insightModel = $isEnglish ? InsightList::class : InsightListHindi::class;
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        $redirectPath = $locale == 'en' ? '/insights' : '/insights/hindi';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+        $insightModel = $locale =='en' ? InsightList::class : InsightListHindi::class;
+        $tagModel = $locale =='en' ? SeoTag::class : SeoTagHindi::class;
+        $contentModel = $locale =='en' ? ContentTagsAssigned::class : ContentTagsAssignedHindi::class;
 
         // Fetch the tag data
-        $seoTag = SeoTag::query()->where('name', $tagstr)->first();
+        $seoTag = $tagModel::query()->where('name', $tagstr)->first();
         if (is_null($seoTag)) {
             return redirect($redirectPath);
         }
 
         // Fetch the associated content IDs
-        $articleIds = ContentTagsAssigned::where([
+        $articleIds = $contentModel::where([
             ['tag_id', $seoTag->tag_id],
             ['content_type', 2]
         ])->pluck('content_id')->unique()->toArray();
@@ -786,11 +634,16 @@ class InsightsController extends Controller
         return round($articlelen / 200);
     }
 
-    public static function insightcategory()
+    public static function insightCategory($locale)
     {
-        $categories = InsightCategory::all()->toArray();
+        $model = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
+
+        // Use select to limit retrieved columns (optional)
+        $categories = $model::select('id', 'catname', 'slug')->get()->toArray();
+
         return $categories;
     }
+
 
     // STATIC FUNCTIONS END HERE
 
@@ -890,46 +743,97 @@ class InsightsController extends Controller
     }
 
 
+    // public function insightsubcategory(Request $request)
+    // {
+    //     // Redirect if category or subcategory is 'kicker'
+    //     if (in_array($request->category, ['kicker']) || in_array($request->subcategory, ['kicker'])) {
+    //         return redirect('/insights');
+    //     }
+
+    //     $categorySlug = $request->category;
+    //     $subcategorySlug = $request->subcategory;
+    //     $isEnglish = App::getLocale() == 'en';
+
+    //     // Determine models based on the language
+    //     $insightListModel = $isEnglish ? InsightList::class : InsightListHindi::class;
+    //     $insightSubCatModel = $isEnglish ? InsightSubcategory::class : InsightsHindiSubcategory::class;
+    //     $insightCatModel = $isEnglish ? InsightCategory::class : InsightsHindiCategory::class;
+
+    //     // Fetch subcategory and category data
+    //     $subcatData = $insightSubCatModel::query()->where('slug', $subcategorySlug)->first();
+    //     dd($subcatData);
+    //     $catData = $insightCatModel::query()
+    //         ->where('slug', $categorySlug)
+    //         ->where('id', $subcatData->mcat_id)
+    //         ->first();
+
+    //     if (!$subcatData || !$catData) {
+    //         return redirect('/insights');
+    //     }
+
+    //     // Fetch content data
+    //     $contentData = $insightListModel::with(['author', 'category', 'subcategory'])
+    //         ->where('subcat_id', $subcatData->id)
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->where('status', 1)
+    //         ->whereNotNull('image')
+    //         ->whereNotNull('cat_id')
+    //         ->whereNotNull('subcat_id')
+    //         ->paginate(10);
+
+    //     // Return the view
+    //     return view('insights.subcatdata', compact('contentData', 'subcatData'));
+    // }
+
     public function insightsubcategory(Request $request)
     {
-        // dd($request->category);
-        if ($request->category == 'kicker' || $request->subcategory == 'kicker') {
+        // Redirect if category or subcategory is 'kicker'
+        if (in_array($request->category, ['kicker']) || in_array($request->subcategory, ['kicker'])) {
             return redirect('/insights');
         }
-        $catslug = $request->category;
-        $subcat = $request->subcategory;
-        if (App::getLocale() == 'en') {
-            $subcat_data = InsightSubcategory::query()->where('slug', $subcat)->first();
-            // dd($subcats);
-            $cat_data = InsightCategory::query()->where('slug', $catslug)->where('id', $subcat_data->mcat_id)->first();
 
+        $categorySlug = $request->category;
+        $subcategorySlug = $request->subcategory;
+        // $isEnglish = App::getLocale() == 'en';  // Check if the language is English
+        $isEnglish = request()->segment(2) == 'en' ? 'en' : 'hi';
+        $redirectPath = $isEnglish == 'en' ? '/insights' : '/insights/hindi';
+        app()->setLocale($isEnglish);
+        session()->put('locale', $isEnglish);
+        // Determine models based on the language (English or Hindi)
+        $insightListModel = $isEnglish ? InsightList::class : InsightListHindi::class;
+        $insightSubCatModel = $isEnglish ? InsightSubcategory::class : InsightsHindiSubcategory::class;
+        $insightCatModel = $isEnglish ? InsightCategory::class : InsightsHindiCategory::class;
 
-            $contentdata = InsightList::with(['author', 'category', 'subcategory'])
-                ->where('subcat_id', $subcat_data->id)
-                ->whereNotIn('news_type', ['ri', 'ir'])
-                ->where('status', 1)
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->whereNotNull('subcat_id')
-                ->paginate(10);
-            // dd($contentdata);
-        } else {
-            $subcat_data = InsightSubcategory::query()->where('slug', $subcat)->first();
-            // dd($subcats);
-            $cat_data = InsightCategory::query()->where('slug', $catslug)->where('id', $subcat_data->mcat_id)->first();
-
-
-            $contentdata = InsightListHindi::with(['author', 'category', 'subcategory'])
-                ->where('subcat_id', $subcat_data->id)
-                ->whereNotIn('news_type', ['ri', 'ir'])
-                ->where('status', 1)
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->whereNotNull('subcat_id')
-                ->paginate(10);
+        // Fetch subcategory and category data
+        $subcatData = $insightSubCatModel::query()->where('slug', $subcategorySlug)->first();
+        if (!$subcatData) {
+            return redirect('/insights');  // Redirect if subcategory not found
         }
-        return view('insights.subcatdata', compact('contentdata', 'subcat_data'));
+
+        $catData = $insightCatModel::query()
+            ->where('slug', $categorySlug)
+            ->where('id', $subcatData->mcat_id) // Ensure correct category based on subcategory
+            ->first();
+
+        if (!$catData) {
+            return redirect('/insights');  // Redirect if category not found
+        }
+
+        // Fetch content data for the selected subcategory
+        $contentData = $insightListModel::with(['author', 'category', 'subcategory'])
+            ->where('subcat_id', $subcatData->id)
+            ->whereNotIn('news_type', ['ri', 'ir'])  // Exclude specific news types
+            ->where('status', 1)  // Only active insights
+            ->whereNotNull('image')  // Only insights with images
+            ->whereNotNull('cat_id')  // Ensure category ID is present
+            ->whereNotNull('subcat_id')  // Ensure subcategory ID is present
+            ->paginate(10);
+
+        // Return the view with the appropriate language data
+        return view('insights.subcatdata', compact('contentData', 'subcatData', 'catData'));
     }
+
+
 
     public static function createTagSlugUrl($slug)
     {

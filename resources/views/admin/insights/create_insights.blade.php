@@ -574,9 +574,8 @@
         });
 
         function Subcategoriesdata(catid) {
-
             $.ajax({
-                url: '{{ url('admin/getSubcategories') }}/' + catid,
+                url: '{{ url('admin/en/getSubcategories') }}/' + catid,
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {

@@ -61,7 +61,7 @@ return [
         'single' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
-            'level' => env('LOG_LEVEL', 'error'),
+            'level' => env('LOG_LEVEL', 'debug'),
             'replace_placeholders' => true,
         ],
 
@@ -79,6 +79,7 @@ return [
             'username' => 'Laravel Log',
             'emoji' => ':boom:',
             'level' => env('LOG_LEVEL', 'critical'),
+            // 'level' => 'debug', // Captures all log levels
             'replace_placeholders' => true,
         ],
 

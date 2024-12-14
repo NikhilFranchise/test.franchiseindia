@@ -10,7 +10,9 @@ use App\Models\NewsList;
 use App\Models\InsightList;
 use App\Models\InsightListHindi;
 use App\Models\InsightCategory;
+use App\Models\InsightsHindiCategory;
 use App\Models\InsightSubcategory;
+use App\Models\InsightsHindiSubcategory;
 use App\Models\AdminUser;
 use App\Models\AuthorList;
 use App\Models\NewsComment;
@@ -1793,7 +1795,7 @@ class AdminController extends Controller
             $kicker     = array_column($kickerData, 'name');
             $authors    = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
 
-            $InsightCategory    = InsightCategory::query()->select('id', 'catname')->where('status', 1)->get();
+            $InsightCategory    = InsightsHindiCategory::query()->select('id', 'catname')->where('status', 1)->get();
             return view('admin/insights/create_hindi_insights', compact('kicker', 'authors', 'InsightCategory'));
         }
     }
@@ -1834,7 +1836,7 @@ class AdminController extends Controller
             $imageUrl  = $this->uploadImage($newsImage, 'News', 0, 's3', '');
 
             //thumbnail creation
-            $this->thumbnailCreation($imageUrl, 'News', 247, 139);
+            //$this->thumbnailCreation($imageUrl, 'News', 247, 139);
             // dd('image');
         }
 
@@ -1907,7 +1909,7 @@ class AdminController extends Controller
         if ($request->segment(2) == 'en') {
 
             $data = InsightList::query()
-                ->whereNotIn('news_type', ['ri','ir'])
+                ->whereNotIn('news_type', ['ri', 'ir'])
                 ->where(function ($query) use ($request) {
                     $query->where('title', 'LIKE', '%' . $request->search . '%')
                         ->where(function ($query) use ($request) {
@@ -1940,39 +1942,39 @@ class AdminController extends Controller
     }
 
     public function multilistinsights(Request $request)
-{
-    // Determine the model based on language segment
-    $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
+    {
+        // Determine the model based on language segment
+        $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
 
-    // Fetch data with filters and eager loading
-    $data = $model::with(['category', 'subcategory', 'author'])
-        ->whereNotIn('news_type', ['ri', 'ir']) // Exclude 'ri' and 'ir'
-       // ->whereNull(['insight_type', 'cat_id', 'subcat_id']) // Check for null fields
-        ->where(function ($query) use ($request) {
-            $query->where(function ($subQuery) use ($request) {
+        // Fetch data with filters and eager loading
+        $data = $model::with(['category', 'subcategory', 'author'])
+            ->whereNotIn('news_type', ['ri', 'ir']) // Exclude 'ri' and 'ir'
+            // ->whereNull(['insight_type', 'cat_id', 'subcat_id']) // Check for null fields
+            ->where(function ($query) use ($request) {
+                $query->where(function ($subQuery) use ($request) {
                     // Search logic
                     $subQuery->where('title', 'LIKE', '%' . $request->search . '%')
                         ->orWhere('news_id', $request->search);
                 });
-        })
-        ->whereIn('status', [0, 1]) // Filter status (active or inactive)
-        ->orderByDesc('news_id') // Order by descending ID
-        ->paginate(30); // Paginate results
+            })
+            ->whereIn('status', [0, 1]) // Filter status (active or inactive)
+            ->orderByDesc('news_id') // Order by descending ID
+            ->paginate(30); // Paginate results
 
-    // Fetch common dropdown data
-    $InsightCategory = InsightCategory::query()
-        ->select('id', 'catname')
-        ->where('status', 1)
-        ->get();
+        // Fetch common dropdown data
+        $InsightCategory = InsightCategory::query()
+            ->select('id', 'catname')
+            ->where('status', 1)
+            ->get();
 
-    $InsightAuthor = AuthorList::query()
-        ->select('author_id', 'title', 'slug')
-        ->where('status', 'A')
-        ->get();
+        $InsightAuthor = AuthorList::query()
+            ->select('author_id', 'title', 'slug')
+            ->where('status', 'A')
+            ->get();
 
-    // Return view with data
-    return view('admin/insights/multilist-edit', compact('data', 'InsightCategory', 'InsightAuthor'));
-}
+        // Return view with data
+        return view('admin/insights/multilist-edit', compact('data', 'InsightCategory', 'InsightAuthor'));
+    }
 
 
 
@@ -2017,40 +2019,40 @@ class AdminController extends Controller
     // }
 
     public function saveMultipleInsights(Request $request)
-{
-    // Determine the model based on language segment
-    $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
+    {
+        // Determine the model based on language segment
+        $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
 
-    // Get selected articles
-    $articles = $request->input('articles', []);
+        // Get selected articles
+        $articles = $request->input('articles', []);
 
-    foreach ($articles as $newsId => $articleDetails) {
-        $existingInsight = $model::find($newsId);
-        if ($existingInsight) {
-            // Update fields dynamically
-            $fieldsToUpdate = [
-                'insight_type' => $articleDetails['insight_type'] ?? $existingInsight->insight_type,
-                'cat_id' => $articleDetails['main_category'] ?? $existingInsight->cat_id,
-                'subcat_id' => $articleDetails['sub_category'] ?? $existingInsight->subcat_id,
-                'status' => $articleDetails['status'] ?? $existingInsight->status,
-                'author_id' => $articleDetails['author'] ?? $existingInsight->author_id,
-            ];
+        foreach ($articles as $newsId => $articleDetails) {
+            $existingInsight = $model::find($newsId);
+            if ($existingInsight) {
+                // Update fields dynamically
+                $fieldsToUpdate = [
+                    'insight_type' => $articleDetails['insight_type'] ?? $existingInsight->insight_type,
+                    'cat_id' => $articleDetails['main_category'] ?? $existingInsight->cat_id,
+                    'subcat_id' => $articleDetails['sub_category'] ?? $existingInsight->subcat_id,
+                    'status' => $articleDetails['status'] ?? $existingInsight->status,
+                    'author_id' => $articleDetails['author'] ?? $existingInsight->author_id,
+                ];
 
-            // Apply updates
-            foreach ($fieldsToUpdate as $field => $value) {
-                $existingInsight->{$field} = $value;
+                // Apply updates
+                foreach ($fieldsToUpdate as $field => $value) {
+                    $existingInsight->{$field} = $value;
+                }
+
+                // Generate slug dynamically
+                $existingInsight->slug = Str::slug($existingInsight->title);
+
+                // Save the updated record
+                $existingInsight->save();
             }
-
-            // Generate slug dynamically
-            $existingInsight->slug = Str::slug($existingInsight->title);
-
-            // Save the updated record
-            $existingInsight->save();
         }
-    }
 
-    return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
-}
+        return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
+    }
 
 
 
@@ -2264,6 +2266,13 @@ class AdminController extends Controller
 
     public function categoryform()
     {
+        if (request()->segment(2) != 'hindi') {
+            app()->setLocale('en');
+            session()->put('locale', 'en');
+        } else {
+            app()->setLocale('hi');
+            session()->put('locale', 'hi');
+        }
         return view('admin.category.catform');
     }
 
@@ -2288,24 +2297,43 @@ class AdminController extends Controller
     }
     public function catlist(Request $request)
     {
-        // $catdata = InsightCategory::orderByDesc('id')->paginate(10);
-        $catdata = InsightCategory::query()
-            ->where('catname', 'LIKE', '%' . $request->search . '%')
-            ->orWhere('id', $request->search)
-            ->orderBy('id', 'DESC')
-            ->paginate(10);
+        $locale = $request->segment(2);
+        if ($locale == 'en') {
+            $catdata = InsightCategory::query()
+                ->where('catname', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('id', $request->search)
+                ->orderBy('id', 'DESC')
+                ->paginate(10);
+        } else {
+            $catdata = InsightsHindiCategory::query()
+                ->where('catname', 'LIKE', '%' . $request->search . '%')
+                ->orWhere('id', $request->search)
+                ->orderBy('id', 'DESC')
+                ->paginate(10);
+        }
         return view('admin.category.list', compact('catdata'));
     }
 
     public function deleteCat()
     {
-        $catclass = InsightCategory::findOrFail(request()->id);
-        $catclass->delete();
+        $locale = request()->segment(2);
+        if ($locale == 'en') {
+            $catclass = InsightCategory::findOrFail(request()->id);
+            $catclass->delete();
+        } else {
+            $catclass = InsightsHindiCategory::findOrFail(request()->id);
+            $catclass->delete();
+        }
         return redirect()->back()->with('success', 'Main Category Deleted Successfully.');
     }
     public function subcatform()
     {
-        $cat = InsightCategory::all();
+        $locale = request()->segment(2);
+        if ($locale == 'en') {
+            $cat = InsightCategory::all();
+        } else {
+            $cat = InsightsHindiCategory::all();
+        }
         return view('admin.subcategory.create', compact('cat'));
     }
 
@@ -2351,8 +2379,12 @@ class AdminController extends Controller
 
     public function getSubcategories($catid)
     {
-        $subcategories = InsightSubcategory::select('id', 'subcat_name')->where('mcat_id', $catid)->get();
-        // dd($subcategories);
+        if (request()->segment(2) == 'en') {
+            // dd(request()->segment(2));
+            $subcategories = InsightSubcategory::select('id', 'subcat_name')->where('mcat_id', $catid)->get();
+        } else {
+            $subcategories = InsightsHindiSubcategory::select('id', 'subcat_name')->where('mcat_id', $catid)->get();
+        }
         return response()->json($subcategories);
     }
 }

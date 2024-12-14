@@ -8,6 +8,7 @@ use App\Models\InsightList;
 use App\Models\InsightCategory;
 use App\Models\InsightSubcategory;
 use App\Models\ContentTagsAssigned;
+use App\Models\InsightListHindi;
 
 class InsightSitemapController extends Controller
 {
@@ -23,13 +24,29 @@ class InsightSitemapController extends Controller
     }
     public function articlesitemap()
     {
+        // print_r('yes');
+        // dd('tesxt');
+        // $articlesitemap = InsightList::whereNotIn('news_type', ['ri','ir'])
+        // $articlesitemap = InsightList::where('insight_type', 'Article')
         $articlesitemap = InsightList::where('news_type', 'fi')
+            ->where('insight_type', 'News')
+            ->where('cat_id', '!=', '')
+            ->where('status', 1)->get();
+
+        //  dd($articlesitemap);
+        return response()->view('insights.sitemaps.art_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
+    }
+    public function hindiarticlesitemap()
+    {
+        $articlesitemap = InsightListHindi::whereNotIn('news_type', ['ri','ir'])
             ->where('insight_type', 'Article')
             ->where('cat_id', '!=', '')
             ->where('status', 1)->get();
         //  dd($articlesitemap->count());
-        return response()->view('insights.sitemaps.art_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
+        return response()->view('insights.sitemaps.hindiart_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
     }
+
+
     public function interviewsitemap()
     {
         $interviewsitemap = InsightList::where('news_type', 'fi')
