@@ -188,7 +188,7 @@
                             </li>
                         @endforeach
                     </ul>
-                    <div class="d-felx justify-content-center">
+                    <div class="video-pagination">
                         {{ $articles->links('pagination::bootstrap-4') }}
                     </div>
                 </div>

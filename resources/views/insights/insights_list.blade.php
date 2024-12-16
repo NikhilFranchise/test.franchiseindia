@@ -1,4 +1,4 @@
-@extends('layout.insights.master')  
+@extends('layout.insights.master')
 @section('content')
 <div class="maininnver homeh">
     <div class="container">
@@ -12,36 +12,36 @@
     <div class="listblk">
         <div class="container">
             <ul class="artilsit">
-                @foreach($articles as $article) 
-                    @php 
-                   
-                   
-                    $image = Config('constants.awsS3Url') . $article->image; 
-                    $url = Config('constants.MainDomain') . '/insights/' . strtolower($article->insight_type) . '/' . $article->slug . '.' . $article->news_id; 
+                @foreach($articles as $article)
+                    @php
+
+
+                    $image = Config('constants.awsS3Url') . $article->image;
+                    $url = Config('constants.MainDomain') . '/insights/' . strtolower($article->insight_type) . '/' . $article->slug . '.' . $article->news_id;
                     if(!empty($article->author_image)){ $author_image =
-                    'https://franchiseindia.s3.ap-south-1.amazonaws.com'. $author_details->author_image; 
-                    }else{ 
-                    $author_image = url('images/defaultuser.png'); 
+                    'https://franchiseindia.s3.ap-south-1.amazonaws.com'. $author_details->author_image;
+                    }else{
+                    $author_image = url('images/defaultuser.png');
                     }
                     @endphp
-                @foreach($article->author as $author) 
+                @foreach($article->author as $author)
                     @php
                     $authorname = $author->title;
-                    $authorUrl = Config('constants.MainDomain') . '/insights/author/' . $author->slug .'-' . $author->author_id; 
-                    if(!empty($author->image)){ 
+                    $authorUrl = Config('constants.MainDomain') . '/insights/author/' . $author->slug .'-' . $author->author_id;
+                    if(!empty($author->image)){
                     $author_image = 'https://franchiseindia.s3.ap-south-1.amazonaws.com'.  $author->image; }
-                    else{ 
-                    $author_image = url('images/defaultuser.png'); } 
+                    else{
+                    $author_image = url('images/defaultuser.png'); }
                     @endphp
                 @endforeach
-                
-               
+
+
                 <li>
                     <div class="artimgblk">
                         <a href="{{$url}}"><img src="{{$image}}" alt="{{$article->title. ' image'}}" /></a>
                     </div>
                     <div class="artcontent">
-                        
+
                         <div class="haedname"><a href="{{$url}}">{{$article->title}}</a></div>
                         <div class="authblk cot">
                             <div class="autimg"><img src="{{$author_image}}" alt="{{$authorname}}" /></div>
@@ -54,7 +54,7 @@
                             {{html_entity_decode(strip_tags(\Illuminate\Support\Str::words($article->content, 55 , ' ...')), ENT_QUOTES | ENT_HTML5 , 'UTF-8')}}
                         </div>
                         <div class="scbk">
-                           
+
                             <div class="shrblk">
                                 <span class="inshrblk">
                                     <a href="">
@@ -72,11 +72,11 @@
                     </div>
                 </li>
 
-              
-               
+
+
                 @endforeach
             </ul>
-            <div class="d-felx justify-content-center">
+            <div class="video-pagination">
                 {{ $articles->links('pagination::bootstrap-4') }}
              </div>
         </div>
@@ -88,12 +88,12 @@
 
     <!-- another list start here   -->
     <div class="listblk">
-       
+
     </div>
 
     <!-- another list end here  -->
 
-    
+
 
     @include("layout.insights.brandlist")
 </div>

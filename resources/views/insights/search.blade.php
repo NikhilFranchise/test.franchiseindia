@@ -99,9 +99,9 @@
                     @endforeach
 
                 </ul>
-                {{-- <div class="d-felx justify-content-center">
+                <div class="video-pagination">
                 {{ $articlesList->links('pagination::bootstrap-5') }}
-            </div> --}}
+            </div>
             </div>
         </div>
 

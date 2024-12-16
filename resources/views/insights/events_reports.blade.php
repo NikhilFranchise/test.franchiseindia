@@ -57,16 +57,16 @@
                                         <a href="#">
                                             <img src="{{ url('insight-new/images/smallshare.svg') }}" class="inimg" />Share
                                             <div class="sfv">
-                                                @foreach([
-                                                    'facebook' => 'facebookcard.svg',
-                                                    'twitter' => 'twittercard.svg',
-                                                    'instagram' => 'https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg',
-                                                    'youtube' => 'https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg'
-                                                ] as $platform => $icon)
-                                                    <div class="innersfv" onclick="window.open('https://www.{{ $platform }}.com/FranchiseIndiaMedia', '_blank')">
-                                                        <img src="{{ strpos($icon, 'http') === 0 ? $icon : url("insights/images/{$icon}") }}" />
-                                                    </div>
-                                                @endforeach
+                                                @foreach ([
+                                                        'facebook' => '/insight-new/images/facebookcard.svg',
+                                                        'twitter' => '/insight-new/images/twittercard.svg',
+                                                        'instagram' => 'https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg',
+                                                        'youtube' => 'https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg'
+                                                    ] as $platform => $icon)
+                                                        <div class="innersfv" onclick="window.open('https://www.{{ $platform }}.com/FranchiseIndia', '_blank')">
+                                                            <img src="{{ $icon }}" />
+                                                        </div>
+                                                    @endforeach
                                             </div>
                                         </a>
                                     </span>
@@ -76,7 +76,7 @@
                     </li>
                 @endforeach
             </ul>
-            <div class="d-flex justify-content-center">
+            <div class="video-pagination">
                 {{ $events_reports->links('pagination::bootstrap-4') }}
             </div>
         </div>

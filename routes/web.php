@@ -1081,6 +1081,8 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('trendstories',                  [InsightsController::class, 'trendstories']);
             Route::get('interviews',                    [InsightsController::class, 'getinsightsinterviews']);
             Route::get('events_reports',                [InsightsController::class, 'geteventsreports']);
+            Route::get('video_podcast',                [InsightsController::class, 'getvideopodcast']);
+            Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
             Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
@@ -1100,11 +1102,12 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             }); //404 ERROR PAGE
             Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
             Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
-
             Route::get('topstories',                    [InsightsController::class, 'getinsightstories']);
             Route::get('trendstories',                  [InsightsController::class, 'trendstories']);
             Route::get('interviews',                    [InsightsController::class, 'getinsightsinterviews']);
             Route::get('events_reports',                [InsightsController::class, 'geteventsreports']);
+            Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
+            Route::get('video_podcast',                [InsightsController::class, 'getvideopodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
             Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);

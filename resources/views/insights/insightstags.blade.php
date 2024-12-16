@@ -16,7 +16,7 @@
                     'Franchise 100' => 'फ्रेंचाइज़ 100',
                     'investment' => 'व्यापार में निवेश',
                 ];
-                $displayName = $locale == 'en' ? ucwords($data->name) : $hindiCategoryNames[$data->name] ?? $data->name;
+                $displayName = $locale == 'en' ? ucwords($data->name) : $hindiCategoryNames[$seoTag->name] ?? $seoTag->name;
             @endphp
 
             <h1 class="cathead">{{ $displayName }}</h1>
@@ -94,10 +94,14 @@
                                                     <img src="{{ url('insight-new/images/smallshare.svg') }}"
                                                         class="inimg" /> Share
                                                     <div class="sfv">
-                                                        @foreach (['facebook', 'twitter', 'linkedin', 'mail'] as $platform)
-                                                            <div class="innersfv" onclick="">
-                                                                <img
-                                                                    src="{{ url('insight-new/images/' . $platform . 'card.svg') }}" />
+                                                        @foreach ([
+                                                            'facebook' => '/insight-new/images/facebookcard.svg',
+                                                            'twitter' => '/insight-new/images/twittercard.svg',
+                                                            'instagram' => 'https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg',
+                                                            'youtube' => 'https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg'
+                                                        ] as $platform => $icon)
+                                                            <div class="innersfv" onclick="window.open('https://www.{{ $platform }}.com/FranchiseIndia', '_blank')">
+                                                                <img src="{{ $icon }}" />
                                                             </div>
                                                         @endforeach
                                                     </div>
@@ -110,7 +114,7 @@
                         @endif
                     @endforeach
                 </ul>
-                <div class="d-flex justify-content-center">
+                <div class="video-pagination">
                     {{ $articlesList->links('pagination::bootstrap-4') }}
                 </div>
             </div>
