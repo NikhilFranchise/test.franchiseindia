@@ -14,8 +14,14 @@
                         <li><a href="https://www.franchiseindia.com/" target="_blank">GET FRANCHISE</a> <span>|</span>
                         </li>
                         <li><a href="https://www.dealerindia.com/" target="_blank">GET DISTRIBUTORSHIP</a></li>
+
                     </ul>
                 </div>
+                @mobile
+                <div class="col-lg-3 col-md-3 col-xl-2 offset-xl-1">
+                    <span class="top1">#ApneBrandsKiNayiMarket</span>
+                </div>
+                @endmobile
                 <div class="col-lg-2 col-xl-2 col-md-2">
                     {{--  <span class="call">1800 102 2007 <span class="tel-img"><img
                                 src="{{ url('insight-new/images/tel.png') }}" alt="tel.png"></span> </span>  --}}
@@ -47,7 +53,7 @@
                         }
                     @endphp
                     <a href="{{ $murl }}" class="logo mr-auto"><img
-                            src="{{ url('insight-new/images/logo.svg') }}" alt="Franchise india Insights" /></a>
+                            src="{{ url('insight-new/images/logo.png') }}" alt="Franchise india Insights" /></a>
 
                     <nav class="nav-menu d-none d-lg-block">
                         <ul>
@@ -92,9 +98,8 @@
                     <div class="search-main mx-auto">
                         <div class="ev-spk-icon">
                             <span id="tog1">
-                                <img src="https://www.opportunityindia.com/images/search.svg" alt="Search"
-                                    style="" />
-                                <img src="https://www.opportunityindia.com/images/cross.png" alt="Close"
+                                <img src="{{ url('insight-new/images/search.svg') }}" alt="Search"/>
+                                <img src="{{ url('insight-new/images/cross.png') }}" alt="Close"
                                     style="display: none;" />
                             </span>
                         </div>

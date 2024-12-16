@@ -927,7 +927,7 @@ class InsightsController extends Controller
             ->limit(4)
             ->get();
 
-            dd($videos);
+            // dd($videos);
         // Return the view with videos and podcast data
         return view('insights.video', compact('listVideo', 'podcast'));
     }
