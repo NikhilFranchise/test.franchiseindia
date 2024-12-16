@@ -45,10 +45,13 @@
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <div class="form-group pos-rel">
-                                    <input name="mobile" id="mobile" type="text" pattern="[0-9]{5,10}" minlength="10" maxlength="10" onkeyup="getMobileStatuscontact(this.value);" class="form-control" placeholder="Enter Mobile" required>
+                                    {{-- <input name="mobile" id="mobile" type="text" pattern="[0-9]{5,10}" minlength="10" maxlength="10" onkeyup="getMobileStatuscontact(this.value);" class="form-control" placeholder="Enter Mobile" required>
                                     <span class="vrfy" onClick="editmobile();" id="editmobilecontact" style="display: none;">edit</span>
                                     <span class="vrfy" onClick="validatemobile();" id="validatemobile" style="display: none">VERIFY</span>
-                                    <span id="successmobile" class="showhideright" style="display: none"><i class="fa fa-check fa-lg" aria-hidden="true"></i></span>
+                                    <span id="successmobile" class="showhideright" style="display: none"><i class="fa fa-check fa-lg" aria-hidden="true"></i></span> --}}
+                                    <input type="text" name="mobile" id='txtPhone' class="form-control"
+                                            placeholder="Enter Mobile No" maxlength="10" autocomplete="off"
+                                            />
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6">

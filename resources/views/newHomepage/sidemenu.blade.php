@@ -164,9 +164,9 @@
                     </ul>
                 </div>
             </li>
-            <li>
+            {{-- <li>
                 <div class="contact-us-section">टोल फ्री 1800 102 2007</div>
-            </li>
+            </li> --}}
         </ul>
         <div id="mCSB_1_scrollbar_vertical"
             class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal mCSB_scrollTools_vertical" style="display:block">
@@ -355,9 +355,9 @@
                     </ul>
                 </div>
             </li>
-            <li>
+            {{-- <li>
                 <div class="contact-us-section">Toll Free 1800 102 2007</div>
-            </li>
+            </li> --}}
         </ul>
         <div id="mCSB_1_scrollbar_vertical"
             class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal mCSB_scrollTools_vertical" style="display:block">

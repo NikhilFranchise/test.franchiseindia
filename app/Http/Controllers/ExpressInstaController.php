@@ -727,14 +727,174 @@ class ExpressInstaController extends Controller
         $pincode = $request->input('pincode');
         $investmentRange = $request->input('investment_range');
         $needLoan = 0;
-        $chkMobVerify = MobileVerification::query()->select('mob_verify_id', 'mobile_no')
-            ->where('mobile_no', $phone)
-            ->where('is_verified', '1')
-            ->first();
+        // $chkMobVerify = MobileVerification::query()->select('mob_verify_id', 'mobile_no')
+        //     ->where('mobile_no', $phone)
+        //     ->where('is_verified', '1')
+        //     ->first();
 
-        if (empty($chkMobVerify)) {
-            $result = "<span>Congratulations!</span> Your application was successful to $franId . Your request will be sent to the company. The business development representative will contact you soon through your contact number / email ID.";
-        } else {
+        // if (empty($chkMobVerify)) {
+        //     $result = "<span>Congratulations!</span> Your application was successful to $franId . Your request will be sent to the company. The business development representative will contact you soon through your contact number / email ID.";
+        // } else {
+        //     if (isset(request()->need_loan) && request()->need_loan == 'on')
+        //         $needLoan = 1;
+
+        //     //if the newsletter is selected
+        //     if (isset(request()->newsletter_sub) && request()->newsletter_sub == 'on')
+        //         $this->newsletterSubscribe($email);
+
+        //     // Check for duplicate entry
+        //     $chkRec = ExpressInstaApply::query()->where('franchisor_id', '=', $franId)->where('email', '=', $email)->count();
+
+        //     // Fetch Franchisor Details
+        //     $franchisorDetail = FranchisorBusinessDetail::query()->where('franchisor_id', $franId)->select('company_name', 'membership_type', 'ind_main_cat' , 'ceo_name')->first();
+
+        //     // If record already exists
+        //     if ($chkRec > 0 && !empty(request()->check_lead_popup) && request()->check_lead_popup == 'lead') {
+        //         return json_encode("<span>Thanks!</span> But you have already applied to $franchisorDetail->company_name", 200);
+        //     }
+
+        //     if ($chkRec > 0 && empty(request()->check_lead_popup)) {
+        //         $result = "<span>Thanks!</span> But you have already applied to $franchisorDetail->company_name";
+
+        //         if (isset($request->flag))
+        //             return 2;
+
+        //         return view('thanks/brandcontact', compact('result'));
+        //     }
+
+        //     // dd($franId);
+        //     $userDetail = UserAccount::query()->where('profile_str', $franId)
+        //                                     ->where('profile_status', 1)
+        //                                     ->where('profile_type', 1)
+        //                                     ->first();
+        //     // dd($userDetail);
+        //     $resource = "DOTCOM";
+        //     if (!empty(request()->check_lead_popup))
+        //         $resource = "leadPopup";
+
+        //     $source_ref = "";
+        //     if (!empty(Cookie::get('campaignSource')))
+        //         $source_ref = Cookie::get('campaignSource');
+
+        //     $insertData = [
+        //         'name' => $name,
+        //         'email' => $email,
+        //         'phone' => $phone,
+        //         'state' => $state,
+        //         'city' => $city,
+        //         'address' => $add,
+        //         'category' => Config('constants.CategoryArr.' . $franchisorDetail->ind_main_cat),
+        //         'pincode' => $pincode,
+        //         'source' => $resource,
+        //         'source_ref' => $source_ref,
+        //         'investment' => $investmentRange,
+        //         'mobile_status' => 'S',
+        //         'franchisor_id' => $franId,
+        //         'visibility' => ($userDetail?->membership_type === 1 ? 1 : 0),
+        //         'visibility_date' => ($userDetail?->membership_type === 1 ? date('Y-m-d H:i:s') : null)
+
+        //     ];
+        //     dd($insertData);
+        //     // If count is zero, Insert a new record
+        //     $insertId = ExpressInstaApply::query()->insertGetId($insertData);
+
+        //     if ($needLoan == 1) {
+        //         PropertyLoan::query()->insert([
+        //             'name' => $name,
+        //             'email' => $email,
+        //             'mobile' => $phone,
+        //             'address' => $add,
+        //             'pincode' => $pincode,
+        //             'income_range' => Config('constants.investRangeInWords.' . $investmentRange),
+        //             'source' => 'INSTA APPLY(' . $insertId . ')',
+        //         ]);
+        //     }
+
+        //     $investorController = new InvestorController();
+
+        //     $insertData = [
+        //         'name' => $name,
+        //         'email' => $email,
+        //         'mobile' => $phone,
+        //         'address' => $add,
+        //         'state' => $state,
+        //         'city' => $city,
+        //         'category_id' => $franchisorDetail->ind_main_cat,
+        //         'pincode' => $pincode,
+        //         'investment_range' => $investmentRange
+        //     ];
+
+        //     $leadSource = Config('constants.leadSource.FiInstantApply');
+
+        //     $investorController->convertLeadsToInvestor($insertData, $leadSource);
+
+        //     /* if ($userDetail->email == 'fiblbrands@franchiseindia.in') {
+        //         try {
+        //             CronController::saveAPI($name, $email, $phone, $franchisorDetail->ind_main_cat, $franchisorDetail->fibl_brands, $city, $state);
+        //         } catch (\Exception $e) {
+        //             echo $e->getMessage();
+        //         }
+        //     }*/
+
+        //     if (empty($phone) || empty($email)) {
+        //         $checkFlag = 0;
+        //         if (isset($request->flag))
+        //             $checkFlag = 1;
+
+        //         $this->logErrorForLeadGeneration('instaapply_01032018.txt', $request->header('User-Agent'));
+        //         $this->logErrorForLeadGeneration('instaapply_01032018.txt', request()->ip() . ' - ' . $franId . ' - ' . $email . ' - ' . $phone . ' - ' . $name . ' - ' . $checkFlag . ' -- 2');
+        //     }
+
+        //     // Fetch Franchisor Contact Details
+
+        //     $details[0] = [
+        //         'name' => $name,
+        //         'email' => $email,
+        //         'mobile' => $phone,
+        //         'state' => $state,
+        //         'city' => $city
+        //     ];
+
+        //     $details[1] = $franchisorDetail->ceo_name;
+
+        //     if ($franchisorDetail->membership_type != 0) {
+        //         //Sms message
+        //         $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name, strlen($phone) > 15 ? substr($phone, 0, 15) . ".." : $phone);
+
+        //         //Sending Paid Franchisor Notifications
+        //         $this->sendFranNotifications($userDetail->email, $details, $userDetail->mobile, $franSmsMsg, 'paid');
+        //     }
+
+        //     if ($franchisorDetail->membership_type == 0) {
+        //         //sms sending
+        //         $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
+
+        //         //Sending Free Franchisor Notifications
+        //         $this->sendFranNotifications($userDetail->email, $details[1], $userDetail->mobile, $franSmsMsg, 'free');
+        //     }
+
+        //     $detailMail[0] = $franchisorDetail->company_name;
+        //     $detailMail[1] = $request->input('infoname');
+
+        //     //sms message for a visitor sending
+        //     $franSmsMsg = sprintf(config('txtlocal.GuestInv'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
+
+        //     $this->sendInvNotifications($email, $detailMail, $phone, $franSmsMsg, 'visitor');
+
+        //     //blade msg
+        //     $result = "<span>Congratulations!</span> Your application was successful to $franchisorDetail->company_name . Your request will be sent to the company. The business development representative will contact you soon through your contact number / email ID.";
+
+        //     // If record already exists
+        //     if (!empty(request()->check_lead_popup) && request()->check_lead_popup == 'lead') {
+        //         return json_encode($result, 200);
+        //     }
+
+
+        //     if (isset($request->flag))
+        //         return 1;
+        // }
+
+        
             if (isset(request()->need_loan) && request()->need_loan == 'on')
                 $needLoan = 1;
 
@@ -892,7 +1052,7 @@ class ExpressInstaController extends Controller
 
             if (isset($request->flag))
                 return 1;
-        }
+        
 
         return view('thanks/brandcontact', compact('result'));
     }
