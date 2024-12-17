@@ -294,9 +294,9 @@
         }
 
         function Subcategoriesdata(catid) {
-
+            var locale = '{{ request()->segment(2)}}';
             $.ajax({
-                url: '{{ url('admin/getSubcategories') }}/' + catid,
+                url: '{{ url('admin') }}/' + locale + '/getSubcategories/' + catid,
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {

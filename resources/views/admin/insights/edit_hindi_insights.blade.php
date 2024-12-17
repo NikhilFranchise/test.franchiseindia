@@ -222,7 +222,7 @@
                                             <br><span style="color: red;">{{ $error }}</span>
                                         @endforeach
                                     @endif
-                                    <img src="{{ Config('constants.franAwsS3Url') . ltrim($data->image, '/') }}"
+                                    <img src="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image) }}"
                                         height="106" width="187" style="padding-top: inherit;">
                                 </div>
                             </div>
@@ -232,7 +232,7 @@
                             <label class="control-label">Image :</label>
                             <div class="controls">
                                 <input type="hidden" name="old_image"
-                                    value="{{ Config('constants.franAwsS3Url') . ltrim($data->image, '/') }}" />
+                                    value="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image) }}" />
                                 <input type="file" id="showImage" class="span11" name="image">
                                 <div style="display: none; color: red;" id="showImage_msg">Invalid image type! Please
                                     select a valid image format (JPG, GIF, PNG, or WebP)</div>

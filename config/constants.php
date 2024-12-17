@@ -16,7 +16,7 @@ return [
     'NewsDomain' => 'https://news.franchiseindia.com',
     'franAwsImgPath' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/',
     'franAwsS3Url' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/',
-    'awsS3Url' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/', // duplicate for news
+    'awsS3Url' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com', // duplicate for news
     'OIDomain' => 'https://www.dealerindia.com', // duplicate for news
     'ARTICLE_UPLOAD_PATH' => 'opp/article/english/images/',
 	'ARTICLE_HINDI_UPLOAD_PATH' => 'opp/article/hindi/images/',
@@ -1379,7 +1379,7 @@ return [
             //"797" => "Grain",
             //"798" => "Eggs",
             //"799" => "Cereals"
-            
+
             //Sub cat id created by pankaj
             "1021" => "Farming Tools, equipments & Machines",
             "1022" => "Fishery",

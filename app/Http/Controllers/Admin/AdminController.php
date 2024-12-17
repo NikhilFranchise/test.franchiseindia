@@ -12,7 +12,7 @@ use App\Models\InsightListHindi;
 use App\Models\InsightCategory;
 use App\Models\InsightsHindiCategory;
 use App\Models\InsightSubcategory;
-use App\Models\InsightsHindiSubcategory;
+use App\Models\InsightsHindiSubCategory;
 use App\Models\AdminUser;
 use App\Models\AuthorList;
 use App\Models\NewsComment;
@@ -31,6 +31,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -1658,15 +1659,23 @@ class AdminController extends Controller
     private function thumbnailCreation($imageUrl, $type, $width, $height)
     {
         //thumbnail creation
+        // dd($imageUrl, $type, $width, $height);
         $sourcePhoto     = public_path($imageUrl);
-        // dd($width, $height, $type, $imageUrl);
-        if ($type == 'Gallery')
+        $locale = App::getLocale();
+        // dd($locale);
+        if ($type == 'Gallery') {
             $sourcePhoto = $imageUrl;
+        } else if ($type == 'News' && $locale == 'en') {
+            $sourcePhoto = Config('constants.franAwsS3Url') . $imageUrl;
+            // dd($sourcePhoto);
+        } else if ($type == 'News' && $locale == 'hi') {
+            $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
+        }
 
         if ($type != 'Gallery')
             $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
-
         $imageName       = pathinfo($sourcePhoto)['basename'];
+        // dd($imageName);
 
         $destinationPath = "uploads";
 
@@ -1685,6 +1694,7 @@ class AdminController extends Controller
 
             case 'News':
                 $destinationPath = public_path('uploads/thumbnails/news/' . session()->get('role') . '/');
+                // dd($destinationPath);
         }
 
         try {
@@ -1692,7 +1702,7 @@ class AdminController extends Controller
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0777, true);
             }
-            $image = Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 80);
+            $image = Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 90);
             // dd($image);
 
         } catch (\Exception $e) {
@@ -1800,109 +1810,191 @@ class AdminController extends Controller
         }
     }
 
+    // public function createInsights(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $this->validate($request, [
+
+    //         'insights_publisher' => 'required',
+    //         'insights_type' => 'required',
+    //         'insights_cat' => 'required',
+    //         // 'insights_subcat' => 'required',
+    //         'title' => 'required|max:255',
+    //         'sub_title' => 'required',
+    //         'content' => 'required',
+    //         'image' => 'required',
+    //     ]);
+    //     $imageUrl          = "";
+    //     $role              = $request->session()->get('role');
+    //     $brand             = !empty($request->brands) ? $this->stringyfyText($request->brands) : "";
+    //     $title             = $request->title;
+    //     // $kicker            = $request->kicker;
+    //     $homeTitle         = $request->home_title;
+    //     $subTitle          = $request->sub_title;
+    //     $slug              = Str::slug($title);
+    //     $desc              = $request->input('content');
+    //     $insights_type      = $request->insights_type;
+    //     $cat_id             = $request->insights_cat;
+    //     $subcat_id         = $request->insights_subcat;
+    //     $desc              = $request->input('content');
+    //     $isInternational   = ($request->is_intl == 1) ? 1 : 0;
+    //     // dd('hello');
+    //     if ($request->hasFile('image')) {
+
+    //         //Uploading Image
+    //         $newsImage = $request->file('image');
+    //         $imageUrl  = $this->uploadImage($newsImage, 'News', 0, 's3', '');
+    //         // dd($imageUrl);
+    //         //thumbnail creation
+    //         $this->thumbnailCreation($imageUrl, 'News', 247, 139);
+    //         // dd('image');
+    //     }
+
+    //     if ($request->segment(2) == 'en') {
+    //         $newsData                = new InsightList;
+    //         $newsData->title         = $title;
+    //         // $newsData->kicker        = $kicker;
+    //         $newsData->news_type     = $role;
+    //         $newsData->homeTitle     = $homeTitle;
+    //         $newsData->shortDesc     = $subTitle;
+    //         $newsData->content       = $desc;
+    //         $newsData->insight_type  = $insights_type;
+    //         $newsData->cat_id        = $cat_id;
+    //         $newsData->subcat_id     = $subcat_id;
+    //         $newsData->related_brand = $brand;
+    //         $newsData->image         = $imageUrl;
+    //         $newsData->slug          = $slug;
+    //         $newsData->is_intl       = $isInternational;
+    //         $newsData->author_id     = request()->insights_publisher;
+
+
+    //         if ($newsData->save()) {
+    //             $newsId = $newsData->news_id;
+    //         } else {
+    //             return redirect('admin/en/list-insights')->with('error', "Insights Data Can't Save. ");
+    //         }
+
+
+    //         //increasing frequency count of kickers
+    //         if ($request->associated_tags != null)
+    //             $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
+
+    //         return redirect('admin/en/list-insights')->with('success', 'Insights Data Save Successfully.');
+    //     } elseif ($request->segment(2) == 'hi') {
+    //         $newsData                = new InsightListHindi;
+    //         $newsData->title         = $title;
+    //         // $newsData->kicker        = $kicker;
+    //         $newsData->news_type     = $role;
+    //         $newsData->homeTitle     = $homeTitle;
+    //         $newsData->shortDesc     = $subTitle;
+    //         $newsData->content       = $desc;
+    //         $newsData->insight_type  = $insights_type;
+    //         $newsData->cat_id        = $cat_id;
+    //         $newsData->subcat_id     = $subcat_id;
+    //         $newsData->related_brand = $brand;
+    //         $newsData->image         = $imageUrl;
+    //         $newsData->slug          = $slug;
+    //         $newsData->is_intl       = $isInternational;
+    //         $newsData->author_id     = request()->insights_publisher;
+
+
+    //         if ($newsData->save()) {
+    //             $newsId = $newsData->news_id;
+    //         } else {
+    //             return redirect('admin/hi/list-insights')->with('error', "Insights Data Can't Save. ");
+    //         }
+
+
+    //         //increasing frequency count of kickers
+    //         if ($request->associated_tags != null)
+    //             // dd($request->associatedTags);
+    //             $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
+
+    //         return redirect('admin/hi/list-insights')->with('success', 'Insights Data Save Successfully.');
+    //     }
+    // }
+
     public function createInsights(Request $request)
     {
-        // dd($request->all());
+        // Validate the input
         $this->validate($request, [
-
             'insights_publisher' => 'required',
             'insights_type' => 'required',
             'insights_cat' => 'required',
-            // 'insights_subcat' => 'required',
             'title' => 'required|max:255',
             'sub_title' => 'required',
             'content' => 'required',
             'image' => 'required',
         ]);
-        $imageUrl          = "";
-        $role              = $request->session()->get('role');
-        $brand             = !empty($request->brands) ? $this->stringyfyText($request->brands) : "";
-        $title             = $request->title;
-        // $kicker            = $request->kicker;
-        $homeTitle         = $request->home_title;
-        $subTitle          = $request->sub_title;
-        $slug              = Str::slug($title);
-        $desc              = $request->input('content');
-        $insights_type      = $request->insights_type;
-        $cat_id             = $request->insights_cat;
-        $subcat_id         = $request->insights_subcat;
-        $desc              = $request->input('content');
-        $isInternational   = ($request->is_intl == 1) ? 1 : 0;
-        // dd('hello');
-        if ($request->hasFile('image')) {
 
-            //Uploading Image
-            $newsImage = $request->file('image');
-            $imageUrl  = $this->uploadImage($newsImage, 'News', 0, 's3', '');
+        // Extract variables from the request
+        $role = $request->session()->get('role');
+        $brand = $request->brands ? $this->stringyfyText($request->brands) : "";
+        $title = $request->title;
+        $homeTitle = $request->home_title;
+        $subTitle = $request->sub_title;
+        $desc = $request->input('content');
+        $insightsType = $request->insights_type;
+        $catId = $request->insights_cat;
+        $subcatId = $request->insights_subcat;
+        $isInternational = $request->is_intl == 1 ? 1 : 0;
 
-            //thumbnail creation
-            //$this->thumbnailCreation($imageUrl, 'News', 247, 139);
-            // dd('image');
+        // Generate slug based on language
+        if ($request->segment(2) == 'en') {
+            $slug = Str::slug($title);
+        } else {
+            $titleSlug = preg_replace("/[\s+\?]/", " ", $title);
+            $titleSlug = str_replace("  ", " ", $titleSlug);
+            $titleSlug = str_replace(" ", "-", $titleSlug);
+            $titleSlug = preg_replace("/\s+/", "-", $titleSlug);
+            $slug = str_replace(".", "-", $titleSlug);
         }
 
-        if ($request->segment(2) == 'en') {
-            $newsData                = new InsightList;
-            $newsData->title         = $title;
-            // $newsData->kicker        = $kicker;
-            $newsData->news_type     = $role;
-            $newsData->homeTitle     = $homeTitle;
-            $newsData->shortDesc     = $subTitle;
-            $newsData->content       = $desc;
-            $newsData->insight_type  = $insights_type;
-            $newsData->cat_id        = $cat_id;
-            $newsData->subcat_id     = $subcat_id;
-            $newsData->related_brand = $brand;
-            $newsData->image         = $imageUrl;
-            $newsData->slug          = $slug;
-            $newsData->is_intl       = $isInternational;
-            $newsData->author_id     = request()->insights_publisher;
+        // Handle image upload
+        $imageUrl = "";
+        if ($request->hasFile('image')) {
+            $newsImage = $request->file('image');
+            $imageUrl = $this->uploadImage($newsImage, 'News', 0, 's3', '');
+            // dd($imageUrl);
+            $this->thumbnailCreation($imageUrl, 'News', 247, 139);
+        }
 
+        // Determine language and model
+        $isEnglish = $request->segment(2) == 'en';
+        $modelClass = $isEnglish ? InsightList::class : InsightListHindi::class;
+        $redirectUrl = $isEnglish ? 'admin/en/list-insights' : 'admin/hi/list-insights';
 
-            if ($newsData->save()) {
-                $newsId = $newsData->news_id;
-            } else {
-                return redirect('admin/en/list-insights')->with('error', "Insights Data Can't Save. ");
+        // Create the data object
+        $newsData = new $modelClass;
+        $newsData->title = $title;
+        $newsData->news_type = $role;
+        $newsData->homeTitle = $homeTitle;
+        $newsData->shortDesc = $subTitle;
+        $newsData->content = $desc;
+        $newsData->insight_type = $insightsType;
+        $newsData->cat_id = $catId;
+        $newsData->subcat_id = $subcatId;
+        $newsData->related_brand = $brand;
+        $newsData->image = $imageUrl;
+        $newsData->slug = $slug;
+        $newsData->is_intl = $isInternational;
+        $newsData->author_id = $request->insights_publisher;
+
+        // Save the data
+        if ($newsData->save()) {
+            $newsId = $newsData->news_id;
+
+            // Insert associated tags if present
+            if ($request->associated_tags) {
+                $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
             }
 
-
-            //increasing frequency count of kickers
-            if ($request->associated_tags != null)
-                $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
-
-            return redirect('admin/en/list-insights')->with('success', 'Insights Data Save Successfully.');
-        } elseif ($request->segment(2) == 'hi') {
-            $newsData                = new InsightListHindi;
-            $newsData->title         = $title;
-            // $newsData->kicker        = $kicker;
-            $newsData->news_type     = $role;
-            $newsData->homeTitle     = $homeTitle;
-            $newsData->shortDesc     = $subTitle;
-            $newsData->content       = $desc;
-            $newsData->insight_type  = $insights_type;
-            $newsData->cat_id        = $cat_id;
-            $newsData->subcat_id     = $subcat_id;
-            $newsData->related_brand = $brand;
-            $newsData->image         = $imageUrl;
-            $newsData->slug          = $slug;
-            $newsData->is_intl       = $isInternational;
-            $newsData->author_id     = request()->insights_publisher;
-
-
-            if ($newsData->save()) {
-                $newsId = $newsData->news_id;
-            } else {
-                return redirect('admin/hi/list-insights')->with('error', "Insights Data Can't Save. ");
-            }
-
-
-            //increasing frequency count of kickers
-            if ($request->associated_tags != null)
-                // dd($request->associatedTags);
-                $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
-
-            return redirect('admin/hi/list-insights')->with('success', 'Insights Data Save Successfully.');
+            return redirect($redirectUrl)->with('success', 'Insights Data Saved Successfully.');
+        } else {
+            return redirect($redirectUrl)->with('error', "Insights Data Couldn't Be Saved.");
         }
     }
+
 
     public function listinsights(Request $request)
     {
@@ -1945,6 +2037,7 @@ class AdminController extends Controller
     {
         // Determine the model based on language segment
         $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
+        $catmodel = ($request->segment(2) == 'en') ? InsightCategory::class : InsightsHindiCategory::class;
 
         // Fetch data with filters and eager loading
         $data = $model::with(['category', 'subcategory', 'author'])
@@ -1960,9 +2053,8 @@ class AdminController extends Controller
             ->whereIn('status', [0, 1]) // Filter status (active or inactive)
             ->orderByDesc('news_id') // Order by descending ID
             ->paginate(30); // Paginate results
-
         // Fetch common dropdown data
-        $InsightCategory = InsightCategory::query()
+        $InsightCategory = $catmodel::query()
             ->select('id', 'catname')
             ->where('status', 1)
             ->get();
@@ -1976,47 +2068,6 @@ class AdminController extends Controller
         return view('admin/insights/multilist-edit', compact('data', 'InsightCategory', 'InsightAuthor'));
     }
 
-
-
-    // public function saveMultipleInsights(Request $request)
-    // {
-    //     // Get selected articles
-    //     if ($request->segment(2) == 'en') {
-
-    //         $articles = $request->input('articles', []);
-    //         // dd($articles);
-    //         foreach ($articles as $newsId => $articleDetails) {
-    //             $existingInsight = InsightList::find($newsId);
-    //             if ($existingInsight) {
-    //                 // dd($existingInsight->slug);
-    //                 $existingInsight->insight_type = $articleDetails['insight_type'] ?? $existingInsight->insight_type;
-    //                 $existingInsight->cat_id = $articleDetails['main_category'] ?? $existingInsight->cat_id;
-    //                 $existingInsight->subcat_id = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
-    //                 $existingInsight->status = $articleDetails['status'] ?? $existingInsight->status;
-    //                 $existingInsight->author_id = $articleDetails['author'] ?? $existingInsight->author_id;
-    //                 $existingInsight->slug = Str::slug($existingInsight->title);
-    //                 $existingInsight->save();
-    //             }
-    //         }
-    //     } else {
-    //         $articles = $request->input('articles', []);
-    //         // dd($articles);
-    //         foreach ($articles as $newsId => $articleDetails) {
-    //             $existingInsight = InsightListHindi::find($newsId);
-    //             if ($existingInsight) {
-    //                 // dd($existingInsight->slug);
-    //                 $existingInsight->insight_type = $articleDetails['insight_type'] ?? $existingInsight->insight_type;
-    //                 $existingInsight->cat_id = $articleDetails['main_category'] ?? $existingInsight->cat_id;
-    //                 $existingInsight->subcat_id = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
-    //                 $existingInsight->status = $articleDetails['status'] ?? $existingInsight->status;
-    //                 $existingInsight->author_id = $articleDetails['author'] ?? $existingInsight->author_id;
-    //                 $existingInsight->slug = Str::slug($existingInsight->title);
-    //                 $existingInsight->save();
-    //             }
-    //         }
-    //     }
-    //     return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
-    // }
 
     public function saveMultipleInsights(Request $request)
     {
@@ -2095,8 +2146,8 @@ class AdminController extends Controller
             $kicker             = array_column($kickerData, 'name');
             $data               = InsightListHindi::query()->where('news_id', $newsId)->first();
 
-            $InsightCategory    = InsightCategory::query()->where('status', '1')->get();
-            $InsightSubcategory    = InsightSubcategory::all();
+            $InsightCategory    = InsightsHindiCategory::query()->where('status', '1')->get();
+            $InsightSubcategory    = InsightsHindiSubcategory::all();
 
             $brands             = explode(",", $data->related_brand);
 
@@ -2380,11 +2431,49 @@ class AdminController extends Controller
     public function getSubcategories($catid)
     {
         if (request()->segment(2) == 'en') {
-            // dd(request()->segment(2));
+            //dd(request()->segment(2));
             $subcategories = InsightSubcategory::select('id', 'subcat_name')->where('mcat_id', $catid)->get();
         } else {
-            $subcategories = InsightsHindiSubcategory::select('id', 'subcat_name')->where('mcat_id', $catid)->get();
+            // $data = InsightsHindiSubCategory::all();
+            $subcategories = InsightsHindiSubCategory::select('id', 'subcat_name')->where('mcat_id', $catid)->get();
+            // dd($subcategories);
         }
         return response()->json($subcategories);
+    }
+
+
+    public static function createimgurl($image)
+    {
+        // dd($image);
+        if ($image) {
+            $iscont = strstr($image, "/");
+            $isHttps = strstr($image, 'https');
+            if ($isHttps) {
+                $url =  trim($image, '/');
+                dd($url);
+            } else {
+
+                if ($iscont) {
+                    $url =  Config('constants.franAwsS3Url'). trim($image, '/');
+                // dd($url);
+                } else {
+                    if (App::getLocale() != 'en') {
+
+                        $url = Config('constants.franAwsS3Url') . Config('constants.ARTICLE_HINDI_UPLOAD_PATH') . trim($image);
+                        // dd($url);
+                    } else if (App::getLocale() != 'hi') {
+
+                        $url = Config('constants.franAwsS3Url') . Config('constants.ARTICLE_UPLOAD_PATH') . trim($image);
+                        // dd( $url);
+                        //  = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/' . Config('constants.ARTICLE_UPLOAD_PATH') . trim($image);
+                    }
+                }
+            }
+        } else {
+            $url = url('/img/602a695853d99.jpeg');
+        }
+
+        // dd($url);
+        return $url;
     }
 }

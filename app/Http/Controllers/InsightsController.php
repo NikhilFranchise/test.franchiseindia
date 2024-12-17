@@ -745,49 +745,6 @@ class InsightsController extends Controller
         }
     }
 
-
-    // public function insightsubcategory(Request $request)
-    // {
-    //     // Redirect if category or subcategory is 'kicker'
-    //     if (in_array($request->category, ['kicker']) || in_array($request->subcategory, ['kicker'])) {
-    //         return redirect('/insights');
-    //     }
-
-    //     $categorySlug = $request->category;
-    //     $subcategorySlug = $request->subcategory;
-    //     $isEnglish = App::getLocale() == 'en';
-
-    //     // Determine models based on the language
-    //     $insightListModel = $isEnglish ? InsightList::class : InsightListHindi::class;
-    //     $insightSubCatModel = $isEnglish ? InsightSubcategory::class : InsightsHindiSubcategory::class;
-    //     $insightCatModel = $isEnglish ? InsightCategory::class : InsightsHindiCategory::class;
-
-    //     // Fetch subcategory and category data
-    //     $subcatData = $insightSubCatModel::query()->where('slug', $subcategorySlug)->first();
-    //     dd($subcatData);
-    //     $catData = $insightCatModel::query()
-    //         ->where('slug', $categorySlug)
-    //         ->where('id', $subcatData->mcat_id)
-    //         ->first();
-
-    //     if (!$subcatData || !$catData) {
-    //         return redirect('/insights');
-    //     }
-
-    //     // Fetch content data
-    //     $contentData = $insightListModel::with(['author', 'category', 'subcategory'])
-    //         ->where('subcat_id', $subcatData->id)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->where('status', 1)
-    //         ->whereNotNull('image')
-    //         ->whereNotNull('cat_id')
-    //         ->whereNotNull('subcat_id')
-    //         ->paginate(10);
-
-    //     // Return the view
-    //     return view('insights.subcatdata', compact('contentData', 'subcatData'));
-    // }
-
     public function insightsubcategory(Request $request)
     {
         // Redirect if category or subcategory is 'kicker'
@@ -836,32 +793,6 @@ class InsightsController extends Controller
         return view('insights.subcatdata', compact('contentData', 'subcatData', 'catData'));
     }
 
-    // public  function getvideopodcast(Request $request)
-    // {
-    //     //dd('hello');
-    //     $isEnglish = request()->segment(2) == 'en' ? 'en' : 'hi';
-    //     $redirectPath = $isEnglish == 'en' ? '/insights' : '/insights/hindi';
-    //     app()->setLocale($isEnglish);
-    //     session()->put('locale', $isEnglish);
-    //     if ($isEnglish == 'en') {
-
-    //         $listVideo = FihlPodcastVideo::with('category')->where('podcast_type', 'V')->where('pod_lang', 'en')->where('status', 'A')
-    //             ->orderBy('created_at', 'DESC')
-    //             ->paginate(10);
-    //         $podcast = FihlPodcastVideo::query()->where('pod_lang', 'en')->where('podcast_type', 'A')->where('status', 'A')->orderByDesc('created_at')->where('podcast_id', '!=', '')->limit(4)->get();
-    //     } else {
-
-    //         $listVideo = FihlPodcastVideo::with('category')->where('podcast_type', 'V')->where('pod_lang', 'hi')->where('status', 'A')
-    //             ->orderBy('created_at', 'DESC')
-    //             ->paginate(10);
-    //         $podcast = FihlPodcastVideo::query()->where('pod_lang', 'hi')->where('podcast_type', 'A')->where('status', 'A')->orderByDesc('created_at')->where('podcast_id', '!=', '')->limit(4)->get();
-    //     }
-
-    //     // Add a limit as needed
-    //     dd($listVideo);
-    //     return view('insights.video', compact('listVideo', 'podcast'));
-    // }
-
     public function getVideoPodcast(Request $request)
     {
         // Determine the language based on the URL segment
@@ -877,46 +808,47 @@ class InsightsController extends Controller
         $YOUTUBE_URL = "https://www.youtube.com/watch?v=%s";
 
         // Determine query parameters
-        $offset = $request->input('offset', 0);
-        $limit = $request->input('limit', 4);
-        $limit = ($limit > 50) ? 50 : $limit; // Ensure limit doesn't exceed 50
+        // $offset = $request->input('offset', 0);
+        // $limit = $request->input('limit', 4);
+        // $limit = ($limit > 50) ? 50 : $limit; // Ensure limit doesn't exceed 50
 
         // Fetch video podcasts and additional podcast data
         $listVideoQuery = FihlPodcastVideo::with('category')
             ->where('podcast_type', 'V')
             ->where('pod_lang', $isEnglish)
             ->where('status', 'A')
-            ->orderBy('created_at', 'DESC');
-
+            ->orderBy('created_at', 'DESC')
+            ->paginate(8);
+            dd($listVideoQuery);
         // Get total records count for pagination
-        $total = $listVideoQuery->count();
+      //  $total = $listVideoQuery->count();
 
         // Apply offset and limit
-        $videos = $listVideoQuery->offset($offset)->limit($limit)->get();
+      //  $videos = $listVideoQuery->offset($offset)->limit($limit)->get();
 
         // Map and format results
-        $mappedVideos = $videos->map(function ($video) use ($YOUTUBE_IMAGE_PATH, $YOUTUBE_URL) {
-            return [
-                'sno' => $video->sno,
-                'title' => $video->title,
-                'pod_lang' => $video->pod_lang,
-                'description' => $video->description,
-                'url' => sprintf($YOUTUBE_URL, $video->videoID),
-                'image' => sprintf($YOUTUBE_IMAGE_PATH, $video->videoID),
-                'views' => $video->views,
-                'createDate' => $video->createDate,
-                'category' => $video->category->catname ?? null, // Ensure category is safely accessed
-            ];
-        });
+        // $mappedVideos = $videos->map(function ($video) use ($YOUTUBE_IMAGE_PATH, $YOUTUBE_URL) {
+        //     return [
+        //         'sno' => $video->sno,
+        //         'title' => $video->title,
+        //         'pod_lang' => $video->pod_lang,
+        //         'description' => $video->description,
+        //         'url' => sprintf($YOUTUBE_URL, $video->videoID),
+        //         'image' => sprintf($YOUTUBE_IMAGE_PATH, $video->videoID),
+        //         'views' => $video->views,
+        //         'createDate' => $video->createDate,
+        //         'category' => $video->category->catname ?? null, // Ensure category is safely accessed
+        //     ];
+        // });
 
         // Create a paginated response
-        $listVideo = new LengthAwarePaginator(
-            $mappedVideos, // Items for the current page
-            $total,        // Total number of items
-            $limit,        // Items per page
-            ($offset / $limit) + 1, // Current page
-            ['path' => request()->url(), 'query' => request()->query()] // Path and query params for pagination links
-        );
+        // $listVideo = new LengthAwarePaginator(
+        //     $mappedVideos, // Items for the current page
+        //     $total,        // Total number of items
+        //     $limit,        // Items per page
+        //     ($offset / $limit) + 1, // Current page
+        //     ['path' => request()->url(), 'query' => request()->query()] // Path and query params for pagination links
+        // );
 
         $podcast = FihlPodcastVideo::query()
             ->where('pod_lang', $isEnglish)
@@ -927,7 +859,7 @@ class InsightsController extends Controller
             ->limit(4)
             ->get();
 
-            // dd($videos);
+        // dd($videos);
         // Return the view with videos and podcast data
         return view('insights.video', compact('listVideo', 'podcast'));
     }
@@ -961,54 +893,105 @@ class InsightsController extends Controller
 
     public static function createimgurl($image)
     {
-        // dd($image);
-        if ($image) {
-            $iscont = strstr($image, "/");
-            $isHttps = strstr($image, 'https');
-            if ($isHttps) {
-                $url =  trim($image, '/');
-            } else {
+        // Default image URL
+        $defaultUrl = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/content/fi/int/5ff40e6aaa3da.jpeg';
 
-                if ($iscont) {
-                    $url = env('S3_BUCKET_URL2', '') . trim($image, '/');
-                } else {
-                    if (App::getLocale() != 'en') {
-
-                        $url = env('S3_BUCKET_URL2', '') . Config('constants.ARTICLE_HINDI_UPLOAD_PATH') . trim($image);
-                    } else {
-
-                        $url = env('S3_BUCKET_URL2', '') . Config('constants.ARTICLE_UPLOAD_PATH') . trim($image);
-                        //$url = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/' . Config('constants.ARTICLE_UPLOAD_PATH') . trim($image);
-                    }
-                }
-            }
-        } else {
-            $url = url('/img/602a695853d99.jpeg');
+        if (!$image) {
+            return $defaultUrl;
         }
 
+        // If the image is an absolute URL (contains 'https')
+        if (strstr($image, 'https')) {
+            return trim($image, '/');
+        }
 
-        return $url;
+        $baseUrl = Config('constants.franAwsS3Url');
+        $imagePath = ltrim($image, '/'); // Clean the image path
+
+        // Check if the image contains a "/"
+        if (strstr($image, '/')) {
+            return $baseUrl . $imagePath;
+        }
+
+        // Set path based on locale
+        $uploadPath = App::getLocale() !== 'en'
+            ? Config('constants.ARTICLE_HINDI_UPLOAD_PATH')
+            : Config('constants.ARTICLE_UPLOAD_PATH');
+
+        return $baseUrl . $uploadPath . $imagePath;
     }
+
+
+    // public static function createimgurl($image)
+    // {
+    //     // dd($image);
+    //     if ($image) {
+    //         $iscont = strstr($image, "/");
+    //         $isHttps = strstr($image, 'https');
+    //         if ($isHttps) {
+    //             $url =  trim($image, '/');
+    //         } else {
+
+    //             if ($iscont) {
+    //                 $url = Config('constants.franAwsS3Url') . trim($image, '/');
+    //             } else {
+    //                 if (App::getLocale() != 'en') {
+
+    //                     $url = Config('constants.franAwsS3Url') . Config('constants.ARTICLE_HINDI_UPLOAD_PATH') . trim($image);
+    //                 } else {
+
+    //                     $url = Config('constants.franAwsS3Url') . Config('constants.ARTICLE_UPLOAD_PATH') . trim($image);
+    //                     //$url = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/' . Config('constants.ARTICLE_UPLOAD_PATH') . trim($image);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $url = url('/img/602a695853d99.jpeg');
+    //     }
+
+
+    //     return $url;
+    // }
+
+    // public static function authorImageurl($image)
+    // {
+    //     // dd($image);
+    //     if ($image) {
+    //         $iscont = strstr($image, "/");
+    //         if ($iscont) {
+    //             $url = Config('constants.franAwsS3Url') . trim($image, '/');
+    //         } else {
+    //             $info = @getimagesize('https://franchiseindia.s3.ap-south-1.amazonaws.com/opp/authors/images/' . $image);
+    //             if ($info === false) {
+    //                 $url = url('images/defaultuser.png');
+    //             } else {
+    //                 $url = Config('constants.franAwsS3Url') . 'opp/authors/images/' . trim($image);
+    //             }
+    //         }
+    //     } else {
+    //         $url = url('images/defaultuser.png');
+    //     }
+
+    //     return $url;
+    // }
 
     public static function authorImageurl($image)
     {
-        // dd($image);
-        if ($image) {
-            $iscont = strstr($image, "/");
-            if ($iscont) {
-                $url = env('S3_BUCKET_URL2', '') . trim($image, '/');
-            } else {
-                $info = @getimagesize('https://franchiseindia.s3.ap-south-1.amazonaws.com/opp/authors/images/' . $image);
-                if ($info === false) {
-                    $url = url('images/defaultuser.png');
-                } else {
-                    $url = env('S3_BUCKET_URL2', '') . 'opp/authors/images/' . trim($image);
-                }
-            }
-        } else {
-            $url = url('images/defaultuser.png');
+        $defaultUrl = url('images/defaultuser.png');
+
+        if (!$image) {
+            return $defaultUrl;
         }
 
-        return $url;
+        // Check if the image contains a "/"
+        if (strstr($image, "/")) {
+            return Config('constants.franAwsS3Url') . ltrim($image, '/');
+        }
+
+        // Check if the image exists on S3
+        $imagePath = 'opp/authors/images/' . trim($image);
+        $s3Url = Config('constants.franAwsS3Url') . $imagePath;
+
+        return @getimagesize($s3Url) !== false ? $s3Url : $defaultUrl;
     }
 }
