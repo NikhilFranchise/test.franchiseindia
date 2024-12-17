@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FranchisorBusinessDetail;
-use App\Models\Videos;
+use App\Models\Videos;  
 use App\Models\HomePremiumPageBrand;
+use App\Models\InsightList;
+use App\Models\InsightListHindi;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -20,8 +22,10 @@ class NewHomePageController extends Controller
 {
     public function hindiHomePage()
     {
-
-
+        if (request()->segment(1) == 'hi') {
+            app()->setLocale('hi');
+            session()->put('locale', 'hi');
+        }
         $cacheKeys = [
             'brandslft' => 'brandslft_cache',
             'brandstbo' => 'brandstbo_cache',
@@ -99,18 +103,33 @@ class NewHomePageController extends Controller
         });
 
 
-        $filePath = public_path('oidata/articlehindi.json');
+        // $filePath = public_path('oidata/articlehindi.json');
 
 
-        $articles = Cache::remember($cacheKeys['articles_data_cache'], $cacheExpiration, function () use ($filePath) {
-            // If the data is not in Redis, read it from the file
-            if (file_exists($filePath)) {
-                $storedData = json_decode(file_get_contents($filePath), true);
-                return $storedData['data'] ?? []; // Return the data or an empty array if not found
-            } else {
-                return []; // Default to an empty array if the file does not exist
-            }
-        });
+        // $articles = Cache::remember($cacheKeys['articles_data_cache'], $cacheExpiration, function () use ($filePath) {
+        //     // If the data is not in Redis, read it from the file
+        //     if (file_exists($filePath)) {
+        //         $storedData = json_decode(file_get_contents($filePath), true);
+        //         return $storedData['data'] ?? []; // Return the data or an empty array if not found
+        //     } else {
+        //         return []; // Default to an empty array if the file does not exist
+        //     }
+        // });
+
+        $articles= InsightListHindi::query()
+                ->where('status', 1)
+                ->whereIn('insight_type', ['Article'])
+                ->orderByDesc('created_at')
+                ->limit(10)
+                ->get();
+
+                // $articles2= InsightListHindi::query()
+                // ->where('status', 1)
+                // ->whereIn('insight_type', ['Interview'])
+                // ->orderByDesc('created_at')
+                // ->limit(10)
+                // ->get();
+                // // dd($articles);
 
         $youtubeApiKey = 'AIzaSyCB2nVhCCrLyMmHhAdIuGVBOyV_ywUATUA';
         $videos = Cache::remember($cacheKeys['fivideohi'], $cacheExpiration, function () use ($youtubeApiKey) {
@@ -173,6 +192,10 @@ class NewHomePageController extends Controller
 
     public function homeNew(Request $request)
     {
+        if (request()->segment(1) != 'hi') {
+            app()->setLocale('en');
+            session()->put('locale', 'en');
+        }
         $cacheKeys = [
             'brandslft' => 'brandslft_cache',
             'brandstbo' => 'brandstbo_cache',
@@ -236,19 +259,36 @@ class NewHomePageController extends Controller
 
 
         // Define the path where the JSON file is stored
-        $filePath = public_path('oidata/articles.json');
+        // $filePath = public_path('oidata/articles.json');
 
-        // Read the data back from the JSON file
-        $articles = Cache::remember($cacheKeys['articles_data_cache_english'], $cacheExpiration, function () use ($filePath) {
-            // If the data is not in Redis, read it from the file
-            if (file_exists($filePath)) {
-                $storedData = json_decode(file_get_contents($filePath), true);
-                return $storedData['data'] ?? []; // Return the data or an empty array if not found
-            } else {
-                return []; // Default to an empty array if the file does not exist
-            }
-        });
+        // // Read the data back from the JSON file
+        // $articles = Cache::remember($cacheKeys['articles_data_cache_english'], $cacheExpiration, function () use ($filePath) {
+        //     // If the data is not in Redis, read it from the file
+        //     if (file_exists($filePath)) {
+        //         $storedData = json_decode(file_get_contents($filePath), true);
+        //         return $storedData['data'] ?? []; // Return the data or an empty array if not found
+        //     } else {
+        //         return []; // Default to an empty array if the file does not exist
+        //     }
+        // });
 
+                $articles= InsightList::query()
+                ->where('status', 1)
+                ->whereIn('insight_type', ['News'])
+                ->orderByDesc('created_at')
+                ->limit(10)
+                ->get();
+
+                $articles2= InsightList::query()
+                ->where('status', 1)
+                ->whereIn('insight_type', ['Interview'])
+                ->orderByDesc('created_at')
+                ->limit(10)
+                ->get();
+
+
+                // dd($articles2);
+        
         $youtubeApiKey = 'AIzaSyCB2nVhCCrLyMmHhAdIuGVBOyV_ywUATUA';
         $videos = Cache::remember($cacheKeys['fivideo'], $cacheExpiration, function () use ($youtubeApiKey) {
 
@@ -298,7 +338,7 @@ class NewHomePageController extends Controller
 
         // return view('cvw.homepage')->with(compact('articles', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
 
-        return view('newHomepage.newmasterhomepage')->with(compact('articles', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
+        return view('newHomepage.newmasterhomepage')->with(compact('articles','articles2', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
 
         // return view('layout.masternewhomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
     }
@@ -352,6 +392,41 @@ class NewHomePageController extends Controller
             $slug = Str::slug($title);
         }
         $url .= "article/" . $slug . "-" . $id;
+        return $url;
+    }
+
+    public static function getinsightsSlug($title, $id)
+    {
+
+        $url = '';
+        // dd(request()->segments());
+        if (request()->segment(1) == 'hi') {
+            $rep = preg_replace("/[:?]/", "", $title);
+            $slug = preg_replace("/[\s]/", '-', $rep);
+            // dd($slug);
+            $url .= "/";
+        } else {
+            //   $slug = str_slug($title);
+            $slug = Str::slug($title);
+        }
+        $url .= "/en/news/" . $slug . "." . $id;
+        return $url;
+    }
+
+    public static function getinsights_interview_Slug($title, $id)
+    {
+
+        $url = '';
+        // dd(request()->segments());
+        if (request()->segment(1) == 'hi') {
+            $rep = preg_replace("/[:?]/", "", $title);
+            $slug = preg_replace("/[\s]/", '-', $rep);
+            $url .= "hindi/";
+        } else {
+            //   $slug = str_slug($title);
+            $slug = Str::slug($title);
+        }
+        $url .= "/en/interviews/" . $slug . "." . $id;
         return $url;
     }
 

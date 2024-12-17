@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group pos-rel">
-                            <input name="mobile" id="mobile-wider" type="text" pattern="[0-9]{5,10}" minlength="10"
+                            {{-- <input name="mobile" id="mobile-wider" type="text" pattern="[0-9]{5,10}" minlength="10"
                                 maxlength="10" onkeyup="getMobileStatusWider(this.value)" class="form-control blur"
                                 placeholder="Enter Mobile">
                             <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider"
@@ -60,7 +60,11 @@
                             <span class="vrfy" onclick="validateMobileWider()" id="validate-mobile-contact"
                                 style="display:none">VERIFY</span>
                             <span id="success-mobile-wider" class="showhideright" style="display:none"><i
-                                    class="fa fa-check fa-lg" aria-hidden="true"></i></span>
+                                    class="fa fa-check fa-lg" aria-hidden="true"></i></span> --}}
+                                    <input type="text" name="mobile" id='txtPhone' class="form-control"
+                                            placeholder="Enter Mobile No" maxlength="10" autocomplete="off"
+                                            />
+                                       
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6">

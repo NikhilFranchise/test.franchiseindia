@@ -68,7 +68,7 @@
 
 @endphp
 
-@if (
+{{-- @if (
     !(request()->segment(1) == 'brands' &&
         !empty(request()->segment(2)) &&
         in_array(explode('.', request()->segment(2))[1], Config('constants.popupBrands'))
@@ -90,9 +90,9 @@
         @endif
     @endforeach
 
-@endif
+@endif --}}
 
-@endif
+{{-- @endif --}}
 
 
 @if (request()->segment(1) == 'hi')
@@ -145,7 +145,7 @@
                     <li><a href="https://www.franchiseindia.com/contact" target="_blank">Contact Us</a></li>
                     <li><a href="https://www.franchiseindia.com/feedback" target="_blank">Feedback</a></li>
                     <li><a href="https://www.franchiseindia.com/sitemap/brands" target="_blank">Brands</a></li>
-                    <li><a href="https://opportunityindia.com" target="_blank">News</a></li>
+                    <li><a href="https://www.franchiseindia.com/insights" target="_blank">News</a></li>
                     <li><a href="https://www.franchiseindia.com/testimonials" target="_blank">Testimonials</a></li>
                     <li><a href="https://www.franchiseindia.com/terms" target="_blank">Terms</a></li>
                     {{-- <li><a href="https://www.franchiseindia.com/sitemap" target="_blank">Sitemap</a></li> --}}

@@ -31,6 +31,7 @@ class VerifyCsrfToken extends Middleware
         'fetch-data2',
         'newslettersignup',
         'price_filter',
+        'feedback'
 
 
 

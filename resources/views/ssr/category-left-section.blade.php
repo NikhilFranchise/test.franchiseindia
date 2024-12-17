@@ -118,12 +118,12 @@ use Illuminate\Support\Str;
                                                             @foreach (Config('constants.subSubCategoryArr.'.$subCatIndex) as $subSubCatIndex => $subSubCat)
                                                                 @php
                                                                     $subsubcatchecked = "";
-                                                                    if (!is_array($ssc)) {
-                                                                    $sscArr = explode(',', $ssc);
-                                                                    } else {
-                                                                    $sscArr = $ssc;
-                                                                    }
-                                                                    if(in_array($subSubCatIndex, $sscArr))
+                                                                    // if (!is_array($ssc)) {
+                                                                    // $sscArr = explode(',', $ssc);
+                                                                    // } else {
+                                                                    // $sscArr = $ssc;
+                                                                    // }
+                                                                    // if(in_array($subSubCatIndex, $sscArr))
                                                                     $subsubcatchecked = "checked";
                                                                     $subsubCatUrl = Config('constants.MainDomain').'/business-opportunities/'.Config('category.SeoSubSubCategoryArr.'.$subSubCatIndex).'.ssc'.$subSubCatIndex;
                                                                 @endphp
@@ -159,7 +159,7 @@ use Illuminate\Support\Str;
                                     <li>
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" @if($ftype !=1 && $ftype !=2 && $ftype !=3) checked @endif class="franType" name="franchise_type" value="">
+                                                {{-- <input type="radio" @if($ftype !=1 && $ftype !=2 && $ftype !=3) checked @endif class="franType" name="franchise_type" value=""> --}}
                                                 All
                                             </label>
                                         </div>
@@ -168,12 +168,12 @@ use Illuminate\Support\Str;
                                         <li>
                                             <div class="radio">
                                                 <label>
-                                                    @php
+                                                    {{-- @php
                                                         $ftypeCheck = "";
                                                         if($ftype == $key)
                                                         $ftypeCheck = "checked";
-                                                    @endphp
-                                                    <input type="radio" slug="{{Str::slug($value)}}" {{$ftypeCheck}} url="{{Config('MainDomain')}}/business-opportunities/{{strtolower(Str::slug($value))}}.FT{{ $key }}" class="franType" name="franchise_type" id="ftype{{$key}}" value={{$key}}>
+                                                    @endphp --}}
+                                                    {{-- <input type="radio" slug="{{Str::slug($value)}}" {{$ftypeCheck}} url="{{Config('MainDomain')}}/business-opportunities/{{strtolower(Str::slug($value))}}.FT{{ $key }}" class="franType" name="franchise_type" id="ftype{{$key}}" value={{$key}}> --}}
                                                     <a href="{{Config('MainDomain')}}/business-opportunities/{{strtolower(Str::slug($value))}}.FT{{ $key }}" id="aftype{{$key}}" class="sub-cat-disable">
                                                         {{$value}}
                                                     </a>

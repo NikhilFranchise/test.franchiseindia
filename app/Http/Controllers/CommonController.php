@@ -1303,5 +1303,7 @@ public function fetchDataajax2(Request $request)
     return response()->json(['html' => $html]);
 }
 
+
+
 }
 

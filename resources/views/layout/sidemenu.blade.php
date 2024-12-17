@@ -392,10 +392,10 @@
                 </ul>
             </div>
         </li>
-        <li>
+        {{-- <li>
             <div class="contact-us-section">
                 Toll Free 1800 102 2007
             </div>
-        </li>
+        </li> --}}
     </ul>
 </nav>

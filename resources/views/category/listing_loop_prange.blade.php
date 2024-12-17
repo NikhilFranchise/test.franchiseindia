@@ -621,5 +621,7 @@ if (!empty($item['franchisorLike'])) {  // Array access
 @endif
 
 @endforeach
+
+
 </div>
 </div>
