@@ -8,7 +8,6 @@
             <div class="container">
                 <ul class="artilsit">
                     @foreach ($listVideo as $fivideo)
-                        @if ($loop->iteration < 8)
                             <li>
                                 <div class="row">
                                     <div class="col-lg-5 col-md-5">
@@ -30,7 +29,7 @@
                                             <div class="myblk">
                                                 <div class="row">
                                                     <div class="col-lg-6 col-md-6 myblk-lt col-sm-6 col-xs-6">
-                                                        {{ $fivideo['createDate'] }}</div>
+                                                        {{ date('M d, Y', strtotime($fivideo['createDate'])) }}</div>
                                                 </div>
                                             </div>
                                             <div class="stext">
@@ -40,11 +39,10 @@
                                     </div>
                                 </div>
                             </li>
-                        @endif
                     @endforeach
                 </ul>
                 <div class="video-pagination">
-                    {{ $listVideo->links('pagination::bootstrap-4') }}
+                    {{ $videos->links('pagination::bootstrap-4') }}
                 </div>
             </div>
         </div>

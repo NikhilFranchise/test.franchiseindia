@@ -2147,7 +2147,7 @@ class AdminController extends Controller
             $data               = InsightListHindi::query()->where('news_id', $newsId)->first();
 
             $InsightCategory    = InsightsHindiCategory::query()->where('status', '1')->get();
-            $InsightSubcategory    = InsightsHindiSubcategory::all();
+            $InsightSubcategory    = InsightsHindiSubCategory::all();
 
             $brands             = explode(",", $data->related_brand);
 
