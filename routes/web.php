@@ -1067,6 +1067,9 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         Route::get('{insight_type}/{slug}.{id}', function ($insight_type, $slug, $id) {
             return redirect()->to("/insights/en/{$insight_type}/{$slug}.{$id}", 301);
         });
+        Route::get('tag/{tagslug}', function ($tagslug) {
+            return redirect()->to("/insights/en/tag/$tagslug", 301);
+        });
         Route::group(['prefix' => 'en'], function () {
             Route::get('/search',               [InsightsController::class, 'insightSearch']);
             Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
