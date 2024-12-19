@@ -1547,54 +1547,6 @@ class AdminController extends Controller
      * @param $oldImagePath
      * @return mixed
      */
-    // private function uploadImage($image, $type, $isDelete, $store_type, $oldImagePath)
-    // {
-    //     $uploadPath = "uploads/";
-    //     if ($isDelete == 1 && $store_type == 'public' && !empty($oldImagePath))
-    //         unlink(public_path($oldImagePath));
-
-    //     if ($isDelete == 1 && $store_type == 's3')
-    //         Storage::getFacadeRoot()->disk('s3')->delete(parse_url($oldImagePath)['path']);
-
-    //     $extension  = $image->extension();
-
-    //     $picPath    = config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
-
-    //     switch ($type) {
-    //         case 'Author':
-    //             $picPath    = $uploadPath . sprintf(config('constants.AdminAuthor'), date('md')) . '/' . uniqid() . '.' . $extension;
-    //             break;
-
-    //         case 'Article':
-    //             $picPath    = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
-    //             break;
-
-    //         case 'Interview':
-    //             $picPath    = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/int/' . uniqid() . '.' . $extension;
-    //             break;
-
-    //         case 'Gallery':
-    //             $picPath    = config('constants.AdminArticleInterview') . '/gallery/art/' . uniqid() . '.' . $extension;
-    //             break;
-
-    //         case 'Magazine':
-    //             $picPath    = $uploadPath . config('constants.AdminMagazine') . '/' . '' . uniqid() . '.' . $extension;
-    //             break;
-
-    //         case 'News':
-    //             $picPath    = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
-    //             break;
-    //     }
-    //     Storage::getFacadeRoot()->disk($store_type)->put($picPath, file_get_contents($image), 'public');
-    //     $imageUrl   = Storage::getFacadeRoot()->disk($store_type)->url($picPath);
-
-    //     if ($store_type == 's3' && $type != 'Gallery')
-    //         return  str_replace('storage', 'uploads', parse_url($imageUrl, PHP_URL_PATH));
-
-    //     return  str_replace('storage', 'uploads', $imageUrl);
-    // }
-
-
 
     private function uploadImage($image, $type, $isDelete, $store_type, $oldImagePath)
     {
@@ -2120,7 +2072,8 @@ class AdminController extends Controller
             $data               = InsightList::query()->where('news_id', $newsId)->first();
 
             $InsightCategory    = InsightCategory::query()->where('status', '1')->get();
-            $InsightSubcategory    = InsightSubcategory::all();
+            // dd($InsightCategory);
+            $InsightSubcategory    = InsightSubcategory::query()->where('mcat_id', $data->cat_id)->get();
 
             $brands             = explode(",", $data->related_brand);
 
@@ -2147,7 +2100,7 @@ class AdminController extends Controller
             $data               = InsightListHindi::query()->where('news_id', $newsId)->first();
 
             $InsightCategory    = InsightsHindiCategory::query()->where('status', '1')->get();
-            $InsightSubcategory    = InsightsHindiSubCategory::all();
+            $InsightSubcategory    = InsightsHindiSubCategory::query()->where('mcat_id', $data->cat_id)->get();
 
             $brands             = explode(",", $data->related_brand);
 
@@ -2329,22 +2282,25 @@ class AdminController extends Controller
 
     public function storecat(Request $request)
     {
-
-        $catclass = InsightCategory::query();
-        $catCount   = $catclass->where('catname', request()->maincat)->select('catname')->count();
+        $lang = $request->segment(2);
+        // dd($lang);
+        $catclass =  $lang == 'en' ? InsightCategory::query() : InsightsHindiCategory::query();
+        $catCount   = $catclass->where('catname', $request->maincat)->select('catname')->count();
+        // dd($request->maincat);
         if ($catCount == 0) {
-            $string = str_replace(' ', '-', request()->maincat);
-            $slug = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
-            $catslug = str_replace('--', '-', $slug);
-            $cslug = strtolower($catslug);
-
-            $catclass->insert(['catname' => request()->maincat, 'slug' => $cslug]);
+            $cslug = Str::slug($request->maincat);
+            // dd($cslug);
+            if ($lang == 'hi') {
+                $catclass->insert(['catname' => request()->maincat, 'slug' => request()->slug]);
+            } else {
+                $catclass->insert(['catname' => request()->maincat, 'slug' => $cslug]);
+            }
         } else {
             session()->flash('failed', 'This Main Category already Exists');
             return redirect()->back();
         }
 
-        return redirect('/admin/cat/list')->with('success', "Main Category Created Successfully.");
+        return redirect('/admin/' . $lang . '/cat/list')->with('success', "Main Category Created Successfully.");
     }
     public function catlist(Request $request)
     {
@@ -2365,84 +2321,174 @@ class AdminController extends Controller
         return view('admin.category.list', compact('catdata'));
     }
 
-    public function deleteCat()
+    public function deleteCat(Request $request)
     {
-        $locale = request()->segment(2);
-        if ($locale == 'en') {
-            $catclass = InsightCategory::findOrFail(request()->id);
-            $catclass->delete();
-        } else {
-            $catclass = InsightsHindiCategory::findOrFail(request()->id);
-            $catclass->delete();
+        try {
+            // Determine the model class based on the locale
+            $locale = $request->segment(2);
+            $catclass = $locale == 'en' ? InsightCategory::class : InsightsHindiCategory::class;
+
+            // Find and delete the category
+            $category = $catclass::findOrFail($request->id);
+            $category->delete();
+
+            // Set a success message in the session
+            return redirect()->back()->with('success', 'Main Category Deleted Successfully.');
+        } catch (\Exception $e) {
+            // Handle unexpected errors
+            return redirect()->back()->with('error', 'Failed to delete category: ' . $e->getMessage());
         }
-        return redirect()->back()->with('success', 'Main Category Deleted Successfully.');
     }
+
+
     public function subcatform()
     {
         $locale = request()->segment(2);
-        if ($locale == 'en') {
-            $cat = InsightCategory::all();
-        } else {
-            $cat = InsightsHindiCategory::all();
-        }
+        $cat =  $locale == 'en' ? InsightCategory::all() : InsightsHindiCategory::all();
+
         return view('admin.subcategory.create', compact('cat'));
     }
 
+    // public function storesubcat(Request $request)
+    // {
+    //     dd($request->all());
+    //     $locale = request()->segment(2);
+
+    //     $subcatclass = $locale == 'en' ? InsightSubcategory::query() : InsightsHindiSubCategory::query();
+    //     $maincatid = $request->maincat;
+    //     $slugs = explode(',', $request->sub_catslug); // Explode the slugs input
+    //     // dd($slug[0]);
+    //     print_r($slug);die;
+    //     $subcat = $request->sub_categories;
+    //     foreach ($subcat as $sbval) {
+    //         $catCount   = $subcatclass->where('mcat_id', $maincatid)->where('subcat_name', $sbval)->select('subcat_name')->count();
+    //     }
+    //     // dd($catCount);
+    //     if ($catCount === 0) {
+
+    //         foreach ($subcat as $val) {
+    //             $string = str_replace(' ', '-', $val);
+    //             $slug = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
+    //             $catslug = str_replace('--', '-', $slug);
+    //             $cslug = strtolower($catslug);
+
+    //             $data = $subcatclass->insert(['mcat_id' => $maincatid, 'subcat_name' => $val, 'slug' => $cslug]);
+    //             //  dd($data);
+    //         }
+    //     } else {
+    //         session()->flash('failed', 'This Sub Category already Exists');
+    //         return redirect()->back();
+    //     }
+    //     return redirect('/admin/' . $locale . '/subcat/list')->with('success', 'Sub Category Created Successfully.');
+    // }
+
     public function storesubcat(Request $request)
     {
-        $subcatclass = InsightSubcategory::query();
+        // Determine the locale and model class
+        $locale = request()->segment(2);
+        $subcatclass = $locale == 'en' ? InsightSubcategory::query() : InsightsHindiSubCategory::query();
+
+        // Main category ID and subcategories
         $maincatid = $request->maincat;
-        $subcat = $request->sub_categories;
-        foreach ($subcat as $sbval) {
-            $catCount   = $subcatclass->where('mcat_id', $maincatid)->where('subcat_name', $sbval)->select('subcat_name')->count();
-        }
-        // dd($catCount);
-        if ($catCount === 0) {
+        $subcategories = $request->sub_categories;
 
-            foreach ($subcat as $val) {
-                $string = str_replace(' ', '-', $val);
-                $slug = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
-                $catslug = str_replace('--', '-', $slug);
-                $cslug = strtolower($catslug);
-
-                $data =    InsightSubcategory::query()->insert(['mcat_id' => $maincatid, 'subcat_name' => $val, 'slug' => $cslug]);
-                //  dd($data);
+        // Handle slugs (string or array)
+        $slugs = [];
+        if ($locale == 'hi') {
+            if (is_array($request->sub_catslug)) {
+                foreach ($request->sub_catslug as $slugValue) {
+                    $slugs = array_merge($slugs, explode(',', $slugValue));
+                }
+            } else {
+                $slugs = explode(',', $request->sub_catslug);
             }
-        } else {
-            session()->flash('failed', 'This Sub Category already Exists');
-            return redirect()->back();
+
+            // Trim and clean slugs
+            $slugs = array_map('trim', $slugs);
         }
-        return redirect('/admin/subcat/list')->with('success', 'Sub Category Created Successfully.');
+
+        foreach ($subcategories as $key => $subcategoryName) {
+            // Check if the subcategory already exists
+            $exists = $subcatclass->where('mcat_id', $maincatid)
+                ->where('subcat_name', $subcategoryName)
+                ->exists();
+
+            if (!$exists) {
+                // Generate slug based on locale
+                if ($locale == 'en') {
+                    $finalSlug = Str::slug($subcategoryName);
+                } else {
+                    $finalSlug = isset($slugs[$key]) ? $slugs[$key] : Str::slug($subcategoryName);
+                }
+
+                // Insert the new subcategory
+                $subcatclass->create([
+                    'mcat_id' => $maincatid,
+                    'subcat_name' => $subcategoryName,
+                    'slug' => $finalSlug,
+                ]);
+            } else {
+                // Flash error message and return if a subcategory exists
+                session()->flash('failed', "Sub Category '{$subcategoryName}' already exists.");
+                return redirect()->back();
+            }
+        }
+
+        // Redirect with success message
+        return redirect('/admin/' . $locale . '/subcat/list')
+            ->with('success', 'Sub Category Created Successfully.');
     }
+
+
+
 
     public function subcatlist()
     {
-        $subCat = InsightSubcategory::with('category')->orderByDesc('id')->paginate(10);
+        $locale = request()->segment(2);
+        $subcatmodel = $locale == 'en' ? InsightSubcategory::class : InsightsHindiSubcategory::class;
+        $subCat = $subcatmodel::with('category')->orderByDesc('id')->paginate(10);
 
         return view('admin.subcategory.list', compact('subCat'));
     }
 
     public function deletesubCat(Request $request)
     {
-        $id = $request->id;
-        return InsightSubcategory::query()->where('id', $id)->delete();
+        // Determine the appropriate subcategory model based on the locale
+        try {
+            $locale = $request->segment(2);
+            $subcatclass = $locale == 'en'
+                ? InsightSubcategory::class
+                : InsightsHindiSubCategory::class;
+
+            // Find and delete the subcategory
+            $subcategory = $subcatclass::findOrFail($request->id);
+            $subcategory->delete();
+
+            // Redirect back with success message
+            return redirect()->back()->with('success', 'Sub Category Deleted Successfully.');
+        } catch (\Exception $e) {
+            // Handle unexpected errors
+            return redirect()->back()->with('error', 'Failed to delete sub category: ' . $e->getMessage());
+        }
     }
+
+
 
     public function getSubcategories($catid)
     {
-        if (request()->segment(2) == 'en') {
-            //dd(request()->segment(2));
-            $subcategories = InsightSubcategory::select('id', 'subcat_name')->where('mcat_id', $catid)->get();
-        } else {
-            // $data = InsightsHindiSubCategory::all();
-            $subcategories = InsightsHindiSubCategory::select('id', 'subcat_name')->where('mcat_id', $catid)->get();
-            // dd($subcategories);
-        }
+        // Determine the appropriate model based on the locale
+        $locale = request()->segment(2);
+        $model = $locale === 'en' ? InsightSubcategory::class : InsightsHindiSubCategory::class;
+
+        // Fetch subcategories
+        $subcategories = $model::select('id', 'subcat_name')->where('mcat_id', $catid)->get();
+
+        // Return JSON response
         return response()->json($subcategories);
     }
 
 
-    public static function createimgurl($image)
+    public static function createimgurl($image, $lang)
     {
         // dd($image);
         if ($image) {
@@ -2454,18 +2500,16 @@ class AdminController extends Controller
             } else {
 
                 if ($iscont) {
-                    $url =  Config('constants.franAwsS3Url'). trim($image, '/');
-                // dd($url);
+                    $url =  Config('constants.franAwsS3Url') . trim($image, '/');
+                    // dd($url);
                 } else {
-                    if (App::getLocale() != 'en') {
+                    if ($lang != 'en') {
 
                         $url = Config('constants.franAwsS3Url') . Config('constants.ARTICLE_HINDI_UPLOAD_PATH') . trim($image);
                         // dd($url);
-                    } else if (App::getLocale() != 'hi') {
+                    } else if ($lang != 'hi') {
 
                         $url = Config('constants.franAwsS3Url') . Config('constants.ARTICLE_UPLOAD_PATH') . trim($image);
-                        // dd( $url);
-                        //  = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/' . Config('constants.ARTICLE_UPLOAD_PATH') . trim($image);
                     }
                 }
             }

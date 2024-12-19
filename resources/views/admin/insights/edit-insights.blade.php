@@ -148,7 +148,7 @@
                                     <option value="">Select Sub Category</option>
                                     @foreach ($InsightSubcategory as $subcat)
                                         <option value="{{ $subcat->id }}"
-                                            @if ($subcat->id == $data->subcat_id) selected @endif>
+                                            @if ($subcat->mcat_id == $data->cat_id && $subcat->id == $data->subcat_id) selected @endif>
                                             {{ $subcat->subcat_name }}</option>
                                     @endforeach
                                 </select>
@@ -209,7 +209,9 @@
                             </div>
                         </div>
 
-
+                        @php
+                            $lang = request()->segment(2);
+                        @endphp
 
                         <div class="control-group">
                             <label for="inputStatus" class="control-label">Insights Content :</label>
@@ -223,7 +225,7 @@
                                         @endforeach
                                     @endif
 
-                                    <img src="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image) }}"
+                                    <img src="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $lang) }}"
                                         height="106" width="187" style="padding-top: inherit;">
                                 </div>
                             </div>
@@ -233,7 +235,7 @@
                             <label class="control-label">Image :</label>
                             <div class="controls">
                                 <input type="hidden" name="old_image"
-                                    value="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image) }}" />
+                                    value="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $lang) }}" />
 
                                 <input type="file" id="showImage" class="span11" name="image">
                                 <div style="display: none; color: red;" id="showImage_msg">Invalid image type! Please
@@ -629,7 +631,7 @@
         function Subcategoriesdata(catid) {
 
             $.ajax({
-                url: '{{ url('admin/getSubcategories') }}/' + catid,
+                url: '{{ url('admin/en/getSubcategories') }}/' + catid,
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {

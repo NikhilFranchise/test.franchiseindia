@@ -210,7 +210,9 @@
                         </div>
 
 
-
+                        @php
+                            $lang = request()->segment(2);
+                        @endphp
                         <div class="control-group">
                             <label for="inputStatus" class="control-label">Insights Content :</label>
                             <div class="controls span9">
@@ -222,7 +224,7 @@
                                             <br><span style="color: red;">{{ $error }}</span>
                                         @endforeach
                                     @endif
-                                    <img src="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image) }}"
+                                    <img src="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $lang) }}"
                                         height="106" width="187" style="padding-top: inherit;">
                                 </div>
                             </div>
@@ -232,7 +234,7 @@
                             <label class="control-label">Image :</label>
                             <div class="controls">
                                 <input type="hidden" name="old_image"
-                                    value="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image) }}" />
+                                    value="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $lang) }}" />
                                 <input type="file" id="showImage" class="span11" name="image">
                                 <div style="display: none; color: red;" id="showImage_msg">Invalid image type! Please
                                     select a valid image format (JPG, GIF, PNG, or WebP)</div>
@@ -416,9 +418,9 @@
                 default:
                     $(this).val('');
                     toastr.error(
-                    'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
+                        'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
                     $('#showImage_msg').css('display', 'block');
-                    setTimeout(function(){
+                    setTimeout(function() {
                         $('#showImage_msg').css('display', 'none');
                     }, 5000);
                     $('#newssubmit').prop('disabled', true);
@@ -452,7 +454,7 @@
             if (fileInput.files[0].size > 153600) {
                 toastr.error('Image size should be 150 KB or less.');
                 $('#showImage_msg_size').css('display', 'block');
-                setTimeout(function(){
+                setTimeout(function() {
                     $('#showImage_msg_size').css('display', 'none');
                 }, 5000);
                 $('#newssubmit').prop('disabled', true);
@@ -627,7 +629,7 @@
         function Subcategoriesdata(catid) {
 
             $.ajax({
-                url: '{{ url('admin/getSubcategories') }}/' + catid,
+                url: '{{ url('admin/hi/getSubcategories') }}/' + catid,
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {

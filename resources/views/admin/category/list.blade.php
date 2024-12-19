@@ -190,6 +190,18 @@
                 <div class="span12">
                     <div class="widget-box">
                         <div class="widget-content nopadding">
+                            @if (session()->has('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session()->has('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
@@ -251,10 +263,11 @@
         var YOUR_MESSAGE_STRING_CONST = "Are you sure to delete this category?";
         $('.deletetag').on('click', function() {
             var x = $(this).attr('data-value');
+            var lang = '{{ $locale }}';
             confirmDialog(YOUR_MESSAGE_STRING_CONST, function() {
                 $.ajax({
                     type: "POST",
-                    url: '{{ url('admin/delete-category') }}',
+                    url: `{{ url('admin/') }}/${lang}/delete-category`, // Dynamic URL with lang
                     data: {
                         "id": x,
                         "_token": "{{ csrf_token() }}"

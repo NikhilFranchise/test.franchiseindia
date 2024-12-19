@@ -24,6 +24,8 @@
                     <li class="bg_ls"> <a href="list-news"> <i class="icon-th"></i>News</a> </li>
                     <li class="bg_lg"> <a href="list-magazine"> <i class="icon-th"></i>Magazine</a> </li>
                     <li class="bg_lb"> <a href="list-comments"> <i class="icon-th"></i>Comments</a> </li>
+                    <li class="bg_lg"> <a href="icon-list-alt"> <i class="icon-th"></i>English  Cate... & Sub Cate...</a> </li>
+                    <li class="bg_lb"> <a href="icon-list-alt"> <i class="icon-th"></i>Hindi Cate... & Sub Cate...</a> </li>
                 @endif
                 <li class="bg_lb"> <a href="en/list-insights"> <i class="icon-list-alt"></i>English Insights</a> </li>
                 <li class="bg_lb"> <a href="hi/list-insights"> <i class="icon-list-alt"></i>Hindi Insights</a> </li>
