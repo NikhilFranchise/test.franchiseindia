@@ -153,9 +153,10 @@
                             <div class="controls">
 
                                 <input type="text" name="slug" id="slugId" oninput="validateInput()"
-                                    maxlength="125" class="span11" pattern="[a-z0-9\-]+"
-                                    title="Only small letters, numbers, and hyphens are allowed"
+                                    maxlength="125" class="span11" pattern="[a-z0-9\-ह-ॣा-ौं-ः]*"
+                                    title="Only small letters, numbers, hyphens, and Hindi characters are allowed"
                                     value="{{ $data->slug }}" />
+
 
                             </div>
                         </div>
