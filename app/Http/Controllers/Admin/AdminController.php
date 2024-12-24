@@ -1853,75 +1853,61 @@ class AdminController extends Controller
 
     public function listinsights(Request $request)
     {
-        if ($request->segment(2) == 'en') {
+        // Determine the model based on the language segment
+        $locale = $request->segment(2);
+        $model = ($locale === 'en') ? InsightList::class : InsightListHindi::class;
 
-            $data = InsightList::query()
-                ->whereNotIn('news_type', ['ri', 'ir'])
-                ->where(function ($query) use ($request) {
-                    $query->where('title', 'LIKE', '%' . $request->search . '%')
-                        ->where(function ($query) use ($request) {
-                            $query->where('status', 1)
-                                ->orWhere('status', 0);
-                        })
-                        ->orWhere('news_id', $request->search);
-                })
-                ->orderBy('news_id', 'DESC')
-                ->paginate(25);
-            return view('admin/insights/list-edit-insights', compact('data'));
-        } elseif ($request->segment(2) == 'hi') {
-            // dd('hello');
-            $data = InsightListHindi::query()
-                ->whereNotIn('news_type', ['ri', 'ir'])
-                ->where(function ($query) use ($request) {
-                    $query->where('title', 'LIKE', '%' . $request->search . '%')
-                        ->where(function ($query) use ($request) {
-                            $query->where('status', 1)
-                                ->orWhere('status', 0);
-                        })
-                        ->orWhere('news_id', $request->search);
-                })
-                ->orderBy('news_id', 'DESC')
-                ->paginate(25);
+        // Fetch data with filters
+        $data = $model::query()
+            ->whereNotIn('news_type', ['ri', 'ir']) // Exclude specific news types
+            ->when($request->search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%")
+                        ->orWhere('news_id', $search);
+                });
+            })
+            ->whereIn('status', [0, 1]) // Filter by status (active/inactive)
+            ->orderByDesc('news_id') // Order by descending news ID
+            ->paginate(25);
 
-
-            return view('admin/insights/list-edit-insights', compact('data'));
-        }
+        // Return the view with data
+        return view('admin.insights.list-edit-insights', compact('data'));
     }
+
 
     public function multilistinsights(Request $request)
     {
-        // Determine the model based on language segment
-        $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
-        $catmodel = ($request->segment(2) == 'en') ? InsightCategory::class : InsightsHindiCategory::class;
+        // Determine the model and category model based on the language segment
+        $locale = $request->segment(2);
+        $model = ($locale === 'en') ? InsightList::class : InsightListHindi::class;
+        $catModel = ($locale === 'en') ? InsightCategory::class : InsightsHindiCategory::class;
 
-        // Fetch data with filters and eager loading
+        // Fetch filtered and paginated data
         $data = $model::with(['category', 'subcategory', 'author'])
-            ->whereNotIn('news_type', ['ri', 'ir']) // Exclude 'ri' and 'ir'
-            // ->whereNull(['insight_type', 'cat_id', 'subcat_id']) // Check for null fields
-            ->where(function ($query) use ($request) {
-                $query->where(function ($subQuery) use ($request) {
-                    // Search logic
-                    $subQuery->where('title', 'LIKE', '%' . $request->search . '%')
-                        ->orWhere('news_id', $request->search);
+            ->whereNotIn('news_type', ['ri', 'ir']) // Exclude specific news types
+            ->when($request->search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%")
+                        ->orWhere('news_id', $search);
                 });
             })
-            ->whereIn('status', [0, 1]) // Filter status (active or inactive)
-            ->orderByDesc('news_id') // Order by descending ID
-            ->paginate(30); // Paginate results
-        // Fetch common dropdown data
-        $InsightCategory = $catmodel::query()
-            ->select('id', 'catname')
+            ->whereIn('status', [0, 1]) // Filter by active/inactive status
+            ->orderByDesc('news_id') // Order by descending news ID
+            ->paginate(30);
+
+        // Fetch dropdown data
+        $InsightCategory = $catModel::select('id', 'catname')
             ->where('status', 1)
             ->get();
 
-        $InsightAuthor = AuthorList::query()
-            ->select('author_id', 'title', 'slug')
+        $InsightAuthor = AuthorList::select('author_id', 'title', 'slug')
             ->where('status', 'A')
             ->get();
 
-        // Return view with data
-        return view('admin/insights/multilist-edit', compact('data', 'InsightCategory', 'InsightAuthor'));
+        // Return the view with data
+        return view('admin.insights.multilist-edit', compact('data', 'InsightCategory', 'InsightAuthor'));
     }
+
 
 
     public function saveMultipleInsights(Request $request)
@@ -2207,22 +2193,26 @@ class AdminController extends Controller
     }
     public function catlist(Request $request)
     {
-        $locale = $request->segment(2);
-        if ($locale == 'en') {
-            $catdata = InsightCategory::query()
-                ->where('catname', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('id', $request->search)
-                ->orderBy('id', 'DESC')
-                ->paginate(10);
-        } else {
-            $catdata = InsightsHindiCategory::query()
-                ->where('catname', 'LIKE', '%' . $request->search . '%')
-                ->orWhere('id', $request->search)
-                ->orderBy('id', 'DESC')
-                ->paginate(10);
-        }
+        $locale = $request->segment(2); // Retrieve the locale
+        $search = $request->input('search'); // Retrieve the search input
+
+        // Determine the model based on the locale
+        $categoryModel = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
+
+        // Build the query
+        $catdata = $categoryModel::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('catname', 'LIKE', "%{$search}%")
+                        ->orWhere('id', $search);
+                });
+            })
+            ->orderByDesc('id')
+            ->paginate(10);
+
         return view('admin.category.list', compact('catdata'));
     }
+
 
     public function deleteCat(Request $request)
     {
@@ -2251,39 +2241,6 @@ class AdminController extends Controller
 
         return view('admin.subcategory.create', compact('cat'));
     }
-
-    // public function storesubcat(Request $request)
-    // {
-    //     dd($request->all());
-    //     $locale = request()->segment(2);
-
-    //     $subcatclass = $locale == 'en' ? InsightSubcategory::query() : InsightsHindiSubCategory::query();
-    //     $maincatid = $request->maincat;
-    //     $slugs = explode(',', $request->sub_catslug); // Explode the slugs input
-    //     // dd($slug[0]);
-    //     print_r($slug);die;
-    //     $subcat = $request->sub_categories;
-    //     foreach ($subcat as $sbval) {
-    //         $catCount   = $subcatclass->where('mcat_id', $maincatid)->where('subcat_name', $sbval)->select('subcat_name')->count();
-    //     }
-    //     // dd($catCount);
-    //     if ($catCount === 0) {
-
-    //         foreach ($subcat as $val) {
-    //             $string = str_replace(' ', '-', $val);
-    //             $slug = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
-    //             $catslug = str_replace('--', '-', $slug);
-    //             $cslug = strtolower($catslug);
-
-    //             $data = $subcatclass->insert(['mcat_id' => $maincatid, 'subcat_name' => $val, 'slug' => $cslug]);
-    //             //  dd($data);
-    //         }
-    //     } else {
-    //         session()->flash('failed', 'This Sub Category already Exists');
-    //         return redirect()->back();
-    //     }
-    //     return redirect('/admin/' . $locale . '/subcat/list')->with('success', 'Sub Category Created Successfully.');
-    // }
 
     public function storesubcat(Request $request)
     {
@@ -2345,14 +2302,28 @@ class AdminController extends Controller
 
 
 
-    public function subcatlist()
+    public function subcatlist(Request $request)
     {
-        $locale = request()->segment(2);
-        $subcatmodel = $locale == 'en' ? InsightSubcategory::class : InsightsHindiSubcategory::class;
-        $subCat = $subcatmodel::with('category')->orderByDesc('id')->paginate(10);
+        $locale = $request->segment(2); // Use $request for consistency
+        $search = $request->input('search'); // Retrieve search input
+
+        // Determine the model based on locale
+        $subcatModel = $locale === 'en' ? InsightSubcategory::class : InsightsHindiSubcategory::class;
+
+        // Build the query
+        $subCat = $subcatModel::with('category')
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('subcat_name', 'LIKE', "%{$search}%")
+                        ->orWhere('id', $search);
+                });
+            })
+            ->orderByDesc('id')
+            ->paginate(10);
 
         return view('admin.subcategory.list', compact('subCat'));
     }
+
 
     public function deletesubCat(Request $request)
     {
@@ -2387,7 +2358,7 @@ class AdminController extends Controller
         //dd($request->all());
         try {
             $validator = validator($request->all(), [
-                'podcastId' => 'required|unique:fihl_podcstvideo,podcast_id',
+                'podcastId' => 'required',
                 'Podcast_url' => 'required|unique:fihl_podcstvideo,podcast_link',
                 'title' => 'required',
                 'image' => 'nullable|file', // Make image optional if not always provided
@@ -2454,13 +2425,25 @@ class AdminController extends Controller
 
     public function podcastlist(Request $request)
     {
+        $locale = $request->segment(2); // Use $request for consistency
+        $search = $request->input('search'); // Retrieve search input
 
-        $locale = request()->segment(2);
-        // $isEnglish = $locale == 'en' ? 'en' : 'hi';
-        $podlist = FihlPodcastVideo::query()->where('podcast_type', 'A')->where('pod_lang', $locale)->whereIn('status', ['A', 'D'])->orderByDesc('create_date')->paginate(10);
-        // dd($podlist);
+        $podlist = FihlPodcastVideo::query()
+            ->where('podcast_type', 'A')
+            ->where('pod_lang', $locale)
+            ->whereIn('status', ['A', 'D'])
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%")
+                        ->orWhere('podcast_id', $search);
+                });
+            })
+            ->orderByDesc('create_date')
+            ->paginate(10);
+
         return view('admin.podcast.podlist', compact('podlist'));
     }
+
 
     public function updatepodcastatus(Request $request)
     {
@@ -2568,16 +2551,27 @@ class AdminController extends Controller
 
     public function videolist(Request $request)
     {
-        $locale = request()->segment(2);
-        $videos = FihlPodcastVideo::query()->with('VideoCategory')
-            ->whereIn('status', ['A','D'])
+        $locale = $request->segment(2); // Use $request for consistency
+        $search = $request->input('search');
+
+        // Build the query
+        $videos = FihlPodcastVideo::query()
+            ->with('VideoCategory')
+            ->whereIn('status', ['A', 'D'])
             ->where('podcast_type', 'v')
             ->where('pod_lang', $locale)
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%")
+                        ->orWhere('videoID', $search);
+                });
+            })
             ->orderBy('create_date', 'desc')
             ->paginate(20);
-        // dd($videos);
+
         return view('admin.videos.videolist', compact('videos'));
     }
+
 
     public function videocreate()
     {
@@ -2585,12 +2579,13 @@ class AdminController extends Controller
         return view('admin.videos.videocreate', compact('category'));
     }
 
-    public function videostore(Request $request) {
+    public function videostore(Request $request)
+    {
 
         // dd($request->all());
         try {
             $validator = validator($request->all(), [
-                'videoId' => 'required|unique:fihl_podcstvideo,videoID',
+                'videoId' => 'required',
                 'category' => 'required',
                 'title' => 'required',
                 'video_duration' => 'required',
@@ -2614,29 +2609,6 @@ class AdminController extends Controller
             $fihlvideo->category = $request->input('category');
             $fihlvideo->description = $request->input('content');
             $fihlvideo->create_date = Carbon::now();
-
-            // if ($request->hasFile('image')) {
-            //     $image = $request->file('image');
-
-            //     // Define the upload path based on language
-            //     $uploadPath =  config("constants.ARTICLE_UPLOAD_PATH");
-
-            //     // Resize the image using Image Intervention (optional)
-            //     $resizedImage = Image::make($image)->resize(478, 478)->encode('webp', 90);
-
-            //     // Generate a unique image name (e.g., timestamp-based)
-            //     $imageName = time() . '.webp';
-
-            //     // Save the resized image to S3
-            //     $path = Storage::disk('s3')->put($uploadPath . $imageName, $resizedImage->__toString(), 'public');
-
-            //     // Now that the image is uploaded, save the full URL to the database
-            //     if ($path) {
-            //         $fihlvideo->image_path = $imageName; // Full S3 URL
-            //         $fihlvideo->image = $imageName; // Full S3 URL
-            //     }
-            // }
-
 
             // Save the podcast record
             $fihlvideo->save();
@@ -2671,7 +2643,7 @@ class AdminController extends Controller
         $category = FihlVideoCategory::all();
         $data = FihlPodcastVideo::query()->where('sno', $request->sno)->first();
         // dd($data);
-        return view('admin.videos.videoedit', compact('data','category'));
+        return view('admin.videos.videoedit', compact('data', 'category'));
     }
 
     public function videoUpdate(Request $request)
