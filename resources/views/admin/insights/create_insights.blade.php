@@ -65,12 +65,15 @@
                         <div class="control-group">
                             <label class="control-label">Insights Publisher :</label>
                             <div class="controls">
-                                <select required class="span11" name="insights_publisher" title="author">
+                                {{--  <select required class="span11" name="insights_publisher" title="author">
                                     <option value="">Select Publisher</option>
                                     @foreach ($authors as $author)
                                         <option value="{{ $author->author_id }}">{{ $author->title }}</option>
                                     @endforeach
-                                </select>
+                                </select>  --}}
+                                <div>
+                                    <select class="form-control customError" name="insights_publisher" id="authorId" required></select>
+                                </div>
                                 @if ($errors->has('insights_publisher'))
                                     @foreach ($errors->get('insights_publisher') as $error)
                                         <br><span style="color: red;">{{ $error }}</span>
@@ -460,7 +463,7 @@
                 minimumInputLength: 2,
 
                 ajax: {
-                    url: '{{ url('admin/articles/english/get-authors') }}',
+                    url: '{{ url('admin/get-authors') }}',
                     dataType: 'json',
                     delay: 250,
                     processResults: function(data) {

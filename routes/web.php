@@ -966,17 +966,19 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('create/kicker/{type}',                [AdminController::class, 'insertUpdateKicker']);
     Route::post('delete-kicker',                       [AdminController::class, 'deleteKicker']);
     Route::post('hindi/create',                        [AdminController::class, 'createUpdateHindiArticle']);
-    // podcast get routes
+    // podcast & video get routes
     Route::get('/createpodcast', [AdminController::class, 'podcastcreate']);
     Route::get('/createvideo', [AdminController::class, 'videocreate']);
     Route::get('/edit-podcast/{sno}', [AdminController::class, 'editpodcast'])->name('editpodcast');
     Route::get('/edit-video/{sno}', [AdminController::class, 'editvideo'])->name('editvideo');
 
-    // podcast post routes
+    // podcast & video post routes
     Route::post('/podcastore', [AdminController::class, 'podcastore']);
     Route::post('/videostore', [AdminController::class, 'videostore']);
     Route::post('/podcastupdate', [AdminController::class, 'podcastupdate']);
     Route::post('/videoupdate', [AdminController::class, 'videoUpdate']);
+
+    Route::get('/get-authors',[AdminController::class, 'getauthors']);
 
     // insights get routes code by gp
     // admin/list-insights

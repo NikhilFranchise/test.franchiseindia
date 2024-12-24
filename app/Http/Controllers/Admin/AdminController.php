@@ -673,12 +673,10 @@ class AdminController extends Controller
             $search = $request->q;
 
             if ($request->segment(1) == 'en') {
-                dd('yes');
                 $data = SeoTag::query()->select("tag_id", "name")
                     ->where('name', 'LIKE', "%$search%")
                     ->get();
             } else {
-                // dd('no');
                 $data = SeoTagHindi::query()->select("tag_id", "name")
                     ->where('name', 'LIKE', "%$search%")
                     ->get();
@@ -2752,5 +2750,18 @@ class AdminController extends Controller
 
         // dd($url);
         return $url;
+    }
+
+    public function getauthors(Request $request){
+        $data = [];
+        if ($request->has('q')) {
+            $search = $request->q;
+            $class = AuthorList::query();
+            $data = $class->select("author_id", "title")
+                ->where('title', 'LIKE', "%$search%")
+                ->where('status', 1)
+                ->get();
+        }
+        return response()->json($data);
     }
 }
