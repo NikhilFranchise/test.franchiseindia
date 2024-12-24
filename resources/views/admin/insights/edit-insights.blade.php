@@ -225,7 +225,6 @@
                                 Note : * Image Size 1600x940
                             </div>
                         </div>
-                        {{--  @dd($brands);  --}}
 
                         <div class="control-group">
                             <label for="select2" class="control-label">Related Brands :</label>
@@ -233,11 +232,14 @@
                                 <select multiple name="brands[]" id="select2" class="span11">
                                     @if (isset($company) && !empty($company))
                                         @foreach ($company as $companyData)
-                                            <option value="{{ $companyData->franchisor_id }}"
-                                                @if (in_array($companyData->franchisor_id, $brands)) selected @endif>
-                                                {{ $companyData->company_name }}
-                                            </option>
+                                            @if ($companyData)
+                                                <option value="{{ $companyData->franchisor_id }}"
+                                                    @if (in_array($companyData->franchisor_id, $brands)) selected @endif>
+                                                    {{ $companyData->company_name }}
+                                                </option>
+                                            @endif
                                         @endforeach
+
                                     @endif
                                 </select>
                             </div>
