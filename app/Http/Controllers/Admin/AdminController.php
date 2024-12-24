@@ -1966,7 +1966,7 @@ class AdminController extends Controller
             foreach ($brands as $value) {
                 $company[]        = FranchisorBusinessDetail::query()->where('franchisor_id', $value)->select('franchisor_id', 'company_name')->first();
             }
-            dd($company);
+            // dd($company);
             $associatedTags     = ContentTagsAssigned::query()->where('content_id', $newsId)->where('content_type', 2)->select('tag_id')->get();
             $assocTags = [];
             //fetching associated tags to a array
