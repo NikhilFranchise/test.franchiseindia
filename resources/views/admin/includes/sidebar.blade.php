@@ -4,7 +4,11 @@
             <a href="/admin/dashboard"><i class="icon icon-home"></i> <span>Dashboard</span></a>
         </li>
 
-        @if (session()->get('role') != 'ga' && session()->get('author_creation_capability') == 1)
+        @if (
+            (session()->get('role') != 'ga' &&
+                session()->get('author_creation_capability') == 1 &&
+                session()->get('adminEmail') == 'pganesh@franchiseindia.net') ||
+                session()->get('adminEmail') == 'techsupport@franchiseindia.net')
             <li class="submenu @yield('DAU')"> <a href="#"><i class="icon icon-th-list"></i>
                     <span>Author</span></a>
                 <ul>
@@ -13,35 +17,43 @@
                 </ul>
             </li>
         @endif
-
-        <li class="submenu @yield('KICK')"> <a href="#"><i class="icon icon-th-list"></i>
-                <span>Kickers</span></a>
-            <ul>
-                <li><a href="/admin/kicker/create/english">Create English Kicker</a></li>
-                <li><a href="/admin/kickers/list/english">List English Kicker</a></li>
-                <li><a href="/admin/kicker/create/hindi">Create Hindi Kicker</a></li>
-                <li><a href="/admin/kickers/list/hindi">List Hindi Kicker</a></li>
-            </ul>
-        </li>
-
-        @if (session()->get('role') != 'ga' && session()->get('adminEmail') == 'techsupport@franchiseindia.net' || session()->get('role') != 'ga' && session()->get('adminEmail') == 'pganesh@franchiseindia.net')
-            <li class="submenu @yield('CAT')"> <a href="#"><i class="icon icon-th-list"></i> <span>Main
-                        Category/Sub Category</span></a>
+        @if (
+            (session()->get('role') != 'ga' && session()->get('adminEmail') == 'pganesh@franchiseindia.net') ||
+                session()->get('adminEmail') == 'techsupport@franchiseindia.net')
+            <li class="submenu @yield('KICK')"> <a href="#"><i class="icon icon-th-list"></i>
+                    <span>Kickers</span></a>
                 <ul>
-                    <li><a href="/admin/en/cat/create">Create Main Category</a></li>
-                    <li><a href="/admin/en/cat/list">List Main Category</a></li>
-                    <li><a href="/admin/en/subcat/create">Create Sub Category</a></li>
-                    <li><a href="/admin/en/subcat/list">List Sub Category</a></li>
-                </ul>
-                <ul>
-                    <li><a href="/admin/hi/cat/create">Create Hindi Main Category</a></li>
-                    <li><a href="/admin/hi/cat/list">List Hindi Main Category</a></li>
-                    <li><a href="/admin/hi/subcat/create">Create Hindi Sub Category</a></li>
-                    <li><a href="/admin/hi/subcat/list">List Hindi Sub Category</a></li>
+                    <li><a href="/admin/kicker/create/english">Create English Kicker</a></li>
+                    <li><a href="/admin/kickers/list/english">List English Kicker</a></li>
+                    <li><a href="/admin/kicker/create/hindi">Create Hindi Kicker</a></li>
+                    <li><a href="/admin/kickers/list/hindi">List Hindi Kicker</a></li>
                 </ul>
             </li>
         @endif
-        @if (session()->get('adminEmail') == 'techsupport@franchiseindia.net' || session()->get('adminEmail') == 'pganesh@franchiseindia.net')
+        @if (
+            (session()->get('role') != 'ga' && session()->get('adminEmail') == 'techsupport@franchiseindia.net') ||
+                (session()->get('role') != 'ga' && session()->get('adminEmail') == 'pganesh@franchiseindia.net'))
+            <li class="submenu @yield('CAT')"> <a href="#"><i class="icon icon-th-list"></i> <span>Main/Sub
+                        Category List</span></a>
+                <ul>
+                    {{--  <li><a href="/admin/en/cat/create">Create Main Category</a></li>  --}}
+                    <li><a href="/admin/en/cat/list">Main/Sub Category List</a></li>
+                    {{--  <li><a href="/admin/en/subcat/create">Create Sub Category</a></li>  --}}
+                    {{--  <li><a href="/admin/en/subcat/list">Sub Category List</a></li>  --}}
+                </ul>
+            </li>
+            {{--  <li class="submenu @yield('CAT')"> <a href="#"><i class="icon icon-th-list"></i> <span>Hin Main
+                        Cate../Sub Cate.. List</span></a>
+                <ul>
+                    <li><a href="/admin/hi/cat/create">Create Hindi Main Category</a></li>
+                    <li><a href="/admin/hi/cat/list">Hindi Main Category List</a></li>
+                    <li><a href="/admin/hi/subcat/create">Create Hindi Sub Category</a></li>
+                    <li><a href="/admin/hi/subcat/list">Hindi Sub Category List</a></li>
+                </ul>
+            </li>  --}}
+        @endif
+        @if (session()->get('adminEmail') == 'techsupport@franchiseindia.net' ||
+                session()->get('adminEmail') == 'pganesh@franchiseindia.net')
             <li class="submenu @yield('AA')"> <a href="#"><i class="icon icon-th-list"></i>
                     <span>Article/Interview</span></a>
                 <ul>
@@ -81,15 +93,23 @@
         @endif
         @if (session()->get('role') != 'ga')
             <li class="submenu @yield('IN')"> <a href="#"><i class="icon icon-th-list"></i>
-                    <span>Insights</span></a>
+                    <span>Insights List</span></a>
                 <ul>
-                    <li><a href="/admin/en/create-insights">Create Insights English</a></li>
-                    <li><a href="/admin/en/list-insights">List & Edit Insights Englsih</a></li>
-                    <li><a href="/admin/en/multilist-insights">Multiple Insights English Data Edit</a></li>
-                </ul><ul>
-                    <li><a href="/admin/hi/create-insights">Create Insights Hindi</a></li>
-                    <li><a href="/admin/hi/list-insights">List & Edit Insights Hindi</a></li>
-                    <li><a href="/admin/hi/multilist-insights">Multiple Insights Hindi Data Edit</a></li>
+                    <li><a href="/admin/en/list-insights">Insights List</a></li>
+                    <li><a href="/admin/en/multilist-insights">Bulk Insights Listing Edit</a></li>
+                </ul>
+            </li>
+
+            <li class="submenu @yield('E-POD')"><a href="#"><i class="icon icon-th-list"></i>
+                    <span>Podcast List</span></a>
+                <ul>
+                    <li><a href="/admin/en/podcastlist">Podcast List</a></li>
+                </ul>
+            </li>
+            <li class="submenu @yield('VID')"><a href="#"><i class="icon icon-th-list"></i><span>Video
+                        List</span></a>
+                <ul>
+                    <li><a href="/admin/en/videolist">Video List</a></li>
                 </ul>
             </li>
         @endif

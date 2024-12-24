@@ -33,16 +33,19 @@
     @endsection
     @include('admin.includes.sidebar')
     <!--sidebar-menu-->
-
+    @php
+        $locale = request()->segment(2);
+        $lang = $locale == 'en' ? 'English' : 'Hindi';
+    @endphp
     <div id="content">
         <!--breadcrumbs-->
         <div id="content-header">
             <div id="breadcrumb">
                 <a href="dashboard" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a>
-                <a href="list-insights" class="tip-bottom">Insights</a>
-                <a href="" class="current">Create-Insights</a>
+                <a href="list-insights" class="tip-bottom">{{ $lang . ' Insights' }}</a>
+                <a href="" class="current">{{ 'Create ' . $lang . ' Insights' }}</a>
             </div>
-            <h1>Create English Insights</h1>
+            <h1>{{ 'Create ' . $lang . ' Insights' }}</h1>
         </div>
 
         <!--End-breadcrumbs-->
@@ -56,10 +59,9 @@
 
                     <div class="widget-content nopadding">
                         <form method="POST" class="form-horizontal" enctype="multipart/form-data"
-                            action="{{ Config('constants.MainDomain') }}/admin/en/create-insights" id="editform"
-                            novalidate />
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
+                            action="{{ config('constants.MainDomain') . '/admin/' . $locale . '/create-insights' }}"
+                            id="editform" novalidate />
+                        @csrf
                         <div class="control-group">
                             <label class="control-label">Insights Publisher :</label>
                             <div class="controls">
@@ -120,11 +122,6 @@
                                     title="Sub Category">
                                     <option value="">Select Sub Category</option>
                                 </select>
-                                {{-- @if ($errors->has('insights_subcat'))
-                                    @foreach ($errors->get('insights_subcat') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif --}}
                             </div>
                         </div>
                         <div class="control-group">
@@ -144,11 +141,6 @@
                             <div class="controls">
                                 <input type="text" maxlength="40" required class="span11"
                                     placeholder="Enter Home Title" name="home_title" />
-                                {{-- @if ($errors->has('home_title'))
-                                    @foreach ($errors->get('home_title') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif --}}
                             </div>
                         </div>
 
@@ -195,7 +187,8 @@
                                         <br><span style="color: red;">{{ $error }}</span>
                                     @endforeach
                                 @endif
-                                <div style="display: none; color: red;" id="showImage_msg">Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP)</div>
+                                <div style="display: none; color: red;" id="showImage_msg">Invalid image type! Please
+                                    select a valid image format (JPG, GIF, PNG, or WebP)</div>
                                 <div style="display: none; color: red;" id="showImage_msg_size">Please select a image
                                     of size(Less than 150 KB)</div>
                                 <br />
@@ -247,13 +240,13 @@
         $(document).ready(function() {
 
             $('#select2').html("<option>No Data</option>");
-
+            var lang = '{{ $locale }}';
             //initialization and maximum values to be selected from text box
             $('#select3').select2({
                 placeholder: "Choose tags...",
                 minimumInputLength: 2,
                 ajax: {
-                    url: '/associatedtags',
+                    url:  '/associatedtags',
                     dataType: 'json',
                     delay: 250,
                     processResults: function(data) {
@@ -323,28 +316,6 @@
 
         });
 
-        //initialozing maximum values to be selected from text box
-        $('#kicker').select2({
-            placeholder: "Choose kicker...",
-            minimumInputLength: 2,
-            ajax: {
-                url: '{{ url('admin/get-kickers?type=1') }}',
-                dataType: 'json',
-                delay: 250,
-                processResults: function(data) {
-                    return {
-                        results: $.map(data, function(item) {
-                            return {
-                                text: item.name,
-                                id: item.name
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
-        });
-
 
         $("#showImage").change(function() {
             var val = $(this).val();
@@ -362,7 +333,7 @@
                 default:
                     $(this).val('');
                     toastr.error(
-                    'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
+                        'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
                     $('#showImage_msg').css('display', 'block');
                     setTimeout(function() {
                         $('#showImage_msg').css('display', 'none');
@@ -482,6 +453,7 @@
                     }
                 }
             });
+        });
 
             $('#authorId').select2({
                 placeholder: "Choose Publisher...",
@@ -505,77 +477,10 @@
                 }
             });
 
-            $('#associatedTags').select2({
-                placeholder: "Choose Associated Tags...",
-                minimumInputLength: 2,
-
-                ajax: {
-                    url: '{{ url('admin/articles/english/get-kickers') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.name,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-
-            $('#tagId').select2({
-                placeholder: "Choose Associated Tags...",
-                minimumInputLength: 2,
-
-                ajax: {
-                    url: '{{ url('admin/articles/english/get-kickers') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.name,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-
-            $('#audioId').select2({
-                placeholder: "Choose Audio Files...",
-                minimumInputLength: 2,
-
-                ajax: {
-                    url: '{{ url('admin/articles/english/get-audio-files') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.name,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-
-        });
-
         function Subcategoriesdata(catid) {
+            var lang = '{{ $locale }}';
             $.ajax({
-                url: '{{ url('admin/en/getSubcategories') }}/' + catid,
+                url: '/admin/' + lang + '/getSubcategories/' + catid,
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {

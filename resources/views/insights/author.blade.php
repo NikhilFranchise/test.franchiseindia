@@ -21,14 +21,13 @@
 
                 @endphp
 
-                <div class="row">
-                    <div class="col-4 col-sm-4 col-md-3 artublk1">
-                        <div class="imgprolist"><a href="javascript:void();"><img alt="{{ $author->title }}"
-                                    src="{{ $author_image }}"></a></div>
 
-                    </div>
-
-                    <div class="col-8 col-sm-8 col-md-9 artublk2">
+                <ul class="author-detailing">
+                    <li class="artublk1">
+                        <div><a href="javascript:void();"><img alt="{{ $author->title }}"
+                            src="{{ $author_image }}"></a></div>
+                    </li>
+                    <li class="artublk2">
                         <div class="authorcontent">
                             <h1>{{ $author->title }}</h1>
                             <div class="jobprofile">{{ $author->designation }}</div>
@@ -50,10 +49,10 @@
                                 @endif
                             </div>
                         </div>
+                    </li>
+                </ul>
 
 
-                    </div>
-                </div>
 
             </div>
         </div>

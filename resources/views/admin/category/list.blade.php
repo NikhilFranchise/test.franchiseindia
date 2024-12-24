@@ -14,6 +14,26 @@
     <link rel="stylesheet" type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <style>
+        .search-results {
+            margin-top: 63px;
+            display: block;
+            width: 96%;
+        }
+
+        .search-results input {
+            width: 400px;
+        }
+
+        .search-result-inner {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .search-result-inner a.greens {
+            height: 20px;
+        }
         .switch {
             position: relative;
             display: inline-block;
@@ -165,29 +185,38 @@
         </div>
         <!--End-breadcrumbs-->
 
-        <div class="container-fluid">
-            <hr>
-            <div class="row-fluid">
-                <div class="span3">
-                </div>
-                <div class="span9">
-                    <form action="{{ url('admin/'. $locale.'/cat/list/') }}" method="get">
-                        Search Keyword : <input type="text" name="search" class="span7"
-                            placeholder="Enter Main Category or Category Id to search"
-                            @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
-                        <input type="submit" class="btn" value="Search"
-                            style="margin-top: -12px; margin-left: 10px; width: 110px;" />
-                        <a href="{{ url('admin/'.$locale.'/cat/list/') }}" class="btn" style="margin-top: -12px;">Reset
-                            Search</a>
-                    </form>
-                </div>
+<br>
+        <div class="search-results container-fluid">
+            <div class="search-result-inner">
+
+                <a href="{{ url('admin/' . $locale . '/cat/create') }}"
+                    class="greens float-right btn btn-md btn-success">
+                    <i class="fa fa-plus-circle"></i>{{ ' Add New ' . $lang . ' Category' }}
+                </a>
+                <form action="{{ url('admin/'. $locale.'/cat/list/') }}" method="get">
+                    <input type="text" name="search"class="span7" placeholder="Enter Main Category or Category Id to search"
+                        @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
+                    <input type="submit" class="btn"
+                        value="Search"style="margin-top: -12px; margin-left: 10px; width: 110px;" />
+                    <a href="{{ url('admin/'.$locale.'/cat/list/') }}" class="btn"style="margin-top: -12px;">Reset
+                        Search</a>
+                </form>
             </div>
-            <hr>
         </div>
 
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="span12">
+                    <ul class="nav nav-tabs">
+                        <li @if (url()->current() == url('admin/en/cat/list')) class="active" @endif><a
+                                href="{{ url('admin/en/cat/list') }}">English Main Category List</a></li>
+                        <li @if (url()->current() == url('admin/hi/cat/list')) class="active" @endif><a
+                                href="{{ url('admin/hi/cat/list') }}">Hindi Main Category List</a></li>
+                        <li @if (url()->current() == url('admin/en/subcat/list')) class="active" @endif><a
+                                href="{{ url('admin/en/subcat/list') }}">English Sub Category List</a></li>
+                        <li @if (url()->current() == url('admin/hi/subcat/list')) class="active" @endif><a
+                                href="{{ url('admin/hi/subcat/list') }}">Hindi Sub Category List</a></li>
+                    </ul>
                     <div class="widget-box">
                         <div class="widget-content nopadding">
                             @if (session()->has('success'))

@@ -27,15 +27,19 @@ use App\Models\ContentTagsAssigned;
 use App\Mail\CommentReplyMail;
 use App\Models\FranchisorBusinessDetail;
 use App\Models\ArticleInterviewCommentReply;
+use App\Models\FihlPodcastVideo;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use App\Models\FihlVideoCategory;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -1762,112 +1766,11 @@ class AdminController extends Controller
         }
     }
 
-    // public function createInsights(Request $request)
-    // {
-    //     // dd($request->all());
-    //     $this->validate($request, [
 
-    //         'insights_publisher' => 'required',
-    //         'insights_type' => 'required',
-    //         'insights_cat' => 'required',
-    //         // 'insights_subcat' => 'required',
-    //         'title' => 'required|max:255',
-    //         'sub_title' => 'required',
-    //         'content' => 'required',
-    //         'image' => 'required',
-    //     ]);
-    //     $imageUrl          = "";
-    //     $role              = $request->session()->get('role');
-    //     $brand             = !empty($request->brands) ? $this->stringyfyText($request->brands) : "";
-    //     $title             = $request->title;
-    //     // $kicker            = $request->kicker;
-    //     $homeTitle         = $request->home_title;
-    //     $subTitle          = $request->sub_title;
-    //     $slug              = Str::slug($title);
-    //     $desc              = $request->input('content');
-    //     $insights_type      = $request->insights_type;
-    //     $cat_id             = $request->insights_cat;
-    //     $subcat_id         = $request->insights_subcat;
-    //     $desc              = $request->input('content');
-    //     $isInternational   = ($request->is_intl == 1) ? 1 : 0;
-    //     // dd('hello');
-    //     if ($request->hasFile('image')) {
-
-    //         //Uploading Image
-    //         $newsImage = $request->file('image');
-    //         $imageUrl  = $this->uploadImage($newsImage, 'News', 0, 's3', '');
-    //         // dd($imageUrl);
-    //         //thumbnail creation
-    //         $this->thumbnailCreation($imageUrl, 'News', 247, 139);
-    //         // dd('image');
-    //     }
-
-    //     if ($request->segment(2) == 'en') {
-    //         $newsData                = new InsightList;
-    //         $newsData->title         = $title;
-    //         // $newsData->kicker        = $kicker;
-    //         $newsData->news_type     = $role;
-    //         $newsData->homeTitle     = $homeTitle;
-    //         $newsData->shortDesc     = $subTitle;
-    //         $newsData->content       = $desc;
-    //         $newsData->insight_type  = $insights_type;
-    //         $newsData->cat_id        = $cat_id;
-    //         $newsData->subcat_id     = $subcat_id;
-    //         $newsData->related_brand = $brand;
-    //         $newsData->image         = $imageUrl;
-    //         $newsData->slug          = $slug;
-    //         $newsData->is_intl       = $isInternational;
-    //         $newsData->author_id     = request()->insights_publisher;
-
-
-    //         if ($newsData->save()) {
-    //             $newsId = $newsData->news_id;
-    //         } else {
-    //             return redirect('admin/en/list-insights')->with('error', "Insights Data Can't Save. ");
-    //         }
-
-
-    //         //increasing frequency count of kickers
-    //         if ($request->associated_tags != null)
-    //             $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
-
-    //         return redirect('admin/en/list-insights')->with('success', 'Insights Data Save Successfully.');
-    //     } elseif ($request->segment(2) == 'hi') {
-    //         $newsData                = new InsightListHindi;
-    //         $newsData->title         = $title;
-    //         // $newsData->kicker        = $kicker;
-    //         $newsData->news_type     = $role;
-    //         $newsData->homeTitle     = $homeTitle;
-    //         $newsData->shortDesc     = $subTitle;
-    //         $newsData->content       = $desc;
-    //         $newsData->insight_type  = $insights_type;
-    //         $newsData->cat_id        = $cat_id;
-    //         $newsData->subcat_id     = $subcat_id;
-    //         $newsData->related_brand = $brand;
-    //         $newsData->image         = $imageUrl;
-    //         $newsData->slug          = $slug;
-    //         $newsData->is_intl       = $isInternational;
-    //         $newsData->author_id     = request()->insights_publisher;
-
-
-    //         if ($newsData->save()) {
-    //             $newsId = $newsData->news_id;
-    //         } else {
-    //             return redirect('admin/hi/list-insights')->with('error', "Insights Data Can't Save. ");
-    //         }
-
-
-    //         //increasing frequency count of kickers
-    //         if ($request->associated_tags != null)
-    //             // dd($request->associatedTags);
-    //             $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
-
-    //         return redirect('admin/hi/list-insights')->with('success', 'Insights Data Save Successfully.');
-    //     }
-    // }
 
     public function createInsights(Request $request)
     {
+        //dd($request->all());
         // Validate the input
         $this->validate($request, [
             'insights_publisher' => 'required',
@@ -1901,7 +1804,7 @@ class AdminController extends Controller
             $titleSlug = preg_replace("/\s+/", "-", $titleSlug);
             $slug = str_replace(".", "-", $titleSlug);
         }
-
+        // dd($slug);
         // Handle image upload
         $imageUrl = "";
         if ($request->hasFile('image')) {
@@ -1915,7 +1818,7 @@ class AdminController extends Controller
         $isEnglish = $request->segment(2) == 'en';
         $modelClass = $isEnglish ? InsightList::class : InsightListHindi::class;
         $redirectUrl = $isEnglish ? 'admin/en/list-insights' : 'admin/hi/list-insights';
-
+        // dd($modelClass, $redirectUrl);
         // Create the data object
         $newsData = new $modelClass;
         $newsData->title = $title;
@@ -1981,7 +1884,7 @@ class AdminController extends Controller
                 ->paginate(25);
 
 
-            return view('admin/insights/hindilist-edit-insights', compact('data'));
+            return view('admin/insights/list-edit-insights', compact('data'));
         }
     }
 
@@ -2472,7 +2375,365 @@ class AdminController extends Controller
         }
     }
 
+    public function podcastcreate(Request $request)
+    {
+        // $locale = $request->segment(2);
+        return view('admin.podcast.create');
+    }
 
+
+    public function podcastore(Request $request)
+    {
+        //dd($request->all());
+        try {
+            $validator = validator($request->all(), [
+                'podcastId' => 'required|unique:fihl_podcstvideo,podcast_id',
+                'Podcast_url' => 'required|unique:fihl_podcstvideo,podcast_link',
+                'title' => 'required',
+                'image' => 'nullable|file', // Make image optional if not always provided
+                'podcast_dur' => 'required',
+                'podcast_lang' => 'required',
+                'content' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $fihlvideo = new FihlPodcastVideo();
+
+            $fihlvideo->podcast_id = $request->input('podcastId');
+            $fihlvideo->podcast_link = $request->input('Podcast_url');
+            $fihlvideo->title = $request->input('title');
+            $fihlvideo->pod_lang = $request->input('podcast_lang');
+            $fihlvideo->duration = $request->input('podcast_dur');
+            $fihlvideo->podcast_type = 'A';
+            $fihlvideo->status = 'A';
+            $fihlvideo->category = 0;
+            $fihlvideo->description = $request->input('content');
+            $fihlvideo->create_date = Carbon::now();
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+
+                // Define the upload path based on language
+                $uploadPath =  config("constants.ARTICLE_UPLOAD_PATH");
+
+                // Resize the image using Image Intervention (optional)
+                $resizedImage = Image::make($image)->resize(478, 478)->encode('webp', 90);
+
+                // Generate a unique image name (e.g., timestamp-based)
+                $imageName = time() . '.webp';
+
+                // Save the resized image to S3
+                $path = Storage::disk('s3')->put($uploadPath . $imageName, $resizedImage->__toString(), 'public');
+
+                // Now that the image is uploaded, save the full URL to the database
+                if ($path) {
+                    $fihlvideo->image_path = $imageName; // Full S3 URL
+                    $fihlvideo->image = $imageName; // Full S3 URL
+                }
+            }
+
+
+            // Save the podcast record
+            $fihlvideo->save();
+            // Redirect after success
+            if ($request->podcast_lang == 'en') {
+                return redirect()->route('podcastlist')->with("success", 'Podcast Has Been Added');
+            } else {
+                return redirect()->route('hindipodcastlist')->with("success", 'Podcast Has Been Added');
+            }
+        } catch (\Exception $e) {
+            // Log the error and return a failure response
+            Log::error('Error in podcastore: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred while saving the podcast.');
+        }
+    }
+
+
+    public function podcastlist(Request $request)
+    {
+
+        $locale = request()->segment(2);
+        // $isEnglish = $locale == 'en' ? 'en' : 'hi';
+        $podlist = FihlPodcastVideo::query()->where('podcast_type', 'A')->where('pod_lang', $locale)->whereIn('status', ['A', 'D'])->orderByDesc('create_date')->paginate(10);
+        // dd($podlist);
+        return view('admin.podcast.podlist', compact('podlist'));
+    }
+
+    public function updatepodcastatus(Request $request)
+    {
+        // dd($request->all());
+        $podcastId    = $request->podcast_id;
+        $status    = $request->status;
+        $locale = $request->segment(2);
+        $podstatus = FihlPodcastVideo::query()->where('sno', $podcastId)->update(['status' => $status]);
+        // dd($podstatus);
+        return response()->json(array('status' => $status), 200);
+    }
+
+    public function deletepodcast(Request $request)
+    {
+        // dd($request->all());
+        FihlPodcastVideo::query()->where('sno', $request->sno)->delete();
+        return response()->json(array('status' => 1), 200);
+    }
+
+    public function editpodcast(Request $request)
+    {
+        // dd($request->sno);
+        $locale = request()->segment(2);
+        $data = FihlPodcastVideo::query()->where('sno', $request->sno)->first();
+        // dd($data);
+        return view('admin.podcast.edit', compact('data'));
+    }
+
+    public function podcastUpdate(Request $request)
+    {
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            'podcastId'     => 'required',
+            'Podcast_url'   => 'required',
+            'title'         => 'required',
+            'podcast_dur'   => 'required',
+            'podcast_lang'  => 'required',
+            'content'       => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        try {
+            // Find the existing podcast record
+            $video = FihlPodcastVideo::where('sno', $request->p_id)->first();
+
+            if (!$video) {
+                return redirect()->back()->with('error', 'Podcast not found.');
+            }
+
+            // Handle image upload if provided
+            $fimage = $video->image_path; // Default to existing image path
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+
+                // Define the upload path for S3
+                $uploadPath = config("constants.ARTICLE_UPLOAD_PATH");
+
+                // Resize the image using Image Intervention (optional)
+                $resizedImage = Image::make($image)->resize(478, 478)->encode('webp', 90);
+
+                // Generate a unique filename
+                $imageName = time() . '.webp'; // Unique file name based on the current time
+
+                // Save the image to S3
+                $path = Storage::getFacadeRoot()->disk('s3')->put($uploadPath . $imageName, $resizedImage->__toString(), 'public');
+
+                // Generate the full URL of the image on S3
+                if ($path) {
+                    $fimage = $imageName; // Full S3 URL
+                }
+            }
+
+
+            // Update the podcast attributes
+            $updateData = [
+                'podcast_id'   => $request->input('podcastId'),
+                'podcast_link' => $request->input('Podcast_url'),
+                'title'        => $request->input('title'),
+                'image_path'   => $fimage,
+                'image'   => $fimage,
+                'duration'     => $request->input('podcast_dur'),
+                'pod_lang'     => $request->input('podcast_lang'),
+                'status'       => $request->input('status', 'A'),
+                'podcast_type' => 'A', // Fixed type
+                'description'  => $request->input('content'),
+            ];
+
+            Log::info('Podcast Update Data', $updateData);
+            $video->update($updateData);
+
+
+            // Redirect based on language
+            $route = $request->podcast_lang === 'en' ? 'podcastlist' : 'hindipodcastlist';
+            return redirect()->route($route)->with('success', 'Podcast has been updated successfully.');
+        } catch (\Exception $e) {
+            // Log the error and return an error response
+            Log::error('Error in podcastUpdate: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred while updating the podcast.');
+        }
+    }
+
+    public function videolist(Request $request)
+    {
+        $locale = request()->segment(2);
+        $videos = FihlPodcastVideo::query()->with('VideoCategory')
+            ->whereIn('status', ['A','D'])
+            ->where('podcast_type', 'v')
+            ->where('pod_lang', $locale)
+            ->orderBy('create_date', 'desc')
+            ->paginate(20);
+        // dd($videos);
+        return view('admin.videos.videolist', compact('videos'));
+    }
+
+    public function videocreate()
+    {
+        $category = FihlVideoCategory::all();
+        return view('admin.videos.videocreate', compact('category'));
+    }
+
+    public function videostore(Request $request) {
+
+        // dd($request->all());
+        try {
+            $validator = validator($request->all(), [
+                'videoId' => 'required|unique:fihl_podcstvideo,videoID',
+                'category' => 'required',
+                'title' => 'required',
+                'video_duration' => 'required',
+                'pod_lang' => 'required',
+                'content' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $fihlvideo = new FihlPodcastVideo();
+
+            $fihlvideo->videoID = $request->input('videoId');
+            // $fihlvideo->podcast_link = $request->input('Podcast_url');
+            $fihlvideo->title = $request->input('title');
+            $fihlvideo->pod_lang = $request->input('pod_lang');
+            $fihlvideo->duration = $request->input('video_duration');
+            $fihlvideo->podcast_type = 'V';
+            $fihlvideo->status = 'A';
+            $fihlvideo->category = $request->input('category');
+            $fihlvideo->description = $request->input('content');
+            $fihlvideo->create_date = Carbon::now();
+
+            // if ($request->hasFile('image')) {
+            //     $image = $request->file('image');
+
+            //     // Define the upload path based on language
+            //     $uploadPath =  config("constants.ARTICLE_UPLOAD_PATH");
+
+            //     // Resize the image using Image Intervention (optional)
+            //     $resizedImage = Image::make($image)->resize(478, 478)->encode('webp', 90);
+
+            //     // Generate a unique image name (e.g., timestamp-based)
+            //     $imageName = time() . '.webp';
+
+            //     // Save the resized image to S3
+            //     $path = Storage::disk('s3')->put($uploadPath . $imageName, $resizedImage->__toString(), 'public');
+
+            //     // Now that the image is uploaded, save the full URL to the database
+            //     if ($path) {
+            //         $fihlvideo->image_path = $imageName; // Full S3 URL
+            //         $fihlvideo->image = $imageName; // Full S3 URL
+            //     }
+            // }
+
+
+            // Save the podcast record
+            $fihlvideo->save();
+            // Redirect after success
+            if ($request->pod_lang == 'en') {
+                return redirect()->route('videolist')->with("success", 'Video Has Been Added');
+            } else {
+                return redirect()->route('hindivideolist')->with("success", 'Video Has Been Added');
+            }
+        } catch (\Exception $e) {
+            // Log the error and return a failure response
+            Log::error('Error in podcastore: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred while saving the video.');
+        }
+    }
+
+    public function updatevideostatus(Request $request)
+    {
+        // dd($request->all());
+        $podcastId    = $request->video_id;
+        $status    = $request->status;
+        // $locale = $request->segment(2);
+        $podstatus = FihlPodcastVideo::query()->where('sno', $podcastId)->update(['status' => $status]);
+        // dd($podstatus);
+        return response()->json(array('status' => $status), 200);
+    }
+
+    public function editvideo(Request $request)
+    {
+        // dd($request->sno);
+        $locale = request()->segment(2);
+        $category = FihlVideoCategory::all();
+        $data = FihlPodcastVideo::query()->where('sno', $request->sno)->first();
+        // dd($data);
+        return view('admin.videos.videoedit', compact('data','category'));
+    }
+
+    public function videoUpdate(Request $request)
+    {
+        // dd($request->all());fv
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            'videoId'     => 'required',
+            'category'   => 'required',
+            'title'         => 'required',
+            'video_duration'   => 'required',
+            'pod_lang'  => 'required',
+            'content'       => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        try {
+            // Find the existing podcast record
+            $video = FihlPodcastVideo::where('sno', $request->sno)->first();
+
+            if (!$video) {
+                return redirect()->back()->with('error', 'Video not found.');
+            }
+
+
+            // Update the podcast attributes
+            $updateData = [
+                'podcast_id'   => $request->input('videoId'),
+                'category' => $request->input('category'),
+                'title'        => $request->input('title'),
+                // 'image_path'   => $fimage,
+                // 'image'   => $fimage,
+                'duration'     => $request->input('video_duration'),
+                'pod_lang'     => $request->input('pod_lang'),
+                'status'       => $request->input('status', 'A'),
+                'podcast_type' => 'V', // Fixed type
+                'description'  => $request->input('content'),
+            ];
+
+            Log::info('Video Update Data', $updateData);
+            $video->update($updateData);
+
+
+            // Redirect based on language
+            $route = $request->video_lang === 'en' ? 'videolist' : 'hindivideolist';
+            return redirect()->route($route)->with('success', 'Video has been updated successfully.');
+        } catch (\Exception $e) {
+            // Log the error and return an error response
+            Log::error('Error in VideoUpdate: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred while updating the Video.');
+        }
+    }
+
+    public function deletevideo(Request $request)
+    {
+        // dd($request->all());
+        FihlPodcastVideo::query()->where('sno', $request->sno)->delete();
+        return response()->json(array('status' => 1), 200);
+    }
 
     public function getSubcategories($catid)
     {
@@ -2496,7 +2757,7 @@ class AdminController extends Controller
             $isHttps = strstr($image, 'https');
             if ($isHttps) {
                 $url =  trim($image, '/');
-                dd($url);
+                // dd($url);
             } else {
 
                 if ($iscont) {

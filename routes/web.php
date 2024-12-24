@@ -907,6 +907,11 @@ Route::get('searchmagazine',                  [AdminController::class, 'searchMa
 Route::get('articleinterviewcommentsearch',   [AdminController::class, 'searchArticleInterviewComment']);
 Route::get('newscommentsearch',               [AdminController::class, 'searchNewsComment']);
 Route::get('admin-logout',                    [AdminController::class, 'logout']);
+// podcast status
+Route::post('updatepodcastatus', [AdminController::class, 'updatepodcastatus']);
+Route::post('updatevideostatus', [AdminController::class, 'updatevideostatus']);
+Route::post('deletepodcast', [AdminController::class, 'deletepodcast']);
+Route::post('deletevideo', [AdminController::class, 'deletevideo']);
 //admin panel routes
 Route::group(['prefix' => 'admin'], function () {
     //Get routes
@@ -961,63 +966,73 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('create/kicker/{type}',                [AdminController::class, 'insertUpdateKicker']);
     Route::post('delete-kicker',                       [AdminController::class, 'deleteKicker']);
     Route::post('hindi/create',                        [AdminController::class, 'createUpdateHindiArticle']);
+    // podcast get routes
+    Route::get('/createpodcast', [AdminController::class, 'podcastcreate']);
+    Route::get('/createvideo', [AdminController::class, 'videocreate']);
+    Route::get('/edit-podcast/{sno}', [AdminController::class, 'editpodcast'])->name('editpodcast');
+    Route::get('/edit-video/{sno}', [AdminController::class, 'editvideo'])->name('editvideo');
+
+    // podcast post routes
+    Route::post('/podcastore', [AdminController::class, 'podcastore']);
+    Route::post('/videostore', [AdminController::class, 'videostore']);
+    Route::post('/podcastupdate', [AdminController::class, 'podcastupdate']);
+    Route::post('/videoupdate', [AdminController::class, 'videoUpdate']);
+
     // insights get routes code by gp
+    // admin/list-insights
     Route::group(['prefix' => 'en'], function () {
+        // insights get routes
         Route::get('create-insights',                      [AdminController::class, 'createinsightsView']);
         Route::get('list-insights',                        [AdminController::class, 'listinsights']);
         Route::get('multilist-insights',                   [AdminController::class, 'multilistinsights']);
         Route::get('edit-insights-view/{id}',              [AdminController::class, 'editInsightsView']);
-
-        //post routes
+        // insights post routes
         Route::post('create-insights',                     [AdminController::class, 'createInsights']);
         Route::post('update-insights',                      [AdminController::class, 'updateInsights']);
         Route::post('save-multiple-insights',              [AdminController::class, 'saveMultipleInsights']);
         Route::post('updateinsightstatus',                  [AdminController::class, 'updateInsightStatus']);
         Route::post('deleteinsights',                       [AdminController::class, 'deleteInsights']);
+        //category and subcategory
+        Route::get('cat/create',                      [AdminController::class, 'categoryform']);
+        Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
+        Route::get('cat/list',                        [AdminController::class, 'catlist']);
+        Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
+        Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
+        // category and subcategory post routes
+        Route::post('create/cat',                      [AdminController::class, 'storecat']);
+        Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
+        Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
+        Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
+        Route::get('/podcastlist', [AdminController::class, 'podcastlist'])->name('podcastlist');
+        Route::get('/videolist', [AdminController::class, 'videolist'])->name('videolist');
+
     });
     Route::group(['prefix' => 'hi'], function () {
+        //insights get routes
         Route::get('create-insights',                      [AdminController::class, 'createinsightsView']);
         Route::get('list-insights',                        [AdminController::class, 'listinsights']);
         Route::get('multilist-insights',                        [AdminController::class, 'multilistinsights']);
         Route::get('edit-insights-view/{id}',              [AdminController::class, 'editInsightsView']);
-
-        //post routes
+        // insights post routes
         Route::post('create-insights',                     [AdminController::class, 'createInsights']);
         Route::post('update-insights',                      [AdminController::class, 'updateInsights']);
         Route::post('save-multiple-insights',              [AdminController::class, 'saveMultipleInsights']);
         Route::post('updateinsightstatus',                  [AdminController::class, 'updateInsightStatus']);
         Route::post('deleteinsights',                       [AdminController::class, 'deleteInsights']);
-    });
-    // insights post routes
-
-    // insights post routes end here
-    // category and sub category get routes code by gp
-    Route::group(['prefix' => 'en'], function () {
+        //category and subcategory get routes
         Route::get('cat/create',                      [AdminController::class, 'categoryform']);
         Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
         Route::get('cat/list',                        [AdminController::class, 'catlist']);
         Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
         Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
-        // routes/web.php
-        // insights post routes
+        // category and subcategory post routes
         Route::post('create/cat',                      [AdminController::class, 'storecat']);
         Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
         Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
         Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
-    });
+        Route::get('/podcastlist', [AdminController::class, 'podcastlist'])->name('hindipodcastlist');
+        Route::get('/videolist', [AdminController::class, 'videolist'])->name('hindivideolist');
 
-    Route::group(['prefix' => 'hi'], function () {
-        Route::get('cat/create',                      [AdminController::class, 'categoryform']);
-        Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
-        Route::get('cat/list',                        [AdminController::class, 'catlist']);
-        Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
-        Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
-        // routes/web.php
-        // insights post routes
-        Route::post('create/cat',                      [AdminController::class, 'storecat']);
-        Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
-        Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
-        Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
     });
 });
 
@@ -1169,11 +1184,11 @@ Route::get('/l_layout', [CommonController::class, 'listing_layout']);
 Route::post('/fetch-data', [CommonController::class, 'fetchDataajax']);
 Route::post('/price_filter', [BusinessListingController::class, 'pricefilter']);
 Route::post('/fetch-data2', [CommonController::class, 'fetchDataajax2']);
-Route::get('/price_filter', [BusinessListingController::class,'pricefilter']);
-Route::post('/price_filter', [BusinessListingController::class,'pricefilter'])->name('price_filter');;
+Route::get('/price_filter', [BusinessListingController::class, 'pricefilter']);
+Route::post('/price_filter', [BusinessListingController::class, 'pricefilter'])->name('price_filter');;
 
-Route::get('/ajax',[BusinessListingController::class,'fetchtest']);
-Route::get('/getajax',[BusinessListingController::class,'fetchtest']);
+Route::get('/ajax', [BusinessListingController::class, 'fetchtest']);
+Route::get('/getajax', [BusinessListingController::class, 'fetchtest']);
 // Route::get('/getajax', [BusinessListingController::class, 'fetchtest'])->name('getajax');
 
 

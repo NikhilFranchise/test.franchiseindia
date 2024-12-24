@@ -2,6 +2,9 @@
 html,body{height:100%}
 body{overflow-x:hidden;margin-top:-10px;font-family:'Open Sans',sans-serif;font-size:12px;color:#666}
 a{color:#666}
+.nav-tabs{list-style: none;display: inline-flex;}li{padding: 6px;}.nav-tabs {
+    border-bottom: 1px solid #ddd;
+}
 a:hover,a:focus{text-decoration:none;color:#28b779}
 .dropdown-menu .divider{margin:4px 0}
 .dropdown-menu{min-width:180px}

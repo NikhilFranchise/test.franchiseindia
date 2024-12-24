@@ -14,9 +14,140 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
-<style>
-   .switch input{display:none}.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s}.slider:before{position:absolute;content:"";height:26px;width:26px;left:4px;bottom:4px;background-color:#fff;-webkit-transition:.4s;transition:.4s}input:checked+.slider{background-color:#2196f3}input:focus+.slider{box-shadow:0 0 1px #2196f3}input:checked+.slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translateX(26px)}.gradeX td,th{text-align:center;border:1px solid #000}.slider.round{border-radius:34px}.slider.round:before{border-radius:50%}.round-button-circle{width:45px;border-radius:50%;overflow:hidden;background:#4679bd;box-shadow:0 0 3px gray}.round-button-circle:hover{background:#30588e}.round-button a{display:block;float:left;width:100%;padding-top:35%;padding-bottom:50%;line-height:1em;margin-top:-.5em;text-align:center;color:#e2eaf3;font-family:Verdana,"serif";font-size:1.2em;font-weight:700;text-decoration:none}.custpagin{background-color:#dfdfdf;margin-bottom:10px}.custpagin .pagination li{display:inline-grid;font-size:20px;margin-left:1px;margin-right:1px;border-width:1px;border-radius:6px}.custpagin .pagination{text-align:right}.custpagin .pagination li.active{background-color:#faa732;color:#fff;padding:3px 7px;border-radius:6px;border:1px}.custpagin .pagination li a{padding:3px 7px;background-color:#41bedd;color:#fff;border-radius:6px;border:1px}.form-control{width:16%;align-items:center}.bulk-actions{width:100%;padding:10px}#apply_bulk{margin-left:8px;margin-bottom:10px}
-</style>
+    <style>
+        .switch input {
+            display: none
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: #fff;
+            -webkit-transition: .4s;
+            transition: .4s
+        }
+
+        input:checked+.slider {
+            background-color: #2196f3
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196f3
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px)
+        }
+
+        .gradeX td,
+        th {
+            text-align: center;
+            border: 1px solid #000
+        }
+
+        .slider.round {
+            border-radius: 34px
+        }
+
+        .slider.round:before {
+            border-radius: 50%
+        }
+
+        .round-button-circle {
+            width: 45px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #4679bd;
+            box-shadow: 0 0 3px gray
+        }
+
+        .round-button-circle:hover {
+            background: #30588e
+        }
+
+        .round-button a {
+            display: block;
+            float: left;
+            width: 100%;
+            padding-top: 35%;
+            padding-bottom: 50%;
+            line-height: 1em;
+            margin-top: -.5em;
+            text-align: center;
+            color: #e2eaf3;
+            font-family: Verdana, "serif";
+            font-size: 1.2em;
+            font-weight: 700;
+            text-decoration: none
+        }
+
+        .custpagin {
+            background-color: #dfdfdf;
+            margin-bottom: 10px
+        }
+
+        .custpagin .pagination li {
+            display: inline-grid;
+            font-size: 20px;
+            margin-left: 1px;
+            margin-right: 1px;
+            border-width: 1px;
+            border-radius: 6px
+        }
+
+        .custpagin .pagination {
+            text-align: right
+        }
+
+        .custpagin .pagination li.active {
+            background-color: #faa732;
+            color: #fff;
+            padding: 3px 7px;
+            border-radius: 6px;
+            border: 1px
+        }
+
+        .custpagin .pagination li a {
+            padding: 3px 7px;
+            background-color: #41bedd;
+            color: #fff;
+            border-radius: 6px;
+            border: 1px
+        }
+
+        .form-control {
+            width: 16%;
+            align-items: center
+        }
+
+        .bulk-actions {
+            width: 100%;
+            padding: 10px
+        }
+
+        #apply_bulk {
+            margin-left: 8px;
+            margin-bottom: 10px
+        }
+    </style>
 </head>
 
 <body>
@@ -34,48 +165,59 @@
 
     <div id="content">
         @if (Request::is('admin/hi/multilist-insights'))
-        @php
-            $url = 'admin/hi/save-multiple-insights';
-            $hi = 'Hindi';
-            $type = 'hi';
-        @endphp
-    @else
-        @php
-            $url = 'admin/en/save-multiple-insights';
-            $hi = 'English';
-            $type = 'en';
-        @endphp
-    @endif
+            @php
+                $url = 'admin/hi/save-multiple-insights';
+                $hi = 'Hindi';
+                $type = 'hi';
+            @endphp
+        @else
+            @php
+                $url = 'admin/en/save-multiple-insights';
+                $hi = 'English';
+                $type = 'en';
+            @endphp
+        @endif
         <!--breadcrumbs-->
         <div id="content-header">
             <div id="breadcrumb"> <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
                         class="icon-home"></i> Home</a> <a href="list-insights" class="tip-bottom">List Insights</a>
-                <a href="" class="current">{{'Multiple '. $hi .' Insights'}}</a>
+                <a href="" class="current">{{ 'Multiple ' . $hi . ' Insights' }}</a>
             </div>
-            <h1>{{'Multiple '. $hi .' Insights'}}</h1>
+            <h1>{{ $hi . ' Insights List' }}</h1>
         </div>
         <!--End-breadcrumbs-->
-
+        <br>
         <div style="margin-top: 5%;float: right;" class="container-fluid">
-            <form action="{{ url('admin/'. $type. '/list-insights') }}" method="get">
+            <form action="{{ url('admin/' . $type . '/list-insights') }}" method="get">
                 Search Keyword : <input type="text" name="search"class="span7"
                     placeholder="Enter Title or Insights Id to search"
                     @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
                 <input type="submit" class="btn"
                     value="Search"style="margin-top: -12px; margin-left: 10px; width: 110px;" />
-                <a href="{{ url('admin/list-insights') }}" class="btn"style="margin-top: -12px;">Reset Search</a>
+                <a href="{{ url('admin/' . $type . '/list-insights') }}" class="btn"style="margin-top: -12px;">Reset Search</a>
             </form>
         </div>
 
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="span12">
+                    <ul class="nav nav-tabs">
+                        <li @if (url()->current() == url('admin/en/multilist-insights')) class="active" @endif><a
+                                href="{{ url('admin/en/multilist-insights') }}">English Insights List</a></li>
+                        <li @if (url()->current() == url('admin/hi/multilist-insights')) class="active" @endif><a
+                                href="{{ url('admin/hi/multilist-insights') }}">Hindi Insights List</a></li>
+                    </ul>
                     <div class="widget-box">
                         <div class="widget-content nopadding">
                             <form method="POST" action="{{ url($url) }}">
                                 @csrf <!-- Include CSRF token for security -->
                                 <!-- Global Select Boxes -->
-                                <h3 style="text-align:center">{{ 'Multiple '. $hi .' Insights' }}</h3>
+                                {{--  <h3 style="text-align:center">{{$hi . ' Insights List' }}</h3>  --}}
+                                <h3 style="text-align:center">Bulk Edit {{ $hi }} Insights</h3>
+
+                                <p style="text-align: center; color: #faa732;">
+                                    Make changes to multiple insights in a single action.
+                                </p>
                                 <div class="bulk-actions">
                                     <select required id="global_insight_type" name="global_insight_type[]"
                                         class="form-control">
@@ -137,7 +279,9 @@
                                             <tr class="gradeX">
                                                 @php
                                                     $url =
-                                                        '/insights/'. $type .'/' .
+                                                        '/insights/' .
+                                                        $type .
+                                                        '/' .
                                                         strtolower($insights->insight_type) .
                                                         '/' .
                                                         $insights->slug .
@@ -165,8 +309,9 @@
                                                 </td>
                                                 <td>
                                                     <div class="round-button">
-                                                        <div class="round-button-circle"><a href="{{ $url }}"
-                                                                target="_blank" class="round-button">Go</a></div>
+                                                        <div class="round-button-circle"><a
+                                                                href="{{ $url }}" target="_blank"
+                                                                class="round-button">Go</a></div>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -249,7 +394,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: '/admin/'+ type +'/updateinsightstatus',
+                    url: '/admin/' + type + '/updateinsightstatus',
                     data: {
                         "News": id,
                         "contentStatus": status,
@@ -294,7 +439,7 @@
         }
 
         function Subcategoriesdata(catid) {
-            var locale = '{{ request()->segment(2)}}';
+            var locale = '{{ request()->segment(2) }}';
             $.ajax({
                 url: '{{ url('admin') }}/' + locale + '/getSubcategories/' + catid,
                 type: 'GET',
