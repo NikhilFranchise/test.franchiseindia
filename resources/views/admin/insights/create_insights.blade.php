@@ -62,24 +62,13 @@
                             action="{{ config('constants.MainDomain') . '/admin/' . $locale . '/create-insights' }}"
                             id="editform" novalidate />
                         @csrf
+
                         <div class="control-group">
-                            <label class="control-label">Insights Publisher :</label>
-                            <div class="controls">
-                                {{--  <select required class="span11" name="insights_publisher" title="author">
-                                    <option value="">Select Publisher</option>
-                                    @foreach ($authors as $author)
-                                        <option value="{{ $author->author_id }}">{{ $author->title }}</option>
-                                    @endforeach
-                                </select>  --}}
-                                <div>
-                                    <select class="form-control customError" name="insights_publisher" id="authorId" required></select>
-                                </div>
-                                @if ($errors->has('insights_publisher'))
-                                    @foreach ($errors->get('insights_publisher') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
+                            <label class="control-label" for="publisher">Insights Publisher :</label>
+                            <div class="controls" id="insights_publisher">
+                                <select class="" style="display: none;" name="insights_publisher" id="publisher"></select>
                             </div>
+
                         </div>
                         <div class="control-group">
                             <label class="control-label">Insights Type :</label>
@@ -249,9 +238,16 @@
                 placeholder: "Choose tags...",
                 minimumInputLength: 2,
                 ajax: {
-                    url:  '/associatedtags',
+                    url: '/associatedtags',
                     dataType: 'json',
                     delay: 250,
+                    data: function(params) {
+
+                        return {
+                            q: params.term, // Search term
+                            lang: lang // Language variable
+                        };
+                    },
                     processResults: function(data) {
                         return {
                             results: $.map(data, function(item) {
@@ -293,9 +289,8 @@
                 maximumSelectionLength: 1,
             });
 
-            //content publisher
+
             $('#publisher').select2({
-                maximumSelectionLength: 1,
                 placeholder: "Select Publisher...",
                 minimumInputLength: 2,
                 ajax: {
@@ -307,14 +302,13 @@
                             results: $.map(data, function(item) {
                                 return {
                                     text: item.title,
-                                    id: item.title
+                                    id: item.author_id
                                 }
                             })
                         };
                     },
                     cache: true
                 }
-
             });
 
         });
@@ -346,32 +340,6 @@
             }
         });
 
-        // we are using these functions for validate image dimensions start here
-        {{--  readImageDimensions(fileInput.files[0], function(width, height) {
-            if (width === 680 && height === 435) {
-                $('#showImage_msg_dimensions').css('display', 'none');
-                checkImageSize(fileInput);
-            } else {
-                toastr.error('Please select an image with dimensions 680x435.');
-                // alert('Please select an image with dimensions 680x435.');
-                $(fileInput).val('');
-                $('#showImage_msg_dimensions').css('display', 'block');
-                $('#newssubmit').prop('disabled', true);
-            }
-        });  --}}
-        {{--  function readImageDimensions(file, callback) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var img = new Image();
-                img.onload = function() {
-                    callback(img.width, img.height);
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }  --}}
-        // we are using these functions for validate image dimensions end here
-
         function checkImageSize(fileInput) {
             if (fileInput.files[0].size > 153600) {
                 toastr.error('Image size should be 150 KB or less.');
@@ -387,12 +355,6 @@
             }
         }
 
-        {{--  $('#showImage').bind('change', function() {
-            checkImageSize(this);
-        });  --}}
-    </script>
-
-    <script>
         $(document).ready(function() {
             var editor_config = {
                 path_absolute: "/",
@@ -457,28 +419,6 @@
                 }
             });
         });
-
-            $('#authorId').select2({
-                placeholder: "Choose Publisher...",
-                minimumInputLength: 2,
-
-                ajax: {
-                    url: '{{ url('admin/get-authors') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.name,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
 
         function Subcategoriesdata(catid) {
             var lang = '{{ $locale }}';

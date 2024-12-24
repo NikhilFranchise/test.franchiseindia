@@ -669,21 +669,24 @@ class AdminController extends Controller
     public function associatedTags(Request $request)
     {
         $data = [];
-        if ($request->has('q')) {
-            $search = $request->q;
+        $locale = $request->input('lang', 'en'); // Extract the locale
+        $search = $request->input('q'); // Extract the search query
+        // dd($search, $locale);
 
-            if ($request->segment(1) == 'en') {
-                $data = SeoTag::query()->select("tag_id", "name")
-                    ->where('name', 'LIKE', "%$search%")
-                    ->get();
-            } else {
-                $data = SeoTagHindi::query()->select("tag_id", "name")
-                    ->where('name', 'LIKE', "%$search%")
-                    ->get();
-            }
+        if ($search) {
+            // Determine the model based on the locale
+            $model = ($locale === 'en') ? SeoTag::class : SeoTagHindi::class;
+
+            // Fetch matching tags
+            $data = $model::query()
+                ->select("tag_id", "name")
+                ->where('name', 'LIKE', "%{$search}%")
+                ->get();
         }
+        // Return JSON response
         return response()->json($data);
     }
+
 
     /**
      * Function to retrieve author list with ajax
@@ -696,8 +699,8 @@ class AdminController extends Controller
         if ($request->has('q')) {
             $search = $request->q;
             $data = AuthorList::query()
-                ->select("title")
-                ->where('title', 'LIKE', "%$search%")
+                ->select("title","author_id")
+                ->where('title', 'LIKE', "%{$search}%")
                 ->get();
         }
         return response()->json($data);
@@ -1768,7 +1771,7 @@ class AdminController extends Controller
 
     public function createInsights(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         // Validate the input
         $this->validate($request, [
             'insights_publisher' => 'required',
@@ -1791,7 +1794,7 @@ class AdminController extends Controller
         $catId = $request->insights_cat;
         $subcatId = $request->insights_subcat;
         $isInternational = $request->is_intl == 1 ? 1 : 0;
-
+        // dd($brand);
         // Generate slug based on language
         if ($request->segment(2) == 'en') {
             $slug = Str::slug($title);
@@ -1816,8 +1819,6 @@ class AdminController extends Controller
         $isEnglish = $request->segment(2) == 'en';
         $modelClass = $isEnglish ? InsightList::class : InsightListHindi::class;
         $redirectUrl = $isEnglish ? 'admin/en/list-insights' : 'admin/hi/list-insights';
-        // dd($modelClass, $redirectUrl);
-        // Create the data object
         $newsData = new $modelClass;
         $newsData->title = $title;
         $newsData->news_type = $role;
@@ -1944,11 +1945,6 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
     }
 
-
-
-
-
-
     public function editInsightsView(Request $request)
     {
         if ($request->segment(2) == 'en') {
@@ -1956,8 +1952,8 @@ class AdminController extends Controller
             $newsId             = $request->id;
             $kickerData         = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
             $kicker             = array_column($kickerData, 'name');
-            $data               = InsightList::query()->where('news_id', $newsId)->first();
-
+            $data               = InsightList::query()->with('author')->where('news_id', $newsId)->first();
+            // dd($data);
             $InsightCategory    = InsightCategory::query()->where('status', '1')->get();
             // dd($InsightCategory);
             $InsightSubcategory    = InsightSubcategory::query()->where('mcat_id', $data->cat_id)->get();
@@ -1965,7 +1961,7 @@ class AdminController extends Controller
             $brands             = explode(",", $data->related_brand);
 
             $authors            = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
-
+            // $company = [];
             //getting brand names to a array
             foreach ($brands as $value) {
                 $company[]        = FranchisorBusinessDetail::query()->where('franchisor_id', $value)->select('franchisor_id', 'company_name')->first();
@@ -2043,10 +2039,15 @@ class AdminController extends Controller
         $role              = $request->session()->get('role');
         $brand             = !empty($request->brands) ? $this->stringyfyText($request->brands) : "";
         $title             = $request->title;
-        if (!empty($request->slug)) {
+        if (!empty($request->slug) && request()->segment(2) == 'en') {
             $slug              = Str::slug($request->slug);
         } else {
-            $slug              = Str::slug($title);
+            // $slug              = Str::slug($title);
+            $titleSlug = preg_replace("/[\s+\?]/", " ", $title);
+            $titleSlug = str_replace("  ", " ", $titleSlug);
+            $titleSlug = str_replace(" ", "-", $titleSlug);
+            $titleSlug = preg_replace("/\s+/", "-", $titleSlug);
+            $slug = str_replace(".", "-", $titleSlug);
         }
         // dd($role);
         $kicker            = $request->kicker;
@@ -2752,7 +2753,8 @@ class AdminController extends Controller
         return $url;
     }
 
-    public function getauthors(Request $request){
+    public function getauthors(Request $request)
+    {
         $data = [];
         if ($request->has('q')) {
             $search = $request->q;

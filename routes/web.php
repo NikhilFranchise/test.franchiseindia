@@ -898,7 +898,6 @@ Route::post('deletearticle',                  [AdminController::class, 'deleteAr
 Route::post('deletenews',                     [AdminController::class, 'deleteNews']);
 Route::get('relatedbrands',                   [AdminController::class, 'relatedBrands']);
 Route::get('associatedtags',                  [AdminController::class, 'associatedTags']);
-Route::get('hi/associatedtags',                  [AdminController::class, 'associatedTags']);
 Route::get('publisher',                       [AdminController::class, 'publisher']);
 Route::get('find',                            [AdminController::class, 'find']);
 Route::get('searcharticleinterview',          [AdminController::class, 'searchArticleInterview']);
