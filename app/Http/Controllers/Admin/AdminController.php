@@ -699,7 +699,7 @@ class AdminController extends Controller
         if ($request->has('q')) {
             $search = $request->q;
             $data = AuthorList::query()
-                ->select("title","author_id")
+                ->select("title", "author_id")
                 ->where('title', 'LIKE', "%{$search}%")
                 ->get();
         }
