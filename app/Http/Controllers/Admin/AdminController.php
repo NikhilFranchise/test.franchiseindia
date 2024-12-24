@@ -1961,7 +1961,7 @@ class AdminController extends Controller
             $brands             = explode(",", $data->related_brand);
 
             $authors            = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
-            // $company = [];
+            $company = [];
             //getting brand names to a array
             foreach ($brands as $value) {
                 $company[]        = FranchisorBusinessDetail::query()->where('franchisor_id', $value)->select('franchisor_id', 'company_name')->first();
