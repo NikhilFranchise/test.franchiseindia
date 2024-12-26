@@ -186,12 +186,10 @@ class InsightSitemapController extends Controller
             session()->put('locale', 'en');
         }
 
-        // Determine models dynamically
         $model = $isHindi ? InsightListHindi::class : InsightList::class;
         $catModel = $isHindi ? InsightsHindiCategory::class : InsightCategory::class;
         $subcatModel = $isHindi ? InsightsHindiSubCategory::class : InsightSubcategory::class;
 
-        // Fetch unique subcategory IDs
         $subcatIds = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('status', 1)
             ->whereNotNull('cat_id')
@@ -199,15 +197,12 @@ class InsightSitemapController extends Controller
             ->distinct()
             ->pluck('subcat_id');
 
-        // Fetch subcategories and related data
         $subcategories = $subcatModel::whereIn('id', $subcatIds)
-            ->with(['category' => function ($query) use ($catModel) {
-                $query->select('id', 'catname')->from((new $catModel)->getTable());
-            }])
+            ->with('category') // Ensure eager loading of the category
             ->get()
             ->map(function ($subcat) use ($model) {
                 return [
-                    'category' => $subcat->category,
+                    'category' => $subcat->category, // This should now be an individual model
                     'scategory' => $subcat,
                     'created_at' => $model::where('subcat_id', $subcat->id)
                         ->whereNotIn('news_type', ['ri', 'ir'])
@@ -216,11 +211,11 @@ class InsightSitemapController extends Controller
                 ];
             });
 
-        // Return the XML response
         return response()
             ->view('insights.sitemaps.subcat_sitemap', ['subcategories' => $subcategories])
             ->header('Content-type', 'text/xml');
     }
+
 
 
 
