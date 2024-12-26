@@ -202,7 +202,7 @@ class InsightSitemapController extends Controller
         // Fetch subcategories and related data
         $subcategories = $subcatModel::whereIn('id', $subcatIds)
             ->with(['category' => function ($query) use ($catModel) {
-                $query->select('id', 'name')->from((new $catModel)->getTable());
+                $query->select('id', 'catname')->from((new $catModel)->getTable());
             }])
             ->get()
             ->map(function ($subcat) use ($model) {
