@@ -185,43 +185,43 @@ class InsightSitemapController extends Controller
             app()->setLocale('en');
             session()->put('locale', 'en');
         }
-        $model = $isHindi ? InsightListHindi::class : InsightList::class;
-        $catmodel = $isHindi ? InsightsHindiCategory::class : InsightCategory::class;
-        $subcatmodel = $isHindi ? InsightsHindiSubCategory::class : InsightSubcategory::class;
 
-        $subcatIds = $model::select('subcat_id')
-            ->distinct()
-            ->whereNotIn('news_type', ['ri', 'ir'])
+        // Determine models dynamically
+        $model = $isHindi ? InsightListHindi::class : InsightList::class;
+        $catModel = $isHindi ? InsightsHindiCategory::class : InsightCategory::class;
+        $subcatModel = $isHindi ? InsightsHindiSubCategory::class : InsightSubcategory::class;
+
+        // Fetch unique subcategory IDs
+        $subcatIds = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('status', 1)
             ->whereNotNull('cat_id')
             ->whereNotNull('subcat_id')
-            ->orderByDesc('created_at')
+            ->distinct()
             ->pluck('subcat_id');
-        // dd($subcatIds);
-        $subcat = $subcatmodel::whereIn('id', $subcatIds)->get();
 
-        $subcategories = [];
-        foreach ($subcat as $cat) {
-            $category = $catmodel::find($cat->mcat_id); // Changed to find() since it's a single ID
-            $scategory = $subcatmodel::find($cat->id); // Changed to find() since it's a single ID
-            $created_at = $model::where('subcat_id', $cat->id)
-                ->whereNotIn('news_type',  ['ir', 'ri'])
-                ->where('status', 1)
-                ->value('created_at');
+        // Fetch subcategories and related data
+        $subcategories = $subcatModel::whereIn('id', $subcatIds)
+            ->with(['category' => function ($query) use ($catModel) {
+                $query->select('id', 'name')->from((new $catModel)->getTable());
+            }])
+            ->get()
+            ->map(function ($subcat) use ($model) {
+                return [
+                    'category' => $subcat->category,
+                    'scategory' => $subcat,
+                    'created_at' => $model::where('subcat_id', $subcat->id)
+                        ->whereNotIn('news_type', ['ri', 'ir'])
+                        ->where('status', 1)
+                        ->value('created_at'),
+                ];
+            });
 
-            $subcategories[] = [
-                'category' => $category,
-                'scategory' => $scategory,
-                'created_at' => $created_at
-            ];
-        }
-
-        // dd($categories); // Check if categories are being fetched correctly
-
+        // Return the XML response
         return response()
             ->view('insights.sitemaps.subcat_sitemap', ['subcategories' => $subcategories])
             ->header('Content-type', 'text/xml');
     }
+
 
 
 
