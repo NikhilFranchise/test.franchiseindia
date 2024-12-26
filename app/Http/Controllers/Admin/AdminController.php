@@ -355,10 +355,10 @@ class AdminController extends Controller
         if ($kickerCount == 0) {
             $class->insert(['name' => request()->kicker]);
         } else {
-            session()->flash('failed', 'Kicker already Exists');
+            session()->flash('failed', 'Tag already Exists');
             return redirect()->back();
         }
-
+        session()->flash('success', 'Tag Inserted Successfully.');
         return redirect('/admin/kickers/list/' . request()->type);
     }
 
