@@ -115,7 +115,7 @@ class NewHomePageController extends Controller
         //         return []; // Default to an empty array if the file does not exist
         //     }
         // });
-
+ 
         $articles= InsightListHindi::query()
                 ->where('status', 1)
                 ->whereIn('insight_type', ['Article'])
@@ -1283,5 +1283,36 @@ class NewHomePageController extends Controller
 
 
         // return view('layout.hindihomepage')->with(compact('articles', 'brands', 'brandstfo', 'brandslft', 'brandstbo',	'brandsffc','videos'));
+    }
+
+    public function insights_news(){
+        $articles= InsightList::query()
+                ->where('status', 1)
+                ->whereIn('insight_type', ['News'])
+                ->orderByDesc('created_at')
+                ->limit(10)
+                ->get();
+
+                $articles2= InsightList::query()
+                ->where('status', 1)
+                ->whereIn('insight_type', ['Interview'])
+                ->orderByDesc('created_at')
+                ->limit(10)
+                ->get();
+
+                return view('newhomepage.f_news')->with(compact('articles','articles2'));
+    }
+
+
+    public function insights_news_hi(){
+        $articles= InsightListHindi::query()
+                ->where('status', 1)
+                ->whereIn('insight_type', ['Article'])
+                ->orderByDesc('created_at')
+                ->limit(10)
+                ->get();
+
+        return view('newhomepage.f_news')->with(compact('articles'));
+        
     }
 }

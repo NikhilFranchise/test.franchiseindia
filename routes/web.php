@@ -1172,3 +1172,6 @@ Route::get('/getajax',[BusinessListingController::class,'fetchtest']);
 
 
 Route::get('/items', [BusinessListingController::class, 'index'])->name('items.index');
+
+Route::get('/item', [NewHomePageController::class, 'insights_news']);
+Route::get('item/hi', [NewHomePageController::class, 'insights_news_hi']); //checck

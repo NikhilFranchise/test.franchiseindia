@@ -68,38 +68,49 @@ class BrandController extends Controller
              ->get();
                 // Cache key for insight matches
                 $insightMatchesCacheKey = "insight_matches_{$franDetails->company_name}";
-                $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
-                    return InsightList::query()
-                        ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
-                        ->where('status', 1)
-                        ->whereIn('insight_type', ['News', 'Article'])
-                        ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($franDetails->company_name) . '([[:space:]]|$)'])
-                        ->orderByDesc('created_at')
-                        ->limit(3)
-                        ->get()
-                        ->map(function ($item) {
-                            $item->url = url('insights/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
-                            return $item;
-                        });
-                });
+$insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
+    // Prepare the regex pattern
+    $companyNameRegex = preg_quote($franDetails->company_name, '/'); // Escape special regex characters
+    // Add boundaries to the company name, allowing spaces or punctuation around it
+    $pattern = '(?i)(^|[[:space:][:punct:]])' . $companyNameRegex . '([[:space:][:punct:]]|$)';
+    
+    return InsightList::query()
+        ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
+        ->where('status', 1)
+        // ->whereIn('insight_type', ['News', 'Article', 'Interview']) // Uncomment if needed
+        ->whereRaw("title REGEXP ?", [$pattern])
+        ->orderByDesc('created_at')
+        ->limit(3)
+        ->get()
+        ->map(function ($item) {
+            $item->url = url('insights/en/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
+            return $item;
+        });
+});
+
+// dd($insightMatches);
+               
 
             // Cache key for API response
-            $apiDataCacheKey = "api_data_{$franDetails->company_name}";
-            $dataFromB = Cache::remember($apiDataCacheKey, $cacheDuration, function () use ($franDetails) {
-                $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
-                $response = Http::get($apiUrl, ['company_name' => $franDetails->company_name]);
+            // $apiDataCacheKey = "api_data_{$franDetails->company_name}";
+            // $dataFromB = Cache::remember($apiDataCacheKey, $cacheDuration, function () use ($franDetails) {
+            //     $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
+            //     $response = Http::get($apiUrl, ['company_name' => $franDetails->company_name]);
 
-                return $response->json();
-            });
+            //     return $response->json();
+            // });
 
-            $insightMatchesArray = $insightMatches->toArray();
-            $dataFromBArray = $dataFromB;
+            // $insightMatchesArray = $insightMatches->toArray();
+            // $dataFromBArray = $dataFromB;
 
-            // Combine both arrays into one
-            $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
-            $combinedDataCollection = collect($combinedDataArray);
+            // // Combine both arrays into one
+            // $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
+            // $combinedDataCollection = collect($combinedDataArray);
+            $combinedDataCollection = $insightMatches->toArray();
+
 
             //cache end
+            // dd($combinedDataCollection);
 
 
         //OI Redirection Start
