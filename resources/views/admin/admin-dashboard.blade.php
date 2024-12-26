@@ -25,8 +25,8 @@
                     <li class="bg_lg"> <a href="list-magazine"> <i class="icon-th"></i>Magazine</a> </li>
                     <li class="bg_lb"> <a href="list-comments"> <i class="icon-th"></i>Comments</a> </li>
                 @endif
+                <li class="bg_lb"> <a href="kickers/list/english"> <i class="icon-list-alt"></i>Associated Tags</a> </li>
                 <li class="bg_lb"> <a href="en/list-insights"> <i class="icon-list-alt"></i>Insights List</a> </li>
-                {{--  <li class="bg_lb"> <a href="hi/list-insights"> <i class="icon-list-alt"></i>Hindi Insights</a> </li>  --}}
                 <li class="bg_lb"> <a href="en/podcastlist"> <i class="icon-list-alt"></i>Podcast List</a> </li>
                 <li class="bg_lb"> <a href="en/videolist"> <i class="icon-list-alt"></i>Video List</a> </li>
             </ul>
