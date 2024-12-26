@@ -338,30 +338,7 @@ $c_Url = url()->current();
 
     <script type="text/javascript" src="{{ url('awesomplete/awesomplete.js') }}"></script>
 
-    <script>
-        $(document).ready(function() {
-            // Intercept pagination clicks
-            $(document).on('click', '.pagination a', function(event) {
-                event.preventDefault();
-                var url = $(this).attr('href'); // Get the URL of the next page
-                getItems(url);
-            });
-
-            // Function to fetch items using AJAX
-            function getItems(url) {
-                $.ajax({
-                    url: url,
-                    type: 'get',
-                    success: function(response) {
-                        $('#items-list').html(response.html); // Update the items list with new data
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('Error loading items:', error);
-                    }
-                });
-            }
-        });
-    </script>
+    
 
 
     <script language="javascript">

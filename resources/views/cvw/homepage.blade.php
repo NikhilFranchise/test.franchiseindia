@@ -1,4 +1,4 @@
-@include('cvw.header')
+{{-- @include('cvw.header') --}}
 {{-- @include('layout.newhomepage.expendfrm') --}}
 @include('cvw.herosection') 
 <main id="main" class="main">

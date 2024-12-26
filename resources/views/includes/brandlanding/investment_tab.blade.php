@@ -712,7 +712,11 @@
 </style>
 <div id="investmentnew_tab" class="tab-section">
 
-    @if ($combinedDataCollection != null && $combinedDataCollection->isNotEmpty())
+    @php
+    use Illuminate\Support\Collection;
+    $combinedDataCollection = collect($combinedDataCollection);
+    @endphp
+    @if ($combinedDataCollection->isNotEmpty())
         <h2 class="tab-sec-ttl-recent">{{$franDetails->company_name}} Latest Updates</h2>
         <div class="recent-activities">
             <div class="box">

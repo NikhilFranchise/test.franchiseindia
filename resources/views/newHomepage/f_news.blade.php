@@ -1,4 +1,19 @@
-@if (Request::segment(1) == 'hi')
+
+    <head>
+        <!-- Other meta tags and head content -->
+    
+        @if (Request::segment(2) == 'hi')
+            <!-- For Hindi path segment -->
+            <meta name="robots" content="noindex, nofollow" />
+        @else
+            <!-- For other paths -->
+            <meta name="robots" content="noindex, nofollow" />
+        @endif
+    
+        <!-- Other links, scripts, or meta tags -->
+    </head>
+
+    @if (Request::segment(2) == 'hi')
 <section class="newssection section-30" id="newssection">
     <div class="container">
         <div class="row justify-content-center">
@@ -95,7 +110,7 @@
                             <div class="modified-col col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="card-news-info">
                                     <div class="news-overlay">
-                                        <a href="https://www.franchiseindia.com/insights/hi/article/{{ $articles[0]['slug'] }}.{{ $articles[5]['news_id'] }}"
+                                        <a href="https://www.franchiseindia.com/insights/hi/articlerview/{{ $articles[0]['slug'] }}.{{ $articles[5]['news_id'] }}"
                                             target="_blank" aria-label="{{ $articles[5]['title'] }}"><img
                                                 loading="lazy"
                                                 src="{{\App\Http\Controllers\InsightsController::createimgurl($articles[5]['image']) }}"
@@ -103,7 +118,7 @@
                                                 height="151"></a>
                                     </div>
                                     <div class="card-news-summry">
-                                        <h3><a href="https://www.franchiseindia.com/insights/hi/article/{{ $articles[5]['slug'] }}.{{ $articles[5]['news_id'] }}"
+                                        <h3><a href="https://www.franchiseindia.com/insights/hi/articlerview/{{ $articles[5]['slug'] }}.{{ $articles[5]['news_id'] }}"
                                                 target="_blank"
                                                 aria-label="{{ $articles[5]['title'] }}">{{ $articles[5]['title'] }}</a>
                                         </h3>
@@ -112,7 +127,7 @@
                                         <p> {{ strip_tags(html_entity_decode(\Illuminate\Support\Str::words($articles[5]['content'], 20, ' ...'))) }}
                                         </p>
                                         <a
-                                            href="https://www.franchiseindia.com/insights/hi/article/{{ $articles[5]['slug'] }}.{{ $articles[5]['news_id'] }}"
+                                            href="https://www.franchiseindia.com/insights/hi/articlerview/{{ $articles[5]['slug'] }}.{{ $articles[5]['news_id'] }}"
                                             target="_blank" aria-label="{{ $articles[5]['title'] }}"></a>
                                         <div class="d-flex author-section">
                                             <div class="author-info">
@@ -125,12 +140,12 @@
                             <div class="modified-col col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                 <div class="news-min-section">
                                     <ul class="news-min-section-info">
-                                        @for ($i = 6; $i <= 9; $i++)
+                                        @for ($i = 1; $i <= 4; $i++)
                                             <li>
                                                 <div class="row justify-content-center">
                                                     <div
                                                         class="modified-col col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-                                                        <a href="https://www.franchiseindia.com/insights/hi/article/{{ $articles[$i]['slug'] }}.{{ $articles[$i]['news_id'] }}"
+                                                        <a href="https://www.franchiseindia.com/insights/hi/articlerview/{{ $articles[$i]['slug'] }}.{{ $articles[$i]['news_id'] }}"
                                                             target="_blank"
                                                             aria-label="{{ $articles[$i]['title'] }}"><img
                                                                 loading="lazy"
@@ -141,11 +156,11 @@
                                                     <div
                                                         class="modified-col col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
                                                         <div class="post-news-text">
-                                                            <p><a href="https://www.franchiseindia.com/insights/hi/article/{{ $articles[$i]['slug'] }}.{{ $articles[$i]['news_id'] }}"
+                                                            <p><a href="https://www.franchiseindia.com/insights/hi/articlerview/{{ $articles[$i]['slug'] }}.{{ $articles[$i]['news_id'] }}"
                                                                     aria-label="{{ $articles[$i]['title'] }}"
                                                                     target="_blank">{{ $articles[$i]['title'] }}</a>
                                                             </p><a
-                                                                href="https://www.franchiseindia.com/insights/hi/article/{{ $articles[$i]['slug'] }}.{{ $articles[$i]['news_id'] }}"
+                                                                href="https://www.franchiseindia.com/insights/hi/articlerview/{{ $articles[$i]['slug'] }}.{{ $articles[$i]['news_id'] }}"
                                                                 class="read-more"
                                                                 aria-label="{{ $articles[$i]['title'] }}"
                                                                 target="_blank"></a>

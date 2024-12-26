@@ -508,17 +508,17 @@
                                             id="newemail" name="infoemail" placeholder="Enter email">
                                     </div>
                                     <div class="form-group" style="position: relative;">
-                                        {{-- <input type="text" name="mobile" id='txtPhone' class="form-control"
+                                        <input type="text" name="mobile" id='txtPhone' class="form-control"
                                             placeholder="Enter Mobile No" maxlength="10" autocomplete="off"
                                             onkeyup="getMobileStatus(this.value);" />
                                         <input class="verif-submitbtn" id="verifybutton" value="Verify"
                                             type="button" onclick="veryfie()">
                                         <input class="verif-submitbtn" id="editmobile" value="Edit" type="button"
-                                            onclick="editmobileinsta();" style="display: none"> --}}
+                                            onclick="editmobileinsta();" style="display: none">
 
-                                            <input type="text" name="mobile" id='txtPhone' class="form-control"
+                                            {{-- <input type="text" name="mobile" id='txtPhone' class="form-control"
                                             placeholder="Enter Mobile No" maxlength="10" autocomplete="off"
-                                            />
+                                            /> --}}
                                        
                                        
 
