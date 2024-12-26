@@ -105,8 +105,9 @@ $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, funct
 
             // // Combine both arrays into one
             // $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
-            // $combinedDataCollection = collect($combinedDataArray);
             $combinedDataCollection = $insightMatches->toArray();
+            $combinedDataCollection = collect($combinedDataCollection);
+
 
 
             //cache end
