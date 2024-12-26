@@ -6,39 +6,71 @@ use Illuminate\Http\Request;
 use App\Models\SeoTag;
 use App\Models\InsightList;
 use App\Models\InsightCategory;
+use App\Models\InsightsHindiCategory;
 use App\Models\InsightSubcategory;
+use App\Models\InsightsHindiSubCategory;
 use App\Models\ContentTagsAssigned;
+use App\Models\ContentTagsAssignedHindi;
 use App\Models\InsightListHindi;
+use App\Models\SeoTagHindi;
 
 class InsightSitemapController extends Controller
 {
     public function newssitemap()
     {
+        $isHindi = request()->segment(2) === 'hi';
 
-        $newssitemap = InsightList::where('news_type', 'fi')
+        if (!$isHindi) {
+            app()->setLocale('en');
+            session()->put('locale', 'en');
+        }
+
+        $model = $isHindi ? InsightListHindi::class : InsightList::class;
+
+        $newssitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'News')
             ->where('cat_id', '!=', '')
-            ->where('status', 1)->get();
-
-        return response()->view('insights.sitemaps.news_sitemap', ['newssitemap' => $newssitemap])->header('Content-type', 'text/xml');
-    }
-    public function articlesitemap()
-    {
-        $articlesitemap = InsightList::query()
-        ->where('insight_type', 'Article')
-            ->where('cat_id', '!=', '')
-            ->where('status', 1)->limit(10000)
+            ->where('status', 1)
+            ->orderByDesc('created_at')
             ->get();
 
-        //  dd($articlesitemap);
+        return response()
+            ->view('insights.sitemaps.news_sitemap', ['newssitemap' => $newssitemap])
+            ->header('Content-type', 'text/xml');
+    }
+
+    public function articlesitemap()
+    {
+        $isHindi = request()->segment(2) === 'hi';
+
+        if (!$isHindi) {
+            app()->setLocale('en');
+            session()->put('locale', 'en');
+        }
+        $model = $isHindi ? InsightListHindi::class : InsightList::class;
+
+        $articlesitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
+            ->where('insight_type', 'Article')
+            ->where('cat_id', '!=', '')
+            ->where('status', 1)->limit(10000)
+            ->orderByDesc('created_at')
+            ->get();
         return response()->view('insights.sitemaps.art_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
     }
     public function articlesitemaptwo()
     {
-        $articlesitemap = InsightList::query()
-        ->where('insight_type', 'Article')
+        $isHindi = request()->segment(2) === 'hi';
+
+        if (!$isHindi) {
+            app()->setLocale('en');
+            session()->put('locale', 'en');
+        }
+        $model = $isHindi ? InsightListHindi::class : InsightList::class;
+        $articlesitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
+            ->where('insight_type', 'Article')
             ->where('cat_id', '!=', '')
             ->where('status', 1)
+            ->orderByDesc('created_at')
             ->offset(10000) // Skip the first 12,000 records
             ->limit(7000)   // Fetch the next 5,000 records
             ->get();
@@ -46,58 +78,97 @@ class InsightSitemapController extends Controller
         //  dd($articlesitemap);
         return response()->view('insights.sitemaps.art_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
     }
-    public function hindiarticlesitemap()
-    {
-        $articlesitemap = InsightListHindi::whereNotIn('news_type', ['ri','ir'])
-            ->where('insight_type', 'Article')
-            ->where('cat_id', '!=', '')
-            ->where('status', 1)->get();
-        //  dd($articlesitemap->count());
-        return response()->view('insights.sitemaps.hindiart_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
-    }
+    // public function hindiarticlesitemap()
+    // {
+    //     $articlesitemap = InsightListHindi::whereNotIn('news_type', ['ri', 'ir'])
+    //         ->where('insight_type', 'Article')
+    //         ->where('cat_id', '!=', '')
+    //         ->where('status', 1)->get();
+    //     //  dd($articlesitemap->count());
+    //     return response()->view('insights.sitemaps.hindiart_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
+    // }
 
 
     public function interviewsitemap()
     {
-        $interviewsitemap = InsightList::where('news_type', 'fi')
+        $isHindi = request()->segment(2) === 'hi';
+
+        if (!$isHindi) {
+            app()->setLocale('en');
+            session()->put('locale', 'en');
+        }
+        $model = $isHindi ? InsightListHindi::class : InsightList::class;
+
+        $interviewsitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Interview')
             ->where('cat_id', '!=', '')
-            ->where('status', 1)->get();
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->get();
         return response()->view('insights.sitemaps.interview_sitemap', ['interviewsitemap' => $interviewsitemap])->header('Content-type', 'text/xml');
     }
+
     public function eventsitemap()
     {
-        $eventsitemap = InsightList::where('news_type', 'fi')
+        $isHindi = request()->segment(2) === 'hi';
+
+        if (!$isHindi) {
+            app()->setLocale('en');
+            session()->put('locale', 'en');
+        }
+        $model = $isHindi ? InsightListHindi::class : InsightList::class;
+
+        $eventsitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Event')
             ->where('cat_id', '!=', '')
-            ->where('status', 1)->get();
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->get();
         return response()->view('insights.sitemaps.event_sitemap', ['eventsitemap' => $eventsitemap])->header('Content-type', 'text/xml');
     }
     public function reportsitemap()
     {
-        $reportsitemap = InsightList::where('news_type', 'fi')
+        $isHindi = request()->segment(2) === 'hi';
+
+        if (!$isHindi) {
+            app()->setLocale('en');
+            session()->put('locale', 'en');
+        }
+        $model = $isHindi ? InsightListHindi::class : InsightList::class;
+
+        $reportsitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Event')
             ->where('cat_id', '!=', '')
-            ->where('status', 1)->get();
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->get();
         return response()->view('insights.sitemaps.report_sitemap', ['reportsitemap' => $reportsitemap])->header('Content-type', 'text/xml');
     }
     public function categorysitemap()
     {
-        $categoryIds = InsightList::select('cat_id')
+        $isHindi = request()->segment(2) === 'hi';
+
+        if (!$isHindi) {
+            app()->setLocale('en');
+            session()->put('locale', 'en');
+        }
+        $model = $isHindi ? InsightListHindi::class : InsightList::class;
+        $catmodel = $isHindi ? InsightsHindiCategory::class : InsightCategory::class;
+        $categoryIds = $model::select('cat_id')
             ->distinct()
-            ->where('news_type', 'fi')
+            ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('status', 1)
             ->whereNotNull('cat_id')
             ->pluck('cat_id');
 
-        $categories = InsightCategory::whereIn('id', $categoryIds)->get();
+        $categories = $catmodel::whereIn('id', $categoryIds)->get();
 
         // Fetch creation date from InsightList for each category
         $categorydata = [];
         foreach ($categories as $category) {
             $categorydata[] = [
                 'category' => $category,
-                'created_at' => InsightList::where('cat_id', $category->id)->where('news_type', 'fi')
+                'created_at' => $model::where('cat_id', $category->id)->whereNotIn('news_type', ['ri', 'ir'])
                     ->where('status', 1)->value('created_at')
             ];
         }
@@ -108,22 +179,33 @@ class InsightSitemapController extends Controller
 
     public function subcategorysitemap()
     {
-        $subcatIds = InsightList::select('subcat_id')
+        $isHindi = request()->segment(2) === 'hi';
+
+        if (!$isHindi) {
+            app()->setLocale('en');
+            session()->put('locale', 'en');
+        }
+        $model = $isHindi ? InsightListHindi::class : InsightList::class;
+        $catmodel = $isHindi ? InsightsHindiCategory::class : InsightCategory::class;
+        $subcatmodel = $isHindi ? InsightsHindiSubCategory::class : InsightSubcategory::class;
+
+        $subcatIds = $model::select('subcat_id')
             ->distinct()
-            ->where('news_type', 'fi')
+            ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('status', 1)
             ->whereNotNull('cat_id')
             ->whereNotNull('subcat_id')
+            ->orderByDesc('created_at')
             ->pluck('subcat_id');
         // dd($subcatIds);
-        $subcat = InsightSubcategory::whereIn('id', $subcatIds)->get();
+        $subcat = $subcatmodel::whereIn('id', $subcatIds)->get();
 
         $subcategories = [];
         foreach ($subcat as $cat) {
-            $category = InsightCategory::find($cat->mcat_id); // Changed to find() since it's a single ID
-            $scategory = InsightSubcategory::find($cat->id); // Changed to find() since it's a single ID
-            $created_at = InsightList::where('subcat_id', $cat->id)
-                ->where('news_type', 'fi')
+            $category = $catmodel::find($cat->mcat_id); // Changed to find() since it's a single ID
+            $scategory = $subcatmodel::find($cat->id); // Changed to find() since it's a single ID
+            $created_at = $model::where('subcat_id', $cat->id)
+                ->whereNotIn('news_type',  ['ir', 'ri'])
                 ->where('status', 1)
                 ->value('created_at');
 
@@ -146,40 +228,50 @@ class InsightSitemapController extends Controller
 
     public function tagsitemap()
     {
-        $insightIds = InsightList::query()
+        $isHindi = request()->segment(2) === 'hi';
+
+        if (!$isHindi) {
+            app()->setLocale('en');
+            session()->put('locale', 'en');
+        }
+        $model = $isHindi ? InsightListHindi::class : InsightList::class;
+        $catmodel = $isHindi ? InsightsHindiCategory::class : InsightCategory::class;
+        $subcatmodel = $isHindi ? InsightsHindiSubCategory::class : InsightSubcategory::class;
+        $contentmodel = $isHindi ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
+        $seomodel = $isHindi ? SeoTagHindi::class : SeoTag::class;
+
+        $insightIds = $model::query()
             ->select('news_id')
             ->distinct()
-            ->where('news_type', 'fi')
+            ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('cat_id', '!=', '')
             ->where('status', 1)
+            ->orderByDesc('created_at')
             ->pluck('news_id');
 
-        $contentTagIds = ContentTagsAssigned::query()
+        $contentTagIds = $contentmodel::query()
             ->select('tag_id')
             ->distinct()
-            ->where('content_type', 2)
             ->whereIn('content_id', $insightIds)
             ->pluck('tag_id');
 
-        $tags = SeoTag::select('tag_id', 'name')
+        $tags = $seomodel::select('tag_id', 'name')
             ->whereIn('tag_id', $contentTagIds)
             ->get();
 
         $tagsData = [];
         foreach ($tags as $tag) {
-            $createdAt = InsightList::whereIn('news_id', $insightIds)
-                ->where('news_type', 'fi')
+            $createdAt = $model::whereIn('news_id', $insightIds)
+                ->whereNotIn('news_type', ['ri', 'ir'])
                 ->where('status', 1)
-                // ->where('content_id', $tag->tag_id)
                 ->value('created_at');
 
             $tagsData[] = [
                 'tag' => $tag->name,
                 'created_at' => $createdAt
             ];
-            // echo '<pre/>';print_r($createdAt);
         }
-
+        // dd($tagsData);
         return response()
             ->view('insights.sitemaps.tags_sitemap', ['tagsData' => $tagsData])
             ->header('Content-type', 'text/xml');

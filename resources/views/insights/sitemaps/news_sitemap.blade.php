@@ -1,11 +1,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
     @foreach ($newssitemap as $news)
-    @if($news->insight_type = 'News')
-    <url>
-        {{-- <loc>{{$loop->index}}</loc> --}}
-        <loc>{{url('/')}}/insights/en/{{strtolower($news->insight_type)}}/{{$news->slug}}.{{$news->news_id}}</loc>
-        <lastmod>{{date('d-m-Y h:m A',strtotime($news->created_at))}}</lastmod>
-        </url>
+        @php
+            $type = strtolower($news->insight_type);
+            $locale = App::getLocale();
+        @endphp
+        @if ($news->insight_type = 'News')
+            <url>
+                <loc>{{ url('/insights/' . $locale . '/' . $type . '/' . $news->slug . '.' . $news->news_id) }}</loc>
+                <lastmod>{{ date('d-m-Y', strtotime($news->created_at)) }}</lastmod>
+            </url>
         @endif
     @endforeach
-    </urlset>
+</urlset>
