@@ -10,4 +10,6 @@ class AuthorList extends Model
     use HasFactory;
     public $table = 'author_list';
     protected $primaryKey = 'author_id';
+
+
 }

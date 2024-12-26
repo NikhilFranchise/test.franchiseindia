@@ -5,14 +5,14 @@
     <title>Franchise India Admin Panel</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type='text/css' href="{{ url('admin/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" type='text/css' href="{{ url('admin/css/bootstrap-switch.css') }}">
-    <link rel="stylesheet" type='text/css' href="{{ url('admin/css/bootstrap-responsive.min.css') }}" />
-    <link rel="stylesheet" type='text/css' href="{{ url('admin/css/matrix-style.css') }}" />
-    <link rel="stylesheet" type='text/css' href="{{ url('admin/css/matrix-media.css') }}" />
-    <link rel="stylesheet" type='text/css' href="{{ url('admin/font-awesome/css/font-awesome.css') }}" />
-    <link rel="stylesheet" type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" href="{{ url('admin/css/bootstrap.min.css') }}" />
+    <link href="{{ url('admin/css/bootstrap-switch.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url('admin/css/bootstrap-responsive.min.css') }}" />
+    <link rel="stylesheet" href="{{ url('admin/css/matrix-style.css') }}" />
+    <link rel="stylesheet" href="{{ url('admin/css/matrix-media.css') }}" />
+    <link href="{{ url('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
     <style>
         .search-results {
             margin-top: 63px;
@@ -159,104 +159,111 @@
             border: 1px;
         }
     </style>
+
 </head>
 
 <body>
-
-    @include('admin.includes.header')
-    @section('CAT')
-        active
-    @endsection
-    @include('admin.includes.sidebar')
-    <!--sidebar-menu-->
     @php
         $locale = request()->segment(2);
         $lang = $locale == 'en' ? 'English' : 'Hindi';
     @endphp
+    <!--Header-part-->
+    @include('admin.includes.header')
+    <!--close-top-Header-menu-->
+
+    <!--sidebar-menu-->
+    @section($lang . '-POD')
+        active
+    @endsection
+    @include('admin.includes.sidebar')
+    <!--sidebar-menu-->
+
     <div id="content">
+
         <!--breadcrumbs-->
         <div id="content-header">
             <div id="breadcrumb"> <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
-                        class="icon-home"></i> Home</a> <a href="#" class="tip-bottom">{{ $lang }} Main
-                    Category/{{ $lang }} Sub Category</a>
-                <a href="#" class="current">List {{ $lang }} Sub Category</a>
-            </div>
-            <h1>{{ $lang }} Sub Category Listing</h1>
+                        class="icon-home"></i> Home</a> <a href="#" class="tip-bottom">Video</a> <a href="#"
+                    class="current">{{ $lang }} Video List</a> </div>
+            <h1>{{ $lang }} Video Listing</h1>
         </div>
         <br>
         <!--End-breadcrumbs-->
-
         <div class="search-results container-fluid">
             <div class="search-result-inner">
 
-                <a href="{{ url('admin/' . $locale . '/subcat/create') }}" class="greens float-right btn btn-md btn-success">
-                    <i class="fa fa-plus-circle"></i>{{ ' Add New ' . $lang . ' Subcategory' }}
+                <a href="{{ url('admin/createvideo') }}" class="greens float-right btn btn-md btn-success">
+                    <i class="fa fa-plus-circle"></i>{{ ' Add New Video' }}
                 </a>
-                <form action="{{ url('admin/' . $locale . '/cat/list/') }}" method="get">
-                    <input type="text" name="search"class="span7"
-                        placeholder="Enter Main Category or Category Id to search"
+                <form action="{{ url('admin/' . $locale . '/videolist') }}" method="get">
+                    <input type="text" name="search"class="span7" placeholder="Enter Video Id or Title to search"
                         @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
                     <input type="submit" class="btn"
                         value="Search"style="margin-top: -12px; margin-left: 10px; width: 110px;" />
-                    <a href="{{ url('admin/' . $locale . '/cat/list/') }}" class="btn"style="margin-top: -12px;">Reset
+                    <a href="{{ url('admin/' . $locale . '/videolist') }}"
+                        class="btn"style="margin-top: -12px;">Reset
                         Search</a>
                 </form>
             </div>
         </div>
-
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="span12">
                     <ul class="nav nav-tabs">
-                        <li @if (url()->current() == url('admin/en/cat/list')) class="active" @endif><a
-                                href="{{ url('admin/en/cat/list') }}">English Main Category List</a></li>
-                        <li @if (url()->current() == url('admin/hi/cat/list')) class="active" @endif><a
-                                href="{{ url('admin/hi/cat/list') }}">Hindi Main Category List</a></li>
-                        <li @if (url()->current() == url('admin/en/subcat/list')) class="active" @endif><a
-                                href="{{ url('admin/en/subcat/list') }}">English Sub Category List</a></li>
-                        <li @if (url()->current() == url('admin/hi/subcat/list')) class="active" @endif><a
-                                href="{{ url('admin/hi/subcat/list') }}">Hindi Sub Category List</a></li>
+                        <li @if (url()->current() == url('admin/en/videolist')) class="active" @endif><a
+                                href="{{ url('admin/en/videolist') }}">English Video List</a></li>
+                        <li @if (url()->current() == url('admin/hi/videolist')) class="active" @endif><a
+                                href="{{ url('admin/hi/videolist') }}">Hindi Video List</a></li>
                     </ul>
                     <div class="widget-box">
                         <div class="widget-content nopadding">
-                            @if (session()->has('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                            @endif
-
-                            @if (session()->has('error'))
-                                <div class="alert alert-danger">
-                                    {{ session('error') }}
-                                </div>
-                            @endif
-
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Category Id</th>
-                                        <th>Main Category Name</th>
-                                        <th>Sub Category Name</th>
-                                        <th>Slug</th>
-                                        <th colspan='2'>Action</th>
+                                        <th>Video Id</th>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Duration</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tablecontent">
-                                    @php
-                                        $url = Config('constants.MainDomain') . '/';
-                                    @endphp
-                                    @foreach ($subCat as $data)
+                                    @foreach ($videos as $data)
                                         <tr class="gradeX">
-                                            <td>{{ $data->id }}</td>
-                                            @foreach ($data->category as $catname)
-                                                <td>{{ $catname->catname }}</td>
-                                            @endforeach
-                                            <td>{{ $data->subcat_name }}</td>
-                                            <td>{{ $data->slug }}</td>
-                                            {{-- <td><center><button class="btn btn-medium btn-warning" style="border-radius: 4px"><a href="edit/{{$data->id}}">Edit</a></button></center></td> --}}
-                                            <td><button class="btn btn-medium btn-danger deletetag"
-                                                    style="border-radius: 4px"
-                                                    data-value="{{ $data->id }}">Delete</button></td>
+                                            @php
+                                                $url = url('/insights/' . $data->pod_lang . '/video');
+
+                                            @endphp
+                                            <td>{{ $data->videoID }}</td>
+                                            <td>{{ $data->title }}</td>
+                                            <td>{{ $data->VideoCategory[0]->catname }}</td>
+                                            <td>{{ $data->duration }}</td>
+                                            <td>{{ date('d-M-Y', strtotime($data->create_date)) }}</td>
+                                            <td>
+                                                <center>
+                                                    <label class="switch">
+                                                        <input type="checkbox" value="{{ $data->sno }}"
+                                                            class="activestate"
+                                                            {{ $data->status == 'A' ? 'checked' : '' }}>
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </center>
+                                            </td>
+                                            <td>
+                                                <center><button class="btn btn-medium btn-warning"
+                                                        style="border-radius: 4px"><a
+                                                            href="/admin/edit-video/{{ $data->sno }}">Edit</a></button>
+                                                </center>
+                                            </td>
+                                            <td>
+                                                <center><button class="btn btn-medium btn-danger deletevideo"
+                                                        style="border-radius: 4px"
+                                                        data-value="{{ $data->sno }}">Delete</button>
+                                                </center>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -276,12 +283,11 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="custpagin">{{ $videos->links('pagination::bootstrap-4') }}</div>
                     </div>
                 </div>
             </div>
-            <div class="custpagin">
-                {!! $subCat->appends(['search' => request()->search])->render('pagination::bootstrap-4') !!}
-            </div>
+
         </div>
     </div>
     <!--Footer-part-->
@@ -289,44 +295,9 @@
     <!--end-Footer-part-->
 
     <script src="{{ url('admin/js/jquery.min.js') }}"></script>
-    <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url('admin/js/matrix.js') }}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script type="text/javascript">
-        var YOUR_MESSAGE_STRING_CONST = "Are you sure to delete this category?";
-        $('.deletetag').on('click', function() {
-            var x = $(this).attr('data-value');
-            var lang = '{{ $locale }}';
-            confirmDialog(YOUR_MESSAGE_STRING_CONST, function() {
-                $.ajax({
-                    type: "POST",
-                    url: `{{ url('admin/') }}/${lang}/delete-subcategory`,
-                    data: {
-                        "id": x,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success: function() {
-                        $(document).ajaxStop(function() {
-                            window.location.reload();
-                        });
-                    }
-                });
-            });
-        });
-
-        function confirmDialog(message, onConfirm) {
-            var confirmOk = $("#confirmOk");
-            var fClose = function() {
-                modal.modal("hide");
-            };
-            var modal = $("#confirmModal");
-            modal.modal("show");
-            $("#confirmMessage").empty().append(message);
-            confirmOk.one('click', onConfirm);
-            confirmOk.one('click', fClose);
-            $("#confirmCancel").one("click", fClose);
-        }
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script>
         @if (Session::has('success'))
             toastr.options = {
@@ -342,6 +313,63 @@
             toastr.error(" {{ session('error') }}")
         @endif
     </script>
+    <script type="text/javascript">
+        $('.activestate').click(function() {
+            var id = this.value;
+            var status = 'D';
+            if (this.checked)
+                status = 'A';
+
+            $.ajax({
+                type: "POST",
+                url: '/updatevideostatus',
+                data: {
+                    "video_id": id,
+                    "status": status,
+                    "_token": "{{ csrf_token() }}"
+                }
+            });
+        });
+
+        var YOUR_MESSAGE_STRING_CONST = "Are you sure to delete this news?";
+        $('.deletevideo').click(function() {
+            var x = $(this).attr('data-value');
+            confirmDialog(YOUR_MESSAGE_STRING_CONST, function() {
+                $.ajax({
+                    type: "POST",
+                    url: '/deletevideo',
+                    data: {
+                        "sno": x,
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success: function(data) {
+                        $(document).ajaxStop(function() {
+                            window.location.reload();
+                        });
+                    }
+                });
+            });
+        });
+
+        function confirmDialog(message, onConfirm) {
+            var fClose = function() {
+                modal.modal("hide");
+            };
+            var confirm = $("#confirmOk");
+            var modal = $("#confirmModal");
+            modal.modal("show");
+            $("#confirmMessage").empty().append(message);
+            confirm.one('click', onConfirm);
+            confirm.one('click', fClose);
+            $("#confirmCancel").one("click", fClose);
+        }
+    </script>
+    <script src="{{ url('admin/js/jquery.ui.custom.js') }}"></script>
+    <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('admin/js/select2.min.js') }}"></script>
+    <script src="{{ url('admin/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url('admin/js/matrix.js') }}"></script>
+    <script src="{{ url('admin/js/matrix.tables.js') }}"></script>
 </body>
 
 </html>
