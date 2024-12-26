@@ -2753,17 +2753,4 @@ class AdminController extends Controller
         return $url;
     }
 
-    public function getauthors(Request $request)
-    {
-        $data = [];
-        if ($request->has('q')) {
-            $search = $request->q;
-            $class = AuthorList::query();
-            $data = $class->select("author_id", "title")
-                ->where('title', 'LIKE', "%$search%")
-                ->where('status', 1)
-                ->get();
-        }
-        return response()->json($data);
-    }
 }

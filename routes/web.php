@@ -977,8 +977,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/podcastupdate', [AdminController::class, 'podcastupdate']);
     Route::post('/videoupdate', [AdminController::class, 'videoUpdate']);
 
-    Route::get('/get-authors',[AdminController::class, 'getauthors']);
-
     // insights get routes code by gp
     // admin/list-insights
     Route::group(['prefix' => 'en'], function () {
