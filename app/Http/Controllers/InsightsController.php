@@ -25,6 +25,9 @@ use App\Models\FihlPodcastVideo;
 use App\Models\FihlVideoCategory;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isNan;
+use function PHPUnit\Framework\isNull;
+
 class InsightsController extends Controller
 {
 
@@ -447,21 +450,21 @@ class InsightsController extends Controller
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('news_id', $id)
             ->first();
-        // print_r($newsDetails->toSql());die;
+        // dd($newsDetails);
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
         }
         // dd($newsDetails->author);
         // Fetch author details
-        if (empty($newsDetails->author)) {
-            $defaultauthor = 466;
+        if (empty($newsDetails->author[0])) {
+            // dd('hello');
+            $authorId = 466;
         } else {
-            $defaultauthor = $newsDetails->author[0]->author_id;
+            $authorId = $newsDetails->author_id;
         }
-        $authorId = $defaultauthor; // Default author_id
-        $author_details = AuthorList::query()
-            ->where('author_id', $authorId)
-            ->first();
+        // dd($authorId);
+        $author_details = AuthorList::query()->where('author_id','=', $authorId)->first();
+        // dd($author_details);
 
         // Fetch associated tags
         $associatedTags = $tagTable::query()

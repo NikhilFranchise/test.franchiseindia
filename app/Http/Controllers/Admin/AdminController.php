@@ -2557,7 +2557,7 @@ class AdminController extends Controller
         $videos = FihlPodcastVideo::query()
             ->with('VideoCategory')
             ->whereIn('status', ['A', 'D'])
-            ->where('podcast_type', 'v')
+            ->where('podcast_type', 'V')
             ->where('pod_lang', $locale)
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
