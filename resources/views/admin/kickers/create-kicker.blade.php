@@ -10,7 +10,7 @@
         .tt-query { box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset; }
         .tt-hint { color: #999999; }
         .tt-menu { background-color: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 8px; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); margin-top: 12px; padding: 8px 0; width: 422px; }
-        .tt-suggestion { font-size: 22px; padding: 3px 20px; }
+        .tt-suggestion { font-size: 13px; padding: 3px 20px; }
         .tt-suggestion:hover { cursor: pointer; background-color: #0097CF; color: #FFFFFF; }
         .tt-suggestion p { margin: 0; }
     </style>
