@@ -1,6 +1,6 @@
 <sightmapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     @php
-        $lang = request()->segment(2) === 'hi' ? 'hi' : null;
+        $lang = request()->segment(2) === 'hi' ? 'hi' : 'en';
     @endphp
 
     {{--  @dd($lang);  --}}
@@ -10,9 +10,11 @@
     <sitemap>
         <loc>{{ url('/insights/' . $lang . '/article.xml') }}</loc>
     </sitemap>
-    <sitemap>
-        <loc>{{ url('/insights/' . $lang . '/article2.xml') }}</loc>
-    </sitemap>
+    @if ($lang != 'hi')
+        <sitemap>
+            <loc>{{ url('/insights/' . $lang . '/article2.xml') }}</loc>
+        </sitemap>
+    @endif
     <sitemap>
         <loc>{{ url('/insights/' . $lang . '/interview.xml') }}</loc>
     </sitemap>

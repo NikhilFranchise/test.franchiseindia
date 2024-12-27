@@ -1935,8 +1935,15 @@ class AdminController extends Controller
                 }
 
                 // Generate slug dynamically
-                $existingInsight->slug = Str::slug($existingInsight->title);
-
+                if ($request->segment(2) == 'en') {
+                    $existingInsight->slug = Str::slug($existingInsight->title);
+                } else {
+                    $titleSlug = preg_replace("/[\s+\?]/", " ", $existingInsight->title);
+                    $titleSlug = str_replace("  ", " ", $titleSlug);
+                    $titleSlug = str_replace(" ", "-", $titleSlug);
+                    $titleSlug = preg_replace("/\s+/", "-", $titleSlug);
+                    $existingInsight->slug = str_replace(".", "-", $titleSlug);
+                }
                 // Save the updated record
                 $existingInsight->save();
             }
@@ -2752,5 +2759,4 @@ class AdminController extends Controller
         // dd($url);
         return $url;
     }
-
 }

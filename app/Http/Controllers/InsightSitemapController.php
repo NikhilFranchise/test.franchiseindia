@@ -43,10 +43,10 @@ class InsightSitemapController extends Controller
 
     public function articlesitemap()
     {
-        $locale = request()->segment(2) === 'hi' ? 'hi' : 'en';
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
-        $model = $locale ? InsightListHindi::class : InsightList::class;
+        $model = $locale =='hi' ? InsightListHindi::class : InsightList::class;
 
         $articlesitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Article')
@@ -54,15 +54,15 @@ class InsightSitemapController extends Controller
             ->where('status', 1)->limit(10000)
             ->orderByDesc('created_at')
             ->get();
-
+      //  dd($model,$locale);
         return response()->view('insights.sitemaps.art_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
     }
     public function articlesitemaptwo()
     {
-        $locale = request()->segment(2) === 'hi' ? 'hi' : 'en';
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
-        $model = $locale ? InsightListHindi::class : InsightList::class;
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
 
         $articlesitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Article')
@@ -82,7 +82,7 @@ class InsightSitemapController extends Controller
         $locale = request()->segment(2) === 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
-        $model = $locale ? InsightListHindi::class : InsightList::class;
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
 
         $interviewsitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Interview')
@@ -98,7 +98,7 @@ class InsightSitemapController extends Controller
         $locale = request()->segment(2) === 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
-        $model = $locale ? InsightListHindi::class : InsightList::class;
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
 
         $eventsitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Event')
@@ -113,7 +113,7 @@ class InsightSitemapController extends Controller
         $locale = request()->segment(2) === 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
-        $model = $locale ? InsightListHindi::class : InsightList::class;
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
 
         $reportsitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Event')
@@ -128,8 +128,8 @@ class InsightSitemapController extends Controller
         $locale = request()->segment(2) === 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
-        $model = $locale ? InsightListHindi::class : InsightList::class;
-        $catmodel = $locale ? InsightsHindiCategory::class : InsightCategory::class;
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+        $catmodel = $locale == 'hi' ? InsightsHindiCategory::class : InsightCategory::class;
         $categoryIds = $model::select('cat_id')
             ->distinct()
             ->whereNotIn('news_type', ['ri', 'ir'])
@@ -158,9 +158,9 @@ class InsightSitemapController extends Controller
         $locale = request()->segment(2) === 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
-        $model = $locale ? InsightListHindi::class : InsightList::class;
-        $catModel = $locale ? InsightsHindiCategory::class : InsightCategory::class;
-        $subcatModel = $locale ? InsightsHindiSubCategory::class : InsightSubcategory::class;
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+        $catModel = $locale == 'hi' ? InsightsHindiCategory::class : InsightCategory::class;
+        $subcatModel = $locale == 'hi' ? InsightsHindiSubCategory::class : InsightSubcategory::class;
 
         $subcatIds = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('status', 1)
@@ -198,9 +198,9 @@ class InsightSitemapController extends Controller
         $locale = request()->segment(2) === 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
-        $model = $locale ? InsightListHindi::class : InsightList::class;
-        $contentmodel = $locale ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
-        $seomodel = $locale ? SeoTagHindi::class : SeoTag::class;
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+        $contentmodel = $locale == 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
+        $seomodel = $locale == 'hi' ? SeoTagHindi::class : SeoTag::class;
 
         $insightIds = $model::query()
             ->select('news_id')
