@@ -209,7 +209,7 @@ class InsightSitemapController extends Controller
             ->where('cat_id', '!=', '')
             ->where('status', 1)
             ->pluck('news_id');
-        // dd($insightIds);
+        dd($insightIds);
         $contentTagIds = $contentmodel::query()
             ->select('tag_id')
             ->distinct()
