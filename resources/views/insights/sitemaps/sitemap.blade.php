@@ -1,35 +1,35 @@
 <sightmapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     @php
-        $lang = request()->segment(2) === 'hi' ? 'hi': null;
+        $lang = request()->segment(2) === 'hi' ? 'hi' : null;
     @endphp
 
     {{--  @dd($lang);  --}}
     <sitemap>
-        <loc>{{ url('/'.$lang) }}/insights/news.xml</loc>
+        <loc>{{ url('/insights/' . $lang . '/news.xml') }}</loc>
     </sitemap>
     <sitemap>
-        <loc>{{ url('/'.$lang) }}/insights/article.xml</loc>
+        <loc>{{ url('/insights/' . $lang . '/article.xml') }}</loc>
     </sitemap>
     <sitemap>
-        <loc>{{ url('/'.$lang) }}/insights/article2.xml</loc>
+        <loc>{{ url('/insights/' . $lang . '/article2.xml') }}</loc>
     </sitemap>
     <sitemap>
-        <loc>{{ url('/'.$lang) }}/insights/interview.xml</loc>
+        <loc>{{ url('/insights/' . $lang . '/interview.xml') }}</loc>
     </sitemap>
     <sitemap>
-        <loc>{{ url('/'.$lang) }}/insights/report.xml</loc>
+        <loc>{{ url('/insights/' . $lang . '/report.xml') }}</loc>
     </sitemap>
     <sitemap>
-        <loc>{{ url('/'.$lang) }}/insights/event.xml</loc>
+        <loc>{{ url('/insights/' . $lang . '/event.xml') }}</loc>
     </sitemap>
     <sitemap>
-        <loc>{{ url('/'.$lang) }}/insights/categories.xml</loc>
+        <loc>{{ url('/insights/' . $lang . '/categories.xml') }}</loc>
     </sitemap>
     <sitemap>
-        <loc>{{ url('/'.$lang) }}/insights/subcategories.xml</loc>
+        <loc>{{ url('/insights/' . $lang . '/subcategories.xml') }}</loc>
     </sitemap>
     <sitemap>
-        <loc>{{ url('/'.$lang) }}/insights/tags.xml</loc>
+        <loc>{{ url('/insights/' . $lang . '/tags.xml') }}</loc>
     </sitemap>
 
 </sightmapindex>
