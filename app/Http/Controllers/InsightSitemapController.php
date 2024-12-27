@@ -46,7 +46,7 @@ class InsightSitemapController extends Controller
         $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
-        $model = $locale =='hi' ? InsightListHindi::class : InsightList::class;
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
 
         $articlesitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Article')
@@ -54,7 +54,7 @@ class InsightSitemapController extends Controller
             ->where('status', 1)->limit(10000)
             ->orderByDesc('created_at')
             ->get();
-      //  dd($model,$locale);
+        //  dd($model,$locale);
         return response()->view('insights.sitemaps.art_sitemap', ['articlesitemap' => $articlesitemap])->header('Content-type', 'text/xml');
     }
     public function articlesitemaptwo()
@@ -198,28 +198,38 @@ class InsightSitemapController extends Controller
         $locale = request()->segment(2) === 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
-        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
-        $contentmodel = $locale == 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
-        $seomodel = $locale == 'hi' ? SeoTagHindi::class : SeoTag::class;
 
+        // Select models based on locale
+        $model = $locale === 'hi' ? InsightListHindi::class : InsightList::class;
+        $contentmodel = $locale === 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
+        $seomodel = $locale === 'hi' ? SeoTagHindi::class : SeoTag::class;
+
+        // Fetch insight IDs
         $insightIds = $model::query()
             ->select('news_id')
             ->distinct()
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('cat_id', '!=', '')
             ->where('status', 1)
+            ->limit(10000)
             ->pluck('news_id');
-        dd($insightIds);
+
+        // Fetch content tag IDs
         $contentTagIds = $contentmodel::query()
             ->select('tag_id')
             ->distinct()
             ->whereIn('content_id', $insightIds)
+            ->limit(10000)
             ->pluck('tag_id');
 
-        $tags = $seomodel::select('tag_id', 'name')
+        // Fetch SEO tags
+        $tags = $seomodel::query()
+            ->select('tag_id', 'name')
             ->whereIn('tag_id', $contentTagIds)
+            ->limit(10000)
             ->get();
 
+        // Prepare tags data
         $tagsData = [];
         foreach ($tags as $tag) {
             $createdAt = $model::whereIn('news_id', $insightIds)
@@ -231,10 +241,16 @@ class InsightSitemapController extends Controller
                 'tag' => $tag->name,
                 'created_at' => $createdAt
             ];
+
+            // Stop if we've hit the limit
+            if (count($tagsData) >= 10000) {
+                break;
+            }
         }
-        // dd($tagsData);
+
+        // Return XML response
         return response()
             ->view('insights.sitemaps.tags_sitemap', ['tagsData' => $tagsData])
-            ->header('Content-type', 'text/xml');
+            ->header('Content-Type', 'text/xml');
     }
 }
