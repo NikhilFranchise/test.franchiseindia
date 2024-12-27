@@ -207,7 +207,6 @@ class InsightSitemapController extends Controller
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('cat_id', '!=', '')
             ->where('status', 1)
-            ->orderByDesc('created_at')
             ->pluck('news_id');
 
         $contentTagIds = $contentmodel::query()
