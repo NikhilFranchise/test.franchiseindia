@@ -204,7 +204,6 @@ class InsightSitemapController extends Controller
 
         $insightIds = $model::query()
             ->select('news_id')
-            ->distinct()
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('cat_id', '!=', '')
             ->where('status', 1)
