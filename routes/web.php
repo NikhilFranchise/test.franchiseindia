@@ -1004,7 +1004,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
         Route::get('/podcastlist', [AdminController::class, 'podcastlist'])->name('podcastlist');
         Route::get('/videolist', [AdminController::class, 'videolist'])->name('videolist');
-
     });
     Route::group(['prefix' => 'hi'], function () {
         //insights get routes
@@ -1031,43 +1030,37 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
         Route::get('/podcastlist', [AdminController::class, 'podcastlist'])->name('hindipodcastlist');
         Route::get('/videolist', [AdminController::class, 'videolist'])->name('hindivideolist');
-
     });
 });
 
 Route::get('location/{city}',              [BusinessListingController::class, 'listingLocation']);
 // INSIGHTS ROUTES START HERE //
-Route::get('insights/en/sitemap.xml', function () {
-    return response()->view('insights.sitemaps.english_sitemap')->header('Content-type', 'text/xml');
+Route::get('insights/sitemap.xml', function () {
+    return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
 });
 Route::get('insights/hi/sitemap.xml', function () {
-    return response()->view('insights.sitemaps.hindi_sitemap')->header('Content-type', 'text/xml');
+    return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
 });
-/*Language setter*/
+// /*Language setter*/
 
 Route::group(['prefix' => 'insights'], function () {
-    Route::group(['prefix' => 'en'], function () {
-        Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
-        Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
-        Route::get('article2.xml',                   [InsightSitemapController::class, 'articlesitemaptwo'])->name('article2.xml');
-
-        Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
-        Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap'])->name('event.xml');
-        Route::get('report.xml',                    [InsightSitemapController::class, 'reportsitemap'])->name('report.xml');
-        Route::get('categories.xml',                [InsightSitemapController::class, 'categorysitemap'])->name('categories.xml');
-        Route::get('subcategories.xml',             [InsightSitemapController::class, 'subcategorysitemap'])->name('subcategories.xml');
-        Route::get('kickers.xml',                   [InsightSitemapController::class, 'kickersitemap']);
-        Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap'])->name('tags.xml');
-    });
+    Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
+    Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
+    Route::get('article2.xml',                   [InsightSitemapController::class, 'articlesitemaptwo'])->name('article2.xml');
+    Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
+    Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap'])->name('event.xml');
+    Route::get('report.xml',                    [InsightSitemapController::class, 'reportsitemap'])->name('report.xml');
+    Route::get('categories.xml',                [InsightSitemapController::class, 'categorysitemap'])->name('categories.xml');
+    Route::get('subcategories.xml',             [InsightSitemapController::class, 'subcategorysitemap'])->name('subcategories.xml');
+    Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap'])->name('tags.xml');
     Route::group(['prefix' => 'hi'], function () {
         Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
-        Route::get('article.xml',                   [InsightSitemapController::class, 'hindiarticlesitemap'])->name('article.xml');
+        Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
         Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
         Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap'])->name('event.xml');
         Route::get('report.xml',                    [InsightSitemapController::class, 'reportsitemap'])->name('report.xml');
         Route::get('categories.xml',                [InsightSitemapController::class, 'categorysitemap'])->name('categories.xml');
         Route::get('subcategories.xml',             [InsightSitemapController::class, 'subcategorysitemap'])->name('subcategories.xml');
-        Route::get('kickers.xml',                   [InsightSitemapController::class, 'kickersitemap']);
         Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap'])->name('tags.xml');
     });
 });

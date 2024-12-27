@@ -17,19 +17,16 @@
                 </ul>
             </li>
         @endif
-        @if (
-            (session()->get('role') != 'ga' && session()->get('adminEmail') == 'pganesh@franchiseindia.net') ||
-                session()->get('adminEmail') == 'techsupport@franchiseindia.net')
+
             <li class="submenu @yield('KICK')"> <a href="#"><i class="icon icon-th-list"></i>
-                    <span>Kickers</span></a>
+                    <span>Associated Tags</span></a>
                 <ul>
-                    <li><a href="/admin/kicker/create/english">Create English Kicker</a></li>
-                    <li><a href="/admin/kickers/list/english">List English Kicker</a></li>
-                    <li><a href="/admin/kicker/create/hindi">Create Hindi Kicker</a></li>
-                    <li><a href="/admin/kickers/list/hindi">List Hindi Kicker</a></li>
+                    {{--  <li><a href="/admin/kicker/create/english">Create English Kicker</a></li>  --}}
+                    <li><a href="/admin/kickers/list/english">Tags List</a></li>
+                    {{--  <li><a href="/admin/kicker/create/hindi">Create Hindi Kicker</a></li>  --}}
+                    {{--  <li><a href="/admin/kickers/list/hindi">List Hindi Kicker</a></li>  --}}
                 </ul>
             </li>
-        @endif
         @if (
             (session()->get('role') != 'ga' && session()->get('adminEmail') == 'techsupport@franchiseindia.net') ||
                 (session()->get('role') != 'ga' && session()->get('adminEmail') == 'pganesh@franchiseindia.net'))

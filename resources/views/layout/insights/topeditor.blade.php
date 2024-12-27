@@ -2,9 +2,9 @@
     <div class="container">
         <div class="comhead">
             @if (App::getLocale() == 'en')
-                Insights
+            Articles
             @else
-                इनसाइट्स
+            आर्टिकल
             @endif
         </div>
     </div>

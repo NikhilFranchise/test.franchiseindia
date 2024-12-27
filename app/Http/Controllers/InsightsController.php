@@ -23,7 +23,7 @@ use App\Models\InsightListHindi;
 use App\Models\SeoTagHindi;
 use App\Models\FihlPodcastVideo;
 use App\Models\FihlVideoCategory;
-use Illuminate\Support\Facades\DB;
+
 
 class InsightsController extends Controller
 {
@@ -31,7 +31,7 @@ class InsightsController extends Controller
     public function insightshome()
     {
         if (request()->segment(2) != 'hindi') {
-            app()->setLocale('en');
+            $locale =  app()->setLocale('en');
             session()->put('locale', 'en');
 
             $homeArticle = InsightList::with('category')->where('status', 1)
@@ -105,7 +105,7 @@ class InsightsController extends Controller
                 ->take(8)->get();
             $interview      = CommonController::contentUrlSlug($interview);
         } else {
-            app()->setLocale('hi');
+            $locale = app()->setLocale('hi');
             session()->put('locale', 'hi');
 
             $homeArticle = InsightListHindi::with('category')->where('status', 1)
@@ -119,7 +119,7 @@ class InsightsController extends Controller
             $homeArticle = CommonController::contentUrlSlug($homeArticle);
 
             if (empty($homeArticle)) {
-                return redirect('/insights');
+                return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
             }
 
             $topstories = InsightListHindi::with('category')
@@ -222,7 +222,7 @@ class InsightsController extends Controller
 
         // Handle empty results
         if ($insArticles->isEmpty()) {
-            return redirect('/insights');
+            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
 
         // Apply the content URL slug logic
@@ -250,7 +250,7 @@ class InsightsController extends Controller
             ->paginate(10);
         $interviews = CommonController::contentUrlSlug($interviews);
         if ($interviews->isEmpty()) {
-            return redirect('/insights');
+            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         } else {
             return view('insights.interviewslist', compact('interviews'));
         }
@@ -276,66 +276,27 @@ class InsightsController extends Controller
         $events_reports = CommonController::contentUrlSlug($events_reports);
 
         if ($events_reports->isEmpty()) {
-            return redirect('/insights');
+            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         } else {
             return view('insights.events_reports', compact('events_reports'));
         }
     }
 
 
-    // public function authordata(Request $request)
-    // {
-
-    //     $author_id =  explode('-', $request->slug);
-    //     $id = end($author_id);
-    //     if (!is_int($id)) {
-    //         $id = (int)$id;
-    //         if ($id == 0) return redirect('/insight');
-    //     }
-    //     if ($request->segment(2) == 'en') {
-    //         $author = AuthorList::find($id);
-    //         $articleCount = InsightList::where('author_id', $id)
-    //             ->whereNotIn('news_type', ['ri', 'ir'])->count();
-    //         $article = InsightList::where('author_id', $id)
-    //             ->where('status', 1)
-    //             ->whereNotIn('news_type', ['ri', 'ir'])
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->orderByDesc('created_at')
-    //             ->paginate(6);
-    //         $article = CommonController::contentUrlSlug($article);
-    //     } else {
-    //         $author = AuthorList::find($id);
-    //         $articleCount = InsightListHindi::where('author_id', $id)
-    //             ->whereNotIn('news_type', ['ri', 'ir'])->count();
-    //         $article = InsightListHindi::where('author_id', $id)
-    //             ->where('status', 1)
-    //             ->whereNotIn('news_type', ['ri', 'ir'])
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->orderByDesc('created_at')
-    //             ->paginate(6);
-    //         $article = CommonController::contentUrlSlug($article);
-    //     }
-    //     return view('insights.author', compact('author', 'article', 'articleCount'));
-    // }
-
     public function authordata(Request $request)
     {
+        // Set the appropriate model and fetch data based on the language
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
         // Extract and validate the author ID from the slug
         $author_id = explode('-', $request->slug);
         $id = (int) end($author_id);
 
         // Redirect if the ID is invalid
         if ($id == 0) {
-            return redirect('/insight');
+            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
-
-        // Set the appropriate model and fetch data based on the language
-        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
-        app()->setLocale($locale);
-        session()->put('locale', $locale);
-
         // Choose the appropriate model based on the locale
         $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
         $author = AuthorList::find($id);
@@ -382,8 +343,9 @@ class InsightsController extends Controller
             ->first();
 
         if (!$category) {
-            return redirect('/insights');
+            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
+
 
         // Fetch the insights for the category
         $insightcategories = $insightListModel::with('author')
@@ -398,7 +360,7 @@ class InsightsController extends Controller
 
         // Check if insights are available
         if ($insightcategories->isEmpty()) {
-            return redirect('/insights');
+            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
 
         // Return the view with compacted data
@@ -425,10 +387,9 @@ class InsightsController extends Controller
 
         $trendstories = CommonController::contentUrlSlug($trendstories);
         if ($trendstories->isEmpty()) {
-            return redirect('/insights');
-        } else {
-            return view('insights.trendstories', compact('trendstories'));
+            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
+        return view('insights.trendstories', compact('trendstories'));
     }
 
     public function getInsightsDetails(Request $request)
@@ -447,21 +408,21 @@ class InsightsController extends Controller
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('news_id', $id)
             ->first();
-        // print_r($newsDetails->toSql());die;
+        // dd($newsDetails);
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
         }
         // dd($newsDetails->author);
         // Fetch author details
-        if (empty($newsDetails->author)) {
-            $defaultauthor = 466;
+        if (empty($newsDetails->author[0])) {
+            // dd('hello');
+            $authorId = 466;
         } else {
-            $defaultauthor = $newsDetails->author[0]->author_id;
+            $authorId = $newsDetails->author_id;
         }
-        $authorId = $defaultauthor; // Default author_id
-        $author_details = AuthorList::query()
-            ->where('author_id', $authorId)
-            ->first();
+        // dd($authorId);
+        $author_details = AuthorList::query()->where('author_id', '=', $authorId)->first();
+        // dd($author_details);
 
         // Fetch associated tags
         $associatedTags = $tagTable::query()
@@ -537,9 +498,8 @@ class InsightsController extends Controller
         // Count matching articles
         $articleCount = $query->count();
 
-        // Redirect if no articles are found
-        if ($articleCount < 1) {
-            return redirect('/insights');
+        if ($articleCount > 1) {
+            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
 
         // Fetch paginated articles
@@ -636,12 +596,43 @@ class InsightsController extends Controller
         return round($articlelen / 200);
     }
 
+    // public static function insightcategory($locale)
+    // {
+    //     $model = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
+
+    //     $categories = $model::select('id', 'catname', 'slug')->get()->toArray();
+    //     // dd($categories);
+    //     return $categories;
+    // }
     public static function insightcategory($locale)
     {
         $model = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
 
-        // Use select to limit retrieved columns (optional)
-        $categories = $model::select('id', 'catname', 'slug')->get()->toArray();
+        if ($locale == 'en') {
+            $specificCategories = ['Electric Vehicles', 'MSME'];
+        } else {
+            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई'];
+        }
+
+        $categories = $model::select('id', 'catname', 'slug')
+            ->whereNotIn('catname', $specificCategories)
+            ->get()
+            ->toArray();
+
+        return $categories;
+    }
+    public static function specificCategories($locale)
+    {
+        $model = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
+        if ($locale == 'en') {
+            $specificCategories = ['Electric Vehicles', 'MSME'];
+        } else {
+            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई'];
+        }
+        $categories = $model::select('id', 'catname', 'slug')
+            ->whereIn('catname', $specificCategories)
+            ->get()
+            ->toArray();
 
         return $categories;
     }
@@ -842,7 +833,7 @@ class InsightsController extends Controller
             ->get();
 
         // Return the view with the mapped videos and podcasts
-        return view('insights.video', compact('listVideo','videos', 'podcast'));
+        return view('insights.video', compact('listVideo', 'videos', 'podcast'));
     }
 
 

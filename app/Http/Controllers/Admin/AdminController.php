@@ -355,10 +355,10 @@ class AdminController extends Controller
         if ($kickerCount == 0) {
             $class->insert(['name' => request()->kicker]);
         } else {
-            session()->flash('failed', 'Kicker already Exists');
+            session()->flash('failed', 'Tag already Exists');
             return redirect()->back();
         }
-
+        session()->flash('success', 'Tag Inserted Successfully.');
         return redirect('/admin/kickers/list/' . request()->type);
     }
 
@@ -2557,7 +2557,7 @@ class AdminController extends Controller
         $videos = FihlPodcastVideo::query()
             ->with('VideoCategory')
             ->whereIn('status', ['A', 'D'])
-            ->where('podcast_type', 'v')
+            ->where('podcast_type', 'V')
             ->where('pod_lang', $locale)
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {

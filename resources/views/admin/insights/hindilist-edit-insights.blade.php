@@ -193,7 +193,7 @@
                                         <th>Insights Type</th>
                                         {{--  <th>Insights Category</th>  --}}
                                         <th>Link</th>
-                                        <th>Views</th>
+                                        <th>Published Date</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         {{-- <th>Hindi(New/Update)</th> --}}
@@ -239,7 +239,7 @@
                                                             target="_blank" class="round-button">Go</a></div>
                                                 </div>
                                             </td>
-                                            <td>{{ $insights->views }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($insights->created_at)) }}</td>
                                             <td>
                                                 <center>
                                                     <label class="switch">

@@ -4,7 +4,7 @@
         <div class="container">
             <h1 class="cathead">
                 {{--  @dd(App::getLocale());  --}}
-                {{ App::getLocale() == 'en' ? 'Insights' : 'इनसाइट्स' }}
+                {{ App::getLocale() == 'en' ? 'Articles' : 'आर्टिकल' }}
             </h1>
         </div>
         <div class="listblk">
