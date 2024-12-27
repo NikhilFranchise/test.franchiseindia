@@ -701,6 +701,7 @@ class AdminController extends Controller
             $data = AuthorList::query()
                 ->select("title", "author_id")
                 ->where('title', 'LIKE', "%{$search}%")
+                ->where('status', 'A')
                 ->get();
         }
         return response()->json($data);
