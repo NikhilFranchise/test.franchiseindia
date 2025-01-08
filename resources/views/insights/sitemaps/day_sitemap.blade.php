@@ -18,9 +18,8 @@
                     $M, 10)) }}</li>
             </ul>
 
-            <ul class="sitemaplist-week sitemap-week-date">
+            <ul class="sitemaplist-year sitemap-week-date">
 
-                {{-- <h4></h4> --}}
                 @forelse($allDays as $record)
                 <li>
                     <a href="{{ url("/insights/sitemap/{$Y}/{$M}/" . str_pad($record, 2, '0', STR_PAD_LEFT)) }}">
