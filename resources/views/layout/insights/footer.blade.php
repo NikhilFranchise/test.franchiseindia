@@ -300,7 +300,7 @@ Education</a>
                       <li><a href="https://news.franchiseindia.com/" target="_blank">News</a></li>
                       <li><a href="https://www.franchiseindia.com/testimonials" target="_blank">Testimonials</a></li>
                       <li><a href="https://www.franchiseindia.com/terms" target="_blank">Terms</a></li>
-                      <li><a href="https://www.franchiseindia.com/sitemap.xml" target="_blank">Sitemap</a></li>
+                      <li><a href="{{ url('/insights/sitemap') }}" target="_blank">Sitemap</a></li>
                   </ul>
        </div>
     </div>

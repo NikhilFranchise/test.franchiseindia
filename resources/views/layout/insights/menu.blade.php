@@ -107,10 +107,10 @@
                                         {{ $insightsLabel }}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="">
-                                        <a href="{{ $categoryUrlPrefix }}industryfocus">{{ $ArticleLabel }}</a>
-                                        <a href="{{ $categoryUrlPrefix }}interviews">{{ $interviewsLabel }}</a>
-                                        <a href="{{ $categoryUrlPrefix }}events_reports">{{ $eventsReportsLabel }}</a>
-                                        <a href="{{ $categoryUrlPrefix }}video_podcast">{{ $videoPodcastLabel }}</a>
+                                        <a class="dropdown-item" href="{{ $categoryUrlPrefix }}industryfocus">{{ $ArticleLabel }}</a>
+                                        <a class="dropdown-item" href="{{ $categoryUrlPrefix }}interviews">{{ $interviewsLabel }}</a>
+                                        <a class="dropdown-item" href="{{ $categoryUrlPrefix }}events_reports">{{ $eventsReportsLabel }}</a>
+                                        <a class="dropdown-item" href="{{ $categoryUrlPrefix }}video_podcast">{{ $videoPodcastLabel }}</a>
 
                                     </div>
                                 </div>

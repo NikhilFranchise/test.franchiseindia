@@ -1044,6 +1044,14 @@ Route::get('insights/hi/sitemap.xml', function () {
 // /*Language setter*/
 
 Route::group(['prefix' => 'insights'], function () {
+    Route::get('sitemap', [InsightSitemapController::class, 'sitemap']);
+    Route::get('sitemap/today', [InsightSitemapController::class, 'todaysitemap']);
+    Route::get('sitemap/yesterday', [InsightSitemapController::class, 'yesterdaysitemap']);
+    Route::get('sitemap/thisweek', [InsightSitemapController::class, 'thisweeksitemap']);
+    Route::get('sitemap/lastweek', [InsightSitemapController::class, 'lastweeksitemap']);
+    Route::get('sitemap/{year}', [InsightSitemapController::class, 'monthsitemap']);
+    Route::get('sitemap/{year}/{month}', [InsightSitemapController::class, 'daysitemap']);
+    Route::get('sitemap/{year}/{month}/{day}', [InsightSitemapController::class, 'datesitemap']);
     Route::group(['prefix' => 'en'], function () {
         Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
         Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
