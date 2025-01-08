@@ -23,28 +23,7 @@
             // Group the records by insight_type
             $groupedData = $allData ->groupBy('insight_type');
             @endphp
-{{--
-            <ul class="listarticle-sitemap">
 
-
-                @foreach($groupedData as $insightType => $records)
-                <h4>{{ $insightType }}</h4>
-                @foreach($records as $record)
-                <li>
-                    <a
-                        href="{{ url('/insights/' . $record->source . '/' . strtolower($record->insight_type) . '/' . $record->slug . '.' . $record->news_id) }}">
-                        {{ $record->title }}
-                    </a>
-                </li>
-
-                @endforeach
-                @endforeach
-
-                @empty($records )
-                <li colspan="3">No records found</li>
-                @endempty
-
-            </ul> --}}
             @if($groupedData->isNotEmpty())
             @foreach($groupedData as $insightType => $records)
             <h4>{{ $insightType }}</h4>
@@ -60,7 +39,7 @@
             </ul>
             @endforeach
             @else
-            <p>No records found</p>
+            <p class="ins-sitemap">No records found</p>
             @endif
         </div>
     </div>

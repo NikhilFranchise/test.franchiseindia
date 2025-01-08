@@ -36,7 +36,7 @@
             </ul>
             @endforeach
             @else
-            <p>No records found</p>
+            <p class="ins-sitemap">No records found</p>
             @endif
         </div>
     </div>
