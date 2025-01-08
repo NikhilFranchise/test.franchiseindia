@@ -73,10 +73,40 @@ class InsightSitemapController extends Controller
         return view('insights.sitemaps.month_sitemap', compact('allMonths', 'Y'));
     }
 
+    // public function daysitemap(Request $request, $year, $month)
+    // {
+    //     $Y = $year;
+    //     $M = $month;
+    //     $englishDays = InsightList::query()
+    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->where('status', 1)
+    //         ->whereRaw('YEAR(created_at) = ?', [$Y])
+    //         ->whereRaw('MONTH(created_at) = ?', [$M])
+    //         ->selectRaw('DAY(created_at) as day, COUNT(*) as total')
+    //         ->groupByRaw('DAY(created_at)')
+    //         ->orderBy('created_at')
+    //         ->pluck('day');
+    //     $hindiDays = InsightListHindi::query()
+    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->where('status', 1)
+    //         ->whereRaw('YEAR(created_at) = ?', [$Y])
+    //         ->whereRaw('MONTH(created_at) = ?', [$M])
+    //         ->selectRaw('DAY(created_at) as day, COUNT(*) as total')
+    //         ->groupByRaw('DAY(created_at)')
+    //         ->orderBy('created_at')
+    //         ->pluck('day');
+
+    //     $allDays = $englishDays->merge($hindiDays)->unique()->sort()->values();
+    //     return view('insights.sitemaps.day_sitemap', compact('allDays', 'M', 'Y'));
+    // }
+
     public function daysitemap(Request $request, $year, $month)
     {
         $Y = $year;
         $M = $month;
+
         $englishDays = InsightList::query()
             ->whereIn('insight_type', ['News', 'Article', 'Interview'])
             ->whereNotIn('news_type', ['ri', 'ir'])
@@ -85,8 +115,9 @@ class InsightSitemapController extends Controller
             ->whereRaw('MONTH(created_at) = ?', [$M])
             ->selectRaw('DAY(created_at) as day, COUNT(*) as total')
             ->groupByRaw('DAY(created_at)')
-            ->orderBy('created_at')
+            ->orderByRaw('DAY(created_at)') // Order by the same column used in GROUP BY
             ->pluck('day');
+
         $hindiDays = InsightListHindi::query()
             ->whereIn('insight_type', ['News', 'Article', 'Interview'])
             ->whereNotIn('news_type', ['ri', 'ir'])
@@ -95,9 +126,8 @@ class InsightSitemapController extends Controller
             ->whereRaw('MONTH(created_at) = ?', [$M])
             ->selectRaw('DAY(created_at) as day, COUNT(*) as total')
             ->groupByRaw('DAY(created_at)')
-            ->orderBy('created_at')
+            ->orderByRaw('DAY(created_at)') // Order by the same column used in GROUP BY
             ->pluck('day');
-
         $allDays = $englishDays->merge($hindiDays)->unique()->sort()->values();
         return view('insights.sitemaps.day_sitemap', compact('allDays', 'M', 'Y'));
     }
