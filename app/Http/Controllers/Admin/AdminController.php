@@ -132,6 +132,7 @@ class AdminController extends Controller
 
         if ($request->hasFile('image')) {
             $profilePic = $request->file('image');
+            $profilePic = Image::make($profilePic)->encode('webp', 90);
             $imageUrl = $this->uploadImage($profilePic, 'Author', 0, 's3', '');
         }
 

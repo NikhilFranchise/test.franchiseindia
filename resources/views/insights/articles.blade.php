@@ -1,6 +1,7 @@
 @extends('layout.insights.master')
 @section('content')
     <div class="maininnver homeh">
+        {{-- <div class=""></div> --}}
         <div class="container">
             <h1 class="cathead">
                 {{--  @dd(App::getLocale());  --}}

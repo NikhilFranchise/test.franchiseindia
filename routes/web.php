@@ -60,6 +60,7 @@ use Illuminate\Support\Facades\App;
 */
 
 Auth::routes();
+Route::feeds();
 
 Route::get('optimize', function () {
     // Run the artisan commands
