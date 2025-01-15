@@ -132,7 +132,6 @@ class AdminController extends Controller
 
         if ($request->hasFile('image')) {
             $profilePic = $request->file('image');
-            $profilePic = Image::make($profilePic)->encode('webp', 90);
             $imageUrl = $this->uploadImage($profilePic, 'Author', 0, 's3', '');
         }
 
@@ -149,7 +148,9 @@ class AdminController extends Controller
             'address'                => request()->address,
             'linkedin_profile'       => request()->linkedin_profile,
             'facebook_profile'       => request()->facebook_profile,
-            'twitter_profile'        => request()->twitter_profile
+            'twitter_profile'        => request()->twitter_profile,
+            'insta_profile'        => request()->insta_profile
+
         ]);
         return redirect("admin/list-author");
     }
@@ -201,7 +202,9 @@ class AdminController extends Controller
                 'address'                => request()->address,
                 'linkedin_profile'       => request()->linkedin_profile,
                 'facebook_profile'       => request()->facebook_profile,
-                'twitter_profile'        => request()->twitter_profile
+                'twitter_profile'        => request()->twitter_profile,
+                'insta_profile'          => request()->insta_profile
+
             ]);
         return redirect("admin/list-author");
     }
@@ -702,7 +705,7 @@ class AdminController extends Controller
             $data = AuthorList::query()
                 ->select("title", "author_id")
                 ->where('title', 'LIKE', "%{$search}%")
-                ->where('status', 'A')
+                -> where('status', 'A')
                 ->get();
         }
         return response()->json($data);
@@ -1591,11 +1594,25 @@ class AdminController extends Controller
             case 'News':
                 $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
                 break;
+            case 'Report':
+                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+                break;
+            case 'Event':
+                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+                break;
+            case 'Terms':
+                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+                break;
         }
 
         // Resize the image to 680x435px and convert it to WebP format
-        $resizedImage = Image::make($image)->resize(1600, 940)->encode('webp', 90);
-        // dd($resizedImage);
+        if($type != 'Author' || $type  != 'Gallery' || $type  != 'Magazine') {
+            $resizedImage = Image::make($image)->resize(1600, 940)->encode('webp', 90);
+        }else if($type == 'Author'){
+            $resizedImage = Image::make($image)->resize(512, 512)->encode('webp', 90);
+        }else{
+            $resizedImage = Image::make($image)->encode('webp', 90);
+        }
         // Store the image in the specified storage
         Storage::getFacadeRoot()->disk($store_type)->put($picPath, (string) $resizedImage, 'public');
         $imageUrl = Storage::getFacadeRoot()->disk($store_type)->url($picPath);
@@ -1812,7 +1829,7 @@ class AdminController extends Controller
         $imageUrl = "";
         if ($request->hasFile('image')) {
             $newsImage = $request->file('image');
-            $imageUrl = $this->uploadImage($newsImage, 'News', 0, 's3', '');
+            $imageUrl = $this->uploadImage($newsImage, $insightsType, 0, 's3', '');
             // dd($imageUrl);
             $this->thumbnailCreation($imageUrl, 'News', 247, 139);
         }
@@ -1937,15 +1954,8 @@ class AdminController extends Controller
                 }
 
                 // Generate slug dynamically
-                if ($request->segment(2) == 'en') {
-                    $existingInsight->slug = Str::slug($existingInsight->title);
-                } else {
-                    $titleSlug = preg_replace("/[\s+\?]/", " ", $existingInsight->title);
-                    $titleSlug = str_replace("  ", " ", $titleSlug);
-                    $titleSlug = str_replace(" ", "-", $titleSlug);
-                    $titleSlug = preg_replace("/\s+/", "-", $titleSlug);
-                    $existingInsight->slug = str_replace(".", "-", $titleSlug);
-                }
+                $existingInsight->slug = Str::slug($existingInsight->title);
+
                 // Save the updated record
                 $existingInsight->save();
             }
@@ -2050,13 +2060,14 @@ class AdminController extends Controller
         $title             = $request->title;
         if (!empty($request->slug) && request()->segment(2) == 'en') {
             $slug              = Str::slug($request->slug);
-        } else {
-            // $slug              = Str::slug($title);
-            $titleSlug = preg_replace("/[\s+\?]/", " ", $title);
-            $titleSlug = str_replace("  ", " ", $titleSlug);
-            $titleSlug = str_replace(" ", "-", $titleSlug);
-            $titleSlug = preg_replace("/\s+/", "-", $titleSlug);
-            $slug = str_replace(".", "-", $titleSlug);
+        } else if(!empty($request->slug) && request()->segment(2) == 'hi'){
+            $slug              = $request->slug;
+        }else{
+            $titleSlug = preg_replace('/[^a-zA-Z0-9\s]/', '', $title); // Remove unwanted characters
+            $titleSlug = preg_replace('/\s+/', ' ', trim($titleSlug)); // Replace multiple spaces with a single space and trim
+            $titleSlug = str_replace(' ', '-', $titleSlug); // Replace spaces with hyphens
+            $slug = strtolower($titleSlug); // Convert to lowercase
+            
         }
         // dd($role);
         $kicker            = $request->kicker;
@@ -2074,7 +2085,7 @@ class AdminController extends Controller
 
             //Uploading Image
             $newsImage = $request->file('image');
-            $imageUrl  = $this->uploadImage($newsImage, 'News', 0, 's3', '');
+            $imageUrl  = $this->uploadImage($newsImage, $insight_type, 0, 's3', '');
 
             //thumbnail creation
             $this->thumbnailCreation($imageUrl, 'News', 247, 139);
@@ -2566,7 +2577,7 @@ class AdminController extends Controller
         $videos = FihlPodcastVideo::query()
             ->with('VideoCategory')
             ->whereIn('status', ['A', 'D'])
-            ->where('podcast_type', 'V')
+            ->where('podcast_type', 'v')
             ->where('pod_lang', $locale)
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {

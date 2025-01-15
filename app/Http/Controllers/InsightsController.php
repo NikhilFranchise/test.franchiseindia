@@ -28,161 +28,6 @@ use App\Models\FihlVideoCategory;
 class InsightsController extends Controller
 {
 
-    // public function insightshome()
-    // {
-    //     if (request()->segment(2) != 'hindi') {
-    //         $locale =  app()->setLocale('en');
-    //         session()->put('locale', 'en');
-
-    //         $homeArticle = InsightList::with('category')->where('status', 1)
-    //             ->where('insight_type', 'News')
-    //             ->whereNotIn('news_type', ['ir', 'ri'])
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->orderByDesc('news_id')
-    //             ->take(1)->get();
-
-    //         $homeArticle = CommonController::contentUrlSlug($homeArticle);
-
-    //         if (empty($homeArticle)) {
-    //             return redirect('/insights');
-    //         }
-
-    //         $topstories = InsightList::with('category')
-    //             ->where('status', 1)
-    //             ->where('insight_type', '=', 'News')
-    //             ->whereNotIn('news_type', ['ir', 'ri'])
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->orderByDesc('news_id')
-    //             ->whereNotIn('news_id', $homeArticle->pluck('news_id'))
-    //             ->take(5)->get();
-
-    //         $topstories     = CommonController::contentUrlSlug($topstories);
-
-
-    //         $topcategories = SeoTag::orderByDesc('frequency')->take(10)->get();
-
-    //         $trendArticles = InsightList::with('category')
-    //             ->where('status', 1)
-    //             ->whereNotIn('news_type', ['ir', 'ri'])
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->orderByDesc('views')
-    //             ->take(8)->get();
-    //         $trendArticles      = CommonController::contentUrlSlug($trendArticles);
-
-    //         $industry_focus = InsightList::with('category')
-    //             ->where('insight_type', '=', 'Article')
-    //             ->whereNotIn('news_type', ['ir', 'ri'])
-    //             ->where('status', 1)
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->orderByDesc('created_at')
-    //             ->take(1)->get();
-
-    //         $industry_focus      = CommonController::contentUrlSlug($industry_focus);
-
-    //         $industry_data = InsightList::with('category')
-    //             ->where('insight_type', '=', 'Article')
-    //             ->whereNotIn('news_type', ['ir', 'ri'])
-    //             ->where('status', 1)
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->whereNotIn('news_id', $industry_focus->pluck('news_id'))
-    //             ->orderByDesc('created_at')
-    //             ->take(6)->get();
-
-    //         $industry_data      = CommonController::contentUrlSlug($industry_data);
-
-    //         $interview = InsightList::with('category')
-    //             ->where('insight_type', '=', 'Interview')
-    //             ->whereNotIn('news_type', ['ir', 'ri'])
-    //             ->where('status', 1)
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->orderByDesc('created_at')
-    //             ->take(8)->get();
-    //         $interview      = CommonController::contentUrlSlug($interview);
-    //     } else {
-    //         $locale = app()->setLocale('hi');
-    //         session()->put('locale', 'hi');
-
-    //         $homeArticle = InsightListHindi::with('category')->where('status', 1)
-    //             ->where('insight_type', 'News')
-    //             ->whereNotIn('news_type', ['ir', 'ri'])
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->orderByDesc('news_id')
-    //             ->take(1)->get();
-
-    //         $homeArticle = CommonController::contentUrlSlug($homeArticle);
-
-    //         if (empty($homeArticle)) {
-    //             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
-    //         }
-
-    //         $topstories = InsightListHindi::with('category')
-    //             ->where('status', 1)
-    //             ->where('insight_type', '=', 'News')
-    //             ->whereNotIn('news_type', ['ir', 'ri'])
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->orderByDesc('news_id')
-    //             ->whereNotIn('news_id', $homeArticle->pluck('news_id'))
-    //             ->take(5)->get();
-
-    //         $topstories     = CommonController::contentUrlSlug($topstories);
-
-
-    //         $topcategories = SeoTag::orderByDesc('frequency')->take(10)->get();
-
-    //         $trendArticles = InsightListHindi::with('category')
-    //             ->where('status', 1)
-    //             ->whereNotIn('news_type', ['ir', 'ri'])
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->orderByDesc('views')
-    //             ->take(8)->get();
-    //         $trendArticles      = CommonController::contentUrlSlug($trendArticles);
-
-    //         $industry_focus = InsightListHindi::with('category')
-    //             ->where('insight_type', '=', 'Article')
-    //             ->whereNotIn('news_type', ['ir', 'ri'])
-    //             ->where('status', 1)
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->orderByDesc('created_at')
-    //             ->take(1)->get();
-
-    //         $industry_focus      = CommonController::contentUrlSlug($industry_focus);
-
-    //         $industry_data = InsightListHindi::with('category')
-    //             ->where('insight_type', '=', 'Article')
-    //             ->whereNotIn('news_type', ['ir', 'ri'])
-    //             ->where('status', 1)
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->whereNotIn('news_id', $industry_focus->pluck('news_id'))
-    //             ->orderByDesc('created_at')
-    //             ->take(6)->get();
-
-    //         $industry_data      = CommonController::contentUrlSlug($industry_data);
-
-    //         $interview = InsightListHindi::with('category')
-    //             ->where('insight_type', '=', 'Interview')
-    //             ->whereNotIn('news_type', ['ir', 'ri'])
-    //             ->where('status', 1)
-    //             ->whereNotNull('image')
-    //             ->whereNotNull('cat_id')
-    //             ->orderByDesc('created_at')
-    //             ->take(8)->get();
-    //         $interview      = CommonController::contentUrlSlug($interview);
-    //     }
-
-    //     return view('insights.insight_home', compact('homeArticle', 'topstories', 'trendArticles', 'topcategories', 'industry_focus', 'industry_data', 'interview'));
-    // }
-
     public function insightshome()
     {
         $locale = request()->segment(2) === 'hindi' ? 'hi' : 'en';
@@ -264,17 +109,35 @@ class InsightsController extends Controller
 
         $topcategories = SeoTag::orderByDesc('frequency')->take(10)->get();
 
-        $authorIds = $model::query()
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->whereNotNull('author_id')
-            ->where('status', 1)
-            ->groupBy('author_id')
-            ->pluck('author_id')
-            ->toArray();
+       // Get author IDs based on article filters
+$authorIds = $model::query()
+->whereNotIn('news_type', ['ir', 'ri'])
+->whereNotNull('author_id')
+->where('status', 1)
+->groupBy('author_id')
+->pluck('author_id')
+->toArray();
 
-        $authorTitles = AuthorList::query()->whereIn('author_id', $authorIds)->where('status', 'A')->get();
+// Get article count grouped by author
+$authorCounts = $model::query()
+->whereNotIn('news_type', ['ir', 'ri'])
+->whereNotNull('author_id')
+->where('status', 1)
+->groupBy('author_id')
+->selectRaw('author_id, COUNT(*) as article_count')
+->pluck('article_count', 'author_id')
+->toArray();
 
-        // dd($authorTitles);
+// Get author details for the filtered IDs
+$authorDetails = AuthorList::query()
+->whereIn('author_id', $authorIds)
+->where('status', 'A')
+->get()
+->map(function ($author) use ($authorCounts) {
+    $author->count = $authorCounts[$author->author_id] ?? 0;
+    return $author;
+});
+
 
         return view('insights.insight_home', compact(
             'homeArticle',
@@ -284,7 +147,7 @@ class InsightsController extends Controller
             'industry_focus',
             'industry_data',
             'interview',
-            'authorTitles'
+            'authorDetails'
         ));
     }
 
@@ -608,8 +471,16 @@ class InsightsController extends Controller
             ];
         })->toArray();
 
+        $trendingArticles = $newsModel::with(['category', 'Subcategory'])
+        ->where('status', 1)
+        ->whereNotIn('news_type', ['ri', 'ir'])
+        ->where('insight_type','Article')
+        ->orderByDesc('created_at')
+        ->take(6)->get();
+        $trendingArticles = CommonController::contentUrlSlug($trendingArticles);
+
         // Return view with compacted variables
-        return view('insights.insight_detail', compact('newsDetails', 'author_details', 'franchiseData', 'assocTags'));
+        return view('insights.detail', compact('newsDetails', 'author_details', 'franchiseData', 'assocTags', 'trendingArticles'));
     }
 
 
