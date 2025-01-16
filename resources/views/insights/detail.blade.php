@@ -239,6 +239,15 @@
                                         } else {
                                             $articleData[] = '
                                                <div id="v-franchiseindia"></div>
+                                               <div class="inner-article-detail-desktop-ad">
+                                                   <div id="adslotInline_1_300x250">
+                                                       <script>
+                                                           googletag.cmd.push(function() {
+                                                               googletag.display("adslotInline_1_300x250");
+                                                           });
+                                                       </script>
+                                                   </div>
+                                               </div>
                                                <script>
                                                    (function(v, d, o, ai) {
                                                        ai = d.createElement("script");
