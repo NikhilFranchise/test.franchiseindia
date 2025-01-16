@@ -215,6 +215,7 @@
                             </div>
                             {{-- most viewed section end here --}}
                         </div>
+                        @include('layout.insights.subscribenewsletter')
                     </div>
                     {{-- stories section end here --}}
                     <div class="col-md-4">
@@ -289,11 +290,11 @@
 
                         </div>
                         {{-- ads section start here --}}
-                        <div class="ad-right-author">
-                            <div id='adslot300x250_ATF'>
+                        <div class="ad-right-sticky">
+                            <div id="adslot300x250_1">
                                 <script>
                                     googletag.cmd.push(function() {
-                                        googletag.display('adslot300x250_ATF');
+                                        googletag.display('adslot300x250_1');
                                     });
                                 </script>
                             </div>
@@ -304,6 +305,7 @@
                 </div>
             </div>
         </div>
+        @include('layout.insights.magblock')
 
         <div class="listblk">
             <div class="container">
