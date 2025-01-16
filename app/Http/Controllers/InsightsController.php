@@ -23,7 +23,9 @@ use App\Models\InsightListHindi;
 use App\Models\SeoTagHindi;
 use App\Models\FihlPodcastVideo;
 use App\Models\FihlVideoCategory;
-
+use App\Models\InsightViews;
+use App\Models\Ip2Location;
+use Illuminate\Support\Facades\Cache;
 
 class InsightsController extends Controller
 {
@@ -109,34 +111,34 @@ class InsightsController extends Controller
 
         $topcategories = SeoTag::orderByDesc('frequency')->take(10)->get();
 
-       // Get author IDs based on article filters
-$authorIds = $model::query()
-->whereNotIn('news_type', ['ir', 'ri'])
-->whereNotNull('author_id')
-->where('status', 1)
-->groupBy('author_id')
-->pluck('author_id')
-->toArray();
+        // Get author IDs based on article filters
+        $authorIds = $model::query()
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('author_id')
+            ->where('status', 1)
+            ->groupBy('author_id')
+            ->pluck('author_id')
+            ->toArray();
 
-// Get article count grouped by author
-$authorCounts = $model::query()
-->whereNotIn('news_type', ['ir', 'ri'])
-->whereNotNull('author_id')
-->where('status', 1)
-->groupBy('author_id')
-->selectRaw('author_id, COUNT(*) as article_count')
-->pluck('article_count', 'author_id')
-->toArray();
+        // Get article count grouped by author
+        $authorCounts = $model::query()
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('author_id')
+            ->where('status', 1)
+            ->groupBy('author_id')
+            ->selectRaw('author_id, COUNT(*) as article_count')
+            ->pluck('article_count', 'author_id')
+            ->toArray();
 
-// Get author details for the filtered IDs
-$authorDetails = AuthorList::query()
-->whereIn('author_id', $authorIds)
-->where('status', 'A')
-->get()
-->map(function ($author) use ($authorCounts) {
-    $author->count = $authorCounts[$author->author_id] ?? 0;
-    return $author;
-});
+        // Get author details for the filtered IDs
+        $authorDetails = AuthorList::query()
+            ->whereIn('author_id', $authorIds)
+            ->where('status', 'A')
+            ->get()
+            ->map(function ($author) use ($authorCounts) {
+                $author->count = $authorCounts[$author->author_id] ?? 0;
+                return $author;
+            });
 
 
         return view('insights.insight_home', compact(
@@ -351,15 +353,22 @@ $authorDetails = AuthorList::query()
 
 
         // Fetch the insights for the category
-        $insightcategories = $insightListModel::with('author')
+        $insightcategories = $insightListModel::query()
             ->where('cat_id', $category->id)
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->orderByDesc('news_id')
-            ->paginate(10);
-
+            ->paginate(8);
         // Apply content URL slug transformation
         $insightcategories = CommonController::contentUrlSlug($insightcategories);
+
+        $popularArticles = $insightListModel::query()->with('category')->where('insight_type', 'Article')
+            ->where('status', 1)
+            ->where('cat_id', $category->id)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByDesc('views')
+            ->take(6)->get();
+        $popularArticles = CommonController::contentUrlSlug($popularArticles);
 
         // Check if insights are available
         if ($insightcategories->isEmpty()) {
@@ -367,7 +376,7 @@ $authorDetails = AuthorList::query()
         }
 
         // Return the view with compacted data
-        return view('insights.categorylist', compact('insightcategories', 'category'));
+        return view('insights.categorylist', compact('insightcategories', 'category', 'popularArticles'));
     }
 
 
@@ -404,7 +413,28 @@ $authorDetails = AuthorList::query()
         $newsModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
         $tagTable = $locale == 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
         $seoTagModel = $locale == 'hi' ? SeoTagHindi::class : SeoTag::class;
-        // dd($id);
+        
+        $ipAddress = $_SERVER['REMOTE_ADDR'];
+        $ipAsInt = ip2long($ipAddress);
+        // Check if the IP has already viewed this article
+        $ipExists = InsightViews::query()
+            ->where('insightID', $id)
+            ->where('ip_address', $ipAddress)
+            ->exists();
+
+        // If the IP has not viewed the article, increment the view count
+        if (!$ipExists) {
+            // Increment the article's view count
+            $newsModel::where('news_id', $id)->increment('views');
+
+            // Add a record of the IP viewing the article
+            InsightViews::insert([
+                'insightID' => $id,
+                'ip_address' => $ipAddress,
+                'created_at' => now(),
+            ]);
+        }
+
         // Fetch news details
         $newsDetails = $newsModel::with(['author', 'category', 'Subcategory'])
             ->where('status', 1)
@@ -472,13 +502,13 @@ $authorDetails = AuthorList::query()
         })->toArray();
 
         $trendingArticles = $newsModel::with(['category', 'Subcategory'])
-        ->where('status', 1)
-        ->whereNotIn('news_type', ['ri', 'ir'])
-        ->where('insight_type','Article')
-        ->orderByDesc('created_at')
-        ->take(6)->get();
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->where('insight_type', 'Article')
+            ->orderByDesc('created_at')
+            ->take(6)->get();
         $trendingArticles = CommonController::contentUrlSlug($trendingArticles);
-
+        
         // Return view with compacted variables
         return view('insights.detail', compact('newsDetails', 'author_details', 'franchiseData', 'assocTags', 'trendingArticles'));
     }

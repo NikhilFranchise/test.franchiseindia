@@ -705,7 +705,7 @@ class AdminController extends Controller
             $data = AuthorList::query()
                 ->select("title", "author_id")
                 ->where('title', 'LIKE', "%{$search}%")
-                -> where('status', 'A')
+                ->where('status', 'A')
                 ->get();
         }
         return response()->json($data);
@@ -1606,11 +1606,11 @@ class AdminController extends Controller
         }
 
         // Resize the image to 680x435px and convert it to WebP format
-        if($type != 'Author' || $type  != 'Gallery' || $type  != 'Magazine') {
+        if ($type != 'Author' || $type  != 'Gallery' || $type  != 'Magazine') {
             $resizedImage = Image::make($image)->resize(1600, 940)->encode('webp', 90);
-        }else if($type == 'Author'){
+        } else if ($type == 'Author') {
             $resizedImage = Image::make($image)->resize(512, 512)->encode('webp', 90);
-        }else{
+        } else {
             $resizedImage = Image::make($image)->encode('webp', 90);
         }
         // Store the image in the specified storage
@@ -1813,18 +1813,23 @@ class AdminController extends Controller
         $catId = $request->insights_cat;
         $subcatId = $request->insights_subcat;
         $isInternational = $request->is_intl == 1 ? 1 : 0;
-        // dd($brand);
         // Generate slug based on language
         if ($request->segment(2) == 'en') {
+            // English slug
             $slug = Str::slug($title);
         } else {
-            $titleSlug = preg_replace("/[\s+\?]/", " ", $title);
-            $titleSlug = str_replace("  ", " ", $titleSlug);
+            // Hindi slug generation
+            $titleSlug = trim($title);
+            $titleSlug = mb_strtolower($titleSlug, "UTF-8");
+            // Retain valid Hindi characters, English letters, numbers, and spaces
+            $titleSlug = preg_replace("/[^a-z0-9\s\p{Devanagari}]/u", "", $titleSlug);
+            // Replace multiple spaces with a single space
+            $titleSlug = preg_replace("/\s+/", " ", $titleSlug);
+            // Replace spaces with dashes
             $titleSlug = str_replace(" ", "-", $titleSlug);
-            $titleSlug = preg_replace("/\s+/", "-", $titleSlug);
+            // Replace dots with dashes
             $slug = str_replace(".", "-", $titleSlug);
         }
-        // dd($slug);
         // Handle image upload
         $imageUrl = "";
         if ($request->hasFile('image')) {
@@ -2060,14 +2065,21 @@ class AdminController extends Controller
         $title             = $request->title;
         if (!empty($request->slug) && request()->segment(2) == 'en') {
             $slug              = Str::slug($request->slug);
-        } else if(!empty($request->slug) && request()->segment(2) == 'hi'){
+        } else if (!empty($request->slug) && request()->segment(2) == 'hi') {
             $slug              = $request->slug;
-        }else{
-            $titleSlug = preg_replace('/[^a-zA-Z0-9\s]/', '', $title); // Remove unwanted characters
-            $titleSlug = preg_replace('/\s+/', ' ', trim($titleSlug)); // Replace multiple spaces with a single space and trim
-            $titleSlug = str_replace(' ', '-', $titleSlug); // Replace spaces with hyphens
-            $slug = strtolower($titleSlug); // Convert to lowercase
-            
+        } else {
+            // Hindi slug generation
+            $titleSlug = trim($title);
+            $titleSlug = mb_strtolower($titleSlug, "UTF-8");
+            // Retain valid Hindi characters, English letters, numbers, and spaces
+            $titleSlug = preg_replace("/[^a-z0-9\s\p{Devanagari}]/u", "", $titleSlug);
+            // Replace multiple spaces with a single space
+            $titleSlug = preg_replace("/\s+/", " ", $titleSlug);
+            // Replace spaces with dashes
+            $titleSlug = str_replace(" ", "-", $titleSlug);
+            // Replace dots with dashes
+            $slug = str_replace(".", "-", $titleSlug);
+
         }
         // dd($role);
         $kicker            = $request->kicker;

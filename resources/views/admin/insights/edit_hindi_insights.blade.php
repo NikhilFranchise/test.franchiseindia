@@ -46,7 +46,7 @@
 
     <!--sidebar-menu-->
     @section('IN')
-    active
+        active
     @endsection
     @include('admin.includes.sidebar')
     <!--sidebar-menu-->
@@ -84,9 +84,9 @@
                                 </select>
                             </div>
                             @if ($errors->has('insights_publisher'))
-                            @foreach ($errors->get('insights_publisher') as $error)
-                            <br><span style="color: red;">{{ $error }}</span>
-                            @endforeach
+                                @foreach ($errors->get('insights_publisher') as $error)
+                                    <br><span style="color: red;">{{ $error }}</span>
+                                @endforeach
                             @endif
                         </div>
                         <div class="control-group">
@@ -108,9 +108,9 @@
                                     </option>
                                 </select>
                                 @if ($errors->has('insights_type'))
-                                @foreach ($errors->get('insights_type') as $error)
-                                <br><span style="color: red;">{{ $error }}</span>
-                                @endforeach
+                                    @foreach ($errors->get('insights_type') as $error)
+                                        <br><span style="color: red;">{{ $error }}</span>
+                                    @endforeach
                                 @endif
                             </div>
                         </div>
@@ -122,15 +122,15 @@
                                     onchange="Subcategoriesdata(value);">
                                     <option value="">Select Main Category</option>
                                     @foreach ($InsightCategory as $category)
-                                    <option value="{{ $category->id }}" @if ($category->id == $data->cat_id) selected
-                                        @endif>
-                                        {{ $category->catname }}</option>
+                                        <option value="{{ $category->id }}"
+                                            @if ($category->id == $data->cat_id) selected @endif>
+                                            {{ $category->catname }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('insights_cat'))
-                                @foreach ($errors->get('insights_cat') as $error)
-                                <br><span style="color: red;">{{ $error }}</span>
-                                @endforeach
+                                    @foreach ($errors->get('insights_cat') as $error)
+                                        <br><span style="color: red;">{{ $error }}</span>
+                                    @endforeach
                                 @endif
                             </div>
                         </div>
@@ -140,9 +140,9 @@
                                 <select class="span11" name="insights_subcat" id="insights_subcat" title="Sub Category">
                                     <option value="">Select Sub Category</option>
                                     @foreach ($InsightSubcategory as $subcat)
-                                    <option value="{{ $subcat->id }}" @if ($subcat->id == $data->subcat_id) selected
-                                        @endif>
-                                        {{ $subcat->subcat_name }}</option>
+                                        <option value="{{ $subcat->id }}"
+                                            @if ($subcat->id == $data->subcat_id) selected @endif>
+                                            {{ $subcat->subcat_name }}</option>
                                     @endforeach
                                 </select>
 
@@ -151,10 +151,8 @@
                         <div class="control-group">
                             <label class="control-label">Publish Url :</label>
                             <div class="controls">
-                                <input type="text" name="slug" id="slugId" maxlength="125"
-                                    class="span11" pattern="[a-z0-9\-ह-ॿ]+"
-                                    title="Only small letters, numbers, hyphens, and Hindi characters are allowed"
-                                    value="{{ $data->slug }}" />
+                                <input type="text" name="slug" id="slugId" maxlength="125" class="span11"
+                                   value="{{ $data->slug }}" />
 
                             </div>
                         </div>
@@ -164,17 +162,18 @@
                                 <input type="text" required maxlength="125" class="span11" placeholder="Enter Title"
                                     name="title" value="{{ $data->title }}" />
                                 @if ($errors->has('title'))
-                                @foreach ($errors->get('title') as $error)
-                                <br><span style="color: red;">{{ $error }}</span>
-                                @endforeach
+                                    @foreach ($errors->get('title') as $error)
+                                        <br><span style="color: red;">{{ $error }}</span>
+                                    @endforeach
                                 @endif
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label">Insights Home Title :</label>
                             <div class="controls">
-                                <input type="text" required maxlength="40" class="span11" placeholder="Enter Home Title"
-                                    name="home_title" value="{{ $data->homeTitle }}" />
+                                <input type="text" required maxlength="40" class="span11"
+                                    placeholder="Enter Home Title" name="home_title"
+                                    value="{{ $data->homeTitle }}" />
 
                             </div>
                         </div>
@@ -182,12 +181,12 @@
                         <div class="control-group">
                             <label class="control-label">Insights Sub Title :</label>
                             <div class="controls">
-                                <input type="text" required maxlength="255" class="span11" placeholder="Sub title"
-                                    name="sub_title" value="{{ $data->shortDesc }}" />
+                                <input type="text" required maxlength="255" class="span11"
+                                    placeholder="Sub title" name="sub_title" value="{{ $data->shortDesc }}" />
                                 @if ($errors->has('sub_title'))
-                                @foreach ($errors->get('sub_title') as $error)
-                                <br><span style="color: red;">{{ $error }}</span>
-                                @endforeach
+                                    @foreach ($errors->get('sub_title') as $error)
+                                        <br><span style="color: red;">{{ $error }}</span>
+                                    @endforeach
                                 @endif
                             </div>
                         </div>
@@ -195,26 +194,25 @@
                             <label for="international_check" class="control-label">International Content?
                                 :</label>
                             <div class="controls">
-                                <input type="checkbox" id="international_check" name="is_intl" value="1" @if
-                                    ($data->is_intl == 1) checked @endif>
+                                <input type="checkbox" id="international_check" name="is_intl" value="1"
+                                    @if ($data->is_intl == 1) checked @endif>
                             </div>
                         </div>
 
 
                         @php
-                        $locale = request()->segment(2);
+                            $locale = request()->segment(2);
                         @endphp
                         <div class="control-group">
                             <label for="inputStatus" class="control-label">Insights Content :</label>
                             <div class="controls span9">
                                 <div class="form-group">
-                                    <textarea name="content" id="inputDescription" class="form-control customError"
-                                        minlength="2" placeholder="Content Description"
-                                        required>{{ $data->content }}</textarea>
+                                    <textarea name="content" id="inputDescription" class="form-control customError" minlength="2"
+                                        placeholder="Content Description" required>{{ $data->content }}</textarea>
                                     @if ($errors->has('content'))
-                                    @foreach ($errors->get('content') as $error)
-                                    <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
+                                        @foreach ($errors->get('content') as $error)
+                                            <br><span style="color: red;">{{ $error }}</span>
+                                        @endforeach
                                     @endif
                                     <img src="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $locale) }}"
                                         height="106" width="187" style="padding-top: inherit;">
@@ -243,12 +241,12 @@
                                 <select multiple name="brands[]" id="select2" class="span11">
                                     @if (isset($company))
 
-                                    @foreach ($company as $companyData)
-                                    @if ($companyData != '')
-                                    <option value="{{ $companyData->franchisor_id }}" selected>
-                                        {{ $companyData->company_name }}</option>
-                                    @endif
-                                    @endforeach
+                                        @foreach ($company as $companyData)
+                                            @if ($companyData != '')
+                                                <option value="{{ $companyData->franchisor_id }}" selected>
+                                                    {{ $companyData->company_name }}</option>
+                                            @endif
+                                        @endforeach
                                     @endif
 
                                 </select>
@@ -261,10 +259,10 @@
                                 <select multiple style="display: none;" name="associated_tags[]" id="select3"
                                     class="span11">
                                     @if (isset($assocTags))
-                                    @foreach ($assocTags as $assocTagsData)
-                                    <option value="{{ $assocTagsData->tag_id }}" selected>
-                                        {{ $assocTagsData->name }}</option>
-                                    @endforeach
+                                        @foreach ($assocTags as $assocTagsData)
+                                            <option value="{{ $assocTagsData->tag_id }}" selected>
+                                                {{ $assocTagsData->name }}</option>
+                                        @endforeach
                                     @endif
                                 </select>
 
@@ -491,31 +489,28 @@
         });
 
         function Subcategoriesdata(catid) {
-    $.ajax({
-        url: `{{ url('admin/hi/getSubcategories') }}/${catid}`,
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) {
-            const subcategoriesSelect = $('#insights_subcat');
-            subcategoriesSelect.empty();
-            subcategoriesSelect.append('<option value="">Select Sub Category</option>');
 
-            if (response && Array.isArray(response)) {
-                response.forEach(subcategory => {
-                    subcategoriesSelect.append(
-                        `<option value="${subcategory.id}">${subcategory.subcat_name}</option>`
-                    );
-                });
-            } else {
-                console.error('Invalid response format:', response);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error('AJAX Error:', textStatus, errorThrown, jqXHR.responseText);
+            $.ajax({
+                url: '{{ url('admin/hi/getSubcategories') }}/' + catid,
+                type: 'GET',
+                dataType: 'json',
+                success: function(response) {
+
+                    var subcategoriesSelect = $('#insights_subcat');
+                    subcategoriesSelect.empty();
+                    subcategoriesSelect.append('<option value="">Select Sub Category</option>');
+
+
+                    $.each(response, function(index, subcategory) {
+                        subcategoriesSelect.append('<option value="' + subcategory.id + '">' +
+                            subcategory.subcat_name + '</option>');
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX Error:', textStatus, errorThrown);
+                }
+            });
         }
-    });
-}
-
     </script>
 </body>
 
