@@ -302,7 +302,7 @@
                                 </div>
                             </div>
                             {{-- ads section start here --}}
-                            <div class="ad-right-author">
+                            <div class="ad-right-author-bottom">
                                 <div id='adslot300x250_ATF'>
                                     <script>
                                         googletag.cmd.push(function() {
