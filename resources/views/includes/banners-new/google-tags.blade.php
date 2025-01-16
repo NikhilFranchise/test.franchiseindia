@@ -51,8 +51,8 @@
 <script>
     window.googletag = window.googletag || {
         cmd: []
-    }; <
-    !--For mobile start-- >
+    }; 
+    // For mobile start
     @mobile
         googletag.cmd.push(function() {
             @if (request()->segment(1) == '')
@@ -138,8 +138,8 @@
             googletag.pubads().enableSingleRequest();
             googletag.enableServices();
         });
-    @endmobile <
-    !--For Mobile end-- >
+    @endmobile 
+    // For Mobile end
     @desktop
         googletag.cmd.push(function() {
 
