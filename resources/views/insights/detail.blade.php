@@ -54,11 +54,10 @@ $authorImage = !empty($author_details->image)
          <img src="{{ url('/insight-new/images/desk-ad.png') }}" alt="" class="img-fluid">
       </div>
    </div> --}}
-    <div id='adslot300x250_Mid_1' style='width: 300px; height: 250px;'>
-      <p>pankaj</p>
+    <div id='FI_Desktop_ROS_728x90_ATF' style='width: 728px; height: 90px;'>
       <script>
          googletag.cmd.push(function() {
-               googletag.display('adslot300x250_Mid_1');
+               googletag.display('FI_Desktop_ROS_728x90_ATF');
          });
       </script>
     </div>
