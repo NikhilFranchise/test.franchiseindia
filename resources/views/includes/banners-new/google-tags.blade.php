@@ -17,7 +17,8 @@
 @if (request()->segment(1) == 'business-opportunities' ||
         request()->segment(2) == 'business-opportunities' ||
         request()->segment(1) == 'brands' ||
-        request()->segment(2) == 'brands' || request()->segment(1) == 'insights')
+        request()->segment(2) == 'brands' ||
+        request()->segment(1) == 'insights')
     <div id = "v-franchiseindia-v1"></div>
     <script>
         (function(v, d, o, ai) {
@@ -51,8 +52,8 @@
 <script>
     window.googletag = window.googletag || {
         cmd: []
-    }; 
-    <!--For mobile start-- >
+    }; <
+    !--For mobile start-- >
     @mobile
         googletag.cmd.push(function() {
             @if (request()->segment(1) == '')
@@ -138,8 +139,8 @@
             googletag.pubads().enableSingleRequest();
             googletag.enableServices();
         });
-    @endmobile 
-    <!--For Mobile end-- >
+    @endmobile <
+    !--For Mobile end-- >
     @desktop
         googletag.cmd.push(function() {
 
