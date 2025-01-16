@@ -15,6 +15,7 @@
     <meta name="robots" content="NOODP" />
     <link href="@yield('canonicalUrl', request()->get('page') ? url()->full() : url()->current())" rel="canonical">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
+    @include('includes.banners-new.google-tags')
     <script>
         window.dataLayer = window.dataLayer || [];
 

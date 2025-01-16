@@ -35,12 +35,6 @@ $authorImage = !empty($author_details->image)
 @section('url', url()->current())
 @section('width', $width)
 @section('height', $height)
-
-<!-- Affinity HVR Invocation Code //-->
-
-<script src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous" async></script>
-
-
 @section('content')
 <div class="maininnver homeh">
    <div class="inner-top-head">
@@ -49,18 +43,19 @@ $authorImage = !empty($author_details->image)
       </div>
    </div>
    <!-- DESKTOP TOP AD PLACEMENT  -->
-   {{-- <div class="container">
-      <div class="inner-article-detail-desktop-top-ad">
+   <div class="container">
+      {{-- <div class="inner-article-detail-desktop-top-ad">
          <img src="{{ url('/insight-new/images/desk-ad.png') }}" alt="" class="img-fluid">
-      </div>
-   </div> --}}
-    <div id='FI_Desktop_ROS_728x90_ATF' style='width: 728px; height: 90px;'>
-      <script>
-         googletag.cmd.push(function() {
-               googletag.display('FI_Desktop_ROS_728x90_ATF');
-         });
-      </script>
-    </div>
+      </div> --}}
+      <div id='FI_Desktop_ROS_728x90_ATF' style='width: 728px; height: 90px;'>
+         <script>
+            googletag.cmd.push(function() {
+                  googletag.display('FI_Desktop_ROS_728x90_ATF');
+            });
+         </script>
+       </div>
+   </div>
+    
    <!-- DESKTOP TOP AD PLACEMENT  -->
 </div>
 <div class="contentwrapper">
