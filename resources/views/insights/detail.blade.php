@@ -211,7 +211,7 @@
                                 foreach ($custom_data as $index => $cdata) {
                                     $articleData[] = $cdata; // Add the paragraph content
                                     // Add ads dynamically based on the interval and maximum ads allowed
-                                    if ($index == 2) {
+                                    if ($index == 4) {
                                         $articleData[] = '
                                                <div class="inner-article-detail-desktop-ad">
                                                    <div id="adslotInline_1_300x250">
@@ -224,7 +224,7 @@
                                                </div>';
                                         $adsInserted++;
                                         $i++;
-                                    } elseif ($index == 5) {
+                                    } elseif ($index == 8) {
                                         $articleData[] = '
                                                <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
                                                    <div id="adslotInline_2_300x250">
@@ -238,7 +238,7 @@
                                                ';
                                         $adsInserted++;
                                         $i++;
-                                    } elseif ($index == 10) {
+                                    } elseif ($index == 16) {
                                         $articleData[] = '
                                                <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
                                                    <div id="adslotInline_3_300x250">
@@ -252,7 +252,7 @@
                                                ';
                                         $adsInserted++;
                                         $i++;
-                                    }else if($index == 15){
+                                    }else if($index == 32){
                                        $articleData[] = '
                                                <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
                                                    <div id="adslotInline_4_300x250">
