@@ -51,7 +51,7 @@
 <script>
     window.googletag = window.googletag || {
         cmd: []
-    }; 
+    };
     // For mobile start
     @mobile
         googletag.cmd.push(function() {
@@ -138,7 +138,7 @@
             googletag.pubads().enableSingleRequest();
             googletag.enableServices();
         });
-    @endmobile 
+    @endmobile
     // For Mobile end
     @desktop
         googletag.cmd.push(function() {
@@ -262,11 +262,18 @@
             @elseif (request()->segment(1) == 'insights')
                 googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], 'adslot728x90_ATF')
                     .addService(googletag.pubads());
-                googletag.defineSlot('/1057625/FxIHL/Desktop_ROS_300x250_ATF', [
-                    [300, 250],
-                    [300, 600]
-                ], 'adslot300x250_ATF').addService(googletag.pubads());
-                googletag.defineSlot('/1057625/FIHL/Desktop_ROS_970x250', [970, 250], 'adslot970x250')
+                googletag.defineSlot('/1057625/FIHL//1057625/FIHL/FI_Desktop_ROS_RHS_300x250_ATF', [300, 250],
+                    'adslot300x250_ATF').addService(googletag.pubads());
+                googletag.defineSlot('/1057625/FIHL//1057625/FIHL//1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [
+                        [300, 250],
+                        [300, 600]
+                    ],
+                    'adslot300x250_1').addService(googletag.pubads());
+                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250', [
+                        [300, 250],
+                        [336, 280],
+                        [250, 250]
+                    ], 'adslotInline_1_300x250')
                     .addService(googletag.pubads());
                 googletag.defineSlot('/1057625/FIHL/Desktop_ROS_728x90_BTF', [728, 90], 'adslot728x90_BTF')
                     .addService(googletag.pubads());

@@ -45,9 +45,6 @@
         </div>
         <!-- DESKTOP TOP AD PLACEMENT  -->
         <div class="container">
-            {{-- <div class="inner-article-detail-desktop-top-ad">
-         <img src="{{ url('/insight-new/images/desk-ad.png') }}" alt="" class="img-fluid">
-      </div> --}}
             @desktop
                 <div class="inner-article-detail-desktop-top-ad">
                     <div id='adslot728x90_ATF'>
@@ -231,11 +228,14 @@
                                         $articleData[] = $cdata;
                                         if ($counter == 1) {
                                             // Change the position based on your requirement
-                                            $articleData[] =
-                                                '<div class="inner-article-detail-desktop-ad">
-                     <img src="' .
-                                                url('insight-new/images/desk-ad.png') .
-                                                '" class="img-fluid">
+                                            $articleData[] = '<div class="inner-article-detail-desktop-ad">
+                                                   <div id="adslotInline_1_300x250">
+                                                      <script>
+                                                          googletag.cmd.push(function() {
+                                                              googletag.display("adslotInline_1_300x250");
+                                                          });
+                                                      </script>
+                                                      </div>
                               </div>';
                                         }
                                         if ($counter == 2) {
@@ -281,9 +281,17 @@
                 </div>
                 <div class="col-md-4">
                     <div class="right-wrap">
+                        {{-- ads top right sidebar --}}
                         <div class="ad-right">
-                            <img src="{{ url('insight-new/images/ad-right.jpg') }}" class="img-fluid">
+                            <div id='adslot300x250_ATF'>
+                                <script>
+                                    googletag.cmd.push(function() {
+                                        googletag.display('adslot300x250_ATF');
+                                    });
+                                </script>
+                            </div>
                         </div>
+                        {{-- ads top right sidebar --}}
                         <div class="popular-articles">
                             <h3>Trending Articles</h3>
                             <ul>
@@ -316,7 +324,14 @@
                             </ul>
                         </div>
                         <div class="ad-right-sticky">
-                            <img src="{{ url('insight-new/images/ad8.png') }}" class="img-fluid">
+                            <div id="adslot300x250_1">
+                                <script>
+                                    googletag.cmd.push(function() {
+                                        googletag.display('adslot300x250_1');
+                                    });
+                                </script>
+                            </div>
+                            {{-- <img src="{{ url('insight-new/images/ad8.png') }}" class="img-fluid"> --}}
                         </div>
                     </div>
                 </div>
@@ -325,30 +340,7 @@
     </div>
     </div>
     @include('layout.insights.magblock')
-    {{-- <div class="fixsocial">
-      <ul class="sociallist">
-         <li>
-            <a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank">
-               <img src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook">
-            </a>
-         </li>
-         <li>
-            <a href="https://www.instagram.com/franchiseindia_/" target="_blank">
-               <img src="https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg" alt="">
-            </a>
-         </li>
-         <li>
-            <a href="https://twitter.com/FranchiseIndia" target="_blank">
-               <img src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg" alt="twitter">
-            </a>
-         </li>
-         <li>
-            <a href="https://www.youtube.com/user/FranchiseIndia" target="_blank">
-               <img src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg" alt="youtube">
-            </a>
-         </li>
-      </ul>
-   </div> --}}
+
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
@@ -430,7 +422,7 @@
                         } else {
                             alert(
                                 'An error occurred. Please try again.'
-                                ); // Display a generic error message
+                            ); // Display a generic error message
                         }
                     });
                 }
