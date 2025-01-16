@@ -206,27 +206,13 @@
                                 $custom_data = explode("\r\n", $newsDetails->content); // Split content into paragraphs
                                 $totalParagraphs = count($custom_data); // Get the total paragraph count
                                 $articleData = []; // Initialize array for final content with ads
-
-                                if ($totalParagraphs > 10) {
-                                    // For more than 10 paragraphs, show 4 ads after every 4 paragraphs
-                                    $adInterval = 4;
-                                    $maxAds = 4;
-                                } else {
-                                    // For 10 or fewer paragraphs, show 2 ads after every 3 paragraphs
-                                    $adInterval = 3;
-                                    $maxAds = 2;
-                                }
-
-                                $adsInserted = 0; // Counter for ads inserted
+                                $adsInserted = 1;
+                                $i = 0;
                                 foreach ($custom_data as $index => $cdata) {
                                     $articleData[] = $cdata; // Add the paragraph content
-
                                     // Add ads dynamically based on the interval and maximum ads allowed
-                                    if (($index + 1) % $adInterval == 0 && $adsInserted < $maxAds) {
-                                        $adsInserted++; // Increment ads count
-                                        // Alternate between ad types for variety
-                                        if ($adsInserted % 2 == 1) {
-                                            $articleData[] = '
+                                    if ($index == 2) {
+                                        $articleData[] = '
                                                <div class="inner-article-detail-desktop-ad">
                                                    <div id="adslotInline_1_300x250">
                                                        <script>
@@ -236,29 +222,23 @@
                                                        </script>
                                                    </div>
                                                </div>';
-                                        } else {
-                                            $articleData[] = '
-                                               <div id="v-franchiseindia"></div>
-                                               <div class="inner-article-detail-desktop-ad">
-                                                   <div id="adslotInline_1_300x250">
+                                        $adsInserted++;
+                                        $i++;
+                                    } elseif ($index == 4) {
+                                        $articleData[] = '
+                                               <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
+                                                   <div id="adslotInline_2_300x250">
                                                        <script>
                                                            googletag.cmd.push(function() {
-                                                               googletag.display("adslotInline_1_300x250");
+                                                               googletag.display("adslotInline_2_300x250");
                                                            });
                                                        </script>
                                                    </div>
-                                               </div>
-                                               <script>
-                                                   (function(v, d, o, ai) {
-                                                       ai = d.createElement("script");
-                                                       ai.defer = true;
-                                                       ai.async = true;
-                                                       ai.src = v.location.protocol + o;
-                                                       d.head.appendChild(ai);
-                                                   })
-                                                   (window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
-                                               </script>';
-                                        }
+                                               </div></div>
+                                               ';
+                                        $adsInserted++;
+                                        $i++;
+                                    } else {
                                     }
                                 }
 

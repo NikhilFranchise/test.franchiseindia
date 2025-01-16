@@ -275,6 +275,12 @@
                         [250, 250]
                     ], 'adslotInline_1_300x250')
                     .addService(googletag.pubads());
+                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250', [
+                        [300, 250],
+                        [336, 280],
+                        [250, 250]
+                    ], 'adslotInline_2_300x250')
+                    .addService(googletag.pubads());
                 googletag.defineSlot('/1057625/FIHL/Desktop_ROS_728x90_BTF', [728, 90], 'adslot728x90_BTF')
                     .addService(googletag.pubads());
             @elseif (request()->segment(1) == 'content' ||
