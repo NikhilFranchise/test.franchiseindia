@@ -89,18 +89,7 @@
                                             $articleData[0] =
                                                 $custom_data[0] .
                                                 '
-                                <div id="v-franchiseindia"></div>
-                                <script>
-                                    (function(v, d, o, ai) {
-                                        ai = d.createElement("script");
-                                        ai.defer = true;
-                                        ai.async = true;
-                                        ai.src = v.location.protocol + o;
-                                        d.head.appendChild(ai);
-                                    })
-                                    (window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
-                                </script>
-                                ';
+                                <div id="v-franchiseindia"></div>';
                                         } else {
                                             $counter = 0;
                                             foreach ($custom_data as $cdata) {
@@ -108,17 +97,7 @@
                                                     $articleData[] =
                                                         $cdata .
                                                         '
-                                <div id="v-franchiseindia"></div>
-                                <script>
-                                    (function(v, d, o, ai) {
-                                        ai = d.createElement("script");
-                                        ai.defer = true;
-                                        ai.async = true;
-                                        ai.src = v.location.protocol + o;
-                                        d.head.appendChild(ai);
-                                    })(window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
-                                </script>
-                                ';
+                                <div id="v-franchiseindia"></div>';
                                                 } else {
                                                     $articleData[] = $cdata;
                                                 }
@@ -295,26 +274,32 @@
                                                         @endforelse
 
                                                     </ul>
+
                                                 </div>
+
                                             </div>
+
                                         </div>
+
                                     </div>
+
                                 </div>
+
                             </div>
 
                         </div>
-                        {{-- popular articles section end here --}}
                         {{-- ads section start here --}}
-                        <div class="ad-right-author-bottom">
-                            <div id='adslot300x250_ATF'>
+                        <div class="ad-right-sticky">
+                            <div id="adslot300x250_1">
                                 <script>
                                     googletag.cmd.push(function() {
-                                        googletag.display('adslot300x250_ATF');
+                                        googletag.display('adslot300x250_1');
                                     });
                                 </script>
                             </div>
                         </div>
                         {{-- ads section end here --}}
+                        {{-- popular articles section end here --}}
                     </div>
                 </div>
             </div>
