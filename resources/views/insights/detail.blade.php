@@ -21,7 +21,8 @@
     //$author_details
     $authorSlug = $author_details->slug ?? strtolower(str_replace(' ', '-', $author_details->title));
     //dd($authorSlug);
-    $authorUrl = Config('constants.MainDomain') . "/insights/$locale/author/" . $authorSlug . '-' . $author_details->author_id;
+    $authorUrl =
+        Config('constants.MainDomain') . "/insights/$locale/author/" . $authorSlug . '-' . $author_details->author_id;
 
     $authorImage = !empty($author_details->image)
         ? \App\Http\Controllers\InsightsController::authorImageurl($author_details->image)
@@ -48,12 +49,14 @@
          <img src="{{ url('/insight-new/images/desk-ad.png') }}" alt="" class="img-fluid">
       </div> --}}
             @desktop
-                <div id='adslot728x90_ATF'>
-                    <script>
-                        googletag.cmd.push(function() {
-                            googletag.display('adslot728x90_ATF');
-                        });
-                    </script>
+                <div class="inner-article-detail-desktop-top-ad">
+                    <div id='adslot728x90_ATF'>
+                        <script>
+                            googletag.cmd.push(function() {
+                                googletag.display('adslot728x90_ATF');
+                            });
+                        </script>
+                    </div>
                 </div>
             @enddesktop
         </div>
@@ -426,7 +429,8 @@
                             alert('Error: ' + error.response.data.message);
                         } else {
                             alert(
-                            'An error occurred. Please try again.'); // Display a generic error message
+                                'An error occurred. Please try again.'
+                                ); // Display a generic error message
                         }
                     });
                 }
