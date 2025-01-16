@@ -152,58 +152,7 @@
                     <div class="content-main">
                         <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}">
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
-
                         {{-- <div class="articlecontent">
-                  @php
-                  $custom_data = explode("\r\n", $newsDetails->content);
-                  if (count($custom_data) == 1) {
-                  $articleData[0] =
-                  $custom_data[0] .
-                  '
-                  <div id="v-franchiseindia"></div>
-                  <script>
-                     (function(v, d, o, ai) {
-                      ai = d.createElement("script");
-                      ai.defer = true;
-                      ai.async = true;
-                      ai.src = v.location.protocol + o;
-                      d.head.appendChild(ai);
-                  })
-                  (window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
-                  </script>
-                  ';
-
-                  } else {
-                  $counter = 0;
-                  foreach ($custom_data as $cdata) {
-                  if ($counter == 2) {
-                  $articleData[] =
-                  $cdata .
-                  '
-                  <div id="v-franchiseindia"></div>
-
-                  <script>
-                     (function(v, d, o, ai) {
-                      ai = d.createElement("script");
-                      ai.defer = true;
-                      ai.async = true;
-                      ai.src = v.location.protocol + o;
-                      d.head.appendChild(ai);
-                  })(window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
-                  </script>
-                  ';
-
-                  } else {
-                  $articleData[] = $cdata;
-                  }
-                  $counter++;
-                  }
-                  }
-                  $resultArticle = implode("\r\n", $articleData);
-                  @endphp
-                  {!! $resultArticle !!}
-               </div> --}}
-                        <div class="articlecontent">
                             @php
                                 $custom_data = explode("\r\n", $newsDetails->content);
                                 if (count($custom_data) == 1) {
@@ -256,7 +205,57 @@
                                     }
                                 }
                                 $resultArticle = implode("\r\n", $articleData);
-                            @endphp {!! $resultArticle !!} </div>
+                            @endphp {!! $resultArticle !!} </div> --}}
+                        <div class="articlecontent">
+                            @php
+                                $custom_data = explode("\r\n", $newsDetails->content);
+                                $totalParagraphs = count($custom_data);
+
+                                // Ensure we add the ads at specific positions (2nd and 4th paragraphs)
+                                $adPositions = [2, 4];
+                                $articleData = [];
+                                $counter = 0;
+
+                                foreach ($custom_data as $cdata) {
+                                    $articleData[] = $cdata; // Add the paragraph content
+
+                                    // Insert ads at the specified positions
+                                    if (in_array($counter + 1, $adPositions)) {
+                                        if ($counter + 1 == 2) {
+                                            // First ad after 2nd paragraph
+                                            $articleData[] = '
+                                                  <div class="inner-article-detail-desktop-ad">
+                                                      <div id="adslotInline_1_300x250">
+                                                          <script>
+                                                              googletag.cmd.push(function() {
+                                                                  googletag.display("adslotInline_1_300x250");
+                                                              });
+                                                          </script>
+                                                      </div>
+                                                  </div>';
+                                        } elseif ($counter + 1 == 4) {
+                                            // Second ad after 4th paragraph
+                                            $articleData[] = '
+                                                  <div id="v-franchiseindia"></div>
+                                                  <script>
+                                                      (function(v, d, o, ai) {
+                                                          ai = d.createElement("script");
+                                                          ai.defer = true;
+                                                          ai.async = true;
+                                                          ai.src = v.location.protocol + o;
+                                                          d.head.appendChild(ai);
+                                                      })
+                                                      (window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
+                                                  </script>';
+                                        }
+                                    }
+                                    $counter++;
+                                }
+
+                                $resultArticle = implode("\r\n", $articleData);
+                            @endphp
+                            {!! $resultArticle !!}
+                        </div>
 
                         @if (!empty($franchiseData))
                             <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px;">
