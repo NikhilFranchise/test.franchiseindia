@@ -518,9 +518,6 @@ class InsightsController extends Controller
     public function insightSearch(Request $request)
     {
         $search = $request->search;
-        // $isEnglish = $request->segment(2) == 'en';
-
-        // Determine the appropriate model
         $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
@@ -535,22 +532,18 @@ class InsightsController extends Controller
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id');
-
+            $articlesList = $query->orderByDesc('created_at')->paginate(10);
+            
         // Count matching articles
-        $articleCount = $query->count();
 
-        if ($articleCount > 1) {
+        if ($articlesList->count() < 1) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
 
-        // Fetch paginated articles
-        $articlesList = $query->orderByDesc('created_at')->paginate(10);
-
-        // Process articles for URL slug
         $articlesList = CommonController::contentUrlSlug($articlesList);
 
         // Return the view
-        return view('insights.search', compact('articleCount', 'articlesList', 'search'));
+        return view('insights.search', compact('articlesList', 'search'));
     }
 
 
