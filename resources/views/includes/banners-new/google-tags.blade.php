@@ -17,8 +17,7 @@
 @if (request()->segment(1) == 'business-opportunities' ||
         request()->segment(2) == 'business-opportunities' ||
         request()->segment(1) == 'brands' ||
-        request()->segment(2) == 'brands' ||
-        )
+        request()->segment(2) == 'brands')
     <div id = "v-franchiseindia-v1"></div>
     <script>
         (function(v, d, o, ai) {
