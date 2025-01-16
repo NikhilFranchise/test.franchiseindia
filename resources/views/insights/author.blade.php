@@ -289,11 +289,11 @@
 
                         </div>
                         {{-- ads section start here --}}
-                        <div class="ad-right-sticky">
-                            <div id="adslot300x250_1">
+                        <div class="ad-right-author">
+                            <div id='adslot300x250_ATF'>
                                 <script>
                                     googletag.cmd.push(function() {
-                                        googletag.display('adslot300x250_1');
+                                        googletag.display('adslot300x250_ATF');
                                     });
                                 </script>
                             </div>
