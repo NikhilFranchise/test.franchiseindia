@@ -18,7 +18,7 @@
         request()->segment(2) == 'business-opportunities' ||
         request()->segment(1) == 'brands' ||
         request()->segment(2) == 'brands' ||
-        request()->segment(1) == 'insights')
+        )
     <div id = "v-franchiseindia-v1"></div>
     <script>
         (function(v, d, o, ai) {
@@ -30,7 +30,7 @@
         })(window, document, '//a.vdo.ai/core/v-franchiseindia-v1/vdo.ai.js');
     </script>
 @endif
-{{-- @if (request()->segment(1) == 'insights')
+@if (request()->segment(1) == 'insights')
     <!-- Affinity HVR Invocation Code //-->
     <script type="text/javascript">
         (function() {
@@ -46,7 +46,7 @@
             m.parentNode.insertBefore(a, m)
         })();
     </script>
-@endif --}}
+@endif
 <!-- new code start -->
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
 <script>
@@ -261,9 +261,9 @@
                 googletag.defineSlot('/1057625/FIHL/Desktop_ROS_728x90_BTF', [728, 90], 'adslot728x90_BTF')
                     .addService(googletag.pubads());
             @elseif (request()->segment(1) == 'insights')
-                googletag.defineSlot('/1057625/FIHL/Desktop_ROS_728x90_ATF', [728, 90], 'adslot728x90_ATF')
+                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], 'adslot728x90_ATF')
                     .addService(googletag.pubads());
-                googletag.defineSlot('/1057625/FIHL/Desktop_ROS_300x250_ATF', [
+                googletag.defineSlot('/1057625/FxIHL/Desktop_ROS_300x250_ATF', [
                     [300, 250],
                     [300, 600]
                 ], 'adslot300x250_ATF').addService(googletag.pubads());

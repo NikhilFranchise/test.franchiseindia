@@ -47,10 +47,10 @@ $authorImage = !empty($author_details->image)
       {{-- <div class="inner-article-detail-desktop-top-ad">
          <img src="{{ url('/insight-new/images/desk-ad.png') }}" alt="" class="img-fluid">
       </div> --}}
-      <div id='Desktop_ROS_728x90_ATF' style='width: 728px; height: 90px;'>
+      <div id='FI_Desktop_ROS_728x90_ATF' style='width: 728px; height: 90px;'>
          <script>
             googletag.cmd.push(function() {
-                  googletag.display('Desktop_ROS_728x90_ATF');
+                  googletag.display('FI_Desktop_ROS_728x90_ATF');
             });
          </script>
        </div>
