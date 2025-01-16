@@ -29,7 +29,7 @@
         })(window, document, '//a.vdo.ai/core/v-franchiseindia-v1/vdo.ai.js');
     </script>
 @endif
-@if (request()->segment(1) == 'insights')
+{{-- @if (request()->segment(1) == 'insights')
     <!-- Affinity HVR Invocation Code //-->
     <script type="text/javascript">
         (function() {
@@ -45,7 +45,7 @@
             m.parentNode.insertBefore(a, m)
         })();
     </script>
-@endif
+@endif --}}
 <!-- new code start -->
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
 <script>
