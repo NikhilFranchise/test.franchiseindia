@@ -224,7 +224,7 @@
                                                </div>';
                                         $adsInserted++;
                                         $i++;
-                                    } elseif ($index == 4) {
+                                    } elseif ($index == 5) {
                                         $articleData[] = '
                                                <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
                                                    <div id="adslotInline_2_300x250">
@@ -238,7 +238,48 @@
                                                ';
                                         $adsInserted++;
                                         $i++;
-                                    } else {
+                                    } elseif ($index == 10) {
+                                        $articleData[] = '
+                                               <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
+                                                   <div id="adslotInline_3_300x250">
+                                                       <script>
+                                                           googletag.cmd.push(function() {
+                                                               googletag.display("adslotInline_3_300x250");
+                                                           });
+                                                       </script>
+                                                   </div>
+                                               </div></div>
+                                               ';
+                                        $adsInserted++;
+                                        $i++;
+                                    }else if($index == 15){
+                                       $articleData[] = '
+                                               <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
+                                                   <div id="adslotInline_4_300x250">
+                                                       <script>
+                                                           googletag.cmd.push(function() {
+                                                               googletag.display("adslotInline_4_300x250");
+                                                           });
+                                                       </script>
+                                                   </div>
+                                               </div></div>
+                                               ';
+                                        $adsInserted++;
+                                        $i++;
+                                    }else{
+                                       $articleData[] = '
+                                               <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
+                                                   <div id="adslotInline_5_300x250">
+                                                       <script>
+                                                           googletag.cmd.push(function() {
+                                                               googletag.display("adslotInline_5_300x250");
+                                                           });
+                                                       </script>
+                                                   </div>
+                                               </div></div>
+                                               ';
+                                        $adsInserted++;
+                                        $i++;
                                     }
                                 }
 
