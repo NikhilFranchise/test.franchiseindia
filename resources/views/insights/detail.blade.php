@@ -118,28 +118,28 @@
                                 <ul>
                                     <li>
                                         <a target="_blank"
-                                            href="https://www.facebook.com/share.php?url={{ $newsUrl }}">
+                                            href="https://www.facebook.com/share.php?url={{ urlencode($newsUrl) }}">
                                             <img src="{{ url('insight-new/images/fshare.webp') }}" height="25"
-                                                width="25" loading="lazy" alt="IR">
+                                                width="25" loading="lazy" alt="Insights">
                                         </a>
                                     </li>
                                     <li>
                                         <a target="_blank"
                                             href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ $newsUrl }}">
                                             <img src="{{ url('insight-new/images/flink.webp') }}" height="25"
-                                                width="25" loading="lazy" alt="IR">
+                                                width="25" loading="lazy" alt="Insights">
                                         </a>
                                     </li>
                                     <li>
                                         <a target="_blank" href="https://x.com/intent/post?url={{ $newsUrl }}">
                                             <img src="{{ url('insight-new/images/ftwit.webp') }}" height="25"
-                                                width="25" loading="lazy" alt="IR">
+                                                width="25" loading="lazy" alt="Insights">
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                             <div class="follow-us">
-                                <a href="https://news.google.com/publications/CAAiEJjETmBVGGR4AF2qcS42jEMqFAgKIhCYxE5gVRhkeABdqnEuNoxD?hl=en-IN&amp;gl=IN&amp;ceid=IN%3Aen"
+                                <a href=""
                                     target="_blank">
                                     Follow Us
                                     <img src="{{ url('insight-new/images/follow.webp') }}" loading="lazy"
@@ -152,55 +152,6 @@
                     <div class="content-main">
                         <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}">
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
-
-                        {{-- <div class="articlecontent">
-                            @php
-                                $custom_data = explode("\r\n", $newsDetails->content);
-                                if (count($custom_data) == 1) {
-                                    $articleData[0] =
-                                        $custom_data[0] .
-                                        '
-                  <div id="v-franchiseindia"></div>
-                  <script>
-                      (function(v, d, o, ai) {
-                          ai = d.createElement("script");
-                          ai.defer = true;
-                          ai.async = true;
-                          ai.src = v.location.protocol + o;
-                          d.head.appendChild(ai);
-                      })
-                      (window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
-                  </script>
-                  ';
-                                } else {
-                                    $counter = 0;
-                                    foreach ($custom_data as $cdata) {
-                                        if ($counter == 2) {
-                                            $articleData[] =
-                                                $cdata .
-                                                '
-                  <div id="v-franchiseindia"></div>
-
-                  <script>
-                      (function(v, d, o, ai) {
-                          ai = d.createElement("script");
-                          ai.defer = true;
-                          ai.async = true;
-                          ai.src = v.location.protocol + o;
-                          d.head.appendChild(ai);
-                      })(window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
-                  </script>
-                  ';
-                                        } else {
-                                            $articleData[] = $cdata;
-                                        }
-                                        $counter++;
-                                    }
-                                }
-                                $resultArticle = implode("\r\n", $articleData);
-                            @endphp
-                            {!! $resultArticle !!}
-                        </div> --}}
                         <div class="articlecontent">
                             @php
                                 $custom_data = explode("\r\n", $newsDetails->content); // Split content into paragraphs

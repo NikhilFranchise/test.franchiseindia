@@ -197,18 +197,21 @@ class InsightsController extends Controller
             ->whereNotNull('cat_id')
             ->where('status', 1)
             ->orderByDesc('created_at')
-            ->paginate(10);
+            ->paginate(8);
 
         // Handle empty results
         if ($insArticles->isEmpty()) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
-
-        // Apply the content URL slug logic
-        $insArticles = CommonController::contentUrlSlug($insArticles);
-
+        $popArticles = $model::with('category')
+            ->where('insight_type', ['Article', 'News'])
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('cat_id')
+            ->where('status', 1)
+            ->orderByDesc('views')
+            ->take(6)->get();
         // Return the view with the articles
-        return view('insights.articles', compact('insArticles'));
+        return view('insights.articles', compact('insArticles', 'popArticles'));
     }
 
     public function getinsightsinterviews()
