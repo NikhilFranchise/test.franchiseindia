@@ -118,9 +118,9 @@
                                 <ul>
                                     <li>
                                         <a target="_blank"
-                                            href="https://www.facebook.com/share.php?url={{ urlencode($newsUrl) }}">
+                                            href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($newsUrl) }}">
                                             <img src="{{ url('insight-new/images/fshare.webp') }}" height="25"
-                                                width="25" loading="lazy" alt="Insights">
+                                                width="25" loading="lazy" alt="IR">
                                         </a>
                                     </li>
                                     <li>
@@ -139,8 +139,7 @@
                                 </ul>
                             </div>
                             <div class="follow-us">
-                                <a href=""
-                                    target="_blank">
+                                <a href="" target="_blank">
                                     Follow Us
                                     <img src="{{ url('insight-new/images/follow.webp') }}" loading="lazy"
                                         alt="Franchise India" width="11" height="10">
@@ -203,8 +202,8 @@
                                                ';
                                         $adsInserted++;
                                         $i++;
-                                    }else if($index == 32){
-                                       $articleData[] = '
+                                    } elseif ($index == 32) {
+                                        $articleData[] = '
                                                <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
                                                    <div id="adslotInline_4_300x250">
                                                        <script>
@@ -217,8 +216,8 @@
                                                ';
                                         $adsInserted++;
                                         $i++;
-                                    }else{
-                                       $articleData[] = '
+                                    } else {
+                                        $articleData[] = '
                                                <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
                                                    <div id="adslotInline_5_300x250">
                                                        <script>
