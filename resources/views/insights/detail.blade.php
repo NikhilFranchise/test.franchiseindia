@@ -62,33 +62,33 @@
     </div>
     <div class="contentwrapper">
         <div class="container">
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{{ url('/insights') }}" class="tip-bottom">Home</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="{{ url('/insights') }}" class="tip-bottom">{{ $newsDetails->insight_type }}</a>
-                </li>
-                @foreach ($newsDetails->category as $category)
-                    <li class="breadcrumb-item"><a href="{{ $baseUrl . $category->slug }}"
-                            class="tip-bottom">{{ $category->catname }}</a></li>
-                @endforeach
-
-                @foreach ($newsDetails->Subcategory as $subcat)
-                    <li class="breadcrumb-item"><a
-                            href="{{ $baseUrl . $category->slug . '/' . $subcat->slug }}">{{ $subcat->subcat_name }}</a>
-                    </li>
-                @endforeach
-
-                <li class="breadcrumb-item">{{ $newsDetails->title }}</li>
-            </ul>
+            
         </div>
         <div class="container">
 
             <div class="row">
 
                 <div class="col-md-8">
-
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{{ url('/insights') }}" class="tip-bottom">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ url('/insights') }}" class="tip-bottom">{{ $newsDetails->insight_type }}</a>
+                        </li>
+                        @foreach ($newsDetails->category as $category)
+                            <li class="breadcrumb-item"><a href="{{ $baseUrl . $category->slug }}"
+                                    class="tip-bottom">{{ $category->catname }}</a></li>
+                        @endforeach
+        
+                        @foreach ($newsDetails->Subcategory as $subcat)
+                            <li class="breadcrumb-item"><a
+                                    href="{{ $baseUrl . $category->slug . '/' . $subcat->slug }}">{{ $subcat->subcat_name }}</a>
+                            </li>
+                        @endforeach
+        
+                        <li class="breadcrumb-item">{!! html_entity_decode(\Illuminate\Support\Str::words($newsDetails->title, 8, ' ...'), ENT_QUOTES, 'UTF-8') !!}</li>
+                    </ul>
                     <h2>{{ $newsDetails->title }}</h2>
                     <div class="cont-top">
                         <div class="article-features">

@@ -104,6 +104,48 @@
                     .addService(googletag.pubads());
                 googletag.defineSlot('/1057625/FIHL/WAP_ROS_320x100_Top', [320, 100], 'adslot320x100_ATF')
                     .addService(googletag.pubads());
+            @elseif (request()->segment(1) == 'insights')
+                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], 'adslot728x90_ATF')
+                    .addService(googletag.pubads());
+                googletag.defineSlot('/1057625/FIHL//1057625/FIHL/FI_Desktop_ROS_RHS_300x250_ATF', [300, 250],
+                    'adslot300x250_ATF').addService(googletag.pubads());
+                googletag.defineSlot('/1057625/FIHL//1057625/FIHL//1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [
+                        [300, 250],
+                        [300, 600]
+                    ],
+                    'adslot300x250_1').addService(googletag.pubads());
+                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250', [
+                        [300, 250],
+                        [336, 280],
+                        [250, 250]
+                    ], 'adslotInline_1_300x250')
+                    .addService(googletag.pubads());
+                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250', [
+                        [300, 250],
+                        [336, 280],
+                        [250, 250]
+                    ], 'adslotInline_2_300x250')
+                    .addService(googletag.pubads());
+                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250', [
+                        [300, 250],
+                        [336, 280],
+                        [250, 250]
+                    ], 'adslotInline_3_300x250')
+                    .addService(googletag.pubads());
+                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250', [
+                        [300, 250],
+                        [336, 280],
+                        [250, 250]
+                    ], 'adslotInline_4_300x250')
+                    .addService(googletag.pubads());
+                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250', [
+                        [300, 250],
+                        [336, 280],
+                        [250, 250]
+                    ], 'adslotInline_5_300x250')
+                    .addService(googletag.pubads());
+                googletag.defineSlot('/1057625/FIHL/Desktop_ROS_728x90_BTF', [728, 90], 'adslot728x90_BTF')
+                    .addService(googletag.pubads());
             @elseif (request()->segment(1) == 'content' ||
                     request()->segment(2) == 'content' ||
                     request()->segment(1) == 'education' ||
