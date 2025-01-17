@@ -17,7 +17,8 @@
 
     $locale = App::getLocale();
     $baseUrl = Config('constants.MainDomain') . "/insights/$locale/";
-    $newsUrl = $baseUrl . strtolower($newsDetails->insight_type) . '/' . $newsDetails->slug . '.' . $newsDetails->news_id;
+    $newsUrl =
+        $baseUrl . strtolower($newsDetails->insight_type) . '/' . $newsDetails->slug . '.' . $newsDetails->news_id;
     //$author_details
     $authorSlug = $author_details->slug ?? strtolower(str_replace(' ', '-', $author_details->title));
     //dd($authorSlug);
@@ -62,7 +63,7 @@
     </div>
     <div class="contentwrapper">
         <div class="container">
-            
+
         </div>
         <div class="container">
 
@@ -80,13 +81,13 @@
                             <li class="breadcrumb-item"><a href="{{ $baseUrl . $category->slug }}"
                                     class="tip-bottom">{{ $category->catname }}</a></li>
                         @endforeach
-        
+
                         @foreach ($newsDetails->Subcategory as $subcat)
                             <li class="breadcrumb-item"><a
                                     href="{{ $baseUrl . $category->slug . '/' . $subcat->slug }}">{{ $subcat->subcat_name }}</a>
                             </li>
                         @endforeach
-        
+
                         <li class="breadcrumb-item">{!! html_entity_decode(\Illuminate\Support\Str::words($newsDetails->title, 8, ' ...'), ENT_QUOTES, 'UTF-8') !!}</li>
                     </ul>
                     <h2>{{ $newsDetails->title }}</h2>
@@ -150,7 +151,19 @@
                     </div>
                     <div class="content-main">
                         <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}">
+                        {{-- ads for mobile & desktop --}}
+                        <div class="inner-article-detail-desktop-ad">
+                            <div id="adslotInline_1_300x250">
+                                <script>
+                                    googletag.cmd.push(function() {
+                                        googletag.display("adslotInline_1_300x250");
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        {{-- ads for mobile & desktop --}}
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
+
                         <div class="articlecontent">
                             @php
                                 $custom_data = explode("\r\n", $newsDetails->content); // Split content into paragraphs
@@ -161,7 +174,7 @@
                                 foreach ($custom_data as $index => $cdata) {
                                     $articleData[] = $cdata; // Add the paragraph content
                                     // Add ads dynamically based on the interval and maximum ads allowed
-                                    if ($index == 4) {
+                                    if ($index == 6) {
                                         $articleData[] = '
                                                <div class="inner-article-detail-desktop-ad">
                                                    <div id="adslotInline_1_300x250">
@@ -174,7 +187,7 @@
                                                </div>';
                                         $adsInserted++;
                                         $i++;
-                                    } elseif ($index == 8) {
+                                    } elseif ($index == 10) {
                                         $articleData[] = '
                                                <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
                                                    <div id="adslotInline_2_300x250">
@@ -202,7 +215,7 @@
                                                ';
                                         $adsInserted++;
                                         $i++;
-                                    } elseif ($index == 32) {
+                                    } elseif ($index == 25) {
                                         $articleData[] = '
                                                <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
                                                    <div id="adslotInline_4_300x250">
