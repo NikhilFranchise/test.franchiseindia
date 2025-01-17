@@ -87,8 +87,9 @@
                                     href="{{ $baseUrl . $category->slug . '/' . $subcat->slug }}">{{ $subcat->subcat_name }}</a>
                             </li>
                         @endforeach
-
+                            @desktop
                         <li class="breadcrumb-item">{!! html_entity_decode(\Illuminate\Support\Str::words($newsDetails->title, 8, ' ...'), ENT_QUOTES, 'UTF-8') !!}</li>
+                        @enddesktop
                     </ul>
                     <h2>{{ $newsDetails->title }}</h2>
                     <div class="cont-top">
