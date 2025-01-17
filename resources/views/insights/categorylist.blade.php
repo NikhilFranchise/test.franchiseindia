@@ -102,11 +102,22 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="contentarea">
+                            @include('layout.insights.subscribenewsletter')
+                        </div>
                     </div>
                     <div class="col-md-4">
+                        {{-- ads section start here --}}
                         <div class="ad-right-author">
-                            <img src="images/ad5.png" class="img-fluid">
+                            <div id='adslot300x250_ATF'>
+                                <script>
+                                    googletag.cmd.push(function() {
+                                        googletag.display('adslot300x250_ATF');
+                                    });
+                                </script>
+                            </div>
                         </div>
+                        {{-- ads section end here --}}
                         <div class="popular-articles">
                             <div class="popular-title">Popular Articles</div>
                             <ul class="popular-list">
@@ -131,17 +142,32 @@
                                                     hreflang="{{ $locale }}">{{ ucwords($catName) }}</a>
                                             </div>
                                         @endforeach
-                                        <div class="popular-head"><a href="{{ $popUrl }}">{{ $popular->title }}</a></div>
+                                        <div class="popular-head"><a href="{{ $popUrl }}">{{ $popular->title }}</a>
+                                        </div>
                                     </li>
 
                                 @empty
                                 @endforelse
                             </ul>
                         </div>
+                        {{-- ads section start here --}}
+                        <div class="ad-right-sticky">
+                            <div id="adslot300x250_1">
+                                <script>
+                                    googletag.cmd.push(function() {
+                                        googletag.display('adslot300x250_1');
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        {{-- ads section end here --}}
                     </div>
                 </div>
             </div>
         </div>
+        @include('layout.insights.brandlist')
+
+@include('layout.insights.magblock')
         <div class="listblk">
             <div class="container">
                 <ul class="artilsit">

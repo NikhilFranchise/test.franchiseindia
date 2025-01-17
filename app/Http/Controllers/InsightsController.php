@@ -167,9 +167,16 @@ class InsightsController extends Controller
             ->where('status', 1)
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
-            ->orderByDesc('created_at')->paginate(10);
+            ->orderByDesc('created_at')->paginate(8);
         $insightstories = CommonController::contentUrlSlug($insightstories);
-        return view('insights.topstories', compact('insightstories'));
+        $popStories = $model::query()->with('category')->select('title', 'shortDesc', 'slug', 'news_id', 'insight_type', 'cat_id')
+            ->whereIn('insight_type', ['News', 'Article'])
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->where('status', 1)
+            ->whereNotNull('cat_id')
+            ->orderByDesc('views')->limit(6)->get();
+        // dd($popStories);
+        return view('insights.topstories', compact('insightstories', 'popStories'));
     }
 
     public function industryfocus()
@@ -413,7 +420,7 @@ class InsightsController extends Controller
         $newsModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
         $tagTable = $locale == 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
         $seoTagModel = $locale == 'hi' ? SeoTagHindi::class : SeoTag::class;
-        
+
         $ipAddress = $_SERVER['REMOTE_ADDR'];
         $ipAsInt = ip2long($ipAddress);
         // Check if the IP has already viewed this article
@@ -508,7 +515,7 @@ class InsightsController extends Controller
             ->orderByDesc('created_at')
             ->take(6)->get();
         $trendingArticles = CommonController::contentUrlSlug($trendingArticles);
-        
+
         // Return view with compacted variables
         return view('insights.detail', compact('newsDetails', 'author_details', 'franchiseData', 'assocTags', 'trendingArticles'));
     }
@@ -532,8 +539,8 @@ class InsightsController extends Controller
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id');
-            $articlesList = $query->orderByDesc('created_at')->paginate(10);
-            
+        $articlesList = $query->orderByDesc('created_at')->paginate(10);
+
         // Count matching articles
 
         if ($articlesList->count() < 1) {

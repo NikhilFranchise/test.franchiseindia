@@ -289,6 +289,7 @@
                             </div>
 
                         </div>
+                        {{-- popular articles section end here --}}
                         {{-- ads section start here --}}
                         <div class="ad-right-sticky">
                             <div id="adslot300x250_1">
@@ -300,7 +301,6 @@
                             </div>
                         </div>
                         {{-- ads section end here --}}
-                        {{-- popular articles section end here --}}
                     </div>
                 </div>
             </div>
