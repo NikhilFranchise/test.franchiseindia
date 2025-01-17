@@ -152,7 +152,7 @@
                     <div class="content-main">
                         <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}">
                         {{-- ads for mobile & desktop --}}
-                        <div class="inner-article-detail-desktop-ad">
+                        <div class="inner-article-detail-desktop-ad fad">
                             <div id="adslotInline_1_300x250">
                                 <script>
                                     googletag.cmd.push(function() {
