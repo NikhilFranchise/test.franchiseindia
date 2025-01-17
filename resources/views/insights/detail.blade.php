@@ -16,8 +16,8 @@
     $height = $imageDetails[1] ? $imageDetails[1] : 0;
 
     $locale = App::getLocale();
-    $baseUrl = Config('constants.MainDomain') . "/insights/$locale/" . strtolower($newsDetails->insight_type) . '/';
-    $newsUrl = $baseUrl . $newsDetails->slug . '.' . $newsDetails->news_id;
+    $baseUrl = Config('constants.MainDomain') . "/insights/$locale/";
+    $newsUrl = $baseUrl . strtolower($newsDetails->insight_type) . '/' . $newsDetails->slug . '.' . $newsDetails->news_id;
     //$author_details
     $authorSlug = $author_details->slug ?? strtolower(str_replace(' ', '-', $author_details->title));
     //dd($authorSlug);
