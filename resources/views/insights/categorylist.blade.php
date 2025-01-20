@@ -1,4 +1,8 @@
 @extends('layout.insights.master')
+@php
+    use Illuminate\Support\Str;
+
+@endphp
 @section('content')
     <div class="maininnver homeh">
         <div class="inner-top-head">
@@ -65,7 +69,7 @@
                                                 <div class="author-fresh-cont">
                                                     <div class="author-latest-title"><a
                                                             href="{{ $url }}">{{ $article->title }}</a></div>
-                                                    <p>{{ $article->shortDesc }} </p>
+                                                    <p>{!! html_entity_decode(Str::words($article->shortDesc, 22, ' ...'), ENT_QUOTES, 'UTF-8') !!}</p>
                                                     <div class="scbk">
                                                         <div class="shrblk">
                                                             <span class="inshrblk">
@@ -73,17 +77,26 @@
                                                                     <img src="{{ url('insight-new/images/smallshare.svg') }}"
                                                                         class="inimg">Share
                                                                     <div class="sfv">
-                                                                        @foreach ([
-            'facebook' => '/insight-new/images/facebookcard.svg',
-            'twitter' => '/insight-new/images/twittercard.svg',
-            'instagram' => 'https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg',
-            'youtube' => 'https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg',
-        ] as $platform => $icon)
-                                                                            <div class="innersfv"
-                                                                                onclick="window.open('https://www.{{ $platform }}.com/FranchiseIndia', '_blank')">
-                                                                                <img src="{{ $icon }}" />
-                                                                            </div>
-                                                                        @endforeach
+                                                                        <div class="innersfv"
+                                                                            onclick="window.open('https://www.facebook.com/sharer/sharer.php?u={{ urlencode($url) }}','_blank')">
+                                                                            <img
+                                                                                src="{{ url('/insight-new/images/facebookcard.svg') }}" />
+                                                                        </div>
+                                                                        <div class="innersfv"
+                                                                            onclick="window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ urlencode($url) }}','_blank')">
+                                                                            <img
+                                                                                src="{{ url('/insight-new/images/linkedin.svg') }}" />
+                                                                        </div>
+                                                                        <div class="innersfv"
+                                                                            onclick="window.open('https://x.com/intent/post?url={{ urlencode($url) }}','_blank')">
+                                                                            <img
+                                                                                src="{{ url('/insight-new/images/twittercard.svg') }}" />
+                                                                        </div>
+                                                                        <div class="innersfv" style="display: none"
+                                                                            onclick="window.open('mailto:?subject=Check this out!&body={{ urlencode($url) }}', '_self')">
+                                                                            <img
+                                                                                src="{{ url('/insight-new/images/mailcard.svg') }}" />
+                                                                        </div>
                                                                     </div>
                                                                 </a>
                                                             </span>
@@ -167,7 +180,7 @@
         </div>
         @include('layout.insights.brandlist')
 
-@include('layout.insights.magblock')
+        @include('layout.insights.magblock')
         <div class="listblk">
             <div class="container">
                 <ul class="artilsit">
