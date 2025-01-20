@@ -87,8 +87,8 @@
                                     href="{{ $baseUrl . $category->slug . '/' . $subcat->slug }}">{{ $subcat->subcat_name }}</a>
                             </li>
                         @endforeach
-                            @desktop
-                        <li class="breadcrumb-item">{!! html_entity_decode(\Illuminate\Support\Str::words($newsDetails->title, 8, ' ...'), ENT_QUOTES, 'UTF-8') !!}</li>
+                        @desktop
+                            <li class="breadcrumb-item">{!! html_entity_decode(\Illuminate\Support\Str::words($newsDetails->title, 8, ' ...'), ENT_QUOTES, 'UTF-8') !!}</li>
                         @enddesktop
                     </ul>
                     <h2>{{ $newsDetails->title }}</h2>
@@ -108,11 +108,11 @@
                                     </span>
                                     <span>
                                         {{ date('M d, Y', strtotime($newsDetails->created_at)) }} /
-                                        <img src="https://www.indianretailer.com/brandlicense/themes/menshealth/images/vicon.webp"
-                                            height="10" width="17" alt="IndianRetailer" class="img-fluid">
+                                        <img src="{{ url('/insight-new/images/vicon.webp') }}" height="10"
+                                            width="17" alt="Franchise Insights" class="img-fluid">
                                         {{ $newsDetails->views }}
                                         / {{ app\Http\Controllers\InsightsController::calculateReadTime($newsDetails) }}
-                                        MIN READ
+                                        Min Read
                                     </span>
                                 </div>
                             </div>

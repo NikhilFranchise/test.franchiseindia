@@ -184,6 +184,9 @@ class AdminController extends Controller
      */
     public function updateAuthor(Request $request)
     {
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:500', // 500 KB max
+        ]);
         $imageUrl       = ($request->hasFile('image')) ? $this->uploadImage($request->file('image'), 'Author', 1, 's3', $request->old_image) : $request->old_image;
 
         if ($request->hasFile('image'))
@@ -1605,8 +1608,7 @@ class AdminController extends Controller
                 break;
         }
 
-        // Resize the image to 680x435px and convert it to WebP format
-        if ($type != 'Author' || $type  != 'Gallery' || $type  != 'Magazine') {
+        if ($type != 'Author' && $type  != 'Gallery' && $type  != 'Magazine') {
             $resizedImage = Image::make($image)->resize(1600, 940)->encode('webp', 90);
         } else if ($type == 'Author') {
             $resizedImage = Image::make($image)->resize(512, 512)->encode('webp', 90);
@@ -2079,7 +2081,6 @@ class AdminController extends Controller
             $titleSlug = str_replace(" ", "-", $titleSlug);
             // Replace dots with dashes
             $slug = str_replace(".", "-", $titleSlug);
-
         }
         // dd($role);
         $kicker            = $request->kicker;

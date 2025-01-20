@@ -167,16 +167,21 @@ class InsightsController extends Controller
             ->where('status', 1)
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
-            ->orderByDesc('created_at')->paginate(8);
-        $insightstories = CommonController::contentUrlSlug($insightstories);
-        $popStories = $model::query()->with('category')->select('title', 'shortDesc', 'slug', 'news_id', 'insight_type', 'cat_id')
-            ->whereIn('insight_type', ['News', 'Article'])
+            ->orderByDesc('created_at')
+            ->paginate(15);
+
+        $popArticles = $model::query()
+            ->with('category')
+            ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
+            ->whereIn('insight_type', ['Article'])
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->where('status', 1)
             ->whereNotNull('cat_id')
-            ->orderByDesc('views')->limit(6)->get();
-        // dd($popStories);
-        return view('insights.topstories', compact('insightstories', 'popStories'));
+            ->orderByDesc('created_at')
+            ->limit(6)
+            ->get();
+
+        return view('insights.topstories', compact('insightstories', 'popArticles'));
     }
 
     public function industryfocus()
@@ -190,26 +195,32 @@ class InsightsController extends Controller
         $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
 
         // Fetch the insights articles
-        $insArticles = $model::with('author')
+        $insArticles = $model::query()
+            ->with('author')
             ->where('insight_type', 'Article')
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->where('status', 1)
             ->orderByDesc('created_at')
-            ->paginate(8);
+            ->paginate(15);
 
         // Handle empty results
         if ($insArticles->isEmpty()) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
-        $popArticles = $model::with('category')
-            ->where('insight_type', ['Article', 'News'])
+        $popArticles = $model::query()
+            ->with('category')
+            ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
+            ->where('insight_type', ['Article'])
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('cat_id')
             ->where('status', 1)
-            ->orderByDesc('views')
-            ->take(6)->get();
+            ->orderByDesc('created_at')
+            ->skip(15)
+            ->take(6)
+            ->get();
+
         // Return the view with the articles
         return view('insights.articles', compact('insArticles', 'popArticles'));
     }

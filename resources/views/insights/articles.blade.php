@@ -67,18 +67,28 @@
                                        <a href="#">
                                           <img src="{{ url('insight-new/images/smallshare.svg') }}"
                                              class="inimg">Share
-                                          <div class="sfv">
-                                             @foreach (['facebook' => '/insight-new/images/facebookcard.svg',
-                                             'twitter' => '/insight-new/images/twittercard.svg',
-                                             'instagram' => 'https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg',
-                                             'youtube' => 'https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg',
-                                             ] as $platform => $icon)
-                                             <div class="innersfv"
-                                                onclick="window.open('https://www.{{ $platform }}.com/FranchiseIndia', '_blank')">
-                                                <img src="{{ $icon }}" />
-                                             </div>
-                                             @endforeach
-                                          </div>
+                                             <div class="sfv">
+                                                <div class="innersfv"
+                                                    onclick="window.open('https://www.facebook.com/sharer/sharer.php?u={{ urlencode($url) }}','_blank')">
+                                                    <img
+                                                        src="{{ url('/insight-new/images/facebookcard.svg') }}" />
+                                                </div>
+                                                <div class="innersfv"
+                                                    onclick="window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ urlencode($url) }}','_blank')">
+                                                    <img
+                                                        src="{{ url('/insight-new/images/linkedin.svg') }}" />
+                                                </div>
+                                                <div class="innersfv"
+                                                    onclick="window.open('https://x.com/intent/post?url={{ urlencode($url) }}','_blank')">
+                                                    <img
+                                                        src="{{ url('/insight-new/images/twittercard.svg') }}" />
+                                                </div>
+                                                <div class="innersfv" style="display: none"
+                                                    onclick="window.open('mailto:?subject=Check this out!&body={{ urlencode($url) }}', '_self')">
+                                                    <img
+                                                        src="{{ url('/insight-new/images/mailcard.svg') }}" />
+                                                </div>
+                                            </div>
                                        </a>
                                     </span>
                                  </div>
