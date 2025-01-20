@@ -1080,7 +1080,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
 
 
     Route::group(['prefix' => 'insights'], function () {
-        Route::get('/hindi',                        [InsightsController::class, 'insightshome'], 301)->name('NewsHiHome');
+        Route::get('hindi',                        [InsightsController::class, 'insightshome'], 301)->name('NewsHiHome');
         Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
         Route::get('{insight_type}/{slug}.{id}', function ($insight_type, $slug, $id) {
             return redirect()->to("/insights/en/{$insight_type}/{$slug}.{$id}", 301);
