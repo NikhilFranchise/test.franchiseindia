@@ -30,13 +30,13 @@
           "@graph": [
             {
               "@type": "Organization",
-              "@id": "https://franchiseindia.com/#organization",
+              "@id": "{{ Config('constants.MainDomain')}}/#organization",
               "name": "FranchiseIndia.com",
               "logo": {
                 "@type": "ImageObject",
-                "@id": "https://www.franchiseindia.com/#logo",
-                "url": "https://www.franchiseindia.com/insight-new/images/logo.png",
-                "contentUrl": "https://www.franchiseindia.com/insight-new/images/logo.png",
+                "@id": "{{ Config('constants.MainDomain')}}/#logo",
+                "url": "{{ Config('constants.MainDomain')}}/insight-new/images/logo.png",
+                "contentUrl": "{{ Config('constants.MainDomain')}}/insight-new/images/logo.png",
                 "caption": "FranchiseIndia.com",
                 "inLanguage": "en-IN",
                 "width": 320,
@@ -45,11 +45,11 @@
             },
             {
               "@type": "WebSite",
-              "@id": "https://www.franchiseindia.com/#website",
-              "url": "https://www.franchiseindia.com",
+              "@id": "{{ Config('constants.MainDomain')}}/#website",
+              "url": "{{ Config('constants.MainDomain')}}",
               "name": "FranchiseIndia.com",
               "alternateName": "FranchiseIndia",
-              "publisher": { "@id": "https://www.franchiseindia.com/#organization" },
+              "publisher": { "@id": "{{ Config('constants.MainDomain')}}/#organization" },
               "inLanguage": "en-IN"
             },
             {
@@ -106,7 +106,7 @@
               "name": "{{$newsDetails->title}} - FranchiseIndia",
               "datePublished": "{{$newsDetails->created_at}}",
               "dateModified": "{{$newsDetails->updated_at}}",
-              "isPartOf": { "@id": "https://www.franchiseindia.com/#website" },
+              "isPartOf": { "@id": "{{ Config('constants.MainDomain')}}/#website" },
               "primaryImageOfPage": { "@id": "{{$ogimage}}" },
               "inLanguage": "en-IN",
               "breadcrumb": { "@id": "{{$newsUrl}}/#breadcrumb" }
@@ -130,7 +130,7 @@
                 "{{$author_details->twitter_profile}}",
                 "{{$author_details->insta_profile}}"
               ],
-              "worksFor": { "@id": "https://www.franchiseindia.com/#organization" }
+              "worksFor": { "@id": "{{ Config('constants.MainDomain')}}/#organization" }
             },
             {
               "@type": "NewsArticle",
@@ -144,7 +144,7 @@
               "name": "{{$newsDetails->title}} - FranchiseIndia",
               "@id": "{{$newsUrl}}/#schema-75109",
               "isPartOf": { "@id": "{{$newsUrl}}/#webpage" },
-              "publisher": { "@id": "https://www.franchiseindia.com/#organization" },
+              "publisher": { "@id": "{{ Config('constants.MainDomain')}}/#organization" },
               "inLanguage": "en-IN",
               "mainEntityOfPage": { "@id": "{{$newsUrl}}/#webpage" }
             }
@@ -158,13 +158,13 @@
       "@graph": [
           {
               "@type": "Organization",
-              "@id": "https://www.franchiseindia.com/#organization",
+              "@id": "{{ Config('constants.MainDomain')}}/#organization",
               "name": "FranchiseIndia.com",
               "logo": {
                   "@type": "ImageObject",
-                  "@id": "https://www.franchiseindia.com/#logo",
-                  "url": "https://www.franchiseindia.com/insight-new/images/logo.png",
-                  "contentUrl": "https://www.franchiseindia.com/insight-new/images/logo.png",
+                  "@id": "{{ Config('constants.MainDomain')}}/#logo",
+                  "url": "{{ Config('constants.MainDomain')}}/insight-new/images/logo.png",
+                  "contentUrl": "{{ Config('constants.MainDomain')}}/insight-new/images/logo.png",
                   "caption": "FranchiseIndia.com",
                   "inLanguage": "en-IN",
                   "width": "320",
@@ -173,11 +173,11 @@
           },
           {
               "@type": "WebSite",
-              "@id": "https://www.franchiseindia.com/#website",
-              "url": "https://www.franchiseindia.com",
+              "@id": "{{ Config('constants.MainDomain')}}/#website",
+              "url": "{{ Config('constants.MainDomain')}}",
               "name": "FranchiseIndia.com",
               "alternateName": "FranchiseIndia",
-              "publisher": { "@id": "https://www.franchiseindia.com/#organization" },
+              "publisher": { "@id": "{{ Config('constants.MainDomain')}}/#organization" },
               "inLanguage": "en-IN"
           },
           {
@@ -234,7 +234,7 @@
             "name": "{{$newsDetails->title}} - FranchiseIndia",
             "datePublished": "{{$newsDetails->created_at}}",
             "dateModified": "{{$newsDetails->updated_at}}",
-            "isPartOf": { "@id": "https://www.franchiseindia.com/#website" },
+            "isPartOf": { "@id": "{{ Config('constants.MainDomain')}}/#website" },
             "primaryImageOfPage": { "@id": "{{$ogimage}}" },
             "inLanguage": "en-IN",
             "breadcrumb": { "@id": "{{$newsUrl}}/#breadcrumb" }
@@ -258,7 +258,7 @@
               "{{$author_details->twitter_profile}}",
               "{{$author_details->insta_profile}}"
             ],
-            "worksFor": { "@id": "https://www.franchiseindia.com/#organization" }
+            "worksFor": { "@id": "{{ Config('constants.MainDomain')}}/#organization" }
           },
           {
             "@type": "Article",
@@ -272,7 +272,7 @@
             "name": "{{$newsDetails->title}} - FranchiseIndia",
             "@id": "{{$newsUrl}}/#schema-75109",
             "isPartOf": { "@id": "{{$newsUrl}}/#webpage" },
-            "publisher": { "@id": "https://www.franchiseindia.com/#organization" },
+            "publisher": { "@id": "{{ Config('constants.MainDomain')}}/#organization" },
             "inLanguage": "en-IN",
             "mainEntityOfPage": { "@id": "{{$newsUrl}}/#webpage" }
           }
