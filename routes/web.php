@@ -1133,7 +1133,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
             Route::get('video_podcast',                [InsightsController::class, 'getvideopodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
-            Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
+            Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails'])->name('insights.details');
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
@@ -1196,3 +1196,14 @@ Route::get('/getajax', [BusinessListingController::class, 'fetchtest']);
 
 
 Route::get('/items', [BusinessListingController::class, 'index'])->name('items.index');
+Route::get('n', function () {
+    $data = [
+        'name' => 'John Doe',
+        'companyName' => 'Tech Corp',
+        'mobile' => '1234567890',
+        'city' => 'New York',
+        'email' => 'johndoe@example.com',
+        'id' => '001',
+    ];
+    return view('mail.advertise', $data);
+});

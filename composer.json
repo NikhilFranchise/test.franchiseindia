@@ -21,7 +21,7 @@
         "spatie/laravel-feed": "^4.4",
         "spatie/laravel-sitemap": "^7.0",
         "tinymce/tinymce": "^7.6",
-        "unisharp/laravel-filemanager": "dev-master",
+        "unisharp/laravel-filemanager": "^2.9",
         "vemcogroup/laravel-sparkpost-driver": "^5.0"
     },
     "require-dev": {

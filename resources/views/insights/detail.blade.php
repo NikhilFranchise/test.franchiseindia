@@ -1,6 +1,8 @@
 @extends('layout.insights.master')
-
 @section('seoTitle', $newsDetails->title)
+@section('header-schema')
+    @include('insights.schema', ['newsDetails' => $newsDetails])
+@endsection
 @section('seoDesc', $newsDetails->shortDesc)
 @section('seoKeywords', $newsDetails->kicker)
 @section('canonicalUrl', url()->current())
@@ -38,6 +40,7 @@
 @section('width', $width)
 @section('height', $height)
 @section('content')
+
     <div class="maininnver homeh">
         <div class="inner-top-head">
             <div class="container">

@@ -15,7 +15,6 @@
     <meta name="robots" content="NOODP" />
     <link href="@yield('canonicalUrl', request()->get('page') ? url()->full() : url()->current())" rel="canonical">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
-    @include('includes.banners-new.google-tags')
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -58,6 +57,8 @@
     <meta name="y_key" content="0f4f718975ac23ed" />
     <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
     @include('layout.insights.headerlinks')
+    @include('includes.banners-new.google-tags')
+    @yield('header-schema')
     @include('layout.insights.menu')
 </head>
 
