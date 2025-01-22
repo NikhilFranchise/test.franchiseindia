@@ -35,21 +35,21 @@
                                                 strtolower($article->insight_type) .
                                                 "/{$article->slug}.{$article->news_id}";
                                             // Default author values
-                                            // $authorname = 'Franchise India Bureau';
-                                            // $authorUrl = '#';
-                                            // $author_image = url('images/defaultuser.png');
+                                            $authorname = 'Franchise India Bureau';
+                                            $authorUrl = '#';
+                                            $author_image = url('images/defaultuser.png');
                                             // Check and set author details if available
-                                            // if ($article->author->isNotEmpty()) {
-                                            // $author = $article->author->first();
-                                            // $authorname = $author->title ?: 'Franchise India Bureau';
-                                            // $slug = $author->slug ?: strtolower(str_replace(' ', '-', $authorname));
-                                            // $authorUrl = "{$mainDomain}/insights/{$locale}/author/{$slug}-{$author->author_id}";
-                                            // $author_image = $author->image
-                                            // ? \App\Http\Controllers\InsightsController::authorImageurl(
-                                            // $author->image,
-                                            // )
-                                            // : $author_image;
-                                            // }
+                                            if ($article->author->isNotEmpty()) {
+                                            $author = $article->author->first();
+                                            $authorname = $author->title ?: 'Franchise India Bureau';
+                                            $slug = $author->slug ?: strtolower(str_replace(' ', '-', $authorname));
+                                            $authorUrl = "{$mainDomain}/insights/{$locale}/author/{$slug}-{$author->author_id}";
+                                            $author_image = $author->image
+                                            ? \App\Http\Controllers\InsightsController::authorImageurl(
+                                            $author->image,
+                                            )
+                                            : $author_image;
+                                            }
                                         @endphp
                                         <li>
                                             <div class="author-fresh">
@@ -61,40 +61,15 @@
                                                     <div class="author-latest-title"><a
                                                             href="{{ $url }}">{{ $article->title }}</a></div>
                                                     <p>{!! html_entity_decode(\Illuminate\Support\Str::words($article->shortDesc, 32, ' ...'), ENT_QUOTES, 'UTF-8') !!}</p>
-                                                    <div class="scbk">
-                                                        <div class="shrblk">
-                                                            <span class="inshrblk">
-                                                                <a href="#">
-                                                                    <img src="{{ url('insight-new/images/smallshare.svg') }}"
-                                                                        class="inimg">Share
-
-                                                                    <div class="sfv">
-                                                                        <div class="innersfv"
-                                                                            onclick="window.open('https://www.facebook.com/sharer/sharer.php?u={{ urlencode($url) }}','_blank')">
-                                                                            <img
-                                                                                src="{{ url('/insight-new/images/facebookcard.svg') }}" />
-                                                                        </div>
-                                                                        <div class="innersfv"
-                                                                            onclick="window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ urlencode($url) }}','_blank')">
-                                                                            <img
-                                                                                src="{{ url('/insight-new/images/linkedin.svg') }}" />
-                                                                        </div>
-                                                                        <div class="innersfv"
-                                                                            onclick="window.open('https://x.com/intent/post?url={{ urlencode($url) }}','_blank')">
-                                                                            <img
-                                                                                src="{{ url('/insight-new/images/twittercard.svg') }}" />
-                                                                        </div>
-                                                                        <div class="innersfv" style="display: none"
-                                                                            onclick="window.open('mailto:?subject=Check this out!&body={{ urlencode($url) }}', '_self')">
-                                                                            <img
-                                                                                src="{{ url('/insight-new/images/mailcard.svg') }}" />
-                                                                        </div>
-                                                                    </div>
-
-                                                                </a>
-                                                            </span>
-                                                        </div>
-                                                    </div>
+                                                    <ul class="art-detail-read">
+                                                        <li>By - <a href="{{ $authorUrl }}"
+                                                                hreflang="{{ $locale }}">{{ $authorname }}</a>
+                                                        </li>
+                                                        <li><time datetime="33Z"
+                                                                class="datetime">{{ date('M d, Y', strtotime($article->created_at)) }}</time>/
+                                                            {{ app\Http\Controllers\InsightsController::calculateReadTime($article) }}
+                                                            MIN READ</li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </li>

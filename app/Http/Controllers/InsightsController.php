@@ -240,13 +240,25 @@ class InsightsController extends Controller
             ->whereNotNull('cat_id')
             ->where('status', 1)
             ->orderByDesc('created_at')
-            ->paginate(10);
+            ->paginate(12);
         $interviews = CommonController::contentUrlSlug($interviews);
+
         if ($interviews->isEmpty()) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
-        } else {
-            return view('insights.interviewslist', compact('interviews'));
-        }
+        } 
+        $popArticles = $model::query()
+            ->with('category')
+            ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
+            ->where('insight_type', ['Article'])
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('cat_id')
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->take(6)
+            ->get();
+
+            return view('insights.interviewslist', compact('interviews','popArticles'));
+        
     }
 
     public function geteventsreports()
@@ -306,7 +318,7 @@ class InsightsController extends Controller
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->orderByDesc('created_at')
-            ->paginate(6);
+            ->paginate(12);
         $latestArticles->getCollection()->transform(function ($item) use ($locale) {
             $item->lang = $locale;
             return $item;
@@ -320,7 +332,7 @@ class InsightsController extends Controller
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->orderByDesc('views')
-            ->paginate(6);
+            ->paginate(12);
         $mostViewedArticles->getCollection()->transform(function ($item) use ($locale) {
             $item->lang = $locale;
             return $item;

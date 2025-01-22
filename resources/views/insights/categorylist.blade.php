@@ -76,40 +76,9 @@
                                                         </li>
                                                         <li><time datetime="33Z"
                                                                 class="datetime">{{ date('M d, Y', strtotime($article->created_at)) }}</time>/
-                                                            {{app\Http\Controllers\InsightsController::calculateReadTime($article)}} MIN READ</li>
+                                                            {{ app\Http\Controllers\InsightsController::calculateReadTime($article) }}
+                                                            MIN READ</li>
                                                     </ul>
-                                                    {{-- <div class="scbk">
-                                                        <div class="shrblk">
-                                                            <span class="inshrblk">
-                                                                <a href="#">
-                                                                    <img src="{{ url('insight-new/images/smallshare.svg') }}"
-                                                                        class="inimg">Share
-                                                                    <div class="sfv">
-                                                                        <div class="innersfv"
-                                                                            onclick="window.open('https://www.facebook.com/sharer/sharer.php?u={{ urlencode($url) }}','_blank')">
-                                                                            <img
-                                                                                src="{{ url('/insight-new/images/facebookcard.svg') }}" />
-                                                                        </div>
-                                                                        <div class="innersfv"
-                                                                            onclick="window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url={{ urlencode($url) }}','_blank')">
-                                                                            <img
-                                                                                src="{{ url('/insight-new/images/linkedin.svg') }}" />
-                                                                        </div>
-                                                                        <div class="innersfv"
-                                                                            onclick="window.open('https://x.com/intent/post?url={{ urlencode($url) }}','_blank')">
-                                                                            <img
-                                                                                src="{{ url('/insight-new/images/twittercard.svg') }}" />
-                                                                        </div>
-                                                                        <div class="innersfv" style="display: none"
-                                                                            onclick="window.open('mailto:?subject=Check this out!&body={{ urlencode($url) }}', '_self')">
-                                                                            <img
-                                                                                src="{{ url('/insight-new/images/mailcard.svg') }}" />
-                                                                        </div>
-                                                                    </div>
-                                                                </a>
-                                                            </span>
-                                                        </div>
-                                                    </div> --}}
                                                 </div>
                                             </div>
                                         </li>
