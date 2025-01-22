@@ -70,7 +70,15 @@
                                                     <div class="author-latest-title"><a
                                                             href="{{ $url }}">{{ $article->title }}</a></div>
                                                     <p>{!! html_entity_decode(Str::words($article->shortDesc, 22, ' ...'), ENT_QUOTES, 'UTF-8') !!}</p>
-                                                    <div class="scbk">
+                                                    <ul class="art-detail-read">
+                                                        <li>By - <a href="{{ $authorUrl }}"
+                                                                hreflang="{{ $locale }}">{{ $authorname }}</a>
+                                                        </li>
+                                                        <li><time datetime="33Z"
+                                                                class="datetime">{{ date('M d, Y', strtotime($article->created_at)) }}</time>/
+                                                            {{app\Http\Controllers\InsightsController::calculateReadTime($article)}} MIN READ</li>
+                                                    </ul>
+                                                    {{-- <div class="scbk">
                                                         <div class="shrblk">
                                                             <span class="inshrblk">
                                                                 <a href="#">
@@ -101,7 +109,7 @@
                                                                 </a>
                                                             </span>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                         </li>

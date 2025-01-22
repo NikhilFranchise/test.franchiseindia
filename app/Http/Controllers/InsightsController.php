@@ -379,7 +379,7 @@ class InsightsController extends Controller
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->orderByDesc('news_id')
-            ->paginate(8);
+            ->paginate(15);
         // Apply content URL slug transformation
         $insightcategories = CommonController::contentUrlSlug($insightcategories);
 
@@ -639,7 +639,7 @@ class InsightsController extends Controller
     }
     public static function calculateReadTime($obj)
     {
-
+        // dd($obj);
         /*Calculating length of total words*/
         $totaltext = $obj->title . ' ' . $obj->content;
 
