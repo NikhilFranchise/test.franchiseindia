@@ -77,8 +77,21 @@
                         <li class="breadcrumb-item">
                             <a href="{{ url('/insights') }}" class="tip-bottom">Home</a>
                         </li>
+                        @php
+                            $insightTypeMap = [
+                                'News' => "{$locale}/topstories",
+                                'Article' => "{$locale}/industryfocus",
+                                'Event' => "{$locale}/events_reports",
+                                'Report' => "{$locale}/events_reports",
+                                'Interview' => "{$locale}/interviews",
+                            ];
+
+                            $typeURL = $insightTypeMap[$newsDetails->insight_type] ?? null;
+                        @endphp
+
                         <li class="breadcrumb-item">
-                            <a href="{{ url('/insights') }}" class="tip-bottom">{{ $newsDetails->insight_type }}</a>
+                            <a href="{{ url("/insights/{$typeURL}") }}"
+                                class="tip-bottom">{{ $newsDetails->insight_type }}</a>
                         </li>
                         @foreach ($newsDetails->category as $category)
                             <li class="breadcrumb-item"><a href="{{ $baseUrl . $category->slug }}"

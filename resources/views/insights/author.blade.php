@@ -60,10 +60,11 @@
                                                         src="{{ url('/insight-new/images/social/twitter.jpg') }}" /></a>
                                             </li>
                                         @elseif(!empty($author->emailid))
-                                            <li>
-                                                <a href="{{ $author->emailid }}" target="_blank"><img
-                                                        src="{{ url('/insight-new/images/social/mail.jpg') }}" /></a>
-                                            </li>
+                                        <li>
+                                            <a href="mailto:{{ $author->emailid }}" target="_blank">
+                                                <img src="{{ url('/insight-new/images/social/mail.jpg') }}" />
+                                            </a>
+                                        </li>
                                         @elseif(!@empty($author->insta_profile))
                                             <li>
                                                 <a href="{{ $author->insta_profile }}" target="_blank"><img
