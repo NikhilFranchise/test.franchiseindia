@@ -14,10 +14,10 @@
                     <div class="home-author-list">
                         <div class="home-author-thumb"><img src="{{ $image }}" class="img-fluid"
                                 alt="{{ $title->title }}" height="200px" width="180px"></div>
-                        <div class="home-author-name">{{ $title->title }}</div>
+                        <div class="home-author-name"><a href="{{ $authorURL }}">{{ $title->title }}</a></div>
                         <div class="home-author-des">{{ $title->designation }}</div>
-                        <div class="home-author-count">No. of Stories - <span>{{ $title->count }}</span></div>
-                        <a href="{{ $authorURL }}">View Articles</a>
+                        <div class="home-author-count"><span>{{ $title->count }}</span> Stories</div>
+                        {{-- <a href="{{ $authorURL }}">View Articles</a> --}}
                     </div>
                 </div>
                 @empty
