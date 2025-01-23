@@ -277,14 +277,25 @@ class InsightsController extends Controller
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->orderByDesc('news_id')
-            ->paginate(10);
+            ->paginate(15);
         $events_reports = CommonController::contentUrlSlug($events_reports);
 
         if ($events_reports->isEmpty()) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
-        } else {
-            return view('insights.events_reports', compact('events_reports'));
         }
+        $popArticles = $model::query()
+            ->with('category')
+            ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
+            ->where('insight_type', ['Article'])
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('cat_id')
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->take(6)
+            ->get();
+
+            return view('insights.events_reports', compact('events_reports','popArticles'));
+        
     }
 
 
