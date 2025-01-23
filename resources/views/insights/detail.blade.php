@@ -337,20 +337,6 @@
                                     }
                                 }
 
-                                // Add the last ad at the very end of the content
-                                $articleData[] = '
-        <div id="v-franchiseindia">
-            <div class="inner-article-detail-desktop-ad">
-                <div id="adslot300x250_ATF">
-                    <script>
-                        googletag.cmd.push(function() {
-                            googletag.display("adslot300x250_ATF");
-                        });
-                    </script>
-                </div>
-            </div>
-        </div>';
-
                                 // Combine the content with ads into a single string
                                 $resultArticle = implode("\r\n", $articleData);
                             @endphp
