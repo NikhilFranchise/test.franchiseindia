@@ -260,7 +260,6 @@
                                                ';
                                         $adsInserted++;
                                         $i++;
-                                    }
                                     } else {
                                         $articleData[] = '
                                                <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
