@@ -341,10 +341,10 @@
                                 $articleData[] = '
         <div id="v-franchiseindia">
             <div class="inner-article-detail-desktop-ad">
-                <div id="adslot728x90_BTF">
+                <div id="adslot300x250_ATF">
                     <script>
                         googletag.cmd.push(function() {
-                            googletag.display("adslot728x90_BTF");
+                            googletag.display("adslot300x250_ATF");
                         });
                     </script>
                 </div>
