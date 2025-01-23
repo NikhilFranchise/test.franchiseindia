@@ -65,7 +65,9 @@ class InsightsController extends Controller
 
         $topstories = CommonController::contentUrlSlug($topstories);
 
-        $trendArticles = $model::with('category')->where('status', 1)
+        $trendArticles = $model::query()
+            ->with('category')
+            ->where('status', 1)
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
