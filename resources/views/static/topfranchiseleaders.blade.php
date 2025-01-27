@@ -464,16 +464,22 @@
 
                                 @endphp --}}
                                 @foreach ($leaders as $leader)
+                                    @php
+                                        $link =
+                                            'top-franchise-leaders/2024/' .
+                                            Str::slug($leader->name) .
+                                            '/' .
+                                            $leader->id;
+                                    @endphp
                                     <tr>
-                                        <td><a href="{{ $leader->profile_link . '/' . $leader->id }}">
-                                                {{-- <td><a href="{{ $leader['profile_link'] . '-' . $leader['id'] }}"> --}}
+                                        <td><a href="{{ $link }}">
                                                 <img src="{{ $leader['image_path'] }}" class="img-top-fifty"
                                                     alt="{{ $leader['name'] }}"></a>
                                         </td>
                                         <td>{{ $leader['name'] }}</td>
                                         <td>{{ $leader['designation'] }}</td>
                                         <td>
-                                            <a href="{{ $leader->profile_link . '/' . $leader->id }}" class="desklink">
+                                            <a href="{{ $link }}" class="desklink">
                                                 Profile
                                             </a>
                                         </td>
