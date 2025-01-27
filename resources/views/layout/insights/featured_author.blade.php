@@ -1,7 +1,6 @@
 <div class="sliderauthor slidercommany">
     <div class="container">
-        <div class="comhead">Featured Authors
-        </div>
+    <div class="comhead">{{ App::getLocale() == 'en' ? 'Featured Authors' : 'फीचर्ड ऑथर्स' }}</div>
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 @forelse ($authorDetails as $title)

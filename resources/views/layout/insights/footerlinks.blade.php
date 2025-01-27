@@ -222,7 +222,7 @@
     var swiper = new Swiper('.sliderauthor .swiper-container', {
         slidesPerView: 1,
         spaceBetween: 10,
-        loop: true,
+        loop: false,
         // AutoPlay
 
         autoplay: {
