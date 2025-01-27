@@ -2,9 +2,9 @@
     <div class="container">
         <div class="comhead">
             @if (App::getLocale() == 'en')
-            Articles
+                Articles
             @else
-            आर्टिकल
+                आर्टिकल
             @endif
         </div>
     </div>
@@ -45,9 +45,7 @@
                             $authorname = $author->title;
                             $authorUrl =
                                 Config('constants.MainDomain') .
-                                '/insights/' .
-                                $locale .
-                                '/author/' .
+                                '/insights/author/' .
                                 $author->slug .
                                 '-' .
                                 $author->author_id;
@@ -70,30 +68,30 @@
                     @foreach ($industry_data as $focusArticle)
                         @php
 
-                                if (!empty($focusArticle['slug'])) {
-                                    $url1 =
-                                        Config('constants.MainDomain') .
-                                        '/insights/' .
-                                        $locale .
-                                        '/' .
-                                        strtolower($focusArticle['insight_type']) .
-                                        '/' .
-                                        $focusArticle['slug'] .
-                                        '.' .
-                                        $focusArticle['news_id'];
-                                } else {
-                                    $slug = Str::slug($focusArticle['title']);
-                                    $url1 =
-                                        Config('constants.MainDomain') .
-                                        '/insights/' .
-                                        $locale .
-                                        '/' .
-                                        strtolower($focusArticle['insight_type']) .
-                                        '/' .
-                                        $slug .
-                                        '.' .
-                                        $focusArticle['news_id'];
-                                }
+                            if (!empty($focusArticle['slug'])) {
+                                $url1 =
+                                    Config('constants.MainDomain') .
+                                    '/insights/' .
+                                    $locale .
+                                    '/' .
+                                    strtolower($focusArticle['insight_type']) .
+                                    '/' .
+                                    $focusArticle['slug'] .
+                                    '.' .
+                                    $focusArticle['news_id'];
+                            } else {
+                                $slug = Str::slug($focusArticle['title']);
+                                $url1 =
+                                    Config('constants.MainDomain') .
+                                    '/insights/' .
+                                    $locale .
+                                    '/' .
+                                    strtolower($focusArticle['insight_type']) .
+                                    '/' .
+                                    $slug .
+                                    '.' .
+                                    $focusArticle['news_id'];
+                            }
                         @endphp
 
                         @if ($loop->index < 2)
@@ -122,30 +120,30 @@
             @foreach ($industry_data as $focusArticle)
                 @php
 
-                        if (!empty($focusArticle['slug'])) {
-                            $url2 =
-                                Config('constants.MainDomain') .
-                                '/insights/' .
-                                $locale .
-                                '/' .
-                                strtolower($focusArticle['insight_type']) .
-                                '/' .
-                                $focusArticle['slug'] .
-                                '.' .
-                                $focusArticle['news_id'];
-                        } else {
-                            $slug = Str::slug($focusArticle['title']);
-                            $url2 =
-                                Config('constants.MainDomain') .
-                                '/insights/' .
-                                $locale .
-                                '/' .
-                                strtolower($focusArticle['insight_type']) .
-                                '/' .
-                                $slug .
-                                '.' .
-                                $focusArticle['news_id'];
-                        }
+                    if (!empty($focusArticle['slug'])) {
+                        $url2 =
+                            Config('constants.MainDomain') .
+                            '/insights/' .
+                            $locale .
+                            '/' .
+                            strtolower($focusArticle['insight_type']) .
+                            '/' .
+                            $focusArticle['slug'] .
+                            '.' .
+                            $focusArticle['news_id'];
+                    } else {
+                        $slug = Str::slug($focusArticle['title']);
+                        $url2 =
+                            Config('constants.MainDomain') .
+                            '/insights/' .
+                            $locale .
+                            '/' .
+                            strtolower($focusArticle['insight_type']) .
+                            '/' .
+                            $slug .
+                            '.' .
+                            $focusArticle['news_id'];
+                    }
                 @endphp
                 @if ($loop->index >= 2)
                     <li>

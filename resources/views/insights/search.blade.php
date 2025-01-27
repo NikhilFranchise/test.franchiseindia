@@ -36,7 +36,7 @@
 
                                             $authorUrl = !empty($author->slug)
                                                 ? Config('constants.MainDomain') .
-                                                    '/insights/' . $locale . '/author/' .
+                                                    '/insights/author/' .
                                                     $author->slug .
                                                     '-' .
                                                     $author->author_id

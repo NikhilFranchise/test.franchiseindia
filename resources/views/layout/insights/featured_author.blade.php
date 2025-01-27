@@ -7,7 +7,7 @@
                 @php
                 $locale = App::getLocale();
                 $image = \App\Http\Controllers\InsightsController::authorImageurl($title->image);
-                $authorURL = Config('constants.MainDomain') . "/insights/{$locale}/author/{$title->slug}". "-{$title->author_id}";
+                $authorURL = Config('constants.MainDomain') . "/insights/author/{$title->slug}". "-{$title->author_id}";
                 @endphp
                 <div class="swiper-slide">
                     <div class="home-author-list">

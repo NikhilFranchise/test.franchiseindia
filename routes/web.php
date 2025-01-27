@@ -1091,9 +1091,9 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         Route::get('tag/{tagslug}', function ($tagslug) {
             return redirect()->to("/insights/en/tag/$tagslug", 301);
         });
+        Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
         Route::group(['prefix' => 'en'], function () {
             Route::get('/search',               [InsightsController::class, 'insightSearch']);
-            Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
             Route::get('thanks', function () {
                 return view('insights.thanks');
             })->name('insights.thanks');
@@ -1120,7 +1120,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         /*Language setter*/
         Route::group(['prefix' => 'hi'], function () {
             Route::get('/search',               [InsightsController::class, 'insightSearch']);
-            Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
+            // Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
             Route::get('thanks', function () {
                 return view('insights.thanks');
             })->name('insights.thanks');

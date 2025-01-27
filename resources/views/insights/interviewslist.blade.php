@@ -43,7 +43,7 @@
                                                 $author = $article->author->first();
                                                 $authorname = $author->title ?: 'Franchise India Bureau';
                                                 $slug = $author->slug ?: strtolower(str_replace(' ', '-', $authorname));
-                                                $authorUrl = "{$mainDomain}/insights/{$locale}/author/{$slug}-{$author->author_id}";
+                                                $authorUrl = "{$mainDomain}/insights/author/{$slug}-{$author->author_id}";
                                                 $author_image = $author->image
                                                     ? \App\Http\Controllers\InsightsController::authorImageurl(
                                                         $author->image,

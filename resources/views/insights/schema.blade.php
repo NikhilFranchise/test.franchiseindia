@@ -17,7 +17,7 @@
     $authorSlug = $author_details->slug ?? strtolower(str_replace(' ', '-', $author_details->title));
     //dd($authorSlug);
     $authorUrl =
-        Config('constants.MainDomain') . "/insights/$locale/author/" . $authorSlug . '-' . $author_details->author_id;
+        Config('constants.MainDomain') . "/insights/author/" . $authorSlug . '-' . $author_details->author_id;
 
     $authorImage = !empty($author_details->image)
         ? \App\Http\Controllers\InsightsController::authorImageurl($author_details->image)
