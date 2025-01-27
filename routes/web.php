@@ -133,7 +133,10 @@ Route::get('testimonials-reviews', [StaticPageController::class, 'getTestimonial
 Route::get('sitemap/brands', [BrandFilterController::class, 'brandsitemap']);
 Route::get('sitemap/brands/{abre}',           [BrandFilterController::class, 'brandfilter']);
 Route::get('terms', [StaticPageController::class, 'mainTerm']);
-
+Route::get('/top-franchise-leaders', [StaticPageController::class, 'topfranchiseleads']);
+Route::group(['prefix' => '/top-franchise-leaders'], function () {
+    Route::get('{year}/{slug}/{id}', [StaticPageController::class, 'franchiseleader'])->name('franchiseleader');
+});
 Route::get('privacy_policy', [StaticPageController::class, 'p_popicy']);
 
 Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBystateName']);

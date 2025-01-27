@@ -8,11 +8,12 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 use App\Models\ContentList;
+use App\Models\TopFranchiseLeader;
 use Illuminate\Support\Facades\DB;
 
 class StaticPageController extends Controller
 {
-   /**
+    /**
      * about us page
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -36,22 +37,22 @@ class StaticPageController extends Controller
             ->select('time')
             ->where('status', 1)
             ->orderBy('time', 'ASC')->get()
-            ->groupBy(function($d) {
+            ->groupBy(function ($d) {
                 return Carbon::parse($d->time)->format('Y-m');
             });
 
-        foreach($allData as $key => $val) {
-            array_push($years, substr($key, 0,4));
+        foreach ($allData as $key => $val) {
+            array_push($years, substr($key, 0, 4));
         }
         $years = array_unique($years);
 
 
         foreach (range('a', 'z') as $char) {
 
-            if($alphabetCount == 1)
-                $alpha = $char."to";
+            if ($alphabetCount == 1)
+                $alpha = $char . "to";
 
-            if($alphabetCount == 3) {
+            if ($alphabetCount == 3) {
                 $alphabetCount = 0;
                 $alpha .= $char;
                 $alphabeticalKickers[$alpha] = "";
@@ -64,19 +65,19 @@ class StaticPageController extends Controller
 
         foreach ($alphabeticalKickers as $kickerRange => $output) {
 
-            $startAlphabet = substr($kickerRange,0,1);
-            $endAlphabet = substr($kickerRange,3);
+            $startAlphabet = substr($kickerRange, 0, 1);
+            $endAlphabet = substr($kickerRange, 3);
             $kickerSpecificRange = [];
 
             $data  = ContentList::query()
                 ->select('kicker',  DB::getFacadeRoot()->raw('count(kicker) as count'))
                 ->where('status', 1)
                 ->where('kicker', '!=', '')
-                ->where('kicker', 'LIKE', $startAlphabet.'%');
+                ->where('kicker', 'LIKE', $startAlphabet . '%');
             $checkFirst = 1;
             foreach (range($startAlphabet, $endAlphabet) as $char) {
-                if($checkFirst != 1)
-                    $data  = $data->orWhere('kicker', 'LIKE', $char.'%');
+                if ($checkFirst != 1)
+                    $data  = $data->orWhere('kicker', 'LIKE', $char . '%');
                 $checkFirst++;
             }
 
@@ -129,7 +130,8 @@ class StaticPageController extends Controller
         return view('static.terms');
     }
 
-    public function p_popicy(){
+    public function p_popicy()
+    {
         return view('.static.privacy_policy');
     }
 
@@ -208,11 +210,11 @@ class StaticPageController extends Controller
             'pincode' => 'required|min:6|max:6',
             'city' => 'required|min:3',
             'property_type' => 'required',
-                'property_size' => 'required',
-                'property_value' => 'required',
-                'income_range' => 'required',
-                'loan_range' => 'required',
-                'details' => 'required',
+            'property_size' => 'required',
+            'property_value' => 'required',
+            'income_range' => 'required',
+            'loan_range' => 'required',
+            'details' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -222,10 +224,10 @@ class StaticPageController extends Controller
         $message = "Your details have been submitted successfully";
 
         $source = "DOTCOM";
-        if(!empty(Cookie::get('campaignSource')))
+        if (!empty(Cookie::get('campaignSource')))
             $source = Cookie::get('campaignSource');
 
-        try{
+        try {
             PropertyLoan::query()->insert([
                 'name' => request()->name,
                 'email' => request()->email,
@@ -248,9 +250,23 @@ class StaticPageController extends Controller
                 'source' => $source
             ]);
         } catch (\Exception $e) {
-            $message = "Oops there is an error please try again...". $e->getMessage();
+            $message = "Oops there is an error please try again..." . $e->getMessage();
         }
 
         return view('thanks.thanks', compact('message'));
+    }
+
+
+    public function topfranchiseleads()
+    {
+        $leaders = TopFranchiseLeader::query()->get();
+        return view('static.topfranchiseleaders', compact('leaders'));
+    }
+    public function franchiseleader($year, $slug, $id)
+    {
+        // dd($id);
+        $leader = TopFranchiseLeader::query()->where('id', $id)->first();
+        // dd($leader);
+        return view('static.topfranchiseleaders.leader_profile', compact('leader'));
     }
 }

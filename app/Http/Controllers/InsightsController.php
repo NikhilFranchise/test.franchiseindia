@@ -211,15 +211,17 @@ class InsightsController extends Controller
         if ($insArticles->isEmpty()) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
+        // Get the IDs of articles already shown
+        $insArticleIds = $insArticles->pluck('news_id');
         $popArticles = $model::query()
             ->with('category')
             ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
-            ->where('insight_type', ['Article'])
+            ->where('insight_type', 'Article')
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('cat_id')
             ->where('status', 1)
+            ->whereNotIn('news_id', $insArticleIds) // Exclude already shown articles
             ->orderByDesc('created_at')
-            ->skip(15)
             ->take(6)
             ->get();
 
@@ -247,7 +249,7 @@ class InsightsController extends Controller
 
         if ($interviews->isEmpty()) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
-        } 
+        }
         $popArticles = $model::query()
             ->with('category')
             ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
@@ -259,8 +261,7 @@ class InsightsController extends Controller
             ->take(6)
             ->get();
 
-            return view('insights.interviewslist', compact('interviews','popArticles'));
-        
+        return view('insights.interviewslist', compact('interviews', 'popArticles'));
     }
 
     public function geteventsreports()
@@ -296,8 +297,7 @@ class InsightsController extends Controller
             ->take(6)
             ->get();
 
-            return view('insights.events_reports', compact('events_reports','popArticles'));
-        
+        return view('insights.events_reports', compact('events_reports', 'popArticles'));
     }
 
 
@@ -410,7 +410,6 @@ class InsightsController extends Controller
 
         $popularArticles = $insightListModel::query()->with('category')->where('insight_type', 'Article')
             ->where('status', 1)
-            ->where('cat_id', $category->id)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->orderByDesc('views')
             ->take(6)->get();
@@ -628,14 +627,19 @@ class InsightsController extends Controller
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->orderByDesc('created_at')
-            ->paginate(10);
+            ->paginate(15);
 
         // Apply URL slugs
         $articlesList = CommonController::contentUrlSlug($articlesList);
 
+        $popArticles = $insightModel::query()->with('category')->where('insight_type', 'Article')
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByDesc('created_at')
+            ->take(6)->get();
         // Check for results and return the view or redirect
         if ($articlesList->count() > 0) {
-            return view('insights.insightstags', compact('articlesList', 'seoTag'));
+            return view('insights.insightstags', compact('articlesList', 'seoTag', 'popArticles'));
         }
 
         return redirect($redirectPath);
