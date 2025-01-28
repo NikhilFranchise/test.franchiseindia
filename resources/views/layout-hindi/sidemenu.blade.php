@@ -463,6 +463,9 @@
         <li><a target="_blank" href="https://opportunityindia.com/hindi">समाचार</a></li>
         <li><a href="https://video.franchiseindia.com/" target="_blank">वीडियो</a></li>
         <li><a target="_blank" href="{{ Config('constants.MainDomain') }}/magazine">पत्रिका</a></li>
+        <li><a href="{{ url('top-100-franchise') }}" target="_blank">Top 100 Franchise</a></li>
+            <li><a href="{{ url('/top-franchise-leaders') }}" target="_blank">Top Franchise Leaders</a></li>
+            <li><a href="{{ url('/most-visitedbrands') }}" target="_blank">Most Searched Franchise Brands</a></li>
     </ul>
 
     <div class="categoryall-franchise border-bottom-1">

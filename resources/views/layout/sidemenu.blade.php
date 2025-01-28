@@ -221,6 +221,7 @@
             <a target="_blank" href="https://master.franchiseindia.com/magazine-subscribe/">Magazine</a>
         </li>
 		<li><a href="{{ url('top-100-franchise') }}" target="_blank">Top 100 Franchise</a></li>
+		<li><a href="{{ url('/top-franchise-leaders') }}" target="_blank">Top Franchise Leaders</a></li>
 		<li><a href="{{ url('/most-visitedbrands') }}" target="_blank">Most Searched Franchise Brands</a></li>
     </ul>
 
