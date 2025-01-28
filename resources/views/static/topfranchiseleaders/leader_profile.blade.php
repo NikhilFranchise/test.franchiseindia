@@ -1,5 +1,5 @@
 @extends('layout.master')
-@section('seoTitle','Sanjay Raghuraman - CEO of Kalyan Jewellers | Franchise Leader 2024')
+@section('seoTitle',"{$leader->name} - {$leader->designation}". " | Franchise Leader 2024")
 @section('content')
     <!--TOP 50 FRANCHISE LEADERS -->
     <style>
