@@ -1,5 +1,5 @@
 @extends('layout.master')
-@section('seodesignation', 'Top 50 Leaders in Franchising - 2024')
+@section('seoTitle', 'Top 50 Leaders in Franchising - 2024')
 @section('content')
     <style>
         .back-btns a,
