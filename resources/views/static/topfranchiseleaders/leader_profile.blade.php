@@ -1,5 +1,6 @@
 @extends('layout.master')
-@section('seoTitle',"{$leader->name} - {$leader->designation}". " | Franchise Leader 2024")
+@section('seoTitle',$leader->seoTitle)
+@section('seoDesc',$leader->seoDescription)
 @section('content')
     <!--TOP 50 FRANCHISE LEADERS -->
     <style>
