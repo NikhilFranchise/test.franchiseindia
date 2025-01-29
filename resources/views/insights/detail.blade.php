@@ -166,163 +166,64 @@ $authorImage = !empty($author_details->image)
                {{-- ads for mobile & desktop --}}
                <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
                <div class="articlecontent">
-                  {{-- @php
-                  $custom_data = explode("\r\n", $newsDetails->content); // Split content into paragraphs
-                  $totalParagraphs = count($custom_data); // Get the total paragraph count
-                  $articleData = []; // Initialize array for final content with ads
-                  $adsInserted = 1;
-                  $i = 0;
-                  foreach ($custom_data as $index => $cdata) {
-                  $articleData[] = $cdata; // Add the paragraph content
-                  // Add ads dynamically based on the interval and maximum ads allowed
-                  if ($index == 6) {
-                  $articleData[] = '
-                  <div class="inner-article-detail-desktop-ad">
-                     <div id="adslotInline_1_300x250">
-                        <script>
-                           googletag.cmd.push(function() {
-                               googletag.display("adslotInline_1_300x250");
-                           });
-                        </script>
-                     </div>
-                  </div>
-                  ';
-                  $adsInserted++;
-                  $i++;
-                  } elseif ($index == 10) {
-                  $articleData[] = '
-                  <div id="v-franchiseindia">
-                     <div class="inner-article-detail-desktop-ad">
-                        <div id="adslotInline_2_300x250">
-                           <script>
-                              googletag.cmd.push(function() {
-                                  googletag.display("adslotInline_2_300x250");
-                              });
-                           </script>
-                        </div>
-                     </div>
-                  </div>
-                  ';
-                  $adsInserted++;
-                  $i++;
-                  } elseif ($index == 16) {
-                  $articleData[] = '
-                  <div id="v-franchiseindia">
-                     <div class="inner-article-detail-desktop-ad">
-                        <div id="adslotInline_3_300x250">
-                           <script>
-                              googletag.cmd.push(function() {
-                                  googletag.display("adslotInline_3_300x250");
-                              });
-                           </script>
-                        </div>
-                     </div>
-                  </div>
-                  ';
-                  $adsInserted++;
-                  $i++;
-                  } elseif ($index == 25) {
-                  $articleData[] = '
-                  <div id="v-franchiseindia">
-                     <div class="inner-article-detail-desktop-ad">
-                        <div id="adslotInline_4_300x250">
-                           <script>
-                              googletag.cmd.push(function() {
-                                  googletag.display("adslotInline_4_300x250");
-                              });
-                           </script>
-                        </div>
-                     </div>
-                  </div>
-                  ';
-                  $adsInserted++;
-                  $i++;
-                  } elseif ($totalParagraphs > 25) {
-                  dd($custom_data,$totalParagraphs);
-                  $articleData[] = '
-                  <div id="v-franchiseindia">
-                     <div class="inner-article-detail-desktop-ad">
-                        <div id="adslot728x90_BTF">
-                           <script>
-                              googletag.cmd.push(function() {
-                                  googletag.display("adslot728x90_BTF");
-                              });
-                           </script>
-                        </div>
-                     </div>
-                  </div>
-                  ';
-                  $adsInserted++;
-                  $i++;
-                  } else {
-                  $articleData[] = '
-                  <div id="v-franchiseindia">
-                     <div class="inner-article-detail-desktop-ad">
-                        <div id="adslotInline_5_300x250">
-                           <script>
-                              googletag.cmd.push(function() {
-                                  googletag.display("adslotInline_5_300x250");
-                              });
-                           </script>
-                        </div>
-                     </div>
-                  </div>
-                  ';
-                  $adsInserted++;
-                  $i++;
-                  }
-                  }
-                  $resultArticle = implode("\r\n", $articleData); // Combine the content with ads
-                  @endphp
-                  {!! $resultArticle !!} --}}
-                  @php
-                  $custom_data = explode("\r\n", $newsDetails->content); // Split content into paragraphs
-                  $totalParagraphs = count($custom_data); // Get the total paragraph count
-                  $articleData = []; // Initialize array for final content with ads
-                  $adSlots = [
-                  'adslotInline_1_300x250',
-                  'adslotInline_2_300x250',
-                  'adslotInline_3_300x250',
-                  'adslotInline_4_300x250',
-                  'adslotInline_5_300x250',
-                  ];
-                  $totalAdSlots = count($adSlots); // Total available ad slots
-                  $adsInserted = 0; // Counter for ads inserted
-                  $adInterval = 0; // Initialize ad interval based on content length
-                  // Determine the ad interval based on the content length
-                  if ($totalParagraphs > 100) {
-                  $adInterval = 10; // Insert ad after every 10 paragraphs
-                  } elseif ($totalParagraphs >= 50 && $totalParagraphs <= 100) {
-                  $adInterval = 8; // Insert ad after every 8 paragraphs
-                  } elseif ($totalParagraphs >= 10 && $totalParagraphs <= 50) {
-                  $adInterval = 5; // Insert ad after every 5 paragraphs
-                  } else {
-                  $adInterval = 5; // Default to inserting ad every 5 paragraphs
-                  }
-                  // Calculate the number of ads to be inserted by dividing totalParagraphs by adInterval
-                  $adInsertCount = floor($totalParagraphs / $adInterval);
-                  foreach ($custom_data as $index => $cdata) {
-                  $articleData[] = $cdata; // Add the paragraph content
-                  // Insert ads based on calculated ad insert count
-                  if ($adsInserted < $adInsertCount && ($index + 1) % $adInterval == 0) {
-                  $adSlotId = $adSlots[$adsInserted]; // Use the next available ad slot
-                  $articleData[] ='
-                  <div class="inner-article-detail-desktop-ad">
-                     <div id="' . $adSlotId . '">
-                        <script>
-                           googletag.cmd.push(function() {googletag.display("' .  $adSlotId . '");
-                           }); 
-                        </script>
-                     </div>
-                  </div>
-                  ';
-                  $adsInserted++; // Increment the ads inserted counter
-                  }
-                  }
-                  // Combine the content with ads into a single string
-                  $resultArticle = implode("\r\n", $articleData);
-                  @endphp
-                  {!! $resultArticle !!}
+                @php
+                $custom_data = explode("\r\n", $newsDetails->content); // Split content into paragraphs
+                $totalParagraphs = count($custom_data); // Get the total paragraph count
+                
+                $articleData = []; // Initialize array for final content with ads
+                $adSlots = [
+                    'adslotInline_1_300x250',
+                    'adslotInline_2_300x250',
+                    'adslotInline_3_300x250',
+                    'adslotInline_4_300x250',
+                    'adslotInline_5_300x250',
+                ];
+                $totalAdSlots = count($adSlots); // Total available ad slots
+                $adsInserted = 0; // Counter for ads inserted
+                $adInterval = 0; // Initialize ad interval based on content length
+            
+                // Determine the ad interval based on the content length
+                if ($totalParagraphs > 100) {
+                    $adInterval = 10; // Insert ad after every 10 paragraphs
+                } elseif ($totalParagraphs >= 50 && $totalParagraphs <= 100) {
+                    $adInterval = 8; // Insert ad after every 8 paragraphs
+                } elseif ($totalParagraphs >= 10 && $totalParagraphs <= 50) {
+                    $adInterval = 5; // Insert ad after every 5 paragraphs
+                } else {
+                    $adInterval = 5; // Default to inserting ad every 5 paragraphs
+                }
+            
+                // Calculate the number of ads to be inserted by dividing totalParagraphs by adInterval
+                $adInsertCount = floor($totalParagraphs / $adInterval);
+            
+                foreach ($custom_data as $index => $cdata) {
+                    $articleData[] = $cdata; // Add the paragraph content
+                    
+                    // Insert ads based on calculated ad insert count
+                    if ($adsInserted < $adInsertCount && ($index + 1) % $adInterval == 0) {
+                        // Use the next available ad slot, cycling through the ad slots
+                        $adSlotId = $adSlots[$adsInserted % $totalAdSlots]; // Use modulo to cycle through ad slots
+                        
+                        $articleData[] = '<div class="inner-article-detail-desktop-ad">
+                            <div id="' . $adSlotId . '">
+                                <script>
+                                    googletag.cmd.push(function() {
+                                        googletag.display("' . $adSlotId . '");
+                                    });
+                                </script>
+                            </div>
+                        </div>';
+                        
+                        $adsInserted++; // Increment the ads inserted counter
+                    }
+                }
+            
+                // Combine the content with ads into a single string
+                $resultArticle = implode("\r\n", $articleData);
+            @endphp
+            
+            {!! $resultArticle !!}
+            
                </div>
                @if (!empty($franchiseData))
                <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px;">
