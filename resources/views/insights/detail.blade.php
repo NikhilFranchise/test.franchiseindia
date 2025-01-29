@@ -168,7 +168,12 @@
                         <div class="articlecontent">
                             @php
                                 $custom_data = explode("\r\n", $newsDetails->content); // Split content into paragraphs
-                                $totalParagraphs = count($custom_data); // Get the total paragraph count
+                                
+                                // Exclude paragraphs with tables from the total paragraph count
+                                $filteredParagraphs = array_filter($custom_data, function($cdata) {
+                                    return stripos($cdata, '<table') === false;
+                                });
+                                $totalParagraphs = count($filteredParagraphs);
                         
                                 $articleData = []; // Initialize array for final content with ads
                                 $adSlots = [
@@ -183,7 +188,7 @@
                                 $adInterval = 5; // Default ad interval
                                 $lastAdIndex = -1; // Track last ad index to prevent consecutive ads
                         
-                                // Determine the ad interval based on the content length
+                                // Determine the ad interval based on the filtered content length
                                 if ($totalParagraphs > 100) {
                                     $adInterval = 10;
                                 } elseif ($totalParagraphs >= 50) {
@@ -194,6 +199,7 @@
                         
                                 // Calculate the number of ads to be inserted
                                 $adInsertCount = floor($totalParagraphs / $adInterval);
+                                $nonTableParagraphCount = 0;
                         
                                 foreach ($custom_data as $index => $cdata) {
                                     $isTable = stripos($cdata, '<table') !== false;
@@ -233,20 +239,23 @@
                                         $lastAdIndex = $index;
                                     }
                         
-                                    // Insert ads at the usual interval, ensuring they do not cluster around tables and aren't consecutive
-                                    if (!$isTable && $adsInserted < $adInsertCount && ($index + 1) % $adInterval == 0 && $lastAdIndex !== $index - 1) {
-                                        $adSlotId = $adSlots[$adsInserted % $totalAdSlots];
-                                        $articleData[] = '<div class="inner-article-detail-desktop-ad">
-                                            <div id="' . $adSlotId . '">
-                                                <script>
-                                                    googletag.cmd.push(function() {
-                                                        googletag.display("' . $adSlotId . '");
-                                                    });
-                                                </script>
-                                            </div>
-                                        </div>';
-                                        $adsInserted++;
-                                        $lastAdIndex = $index;
+                                    // Count only non-table paragraphs for ad insertion
+                                    if (!$isTable) {
+                                        $nonTableParagraphCount++;
+                                        if ($adsInserted < $adInsertCount && $nonTableParagraphCount % $adInterval == 0 && $lastAdIndex !== $index - 1) {
+                                            $adSlotId = $adSlots[$adsInserted % $totalAdSlots];
+                                            $articleData[] = '<div class="inner-article-detail-desktop-ad">
+                                                <div id="' . $adSlotId . '">
+                                                    <script>
+                                                        googletag.cmd.push(function() {
+                                                            googletag.display("' . $adSlotId . '");
+                                                        });
+                                                    </script>
+                                                </div>
+                                            </div>';
+                                            $adsInserted++;
+                                            $lastAdIndex = $index;
+                                        }
                                     }
                                 }
                         
