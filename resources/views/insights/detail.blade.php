@@ -284,12 +284,9 @@
                             {!! $resultArticle !!} --}}
                             @php
                                 $custom_data = explode("\r\n", $newsDetails->content); // Split content into paragraphs
-
                                 $totalParagraphs = count($custom_data); // Get the total paragraph count
-                                                                
+
                                 $articleData = []; // Initialize array for final content with ads
-                                //dd($articleData);
-                                // Define the static ad IDs
                                 $adSlots = [
                                     'adslotInline_1_300x250',
                                     'adslotInline_2_300x250',
@@ -298,42 +295,41 @@
                                     'adslotInline_5_300x250',
                                 ];
                                 $totalAdSlots = count($adSlots); // Total available ad slots
-                                // dd($totalAdSlots);
                                 $adsInserted = 0; // Counter for ads inserted
                                 $adInterval = 0; // Initialize ad interval based on content length
 
                                 // Determine the ad interval based on the content length
                                 if ($totalParagraphs > 100) {
-                                    $adInterval = 10;
-                                    // dd('hello');
+                                    $adInterval = 10; // Insert ad after every 10 paragraphs
                                 } elseif ($totalParagraphs >= 50 && $totalParagraphs <= 100) {
-                                    $adInterval = 8;
-                                    // dd('/hello');
+                                    $adInterval = 8; // Insert ad after every 8 paragraphs
                                 } elseif ($totalParagraphs >= 10 && $totalParagraphs <= 50) {
-                                    $adInterval = 5;
+                                    $adInterval = 5; // Insert ad after every 5 paragraphs
                                 } else {
-                                    $adInterval = 5;
+                                    $adInterval = 5; // Default to inserting ad every 5 paragraphs
                                 }
+
+                                // Calculate the number of ads to be inserted by dividing totalParagraphs by adInterval
+                                $adInsertCount = floor($totalParagraphs / $adInterval);
 
                                 foreach ($custom_data as $index => $cdata) {
                                     $articleData[] = $cdata; // Add the paragraph content
 
-                                    // Insert ads dynamically based on the calculated interval
-                                    if (
-                                        $adInterval > 0 &&
-                                        ($index + 1) % $adInterval == 0 &&
-                                        $adsInserted < $totalAdSlots
-                                    ) {
+                                    // Insert ads based on calculated ad insert count
+                                    if ($adsInserted < $adInsertCount && ($index + 1) % $adInterval == 0) {
                                         $adSlotId = $adSlots[$adsInserted]; // Use the next available ad slot
-                                        $articleData[] = '<div class="inner-article-detail-desktop-ad">
-                                            <div id="' . $adSlotId . '">
-                                                <script>
-                                                        googletag.cmd.push(function() {
-                                                        googletag.display("' . $adSlotId . '");
-                                                         });
-                                                </script>
-                                            </div>
-                                         </div>';
+                                        $articleData[] =
+                                            '<div class="inner-article-detail-desktop-ad">
+                <div id="' .
+                                            $adSlotId .
+                                            '">
+                    <script>
+                        googletag.cmd.push(function() {
+                            googletag.display("' . $adSlotId . '");
+                        });
+                    </script>
+                </div>
+            </div>';
                                         $adsInserted++; // Increment the ads inserted counter
                                     }
                                 }
@@ -343,7 +339,6 @@
                             @endphp
 
                             {!! $resultArticle !!}
-
 
                         </div>
 
