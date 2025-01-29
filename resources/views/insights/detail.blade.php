@@ -200,31 +200,16 @@
                                 // Calculate the number of ads to be inserted
                                 $adInsertCount = floor($totalParagraphs / $adInterval);
                                 $nonTableParagraphCount = 0;
+                                $adsPlacedIndexes = [];
                         
                                 foreach ($custom_data as $index => $cdata) {
                                     $isTable = stripos($cdata, '<table') !== false;
                         
-                                    // Insert ad before the table if there wasn't an ad inserted immediately before
-                                    if ($isTable && $adsInserted < $totalAdSlots && $lastAdIndex !== $index - 1) {
-                                        $adSlotId = $adSlots[$adsInserted % $totalAdSlots];
-                                        $articleData[] = '<div class="inner-article-detail-desktop-ad">
-                                            <div id="' . $adSlotId . '">
-                                                <script>
-                                                    googletag.cmd.push(function() {
-                                                        googletag.display("' . $adSlotId . '");
-                                                    });
-                                                </script>
-                                            </div>
-                                        </div>';
-                                        $adsInserted++;
-                                        $lastAdIndex = $index;
-                                    }
-                        
                                     // Add the actual paragraph content
                                     $articleData[] = $cdata;
                         
-                                    // Insert ad after the table if there wasn't an ad inserted immediately before
-                                    if ($isTable && $adsInserted < $totalAdSlots && $lastAdIndex !== $index) {
+                                    // Insert an ad before the table if it hasn't been placed consecutively
+                                    if ($isTable && $adsInserted < $totalAdSlots && !in_array($index - 1, $adsPlacedIndexes)) {
                                         $adSlotId = $adSlots[$adsInserted % $totalAdSlots];
                                         $articleData[] = '<div class="inner-article-detail-desktop-ad">
                                             <div id="' . $adSlotId . '">
@@ -236,13 +221,29 @@
                                             </div>
                                         </div>';
                                         $adsInserted++;
-                                        $lastAdIndex = $index;
+                                        $adsPlacedIndexes[] = $index;
+                                    }
+                        
+                                    // Insert an ad after the table if it hasn't been placed consecutively
+                                    if ($isTable && $adsInserted < $totalAdSlots && !in_array($index, $adsPlacedIndexes)) {
+                                        $adSlotId = $adSlots[$adsInserted % $totalAdSlots];
+                                        $articleData[] = '<div class="inner-article-detail-desktop-ad">
+                                            <div id="' . $adSlotId . '">
+                                                <script>
+                                                    googletag.cmd.push(function() {
+                                                        googletag.display("' . $adSlotId . '");
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>';
+                                        $adsInserted++;
+                                        $adsPlacedIndexes[] = $index;
                                     }
                         
                                     // Count only non-table paragraphs for ad insertion
                                     if (!$isTable) {
                                         $nonTableParagraphCount++;
-                                        if ($adsInserted < $adInsertCount && $nonTableParagraphCount % $adInterval == 0 && $lastAdIndex !== $index - 1) {
+                                        if ($adsInserted < $adInsertCount && $nonTableParagraphCount % $adInterval == 0 && !in_array($index - 1, $adsPlacedIndexes)) {
                                             $adSlotId = $adSlots[$adsInserted % $totalAdSlots];
                                             $articleData[] = '<div class="inner-article-detail-desktop-ad">
                                                 <div id="' . $adSlotId . '">
@@ -254,9 +255,24 @@
                                                 </div>
                                             </div>';
                                             $adsInserted++;
-                                            $lastAdIndex = $index;
+                                            $adsPlacedIndexes[] = $index;
                                         }
                                     }
+                                }
+                        
+                                // Ensure at least one ad is placed near the end of the article
+                                if ($adsInserted < $totalAdSlots) {
+                                    $adSlotId = $adSlots[$adsInserted % $totalAdSlots];
+                                    $articleData[] = '<div class="inner-article-detail-desktop-ad">
+                                        <div id="' . $adSlotId . '">
+                                            <script>
+                                                googletag.cmd.push(function() {
+                                                    googletag.display("' . $adSlotId . '");
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>';
+                                    $adsInserted++;
                                 }
                         
                                 // Combine the content with ads into a single string
@@ -264,7 +280,8 @@
                             @endphp
                         
                             {!! $resultArticle !!}
-                        </div>                        
+                        </div>
+                                                
                         @if (!empty($franchiseData))
                             <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px;">
                                 <h4 style="margin-top:15px">Interested in Franchise:</h4>
