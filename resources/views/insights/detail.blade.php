@@ -24,8 +24,7 @@
     //$author_details
     $authorSlug = $author_details->slug ?? strtolower(str_replace(' ', '-', $author_details->title));
     //dd($authorSlug);
-    $authorUrl =
-        Config('constants.MainDomain') . "/insights/author/" . $authorSlug . '-' . $author_details->author_id;
+    $authorUrl = Config('constants.MainDomain') . '/insights/author/' . $authorSlug . '-' . $author_details->author_id;
 
     $authorImage = !empty($author_details->image)
         ? \App\Http\Controllers\InsightsController::authorImageurl($author_details->image)
@@ -285,9 +284,11 @@
                             {!! $resultArticle !!} --}}
                             @php
                                 $custom_data = explode("\r\n", $newsDetails->content); // Split content into paragraphs
-                                $totalParagraphs = count($custom_data); // Get the total paragraph count
-                                $articleData = []; // Initialize array for final content with ads
 
+                                $totalParagraphs = count($custom_data); // Get the total paragraph count
+                                                                
+                                $articleData = []; // Initialize array for final content with ads
+                                //dd($articleData);
                                 // Define the static ad IDs
                                 $adSlots = [
                                     'adslotInline_1_300x250',
@@ -297,16 +298,20 @@
                                     'adslotInline_5_300x250',
                                 ];
                                 $totalAdSlots = count($adSlots); // Total available ad slots
-
+                                // dd($totalAdSlots);
                                 $adsInserted = 0; // Counter for ads inserted
                                 $adInterval = 0; // Initialize ad interval based on content length
 
                                 // Determine the ad interval based on the content length
                                 if ($totalParagraphs > 100) {
                                     $adInterval = 10;
-                                } elseif ($totalParagraphs > 80 && $totalParagraphs <= 100) {
+                                    // dd('hello');
+                                } elseif ($totalParagraphs >= 50 && $totalParagraphs <= 100) {
                                     $adInterval = 8;
-                                } elseif ($totalParagraphs >= 50 && $totalParagraphs <= 80) {
+                                    // dd('/hello');
+                                } elseif ($totalParagraphs >= 10 && $totalParagraphs <= 50) {
+                                    $adInterval = 5;
+                                } else {
                                     $adInterval = 5;
                                 }
 
@@ -320,19 +325,15 @@
                                         $adsInserted < $totalAdSlots
                                     ) {
                                         $adSlotId = $adSlots[$adsInserted]; // Use the next available ad slot
-                                        $articleData[] =
-                                            '
-                <div class="inner-article-detail-desktop-ad">
-                    <div id="' .
-                                            $adSlotId .
-                                            '">
-                        <script>
-                            googletag.cmd.push(function() {
-                                googletag.display("' . $adSlotId . '");
-                            });
-                        </script>
-                    </div>
-                </div>';
+                                        $articleData[] = '<div class="inner-article-detail-desktop-ad">
+                                            <div id="' . $adSlotId . '">
+                                                <script>
+                                                        googletag.cmd.push(function() {
+                                                        googletag.display("' . $adSlotId . '");
+                                                         });
+                                                </script>
+                                            </div>
+                                         </div>';
                                         $adsInserted++; // Increment the ads inserted counter
                                     }
                                 }

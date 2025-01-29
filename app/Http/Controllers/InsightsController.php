@@ -499,8 +499,7 @@ class InsightsController extends Controller
             $authorId = $newsDetails->author_id;
         }
         // dd($authorId);
-        $author_details = AuthorList::query()->where('author_id', '=', $authorId)->first();
-        // dd($author_details);
+        $author_details = AuthorList::query()->where('author_id', $authorId)->first();
 
         // Fetch associated tags
         $associatedTags = $tagTable::query()
@@ -548,10 +547,12 @@ class InsightsController extends Controller
 
         $trendingArticles = $newsModel::with(['category', 'Subcategory'])
             ->where('status', 1)
+            ->where('cat_id', $newsDetails->category[0]->id)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Article')
             ->orderByDesc('created_at')
             ->take(6)->get();
+        // dd($trendingArticles);
         $trendingArticles = CommonController::contentUrlSlug($trendingArticles);
 
         // Return view with compacted variables
@@ -572,13 +573,12 @@ class InsightsController extends Controller
             ->where('status', 1)
             ->where(function ($query) use ($search) {
                 $query->where('title', 'LIKE', '%' . $search . '%');
-                //->orWhere('kicker', 'LIKE', '%' . $search . '%');
             })
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id');
         $articlesList = $query->orderByDesc('created_at')->paginate(10);
-
+        $ids = $query->pluck('news_id');
         // Count matching articles
 
         if ($articlesList->count() < 1) {
@@ -586,9 +586,16 @@ class InsightsController extends Controller
         }
 
         $articlesList = CommonController::contentUrlSlug($articlesList);
-
+        $popArticles = $insightModel::with('category')
+            ->where('status', 1)
+            ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($search) . '([[:space:]]|$)'])
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('cat_id')
+            ->whereNotIn('news_id', $ids)
+            ->orderByDesc('created_at')
+            ->limit(6)->get();
         // Return the view
-        return view('insights.search', compact('articlesList', 'search'));
+        return view('insights.search', compact('articlesList', 'search', 'popArticles'));
     }
 
 

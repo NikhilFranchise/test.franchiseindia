@@ -1,123 +1,160 @@
 @extends('layout.insights.master')
 @section('content')
     <div class="maininnver homeh">
-        <div class="container">
-
-            <h1 class="cathead">Search for {{ Illuminate\Support\Str::limit($search, 30, '...') }}</h1>
-
+        <div class="inner-top-head">
+            <div class="container">
+                <h1>Search for {{ Illuminate\Support\Str::limit($search, 30, '...') }}</h1>
+            </div>
         </div>
+        <div class="authblk">
+            <div class="container">
+                <ul class="nabva">
+                    <li><a href="{{ url('/insights') }}">Home</a></li>
+                    <li>/</li>
+                    <li>Search for {{ Illuminate\Support\Str::limit($search, 30, '...') }}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="stories">
+            <div class="container">
+                <h3>Search for {{ Illuminate\Support\Str::limit($search, 30, '...') }}</h3>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="tab-content">
+                            <div class="tab-pane active stab" id="latest">
+                                <ul>
+                                    @forelse ($articlesList as $article)
+                                        @php
+                                            $locale = App::getLocale();
+                                            $mainDomain = Config('constants.MainDomain');
+                                            $image = \App\Http\Controllers\InsightsController::createimgurl(
+                                                $article->image,
+                                            );
+                                            $url =
+                                                "{$mainDomain}/insights/{$locale}/" .
+                                                strtolower($article->insight_type) .
+                                                "/{$article->slug}.{$article->news_id}";
+                                            // Default author values
+                                            $authorname = 'Franchise India Bureau';
+                                            $authorUrl = '#';
+                                            $author_image = url('images/defaultuser.png');
+                                            // Check and set author details if available
+                                            if ($article->author->isNotEmpty()) {
+                                                $author = $article->author->first();
+                                                $authorname = $author->title ?: 'Franchise India Bureau';
+                                                $slug = $author->slug ?: strtolower(str_replace(' ', '-', $authorname));
+                                                $authorUrl = "{$mainDomain}/insights/author/{$slug}-{$author->author_id}";
+                                                $author_image = $author->image
+                                                    ? \App\Http\Controllers\InsightsController::authorImageurl(
+                                                        $author->image,
+                                                    )
+                                                    : $author_image;
+                                            }
+                                        @endphp
+                                        <li>
+                                            <div class="author-fresh">
+                                                <div class="author-latest-pic">
+                                                    <a href="{{ $url }}"><img src="{{ $image }}"
+                                                            alt="{{ $article->title }} image" class="img-fluid"></a>
+                                                </div>
+                                                <div class="author-fresh-cont">
+                                                    <div class="author-latest-title"><a
+                                                            href="{{ $url }}">{{ $article->title }}</a></div>
+                                                    <p>{!! html_entity_decode(\Illuminate\Support\Str::words($article->shortDesc, 22, ' ...')) !!}</p>
+                                                    <ul class="art-detail-read">
+                                                        <li>By - <a href="{{ $authorUrl }}"
+                                                                hreflang="{{ $locale }}">{{ $authorname }}</a>
+                                                        </li>
+                                                        <li><time datetime="33Z"
+                                                                class="datetime">{{ date('M d, Y', strtotime($article->created_at)) }}</time>/
+                                                            {{ app\Http\Controllers\InsightsController::calculateReadTime($article) }}
+                                                            MIN READ</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @empty
+                                        <p>No Records.</p>
+                                    @endforelse
+                                </ul>
+                                <div class="video-pagination">
+                                    {{ $articlesList->links('pagination::bootstrap-4') }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contentarea">
+                            @include('layout.insights.subscribenewsletter')
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        {{-- ads section start here --}}
+                        <div class="ad-right-author">
+                            <div id='adslot300x250_ATF'>
+                                <script>
+                                    googletag.cmd.push(function() {
+                                        googletag.display('adslot300x250_ATF');
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        {{-- ads section end here --}}
+                        <div class="popular-articles">
+                            <div class="popular-title">Related Articles</div>
+                            <ul class="popular-list">
+                                @forelse ($popArticles as $popular)
+                                    @php
+                                        $image = \App\Http\Controllers\InsightsController::createimgurl(
+                                            $popular->image,
+                                        );
+                                        $popUrl =
+                                            "{$mainDomain}/insights/{$locale}/" .
+                                            strtolower($popular->insight_type) .
+                                            "/{$popular->slug}.{$popular->news_id}";
+                                    @endphp
+                                    <li>
+                                        @foreach ($popular->category as $cat)
+                                            @php
+                                                $catURL = "{$mainDomain}/insights/{$locale}/{$cat->slug}";
+                                                $catName = $cat->catname;
+                                            @endphp
+                                            <div class="popular-sub"><a href="{{ $catURL }}"
+                                                    hreflang="{{ $locale }}">{{ ucwords($catName) }}</a>
+                                            </div>
+                                        @endforeach
+                                        <div class="popular-head"><a href="{{ $popUrl }}">{{ $popular->title }}</a>
+                                        </div>
+                                    </li>
+                                @empty
+                                    <center>
+                                        <p>No Results.</p>
+                                    </center>
+                                @endforelse
+                            </ul>
+                        </div>
+                        {{-- ads section start here --}}
+                        <div class="ad-right-sticky">
+                            <div id="adslot300x250_1">
+                                <script>
+                                    googletag.cmd.push(function() {
+                                        googletag.display('adslot300x250_1');
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        {{-- ads section end here --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        @include('layout.insights.brandlist')
+
+        @include('layout.insights.magblock')
 
         <div class="listblk">
             <div class="container">
                 <ul class="artilsit">
-                    @foreach ($articlesList as $article)
-                        @php
-
-                            //$image = Config('constants.awsS3Url') . $article->image;
-                            $locale = App::getLocale();
-                            $url = Config('constants.MainDomain') . '/insights/' . $locale . '/' . strtolower($article->insight_type) .
-                                '/' . $article->slug . '.' . $article->news_id;
-                        @endphp
-                        <li>
-                            <div class="artimgblk">
-                                <a href="{{ $url }}"><img
-                                        src="{{ \App\Http\Controllers\InsightsController::createimgurl($article->image) }}"
-                                        alt="{{ $article->title . ' image' }}" /></a>
-                            </div>
-                            <div class="artcontent">
-                                <div class="haedname"><a href="{{ $url }}">{{ $article->title }}</a></div>
-                                @if (!empty($article->author))
-                                    @foreach ($article->author as $author)
-                                        @php
-                                            $authorname = $author->title;
-                                            $author_image = !empty($author->image)
-                                                ? \App\Http\Controllers\InsightsController::authorImageurl(
-                                                    $author->image) : url('images/defaultuser.png');
-
-                                            $authorUrl = !empty($author->slug)
-                                                ? Config('constants.MainDomain') .
-                                                    '/insights/author/' .
-                                                    $author->slug .
-                                                    '-' .
-                                                    $author->author_id
-                                                : Config('constants.MainDomain') .
-                                                    '/insights/' . $locale . '/author/' .
-                                                    strtolower(str_replace(' ', '-', $author->title)) .
-                                                    '-' .
-                                                    $author->author_id;
-                                        @endphp
-                                        <div class="authblk cot">
-                                            <div class="autimg"><img src="{{ $author_image }}" alt="{{ $authorname }}" />
-                                            </div>
-                                            <div class="autinfo">
-                                                <span><a href="{{ $authorUrl }}">{{ $authorname }}</a></span>
-                                                {{ date('M d, Y', strtotime($article->created_at)) }} -
-                                                {{ \App\Http\Controllers\InsightsController::calculateReadTime($article) }}
-                                                min
-                                                read
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                @endif
-                                <div class="stext">
-
-                                    {{ html_entity_decode(strip_tags(\Illuminate\Support\Str::words($article->content, 55, ' ...')), ENT_QUOTES | ENT_HTML5, 'UTF-8') }}
-                                </div>
-                                <div class="scbk">
-
-                                    <div class="shrblk">
-                                        <span class="inshrblk">
-                                            <a href="#">
-                                                <img src="{{ url('insight-new/images/smallshare.svg') }}"
-                                                    class="inimg" />Share
-                                                <div class="sfv">
-                                                    <div class="innersfv"
-                                                        onclick="window.open('https://www.facebook.com/FranchiseIndiaMedia','_blank')">
-                                                        <img src="{{ url('insight-new/images/facebookcard.svg') }}" />
-                                                    </div>
-                                                    <div class="innersfv"
-                                                        onclick="window.open('https://twitter.com/FranchiseIndia','_blank')">
-                                                        <img src="{{ url('insight-new/images/twittercard.svg') }}" />
-                                                    </div>
-                                                    <div class="innersfv"
-                                                        onclick="window.open('https://www.instagram.com/franchiseindia_/','_blank')">
-                                                        <img
-                                                            src="https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg" />
-                                                    </div>
-                                                    <div class="innersfv"
-                                                        onclick="window.open('https://www.youtube.com/user/FranchiseIndia','_blank')">
-                                                        <img
-                                                            src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg" />
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    @endforeach
-
                 </ul>
-                <div class="video-pagination">
-                {{ $articlesList->links('pagination::bootstrap-5') }}
-            </div>
             </div>
         </div>
 
-        <!-- mag block strat  -->
-        @include('layout.insights.magblock')
-        <!-- mag block end   -->
-
-        <!-- another list start here   -->
-        <div class="listblk">
-
-        </div>
-
-        <!-- another list end here  -->
-
-
-
-        @include('layout.insights.brandlist')
-    </div>
-@endsection
+    @endsection
