@@ -1988,7 +1988,7 @@ class BusinessListingController extends Controller
         }
 
         $count = request()->segment(1) == 'amp' ? 20 : 21;
-
+        $franData = $franData->orderBy('membership_weightage', 'desc');
         $brandResults = $franData->paginate($count);
         // dd($brandResults->pluck('fran_detail_id'));
            // Get the current page and last page
