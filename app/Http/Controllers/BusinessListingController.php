@@ -1986,8 +1986,8 @@ class BusinessListingController extends Controller
         }
 
         if ($cid[0] == 'm') {
-            // $franData->where('ind_main_cat', $cid[1])->orderby('is_fixed_brand', 'desc');
-            $franData->where('ind_main_cat', $cid[1])->orderby('membership_weightage', 'desc');
+            $franData->where('ind_main_cat', $cid[1])->orderby('is_fixed_brand', 'desc');
+            // $franData->where('ind_main_cat', $cid[1])->orderby('membership_weightage', 'desc');
 
             $mainCatId = $cid[1];
             // dd($mainCatId);
@@ -1995,7 +1995,7 @@ class BusinessListingController extends Controller
         $franData= $franData->distinct();
 
         $count = request()->segment(1) == 'amp' ? 20 : 21;
-        $brandResults = $franData->orderby('membership_weightage','desc')->paginate($count);
+        $brandResults = $franData->orderby('membership_weightage','desc') ->orderby('fran_detail_id', 'asc') ->paginate($count);
         // dd($brandResults->pluck('fran_detail_id'));
            // Get the current page and last page
         $currentPage = $brandResults->currentPage();
