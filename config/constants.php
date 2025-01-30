@@ -528,16 +528,9 @@ return [
         4 => "MLM",
         6 => "C & F",
         8 => "Agent",
-<<<<<<< HEAD
         9 => "Channel Partner",
         10 => "Agency Partner",
         11 => "Affiliate Partner",
-
-=======
-          9 => "Channel Partner",
-        10 => "Agency Partner",
-        11 => "Affiliate Partner",
->>>>>>> a36d9bfa500df8642e6794c0eac20c05efdb59ef
     ],
 
     'dealerAndDistributorChannels' => [
