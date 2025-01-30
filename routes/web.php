@@ -60,6 +60,7 @@ use Illuminate\Support\Facades\App;
 */
 
 Auth::routes();
+// Route::feeds();
 
 Route::get('optimize', function () {
     // Run the artisan commands
@@ -132,7 +133,10 @@ Route::get('testimonials-reviews', [StaticPageController::class, 'getTestimonial
 Route::get('sitemap/brands', [BrandFilterController::class, 'brandsitemap']);
 Route::get('sitemap/brands/{abre}',           [BrandFilterController::class, 'brandfilter']);
 Route::get('terms', [StaticPageController::class, 'mainTerm']);
-
+Route::get('/top-franchise-leaders', [StaticPageController::class, 'topfranchiseleads']);
+Route::group(['prefix' => '/top-franchise-leaders'], function () {
+    Route::get('{year}/{slug}/{id}', [StaticPageController::class, 'franchiseleader'])->name('franchiseleader');
+});
 Route::get('privacy_policy', [StaticPageController::class, 'p_popicy']);
 
 Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBystateName']);
@@ -1035,7 +1039,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::get('location/{city}',              [BusinessListingController::class, 'listingLocation']);
 // INSIGHTS ROUTES START HERE //
-Route::get('insights/sitemap.xml', function () {
+Route::get('insights/en/sitemap.xml', function () {
     return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
 });
 Route::get('insights/hi/sitemap.xml', function () {
@@ -1044,15 +1048,25 @@ Route::get('insights/hi/sitemap.xml', function () {
 // /*Language setter*/
 
 Route::group(['prefix' => 'insights'], function () {
-    Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
-    Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
-    Route::get('article2.xml',                   [InsightSitemapController::class, 'articlesitemaptwo'])->name('article2.xml');
-    Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
-    Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap'])->name('event.xml');
-    Route::get('report.xml',                    [InsightSitemapController::class, 'reportsitemap'])->name('report.xml');
-    Route::get('categories.xml',                [InsightSitemapController::class, 'categorysitemap'])->name('categories.xml');
-    Route::get('subcategories.xml',             [InsightSitemapController::class, 'subcategorysitemap'])->name('subcategories.xml');
-    Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap'])->name('tags.xml');
+    Route::get('sitemap', [InsightSitemapController::class, 'sitemap']);
+    Route::get('sitemap/today', [InsightSitemapController::class, 'todaysitemap']);
+    Route::get('sitemap/yesterday', [InsightSitemapController::class, 'yesterdaysitemap']);
+    Route::get('sitemap/thisweek', [InsightSitemapController::class, 'thisweeksitemap']);
+    Route::get('sitemap/lastweek', [InsightSitemapController::class, 'lastweeksitemap']);
+    Route::get('sitemap/{year}', [InsightSitemapController::class, 'monthsitemap']);
+    Route::get('sitemap/{year}/{month}', [InsightSitemapController::class, 'daysitemap']);
+    Route::get('sitemap/{year}/{month}/{day}', [InsightSitemapController::class, 'datesitemap']);
+    Route::group(['prefix' => 'en'], function () {
+        Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
+        Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
+        Route::get('article2.xml',                   [InsightSitemapController::class, 'articlesitemaptwo'])->name('article2.xml');
+        Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
+        Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap'])->name('event.xml');
+        Route::get('report.xml',                    [InsightSitemapController::class, 'reportsitemap'])->name('report.xml');
+        Route::get('categories.xml',                [InsightSitemapController::class, 'categorysitemap'])->name('categories.xml');
+        Route::get('subcategories.xml',             [InsightSitemapController::class, 'subcategorysitemap'])->name('subcategories.xml');
+        Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap'])->name('tags.xml');
+    });
     Route::group(['prefix' => 'hi'], function () {
         Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
         Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
@@ -1069,17 +1083,18 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
 
 
     Route::group(['prefix' => 'insights'], function () {
-        Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
         Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
+        Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
         Route::get('{insight_type}/{slug}.{id}', function ($insight_type, $slug, $id) {
             return redirect()->to("/insights/en/{$insight_type}/{$slug}.{$id}", 301);
         });
         Route::get('tag/{tagslug}', function ($tagslug) {
             return redirect()->to("/insights/en/tag/$tagslug", 301);
         });
+        Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
+        Route::get('author-archive',              [InsightsController::class, 'authordata']);
         Route::group(['prefix' => 'en'], function () {
             Route::get('/search',               [InsightsController::class, 'insightSearch']);
-            Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
             Route::get('thanks', function () {
                 return view('insights.thanks');
             })->name('insights.thanks');
@@ -1106,7 +1121,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         /*Language setter*/
         Route::group(['prefix' => 'hi'], function () {
             Route::get('/search',               [InsightsController::class, 'insightSearch']);
-            Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
+            // Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
             Route::get('thanks', function () {
                 return view('insights.thanks');
             })->name('insights.thanks');
@@ -1122,7 +1137,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
             Route::get('video_podcast',                [InsightsController::class, 'getvideopodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
-            Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
+            Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails'])->name('insights.details');
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);

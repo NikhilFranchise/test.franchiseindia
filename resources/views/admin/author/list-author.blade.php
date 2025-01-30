@@ -86,7 +86,7 @@ input:checked + .slider:before {
       <hr>
       <div class="row-fluid">
         <div class="span12">
-       
+
           <div class="widget-box">
             <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
               <h5>Author Data</h5>
@@ -210,13 +210,13 @@ input:checked + .slider:before {
           $("#confirmOk").one('click', fClose);
           $("#confirmCancel").one("click", fClose);
         }
-  </script> 
-  <script src="{{URL::asset('admin/js/jquery.ui.custom.js')}}"></script> 
-  <script src="{{URL::asset('admin/js/bootstrap.min.js')}}"></script> 
+  </script>
+  <script src="{{URL::asset('admin/js/jquery.ui.custom.js')}}"></script>
+  <script src="{{URL::asset('admin/js/bootstrap.min.js')}}"></script>
   <!-- <script src="{{URL::asset('admin/js/jquery.uniform.js')}}"></script>  -->
   <script src="{{URL::asset('admin/js/select2.min.js')}}"></script>
-  <script src="{{URL::asset('admin/js/jquery.dataTables.min.js')}}"></script> 
+  <script src="{{URL::asset('admin/js/jquery.dataTables.min.js')}}"></script>
   <script src="{{URL::asset('admin/js/matrix.js')}}"></script>
-  <script src="{{URL::asset('admin/js/matrix.tables.js')}}"></script> 
+  <script src="{{URL::asset('admin/js/matrix.tables.js')}}"></script>
   </body>
   </html>

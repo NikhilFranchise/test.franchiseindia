@@ -148,7 +148,9 @@ class AdminController extends Controller
             'address'                => request()->address,
             'linkedin_profile'       => request()->linkedin_profile,
             'facebook_profile'       => request()->facebook_profile,
-            'twitter_profile'        => request()->twitter_profile
+            'twitter_profile'        => request()->twitter_profile,
+            'insta_profile'        => request()->insta_profile
+
         ]);
         return redirect("admin/list-author");
     }
@@ -182,6 +184,9 @@ class AdminController extends Controller
      */
     public function updateAuthor(Request $request)
     {
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:500', // 500 KB max
+        ]);
         $imageUrl       = ($request->hasFile('image')) ? $this->uploadImage($request->file('image'), 'Author', 1, 's3', $request->old_image) : $request->old_image;
 
         if ($request->hasFile('image'))
@@ -200,7 +205,9 @@ class AdminController extends Controller
                 'address'                => request()->address,
                 'linkedin_profile'       => request()->linkedin_profile,
                 'facebook_profile'       => request()->facebook_profile,
-                'twitter_profile'        => request()->twitter_profile
+                'twitter_profile'        => request()->twitter_profile,
+                'insta_profile'          => request()->insta_profile
+
             ]);
         return redirect("admin/list-author");
     }
@@ -701,6 +708,7 @@ class AdminController extends Controller
             $data = AuthorList::query()
                 ->select("title", "author_id")
                 ->where('title', 'LIKE', "%{$search}%")
+                ->where('status', 'A')
                 ->get();
         }
         return response()->json($data);
@@ -1589,11 +1597,24 @@ class AdminController extends Controller
             case 'News':
                 $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
                 break;
+            case 'Report':
+                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+                break;
+            case 'Event':
+                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+                break;
+            case 'Terms':
+                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+                break;
         }
 
-        // Resize the image to 680x435px and convert it to WebP format
-        $resizedImage = Image::make($image)->resize(1600, 940)->encode('webp', 90);
-        // dd($resizedImage);
+        if ($type != 'Author' && $type  != 'Gallery' && $type  != 'Magazine') {
+            $resizedImage = Image::make($image)->resize(1600, 940)->encode('webp', 90);
+        } else if ($type == 'Author') {
+            $resizedImage = Image::make($image)->resize(512, 512)->encode('webp', 90);
+        } else {
+            $resizedImage = Image::make($image)->encode('webp', 90);
+        }
         // Store the image in the specified storage
         Storage::getFacadeRoot()->disk($store_type)->put($picPath, (string) $resizedImage, 'public');
         $imageUrl = Storage::getFacadeRoot()->disk($store_type)->url($picPath);
@@ -1794,23 +1815,28 @@ class AdminController extends Controller
         $catId = $request->insights_cat;
         $subcatId = $request->insights_subcat;
         $isInternational = $request->is_intl == 1 ? 1 : 0;
-        // dd($brand);
         // Generate slug based on language
         if ($request->segment(2) == 'en') {
+            // English slug
             $slug = Str::slug($title);
         } else {
-            $titleSlug = preg_replace("/[\s+\?]/", " ", $title);
-            $titleSlug = str_replace("  ", " ", $titleSlug);
+            // Hindi slug generation
+            $titleSlug = trim($title);
+            $titleSlug = mb_strtolower($titleSlug, "UTF-8");
+            // Retain valid Hindi characters, English letters, numbers, and spaces
+            $titleSlug = preg_replace("/[^a-z0-9\s\p{Devanagari}]/u", "", $titleSlug);
+            // Replace multiple spaces with a single space
+            $titleSlug = preg_replace("/\s+/", " ", $titleSlug);
+            // Replace spaces with dashes
             $titleSlug = str_replace(" ", "-", $titleSlug);
-            $titleSlug = preg_replace("/\s+/", "-", $titleSlug);
+            // Replace dots with dashes
             $slug = str_replace(".", "-", $titleSlug);
         }
-        // dd($slug);
         // Handle image upload
         $imageUrl = "";
         if ($request->hasFile('image')) {
             $newsImage = $request->file('image');
-            $imageUrl = $this->uploadImage($newsImage, 'News', 0, 's3', '');
+            $imageUrl = $this->uploadImage($newsImage, $insightsType, 0, 's3', '');
             // dd($imageUrl);
             $this->thumbnailCreation($imageUrl, 'News', 247, 139);
         }
@@ -2041,12 +2067,19 @@ class AdminController extends Controller
         $title             = $request->title;
         if (!empty($request->slug) && request()->segment(2) == 'en') {
             $slug              = Str::slug($request->slug);
+        } else if (!empty($request->slug) && request()->segment(2) == 'hi') {
+            $slug              = $request->slug;
         } else {
-            // $slug              = Str::slug($title);
-            $titleSlug = preg_replace("/[\s+\?]/", " ", $title);
-            $titleSlug = str_replace("  ", " ", $titleSlug);
+            // Hindi slug generation
+            $titleSlug = trim($title);
+            $titleSlug = mb_strtolower($titleSlug, "UTF-8");
+            // Retain valid Hindi characters, English letters, numbers, and spaces
+            $titleSlug = preg_replace("/[^a-z0-9\s\p{Devanagari}]/u", "", $titleSlug);
+            // Replace multiple spaces with a single space
+            $titleSlug = preg_replace("/\s+/", " ", $titleSlug);
+            // Replace spaces with dashes
             $titleSlug = str_replace(" ", "-", $titleSlug);
-            $titleSlug = preg_replace("/\s+/", "-", $titleSlug);
+            // Replace dots with dashes
             $slug = str_replace(".", "-", $titleSlug);
         }
         // dd($role);
@@ -2065,7 +2098,7 @@ class AdminController extends Controller
 
             //Uploading Image
             $newsImage = $request->file('image');
-            $imageUrl  = $this->uploadImage($newsImage, 'News', 0, 's3', '');
+            $imageUrl  = $this->uploadImage($newsImage, $insight_type, 0, 's3', '');
 
             //thumbnail creation
             $this->thumbnailCreation($imageUrl, 'News', 247, 139);
@@ -2557,7 +2590,7 @@ class AdminController extends Controller
         $videos = FihlPodcastVideo::query()
             ->with('VideoCategory')
             ->whereIn('status', ['A', 'D'])
-            ->where('podcast_type', 'V')
+            ->where('podcast_type', 'v')
             ->where('pod_lang', $locale)
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
@@ -2752,5 +2785,4 @@ class AdminController extends Controller
         // dd($url);
         return $url;
     }
-
 }

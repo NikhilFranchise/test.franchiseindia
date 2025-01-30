@@ -20,7 +20,8 @@
                      <div class="tagl">{{$cat->catname}}</div>
                      @endforeach
                      <div class="hname"> <a href="{{$url}}">{{$article['title']}}</a></div>
-                     <div class="aname"><img src="{{url('/insight-new/images/view.svg')}}" alt="">&nbsp;&nbsp;{{$article->views}}</div>
+                     <div class="aname"><img src="{{url('/insight-new/images/view.svg')}}" alt="views">&nbsp;&nbsp;{{ formatViews($article->views) }}
+                     </div>
 
 
                   </div>

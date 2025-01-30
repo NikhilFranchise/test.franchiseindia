@@ -23,164 +23,138 @@ use App\Models\InsightListHindi;
 use App\Models\SeoTagHindi;
 use App\Models\FihlPodcastVideo;
 use App\Models\FihlVideoCategory;
-
+use App\Models\InsightViews;
+use App\Models\Ip2Location;
+use Illuminate\Support\Facades\Cache;
 
 class InsightsController extends Controller
 {
 
     public function insightshome()
     {
-        if (request()->segment(2) != 'hindi') {
-            $locale =  app()->setLocale('en');
-            session()->put('locale', 'en');
+        $locale = request()->segment(2) === 'hindi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
 
-            $homeArticle = InsightList::with('category')->where('status', 1)
-                ->where('insight_type', 'News')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('news_id')
-                ->take(1)->get();
+        $model = $locale === 'hi' ? InsightListHindi::class : InsightList::class;
 
-            $homeArticle = CommonController::contentUrlSlug($homeArticle);
+        $homeArticle = $model::with('category')->where('status', 1)
+            ->where('insight_type', 'News')
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('news_id')
+            ->take(1)
+            ->get();
 
-            if (empty($homeArticle)) {
-                return redirect('/insights');
-            }
+        $homeArticle = CommonController::contentUrlSlug($homeArticle);
 
-            $topstories = InsightList::with('category')
-                ->where('status', 1)
-                ->where('insight_type', '=', 'News')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('news_id')
-                ->whereNotIn('news_id', $homeArticle->pluck('news_id'))
-                ->take(5)->get();
-
-            $topstories     = CommonController::contentUrlSlug($topstories);
-
-
-            $topcategories = SeoTag::orderByDesc('frequency')->take(10)->get();
-
-            $trendArticles = InsightList::with('category')
-                ->where('status', 1)
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('views')
-                ->take(8)->get();
-            $trendArticles      = CommonController::contentUrlSlug($trendArticles);
-
-            $industry_focus = InsightList::with('category')
-                ->where('insight_type', '=', 'Article')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->where('status', 1)
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('created_at')
-                ->take(1)->get();
-
-            $industry_focus      = CommonController::contentUrlSlug($industry_focus);
-
-            $industry_data = InsightList::with('category')
-                ->where('insight_type', '=', 'Article')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->where('status', 1)
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->whereNotIn('news_id', $industry_focus->pluck('news_id'))
-                ->orderByDesc('created_at')
-                ->take(6)->get();
-
-            $industry_data      = CommonController::contentUrlSlug($industry_data);
-
-            $interview = InsightList::with('category')
-                ->where('insight_type', '=', 'Interview')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->where('status', 1)
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('created_at')
-                ->take(8)->get();
-            $interview      = CommonController::contentUrlSlug($interview);
-        } else {
-            $locale = app()->setLocale('hi');
-            session()->put('locale', 'hi');
-
-            $homeArticle = InsightListHindi::with('category')->where('status', 1)
-                ->where('insight_type', 'News')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('news_id')
-                ->take(1)->get();
-
-            $homeArticle = CommonController::contentUrlSlug($homeArticle);
-
-            if (empty($homeArticle)) {
-                return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
-            }
-
-            $topstories = InsightListHindi::with('category')
-                ->where('status', 1)
-                ->where('insight_type', '=', 'News')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('news_id')
-                ->whereNotIn('news_id', $homeArticle->pluck('news_id'))
-                ->take(5)->get();
-
-            $topstories     = CommonController::contentUrlSlug($topstories);
-
-
-            $topcategories = SeoTag::orderByDesc('frequency')->take(10)->get();
-
-            $trendArticles = InsightListHindi::with('category')
-                ->where('status', 1)
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('views')
-                ->take(8)->get();
-            $trendArticles      = CommonController::contentUrlSlug($trendArticles);
-
-            $industry_focus = InsightListHindi::with('category')
-                ->where('insight_type', '=', 'Article')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->where('status', 1)
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('created_at')
-                ->take(1)->get();
-
-            $industry_focus      = CommonController::contentUrlSlug($industry_focus);
-
-            $industry_data = InsightListHindi::with('category')
-                ->where('insight_type', '=', 'Article')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->where('status', 1)
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->whereNotIn('news_id', $industry_focus->pluck('news_id'))
-                ->orderByDesc('created_at')
-                ->take(6)->get();
-
-            $industry_data      = CommonController::contentUrlSlug($industry_data);
-
-            $interview = InsightListHindi::with('category')
-                ->where('insight_type', '=', 'Interview')
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->where('status', 1)
-                ->whereNotNull('image')
-                ->whereNotNull('cat_id')
-                ->orderByDesc('created_at')
-                ->take(8)->get();
-            $interview      = CommonController::contentUrlSlug($interview);
+        if ($homeArticle->isEmpty()) {
+            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
-        return view('insights.insight_home', compact('homeArticle', 'topstories', 'trendArticles', 'topcategories', 'industry_focus', 'industry_data', 'interview'));
+
+        $topstories = $model::with('category')->where('status', 1)
+            ->where('insight_type', 'News')
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->whereNotIn('news_id', $homeArticle->pluck('news_id')->toArray())
+            ->orderByDesc('news_id')
+            ->take(5)
+            ->get();
+
+        $topstories = CommonController::contentUrlSlug($topstories);
+
+        $trendArticles = $model::query()
+            ->with('category')
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('views')
+            ->take(8)
+            ->get();
+
+        $trendArticles = CommonController::contentUrlSlug($trendArticles);
+
+        $industry_focus = $model::with('category')->where('insight_type', 'Article')
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->take(1)
+            ->get();
+
+        $industry_focus = CommonController::contentUrlSlug($industry_focus);
+
+        $industry_data = $model::with('category')->where('insight_type', 'Article')
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->whereNotIn('news_id', $industry_focus->pluck('news_id')->toArray())
+            ->orderByDesc('created_at')
+            ->take(6)
+            ->get();
+
+        $industry_data = CommonController::contentUrlSlug($industry_data);
+
+        $interview = $model::with('category')->where('insight_type', 'Interview')
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->take(8)
+            ->get();
+
+        $interview = CommonController::contentUrlSlug($interview);
+
+        $topcategories = SeoTag::orderByDesc('frequency')->take(10)->get();
+
+        // Get author IDs based on article filters
+        $authorIds = $model::query()
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('author_id')
+            ->where('status', 1)
+            ->groupBy('author_id')
+            ->pluck('author_id')
+            ->toArray();
+
+        // Get article count grouped by author
+        $authorCounts = $model::query()
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('author_id')
+            ->where('status', 1)
+            ->groupBy('author_id')
+            ->selectRaw('author_id, COUNT(*) as article_count')
+            ->pluck('article_count', 'author_id')
+            ->toArray();
+
+        // Get author details for the filtered IDs
+        $authorDetails = AuthorList::query()
+            ->whereIn('author_id', $authorIds)
+            ->where('status', 'A')
+            ->get()
+            ->map(function ($author) use ($authorCounts) {
+                $author->count = $authorCounts[$author->author_id] ?? 0;
+                return $author;
+            });
+
+
+        return view('insights.insight_home', compact(
+            'homeArticle',
+            'topstories',
+            'trendArticles',
+            'topcategories',
+            'industry_focus',
+            'industry_data',
+            'interview',
+            'authorDetails'
+        ));
     }
+
 
     public function getinsightstories()
     {
@@ -195,9 +169,21 @@ class InsightsController extends Controller
             ->where('status', 1)
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
-            ->orderByDesc('created_at')->paginate(10);
-        $insightstories = CommonController::contentUrlSlug($insightstories);
-        return view('insights.topstories', compact('insightstories'));
+            ->orderByDesc('created_at')
+            ->paginate(15);
+
+        $popArticles = $model::query()
+            ->with('category')
+            ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
+            ->whereIn('insight_type', ['Article'])
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->where('status', 1)
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->limit(6)
+            ->get();
+
+        return view('insights.topstories', compact('insightstories', 'popArticles'));
     }
 
     public function industryfocus()
@@ -211,25 +197,36 @@ class InsightsController extends Controller
         $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
 
         // Fetch the insights articles
-        $insArticles = $model::with('author')
+        $insArticles = $model::query()
+            ->with('author')
             ->where('insight_type', 'Article')
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->where('status', 1)
             ->orderByDesc('created_at')
-            ->paginate(10);
+            ->paginate(15);
 
         // Handle empty results
         if ($insArticles->isEmpty()) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
-
-        // Apply the content URL slug logic
-        $insArticles = CommonController::contentUrlSlug($insArticles);
+        // Get the IDs of articles already shown
+        $insArticleIds = $insArticles->pluck('news_id');
+        $popArticles = $model::query()
+            ->with('category')
+            ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
+            ->where('insight_type', 'Article')
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('cat_id')
+            ->where('status', 1)
+            ->whereNotIn('news_id', $insArticleIds) // Exclude already shown articles
+            ->orderByDesc('created_at')
+            ->take(6)
+            ->get();
 
         // Return the view with the articles
-        return view('insights.articles', compact('insArticles'));
+        return view('insights.articles', compact('insArticles', 'popArticles'));
     }
 
     public function getinsightsinterviews()
@@ -247,13 +244,24 @@ class InsightsController extends Controller
             ->whereNotNull('cat_id')
             ->where('status', 1)
             ->orderByDesc('created_at')
-            ->paginate(10);
+            ->paginate(12);
         $interviews = CommonController::contentUrlSlug($interviews);
+
         if ($interviews->isEmpty()) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
-        } else {
-            return view('insights.interviewslist', compact('interviews'));
         }
+        $popArticles = $model::query()
+            ->with('category')
+            ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
+            ->where('insight_type', ['Article'])
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('cat_id')
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->take(6)
+            ->get();
+
+        return view('insights.interviewslist', compact('interviews', 'popArticles'));
     }
 
     public function geteventsreports()
@@ -272,14 +280,24 @@ class InsightsController extends Controller
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->orderByDesc('news_id')
-            ->paginate(10);
+            ->paginate(15);
         $events_reports = CommonController::contentUrlSlug($events_reports);
 
         if ($events_reports->isEmpty()) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
-        } else {
-            return view('insights.events_reports', compact('events_reports'));
         }
+        $popArticles = $model::query()
+            ->with('category')
+            ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
+            ->where('insight_type', ['Article'])
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('cat_id')
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->take(6)
+            ->get();
+
+        return view('insights.events_reports', compact('events_reports', 'popArticles'));
     }
 
 
@@ -307,19 +325,52 @@ class InsightsController extends Controller
             ->count();
 
         // Fetch articles with the necessary conditions
-        $articles = $model::where('author_id', $id)
+        $latestArticles = $model::where('author_id', $id)
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->orderByDesc('created_at')
-            ->paginate(6);
+            ->paginate(12);
+        $latestArticles->getCollection()->transform(function ($item) use ($locale) {
+            $item->lang = $locale;
+            return $item;
+        });
+        // Apply URL slug transformation
+        $latestArticles = CommonController::contentUrlSlug($latestArticles);
+
+        $mostViewedArticles = $model::where('author_id', $id)
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('views')
+            ->paginate(12);
+        $mostViewedArticles->getCollection()->transform(function ($item) use ($locale) {
+            $item->lang = $locale;
+            return $item;
+        });
 
         // Apply URL slug transformation
-        $articles = CommonController::contentUrlSlug($articles);
+        $mostViewedArticles = CommonController::contentUrlSlug($mostViewedArticles);
+
+        $popularArticles = $model::query()->with('category')
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->where('insight_type', 'Article')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->limit(5)->get()
+            ->map(function ($item) use ($locale) {
+                $item->lang = $locale;
+                return $item;
+            });
+        // dd($popularArticles);
+        $popularArticles = CommonController::contentUrlSlug($popularArticles);
 
         // Return the view with the author data and articles
-        return view('insights.author', compact('author', 'articles', 'articleCount'));
+        return view('insights.author', compact('author', 'latestArticles', 'mostViewedArticles', 'popularArticles', 'articleCount'));
     }
 
 
@@ -348,15 +399,21 @@ class InsightsController extends Controller
 
 
         // Fetch the insights for the category
-        $insightcategories = $insightListModel::with('author')
+        $insightcategories = $insightListModel::query()
             ->where('cat_id', $category->id)
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->orderByDesc('news_id')
-            ->paginate(10);
-
+            ->paginate(15);
         // Apply content URL slug transformation
         $insightcategories = CommonController::contentUrlSlug($insightcategories);
+
+        $popularArticles = $insightListModel::query()->with('category')->where('insight_type', 'Article')
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByDesc('views')
+            ->take(6)->get();
+        $popularArticles = CommonController::contentUrlSlug($popularArticles);
 
         // Check if insights are available
         if ($insightcategories->isEmpty()) {
@@ -364,7 +421,7 @@ class InsightsController extends Controller
         }
 
         // Return the view with compacted data
-        return view('insights.categorylist', compact('insightcategories', 'category'));
+        return view('insights.categorylist', compact('insightcategories', 'category', 'popularArticles'));
     }
 
 
@@ -401,7 +458,28 @@ class InsightsController extends Controller
         $newsModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
         $tagTable = $locale == 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
         $seoTagModel = $locale == 'hi' ? SeoTagHindi::class : SeoTag::class;
-        // dd($id);
+
+        $ipAddress = $_SERVER['REMOTE_ADDR'];
+        $ipAsInt = ip2long($ipAddress);
+        // Check if the IP has already viewed this article
+        $ipExists = InsightViews::query()
+            ->where('insightID', $id)
+            ->where('ip_address', $ipAddress)
+            ->exists();
+
+        // If the IP has not viewed the article, increment the view count
+        if (!$ipExists) {
+            // Increment the article's view count
+            $newsModel::where('news_id', $id)->increment('views');
+
+            // Add a record of the IP viewing the article
+            InsightViews::insert([
+                'insightID' => $id,
+                'ip_address' => $ipAddress,
+                'created_at' => now(),
+            ]);
+        }
+
         // Fetch news details
         $newsDetails = $newsModel::with(['author', 'category', 'Subcategory'])
             ->where('status', 1)
@@ -421,8 +499,7 @@ class InsightsController extends Controller
             $authorId = $newsDetails->author_id;
         }
         // dd($authorId);
-        $author_details = AuthorList::query()->where('author_id', '=', $authorId)->first();
-        // dd($author_details);
+        $author_details = AuthorList::query()->where('author_id', $authorId)->first();
 
         // Fetch associated tags
         $associatedTags = $tagTable::query()
@@ -468,8 +545,18 @@ class InsightsController extends Controller
             ];
         })->toArray();
 
+        $trendingArticles = $newsModel::with(['category', 'Subcategory'])
+            ->where('status', 1)
+            ->where('cat_id', $newsDetails->category[0]->id)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->where('insight_type', 'Article')
+            ->orderByDesc('created_at')
+            ->take(6)->get();
+        // dd($trendingArticles);
+        $trendingArticles = CommonController::contentUrlSlug($trendingArticles);
+
         // Return view with compacted variables
-        return view('insights.insight_detail', compact('newsDetails', 'author_details', 'franchiseData', 'assocTags'));
+        return view('insights.detail', compact('newsDetails', 'author_details', 'franchiseData', 'assocTags', 'trendingArticles'));
     }
 
 
@@ -477,9 +564,6 @@ class InsightsController extends Controller
     public function insightSearch(Request $request)
     {
         $search = $request->search;
-        // $isEnglish = $request->segment(2) == 'en';
-
-        // Determine the appropriate model
         $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
@@ -489,27 +573,29 @@ class InsightsController extends Controller
             ->where('status', 1)
             ->where(function ($query) use ($search) {
                 $query->where('title', 'LIKE', '%' . $search . '%');
-                //->orWhere('kicker', 'LIKE', '%' . $search . '%');
             })
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id');
-
+        $articlesList = $query->orderByDesc('created_at')->paginate(10);
+        $ids = $query->pluck('news_id');
         // Count matching articles
-        $articleCount = $query->count();
 
-        if ($articleCount > 1) {
+        if ($articlesList->count() < 1) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
 
-        // Fetch paginated articles
-        $articlesList = $query->orderByDesc('created_at')->paginate(10);
-
-        // Process articles for URL slug
         $articlesList = CommonController::contentUrlSlug($articlesList);
-
+        $popArticles = $insightModel::with('category')
+            ->where('status', 1)
+            ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($search) . '([[:space:]]|$)'])
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('cat_id')
+            ->whereNotIn('news_id', $ids)
+            ->orderByDesc('created_at')
+            ->limit(6)->get();
         // Return the view
-        return view('insights.search', compact('articleCount', 'articlesList', 'search'));
+        return view('insights.search', compact('articlesList', 'search', 'popArticles'));
     }
 
 
@@ -548,14 +634,19 @@ class InsightsController extends Controller
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->orderByDesc('created_at')
-            ->paginate(10);
+            ->paginate(15);
 
         // Apply URL slugs
         $articlesList = CommonController::contentUrlSlug($articlesList);
 
+        $popArticles = $insightModel::query()->with('category')->where('insight_type', 'Article')
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByDesc('created_at')
+            ->take(6)->get();
         // Check for results and return the view or redirect
         if ($articlesList->count() > 0) {
-            return view('insights.insightstags', compact('articlesList', 'seoTag'));
+            return view('insights.insightstags', compact('articlesList', 'seoTag', 'popArticles'));
         }
 
         return redirect($redirectPath);
@@ -584,7 +675,7 @@ class InsightsController extends Controller
     }
     public static function calculateReadTime($obj)
     {
-
+        // dd($obj);
         /*Calculating length of total words*/
         $totaltext = $obj->title . ' ' . $obj->content;
 

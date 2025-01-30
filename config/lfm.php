@@ -58,6 +58,7 @@ return [
                 'image/pjpeg',
                 'image/png',
                 'image/gif',
+                'image/webp',
                 'application/pdf',
                 'text/plain',
             ],
@@ -73,6 +74,7 @@ return [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
+                'image/webp',
                 'image/gif',
             ],
         ],
@@ -96,17 +98,15 @@ return [
 
     'disk'                     => 'public',
 
-    'prefix'                   => 'laravel-filemanager',
+    'rename_file'              => false,
 
-    'rename_file'              => true,
+    'rename_duplicates'        => false,
 
-    'rename_duplicates'        => true,
+    'alphanumeric_filename'    => false,
 
-    'alphanumeric_filename'    => true,
+    'alphanumeric_directory'   => false,
 
-    'alphanumeric_directory'   => true,
-
-    'should_validate_size'     => true,
+    'should_validate_size'     => false,
 
     'should_validate_mime'     => true,
 
@@ -140,6 +140,7 @@ return [
         'image/jpeg',
         'image/pjpeg',
         'image/png',
+        'image/webp',
     ],
 
     'thumb_img_width'          => 200, // px
@@ -163,6 +164,7 @@ return [
         'jpg'  => 'JPEG Image',
         'jpeg' => 'JPEG Image',
         'png'  => 'PNG Image',
+        'webp'  => 'WEBP Image',
         'ppt'  => 'Microsoft PowerPoint',
         'pptx' => 'Microsoft PowerPoint',
     ],
@@ -179,6 +181,6 @@ return [
     | directives are not supported.
      */
     'php_ini_overrides'        => [
-        'memory_limit' => '256M',
+        'memory_limit' => '1024M',
     ],
 ];

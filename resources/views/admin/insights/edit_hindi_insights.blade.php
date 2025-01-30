@@ -151,10 +151,9 @@
                         <div class="control-group">
                             <label class="control-label">Publish Url :</label>
                             <div class="controls">
-                                <input type="text" name="slug" id="slugId" oninput="validateInput()"
-                                    maxlength="125" class="span11" pattern="[a-zA-Z0-9\-ह-ॣा-ौं-ः]*"
-                                    title="Only letters (small and capital), numbers, hyphens, and Hindi characters are allowed"
-                                    value="{{ $data->slug }}" />
+                                <input type="text" name="slug" id="slugId" maxlength="125" class="span11"
+                                   value="{{ $data->slug }}" />
+
                             </div>
                         </div>
                         <div class="control-group">

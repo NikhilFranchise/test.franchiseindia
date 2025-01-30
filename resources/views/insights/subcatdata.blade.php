@@ -44,8 +44,8 @@
                                 } else {
                                     $slug = $author->slug;
                                 }
-                                $path = $locale === 'en' ? '/insights/en/author/' : '/insights/hi/author/';
-                                $authorUrl = Config('constants.MainDomain') . $path . $slug . '-' . $author->author_id;
+                                // $path = $locale === 'en' ? '/insights/en/author/' : '/insights/hi/author/';
+                                $authorUrl = Config('constants.MainDomain') .'/insights/author/' . $slug . '-' . $author->author_id;
                             }
                         @endphp
 

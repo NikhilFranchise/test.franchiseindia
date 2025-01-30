@@ -4,7 +4,7 @@
 @section('seoDesc', $newsDetails->shortDesc)
 @section('seoKeywords', $newsDetails->kicker)
 @section('canonicalUrl', url()->current())
-{{--  @dd($newsDetails->image);  --}}
+{{-- @dd($newsDetails->image); --}}
 @php
 
     $ogimage = !empty($newsDetails->image)
@@ -21,7 +21,7 @@
     //$author_details
     $authorSlug = $author_details->slug ?? strtolower(str_replace(' ', '-', $author_details->title));
     //dd($authorSlug);
-    $authorUrl = $baseUrl . 'author/' . $authorSlug . '-' . $author_details->author_id;
+    $authorUrl = Config('constants.MainDomain') . "/insights/author/" . $authorSlug . '-' . $author_details->author_id;
 
     $authorImage = !empty($author_details->image)
         ? \App\Http\Controllers\InsightsController::authorImageurl($author_details->image)
@@ -90,9 +90,9 @@
 
         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
 
-        {{--  <div class="articlecontent">
+        {{-- <div class="articlecontent">
         {!! nl2br(e($newsDetails->content)) !!}
-    </div>  --}}
+    </div> --}}
         <div class="articlecontent">
             @php
                 $custom_data = explode("\r\n", $newsDetails->content);
@@ -100,18 +100,18 @@
                     $articleData[0] =
                         $custom_data[0] .
                         '
-    <div id="v-franchiseindia"></div>
-    <script>
-        (function(v, d, o, ai) {
-            ai = d.createElement("script");
-            ai.defer = true;
-            ai.async = true;
-            ai.src = v.location.protocol + o;
-            d.head.appendChild(ai);
-        })
-        (window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
-    </script>
-    ';
+        <div id="v-franchiseindia"></div>
+        <script>
+            (function(v, d, o, ai) {
+                ai = d.createElement("script");
+                ai.defer = true;
+                ai.async = true;
+                ai.src = v.location.protocol + o;
+                d.head.appendChild(ai);
+            })
+            (window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
+        </script>
+        ';
                 } else {
                     $counter = 0;
                     foreach ($custom_data as $cdata) {
@@ -119,17 +119,17 @@
                             $articleData[] =
                                 $cdata .
                                 '
-    <div id="v-franchiseindia"></div>
-    <script>
-        (function(v, d, o, ai) {
-            ai = d.createElement("script");
-            ai.defer = true;
-            ai.async = true;
-            ai.src = v.location.protocol + o;
-            d.head.appendChild(ai);
-        })(window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
-    </script>
-    ';
+        <div id="v-franchiseindia"></div>
+        <script>
+            (function(v, d, o, ai) {
+                ai = d.createElement("script");
+                ai.defer = true;
+                ai.async = true;
+                ai.src = v.location.protocol + o;
+                d.head.appendChild(ai);
+            })(window, document, "//a.vdo.ai/core/v-franchiseindia/vdo.ai.js");
+        </script>
+        ';
                         } else {
                             $articleData[] = $cdata;
                         }
@@ -170,11 +170,6 @@
                 @endif
             </ul>
         </div>
-
-
-
-
-
         <div class="contentarea">
             @include('layout.insights.subscribenewsletter')
         </div>
