@@ -13,6 +13,8 @@
                 <ul class="nabva">
                     <li><a href="{{ url('/insights') }}">Home</a></li>
                     <li>/</li>
+                    <li><a href="{{ url('/insights/author') }}">Author</a></li>
+                    <li>/</li>
                     <li>{{ $author->title }}</li>
                 </ul>
             </div>
