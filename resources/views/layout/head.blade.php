@@ -243,16 +243,20 @@
 </script>
 
 <!-- Global site tag (gtag.js) - Google Ads: 767541249 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-767541249"></script>
+{{-- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-767541249"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
 
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
+  gtag('config', 'AW-767541249');
+</script> --}}
 
-    gtag('config', 'AW-767541249');
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16776470774"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-16776470774');
 </script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->

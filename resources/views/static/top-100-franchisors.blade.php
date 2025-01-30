@@ -1,4 +1,4 @@
-@section('seoTitle', 'Top 100 Franchise/Franchisor 2023 Opportunities in India 2023: Franchisor Insights - Franchise India')
+@section('seoTitle', 'Top 100 Franchise Opportunities in India for 2024: Franchise India')
 @section('seoDesc', 'Top 100 Franchise Businesses in India 2023: Dive into the most successful franchisor and franchisee opportunities. Gain insights into the best sectors to launch and grow your franchise this year.')
 @section('seoKeywords', 'Franchise India Top 100 Franchisees, Top 100 Franchisees')
 @extends('layout.master')
@@ -4044,7 +4044,7 @@ a.desklink{display: none;}
 
 <div class="top-hundred">
     <br>
-<h1>Top 100 Franchise/Franchisor 2023</h1>
+<h1>Top 100 Franchise 2024</h1>
 <p>Revealing brand impact, consumer value, and dynamic opportunities. Explore trends in Indian franchises, including global giants and emerging innovators. Rankings consider financial strength, expansion, growth rate, and success, reflecting a distinct identity, robust planning, support, innovation, and cultural sensitivity. This analysis assists franchisees and franchisors alike, offering insights into the franchise sector that underpin thriving business ventures.</p>
 <a data-target="#topFranchise" data-toggle="modal">Understand Selection Criteria</a>
 </div>

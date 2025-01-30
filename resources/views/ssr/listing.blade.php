@@ -196,12 +196,15 @@
     <div class="pagination">
             {{ $shuffledResults->links('vendor.pagination.ajax') }}
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         $(document).ready(function() {
             // Intercept pagination clicks
             $(document).on('click', '.pagination a', function(event) {
+    $('#loader').show();
+
                 event.preventDefault();
                 var url = $(this).attr('href'); // Get the URL of the next page
                 getItems(url);
@@ -214,9 +217,13 @@
                     type: 'get',
                     success: function(response) {
                         $('#items-list').html(response.html); // Update the items list with new data
+    $('#loader').hide();
+
                     },
                     error: function(xhr, status, error) {
                         console.log('Error loading items:', error);
+    $('#loader').hide();
+
                     }
                 });
             }

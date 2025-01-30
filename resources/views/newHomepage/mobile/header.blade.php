@@ -70,7 +70,7 @@
          gtag('js', new Date());
          gtag('config', 'G-8MKFEZLR18');
       </script>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
+      {{-- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-991358906"></script>
       <script async>
          window.dataLayer = window.dataLayer || [];
 
@@ -79,7 +79,16 @@
          }
          gtag('js', new Date());
          gtag('config', 'AW-991358906');
-      </script>
+      </script> --}}
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16776470774"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-16776470774');
+</script>
       <!-- Facebook Pixel Code -->
       <script async>
          ! function(f, b, e, v, n, t, s) {

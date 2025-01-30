@@ -69,7 +69,28 @@
                     <tbody>
                     @foreach($franTradePartnerData as $tradeData)
                         <tr>
-                            <td data-label="Types of Channels">{{$tradeData->channel_type}}</td>
+                            {{-- <td data-label="Types of Channels">{{$tradeData->channel_type}}</td>    --}}
+                            <td data-label="Types of Channels">
+                                @if($tradeData->channel_type == 2)
+                                डीएसए
+                                @elseif($tradeData->channel_type == 3)
+                                पुनर्विक्रेता
+                                @elseif($tradeData->channel_type == 4)
+                                एमएलएम
+                                @elseif($tradeData->channel_type == 6)
+                                सी एवं एफ
+                                @elseif($tradeData->channel_type == 8)
+                                प्रतिनिधि
+                                @elseif($tradeData->channel_type == 9)
+                                चैनल पार्टनर
+                                @elseif($tradeData->channel_type == 10)
+                                एजेंसी पार्टनर
+                                @elseif($tradeData->channel_type == 11)
+                                सहयोगी भागीदार
+                                @else
+                                    {{ $tradeData->channel_type == 5 ? 'वितरक' : 'विक्रेता' }}
+                                @endif
+                            </td>
                             <td data-label="Investment (If any)">{{Config('constants.investRangeInWords.'.$tradeData->trade_investment)}}</td>
                             <td data-label="Margin / Commissions">{{$tradeData->trade_margin}}%</td>
                             <td data-label="Area Requirement">@if(!empty($tradeData->area_min)){{$tradeData->area_min}} - {{$tradeData->area_max}} Sq.ft @else NIL @endif</td>

@@ -26,12 +26,13 @@ class VerifyCsrfToken extends Middleware
         'franchisor-feedback',
         'reload-captcha',
         'getfreeinfo',
-        // 'loginform',
+        'loginform',
         'fetch-data',
         'fetch-data2',
         'newslettersignup',
         'price_filter',
-        'feedback'
+        'feedback',
+        'password/email'
 
 
 

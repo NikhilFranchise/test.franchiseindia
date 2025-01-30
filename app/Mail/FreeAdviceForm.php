@@ -18,7 +18,8 @@ class FreeAdviceForm extends Mailable
      * @return void
      */
     public function __construct($details)
-    { //dd($details);
+    { 
+        // dd($details);
         $this->details = $details;
     }
 

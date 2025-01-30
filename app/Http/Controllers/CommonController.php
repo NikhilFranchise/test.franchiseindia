@@ -1304,6 +1304,27 @@ public function fetchDataajax2(Request $request)
 }
 
 
-
+public function send_email()
+{
+    //sending the email on testing
+    $code = Str::random(16);
+    $data = [
+        'companyName' => 'Nikhil',
+        'code' => $code,
+    ];
+    $email='cnikhil@franchiseindia.net';
+    Mail::getFacadeRoot()->to($email)->send(new confirmed($data));
 }
 
+public function reset(Request $request){
+    dd($request->email);
+}
+
+public function thankYou(Request $request){
+    $message = session('message');
+    // dd($message);
+    return view('thanks.thanks' , compact('message'));
+}
+}
+
+ 

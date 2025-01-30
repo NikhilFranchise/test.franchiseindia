@@ -60,7 +60,7 @@ use Illuminate\Support\Facades\App;
 */
 
 Auth::routes();
-Route::feeds();
+// Route::feeds();
 
 Route::get('optimize', function () {
     // Run the artisan commands
@@ -345,9 +345,9 @@ Route::post('franfailedmyaccount', [FranPaymentController::class, 'paymentFailur
 Route::post('fransuccessmysccount', [FranPaymentController::class, 'paymentSuccessMyAccount']);
 Route::post('francancelledmyaccount', [FranPaymentController::class, 'paymentCancelledMyAccount']);
 Route::group(['prefix' => 'business-opportunities'], function () {
-    Route::get('dealers-and-distributors.m5',         function () {
-        return redirect('https://dealer.franchiseindia.com/', 301);
-    });
+    // Route::get('dealers-and-distributors.m5',         function () {
+    //     return redirect('https://dealer.franchiseindia.com/', 301);
+    // });
     Route::get('education-supplies.sc269',                   function () {
         return redirect('business-opportunities/education-services.sc269', 301);
     });
@@ -1166,6 +1166,8 @@ Route::get('reload-captcha', [AdviceController::class, 'reloadCaptcha']);
 Route::get('reload-captcha-contact', [ContactUsController::class, 'reloadCaptcha']);
 
 Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('form.submit');
+Route::post('/submit-form-listing', [AdviceController::class, 'freeadvicelisting'])->name('form.submitlisting');
+
 Route::get('/brand-total-count', [CommonController::class, 'brand_total_count']);
 
 Route::post('/submit-form1', [AdviceController::class, 'freeadviceHome_popup'])->name('form.submithome');
@@ -1201,3 +1203,11 @@ Route::get('/getajax', [BusinessListingController::class, 'fetchtest']);
 
 Route::get('/items', [BusinessListingController::class, 'index'])->name('items.index');
 
+Route::get('advertise',                   function() { return redirect('https://www.franchiseindia.com/advertise-with-us-payment', 301);});
+
+
+// test email route
+Route::get('/sendmail',[CommonController::class,'send_email']);
+// Route::post('/password/email',[CommonController::class,'reset']);
+
+Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('password-reset');

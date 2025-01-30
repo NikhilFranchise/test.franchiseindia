@@ -49,7 +49,7 @@
 
         <div class="catlist">
             <a href="{{ $brandUrl }}" id="brandnamecategory{{ $brandResult->franchisor_id }}" target="_blank">
-                {{ $brandResult->company_name }}
+                {{ $brandResult->company_name }}    ssr
             </a>
         </div>
 
