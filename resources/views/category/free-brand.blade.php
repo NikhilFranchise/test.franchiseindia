@@ -1,3 +1,6 @@
+{{-- @php
+@dd($brandResult->company_name);
+@endphp --}}
 <div class="col-xs-12 col-sm-6 col-md-4 catlistmar sec-slide-effect">
     <div class="comparechk">
         <input type="checkbox" id="compare{{ $loop->index }}" class="brandCompareCheckbox" name="compareCheckbox"
