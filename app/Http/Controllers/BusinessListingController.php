@@ -1958,7 +1958,7 @@ class BusinessListingController extends Controller
         )
             // ->whereIn('profile_status', [1,11]);
             ->whereIn('profile_status', [1, 11])
-            ->distinct() 
+            // ->distinct() 
             ->orderBy('membership_weightage', 'desc');
             // ->get(); // Fetch all data
 
