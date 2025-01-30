@@ -173,6 +173,8 @@ class NewHomePageController extends Controller
 
     public function homeNew(Request $request)
     {
+
+        // dd(Config('constants.subSubCategoryArr'));
         $cacheKeys = [
             'brandslft' => 'brandslft_cache',
             'brandstbo' => 'brandstbo_cache',

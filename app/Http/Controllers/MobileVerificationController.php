@@ -267,6 +267,7 @@ class MobileVerificationController extends Controller
                 'loginotp_verification_code' => $otpCode
             ]);
             $this->sendSmsToMobile(request()->mobile, $otpCode);
+            echo "OTP sent: $otpCode";
             return response()->json('Success! OTP sent to customers mobile number');
         }
 

@@ -111,28 +111,30 @@ class AdviceController extends Controller
 
     public function freeadviceHome(Request $request)
     {
-        // dd($request->all());
-          $request->validate([
-            'namefreeadvice' => 'required',
-            'emailfreeadvice' => 'required|email',
-            'mobilefreeadvice' => 'required',
-            'captcha' => 'required|captcha',
-            'pincodefreeadvice' => 'required',
-            'detailsfreeadvice' => 'required',
-            'is_newsletterfreeadvice' => 'required',
-
+        // dd('yes');
+        $request->validate([
+            'namefreeadvice' => $request->has('namefreeadvice') && !$request->has('namefreeadvice1') ? 'required' : 'nullable',
+            'namefreeadvice1' => $request->has('namefreeadvice1') && !$request->has('namefreeadvice') ? 'required' : 'nullable',
+        
+            'emailfreeadvice' => $request->has('emailfreeadvice') && !$request->has('emailfreeadvice1') ? 'required|email' : 'nullable|email',
+            'emailfreeadvice1' => $request->has('emailfreeadvice1') && !$request->has('emailfreeadvice') ? 'required|email' : 'nullable|email',
+        
+            'mobilefreeadvice' => $request->has('mobilefreeadvice') && !$request->has('mobilefreeadvice1') ? 'required' : 'nullable',
+            'mobilefreeadvice1' => $request->has('mobilefreeadvice1') && !$request->has('mobilefreeadvice') ? 'required' : 'nullable',
+        
+            'captcha' => $request->has('captcha') && !$request->has('captcha1') ? 'required|captcha' : 'nullable|captcha',
+            'captcha1' => $request->has('captcha1') && !$request->has('captcha') ? 'required|captcha' : 'nullable|captcha',
+        
+            'pincodefreeadvice' => $request->has('pincodefreeadvice') && !$request->has('pincodefreeadvice1') ? 'required' : 'nullable',
+            'pincodefreeadvice1' => $request->has('pincodefreeadvice1') && !$request->has('pincodefreeadvice') ? 'required' : 'nullable',
+        
+            'detailsfreeadvice' => $request->has('detailsfreeadvice') && !$request->has('detailsfreeadvice1') ? 'required' : 'nullable',
+            'detailsfreeadvice1' => $request->has('detailsfreeadvice1') && !$request->has('detailsfreeadvice') ? 'required' : 'nullable',
+        
+            'is_newsletterfreeadvice' => $request->has('is_newsletterfreeadvice') && !$request->has('is_newsletterfreeadvice1') ? 'required' : 'nullable',
+            'is_newsletterfreeadvice1' => $request->has('is_newsletterfreeadvice1') && !$request->has('is_newsletterfreeadvice') ? 'required' : 'nullable',
         ]);
-
-        // $user = $request->optionsRadios;
-        // $name = $request->name;
-        // $pincode = $request->pincode;
-        // $email = $request->email;
-        // $mobile = $request->mobile;
-        // $details = $request->details;
-        // $newsLetter = $request->is_newsletter;
-        // $city = "";
-        // $state = "";
-        // $ip = $request->ip();
+   
         $user = $request->optionsRadios;
         $name = $request->name ?? $request->namefreeadvice;
         $email = $request->email ?? $request->emailfreeadvice;
@@ -141,17 +143,22 @@ class AdviceController extends Controller
         $details = $request->details ?? $request->detailsfreeadvice;
         $newsLetter = $request->is_newsletter ?? $request->is_newsletterfreeadvice;
         $city = "";
-        $state = "";
+        $state = "";    
         $ip = $request->ip();
         $table = ($user == 'franchisor') ? AskFranchisor::query() : AskInvestor::query();
 
+        // dd($email);
         $pincodeDetails = Pincode::query()->select('city', 'state')->where('pincode', $pincode)->first();
         if (!empty($pincodeDetails)) {
             $city  = ucfirst(strtolower($pincodeDetails->city));
             $state = ucfirst(strtolower($pincodeDetails->state));
         }
 
-        $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
+        // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
+        // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "info@franchiseindia.com";
+        $mailTo = ($user != 'franchisor') ? "pkumar@franchiseindia.net" : "pkumar@franchiseindia.net";
+
+
 
         $users = $table->insert([
             'name' => $name,
@@ -164,12 +171,19 @@ class AdviceController extends Controller
             'ip' => $ip,
             'reg_source' => !empty(Cookie::get('campaignSource')) ? Cookie::get('campaignSource') : ""
         ]);
+
+
+        // dd($name,$email);
         // return response()->json($users);
         //If insertion fails
         if (!$users)
             return response()->json('Insertion failed..!');
+        
 
-        // Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
+        
+            // Mail::getFacadeRoot()->to($mailTo)->bcc("cnikhil@franchiseindia.net")->send(new FreeAdviceForm($request));
+
+        Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
 
         if ($newsLetter == 1)
             NewsLetterController::createNewsLetter($request->input('email'), "fi");

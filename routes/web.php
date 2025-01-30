@@ -338,9 +338,9 @@ Route::post('franfailedmyaccount', [FranPaymentController::class, 'paymentFailur
 Route::post('fransuccessmysccount', [FranPaymentController::class, 'paymentSuccessMyAccount']);
 Route::post('francancelledmyaccount', [FranPaymentController::class, 'paymentCancelledMyAccount']);
 Route::group(['prefix' => 'business-opportunities'], function () {
-    Route::get('dealers-and-distributors.m5',         function () {
-        return redirect('https://dealer.franchiseindia.com/', 301);
-    });
+    // Route::get('dealers-and-distributors.m5',         function () {
+    //     return redirect('https://dealer.franchiseindia.com/', 301);
+    // });
     Route::get('education-supplies.sc269',                   function () {
         return redirect('business-opportunities/education-services.sc269', 301);
     });

@@ -790,8 +790,8 @@ class ExpressInstaController extends Controller
                 'investment' => $investmentRange,
                 'mobile_status' => 'S',
                 'franchisor_id' => $franId,
-                'visibility' => ($userDetail->membership_type === 1 ? 1 : 0),
-                'visibility_date' => ($userDetail->membership_type === 1 ? date('Y-m-d H:i:s') : null)
+                'visibility' => ($userDetail?->membership_type === 1 ? 1 : 0),
+                'visibility_date' => ($userDetail?->membership_type === 1 ? date('Y-m-d H:i:s') : null)
 
             ];
             // dd($insertData);
@@ -862,7 +862,7 @@ class ExpressInstaController extends Controller
                 $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name, strlen($phone) > 15 ? substr($phone, 0, 15) . ".." : $phone);
 
                 //Sending Paid Franchisor Notifications
-                $this->sendFranNotifications($userDetail->email, $details, $userDetail->mobile, $franSmsMsg, 'paid');
+                $this->sendFranNotifications($userDetail?->email, $details, $userDetail->mobile, $franSmsMsg, 'paid');
             }
 
             if ($franchisorDetail->membership_type == 0) {
@@ -870,7 +870,7 @@ class ExpressInstaController extends Controller
                 $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
 
                 //Sending Free Franchisor Notifications
-                $this->sendFranNotifications($userDetail->email, $details[1], $userDetail->mobile, $franSmsMsg, 'free');
+                $this->sendFranNotifications($userDetail?->email, $details[1], $userDetail?->mobile, $franSmsMsg, 'free');
             }
 
             $detailMail[0] = $franchisorDetail->company_name;

@@ -118,7 +118,10 @@ $c_Url = url()->current();
                             $shortBox = 0;
                         @endphp
                         <div  id="renderedData">
-
+                            @php
+                            // dd($brandResult);
+                            // dd($shuffledResults->pluck('fran_detail_id')->toArray());
+                            @endphp
                         @foreach ($shuffledResults as $brandResult)
                             <!-- category list section start here-->
 
