@@ -24,7 +24,8 @@
     //$author_details
     $authorSlug = $author_details->slug ?? strtolower(str_replace(' ', '-', $author_details->title));
     //dd($authorSlug);
-    $authorUrl = Config('constants.MainDomain') . '/insights/author/' . $authorSlug . '-' . $author_details->author_id;
+    $authorUrl =
+        Config('constants.MainDomain') . "/insights/author/" . $authorSlug . '-' . $author_details->author_id;
 
     $authorImage = !empty($author_details->image)
         ? \App\Http\Controllers\InsightsController::authorImageurl($author_details->image)
@@ -342,37 +343,4 @@
     </div>
     </div>
     @include('layout.insights.magblock')
-    <script>
-        $(document).ready(function() {
-            let newsId = "{{ $newsDetails->news_id }}"; // Get news ID
-            let cat = "{{ $newsDetails->cat_id }}"; // Get category ID
-    
-            // Corrected AJAX call
-            $.ajax({
-                url: "/insights/nextarticle", // Use the correct URL route
-                type: "GET",
-                data: {
-                    news_id: newsId,
-                    cat_id: cat
-                },
-                dataType: "json",
-                success: function(data) {
-                    // Update the page content with the response data
-                    $("#newsTitle").text(data.title);
-                    $("#newsImage").attr("src", data.image);
-                    $("#newsShortDesc").text(data.shortDesc);
-                    $("#newsContent").html(data.content);
-                    $("#authorName").text("By - " + data.author.name);
-                    $("#authorImage").attr("src", data.author.image);
-                    $("#authorDesignation").text(data.author.designation);
-                    $("#newsDate").text(data.created_at);
-                    $("#newsViews").text(data.views);
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error fetching news details:", error);
-                }
-            });
-        });
-    </script>
-
 @endsection
