@@ -373,6 +373,68 @@ class InsightsController extends Controller
         return view('insights.author', compact('author', 'latestArticles', 'mostViewedArticles', 'popularArticles', 'articleCount'));
     }
 
+    public function authorarchive(Request $request)
+    {
+        // Set the appropriate model and fetch data based on the language
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+        // Choose the appropriate model based on the locale
+        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+        // $author = AuthorList::find($id);
+        // Get author IDs based on article filters
+        $authorIds = $model::query()
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('author_id')
+            ->where('status', 1)
+            ->groupBy('author_id')
+            ->pluck('author_id')
+            ->toArray();
+
+        // Get article count grouped by author
+        $authorCounts = $model::query()
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('author_id')
+            ->where('status', 1)
+            ->groupBy('author_id')
+            ->selectRaw('author_id, COUNT(*) as article_count')
+            ->pluck('article_count', 'author_id')
+            ->toArray();
+
+        // Get author details for the filtered IDs
+        $authorDetails = AuthorList::query()
+            ->whereNotIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau'])
+            ->whereIn('author_id', $authorIds)
+            ->where('status', 'A')
+            ->orderByDesc('created_at')
+            ->limit(5)
+            ->get()
+            ->map(function ($author) use ($authorCounts) {
+                $author->count = $authorCounts[$author->author_id] ?? 0;
+                return $author;
+            });
+
+        $ContributoryAuthor = AuthorList::query()->whereIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau'])
+            ->whereIn('author_id', $authorIds)
+            ->where('status', 'A')
+            ->get()
+            ->map(function ($author) use ($authorCounts) {
+                $author->count = $authorCounts[$author->author_id] ?? 0;
+                return $author;
+            });
+
+        $guestAuthor = AuthorList::query()
+            ->whereIn('title', ['Guest Author'])
+            ->where('status', 'A')
+            ->get()
+            ->map(function ($author) use ($authorCounts) {
+                $author->count = $authorCounts[$author->author_id] ?? 0;
+                return $author;
+            });
+
+        return view('insights.author_archive', compact('authorDetails', 'authorCounts', 'ContributoryAuthor', 'guestAuthor'));
+    }
+
 
     public function insightscategorydata(Request $request)
     {
@@ -984,60 +1046,6 @@ class InsightsController extends Controller
 
         return $baseUrl . $uploadPath . $imagePath;
     }
-
-
-    // public static function createimgurl($image)
-    // {
-    //     // dd($image);
-    //     if ($image) {
-    //         $iscont = strstr($image, "/");
-    //         $isHttps = strstr($image, 'https');
-    //         if ($isHttps) {
-    //             $url =  trim($image, '/');
-    //         } else {
-
-    //             if ($iscont) {
-    //                 $url = Config('constants.franAwsS3Url') . trim($image, '/');
-    //             } else {
-    //                 if (App::getLocale() != 'en') {
-
-    //                     $url = Config('constants.franAwsS3Url') . Config('constants.ARTICLE_HINDI_UPLOAD_PATH') . trim($image);
-    //                 } else {
-
-    //                     $url = Config('constants.franAwsS3Url') . Config('constants.ARTICLE_UPLOAD_PATH') . trim($image);
-    //                     //$url = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/' . Config('constants.ARTICLE_UPLOAD_PATH') . trim($image);
-    //                 }
-    //             }
-    //         }
-    //     } else {
-    //         $url = url('/img/602a695853d99.jpeg');
-    //     }
-
-
-    //     return $url;
-    // }
-
-    // public static function authorImageurl($image)
-    // {
-    //     // dd($image);
-    //     if ($image) {
-    //         $iscont = strstr($image, "/");
-    //         if ($iscont) {
-    //             $url = Config('constants.franAwsS3Url') . trim($image, '/');
-    //         } else {
-    //             $info = @getimagesize('https://franchiseindia.s3.ap-south-1.amazonaws.com/opp/authors/images/' . $image);
-    //             if ($info === false) {
-    //                 $url = url('images/defaultuser.png');
-    //             } else {
-    //                 $url = Config('constants.franAwsS3Url') . 'opp/authors/images/' . trim($image);
-    //             }
-    //         }
-    //     } else {
-    //         $url = url('images/defaultuser.png');
-    //     }
-
-    //     return $url;
-    // }
 
     public static function authorImageurl($image)
     {

@@ -1092,7 +1092,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             return redirect()->to("/insights/en/tag/$tagslug", 301);
         });
         Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
-        Route::get('author-archive',              [InsightsController::class, 'authordata']);
+        Route::get('author-archive',              [InsightsController::class, 'authorarchive']);
         Route::group(['prefix' => 'en'], function () {
             Route::get('/search',               [InsightsController::class, 'insightSearch']);
             Route::get('thanks', function () {
@@ -1200,14 +1200,4 @@ Route::get('/getajax', [BusinessListingController::class, 'fetchtest']);
 
 
 Route::get('/items', [BusinessListingController::class, 'index'])->name('items.index');
-Route::get('n', function () {
-    $data = [
-        'name' => 'John Doe',
-        'companyName' => 'Tech Corp',
-        'mobile' => '1234567890',
-        'city' => 'New York',
-        'email' => 'johndoe@example.com',
-        'id' => '001',
-    ];
-    return view('mail.advertise', $data);
-});
+
