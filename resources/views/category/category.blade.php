@@ -120,7 +120,7 @@ $c_Url = url()->current();
                         <div  id="renderedData">
                             @php
                             // dd($brandResult);
-                            dd($shuffledResults->pluck('company_name')->toArray());
+                            // dd($shuffledResults->pluck('company_name')->toArray());
                             @endphp
                         @foreach ($shuffledResults as $brandResult)
                             <!-- category list section start here-->
