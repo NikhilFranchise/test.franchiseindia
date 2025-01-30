@@ -115,19 +115,19 @@ $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, funct
 
 
         //OI Redirection Start
-        if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
-            $oiBrandsCacheKey = "oi_brands_{$franDetails->franchisor_id}";
-             // Retrieve OI Brands data from cache or database
-                $iobrands = Cache::remember($oiBrandsCacheKey, $cacheDuration, function () use ($franDetails) {
-                    return OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
-                });
-            // $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
-            //dd($iobrands);
-            if (!empty($iobrands)) {
-                $ioRedirect = Config('constants.OIDomain') . '/manufacturer/' . $iobrands->profile_name . '-' . $iobrands->brand_id;
-                return redirect($ioRedirect, 301);
-            }
-        }
+        // if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
+        //     $oiBrandsCacheKey = "oi_brands_{$franDetails->franchisor_id}";
+        //      // Retrieve OI Brands data from cache or database
+        //         $iobrands = Cache::remember($oiBrandsCacheKey, $cacheDuration, function () use ($franDetails) {
+        //             return OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
+        //         });
+        //     // $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
+        //     //dd($iobrands);
+        //     if (!empty($iobrands)) {
+        //         $ioRedirect = Config('constants.OIDomain') . '/manufacturer/' . $iobrands->profile_name . '-' . $iobrands->brand_id;
+        //         return redirect($ioRedirect, 301);
+        //     }
+        // }
         //OI Redirection Code End
 
         if (!empty($franDetails) && request()->segment(1) == 'hi' && $franDetails->is_hindi == 0)

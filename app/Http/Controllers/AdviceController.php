@@ -230,6 +230,7 @@ class AdviceController extends Controller
         $ip = $request->ip();
         $table = ($user == 'franchisor') ? AskFranchisor::query() : AskInvestor::query();
 
+        // dd($email);
         $pincodeDetails = Pincode::query()->select('city', 'state')->where('pincode', $pincode)->first();
         if (!empty($pincodeDetails)) {
             $city  = ucfirst(strtolower($pincodeDetails->city));
@@ -252,10 +253,14 @@ class AdviceController extends Controller
             'ip' => $ip,
             'reg_source' => !empty(Cookie::get('campaignSource')) ? Cookie::get('campaignSource') : ""
         ]);
+
+
+        // dd($name,$email);
         // return response()->json($users);
         //If insertion fails
         if (!$users)
             return response()->json('Insertion failed..!');
+        
 
         Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
 

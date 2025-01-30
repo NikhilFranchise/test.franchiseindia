@@ -885,7 +885,7 @@ class BusinessListingController extends Controller
      */
     public function getBusinessListing(Request $request)
     {
-        // dd('getBusinessListing');
+        // dd($request);
         // Fetch the request parameters
         $catParam      = request()->category_param;
         $mcat      = request()->catUrl;
@@ -927,14 +927,14 @@ class BusinessListingController extends Controller
         //Category Redirection Start
         $catChk = array(5, 443, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 735, 736, 801, 802, 803, 444, 457, 458, 459, 460, 461, 462, 463, 476, 480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 495, 496, 959, 477, 497, 498, 499, 500, 501, 502, 503, 504, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 478, 505, 506, 507, 508, 509, 510, 511, 512, 513, 839, 840, 841, 842, 843, 844, 845, 479, 514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 887, 888, 889, 890, 891, 892, 893, 894, 895, 738, 739, 740, 741, 742, 743, 744, 745, 746, 747, 748, 749, 750, 751, 752, 753, 754, 755, 756, 757, 758, 759, 760, 964, 965, 761, 762, 763, 764, 765, 766, 767, 768, 769, 961, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 790, 791, 792, 793, 794, 795, 796, 797, 798, 799, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814, 815, 816, 817, 818, 819, 820, 821, 469, 472, 473, 958, 846, 847, 848, 849, 850, 851, 852, 853, 854, 855, 856, 857, 858, 859, 464, 468, 860, 861, 862, 863, 864, 865, 866, 867, 960, 868, 869, 870, 871, 872, 873, 874, 875, 876, 877, 878, 879, 880, 881, 882, 883, 884, 885, 886, 896, 897, 898, 899, 900, 901, 902, 903, 904, 905, 906, 907, 908, 966, 909, 910, 911, 912, 913, 914, 915, 916, 917, 918, 919, 920, 921, 922, 923, 924, 967, 925, 926, 927, 928, 929, 930, 931, 932, 933, 934, 935, 936, 937, 938, 939, 940, 941, 942, 943, 944, 945, 946, 947, 948, 949, 963, 962, 950, 951, 952, 953, 954, 956, 955, 957, 969, 970, 971);
 
-        if (in_array($cid[1], $catChk)) {
-            $oiCategory = MappingCategory::query()->where('fi_category_id', $cid[1])->first();
-            //$oiCategory = MappingCategory::query()->where('fi_category', $catName)->first();			
-            if (!empty($oiCategory)) {
-                $ioRedirect = ($oiCategory->slug != '') ? Config('constants.OIDomain') . '/dir/' . $oiCategory->slug : Config('constants.OIDomain');
-                return redirect($ioRedirect, 301);
-            }
-        }
+        // if (in_array($cid[1], $catChk)) {
+        //     $oiCategory = MappingCategory::query()->where('fi_category_id', $cid[1])->first();
+        //     //$oiCategory = MappingCategory::query()->where('fi_category', $catName)->first();			
+        //     if (!empty($oiCategory)) {
+        //         $ioRedirect = ($oiCategory->slug != '') ? Config('constants.OIDomain') . '/dir/' . $oiCategory->slug : Config('constants.OIDomain');
+        //         return redirect($ioRedirect, 301);
+        //     }
+        // }
         //Category Redirection End
 
         $franData = FranchisorBusinessDetail::query()->select(
@@ -1114,7 +1114,7 @@ class BusinessListingController extends Controller
 
     public function searchBusinessListingnormalization(Request $request)
     {
-        // dd($request);
+        dd('yes');
         $url = $request->url();
         $lowcost      = request()->lowcost;
         preg_match('/[a-zA-Z]+(\d+)/', $lowcost, $matches);
@@ -1762,7 +1762,7 @@ class BusinessListingController extends Controller
     }
     public function getBusinessListingnormalization(Request $request)
     {
-        // dd($request);
+        // dd('yes');
         // $lowcost = $request->route('lowcost');
 
         // Fetch the request parameters
@@ -1779,6 +1779,7 @@ class BusinessListingController extends Controller
 
         // Check if $allIntegers exists in $seoCategoriesm configuration array
         if (array_key_exists($allIntegers, $seoCategoriesm)) {
+       
             // If $allIntegers exists in $seoCategoriesm, add "m" to $allIntegers
             $allIntegers = 'm' . $allIntegers;
             if (strpos($allIntegers, "m") !== false) {
@@ -1801,17 +1802,20 @@ class BusinessListingController extends Controller
                 }
             }
         }
+       
+        //http://localhost:8000/business-opportunities/telecommunications.sc1011
         if (array_key_exists($allIntegers, $seoCategoriessc)) {
             // If $allIntegers exists in $seoCategoriesm, add "m" to $allIntegers
             $allIntegers = 'sc' . $allIntegers;
             // dd($allIntegers);
 
             if (strpos($allIntegers, "sc") !== false) {
+
                 // dd($allIntegers);
                 $category = substr($allIntegers, 2, 4);
                 // dd($allIntegers,$category);
                 $configCatUrl = Config('category.SeoSubCategoryArr.' . $category);
-                // dd($configCatUrl);
+                // dd($allIntegers,$configCatUrl);
                 $newCatUrl = '/business-opportunities/' . $configCatUrl . '.' . $allIntegers;
                 // dd($newCatUrl);
                 $oldCaturl = '/business-opportunities/' . $catUrl . '.' . $catParam;
@@ -1819,13 +1823,24 @@ class BusinessListingController extends Controller
                 // dd($category,$configCatUrl,$newCatUrl, $oldCaturl);
                 if ($configCatUrl !== false) {
                     $newCatUrl = '/business-opportunities/' . $configCatUrl . '.' . $allIntegers;
+                    // dd($newCatUrl ,$oldCaturl);
                     if ($newCatUrl != $oldCaturl) {
                         // dd($newCatUrl);
                         return redirect($newCatUrl, 301);
                     }
+                    // else if ($newCatUrl == $oldCaturl) {
+                    //     // dd($newCatUrl);
+                    //     // return redirect($newCatUrl, 301);
+                    //     return response($newCatUrl, 200);
+                    // }
+
                 }
+                // return redirect($newCatUrl);
+
             }
         } else if (array_key_exists($allIntegers, $seoCategoriesssc)) {
+        
+
             // If $allIntegers exists in $seoCategoriesm, add "m" to $allIntegers
             $allIntegers = 'ssc' . $allIntegers;
             // dd($allIntegers);
@@ -1850,6 +1865,7 @@ class BusinessListingController extends Controller
                 }
             }
         }
+
         // else{
 
         //     $defaultUrl = 'business-opportunities/all/all';
@@ -1884,6 +1900,7 @@ class BusinessListingController extends Controller
         $catArr   = $seoClass->select('catname', 'parent_id', 'seoTitle', 'description', 'keywords')
             ->where('catid', $cid[1])
             ->first();
+            // dd($catArr);
         if ($catArr == null)
             return redirect('/business-opportunities/all/all', 301);
 
@@ -1892,14 +1909,14 @@ class BusinessListingController extends Controller
         //Category Redirection Start
         $catChk = array(5, 443, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 735, 736, 801, 802, 803, 444, 457, 458, 459, 460, 461, 462, 463, 476, 480, 481, 482, 483, 484, 485, 486, 487, 488, 489, 490, 491, 492, 493, 495, 496, 959, 477, 497, 498, 499, 500, 501, 502, 503, 504, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 832, 833, 834, 835, 836, 837, 838, 478, 505, 506, 507, 508, 509, 510, 511, 512, 513, 839, 840, 841, 842, 843, 844, 845, 479, 514, 515, 516, 517, 518, 519, 520, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 887, 888, 889, 890, 891, 892, 893, 894, 895, 738, 739, 740, 741, 742, 743, 744, 745, 746, 747, 748, 749, 750, 751, 752, 753, 754, 755, 756, 757, 758, 759, 760, 964, 965, 761, 762, 763, 764, 765, 766, 767, 768, 769, 961, 770, 771, 772, 773, 774, 775, 776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 790, 791, 792, 793, 794, 795, 796, 797, 798, 799, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814, 815, 816, 817, 818, 819, 820, 821, 469, 472, 473, 958, 846, 847, 848, 849, 850, 851, 852, 853, 854, 855, 856, 857, 858, 859, 464, 468, 860, 861, 862, 863, 864, 865, 866, 867, 960, 868, 869, 870, 871, 872, 873, 874, 875, 876, 877, 878, 879, 880, 881, 882, 883, 884, 885, 886, 896, 897, 898, 899, 900, 901, 902, 903, 904, 905, 906, 907, 908, 966, 909, 910, 911, 912, 913, 914, 915, 916, 917, 918, 919, 920, 921, 922, 923, 924, 967, 925, 926, 927, 928, 929, 930, 931, 932, 933, 934, 935, 936, 937, 938, 939, 940, 941, 942, 943, 944, 945, 946, 947, 948, 949, 963, 962, 950, 951, 952, 953, 954, 956, 955, 957, 969, 970, 971);
 
-        if (in_array($cid[1], $catChk)) {
-            $oiCategory = MappingCategory::query()->where('fi_category_id', $cid[1])->first();
-            //$oiCategory = MappingCategory::query()->where('fi_category', $catName)->first();			
-            if (!empty($oiCategory)) {
-                $ioRedirect = ($oiCategory->slug != '') ? Config('constants.OIDomain') . '/dir/' . $oiCategory->slug : Config('constants.OIDomain');
-                return redirect($ioRedirect, 301);
-            }
-        }
+        // if (in_array($cid[1], $catChk)) {
+        //     $oiCategory = MappingCategory::query()->where('fi_category_id', $cid[1])->first();
+        //     //$oiCategory = MappingCategory::query()->where('fi_category', $catName)->first();			
+        //     if (!empty($oiCategory)) {
+        //         $ioRedirect = ($oiCategory->slug != '') ? Config('constants.OIDomain') . '/dir/' . $oiCategory->slug : Config('constants.OIDomain');
+        //         return redirect($ioRedirect, 301);
+        //     }
+        // }
         //Category Redirection End
 
         $franData = FranchisorBusinessDetail::query()->select(
@@ -2015,7 +2032,7 @@ class BusinessListingController extends Controller
 
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
 
-        dd($shuffledResults->pluck('fran_detail_id'));
+        dd($shuffledResults->pluck('fran_detail_id'));  
         if (!empty($catArr->seoTitle)) {
             $seoTitle = $catArr->seoTitle;
             // dd($catArr);
