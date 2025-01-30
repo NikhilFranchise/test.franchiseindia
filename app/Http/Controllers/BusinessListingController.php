@@ -1985,11 +1985,11 @@ class BusinessListingController extends Controller
             $mainCatId = $catArr->parent_id;
         }
 
-        if ($cid[0] == 'm') {
-            $franData->where('ind_main_cat', $cid[1])->orderby('is_fixed_brand', 'desc');
-            $mainCatId = $cid[1];
-            // dd($mainCatId);
-        }
+        // if ($cid[0] == 'm') {
+        //     $franData->where('ind_main_cat', $cid[1])->orderby('is_fixed_brand', 'desc');
+        //     $mainCatId = $cid[1];
+        //     // dd($mainCatId);
+        // }
         $franData= $franData->distinct();
 
         $count = request()->segment(1) == 'amp' ? 20 : 21;
