@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Log;
+
+
 class BusinessListingController extends Controller
 {
     public function getSubCatUrl()
@@ -652,11 +655,39 @@ class BusinessListingController extends Controller
             // dd('hello');
             $catName = (request()->segment(1) == 'hi') ? 'बिज़नेस  ओप्पोर्तुनिटीज़' : 'Business Opportunities';
 
+
+// dd('yes');
+
+            DB::enableQueryLog();
+
         // Fetch Brand Data
-        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','views','activated_at');
+        // $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','views','activated_at')->whereIn('profile_status', [1,11])->take(50);
 
-        $franData->whereIn('profile_status', [1,11]);
+        $franData = FranchisorBusinessDetail::query()
+    ->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 
+             'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 
+             'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 
+             'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 
+             'profile_status', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 
+             'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility',
+             'brand_verified', 'views', 'activated_at')
+    ->where('profile_status', 1);
+    // ->take(5)->get();
+    // ->get();
 
+    // dd($franData);
+
+
+        DB::listen(function ($query) {
+            // Log query, bindings and execution time
+            Log::info('SQL Query: ' . $query->sql);
+            Log::info('Bindings: ' . implode(', ', $query->bindings));
+            Log::info('Execution Time: ' . $query->time . 'ms');
+        });
+
+        // $franData->whereIn('profile_status', [1,11]);
+
+        // dd('passed');
 
         if (isset(request()->text)) {
             $text = str_replace('-or-', '/', request()->text);
@@ -754,7 +785,7 @@ class BusinessListingController extends Controller
         $franData->where('unit_inv_max', '>=', $minRangeValue);
 
         $orderbyVal = 'membership_weightage';
-        $franData->orderBy($orderbyVal, 'desc');
+        // $franData->orderBy($orderbyVal, 'desc');
 
         if ($orderby == 1) {
             $orderbyVal = 'fran_detail_id';
@@ -854,6 +885,7 @@ class BusinessListingController extends Controller
      */
     public function getBusinessListing(Request $request)
     {
+        // dd('getBusinessListing');
         // Fetch the request parameters
         $catParam      = request()->category_param;
         $mcat      = request()->catUrl;
@@ -1776,7 +1808,7 @@ class BusinessListingController extends Controller
 
             if (strpos($allIntegers, "sc") !== false) {
                 // dd($allIntegers);
-                $category = substr($allIntegers, 2, 3);
+                $category = substr($allIntegers, 2, 4);
                 // dd($allIntegers,$category);
                 $configCatUrl = Config('category.SeoSubCategoryArr.' . $category);
                 // dd($configCatUrl);

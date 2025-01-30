@@ -51,12 +51,45 @@ use Illuminate\Support\Str;
         return maxval;
     }
     /*]]>*/</script>
-<div class="loadman" id="loading" style="display:none">
-    <div class="thanku">
-        <div class="tbl-cell">
-            <div class="loader"></div>
-        </div></div>
+<style>
+    #loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Ensure it appears above other content */
+}
+
+/* Spinner styles */
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top: 5px solid white; /* Color of the spinning bar */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Spinner animation */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+</style>
+
+<div id="loader" style="display: none;">
+    <div class="spinner"></div>
 </div>
+
 <div class="col-xs-12 col-sm-4 col-md-3 row-no-padding catleft" id="sideslide">
     <div id="closecat"><i class="fa fa-times fa-lg" aria-hidden="true"></i></div>
     <div class="bor-radius">
@@ -326,7 +359,7 @@ use Illuminate\Support\Str;
 </script>
 
 
-<script>
+{{-- <script>
     var shuffledResults = @json($shuffledResults);
 
     function fetchPriceData(minvaluerange, maxvaluerange) {
@@ -368,4 +401,4 @@ use Illuminate\Support\Str;
         }
     });
 }
-</script>
+</script> --}}

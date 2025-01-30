@@ -20,7 +20,7 @@ class ContactUsController extends Controller
 
     public function contact(Request $request)
     {
-    // dd($request);
+    dd($request);
         $validator =  $request->validate([
             'name' => 'required|max:30',
             'email' => 'required|email|max:255',

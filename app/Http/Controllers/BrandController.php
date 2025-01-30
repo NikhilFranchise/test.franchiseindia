@@ -55,7 +55,7 @@ class BrandController extends Controller
                  $a = $franDetails->ind_main_cat;
                  // dd($main_cat[$a]);
                  $index_value = $main_cat[$a];
-                 // dd($index_value);
+                //  dd($index_value);
                  $u_slug = Config('category.SeoCategoryArr');
                  $url_slug = $u_slug[$a];
                  // dd($url_slug);

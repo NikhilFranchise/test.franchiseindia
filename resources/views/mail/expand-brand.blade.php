@@ -42,8 +42,8 @@
                 <tr>
                     <td valign="top" class="menu-item" width="100%" style="line-height: 24px;">
                         <a href="{{Config('constants.MainDomain')}}" style="text-decoration: none; color: black;">15,000+ Business Opportunities</a> &nbsp; | &nbsp;
-                        <a href="{{Config('constants.MainDomain')}}/content" style="text-decoration: none; color: black;">What's New</a> &nbsp; | &nbsp;
-                        <a href="http://news.franchiseIndia.com/" style="text-decoration: none; color: black;">News</a>&nbsp; | &nbsp;
+                        {{-- <a href="{{Config('constants.MainDomain')}}/content" style="text-decoration: none; color: black;">What's New</a> &nbsp; | &nbsp; --}}
+                        <a href="https://www.franchiseindia.com/insights" style="text-decoration: none; color: black;">News</a>&nbsp; | &nbsp;
                         <a href="http://video.franchiseIndia.com/" style="text-decoration: none; color: black;">Videos</a> &nbsp; | &nbsp;
                         <a href="{{Config('constants.MainDomain')}}/advertise" style="text-decoration: none; color: black;">Advertise</a> &nbsp; | &nbsp;
                         <a href="https://master.franchiseindia.com/emagazine/" style="text-decoration: none; color: black;">Subscribe</a>
@@ -61,18 +61,20 @@
                     <td valign="top" class="mt-tbl">
                         <table width="100%" class="tbl-mo" cellpadding="0" cellspacing="0">
                             <tbody>
+                            @if ($details->name !== '--')
                             <tr>
                                 <td width="25%" class="td-name" valign="top" style="background:#f4f4f4;padding:10px 0 10px 20px;">Name</td>
                                 <td width="5%" class="td-dot" valign="top" style="background:#f4f4f4;padding:10px 20px 10px 0;">:</td>
-                                <td width="70%" class="td-value" valign="top" style="background:#f4f4f4; color:#333333;line-height:21px;padding:10px 0;">{{ $details->name }}</td>
+                                <td width="70%" class="td-value" valign="top" style="background:#f4f4f4; color:#333333;line-height:21px;padding:10px 0;">{{  $details->name ?? $details->namefreeadvice  }}</td>
                             </tr>
+                            @endif
                             <tr>
                                 <td colspan="3" valign="top" height="1" bgcolor="#eaeaea"></td>
                             </tr>
                             <tr>
                                 <td width="25%" class="td-name" valign="top" style="background:#f4f4f4;padding:10px 0 10px 20px;">Email</td>
                                 <td width="5%" class="td-dot" valign="top" style="background:#f4f4f4;padding:10px 20px 10px 0;">:</td>
-                                <td width="70%" class="td-value" valign="top" style="background:#f4f4f4; color:#333333;line-height:21px;padding:10px 0;">{{ $details->email }}</td>
+                                <td width="70%" class="td-value" valign="top" style="background:#f4f4f4; color:#333333;line-height:21px;padding:10px 0;">{{ $details->email ?? $details->emailfreeadvice  }}</td>
                             </tr>
                             <tr>
                                 <td colspan="3" valign="top" height="1" bgcolor="#eaeaea"></td>
@@ -80,24 +82,29 @@
                             <tr>
                                 <td width="25%" class="td-name" valign="top" style="background:#f4f4f4;padding:10px 0 10px 20px;">Mobile</td>
                                 <td width="5%" class="td-dot" valign="top" style="background:#f4f4f4;padding:10px 20px 10px 0;">:</td>
-                                <td width="70%" class="td-value" valign="top" style="background:#f4f4f4; color:#333333;line-height:21px;padding:10px 0;">{{ $details->mobile }}</td>
+                                <td width="70%" class="td-value" valign="top" style="background:#f4f4f4; color:#333333;line-height:21px;padding:10px 0;">{{ $details->mobile ?? $details->mobilefreeadvice  }}</td>
                             </tr>
+                            @if ($details->pincode !== '000000')
                             <tr>
                                 <td colspan="3" valign="top" height="1" bgcolor="#eaeaea"></td>
                             </tr>
                             <tr>
                                 <td width="25%" class="td-name" valign="top" style="background:#f4f4f4;padding:10px 0 10px 20px;">Pincode</td>
                                 <td width="5%" class="td-dot" valign="top" style="background:#f4f4f4;padding:10px 20px 10px 0;">:</td>
-                                <td width="70%" class="td-value" valign="top" style="background:#f4f4f4; color:#333333;line-height:21px;padding:10px 0;">{{ $details->pincode }}</td>
+                                <td width="70%" class="td-value" valign="top" style="background:#f4f4f4; color:#333333;line-height:21px;padding:10px 0;">{{ $details->pincode ?? $details->pincodefreeadvice }}</td>
                             </tr>
+                            @endif
+
+                            @if ($details->details !== '--')
                             <tr>
                                 <td colspan="3" valign="top" height="1" bgcolor="#eaeaea"></td>
                             </tr>
                             <tr>
                                 <td width="25%" class="td-name" valign="top" style="background:#f4f4f4;padding:10px 0 10px 20px;">Details</td>
                                 <td width="5%" class="td-dot" valign="top" style="background:#f4f4f4;padding:10px 20px 10px 0;">:</td>
-                                <td width="70%" class="td-value" valign="top" style="background:#f4f4f4; color:#333333;line-height:21px;padding:10px 0;">{{ $details->details }}</td>
+                                <td width="70%" class="td-value" valign="top" style="background:#f4f4f4; color:#333333;line-height:21px;padding:10px 0;">{{ $details->details ?? $details->detailsfreeadvice }}</td>
                             </tr>
+                            @endif
                             <tr>
                                 <td colspan="3" valign="top" height="1" bgcolor="#eaeaea"></td>
                             </tr>

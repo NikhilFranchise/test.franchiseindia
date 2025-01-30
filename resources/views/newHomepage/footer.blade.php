@@ -136,7 +136,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <p class="copy-right">Copyright © 2009 - 2024 Franchiseindia.com Pvt Ltd</p>
+                <p class="copy-right">Copyright © 2009 - 2025 Franchiseindia.com Pvt Ltd</p>
             </div>
             <div class="col-md-7">
                 <ul class="fihl-footer-bottom-links">
@@ -462,7 +462,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="frm-container" id="askForm">
                     <form id="homepagenew" name="homepage" method="post"
                         action="{{ route('form.submithome') }}">
-                        @csrf
+                        @csrf 
                         <h2 class="ttl">Free Advice - Ask Our Experts</h2>
                         <div id="errMsg1" style="display:none;">
                             <font color="red"> Please Fill The form! </font>
@@ -493,7 +493,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     class="form-control blur" placeholder="Enter Email" required="">
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon">
+                                <span class="input-group-addon">  
                                     <img src="https://www.franchiseindia.com/images/mobile.png" alt="mobile">
                                 </span>
                                 <input type="text" class="form-control blur" maxlength="10"

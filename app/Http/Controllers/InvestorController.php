@@ -1491,10 +1491,22 @@ class InvestorController extends Controller
         }
 
         //if still the count of recommendations is less
+        // if (count($franchisors) < 15) {
+        //     $franchisor3 = FranchisorBusinessDetail::query()->whereNotIn('franchisor_id', array_column($franchisors, 'franchisor_id'))->inRandomOrder()->where('membership_type', 1)->take(15 - count($franchisors))->get();
+        //     $franchisors = array_merge($franchisors, $franchisor3);
+        // }
+
         if (count($franchisors) < 15) {
-            $franchisor3 = FranchisorBusinessDetail::query()->whereNotIn('franchisor_id', array_column($franchisors, 'franchisor_id'))->inRandomOrder()->where('membership_type', 1)->take(15 - count($franchisors))->get();
-            $franchisors = array_merge($franchisors, $franchisor3);
+            $franchisor3 = FranchisorBusinessDetail::query()
+                ->whereNotIn('franchisor_id', array_column($franchisors, 'franchisor_id'))
+                ->inRandomOrder()
+                ->where('membership_type', 1)
+                ->take(15 - count($franchisors))
+                ->get();
+        
+            $franchisors = array_merge($franchisors, $franchisor3->toArray());
         }
+        
 
         //fetching states for the franchisors
         if (is_array($franchisors)) {

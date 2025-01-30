@@ -955,7 +955,7 @@ function selectMax1(selectmaxheaderval) {
     return false;
 }
 
-$(document).ready(function() {
+$(document).ready(function() { 
     $('#homepagenew').on('submit', function(e) {
         // console.log('tres');
         e.preventDefault(); // Prevent the default form submission

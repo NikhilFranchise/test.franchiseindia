@@ -1151,6 +1151,8 @@ Route::get('reload-captcha', [AdviceController::class, 'reloadCaptcha']);
 Route::get('reload-captcha-contact', [ContactUsController::class, 'reloadCaptcha']);
 
 Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('form.submit');
+Route::post('/submit-form-listing', [AdviceController::class, 'freeadvicelisting'])->name('form.submitlisting');
+
 Route::get('/brand-total-count', [CommonController::class, 'brand_total_count']);
 
 Route::post('/submit-form1', [AdviceController::class, 'freeadviceHome_popup'])->name('form.submithome');
@@ -1185,3 +1187,12 @@ Route::get('/getajax', [BusinessListingController::class, 'fetchtest']);
 
 
 Route::get('/items', [BusinessListingController::class, 'index'])->name('items.index');
+
+Route::get('advertise',                   function() { return redirect('https://www.franchiseindia.com/advertise-with-us-payment', 301);});
+
+
+// test email route
+Route::get('/sendmail',[CommonController::class,'send_email']);
+// Route::post('/password/email',[CommonController::class,'reset']);
+
+Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('password-reset');

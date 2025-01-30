@@ -70,7 +70,7 @@ $(document).ready(function() {
                     const newText = data.split(/\s/).join('');
                     if (newText === 'true') {
                         window.location = "/thanks-advice-form";
-                    } else {
+                    } else {  
                         $("#errMsg").show();
                     }
                 }

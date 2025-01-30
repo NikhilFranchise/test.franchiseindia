@@ -33,7 +33,7 @@
                                     </ul>
                                 </div><br />
                             @endif
-                            <form id="homepagefree" name="homepage" method="post" action="{{ route('form.submit') }}">
+                            <form id="homepagefree" name="homepage" method="post" action="{{ route('form.submitlisting') }}">
                                 @csrf
                                 <h2 class="ttl">Free Advice - Ask Our Experts</h2>
                                 <div id="errMsg" style="display:none;"><span style="color: red; ">Please select one

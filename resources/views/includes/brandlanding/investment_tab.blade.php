@@ -77,10 +77,29 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($franTradePartnerData as $tradeData)
+                        @foreach ($franTradePartnerData as $tradeData) 
                             <tr>
                                 <td data-label="Types of Channels">
-                                    {{ $tradeData->channel_type == 5 ? 'Distributor' : 'Dealer' }}</td>
+                                    @if($tradeData->channel_type == 2)
+                                        DSA
+                                    @elseif($tradeData->channel_type == 3)
+                                    Reseller
+                                    @elseif($tradeData->channel_type == 4)
+                                    MLM
+                                    @elseif($tradeData->channel_type == 6)
+                                    C & F
+                                    @elseif($tradeData->channel_type == 8)
+                                    Agent
+                                    @elseif($tradeData->channel_type == 9)
+                                    Channel Partner
+                                    @elseif($tradeData->channel_type == 10)
+                                    Agency Partner
+                                    @elseif($tradeData->channel_type == 11)
+                                    Affiliate Partner
+                                    @else
+                                        {{ $tradeData->channel_type == 5 ? 'Distributor' : 'Dealer' }}
+                                    @endif
+                                </td>
                                 <td data-label="Investment (If any)">
                                     {{ Config('constants.investRangeInWords.' . $tradeData->trade_investment) }}</td>
                                 <td data-label="Margin / Commissions">{{ $tradeData->trade_margin }}%</td>

@@ -289,17 +289,27 @@
     });
     @endtablet
 </script>
-<!-- Global site tag (gtag.js) - Google Ads: 767541249 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-767541249"></script>
+// <!-- Global site tag (gtag.js) - Google Ads: 767541249 -->
+// <script async src="https://www.googletagmanager.com/gtag/js?id=AW-767541249"></script>
 
+// <script>
+//     window.dataLayer = window.dataLayer || [];
+//     function gtag() {
+//         dataLayer.push(arguments);
+//     }
+//     gtag('js', new Date());
+//     gtag('config', 'AW-767541249');
+// </script>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16776470774"></script>
 <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-    gtag('config', 'AW-767541249');
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-16776470774');
 </script>
+
 
 @if(request()->method() == "POST" && (
     url()->current() == url('thanks-advice-form') ||
@@ -314,7 +324,7 @@
     url()->current() == url('property-loan-submit') ||
     url()->current() == url('exit-popup-post')))
     <script>
-        gtag('event', 'conversion', {'send_to': 'AW-767541249/ebcBCLeLprIBEIGA_-0C'});
+        gtag('event', 'conversion', {'send_to': 'AW-16776470774/ebcBCLeLprIBEIGA_-0C'});
     </script>
 @endif
 
