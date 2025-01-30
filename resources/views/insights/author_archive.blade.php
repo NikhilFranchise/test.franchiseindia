@@ -1,16 +1,15 @@
 @extends('layout.insights.master')
 @section('content')
     <div class="maininnver homeh">
-        <div class="inner-top-head" style="background: linear-gradient(to right, #169743, #fcc22f);margin-top: -21px;">
+        <div class="inner-top-head">
             <div class="container">
-                <h1 style="color: #ffffff;font-family: Roboto;font-weight: 500;font-size: 24px;padding: 10px 0px;">
-                    Author Archive</h1>
+                <h1>Author Archive</h1>
             </div>
         </div>
         <div class="authblk">
             <div class="container">
                 <ul class="nabva">
-                    <li><a href="https://www.franchiseindia.com/insights">Home</a></li>
+                    <li><a href="{{ url('/insights') }}">Home</a></li>
                     <li>/</li>
                     <li>Author Archive</li>
                 </ul>
@@ -27,146 +26,82 @@
                     a pivotal role in shaping the editorial direction of leading media publications and driving
                     strategic content initiatives.</p>
 
-                <h3 class="author-archive-cat">Featured Author</h3>
+                <h3 class="author-archive-cat">{{ App::getLocale() == 'en' ? 'Featured Authors' : 'फीचर्ड ऑथर्स' }}</h3>
                 <ul>
-                    <li>
-                        <div class="home-author-list">
-                            <div class="home-author-thumb"><img src="authors/smita-deorah.jpg" class="img-fluid"
-                                    alt="" height="" width=""></div>
-                            <div class="home-author-name">Beny Sachdeva</div>
-                            <div class="home-author-des">Editor</div>
-                            <div class="home-author-count">No. of Stories - <span>130</span></div>
-                            <a href="">View Articles</a>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="home-author-list">
-                            <div class="home-author-thumb"><img src="authors/gourav.jpg" class="img-fluid" alt=""
-                                    height="" width=""></div>
-                            <div class="home-author-name">Ravindra</div>
-                            <div class="home-author-des">CEO and Co-Founder, Fashinza</div>
-                            <div class="home-author-count">No. of Stories - <span>130</span></div>
-                            <a href="">View Articles</a>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="home-author-list">
-                            <div class="home-author-thumb"><img src="authors/mallika.jpg" class="img-fluid" alt=""
-                                    height="" width=""></div>
-                            <div class="home-author-name">Ruchira Shukla</div>
-                            <div class="home-author-des">MD and Co-Founder of Luxury Ride</div>
-                            <div class="home-author-count">No. of Stories - <span>130</span></div>
-                            <a href="">View Articles</a>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="home-author-list">
-                            <div class="home-author-thumb"><img src="authors/greg.jpg" class="img-fluid" alt=""
-                                    height="" width=""></div>
-                            <div class="home-author-name">Paul</div>
-                            <div class="home-author-des">EVP, Head of Digital Experience & Microsoft Business, Infosys
+                    @foreach ($authorDetails as $article)
+                        @php
+                            $locale = App::getLocale();
+                            $image = \App\Http\Controllers\InsightsController::authorImageurl($article->image);
+                            $authorURL =
+                                Config('constants.MainDomain') .
+                                "/insights/author/{$article->slug}" .
+                                "-{$article->author_id}";
+                        @endphp
+                        <li>
+                            <div class="home-author-list">
+                                <div class="home-author-thumb"><img src="{{ $image }}" class="img-fluid"
+                                        alt="{{ $article->title }}" height="" width=""></div>
+                                <div class="home-author-name"><a href="{{ $authorURL }}">{{ $article->title }}</a></div>
+                                <div class="home-author-des">{{ $article->designation }}</div>
+                                <div class="home-author-count"><span>{{ $article->count }} </span>Stories </div>
+                                {{-- <a href="">View Articles</a> --}}
                             </div>
-                            <div class="home-author-count">No. of Stories - <span>130</span></div>
-                            <a href="">View Articles</a>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="home-author-list">
-                            <div class="home-author-thumb"><img src="authors/ruchira.jpg" class="img-fluid" alt=""
-                                    height="" width=""></div>
-                            <div class="home-author-name">Sneha</div>
-                            <div class="home-author-des">Editor</div>
-                            <div class="home-author-count">No. of Stories - <span>130</span></div>
-                            <a href="">View Articles</a>
-                        </div>
-                    </li>
-
-
+                        </li>
+                    @endforeach
                 </ul>
 
 
 
                 <h3 class="author-archive-cat">Contributory Author</h3>
                 <ul>
-                    <li>
-                        <div class="home-author-list">
-                            <div class="home-author-thumb"><img src="authors/smita-deorah.jpg" class="img-fluid"
-                                    alt="" height="" width=""></div>
-                            <div class="home-author-name">Beny Sachdeva</div>
-                            <div class="home-author-des">Editor</div>
-                            <div class="home-author-count">No. of Stories - <span>130</span></div>
-                            <a href="">View Articles</a>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="home-author-list">
-                            <div class="home-author-thumb"><img src="authors/gourav.jpg" class="img-fluid" alt=""
-                                    height="" width=""></div>
-                            <div class="home-author-name">Ravindra</div>
-                            <div class="home-author-des">CEO and Co-Founder, Fashinza</div>
-                            <div class="home-author-count">No. of Stories - <span>130</span></div>
-                            <a href="">View Articles</a>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="home-author-list">
-                            <div class="home-author-thumb"><img src="authors/mallika.jpg" class="img-fluid" alt=""
-                                    height="" width=""></div>
-                            <div class="home-author-name">Ruchira Shukla</div>
-                            <div class="home-author-des">MD and Co-Founder of Luxury Ride</div>
-                            <div class="home-author-count">No. of Stories - <span>130</span></div>
-                            <a href="">View Articles</a>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="home-author-list">
-                            <div class="home-author-thumb"><img src="authors/greg.jpg" class="img-fluid" alt=""
-                                    height="" width=""></div>
-                            <div class="home-author-name">Paul</div>
-                            <div class="home-author-des">EVP, Head of Digital Experience & Microsoft Business, Infosys
+                    @foreach ($ContributoryAuthor as $article)
+                        @php
+                            $locale = App::getLocale();
+                            $image = \App\Http\Controllers\InsightsController::authorImageurl($article->image);
+                            $authorURL =
+                                Config('constants.MainDomain') .
+                                "/insights/author/{$article->slug}" .
+                                "-{$article->author_id}";
+                        @endphp
+                        <li>
+                            <div class="home-author-list">
+                                <div class="home-author-thumb"><img src="{{ $image }}" class="img-fluid"
+                                        alt="{{ $article->title }}" height="" width=""></div>
+                                <div class="home-author-name"><a href="{{ $authorURL }}">{{ $article->title }}</a>
+                                </div>
+                                <div class="home-author-des">{{ $article->designation }}</div>
+                                <div class="home-author-count"><span>{{ $article->count }} </span>Stories </div>
+                                {{-- <a href="">View Articles</a> --}}
                             </div>
-                            <div class="home-author-count">No. of Stories - <span>130</span></div>
-                            <a href="">View Articles</a>
-                        </div>
-                    </li>
-
-
-
+                        </li>
+                    @endforeach
 
                 </ul>
 
                 <h3 class="author-archive-cat">Guest Author</h3>
                 <ul>
-                    <li>
-                        <div class="home-author-list">
-                            <div class="home-author-thumb"><img src="authors/smita-deorah.jpg" class="img-fluid"
-                                    alt="" height="" width=""></div>
-                            <div class="home-author-name">Beny Sachdeva</div>
-                            <div class="home-author-des">Editor</div>
-                            <div class="home-author-count">No. of Stories - <span>130</span></div>
-                            <a href="">View Articles</a>
-                        </div>
-                    </li>
-
-                    <li>
-                        <div class="home-author-list">
-                            <div class="home-author-thumb"><img src="authors/gourav.jpg" class="img-fluid"
-                                    alt="" height="" width=""></div>
-                            <div class="home-author-name">Ravindra</div>
-                            <div class="home-author-des">CEO and Co-Founder, Fashinza</div>
-                            <div class="home-author-count">No. of Stories - <span>130</span></div>
-                            <a href="">View Articles</a>
-                        </div>
-                    </li>
-
-
+                    @foreach ($guestAuthor as $article)
+                        @php
+                            $locale = App::getLocale();
+                            $image = \App\Http\Controllers\InsightsController::authorImageurl($article->image);
+                            $authorURL =
+                                Config('constants.MainDomain') .
+                                "/insights/author/{$article->slug}" .
+                                "-{$article->author_id}";
+                        @endphp
+                        <li>
+                            <div class="home-author-list">
+                                <div class="home-author-thumb"><img src="{{ $image }}" class="img-fluid"
+                                        alt="{{ $article->title }}" height="" width=""></div>
+                                <div class="home-author-name"><a href="{{ $authorURL }}">{{ $article->title }}</a>
+                                </div>
+                                <div class="home-author-des">{{ $article->designation }}</div>
+                                <div class="home-author-count"><span>{{ $article->count }} </span>Stories </div>
+                                {{-- <a href="">View Articles</a> --}}
+                            </div>
+                        </li>
+                    @endforeach
+                    
 
 
                 </ul>
@@ -227,8 +162,7 @@
                                     <select class="code">
                                         <option> + 91 </option>
                                     </select>
-                                    <input type="text" name="tel" id="tel" class="telcode"
-                                        pattern="[0-9]{10}">
+                                    <input type="text" name="tel" id="tel" class="telcode" pattern="[0-9]{10}">
                                     <span class="text-danger" id="tel-error"></span>
                                 </div>
                             </li>
@@ -324,7 +258,7 @@
                             } else {
                                 alert(
                                     'An error occurred. Please try again.'
-                                    ); // Display a generic error message
+                                ); // Display a generic error message
                             }
                         });
                     }
@@ -364,7 +298,8 @@
                                                 href="https://www.franchiseindia.com/brands/jio-bp.63796"
                                                 target="_blank">OTHERS</a></span>
                                         <a href="https://www.franchiseindia.com/brands/jio-bp.63796"
-                                            target="_blank">Reliance BP Mobility Limited</a>
+                                            target="_blank">Reliance
+                                            BP Mobility Limited</a>
                                     </div>
                                 </div>
                                 <div class="verifyblk">
@@ -398,7 +333,8 @@
                                     <div class="txt1">Locations for expansion</div>
                                     <div class="txt2">Delhi, Haryana, Punjab, <a
                                             href="https://www.franchiseindia.com/brands/jio-bp.63796"
-                                            target="_blank">+20</a></div>
+                                            target="_blank">+20</a>
+                                    </div>
                                 </div>
                                 <div class="btncateblk">
                                     <a href="https://www.franchiseindia.com/brands/jio-bp.63796" class="contlink"

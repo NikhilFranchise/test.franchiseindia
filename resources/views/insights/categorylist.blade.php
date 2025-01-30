@@ -1,9 +1,8 @@
 @extends('layout.insights.master')
-@php
-    use Illuminate\Support\Str;
-
-@endphp
+@section('seoTitle', 'Latest ' . $category['catname'] . ' News & Articles | Trends, Insights & Expert Analysis | Franchise India')
+@section('seoDesc', 'Stay updated with the latest ' . $category['catname'] . ' news and articles. Explore industry trends, expert insights, and business reports. Get market analysis, growth strategies, and top stories on FranchiseIndia.com.')
 @section('content')
+@php use Illuminate\Support\Str; @endphp
     <div class="maininnver homeh">
         <div class="inner-top-head">
             <div class="container">
