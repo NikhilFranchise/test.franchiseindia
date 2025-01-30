@@ -2001,7 +2001,7 @@ class BusinessListingController extends Controller
 
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
 
-        dd($shuffledResults->pluck('fran_detail_id'));
+        dd($shuffledResults->pluck('fran_detail_id'));  
         if (!empty($catArr->seoTitle)) {
             $seoTitle = $catArr->seoTitle;
             // dd($catArr);
@@ -2152,23 +2152,134 @@ class BusinessListingController extends Controller
 {
     $minrange = $request->input('minvaluerange');
     $maxrange = $request->input('maxvaluerange');
-
-    // dd($minrange);
-
-    $shuffledResults = collect($request->input('shuffledResults')); 
-
-    $shuffledResults = $shuffledResults->filter(function ($item) use ($minrange, $maxrange) {
-        return ($item['unit_inv_min'] >= $minrange && $item['unit_inv_max'] <= $maxrange);
-    });
- 
    
+$shuffledResults = FranchisorBusinessDetail::query()->select(
+    'fran_detail_id',
+    'franchisor_id',
+    'profile_name',
+    'company_name',
+    'state',
+    'ind_sub_cat',
+    'operations_start_year',
+    'looking_tradepartner',
+    'looking_franchise',
+    'membership_weightage',
+    'franchise_start_year',
+    'no_fran_outlets',
+    'franchise_partner_type',
+    'city',
+    'unit_investment',
+    'expansion_loc_type',
+    'business_desc',
+    'membership_plan',
+    'prop_area_min',
+    'prop_area_max',
+    'profile_status',
+    'business_desc',
+    'ind_main_cat',
+    'ind_cat',
+    'ind_sub_cat',
+    'membership_type',
+    'company_logo',
+    'unit_inv_min',
+    'unit_inv_max',
+    'is_hindi',
+    'business_desc_hindi',
+    'free_logo_visibility',
+    'brand_verified',
+    'views',
+    'activated_at'
+)
+->whereIn('profile_status', [1, 11])
+->where('membership_type', 1)
+// ->sortByDesc('membership_weightage')
+// ->get();
+->paginate(10); // Fetch the results as a collection
 
-    // return response()->json($shuffledResults);
-    
-    $html = view('category.listingloop', ['shuffledResults' => $shuffledResults])->render();
-    // dd($html);
-    return response()->json(['html' => $html]); 
+// $shuffledResults = $franData->shuffle()->sortByDesc('membership_weightage');
+
+
+    if ($request->ajax()) {
+        return response()->json([
+            'html' => view('ssr.listing', compact('shuffledResults'))->render(),
+            'next_page' => $shuffledResults->nextPageUrl(), // Next page URL for AJAX request
+        ]);
+    }
+    return view('ssr.category', compact('shuffledResults'));
 }
 
+public function getajax(){
+    return view('category.ssr');
+}
+public function fetchtest(Request $request)
+{
+    $items = FranchisorBusinessDetail::paginate(5);  // Adjust the pagination number as needed
+
+        if ($request->ajax()) {
+            // Return the paginated view with data
+            dd('test');
+            return response()->json(view('ssr.data', compact('items'))->render());
+        }
+
+        // Regular page load
+        return view('ssr.index', compact('items'));
+    
+}
+public function index(Request $request)
+{
+    // $items = FranchisorBusinessDetail::paginate(5); // 10 items per page
+    $items = FranchisorBusinessDetail::query()->select(
+        'fran_detail_id',
+        'franchisor_id',
+        'profile_name',
+        'company_name',
+        'state',
+        'ind_sub_cat',
+        'operations_start_year',
+        'looking_tradepartner',
+        'looking_franchise',
+        'membership_weightage',
+        'franchise_start_year',
+        'no_fran_outlets',
+        'franchise_partner_type',
+        'city',
+        'unit_investment',
+        'expansion_loc_type',
+        'business_desc',
+        'membership_plan',
+        'prop_area_min',
+        'prop_area_max',
+        'profile_status',
+        'business_desc',
+        'ind_main_cat',
+        'ind_cat',
+        'ind_sub_cat',
+        'membership_type',
+        'company_logo',
+        'unit_inv_min',
+        'unit_inv_max',
+        'is_hindi',
+        'business_desc_hindi',
+        'free_logo_visibility',
+        'brand_verified',
+        'views',
+        'activated_at'
+    )
+    ->whereIn('profile_status', [1, 11])
+    ->where('membership_type', 1)
+    // ->sortByDesc('membership_weightage')
+    // ->get();
+    ->paginate(10); 
+
+    // If the request is an AJAX request
+    if ($request->ajax()) {
+        return response()->json([
+            'html' => view('ssr.pagination', compact('items'))->render(),
+            'next_page' => $items->nextPageUrl(), // Next page URL for AJAX request
+        ]);
+    }
+
+    return view('ssr.index', compact('items'));
+}
 }
 

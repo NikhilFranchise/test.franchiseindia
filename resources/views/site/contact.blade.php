@@ -184,8 +184,10 @@
                         @if (Request::segment(1) == 'hi')
                             I have one record!
                         @else
-                            i agree to the <a href="{{ Config('constants.MainDomain') }}/terms" target="_blank">Term of
-                                services</a>
+                            {{-- i agree to the <a href="{{ Config('constants.MainDomain') }}/terms" target="_blank">Term of
+                                services</a> --}}
+
+                                I authorise <a href="{{ Config('constants.MainDomain') }}">Franchiseindia.com Ltd </a>& its representatives to contact me with updates and notifications via Email/SMS/What'sApp/Call. This will override DND/NDNC.
                         @endif
                     </div>
                 </div>

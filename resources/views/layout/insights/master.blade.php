@@ -8,11 +8,10 @@
     <meta name="description" content="@yield('seoDesc', 'Get the latest franchise news in India ' . date('d-M-Y') . '!Explore articles on startups, franchisor updates, business & industry trends. Discover franchisee success stories, expansion plans, tie-ups, and new launches. Find your perfect franchise opportunity!')" />
     @if (Request::url() == config('constants.MainDomain') . '/insights')
         <meta name="keywords" content="@yield('seoKeywords', 'franchise news india, franchise business india, india franchise opportunities, franchise in india, new franchise india ' . date('Y') . ', best franchise india, franchise for startups india, franchise expansion india, franchise tie ups india, franchise launches india, franchisor news india, franchisee success stories india, franchise industry trends india.')" />
-    @else
-        <meta name="keywords" content="@yield('seoKeywords', 'franchise India')" />
     @endif
     <meta name="original-source" content="@yield('url')" />
-    <meta name="robots" content="NOODP" />
+    {{-- <meta name="robots" content="NOODP" /> --}}
+    <meta name='robots' content='noindex, nofollow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
     <link href="@yield('canonicalUrl', request()->get('page') ? url()->full() : url()->current())" rel="canonical">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
     <script>
@@ -51,12 +50,14 @@
     <meta name="twitter:creator" content="@franchiseindia">
     <meta name="twitter:site" content="@franchiseindia">
     <meta name="twitter:domain" content="franchiseindia.com">
-    <meta content="@yield('index', 'noindex,nofollow')" name="robots" />
+    {{-- <meta content="@yield('index', 'index,follow')" name="robots" /> --}}
     <meta property="fb:app_id" content="110294989480112" />
     <meta name="google-site-verification" content="8W9CXigRDmfNyf8vOfkZBefougI9sPXO4xvDBFLIjaw" />
     <meta name="y_key" content="0f4f718975ac23ed" />
     <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
     @include('layout.insights.headerlinks')
+    @include('includes.banners-new.google-tags')
+    @yield('header-schema')
     @include('layout.insights.menu')
 </head>
 

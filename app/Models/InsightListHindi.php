@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\AuthorList;
-use App\Models\InsightCategory;
-use App\Models\InsightSubcategory;
+use App\Models\InsightsHindiCategory;
+use App\Models\InsightsHindiSubCategory;
 
 class InsightListHindi extends Model
 {
@@ -20,11 +20,11 @@ class InsightListHindi extends Model
     }
     public function category()
     {
-        return $this->hasMany(InsightCategory::class, 'id', 'cat_id');
+        return $this->hasMany(InsightsHindiCategory::class, 'id', 'cat_id');
     }
     public function Subcategory()
     {
-        return $this->hasMany(InsightSubcategory::class, 'id', 'subcat_id');
+        return $this->hasMany(InsightsHindiSubCategory::class, 'id', 'subcat_id');
     }
 
     public function ContentTagsAssignedHindi()

@@ -100,7 +100,7 @@ $c_Url = url()->current();
                 <!-- category left panel start here  -->
                 @include('category.category-left-section')
                 <!-- category left panel end here  -->
-                <div class="col-xs-12 col-sm-8 col-md-9 bor-radius backwhite catright row-no-padding">
+                <div class="col-xs-12 col-sm-8 col-md-9 bor-radius backwhite catright row-no-padding" id='prannge'>
 
                     @include('category.navigation-search-by')
 

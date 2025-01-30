@@ -1,7 +1,7 @@
 @php
 $i = 0;
 $banner = 1;
-$longbanner = 0;
+$longbanner = 0;    
 $shortBox = 0;
 @endphp
 @foreach ($shuffledResults as $item)
@@ -12,7 +12,6 @@ $brandUrl = sprintf(
     $item['profile_name'],  // Array access
     $item['fran_detail_id'] // Array access
 );
-
 $is_premium = 0;
 $imgCount = 0;
 $SubCatName = '';
@@ -91,7 +90,6 @@ if (!empty($item['franchisorLike'])) {  // Array access
 @endphp
 
 @if ($item['membership_type'] == 1 || $item['free_logo_visibility'] == 1)
-
 
 <div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding sec-slide-effect" >
     <div class="comparechk">

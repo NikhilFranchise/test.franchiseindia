@@ -193,7 +193,7 @@
                                         <th>Insights Type</th>
                                         {{--  <th>Insights Category</th>  --}}
                                         <th>Link</th>
-                                        <th>Views</th>
+                                        <th>Published Date</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         {{-- <th>Hindi(New/Update)</th> --}}
@@ -204,13 +204,24 @@
                                     @foreach ($data as $insights)
                                         <tr class="gradeX">
                                             @php
-                                                $url =
-                                                    '/insights/hi/' .
-                                                    strtolower($insights->insight_type) .
-                                                    '/' .
-                                                    $insights->slug .
-                                                    '.' .
-                                                    $insights->news_id;
+                                                if (!empty($insights->slug)) {
+                                                    $url =
+                                                        '/insights/hi/' .
+                                                        strtolower($insights->insight_type) .
+                                                        '/' .
+                                                        $insights->slug .
+                                                        '.' .
+                                                        $insights->news_id;
+                                                } else {
+                                                    $slug = Str::slug($insights->title);
+                                                    $url =
+                                                        '/insights/hi/' .
+                                                        strtolower($insights->insight_type) .
+                                                        '/' .
+                                                        $slug .
+                                                        '.' .
+                                                        $insights->news_id;
+                                                }
                                             @endphp
                                             <td>{{ $insights->news_id }}</td>
                                             <td>{{ $insights->title }}</td>
@@ -228,7 +239,7 @@
                                                             target="_blank" class="round-button">Go</a></div>
                                                 </div>
                                             </td>
-                                            <td>{{ $insights->views }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($insights->created_at)) }}</td>
                                             <td>
                                                 <center>
                                                     <label class="switch">

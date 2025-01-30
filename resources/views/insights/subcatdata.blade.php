@@ -3,15 +3,15 @@
 @section('content')
     <div class="maininnver homeh">
         <div class="container">
-
-            <h1 class="cathead">{{ $subcat_data->subcat_name }}</h1>
+            {{--  @dd($subcatData)  --}}
+            <h1 class="cathead">{{ $subcatData->subcat_name }}</h1>
 
         </div>
         <div class="listblk">
             <div class="container">
                 <ul class="artilsit">
 
-                    @foreach ($contentdata as $article)
+                    @foreach ($contentData as $article)
                         @php
                             // Generate article details
                             $image = \App\Http\Controllers\InsightsController::createimgurl($article->image);
@@ -44,8 +44,8 @@
                                 } else {
                                     $slug = $author->slug;
                                 }
-                                $path = $locale === 'en' ? '/insights/en/author/' : '/insights/hi/author/';
-                                $authorUrl = Config('constants.MainDomain') . $path . $slug . '-' . $author->author_id;
+                                // $path = $locale === 'en' ? '/insights/en/author/' : '/insights/hi/author/';
+                                $authorUrl = Config('constants.MainDomain') .'/insights/author/' . $slug . '-' . $author->author_id;
                             }
                         @endphp
 
@@ -80,15 +80,13 @@
                                                 Share
                                                 <div class="sfv">
                                                     @foreach ([
-            'facebook' => 'https://www.facebook.com/FranchiseIndiaMedia',
-            'twitter' => 'https://twitter.com/FranchiseIndia',
-            'instagram' => 'https://www.instagram.com/franchiseindia_/',
-            'youtube' => 'https://www.youtube.com/user/FranchiseIndia',
-        ] as $platform => $link)
-                                                        <div class="innersfv"
-                                                            onclick="window.open('{{ $link }}', '_blank')">
-                                                            <img
-                                                                src="{{ url('insight-new/images/' . $platform . 'card.svg') }}" />
+                                                        'facebook' => '/insight-new/images/facebookcard.svg',
+                                                        'twitter' => '/insight-new/images/twittercard.svg',
+                                                        'instagram' => 'https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg',
+                                                        'youtube' => 'https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg'
+                                                    ] as $platform => $icon)
+                                                        <div class="innersfv" onclick="window.open('https://www.{{ $platform }}.com/FranchiseIndia', '_blank')">
+                                                            <img src="{{ $icon }}" />
                                                         </div>
                                                     @endforeach
                                                 </div>
@@ -103,9 +101,9 @@
 
 
                 </ul>
-                <div class="d-felx justify-content-center">
+                <div class="video-pagination">
 
-                    {{ $contentdata->links('pagination::bootstrap-4') }}
+                    {{ $contentData->links('pagination::bootstrap-4') }}
 
                 </div>
             </div>

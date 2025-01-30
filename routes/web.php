@@ -60,6 +60,7 @@ use Illuminate\Support\Facades\App;
 */
 
 Auth::routes();
+Route::feeds();
 
 Route::get('optimize', function () {
     // Run the artisan commands
@@ -132,6 +133,12 @@ Route::get('testimonials-reviews', [StaticPageController::class, 'getTestimonial
 Route::get('sitemap/brands', [BrandFilterController::class, 'brandsitemap']);
 Route::get('sitemap/brands/{abre}',           [BrandFilterController::class, 'brandfilter']);
 Route::get('terms', [StaticPageController::class, 'mainTerm']);
+Route::get('/top-franchise-leaders', [StaticPageController::class, 'topfranchiseleads']);
+Route::group(['prefix' => '/top-franchise-leaders'], function () {
+    Route::get('{year}/{slug}/{id}', [StaticPageController::class, 'franchiseleader'])->name('franchiseleader');
+});
+Route::get('privacy_policy', [StaticPageController::class, 'p_popicy']);
+
 Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBystateName']);
 Route::get('invester-verifyformmobilenumber', [MobileVerificationController::class, 'investerverifyMobile']);
 Route::get('/user/check-mobile-status', [CommonController::class, 'verifyMobile']);
@@ -895,7 +902,6 @@ Route::post('deletearticle',                  [AdminController::class, 'deleteAr
 Route::post('deletenews',                     [AdminController::class, 'deleteNews']);
 Route::get('relatedbrands',                   [AdminController::class, 'relatedBrands']);
 Route::get('associatedtags',                  [AdminController::class, 'associatedTags']);
-Route::get('hi/associatedtags',                  [AdminController::class, 'associatedTags']);
 Route::get('publisher',                       [AdminController::class, 'publisher']);
 Route::get('find',                            [AdminController::class, 'find']);
 Route::get('searcharticleinterview',          [AdminController::class, 'searchArticleInterview']);
@@ -904,6 +910,11 @@ Route::get('searchmagazine',                  [AdminController::class, 'searchMa
 Route::get('articleinterviewcommentsearch',   [AdminController::class, 'searchArticleInterviewComment']);
 Route::get('newscommentsearch',               [AdminController::class, 'searchNewsComment']);
 Route::get('admin-logout',                    [AdminController::class, 'logout']);
+// podcast status
+Route::post('updatepodcastatus', [AdminController::class, 'updatepodcastatus']);
+Route::post('updatevideostatus', [AdminController::class, 'updatevideostatus']);
+Route::post('deletepodcast', [AdminController::class, 'deletepodcast']);
+Route::post('deletevideo', [AdminController::class, 'deletevideo']);
 //admin panel routes
 Route::group(['prefix' => 'admin'], function () {
     //Get routes
@@ -958,78 +969,132 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('create/kicker/{type}',                [AdminController::class, 'insertUpdateKicker']);
     Route::post('delete-kicker',                       [AdminController::class, 'deleteKicker']);
     Route::post('hindi/create',                        [AdminController::class, 'createUpdateHindiArticle']);
+    // podcast & video get routes
+    Route::get('/createpodcast', [AdminController::class, 'podcastcreate']);
+    Route::get('/createvideo', [AdminController::class, 'videocreate']);
+    Route::get('/edit-podcast/{sno}', [AdminController::class, 'editpodcast'])->name('editpodcast');
+    Route::get('/edit-video/{sno}', [AdminController::class, 'editvideo'])->name('editvideo');
+
+    // podcast & video post routes
+    Route::post('/podcastore', [AdminController::class, 'podcastore']);
+    Route::post('/videostore', [AdminController::class, 'videostore']);
+    Route::post('/podcastupdate', [AdminController::class, 'podcastupdate']);
+    Route::post('/videoupdate', [AdminController::class, 'videoUpdate']);
+
     // insights get routes code by gp
+    // admin/list-insights
     Route::group(['prefix' => 'en'], function () {
+        // insights get routes
         Route::get('create-insights',                      [AdminController::class, 'createinsightsView']);
         Route::get('list-insights',                        [AdminController::class, 'listinsights']);
         Route::get('multilist-insights',                   [AdminController::class, 'multilistinsights']);
         Route::get('edit-insights-view/{id}',              [AdminController::class, 'editInsightsView']);
-
-        //post routes
+        // insights post routes
         Route::post('create-insights',                     [AdminController::class, 'createInsights']);
         Route::post('update-insights',                      [AdminController::class, 'updateInsights']);
         Route::post('save-multiple-insights',              [AdminController::class, 'saveMultipleInsights']);
         Route::post('updateinsightstatus',                  [AdminController::class, 'updateInsightStatus']);
         Route::post('deleteinsights',                       [AdminController::class, 'deleteInsights']);
+        //category and subcategory
+        Route::get('cat/create',                      [AdminController::class, 'categoryform']);
+        Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
+        Route::get('cat/list',                        [AdminController::class, 'catlist']);
+        Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
+        Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
+        // category and subcategory post routes
+        Route::post('create/cat',                      [AdminController::class, 'storecat']);
+        Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
+        Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
+        Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
+        Route::get('/podcastlist', [AdminController::class, 'podcastlist'])->name('podcastlist');
+        Route::get('/videolist', [AdminController::class, 'videolist'])->name('videolist');
     });
     Route::group(['prefix' => 'hi'], function () {
+        //insights get routes
         Route::get('create-insights',                      [AdminController::class, 'createinsightsView']);
         Route::get('list-insights',                        [AdminController::class, 'listinsights']);
         Route::get('multilist-insights',                        [AdminController::class, 'multilistinsights']);
         Route::get('edit-insights-view/{id}',              [AdminController::class, 'editInsightsView']);
-
-        //post routes
+        // insights post routes
         Route::post('create-insights',                     [AdminController::class, 'createInsights']);
         Route::post('update-insights',                      [AdminController::class, 'updateInsights']);
         Route::post('save-multiple-insights',              [AdminController::class, 'saveMultipleInsights']);
         Route::post('updateinsightstatus',                  [AdminController::class, 'updateInsightStatus']);
         Route::post('deleteinsights',                       [AdminController::class, 'deleteInsights']);
+        //category and subcategory get routes
+        Route::get('cat/create',                      [AdminController::class, 'categoryform']);
+        Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
+        Route::get('cat/list',                        [AdminController::class, 'catlist']);
+        Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
+        Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
+        // category and subcategory post routes
+        Route::post('create/cat',                      [AdminController::class, 'storecat']);
+        Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
+        Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
+        Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
+        Route::get('/podcastlist', [AdminController::class, 'podcastlist'])->name('hindipodcastlist');
+        Route::get('/videolist', [AdminController::class, 'videolist'])->name('hindivideolist');
     });
-    // insights post routes
-
-    // insights post routes end here
-    // category and sub category get routes code by gp
-    Route::get('cat/create',                      [AdminController::class, 'categoryform']);
-    Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
-    Route::get('cat/list',                        [AdminController::class, 'catlist']);
-    Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
-    Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
-    // routes/web.php
-    // insights post routes
-    Route::post('create/cat',                      [AdminController::class, 'storecat']);
-    Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
-    Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
-    Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
 });
 
 Route::get('location/{city}',              [BusinessListingController::class, 'listingLocation']);
 // INSIGHTS ROUTES START HERE //
-Route::get('insights/sitemap.xml', function () {
+Route::get('insights/en/sitemap.xml', function () {
     return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
 });
-/*Language setter*/
+Route::get('insights/hi/sitemap.xml', function () {
+    return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
+});
+// /*Language setter*/
 
 Route::group(['prefix' => 'insights'], function () {
-    Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
-    Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
-    Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
-    Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap'])->name('event.xml');
-    Route::get('report.xml',                    [InsightSitemapController::class, 'reportsitemap'])->name('report.xml');
-    Route::get('categories.xml',                [InsightSitemapController::class, 'categorysitemap'])->name('categories.xml');
-    Route::get('subcategories.xml',             [InsightSitemapController::class, 'subcategorysitemap'])->name('subcategories.xml');
-    Route::get('kickers.xml',                   [InsightSitemapController::class, 'kickersitemap']);
-    Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap'])->name('tags.xml');
+    Route::get('sitemap', [InsightSitemapController::class, 'sitemap']);
+    Route::get('sitemap/today', [InsightSitemapController::class, 'todaysitemap']);
+    Route::get('sitemap/yesterday', [InsightSitemapController::class, 'yesterdaysitemap']);
+    Route::get('sitemap/thisweek', [InsightSitemapController::class, 'thisweeksitemap']);
+    Route::get('sitemap/lastweek', [InsightSitemapController::class, 'lastweeksitemap']);
+    Route::get('sitemap/{year}', [InsightSitemapController::class, 'monthsitemap']);
+    Route::get('sitemap/{year}/{month}', [InsightSitemapController::class, 'daysitemap']);
+    Route::get('sitemap/{year}/{month}/{day}', [InsightSitemapController::class, 'datesitemap']);
+    Route::group(['prefix' => 'en'], function () {
+        Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
+        Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
+        Route::get('article2.xml',                   [InsightSitemapController::class, 'articlesitemaptwo'])->name('article2.xml');
+        Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
+        Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap'])->name('event.xml');
+        Route::get('report.xml',                    [InsightSitemapController::class, 'reportsitemap'])->name('report.xml');
+        Route::get('categories.xml',                [InsightSitemapController::class, 'categorysitemap'])->name('categories.xml');
+        Route::get('subcategories.xml',             [InsightSitemapController::class, 'subcategorysitemap'])->name('subcategories.xml');
+        Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap'])->name('tags.xml');
+    });
+    Route::group(['prefix' => 'hi'], function () {
+        Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
+        Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
+        Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
+        Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap'])->name('event.xml');
+        Route::get('report.xml',                    [InsightSitemapController::class, 'reportsitemap'])->name('report.xml');
+        Route::get('categories.xml',                [InsightSitemapController::class, 'categorysitemap'])->name('categories.xml');
+        Route::get('subcategories.xml',             [InsightSitemapController::class, 'subcategorysitemap'])->name('subcategories.xml');
+        Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap'])->name('tags.xml');
+    });
 });
 
 Route::middleware(['TrailingSlashRedirect'])->group(function () {
 
 
     Route::group(['prefix' => 'insights'], function () {
-        Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
         Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
+        Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
+        Route::get('{insight_type}/{slug}.{id}', function ($insight_type, $slug, $id) {
+            return redirect()->to("/insights/en/{$insight_type}/{$slug}.{$id}", 301);
+        });
+        Route::get('tag/{tagslug}', function ($tagslug) {
+            return redirect()->to("/insights/en/tag/$tagslug", 301);
+        });
+        Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
+        Route::get('author-archive',              [InsightsController::class, 'authordata']);
         Route::group(['prefix' => 'en'], function () {
             Route::get('/search',               [InsightsController::class, 'insightSearch']);
-            Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
             Route::get('thanks', function () {
                 return view('insights.thanks');
             })->name('insights.thanks');
@@ -1044,6 +1109,8 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('trendstories',                  [InsightsController::class, 'trendstories']);
             Route::get('interviews',                    [InsightsController::class, 'getinsightsinterviews']);
             Route::get('events_reports',                [InsightsController::class, 'geteventsreports']);
+            Route::get('video_podcast',                [InsightsController::class, 'getvideopodcast']);
+            Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
             Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
@@ -1054,7 +1121,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         /*Language setter*/
         Route::group(['prefix' => 'hi'], function () {
             Route::get('/search',               [InsightsController::class, 'insightSearch']);
-            Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
+            // Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
             Route::get('thanks', function () {
                 return view('insights.thanks');
             })->name('insights.thanks');
@@ -1063,13 +1130,14 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             }); //404 ERROR PAGE
             Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
             Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
-
             Route::get('topstories',                    [InsightsController::class, 'getinsightstories']);
             Route::get('trendstories',                  [InsightsController::class, 'trendstories']);
             Route::get('interviews',                    [InsightsController::class, 'getinsightsinterviews']);
             Route::get('events_reports',                [InsightsController::class, 'geteventsreports']);
+            Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
+            Route::get('video_podcast',                [InsightsController::class, 'getvideopodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
-            Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
+            Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails'])->name('insights.details');
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
@@ -1121,4 +1189,25 @@ Route::get('/l_layout', [CommonController::class, 'listing_layout']);
 // Ajax routes
 
 Route::post('/fetch-data', [CommonController::class, 'fetchDataajax']);
-Route::post('/price_filter', [BusinessListingController::class,'pricefilter']);
+Route::post('/price_filter', [BusinessListingController::class, 'pricefilter']);
+Route::post('/fetch-data2', [CommonController::class, 'fetchDataajax2']);
+Route::get('/price_filter', [BusinessListingController::class, 'pricefilter']);
+Route::post('/price_filter', [BusinessListingController::class, 'pricefilter'])->name('price_filter');;
+
+Route::get('/ajax', [BusinessListingController::class, 'fetchtest']);
+Route::get('/getajax', [BusinessListingController::class, 'fetchtest']);
+// Route::get('/getajax', [BusinessListingController::class, 'fetchtest'])->name('getajax');
+
+
+Route::get('/items', [BusinessListingController::class, 'index'])->name('items.index');
+Route::get('n', function () {
+    $data = [
+        'name' => 'John Doe',
+        'companyName' => 'Tech Corp',
+        'mobile' => '1234567890',
+        'city' => 'New York',
+        'email' => 'johndoe@example.com',
+        'id' => '001',
+    ];
+    return view('mail.advertise', $data);
+});

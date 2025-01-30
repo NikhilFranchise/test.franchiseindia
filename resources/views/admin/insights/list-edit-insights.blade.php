@@ -11,11 +11,34 @@
     <link rel="stylesheet" href="{{ url('admin/css/matrix-style.css') }}" />
     <link rel="stylesheet" href="{{ url('admin/css/matrix-media.css') }}" />
     <link href="{{ url('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
+    <link href="{{ url('admin/fontawesome-free/css/all.min.css') }}" rel="stylesheet" />
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
 
     <style>
+        .search-results {
+            margin-top: 63px;
+            display: block;
+            width: 96%;
+        }
+
+        .search-results input {
+            width: 400px;
+        }
+
+        .search-result-inner {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .search-result-inner a.greens {
+            height: 20px;
+        }
+
+
         .switch {
             position: relative;
             display: inline-block;
@@ -139,6 +162,13 @@
             border-radius: 6px;
             border: 1px;
         }
+
+        .btn-success {
+            color: #fff;
+            background-color: #28a745;
+            border-color: #28a745;
+            box-shadow: none;
+        }
     </style>
 
 </head>
@@ -157,32 +187,52 @@
     <!--sidebar-menu-->
 
     <div id="content">
-
+        @php
+            $locale = request()->segment(2);
+            $lang = $locale == 'en' ? 'English' : 'Hindi';
+        @endphp
         <!--breadcrumbs-->
         <div id="content-header">
             <div id="breadcrumb"> <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
-                        class="icon-home"></i> Home</a> <a href="list-insights" class="tip-bottom">Insights</a>
-                <a href="" class="current">List-Insights</a>
+                        class="icon-home"></i> Home</a> <a href="list-insights" class="tip-bottom">Insights List</a>
+                <a href="" class="current">{{ $lang }} List-Insights</a>
             </div>
-            <h1>Insights Listing</h1>
+            <h1>{{ $lang }} Insights Listing</h1>
         </div>
+        <br>
         <!--End-breadcrumbs-->
 
-        <div style="margin-top: 5%;float: right;" class="container-fluid">
-            <form action="{{ url('admin/en/list-insights') }}" method="get">
-                Search Keyword : <input type="text" name="search"class="span7"
-                    placeholder="Enter Title or Insights Id to search"
-                    @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
-                <input type="submit" class="btn"
-                    value="Search"style="margin-top: -12px; margin-left: 10px; width: 110px;" />
-                <a href="{{ url('admin/list-insights') }}" class="btn"style="margin-top: -12px;">Reset Search</a>
-            </form>
+
+        <div class="search-results container-fluid">
+            <div class="search-result-inner">
+
+                <a href="{{ url('admin/' . $locale . '/create-insights') }}"
+                    class="greens float-right btn btn-md btn-success">
+                    <i class="fa fa-plus-circle"></i>{{ ' Add New ' . $lang . ' Insights' }}
+                </a>
+                <form action="{{ url('admin/en/list-insights') }}" method="get">
+                    <input type="text" name="search"class="span7" placeholder="Enter Title or Insights Id to search"
+                        @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
+                    <input type="submit" class="btn"
+                        value="Search"style="margin-top: -12px; margin-left: 10px; width: 110px;" />
+                    <a href="{{ url('admin/list-insights') }}" class="btn"style="margin-top: -12px;">Reset
+                        Search</a>
+                </form>
+            </div>
         </div>
 
 
         <div class="container-fluid">
             <div class="row-fluid">
                 <div class="span12">
+                    <ul class="nav nav-tabs">
+                        {{--  <li @if (url()->current() == url('admin/allpodcastlist')) class="active" @endif><a
+                                href="{{ url('admin/allpodcastlist') }}">All Podcasts List</a></li>  --}}
+                        <li @if (url()->current() == url('admin/en/list-insights')) class="active" @endif><a
+                                href="{{ url('admin/en/list-insights') }}">English Insights List</a></li>
+                        <li @if (url()->current() == url('admin/hi/list-insights')) class="active" @endif><a
+                                href="{{ url('admin/hi/list-insights') }}">Hindi Insights List</a></li>
+                    </ul>
                     <div class="widget-box">
                         <div class="widget-content nopadding">
                             <table class="table table-bordered table-striped">
@@ -193,7 +243,7 @@
                                         <th>Insights Type</th>
                                         {{--  <th>Insights Category</th>  --}}
                                         <th>Link</th>
-                                        <th>Views</th>
+                                        <th>Published Date</th>
                                         <th>Status</th>
                                         <th>Edit</th>
                                         {{-- <th>Hindi(New/Update)</th> --}}
@@ -204,14 +254,31 @@
                                     @foreach ($data as $insights)
                                         <tr class="gradeX">
                                             @php
-                                                $url =
-                                                    '/insights/en/' .
-                                                    strtolower($insights->insight_type) .
-                                                    '/' .
-                                                    $insights->slug .
-                                                    '.' .
-                                                    $insights->news_id;
+                                                $locale = request()->segment(2);
+                                                if (!empty($insights->slug)) {
+                                                    $url =
+                                                        '/insights/' .
+                                                        $locale .
+                                                        '/' .
+                                                        strtolower($insights->insight_type) .
+                                                        '/' .
+                                                        $insights->slug .
+                                                        '.' .
+                                                        $insights->news_id;
+                                                } else {
+                                                    $slug = Str::slug($insights->title);
+                                                    $url =
+                                                        '/insights/' .
+                                                        $locale .
+                                                        '/' .
+                                                        strtolower($insights->insight_type) .
+                                                        '/' .
+                                                        $slug .
+                                                        '.' .
+                                                        $insights->news_id;
+                                                }
                                             @endphp
+
                                             <td>{{ $insights->news_id }}</td>
                                             <td>{{ $insights->title }}</td>
                                             <td>
@@ -228,7 +295,7 @@
                                                             target="_blank" class="round-button">Go</a></div>
                                                 </div>
                                             </td>
-                                            <td>{{ $insights->views }}</td>
+                                            <td>{{ date('d-m-Y', strtotime($insights->created_at)) }}</td>
                                             <td>
                                                 <center>
                                                     <label class="switch">
@@ -306,13 +373,17 @@
             $(document).on('click', '.activestate', function() {
 
                 var id = this.value;
+                var lang = '{{ $locale }}';
                 var status = 0;
                 if (this.checked)
                     status = 1;
 
                 $.ajax({
                     type: "POST",
-                    url: '/admin/en/updateinsightstatus',
+                    //url: '/admin//updateinsightstatus',
+                    url: '/admin/' + lang +
+                    '/updateinsightstatus', // Dynamically set the URL with the locale
+
                     data: {
                         "News": id,
                         "contentStatus": status,
@@ -326,10 +397,12 @@
         $('.deleteauthor').click(function() {
             // alert('delete');
             var x = $(this).attr('data-value');
+            var lang = '{{ $locale }}';
             confirmDialog(YOUR_MESSAGE_STRING_CONST, function() {
                 $.ajax({
                     type: "POST",
-                    url: '/admin/en/deleteinsights',
+                    url: '/admin/' + lang +
+                    '/deleteinsights', // Dynamically set the URL with the locale
                     data: {
                         "contentId": x,
                         "_token": "{{ csrf_token() }}"

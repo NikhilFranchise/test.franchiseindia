@@ -57,10 +57,11 @@
 
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group pos-rel">
-                            <input name="mobile" id="mobile-wider" type="text" pattern="[0-9]{5,10}" minlength="10" maxlength="10" onkeyup="getMobileStatusWider(this.value)" class="form-control blur" placeholder="मोबाइल दर्ज करें">
+                            {{-- <input name="mobile" id="mobile-wider" type="text" pattern="[0-9]{5,10}" minlength="10" maxlength="10" onkeyup="getMobileStatusWider(this.value)" class="form-control blur" placeholder="मोबाइल दर्ज करें">
                             <span class="vrfy" onclick="editMobileWider()" id="edit-mobile-wider" style="display:none">संपादित करें</span>
                             <span class="vrfy" onclick="validateMobileWider()" id="validate-mobile-contact" style="display:none">सत्यापित करें</span>
-                            <span id="success-mobile-wider" class="showhideright" style="display:none"><i class="fa fa-check fa-lg" aria-hidden="true"></i></span>
+                            <span id="success-mobile-wider" class="showhideright" style="display:none"><i class="fa fa-check fa-lg" aria-hidden="true"></i></span> --}}
+                            \\192.168.2.157\htdocs\franchiseindia.com\resources\views\includes\brandlanding\hindi\wider-insta-apply-form.blade.php
                         </div>
                     </div>
 

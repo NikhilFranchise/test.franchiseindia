@@ -2,9 +2,9 @@
     <div class="container">
         <div class="comhead">
             @if (App::getLocale() == 'en')
-                Insights
+                Articles
             @else
-                इनसाइट्स
+                आर्टिकल
             @endif
         </div>
     </div>
@@ -13,17 +13,42 @@
             <div class="col-xs-12 col-sm-12 col-md-6">
                 @foreach ($industry_focus as $focus)
                     @php
-                        //$site = Config('constants.newsArr.' . $focus['news_type']);
                         $locale = App::getLocale();
-                        $url =
-                            Config('constants.MainDomain') . '/insights/' . $locale . '/' . strtolower($focus['insight_type']) .
-                            '/' . $focus['slug'] . '.' . $focus['news_id'];
+                        if (!empty($focus['slug'])) {
+                            $url =
+                                Config('constants.MainDomain') .
+                                '/insights/' .
+                                $locale .
+                                '/' .
+                                strtolower($focus['insight_type']) .
+                                '/' .
+                                $focus['slug'] .
+                                '.' .
+                                $focus['news_id'];
+                        } else {
+                            $slug = Str::slug($focus['title']);
+                            $url =
+                                Config('constants.MainDomain') .
+                                '/insights/' .
+                                $locale .
+                                '/' .
+                                strtolower($focus['insight_type']) .
+                                '/' .
+                                $slug .
+                                '.' .
+                                $focus['news_id'];
+                        }
+
                     @endphp
                     @foreach ($focus->author as $author)
                         @php
                             $authorname = $author->title;
                             $authorUrl =
-                                Config('constants.MainDomain') . '/insights/' . $locale . '/author/' . $author->slug . '-' . $author->author_id;
+                                Config('constants.MainDomain') .
+                                '/insights/author/' .
+                                $author->slug .
+                                '-' .
+                                $author->author_id;
                         @endphp
                     @endforeach
                     <div class="editimgblk">
@@ -42,15 +67,38 @@
                 <ul class="editlist">
                     @foreach ($industry_data as $focusArticle)
                         @php
-                            $url1 = Config('constants.MainDomain') . '/insights/' . $locale . '/' .
-                                strtolower($focusArticle['insight_type']) . '/' . $focusArticle['slug'] .
-                                '.' . $focusArticle['news_id'];
+
+                            if (!empty($focusArticle['slug'])) {
+                                $url1 =
+                                    Config('constants.MainDomain') .
+                                    '/insights/' .
+                                    $locale .
+                                    '/' .
+                                    strtolower($focusArticle['insight_type']) .
+                                    '/' .
+                                    $focusArticle['slug'] .
+                                    '.' .
+                                    $focusArticle['news_id'];
+                            } else {
+                                $slug = Str::slug($focusArticle['title']);
+                                $url1 =
+                                    Config('constants.MainDomain') .
+                                    '/insights/' .
+                                    $locale .
+                                    '/' .
+                                    strtolower($focusArticle['insight_type']) .
+                                    '/' .
+                                    $slug .
+                                    '.' .
+                                    $focusArticle['news_id'];
+                            }
                         @endphp
 
                         @if ($loop->index < 2)
                             <li>
                                 <div class="imgbl">
-                                    <a href="{{ $url1 }}"><img src="{{ \App\Http\Controllers\InsightsController::createimgurl($focusArticle['image']) }}"
+                                    <a href="{{ $url1 }}"><img
+                                            src="{{ \App\Http\Controllers\InsightsController::createimgurl($focusArticle['image']) }}"
                                             alt="{{ $focusArticle->title . ' image' }}" /></a>
                                 </div>
                                 <div class="conblk">
@@ -71,13 +119,37 @@
         <ul class="beloweditlist">
             @foreach ($industry_data as $focusArticle)
                 @php
-                    $url2 = Config('constants.MainDomain') . '/insights/' . $locale . '/' . strtolower($focusArticle['insight_type']) .
-                        '/' . $focusArticle['slug'] . '.' . $focusArticle['news_id'];
+
+                    if (!empty($focusArticle['slug'])) {
+                        $url2 =
+                            Config('constants.MainDomain') .
+                            '/insights/' .
+                            $locale .
+                            '/' .
+                            strtolower($focusArticle['insight_type']) .
+                            '/' .
+                            $focusArticle['slug'] .
+                            '.' .
+                            $focusArticle['news_id'];
+                    } else {
+                        $slug = Str::slug($focusArticle['title']);
+                        $url2 =
+                            Config('constants.MainDomain') .
+                            '/insights/' .
+                            $locale .
+                            '/' .
+                            strtolower($focusArticle['insight_type']) .
+                            '/' .
+                            $slug .
+                            '.' .
+                            $focusArticle['news_id'];
+                    }
                 @endphp
                 @if ($loop->index >= 2)
                     <li>
                         <div class="imgbl">
-                            <a href="{{ $url2 }}"><img src="{{ \App\Http\Controllers\InsightsController::createimgurl($focusArticle['image']) }}"
+                            <a href="{{ $url2 }}"><img
+                                    src="{{ \App\Http\Controllers\InsightsController::createimgurl($focusArticle['image']) }}"
                                     alt="{{ $focusArticle->title . ' image' }}" /></a>
                         </div>
                         <div class="conblk">

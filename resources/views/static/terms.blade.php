@@ -123,7 +123,14 @@
 <ul class="page-list">
 <li>We reserve the right to amend or modify these Terms and Conditions at any time without notice.</li>
 </ul>
+
+<h4 class="static-subheadnew">Privacy Policy:</h4>
+<ul class="page-list">
+    <li>When you voluntarily send us electronic mail / fillup the form, we will keep a record of this information so that we can respond to you. We only collect information from you when you register on our site or fill out a form. Also, when filling out a form on our site, you may be asked to enter your: name, e-mail address or phone number. You may, however, visit our site anonymously. In case you have submitted your personal information and contact details, we reserve the rights to Call, SMS, Email or WhatsApp about our products and offers, even if your number has DND activated on it.</li>
+    </ul>
+    
 <h4 class="static-subheadnew">www.franchiseindia.com Terms & Policies:</h4>
+
 <ul class="page-list">
 <li><a href="https://www.franchiseindia.com/pdf/policies/Archival-Policy.pdf" style="text-decoration:underline;" target="_blank">Archival Policy</a></li>
 <li><a href="https://www.franchiseindia.com/pdf/policies/code-of-conduct.pdf" style="text-decoration:underline;" target="_blank">Code of conduct</a></li>

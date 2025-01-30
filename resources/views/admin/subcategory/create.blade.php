@@ -1,19 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     @include('admin.includes.head')
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <style type="text/css">
-        .typeahead, .tt-query, .tt-hint { border: 2px solid #CCCCCC; border-radius: 8px; font-size: 22px; height: 30px; line-height: 30px; outline: medium none; padding: 8px 12px; width: 850px; }
-        .typeahead { background-color: #FFFFFF; }
-        .typeahead:focus { border: 2px solid #0097CF; }
-        .tt-query { box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset; }
-        .tt-hint { color: #999999; }
-        .tt-menu { background-color: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 8px; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); margin-top: 12px; padding: 8px 0; width: 422px; }
-        .tt-suggestion { font-size: 22px; padding: 3px 20px; }
-        .tt-suggestion:hover { cursor: pointer; background-color: #0097CF; color: #FFFFFF; }
-        .tt-suggestion p { margin: 0; }
-        
+        .typeahead,
+        .tt-query,
+        .tt-hint {
+            border: 2px solid #CCCCCC;
+            border-radius: 8px;
+            font-size: 22px;
+            height: 30px;
+            line-height: 30px;
+            outline: medium none;
+            padding: 8px 12px;
+            width: 850px;
+        }
+
+        .typeahead {
+            background-color: #FFFFFF;
+        }
+
+        .typeahead:focus {
+            border: 2px solid #0097CF;
+        }
+
+        .tt-query {
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+        }
+
+        .tt-hint {
+            color: #999999;
+        }
+
+        .tt-menu {
+            background-color: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 12px;
+            padding: 8px 0;
+            width: 422px;
+        }
+
+        .tt-suggestion {
+            font-size: 22px;
+            padding: 3px 20px;
+        }
+
+        .tt-suggestion:hover {
+            cursor: pointer;
+            background-color: #0097CF;
+            color: #FFFFFF;
+        }
+
+        .tt-suggestion p {
+            margin: 0;
+        }
+
         .select2-container .select2-selection {
             box-sizing: border-box;
             cursor: pointer;
@@ -28,90 +73,107 @@
             display: none;
         }
     </style>
-    
+
 </head>
+
 <body>
-<!--Header-part-->
-@include('admin.includes.header')
-<!--close-top-Header-menu-->
+    <!--Header-part-->
+    @include('admin.includes.header')
+    <!--close-top-Header-menu-->
 
-<!--sidebar-menu-->
-@section('CAT')
-    active
-@endsection
-@include('admin.includes.sidebar')
-<!--sidebar-menu-->
-<div id="content">
-    <!--breadcrumbs-->
-    <div id="content-header">
-        <div id="breadcrumb">
-            <a href="{{url('admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a>
-            <a href="#" class="tip-bottom">Main Category/Sub Category</a>
-            <a href="#" class="current">Create Sub Category</a> </div>
-        <h1>Create Sub Category</h1>
-    </div>
-    <div class="container-fluid">
-        <hr>
-        <div class="row-fluid">
-            <div class="widget-box">
-                <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-                    <h5>Sub Category Details</h5>
-                </div>
-                <div class="widget-content nopadding">
-                    @if (!empty(session()->get('failed')))
-                        <div class="alert alert-danger">{{ session()->get('failed') }}</div>
-                    @endif
-                    <form method="POST" class="form-horizontal" action="{{url('admin/create/subcat')}}">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <!--sidebar-menu-->
+    @section('CAT')
+        active
+    @endsection
+    @include('admin.includes.sidebar')
+    <!--sidebar-menu-->
+    <div id="content">
+        <!--breadcrumbs-->
+        @php
+            $locale = request()->segment(2);
+            $lang = $locale == 'en' ? 'English' : 'Hindi';
+        @endphp
+        <div id="content-header">
+            <div id="breadcrumb">
+                <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
+                        class="icon-home"></i>Home</a>
+                <a href="#" class="tip-bottom">{{ $lang }} Main Category/{{ $lang }} Sub
+                    Category</a>
+                <a href="#" class="current">Create {{ $lang }} Sub Category</a>
+            </div>
+            <h1>Create {{ $lang }} Sub Category</h1>
+        </div>
+        <div class="container-fluid">
+            <hr>
+            <div class="row-fluid">
+                <div class="widget-box">
+                    <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+                        <h5>Sub Category Details</h5>
+                    </div>
+                    <div class="widget-content nopadding">
+                        @if (!empty(session()->get('failed')))
+                            <div class="alert alert-danger">{{ session()->get('failed') }}</div>
+                        @endif
+                        <form method="POST" class="form-horizontal"
+                            action="{{ url('admin/' . $locale . '/create/subcat') }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-                        <div class="control-group">
-                            <label class="control-label">Main Category :</label>
-                            <div class="controls">
-                                
-                                <select class="span11" name="maincat" spellcheck="false">
-                                    <option selected>Select Main Category</option>
-                                @foreach ($cat as $value)
-                                    <option value="{{$value->id}}">{{$value->catname}}</option>
-                                @endforeach
-                                </select>
-                                
+                            <div class="control-group">
+                                <label class="control-label">Main Category :</label>
+                                <div class="controls">
+
+                                    <select class="span11" name="maincat" spellcheck="false">
+                                        <option selected>Select Main Category</option>
+                                        @foreach ($cat as $value)
+                                            <option value="{{ $value->id }}">{{ $value->catname }}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
                             </div>
-                        </div>
-                         <div class="control-group">
-                            <label class="control-label">Sub Category :</label>
-                            <div class="controls" id="sub_categories">
-                               <select multiple required style="display: none;" name="sub_categories[]" id="select3"></select>
+                            <div class="control-group">
+                                <label class="control-label">Sub Category :</label>
+                                <div class="controls" id="sub_categories">
+                                    <select multiple required style="display: none;" name="sub_categories[]"
+                                        id="select3"></select>
+                                </div>
                             </div>
-                        </div>
-                        
+                            @if ($locale == 'hi')
+                                <div class="control-group">
+                                    <label class="control-label">Sub Category Slug:</label>
+                                    <div class="controls">
+                                        <input class="span11" required name="sub_catslug[]" />
+                                    </div>
+                                </div>
+                            @endif
 
-                        <div class="form-actions" style="text-align: center;">
-                            <button type="submit" id="ariclesubmit" class="btn btn-success">Create</button>
-                        </div>
-                    </form>
+                            <div class="form-actions" style="text-align: center;">
+                                <button type="submit" id="ariclesubmit" class="btn btn-success">Create</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-!--Footer-part-->
-@include('admin.includes.footer')
-<!--end-Footer-part-->
+    !--Footer-part-->
+    @include('admin.includes.footer')
+    <!--end-Footer-part-->
 
-<script src="{{url('admin/js/jquery.min.js')}}"></script>
-<script src="{{url('admin/js/typeahead.bundle.js')}}"></script>
-<script src="{{url('admin/js/matrix.js')}}"></script>
-<script src="{{url('tinymce/js/tinymce/tinymce.min.js')}}"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- Add this line for jQuery -->
+    <script src="{{ url('admin/js/jquery.min.js') }}"></script>
+    <script src="{{ url('admin/js/typeahead.bundle.js') }}"></script>
+    <script src="{{ url('admin/js/matrix.js') }}"></script>
+    <script src="{{ url('tinymce/js/tinymce/tinymce.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> <!-- Add this line for jQuery -->
 
-<script src="{{url('admin/js/jquery.ui.custom.js')}}"></script>
-<script src="{{url('admin/js/bootstrap.min.js')}}"></script>
-<script src="{{url('admin/js/jquery.uniform.js')}}"></script>
-<script src="{{url('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js')}}"></script>
-<script src="{{url('admin/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{url('admin/js/typeahead.bundle.js')}}"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> --}}
-<script>
+    <script src="{{ url('admin/js/jquery.ui.custom.js') }}"></script>
+    <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('admin/js/jquery.uniform.js') }}"></script>
+    <script src="{{ url('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js') }}"></script>
+    <script src="{{ url('admin/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url('admin/js/typeahead.bundle.js') }}"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> --}}
+    {{--  <script>
   $(document).ready(function () {
         // Your array of tags
        var businessCategories = [
@@ -133,7 +195,7 @@ var tagArray = businessCategories.map(function (category, index) {
 
         // Initialize Select2 with the array data
         $('#select3').select2({
-            placeholder: "Choose tags...",
+            placeholder: "Choose Subcategories...",
             minimumInputLength: 2,
             data: $.map(tagArray, function (item) {
                 return {
@@ -143,6 +205,73 @@ var tagArray = businessCategories.map(function (category, index) {
             })
         });
     });
-        </script>
+        </script>  --}}
+
+    <script>
+        $(document).ready(function() {
+            // Define your English and Hindi categories
+            var businessCategories = {
+                en: [
+                    "Apparel", "Footwear", "Sportswear", "Leisure wear", "Innerwear",
+                    "QSR", "Fine dine", "Café", "Cloud Kitchen", "Takeaway", "Specialty Restaurant",
+                    "Shakes", "Rolls", "Salon", "Spas", "Nail Salon", "Beauty Retail",
+                    "Specialty Clinics", "Dentist", "Ayurveda", "Homeopathy", "Flower Retail",
+                    "Stationery", "Bookstore", "Store Launch", "Car services", "Automobile Retail",
+                    "Pre-owned", "Car agency", "EV", "EV stations", "Biogas", "Petrol Pump",
+                    "Car Rental", "Fashion Rental", "K-12", "Pre School", "After School",
+                    "Vocational", "Skill Training", "Patient Care", "Edutainment",
+                    "Trampoline Parks", "Theatres", "Pet Salons", "Pet Retail",
+                    "Veterinary Doctors", "Diagnostics Labs", "Collection Centres", "Courier services",
+                    "Aggregators", "Hot & Trending", "Elderly Care", "Child Care", "Beauty Services", "Gym",
+                    "Yoga Centre", "HIIT", "Hotels & Hospitality", "Malls",
+                ],
+                hi: [
+                    "परिधान", "जूते", "खेल परिधान", "अवकाश परिधान", "अंतर्वस्त्र",
+                    "क्यूएसआर (त्वरित सेवा रेस्तरां)",
+                    "फाइन डाइन", "कैफे", "क्लाउड किचन", "टेकअवे", "विशेष रेस्तरां", "शेक्स", "रोल्स",
+                    "सैलून", "स्पा",
+                    "नेल सैलून", "सौंदर्य रिटेल", "विशेष क्लीनिक", "दंत चिकित्सक", "आयुर्वेद", "होम्योपैथी",
+                    "फूल रिटेल",
+                    "स्टेशनरी", "पुस्तकालय", "स्टोर लॉन्च", "कार सेवाएं", "ऑटोमोबाइल रिटेल",
+                    "प्री-ओन्ड (पुरानी कार एजेंसी)",
+                    "एजेंसी", "इलेक्ट्रिक वाहन", "ईवी स्टेशन", "बायोगैस", "पेट्रोल पंप", "कार रेंटल",
+                    "फैशन रेंटल",
+                    "के-12 (विद्यालय शिक्षा)", "प्री-स्कूल", "आफ्टर स्कूल", "व्यावसायिक प्रशिक्षण",
+                    "कौशल प्रशिक्षण",
+                    "रोगी देखभाल", "एजुटेनमेंट", "ट्रैम्पोलिन पार्क्स", "थिएटर", "पालतू सैलून",
+                    "पालतू रिटेल",
+                    "पशु चिकित्सक", "डायग्नोस्टिक लैब्स", "कलेक्शन सेंटर", "फूल रिटेल"
+                ]
+            };
+
+            // Get the current locale from the backend (use Laravel to inject)
+            var locale = "{{ $locale }}"; // Assume locale is passed from backend
+
+            // Get the categories based on the locale
+            var categories = businessCategories[locale] || [];
+
+            // Convert categories to an array of objects for Select2
+            var tagArray = categories.map(function(category, index) {
+                return {
+                    name: category,
+                    tag_id: 'tag_' + (index + 1)
+                };
+            });
+
+            // Initialize Select2 for dynamic subcategories
+            $('#select3').select2({
+                placeholder: locale === 'en' ? "Choose Subcategories..." : "उप श्रेणियाँ चुनें...",
+                minimumInputLength: 2,
+                data: $.map(tagArray, function(item) {
+                    return {
+                        text: item.name,
+                        id: item.name
+                    };
+                })
+            });
+        });
+    </script>
+
 </body>
+
 </html>

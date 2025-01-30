@@ -14,4 +14,5 @@
 <link href="{{url('insight-new/assets/css/swiper.min.css')}}" rel="stylesheet">
 
  <link href="{{url('insight-new/assets/css/insightstyle.css?ver=12.9')}}" rel="stylesheet">
+ <link href="{{url('insight-new/assets/css/insight_new.css?ver=12.9')}}" rel="stylesheet">
    <!-- Java Script -->

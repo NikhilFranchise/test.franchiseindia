@@ -33,16 +33,19 @@
     @endsection
     @include('admin.includes.sidebar')
     <!--sidebar-menu-->
-
+    @php
+        $locale = request()->segment(2);
+        $lang = $locale == 'en' ? 'English' : 'Hindi';
+    @endphp
     <div id="content">
         <!--breadcrumbs-->
         <div id="content-header">
             <div id="breadcrumb">
                 <a href="dashboard" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a>
-                <a href="list-insights" class="tip-bottom">Insights</a>
-                <a href="" class="current">Create-Insights</a>
+                <a href="list-insights" class="tip-bottom">{{ $lang . ' Insights' }}</a>
+                <a href="" class="current">{{ 'Create ' . $lang . ' Insights' }}</a>
             </div>
-            <h1>Create English Insights</h1>
+            <h1>{{ 'Create ' . $lang . ' Insights' }}</h1>
         </div>
 
         <!--End-breadcrumbs-->
@@ -56,25 +59,16 @@
 
                     <div class="widget-content nopadding">
                         <form method="POST" class="form-horizontal" enctype="multipart/form-data"
-                            action="{{ Config('constants.MainDomain') }}/admin/en/create-insights" id="editform"
-                            novalidate />
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            action="{{ config('constants.MainDomain') . '/admin/' . $locale . '/create-insights' }}"
+                            id="editform" novalidate />
+                        @csrf
 
                         <div class="control-group">
-                            <label class="control-label">Insights Publisher :</label>
-                            <div class="controls">
-                                <select required class="span11" name="insights_publisher" title="author">
-                                    <option value="">Select Publisher</option>
-                                    @foreach ($authors as $author)
-                                        <option value="{{ $author->author_id }}">{{ $author->title }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($errors->has('insights_publisher'))
-                                    @foreach ($errors->get('insights_publisher') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
+                            <label class="control-label" for="publisher">Insights Publisher :</label>
+                            <div class="controls" id="insights_publisher">
+                                <select class="" style="display: none;" name="insights_publisher" id="publisher"></select>
                             </div>
+
                         </div>
                         <div class="control-group">
                             <label class="control-label">Insights Type :</label>
@@ -120,11 +114,6 @@
                                     title="Sub Category">
                                     <option value="">Select Sub Category</option>
                                 </select>
-                                {{-- @if ($errors->has('insights_subcat'))
-                                    @foreach ($errors->get('insights_subcat') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif --}}
                             </div>
                         </div>
                         <div class="control-group">
@@ -144,11 +133,6 @@
                             <div class="controls">
                                 <input type="text" maxlength="40" required class="span11"
                                     placeholder="Enter Home Title" name="home_title" />
-                                {{-- @if ($errors->has('home_title'))
-                                    @foreach ($errors->get('home_title') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif --}}
                             </div>
                         </div>
 
@@ -195,7 +179,8 @@
                                         <br><span style="color: red;">{{ $error }}</span>
                                     @endforeach
                                 @endif
-                                <div style="display: none; color: red;" id="showImage_msg">Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP)</div>
+                                <div style="display: none; color: red;" id="showImage_msg">Invalid image type! Please
+                                    select a valid image format (JPG, GIF, PNG, or WebP)</div>
                                 <div style="display: none; color: red;" id="showImage_msg_size">Please select a image
                                     of size(Less than 150 KB)</div>
                                 <br />
@@ -247,7 +232,7 @@
         $(document).ready(function() {
 
             $('#select2').html("<option>No Data</option>");
-
+            var lang = '{{ $locale }}';
             //initialization and maximum values to be selected from text box
             $('#select3').select2({
                 placeholder: "Choose tags...",
@@ -256,6 +241,13 @@
                     url: '/associatedtags',
                     dataType: 'json',
                     delay: 250,
+                    data: function(params) {
+
+                        return {
+                            q: params.term, // Search term
+                            lang: lang // Language variable
+                        };
+                    },
                     processResults: function(data) {
                         return {
                             results: $.map(data, function(item) {
@@ -297,9 +289,8 @@
                 maximumSelectionLength: 1,
             });
 
-            //content publisher
+
             $('#publisher').select2({
-                maximumSelectionLength: 1,
                 placeholder: "Select Publisher...",
                 minimumInputLength: 2,
                 ajax: {
@@ -311,38 +302,15 @@
                             results: $.map(data, function(item) {
                                 return {
                                     text: item.title,
-                                    id: item.title
+                                    id: item.author_id
                                 }
                             })
                         };
                     },
                     cache: true
                 }
-
             });
 
-        });
-
-        //initialozing maximum values to be selected from text box
-        $('#kicker').select2({
-            placeholder: "Choose kicker...",
-            minimumInputLength: 2,
-            ajax: {
-                url: '{{ url('admin/get-kickers?type=1') }}',
-                dataType: 'json',
-                delay: 250,
-                processResults: function(data) {
-                    return {
-                        results: $.map(data, function(item) {
-                            return {
-                                text: item.name,
-                                id: item.name
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
         });
 
 
@@ -362,7 +330,7 @@
                 default:
                     $(this).val('');
                     toastr.error(
-                    'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
+                        'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
                     $('#showImage_msg').css('display', 'block');
                     setTimeout(function() {
                         $('#showImage_msg').css('display', 'none');
@@ -371,32 +339,6 @@
                     break;
             }
         });
-
-        // we are using these functions for validate image dimensions start here
-        {{--  readImageDimensions(fileInput.files[0], function(width, height) {
-            if (width === 680 && height === 435) {
-                $('#showImage_msg_dimensions').css('display', 'none');
-                checkImageSize(fileInput);
-            } else {
-                toastr.error('Please select an image with dimensions 680x435.');
-                // alert('Please select an image with dimensions 680x435.');
-                $(fileInput).val('');
-                $('#showImage_msg_dimensions').css('display', 'block');
-                $('#newssubmit').prop('disabled', true);
-            }
-        });  --}}
-        {{--  function readImageDimensions(file, callback) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var img = new Image();
-                img.onload = function() {
-                    callback(img.width, img.height);
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }  --}}
-        // we are using these functions for validate image dimensions end here
 
         function checkImageSize(fileInput) {
             if (fileInput.files[0].size > 153600) {
@@ -413,12 +355,6 @@
             }
         }
 
-        {{--  $('#showImage').bind('change', function() {
-            checkImageSize(this);
-        });  --}}
-    </script>
-
-    <script>
         $(document).ready(function() {
             var editor_config = {
                 path_absolute: "/",
@@ -482,101 +418,12 @@
                     }
                 }
             });
-
-            $('#authorId').select2({
-                placeholder: "Choose Publisher...",
-                minimumInputLength: 2,
-
-                ajax: {
-                    url: '{{ url('admin/articles/english/get-authors') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.name,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-
-            $('#associatedTags').select2({
-                placeholder: "Choose Associated Tags...",
-                minimumInputLength: 2,
-
-                ajax: {
-                    url: '{{ url('admin/articles/english/get-kickers') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.name,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-
-            $('#tagId').select2({
-                placeholder: "Choose Associated Tags...",
-                minimumInputLength: 2,
-
-                ajax: {
-                    url: '{{ url('admin/articles/english/get-kickers') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.name,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-
-            $('#audioId').select2({
-                placeholder: "Choose Audio Files...",
-                minimumInputLength: 2,
-
-                ajax: {
-                    url: '{{ url('admin/articles/english/get-audio-files') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.name,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-
         });
 
         function Subcategoriesdata(catid) {
-
+            var lang = '{{ $locale }}';
             $.ajax({
-                url: '{{ url('admin/getSubcategories') }}/' + catid,
+                url: '/admin/' + lang + '/getSubcategories/' + catid,
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {

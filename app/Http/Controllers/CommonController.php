@@ -1256,6 +1256,7 @@ class CommonController extends Controller
 
     public function fetchDataajax(Request $request)
 {
+    // dd('yes');
     $sortby = $request->input('sortby');
     $shuffledResults = collect($request->input('shuffledResults'));
 
@@ -1273,6 +1274,31 @@ class CommonController extends Controller
     // return response()->json($shuffledResults);
 
     $html = view('category.listingloop', ['shuffledResults' => $shuffledResults])->render();
+    // dd($html);
+    return response()->json(['html' => $html]);
+}
+
+
+public function fetchDataajax2(Request $request)
+{
+    // dd('yes');
+    $sortby = $request->input('sortby');
+    $shuffledResults = collect($request->input('shuffledResults'));
+
+    if ($sortby == 1) {
+        $shuffledResults = $shuffledResults->sortByDesc('activated_at')->values();
+
+    } elseif ($sortby == 2) {
+        // Alphabetical order
+        $shuffledResults = $shuffledResults->sortBy('company_name')->values();
+
+    } elseif ($sortby == 3) {
+        $shuffledResults = $shuffledResults->sortByDesc('views')->values();
+    }
+
+    // return response()->json($shuffledResults);
+
+    $html = view('category.listingloop_range_sortby', ['shuffledResults' => $shuffledResults])->render();
     // dd($html);
     return response()->json(['html' => $html]);
 }

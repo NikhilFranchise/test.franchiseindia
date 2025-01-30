@@ -10,7 +10,7 @@
         .tt-query { box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset; }
         .tt-hint { color: #999999; }
         .tt-menu { background-color: #FFFFFF; border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 8px; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); margin-top: 12px; padding: 8px 0; width: 422px; }
-        .tt-suggestion { font-size: 22px; padding: 3px 20px; }
+        .tt-suggestion { font-size: 13px; padding: 3px 20px; }
         .tt-suggestion:hover { cursor: pointer; background-color: #0097CF; color: #FFFFFF; }
         .tt-suggestion p { margin: 0; }
     </style>
@@ -26,15 +26,17 @@
 @endsection
 @include('admin.includes.sidebar')
 <!--sidebar-menu-->
-
+@php
+    $lang = $type == 'english' ? 'English' : 'Hindi';
+@endphp
 <div id="content">
     <!--breadcrumbs-->
     <div id="content-header">
         <div id="breadcrumb">
             <a href="{{url('admin/dashboard')}}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a>
-            <a href="#" class="tip-bottom">Kicker</a>
-            <a href="#" class="current">{{ $type }} Kicker</a> </div>
-        <h1>Create {{ $type }} kicker</h1>
+            <a href="#" class="tip-bottom">Tag</a>
+            <a href="#" class="current">{{ $lang }} Tag</a> </div>
+        <h1>Create {{ $lang }} Tag</h1>
     </div>
     <!--End-breadcrumbs-->
     <div class="container-fluid">
@@ -42,19 +44,19 @@
         <div class="row-fluid">
             <div class="widget-box">
                 <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-                    <h5>Hindi Kicker Details</h5>
+                    <h5>{{ $lang }} tag Details</h5>
                 </div>
                 <div class="widget-content nopadding">
                     @if (!empty(session()->get('failed')))
-                        <div class="alert alert-info">{{ session()->get('failed') }}</div>
+                        <div class="alert alert-danger">{{ session()->get('failed') }}</div>
                     @endif
                     <form method="POST" class="form-horizontal" action="{{url('admin/create/kicker/'. $type )}}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="control-group">
-                            <label class="control-label">{{ $type }} Kicker :</label>
+                            <label class="control-label">{{ $lang }} Tag :</label>
                             <div class="controls">
-                                <input type="text"  maxlength="125" required class="typeahead tt-query" autocomplete="off" spellcheck="false" name="kicker" placeholder="Enter Kicker">
+                                <input type="text"  maxlength="125" required class="typeahead tt-query" autocomplete="off" spellcheck="false" name="kicker" placeholder="Enter Tag">
                             </div>
                         </div>
 

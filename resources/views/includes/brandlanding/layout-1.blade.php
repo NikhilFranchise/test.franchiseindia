@@ -343,7 +343,7 @@
 
                         @if (!Auth::check() || Auth::user()->profile_type == Config('constants.ProfileType.Franchisor'))
                             <div class="insta-apply" id="show-m">
-                                <div class="ttl" id="instahead">Insta Apply</div>
+                                <div class="ttl" id="instahead">Insta Apply 1</div>
                                 <div id="instaMsg" style="display:none;" class="green">
                                     <div class="bigth">Thank You!</div>
                                     <p>Thanks for showing your interest in {{ $franDetails->company_name }}.</p>
@@ -378,6 +378,11 @@
                                                 type="button" onclick="veryfie()">
                                             <input class="verif-submitbtn" id="editmobile" value="Edit"
                                                 type="button" onclick="editmobileinsta();" style="display: none">
+
+                                                {{-- <input type="text" name="mobile" id='txtPhone' class="form-control"
+                                            placeholder="Enter Mobile No" maxlength="10" autocomplete="off"
+                                            /> --}}
+                                       
                                         </div>
                                         <div class="form-group" id="otpblk" style="display:none;">
                                             <input type="text" id="otp" class="form-control"

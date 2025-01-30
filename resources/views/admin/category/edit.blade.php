@@ -56,7 +56,7 @@
                                 <input type="hidden" name="catid" value="{{$catdata->id}}">
                             </div>
                         </div>
-                        
+
 
                         <div class="form-actions" style="text-align: center;">
                             <button type="submit" id="ariclesubmit" class="btn btn-success">Save</button>

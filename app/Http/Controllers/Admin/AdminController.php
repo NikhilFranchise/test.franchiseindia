@@ -10,7 +10,9 @@ use App\Models\NewsList;
 use App\Models\InsightList;
 use App\Models\InsightListHindi;
 use App\Models\InsightCategory;
+use App\Models\InsightsHindiCategory;
 use App\Models\InsightSubcategory;
+use App\Models\InsightsHindiSubCategory;
 use App\Models\AdminUser;
 use App\Models\AuthorList;
 use App\Models\NewsComment;
@@ -25,14 +27,19 @@ use App\Models\ContentTagsAssigned;
 use App\Mail\CommentReplyMail;
 use App\Models\FranchisorBusinessDetail;
 use App\Models\ArticleInterviewCommentReply;
+use App\Models\FihlPodcastVideo;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
+use App\Models\FihlVideoCategory;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -141,7 +148,9 @@ class AdminController extends Controller
             'address'                => request()->address,
             'linkedin_profile'       => request()->linkedin_profile,
             'facebook_profile'       => request()->facebook_profile,
-            'twitter_profile'        => request()->twitter_profile
+            'twitter_profile'        => request()->twitter_profile,
+            'insta_profile'        => request()->insta_profile
+
         ]);
         return redirect("admin/list-author");
     }
@@ -175,6 +184,9 @@ class AdminController extends Controller
      */
     public function updateAuthor(Request $request)
     {
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:500', // 500 KB max
+        ]);
         $imageUrl       = ($request->hasFile('image')) ? $this->uploadImage($request->file('image'), 'Author', 1, 's3', $request->old_image) : $request->old_image;
 
         if ($request->hasFile('image'))
@@ -193,7 +205,9 @@ class AdminController extends Controller
                 'address'                => request()->address,
                 'linkedin_profile'       => request()->linkedin_profile,
                 'facebook_profile'       => request()->facebook_profile,
-                'twitter_profile'        => request()->twitter_profile
+                'twitter_profile'        => request()->twitter_profile,
+                'insta_profile'          => request()->insta_profile
+
             ]);
         return redirect("admin/list-author");
     }
@@ -348,10 +362,10 @@ class AdminController extends Controller
         if ($kickerCount == 0) {
             $class->insert(['name' => request()->kicker]);
         } else {
-            session()->flash('failed', 'Kicker already Exists');
+            session()->flash('failed', 'Tag already Exists');
             return redirect()->back();
         }
-
+        session()->flash('success', 'Tag Inserted Successfully.');
         return redirect('/admin/kickers/list/' . request()->type);
     }
 
@@ -662,23 +676,24 @@ class AdminController extends Controller
     public function associatedTags(Request $request)
     {
         $data = [];
-        if ($request->has('q')) {
-            $search = $request->q;
+        $locale = $request->input('lang', 'en'); // Extract the locale
+        $search = $request->input('q'); // Extract the search query
+        // dd($search, $locale);
 
-            if ($request->segment(1) == 'en') {
-                dd('yes');
-                $data = SeoTag::query()->select("tag_id", "name")
-                    ->where('name', 'LIKE', "%$search%")
-                    ->get();
-            } else {
-                // dd('no');
-                $data = SeoTagHindi::query()->select("tag_id", "name")
-                    ->where('name', 'LIKE', "%$search%")
-                    ->get();
-            }
+        if ($search) {
+            // Determine the model based on the locale
+            $model = ($locale === 'en') ? SeoTag::class : SeoTagHindi::class;
+
+            // Fetch matching tags
+            $data = $model::query()
+                ->select("tag_id", "name")
+                ->where('name', 'LIKE', "%{$search}%")
+                ->get();
         }
+        // Return JSON response
         return response()->json($data);
     }
+
 
     /**
      * Function to retrieve author list with ajax
@@ -691,8 +706,9 @@ class AdminController extends Controller
         if ($request->has('q')) {
             $search = $request->q;
             $data = AuthorList::query()
-                ->select("title")
-                ->where('title', 'LIKE', "%$search%")
+                ->select("title", "author_id")
+                ->where('title', 'LIKE', "%{$search}%")
+                ->where('status', 'A')
                 ->get();
         }
         return response()->json($data);
@@ -1544,54 +1560,6 @@ class AdminController extends Controller
      * @param $oldImagePath
      * @return mixed
      */
-    // private function uploadImage($image, $type, $isDelete, $store_type, $oldImagePath)
-    // {
-    //     $uploadPath = "uploads/";
-    //     if ($isDelete == 1 && $store_type == 'public' && !empty($oldImagePath))
-    //         unlink(public_path($oldImagePath));
-
-    //     if ($isDelete == 1 && $store_type == 's3')
-    //         Storage::getFacadeRoot()->disk('s3')->delete(parse_url($oldImagePath)['path']);
-
-    //     $extension  = $image->extension();
-
-    //     $picPath    = config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
-
-    //     switch ($type) {
-    //         case 'Author':
-    //             $picPath    = $uploadPath . sprintf(config('constants.AdminAuthor'), date('md')) . '/' . uniqid() . '.' . $extension;
-    //             break;
-
-    //         case 'Article':
-    //             $picPath    = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
-    //             break;
-
-    //         case 'Interview':
-    //             $picPath    = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/int/' . uniqid() . '.' . $extension;
-    //             break;
-
-    //         case 'Gallery':
-    //             $picPath    = config('constants.AdminArticleInterview') . '/gallery/art/' . uniqid() . '.' . $extension;
-    //             break;
-
-    //         case 'Magazine':
-    //             $picPath    = $uploadPath . config('constants.AdminMagazine') . '/' . '' . uniqid() . '.' . $extension;
-    //             break;
-
-    //         case 'News':
-    //             $picPath    = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
-    //             break;
-    //     }
-    //     Storage::getFacadeRoot()->disk($store_type)->put($picPath, file_get_contents($image), 'public');
-    //     $imageUrl   = Storage::getFacadeRoot()->disk($store_type)->url($picPath);
-
-    //     if ($store_type == 's3' && $type != 'Gallery')
-    //         return  str_replace('storage', 'uploads', parse_url($imageUrl, PHP_URL_PATH));
-
-    //     return  str_replace('storage', 'uploads', $imageUrl);
-    // }
-
-
 
     private function uploadImage($image, $type, $isDelete, $store_type, $oldImagePath)
     {
@@ -1629,11 +1597,24 @@ class AdminController extends Controller
             case 'News':
                 $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
                 break;
+            case 'Report':
+                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+                break;
+            case 'Event':
+                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+                break;
+            case 'Terms':
+                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+                break;
         }
 
-        // Resize the image to 680x435px and convert it to WebP format
-        $resizedImage = Image::make($image)->resize(1600, 940)->encode('webp', 90);
-        // dd($resizedImage);
+        if ($type != 'Author' && $type  != 'Gallery' && $type  != 'Magazine') {
+            $resizedImage = Image::make($image)->resize(1600, 940)->encode('webp', 90);
+        } else if ($type == 'Author') {
+            $resizedImage = Image::make($image)->resize(512, 512)->encode('webp', 90);
+        } else {
+            $resizedImage = Image::make($image)->encode('webp', 90);
+        }
         // Store the image in the specified storage
         Storage::getFacadeRoot()->disk($store_type)->put($picPath, (string) $resizedImage, 'public');
         $imageUrl = Storage::getFacadeRoot()->disk($store_type)->url($picPath);
@@ -1656,15 +1637,23 @@ class AdminController extends Controller
     private function thumbnailCreation($imageUrl, $type, $width, $height)
     {
         //thumbnail creation
+        // dd($imageUrl, $type, $width, $height);
         $sourcePhoto     = public_path($imageUrl);
-        // dd($width, $height, $type, $imageUrl);
-        if ($type == 'Gallery')
+        $locale = App::getLocale();
+        // dd($locale);
+        if ($type == 'Gallery') {
             $sourcePhoto = $imageUrl;
+        } else if ($type == 'News' && $locale == 'en') {
+            $sourcePhoto = Config('constants.franAwsS3Url') . $imageUrl;
+            // dd($sourcePhoto);
+        } else if ($type == 'News' && $locale == 'hi') {
+            $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
+        }
 
         if ($type != 'Gallery')
             $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
-
         $imageName       = pathinfo($sourcePhoto)['basename'];
+        // dd($imageName);
 
         $destinationPath = "uploads";
 
@@ -1683,6 +1672,7 @@ class AdminController extends Controller
 
             case 'News':
                 $destinationPath = public_path('uploads/thumbnails/news/' . session()->get('role') . '/');
+                // dd($destinationPath);
         }
 
         try {
@@ -1690,7 +1680,7 @@ class AdminController extends Controller
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0777, true);
             }
-            $image = Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 80);
+            $image = Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 90);
             // dd($image);
 
         } catch (\Exception $e) {
@@ -1793,269 +1783,193 @@ class AdminController extends Controller
             $kicker     = array_column($kickerData, 'name');
             $authors    = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
 
-            $InsightCategory    = InsightCategory::query()->select('id', 'catname')->where('status', 1)->get();
+            $InsightCategory    = InsightsHindiCategory::query()->select('id', 'catname')->where('status', 1)->get();
             return view('admin/insights/create_hindi_insights', compact('kicker', 'authors', 'InsightCategory'));
         }
     }
 
+
+
     public function createInsights(Request $request)
     {
         // dd($request->all());
+        // Validate the input
         $this->validate($request, [
-
             'insights_publisher' => 'required',
             'insights_type' => 'required',
             'insights_cat' => 'required',
-            // 'insights_subcat' => 'required',
             'title' => 'required|max:255',
             'sub_title' => 'required',
             'content' => 'required',
             'image' => 'required',
         ]);
-        $imageUrl          = "";
-        $role              = $request->session()->get('role');
-        $brand             = !empty($request->brands) ? $this->stringyfyText($request->brands) : "";
-        $title             = $request->title;
-        // $kicker            = $request->kicker;
-        $homeTitle         = $request->home_title;
-        $subTitle          = $request->sub_title;
-        $slug              = Str::slug($title);
-        $desc              = $request->input('content');
-        $insights_type      = $request->insights_type;
-        $cat_id             = $request->insights_cat;
-        $subcat_id         = $request->insights_subcat;
-        $desc              = $request->input('content');
-        $isInternational   = ($request->is_intl == 1) ? 1 : 0;
-        // dd('hello');
+
+        // Extract variables from the request
+        $role = $request->session()->get('role');
+        $brand = $request->brands ? $this->stringyfyText($request->brands) : "";
+        $title = $request->title;
+        $homeTitle = $request->home_title;
+        $subTitle = $request->sub_title;
+        $desc = $request->input('content');
+        $insightsType = $request->insights_type;
+        $catId = $request->insights_cat;
+        $subcatId = $request->insights_subcat;
+        $isInternational = $request->is_intl == 1 ? 1 : 0;
+        // Generate slug based on language
+        if ($request->segment(2) == 'en') {
+            // English slug
+            $slug = Str::slug($title);
+        } else {
+            // Hindi slug generation
+            $titleSlug = trim($title);
+            $titleSlug = mb_strtolower($titleSlug, "UTF-8");
+            // Retain valid Hindi characters, English letters, numbers, and spaces
+            $titleSlug = preg_replace("/[^a-z0-9\s\p{Devanagari}]/u", "", $titleSlug);
+            // Replace multiple spaces with a single space
+            $titleSlug = preg_replace("/\s+/", " ", $titleSlug);
+            // Replace spaces with dashes
+            $titleSlug = str_replace(" ", "-", $titleSlug);
+            // Replace dots with dashes
+            $slug = str_replace(".", "-", $titleSlug);
+        }
+        // Handle image upload
+        $imageUrl = "";
         if ($request->hasFile('image')) {
-
-            //Uploading Image
             $newsImage = $request->file('image');
-            $imageUrl  = $this->uploadImage($newsImage, 'News', 0, 's3', '');
-
-            //thumbnail creation
+            $imageUrl = $this->uploadImage($newsImage, $insightsType, 0, 's3', '');
+            // dd($imageUrl);
             $this->thumbnailCreation($imageUrl, 'News', 247, 139);
-            // dd('image');
         }
 
-        if ($request->segment(2) == 'en') {
-            $newsData                = new InsightList;
-            $newsData->title         = $title;
-            // $newsData->kicker        = $kicker;
-            $newsData->news_type     = $role;
-            $newsData->homeTitle     = $homeTitle;
-            $newsData->shortDesc     = $subTitle;
-            $newsData->content       = $desc;
-            $newsData->insight_type  = $insights_type;
-            $newsData->cat_id        = $cat_id;
-            $newsData->subcat_id     = $subcat_id;
-            $newsData->related_brand = $brand;
-            $newsData->image         = $imageUrl;
-            $newsData->slug          = $slug;
-            $newsData->is_intl       = $isInternational;
-            $newsData->author_id     = request()->insights_publisher;
+        // Determine language and model
+        $isEnglish = $request->segment(2) == 'en';
+        $modelClass = $isEnglish ? InsightList::class : InsightListHindi::class;
+        $redirectUrl = $isEnglish ? 'admin/en/list-insights' : 'admin/hi/list-insights';
+        $newsData = new $modelClass;
+        $newsData->title = $title;
+        $newsData->news_type = $role;
+        $newsData->homeTitle = $homeTitle;
+        $newsData->shortDesc = $subTitle;
+        $newsData->content = $desc;
+        $newsData->insight_type = $insightsType;
+        $newsData->cat_id = $catId;
+        $newsData->subcat_id = $subcatId;
+        $newsData->related_brand = $brand;
+        $newsData->image = $imageUrl;
+        $newsData->slug = $slug;
+        $newsData->is_intl = $isInternational;
+        $newsData->author_id = $request->insights_publisher;
 
+        // Save the data
+        if ($newsData->save()) {
+            $newsId = $newsData->news_id;
 
-            if ($newsData->save()) {
-                $newsId = $newsData->news_id;
-            } else {
-                return redirect('admin/en/list-insights')->with('error', "Insights Data Can't Save. ");
+            // Insert associated tags if present
+            if ($request->associated_tags) {
+                $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
             }
 
-
-            //increasing frequency count of kickers
-            if ($request->associated_tags != null)
-                $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
-
-            return redirect('admin/en/list-insights')->with('success', 'Insights Data Save Successfully.');
-        } elseif ($request->segment(2) == 'hi') {
-            $newsData                = new InsightListHindi;
-            $newsData->title         = $title;
-            // $newsData->kicker        = $kicker;
-            $newsData->news_type     = $role;
-            $newsData->homeTitle     = $homeTitle;
-            $newsData->shortDesc     = $subTitle;
-            $newsData->content       = $desc;
-            $newsData->insight_type  = $insights_type;
-            $newsData->cat_id        = $cat_id;
-            $newsData->subcat_id     = $subcat_id;
-            $newsData->related_brand = $brand;
-            $newsData->image         = $imageUrl;
-            $newsData->slug          = $slug;
-            $newsData->is_intl       = $isInternational;
-            $newsData->author_id     = request()->insights_publisher;
-
-
-            if ($newsData->save()) {
-                $newsId = $newsData->news_id;
-            } else {
-                return redirect('admin/hi/list-insights')->with('error', "Insights Data Can't Save. ");
-            }
-
-
-            //increasing frequency count of kickers
-            if ($request->associated_tags != null)
-                // dd($request->associatedTags);
-                $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
-
-            return redirect('admin/hi/list-insights')->with('success', 'Insights Data Save Successfully.');
+            return redirect($redirectUrl)->with('success', 'Insights Data Saved Successfully.');
+        } else {
+            return redirect($redirectUrl)->with('error', "Insights Data Couldn't Be Saved.");
         }
     }
+
 
     public function listinsights(Request $request)
     {
-        if ($request->segment(2) == 'en') {
+        // Determine the model based on the language segment
+        $locale = $request->segment(2);
+        $model = ($locale === 'en') ? InsightList::class : InsightListHindi::class;
 
-            $data = InsightList::query()
-                ->whereNotIn('news_type', ['ri','ir'])
-                ->where(function ($query) use ($request) {
-                    $query->where('title', 'LIKE', '%' . $request->search . '%')
-                        ->where(function ($query) use ($request) {
-                            $query->where('status', 1)
-                                ->orWhere('status', 0);
-                        })
-                        ->orWhere('news_id', $request->search);
-                })
-                ->orderBy('news_id', 'DESC')
-                ->paginate(25);
-            return view('admin/insights/list-edit-insights', compact('data'));
-        } elseif ($request->segment(2) == 'hi') {
-            // dd('hello');
-            $data = InsightListHindi::query()
-                ->whereNotIn('news_type', ['ri', 'ir'])
-                ->where(function ($query) use ($request) {
-                    $query->where('title', 'LIKE', '%' . $request->search . '%')
-                        ->where(function ($query) use ($request) {
-                            $query->where('status', 1)
-                                ->orWhere('status', 0);
-                        })
-                        ->orWhere('news_id', $request->search);
-                })
-                ->orderBy('news_id', 'DESC')
-                ->paginate(25);
+        // Fetch data with filters
+        $data = $model::query()
+            ->whereNotIn('news_type', ['ri', 'ir']) // Exclude specific news types
+            ->when($request->search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%")
+                        ->orWhere('news_id', $search);
+                });
+            })
+            ->whereIn('status', [0, 1]) // Filter by status (active/inactive)
+            ->orderByDesc('news_id') // Order by descending news ID
+            ->paginate(25);
 
-
-            return view('admin/insights/hindilist-edit-insights', compact('data'));
-        }
+        // Return the view with data
+        return view('admin.insights.list-edit-insights', compact('data'));
     }
+
 
     public function multilistinsights(Request $request)
-{
-    // Determine the model based on language segment
-    $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
+    {
+        // Determine the model and category model based on the language segment
+        $locale = $request->segment(2);
+        $model = ($locale === 'en') ? InsightList::class : InsightListHindi::class;
+        $catModel = ($locale === 'en') ? InsightCategory::class : InsightsHindiCategory::class;
 
-    // Fetch data with filters and eager loading
-    $data = $model::with(['category', 'subcategory', 'author'])
-        ->whereNotIn('news_type', ['ri', 'ir']) // Exclude 'ri' and 'ir'
-       // ->whereNull(['insight_type', 'cat_id', 'subcat_id']) // Check for null fields
-        ->where(function ($query) use ($request) {
-            $query->where(function ($subQuery) use ($request) {
-                    // Search logic
-                    $subQuery->where('title', 'LIKE', '%' . $request->search . '%')
-                        ->orWhere('news_id', $request->search);
+        // Fetch filtered and paginated data
+        $data = $model::with(['category', 'subcategory', 'author'])
+            ->whereNotIn('news_type', ['ri', 'ir']) // Exclude specific news types
+            ->when($request->search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%")
+                        ->orWhere('news_id', $search);
                 });
-        })
-        ->whereIn('status', [0, 1]) // Filter status (active or inactive)
-        ->orderByDesc('news_id') // Order by descending ID
-        ->paginate(30); // Paginate results
+            })
+            ->whereIn('status', [0, 1]) // Filter by active/inactive status
+            ->orderByDesc('news_id') // Order by descending news ID
+            ->paginate(30);
 
-    // Fetch common dropdown data
-    $InsightCategory = InsightCategory::query()
-        ->select('id', 'catname')
-        ->where('status', 1)
-        ->get();
+        // Fetch dropdown data
+        $InsightCategory = $catModel::select('id', 'catname')
+            ->where('status', 1)
+            ->get();
 
-    $InsightAuthor = AuthorList::query()
-        ->select('author_id', 'title', 'slug')
-        ->where('status', 'A')
-        ->get();
+        $InsightAuthor = AuthorList::select('author_id', 'title', 'slug')
+            ->where('status', 'A')
+            ->get();
 
-    // Return view with data
-    return view('admin/insights/multilist-edit', compact('data', 'InsightCategory', 'InsightAuthor'));
-}
-
-
-
-    // public function saveMultipleInsights(Request $request)
-    // {
-    //     // Get selected articles
-    //     if ($request->segment(2) == 'en') {
-
-    //         $articles = $request->input('articles', []);
-    //         // dd($articles);
-    //         foreach ($articles as $newsId => $articleDetails) {
-    //             $existingInsight = InsightList::find($newsId);
-    //             if ($existingInsight) {
-    //                 // dd($existingInsight->slug);
-    //                 $existingInsight->insight_type = $articleDetails['insight_type'] ?? $existingInsight->insight_type;
-    //                 $existingInsight->cat_id = $articleDetails['main_category'] ?? $existingInsight->cat_id;
-    //                 $existingInsight->subcat_id = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
-    //                 $existingInsight->status = $articleDetails['status'] ?? $existingInsight->status;
-    //                 $existingInsight->author_id = $articleDetails['author'] ?? $existingInsight->author_id;
-    //                 $existingInsight->slug = Str::slug($existingInsight->title);
-    //                 $existingInsight->save();
-    //             }
-    //         }
-    //     } else {
-    //         $articles = $request->input('articles', []);
-    //         // dd($articles);
-    //         foreach ($articles as $newsId => $articleDetails) {
-    //             $existingInsight = InsightListHindi::find($newsId);
-    //             if ($existingInsight) {
-    //                 // dd($existingInsight->slug);
-    //                 $existingInsight->insight_type = $articleDetails['insight_type'] ?? $existingInsight->insight_type;
-    //                 $existingInsight->cat_id = $articleDetails['main_category'] ?? $existingInsight->cat_id;
-    //                 $existingInsight->subcat_id = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
-    //                 $existingInsight->status = $articleDetails['status'] ?? $existingInsight->status;
-    //                 $existingInsight->author_id = $articleDetails['author'] ?? $existingInsight->author_id;
-    //                 $existingInsight->slug = Str::slug($existingInsight->title);
-    //                 $existingInsight->save();
-    //             }
-    //         }
-    //     }
-    //     return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
-    // }
-
-    public function saveMultipleInsights(Request $request)
-{
-    // Determine the model based on language segment
-    $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
-
-    // Get selected articles
-    $articles = $request->input('articles', []);
-
-    foreach ($articles as $newsId => $articleDetails) {
-        $existingInsight = $model::find($newsId);
-        if ($existingInsight) {
-            // Update fields dynamically
-            $fieldsToUpdate = [
-                'insight_type' => $articleDetails['insight_type'] ?? $existingInsight->insight_type,
-                'cat_id' => $articleDetails['main_category'] ?? $existingInsight->cat_id,
-                'subcat_id' => $articleDetails['sub_category'] ?? $existingInsight->subcat_id,
-                'status' => $articleDetails['status'] ?? $existingInsight->status,
-                'author_id' => $articleDetails['author'] ?? $existingInsight->author_id,
-            ];
-
-            // Apply updates
-            foreach ($fieldsToUpdate as $field => $value) {
-                $existingInsight->{$field} = $value;
-            }
-
-            // Generate slug dynamically
-            $existingInsight->slug = Str::slug($existingInsight->title);
-
-            // Save the updated record
-            $existingInsight->save();
-        }
+        // Return the view with data
+        return view('admin.insights.multilist-edit', compact('data', 'InsightCategory', 'InsightAuthor'));
     }
 
-    return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
-}
 
 
+    public function saveMultipleInsights(Request $request)
+    {
+        // Determine the model based on language segment
+        $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
 
+        // Get selected articles
+        $articles = $request->input('articles', []);
 
+        foreach ($articles as $newsId => $articleDetails) {
+            $existingInsight = $model::find($newsId);
+            if ($existingInsight) {
+                // Update fields dynamically
+                $fieldsToUpdate = [
+                    'insight_type' => $articleDetails['insight_type'] ?? $existingInsight->insight_type,
+                    'cat_id' => $articleDetails['main_category'] ?? $existingInsight->cat_id,
+                    'subcat_id' => $articleDetails['sub_category'] ?? $existingInsight->subcat_id,
+                    'status' => $articleDetails['status'] ?? $existingInsight->status,
+                    'author_id' => $articleDetails['author'] ?? $existingInsight->author_id,
+                ];
 
+                // Apply updates
+                foreach ($fieldsToUpdate as $field => $value) {
+                    $existingInsight->{$field} = $value;
+                }
+
+                // Generate slug dynamically
+                $existingInsight->slug = Str::slug($existingInsight->title);
+
+                // Save the updated record
+                $existingInsight->save();
+            }
+        }
+
+        return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
+    }
 
     public function editInsightsView(Request $request)
     {
@@ -2064,15 +1978,16 @@ class AdminController extends Controller
             $newsId             = $request->id;
             $kickerData         = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
             $kicker             = array_column($kickerData, 'name');
-            $data               = InsightList::query()->where('news_id', $newsId)->first();
-
+            $data               = InsightList::query()->with('author')->where('news_id', $newsId)->first();
+            // dd($data);
             $InsightCategory    = InsightCategory::query()->where('status', '1')->get();
-            $InsightSubcategory    = InsightSubcategory::all();
+            // dd($InsightCategory);
+            $InsightSubcategory    = InsightSubcategory::query()->where('mcat_id', $data->cat_id)->get();
 
             $brands             = explode(",", $data->related_brand);
 
             $authors            = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
-
+            $company = [];
             //getting brand names to a array
             foreach ($brands as $value) {
                 $company[]        = FranchisorBusinessDetail::query()->where('franchisor_id', $value)->select('franchisor_id', 'company_name')->first();
@@ -2093,8 +2008,8 @@ class AdminController extends Controller
             $kicker             = array_column($kickerData, 'name');
             $data               = InsightListHindi::query()->where('news_id', $newsId)->first();
 
-            $InsightCategory    = InsightCategory::query()->where('status', '1')->get();
-            $InsightSubcategory    = InsightSubcategory::all();
+            $InsightCategory    = InsightsHindiCategory::query()->where('status', '1')->get();
+            $InsightSubcategory    = InsightsHindiSubCategory::query()->where('mcat_id', $data->cat_id)->get();
 
             $brands             = explode(",", $data->related_brand);
 
@@ -2150,10 +2065,22 @@ class AdminController extends Controller
         $role              = $request->session()->get('role');
         $brand             = !empty($request->brands) ? $this->stringyfyText($request->brands) : "";
         $title             = $request->title;
-        if (!empty($request->slug)) {
+        if (!empty($request->slug) && request()->segment(2) == 'en') {
             $slug              = Str::slug($request->slug);
+        } else if (!empty($request->slug) && request()->segment(2) == 'hi') {
+            $slug              = $request->slug;
         } else {
-            $slug              = Str::slug($title);
+            // Hindi slug generation
+            $titleSlug = trim($title);
+            $titleSlug = mb_strtolower($titleSlug, "UTF-8");
+            // Retain valid Hindi characters, English letters, numbers, and spaces
+            $titleSlug = preg_replace("/[^a-z0-9\s\p{Devanagari}]/u", "", $titleSlug);
+            // Replace multiple spaces with a single space
+            $titleSlug = preg_replace("/\s+/", " ", $titleSlug);
+            // Replace spaces with dashes
+            $titleSlug = str_replace(" ", "-", $titleSlug);
+            // Replace dots with dashes
+            $slug = str_replace(".", "-", $titleSlug);
         }
         // dd($role);
         $kicker            = $request->kicker;
@@ -2171,7 +2098,7 @@ class AdminController extends Controller
 
             //Uploading Image
             $newsImage = $request->file('image');
-            $imageUrl  = $this->uploadImage($newsImage, 'News', 0, 's3', '');
+            $imageUrl  = $this->uploadImage($newsImage, $insight_type, 0, 's3', '');
 
             //thumbnail creation
             $this->thumbnailCreation($imageUrl, 'News', 247, 139);
@@ -2264,95 +2191,598 @@ class AdminController extends Controller
 
     public function categoryform()
     {
+        if (request()->segment(2) != 'hindi') {
+            app()->setLocale('en');
+            session()->put('locale', 'en');
+        } else {
+            app()->setLocale('hi');
+            session()->put('locale', 'hi');
+        }
         return view('admin.category.catform');
     }
 
     public function storecat(Request $request)
     {
-
-        $catclass = InsightCategory::query();
-        $catCount   = $catclass->where('catname', request()->maincat)->select('catname')->count();
+        $lang = $request->segment(2);
+        // dd($lang);
+        $catclass =  $lang == 'en' ? InsightCategory::query() : InsightsHindiCategory::query();
+        $catCount   = $catclass->where('catname', $request->maincat)->select('catname')->count();
+        // dd($request->maincat);
         if ($catCount == 0) {
-            $string = str_replace(' ', '-', request()->maincat);
-            $slug = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
-            $catslug = str_replace('--', '-', $slug);
-            $cslug = strtolower($catslug);
-
-            $catclass->insert(['catname' => request()->maincat, 'slug' => $cslug]);
+            $cslug = Str::slug($request->maincat);
+            // dd($cslug);
+            if ($lang == 'hi') {
+                $catclass->insert(['catname' => request()->maincat, 'slug' => request()->slug]);
+            } else {
+                $catclass->insert(['catname' => request()->maincat, 'slug' => $cslug]);
+            }
         } else {
             session()->flash('failed', 'This Main Category already Exists');
             return redirect()->back();
         }
 
-        return redirect('/admin/cat/list')->with('success', "Main Category Created Successfully.");
+        return redirect('/admin/' . $lang . '/cat/list')->with('success', "Main Category Created Successfully.");
     }
     public function catlist(Request $request)
     {
-        // $catdata = InsightCategory::orderByDesc('id')->paginate(10);
-        $catdata = InsightCategory::query()
-            ->where('catname', 'LIKE', '%' . $request->search . '%')
-            ->orWhere('id', $request->search)
-            ->orderBy('id', 'DESC')
+        $locale = $request->segment(2); // Retrieve the locale
+        $search = $request->input('search'); // Retrieve the search input
+
+        // Determine the model based on the locale
+        $categoryModel = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
+
+        // Build the query
+        $catdata = $categoryModel::query()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('catname', 'LIKE', "%{$search}%")
+                        ->orWhere('id', $search);
+                });
+            })
+            ->orderByDesc('id')
             ->paginate(10);
+
         return view('admin.category.list', compact('catdata'));
     }
 
-    public function deleteCat()
+
+    public function deleteCat(Request $request)
     {
-        $catclass = InsightCategory::findOrFail(request()->id);
-        $catclass->delete();
-        return redirect()->back()->with('success', 'Main Category Deleted Successfully.');
+        try {
+            // Determine the model class based on the locale
+            $locale = $request->segment(2);
+            $catclass = $locale == 'en' ? InsightCategory::class : InsightsHindiCategory::class;
+
+            // Find and delete the category
+            $category = $catclass::findOrFail($request->id);
+            $category->delete();
+
+            // Set a success message in the session
+            return redirect()->back()->with('success', 'Main Category Deleted Successfully.');
+        } catch (\Exception $e) {
+            // Handle unexpected errors
+            return redirect()->back()->with('error', 'Failed to delete category: ' . $e->getMessage());
+        }
     }
+
+
     public function subcatform()
     {
-        $cat = InsightCategory::all();
+        $locale = request()->segment(2);
+        $cat =  $locale == 'en' ? InsightCategory::all() : InsightsHindiCategory::all();
+
         return view('admin.subcategory.create', compact('cat'));
     }
 
     public function storesubcat(Request $request)
     {
-        $subcatclass = InsightSubcategory::query();
+        // Determine the locale and model class
+        $locale = request()->segment(2);
+        $subcatclass = $locale == 'en' ? InsightSubcategory::query() : InsightsHindiSubCategory::query();
+
+        // Main category ID and subcategories
         $maincatid = $request->maincat;
-        $subcat = $request->sub_categories;
-        foreach ($subcat as $sbval) {
-            $catCount   = $subcatclass->where('mcat_id', $maincatid)->where('subcat_name', $sbval)->select('subcat_name')->count();
-        }
-        // dd($catCount);
-        if ($catCount === 0) {
+        $subcategories = $request->sub_categories;
 
-            foreach ($subcat as $val) {
-                $string = str_replace(' ', '-', $val);
-                $slug = preg_replace('/[^A-Za-z0-9\-]/', '', $string);
-                $catslug = str_replace('--', '-', $slug);
-                $cslug = strtolower($catslug);
-
-                $data =    InsightSubcategory::query()->insert(['mcat_id' => $maincatid, 'subcat_name' => $val, 'slug' => $cslug]);
-                //  dd($data);
+        // Handle slugs (string or array)
+        $slugs = [];
+        if ($locale == 'hi') {
+            if (is_array($request->sub_catslug)) {
+                foreach ($request->sub_catslug as $slugValue) {
+                    $slugs = array_merge($slugs, explode(',', $slugValue));
+                }
+            } else {
+                $slugs = explode(',', $request->sub_catslug);
             }
-        } else {
-            session()->flash('failed', 'This Sub Category already Exists');
-            return redirect()->back();
+
+            // Trim and clean slugs
+            $slugs = array_map('trim', $slugs);
         }
-        return redirect('/admin/subcat/list')->with('success', 'Sub Category Created Successfully.');
+
+        foreach ($subcategories as $key => $subcategoryName) {
+            // Check if the subcategory already exists
+            $exists = $subcatclass->where('mcat_id', $maincatid)
+                ->where('subcat_name', $subcategoryName)
+                ->exists();
+
+            if (!$exists) {
+                // Generate slug based on locale
+                if ($locale == 'en') {
+                    $finalSlug = Str::slug($subcategoryName);
+                } else {
+                    $finalSlug = isset($slugs[$key]) ? $slugs[$key] : Str::slug($subcategoryName);
+                }
+
+                // Insert the new subcategory
+                $subcatclass->create([
+                    'mcat_id' => $maincatid,
+                    'subcat_name' => $subcategoryName,
+                    'slug' => $finalSlug,
+                ]);
+            } else {
+                // Flash error message and return if a subcategory exists
+                session()->flash('failed', "Sub Category '{$subcategoryName}' already exists.");
+                return redirect()->back();
+            }
+        }
+
+        // Redirect with success message
+        return redirect('/admin/' . $locale . '/subcat/list')
+            ->with('success', 'Sub Category Created Successfully.');
     }
 
-    public function subcatlist()
+
+
+
+    public function subcatlist(Request $request)
     {
-        $subCat = InsightSubcategory::with('category')->orderByDesc('id')->paginate(10);
+        $locale = $request->segment(2); // Use $request for consistency
+        $search = $request->input('search'); // Retrieve search input
+
+        // Determine the model based on locale
+        $subcatModel = $locale === 'en' ? InsightSubcategory::class : InsightsHindiSubcategory::class;
+
+        // Build the query
+        $subCat = $subcatModel::with('category')
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('subcat_name', 'LIKE', "%{$search}%")
+                        ->orWhere('id', $search);
+                });
+            })
+            ->orderByDesc('id')
+            ->paginate(10);
 
         return view('admin.subcategory.list', compact('subCat'));
     }
 
+
     public function deletesubCat(Request $request)
     {
-        $id = $request->id;
-        return InsightSubcategory::query()->where('id', $id)->delete();
+        // Determine the appropriate subcategory model based on the locale
+        try {
+            $locale = $request->segment(2);
+            $subcatclass = $locale == 'en'
+                ? InsightSubcategory::class
+                : InsightsHindiSubCategory::class;
+
+            // Find and delete the subcategory
+            $subcategory = $subcatclass::findOrFail($request->id);
+            $subcategory->delete();
+
+            // Redirect back with success message
+            return redirect()->back()->with('success', 'Sub Category Deleted Successfully.');
+        } catch (\Exception $e) {
+            // Handle unexpected errors
+            return redirect()->back()->with('error', 'Failed to delete sub category: ' . $e->getMessage());
+        }
+    }
+
+    public function podcastcreate(Request $request)
+    {
+        // $locale = $request->segment(2);
+        return view('admin.podcast.create');
+    }
+
+
+    public function podcastore(Request $request)
+    {
+        //dd($request->all());
+        try {
+            $validator = validator($request->all(), [
+                'podcastId' => 'required',
+                'Podcast_url' => 'required|unique:fihl_podcstvideo,podcast_link',
+                'title' => 'required',
+                'image' => 'nullable|file', // Make image optional if not always provided
+                'podcast_dur' => 'required',
+                'podcast_lang' => 'required',
+                'content' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $fihlvideo = new FihlPodcastVideo();
+
+            $fihlvideo->podcast_id = $request->input('podcastId');
+            $fihlvideo->podcast_link = $request->input('Podcast_url');
+            $fihlvideo->title = $request->input('title');
+            $fihlvideo->pod_lang = $request->input('podcast_lang');
+            $fihlvideo->duration = $request->input('podcast_dur');
+            $fihlvideo->podcast_type = 'A';
+            $fihlvideo->status = 'A';
+            $fihlvideo->category = 0;
+            $fihlvideo->description = $request->input('content');
+            $fihlvideo->create_date = Carbon::now();
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+
+                // Define the upload path based on language
+                $uploadPath =  config("constants.ARTICLE_UPLOAD_PATH");
+
+                // Resize the image using Image Intervention (optional)
+                $resizedImage = Image::make($image)->resize(478, 478)->encode('webp', 90);
+
+                // Generate a unique image name (e.g., timestamp-based)
+                $imageName = time() . '.webp';
+
+                // Save the resized image to S3
+                $path = Storage::disk('s3')->put($uploadPath . $imageName, $resizedImage->__toString(), 'public');
+
+                // Now that the image is uploaded, save the full URL to the database
+                if ($path) {
+                    $fihlvideo->image_path = $imageName; // Full S3 URL
+                    $fihlvideo->image = $imageName; // Full S3 URL
+                }
+            }
+
+
+            // Save the podcast record
+            $fihlvideo->save();
+            // Redirect after success
+            if ($request->podcast_lang == 'en') {
+                return redirect()->route('podcastlist')->with("success", 'Podcast Has Been Added');
+            } else {
+                return redirect()->route('hindipodcastlist')->with("success", 'Podcast Has Been Added');
+            }
+        } catch (\Exception $e) {
+            // Log the error and return a failure response
+            Log::error('Error in podcastore: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred while saving the podcast.');
+        }
+    }
+
+
+    public function podcastlist(Request $request)
+    {
+        $locale = $request->segment(2); // Use $request for consistency
+        $search = $request->input('search'); // Retrieve search input
+
+        $podlist = FihlPodcastVideo::query()
+            ->where('podcast_type', 'A')
+            ->where('pod_lang', $locale)
+            ->whereIn('status', ['A', 'D'])
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%")
+                        ->orWhere('podcast_id', $search);
+                });
+            })
+            ->orderByDesc('create_date')
+            ->paginate(10);
+
+        return view('admin.podcast.podlist', compact('podlist'));
+    }
+
+
+    public function updatepodcastatus(Request $request)
+    {
+        // dd($request->all());
+        $podcastId    = $request->podcast_id;
+        $status    = $request->status;
+        $locale = $request->segment(2);
+        $podstatus = FihlPodcastVideo::query()->where('sno', $podcastId)->update(['status' => $status]);
+        // dd($podstatus);
+        return response()->json(array('status' => $status), 200);
+    }
+
+    public function deletepodcast(Request $request)
+    {
+        // dd($request->all());
+        FihlPodcastVideo::query()->where('sno', $request->sno)->delete();
+        return response()->json(array('status' => 1), 200);
+    }
+
+    public function editpodcast(Request $request)
+    {
+        // dd($request->sno);
+        $locale = request()->segment(2);
+        $data = FihlPodcastVideo::query()->where('sno', $request->sno)->first();
+        // dd($data);
+        return view('admin.podcast.edit', compact('data'));
+    }
+
+    public function podcastUpdate(Request $request)
+    {
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            'podcastId'     => 'required',
+            'Podcast_url'   => 'required',
+            'title'         => 'required',
+            'podcast_dur'   => 'required',
+            'podcast_lang'  => 'required',
+            'content'       => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        try {
+            // Find the existing podcast record
+            $video = FihlPodcastVideo::where('sno', $request->p_id)->first();
+
+            if (!$video) {
+                return redirect()->back()->with('error', 'Podcast not found.');
+            }
+
+            // Handle image upload if provided
+            $fimage = $video->image_path; // Default to existing image path
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+
+                // Define the upload path for S3
+                $uploadPath = config("constants.ARTICLE_UPLOAD_PATH");
+
+                // Resize the image using Image Intervention (optional)
+                $resizedImage = Image::make($image)->resize(478, 478)->encode('webp', 90);
+
+                // Generate a unique filename
+                $imageName = time() . '.webp'; // Unique file name based on the current time
+
+                // Save the image to S3
+                $path = Storage::getFacadeRoot()->disk('s3')->put($uploadPath . $imageName, $resizedImage->__toString(), 'public');
+
+                // Generate the full URL of the image on S3
+                if ($path) {
+                    $fimage = $imageName; // Full S3 URL
+                }
+            }
+
+
+            // Update the podcast attributes
+            $updateData = [
+                'podcast_id'   => $request->input('podcastId'),
+                'podcast_link' => $request->input('Podcast_url'),
+                'title'        => $request->input('title'),
+                'image_path'   => $fimage,
+                'image'   => $fimage,
+                'duration'     => $request->input('podcast_dur'),
+                'pod_lang'     => $request->input('podcast_lang'),
+                'status'       => $request->input('status', 'A'),
+                'podcast_type' => 'A', // Fixed type
+                'description'  => $request->input('content'),
+            ];
+
+            Log::info('Podcast Update Data', $updateData);
+            $video->update($updateData);
+
+
+            // Redirect based on language
+            $route = $request->podcast_lang === 'en' ? 'podcastlist' : 'hindipodcastlist';
+            return redirect()->route($route)->with('success', 'Podcast has been updated successfully.');
+        } catch (\Exception $e) {
+            // Log the error and return an error response
+            Log::error('Error in podcastUpdate: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred while updating the podcast.');
+        }
+    }
+
+    public function videolist(Request $request)
+    {
+        $locale = $request->segment(2); // Use $request for consistency
+        $search = $request->input('search');
+
+        // Build the query
+        $videos = FihlPodcastVideo::query()
+            ->with('VideoCategory')
+            ->whereIn('status', ['A', 'D'])
+            ->where('podcast_type', 'v')
+            ->where('pod_lang', $locale)
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%")
+                        ->orWhere('videoID', $search);
+                });
+            })
+            ->orderBy('create_date', 'desc')
+            ->paginate(20);
+
+        return view('admin.videos.videolist', compact('videos'));
+    }
+
+
+    public function videocreate()
+    {
+        $category = FihlVideoCategory::all();
+        return view('admin.videos.videocreate', compact('category'));
+    }
+
+    public function videostore(Request $request)
+    {
+
+        // dd($request->all());
+        try {
+            $validator = validator($request->all(), [
+                'videoId' => 'required',
+                'category' => 'required',
+                'title' => 'required',
+                'video_duration' => 'required',
+                'pod_lang' => 'required',
+                'content' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $fihlvideo = new FihlPodcastVideo();
+
+            $fihlvideo->videoID = $request->input('videoId');
+            // $fihlvideo->podcast_link = $request->input('Podcast_url');
+            $fihlvideo->title = $request->input('title');
+            $fihlvideo->pod_lang = $request->input('pod_lang');
+            $fihlvideo->duration = $request->input('video_duration');
+            $fihlvideo->podcast_type = 'V';
+            $fihlvideo->status = 'A';
+            $fihlvideo->category = $request->input('category');
+            $fihlvideo->description = $request->input('content');
+            $fihlvideo->create_date = Carbon::now();
+
+            // Save the podcast record
+            $fihlvideo->save();
+            // Redirect after success
+            if ($request->pod_lang == 'en') {
+                return redirect()->route('videolist')->with("success", 'Video Has Been Added');
+            } else {
+                return redirect()->route('hindivideolist')->with("success", 'Video Has Been Added');
+            }
+        } catch (\Exception $e) {
+            // Log the error and return a failure response
+            Log::error('Error in podcastore: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred while saving the video.');
+        }
+    }
+
+    public function updatevideostatus(Request $request)
+    {
+        // dd($request->all());
+        $podcastId    = $request->video_id;
+        $status    = $request->status;
+        // $locale = $request->segment(2);
+        $podstatus = FihlPodcastVideo::query()->where('sno', $podcastId)->update(['status' => $status]);
+        // dd($podstatus);
+        return response()->json(array('status' => $status), 200);
+    }
+
+    public function editvideo(Request $request)
+    {
+        // dd($request->sno);
+        $locale = request()->segment(2);
+        $category = FihlVideoCategory::all();
+        $data = FihlPodcastVideo::query()->where('sno', $request->sno)->first();
+        // dd($data);
+        return view('admin.videos.videoedit', compact('data', 'category'));
+    }
+
+    public function videoUpdate(Request $request)
+    {
+        // dd($request->all());fv
+        // Validate the incoming request data
+        $validator = Validator::make($request->all(), [
+            'videoId'     => 'required',
+            'category'   => 'required',
+            'title'         => 'required',
+            'video_duration'   => 'required',
+            'pod_lang'  => 'required',
+            'content'       => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        try {
+            // Find the existing podcast record
+            $video = FihlPodcastVideo::where('sno', $request->sno)->first();
+
+            if (!$video) {
+                return redirect()->back()->with('error', 'Video not found.');
+            }
+
+
+            // Update the podcast attributes
+            $updateData = [
+                'podcast_id'   => $request->input('videoId'),
+                'category' => $request->input('category'),
+                'title'        => $request->input('title'),
+                // 'image_path'   => $fimage,
+                // 'image'   => $fimage,
+                'duration'     => $request->input('video_duration'),
+                'pod_lang'     => $request->input('pod_lang'),
+                'status'       => $request->input('status', 'A'),
+                'podcast_type' => 'V', // Fixed type
+                'description'  => $request->input('content'),
+            ];
+
+            Log::info('Video Update Data', $updateData);
+            $video->update($updateData);
+
+
+            // Redirect based on language
+            $route = $request->video_lang === 'en' ? 'videolist' : 'hindivideolist';
+            return redirect()->route($route)->with('success', 'Video has been updated successfully.');
+        } catch (\Exception $e) {
+            // Log the error and return an error response
+            Log::error('Error in VideoUpdate: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred while updating the Video.');
+        }
+    }
+
+    public function deletevideo(Request $request)
+    {
+        // dd($request->all());
+        FihlPodcastVideo::query()->where('sno', $request->sno)->delete();
+        return response()->json(array('status' => 1), 200);
     }
 
     public function getSubcategories($catid)
     {
-        $subcategories = InsightSubcategory::select('id', 'subcat_name')->where('mcat_id', $catid)->get();
-        // dd($subcategories);
+        // Determine the appropriate model based on the locale
+        $locale = request()->segment(2);
+        $model = $locale === 'en' ? InsightSubcategory::class : InsightsHindiSubCategory::class;
+
+        // Fetch subcategories
+        $subcategories = $model::select('id', 'subcat_name')->where('mcat_id', $catid)->get();
+
+        // Return JSON response
         return response()->json($subcategories);
+    }
+
+
+    public static function createimgurl($image, $lang)
+    {
+        // dd($image);
+        if ($image) {
+            $iscont = strstr($image, "/");
+            $isHttps = strstr($image, 'https');
+            if ($isHttps) {
+                $url =  trim($image, '/');
+                // dd($url);
+            } else {
+
+                if ($iscont) {
+                    $url =  Config('constants.franAwsS3Url') . trim($image, '/');
+                    // dd($url);
+                } else {
+                    if ($lang != 'en') {
+
+                        $url = Config('constants.franAwsS3Url') . Config('constants.ARTICLE_HINDI_UPLOAD_PATH') . trim($image);
+                        // dd($url);
+                    } else if ($lang != 'hi') {
+
+                        $url = Config('constants.franAwsS3Url') . Config('constants.ARTICLE_UPLOAD_PATH') . trim($image);
+                    }
+                }
+            }
+        } else {
+            $url = url('/img/602a695853d99.jpeg');
+        }
+
+        // dd($url);
+        return $url;
     }
 }

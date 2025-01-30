@@ -3,20 +3,28 @@
     <div class="topmenu">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-xl-2 offset-xl-1">
-                    <span class="top1">#ApneBrandsKiNayiMarket</span>
-                </div>
+                @notmobile
+                    <div class="col-lg-3 col-md-3 col-xl-2 offset-xl-1">
+                        <span class="top1">#ApneBrandsKiNayiMarket</span>
+                    </div>
+                @endnotmobile
                 <div class="col-lg-5 col-xl-5 col-md-5 text-right">
                     <ul class="top-ul">
                         <li><a data-toggle="modal" data-target="#myModal">EXPAND YOUR BUSINESS</a> <span>|</span> </li>
                         <li><a href="https://www.franchiseindia.com/" target="_blank">GET FRANCHISE</a> <span>|</span>
                         </li>
                         <li><a href="https://www.dealerindia.com/" target="_blank">GET DISTRIBUTORSHIP</a></li>
+
                     </ul>
                 </div>
+                @mobile
+                    <div class="col-lg-3 col-md-3 col-xl-2 offset-xl-1">
+                        <span class="top1">#ApneBrandsKiNayiMarket</span>
+                    </div>
+                @endmobile
                 <div class="col-lg-2 col-xl-2 col-md-2">
-                    <span class="call">1800 102 2007 <span class="tel-img"><img
-                                src="{{ url('insight-new/images/tel.png') }}" alt="tel.png"></span> </span>
+                    {{--  <span class="call">1800 102 2007 <span class="tel-img"><img
+                                src="{{ url('insight-new/images/tel.png') }}" alt="tel.png"></span> </span>  --}}
                 </div>
                 <div class="col-lg-2 col-md-2">
                     <div class="topright">
@@ -45,7 +53,7 @@
                         }
                     @endphp
                     <a href="{{ $murl }}" class="logo mr-auto"><img
-                            src="{{ url('insight-new/images/logo.svg') }}" alt="Franchise india Insights" /></a>
+                            src="{{ url('insight-new/images/logo.png') }}" alt="Franchise india Insights" /></a>
 
                     <nav class="nav-menu d-none d-lg-block">
                         <ul>
@@ -53,11 +61,13 @@
                             @php
                                 $locale = App::getLocale(); // Store the locale value once
                                 $categoryUrlPrefix = $locale == 'en' ? '/insights/en/' : '/insights/hi/';
-                                $categoryLabel = $locale == 'en' ? 'Categories' : 'श्रेणियाँ';
+                                $categoryLabel = $locale == 'en' ? 'Categories' : 'कैटिगरी';
                                 $topStoriesLabel = $locale == 'en' ? 'Top Stories' : 'प्रमुख समाचार';
                                 $insightsLabel = $locale == 'en' ? 'Insights' : 'इनसाइट्स';
-                                $interviewsLabel = $locale == 'en' ? 'Executive Interviews' : 'कार्यकारी साक्षात्कार';
+                                $ArticleLabel = $locale == 'en' ? 'Articles' : 'आर्टिकल';
+                                $interviewsLabel = $locale == 'en' ? 'Interviews' : 'इंटरव्यू';
                                 $eventsReportsLabel = $locale == 'en' ? 'Events & Reports' : 'इवेंट और रिपोर्ट';
+                                $videoPodcastLabel = $locale == 'en' ? 'Videos & Podcast' : 'वीडियो और पॉडकास्ट';
                             @endphp
 
                             <li>
@@ -68,7 +78,12 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="categoryList">
                                         @php
-                                            $categories = \App\Http\Controllers\InsightsController::insightcategory();
+                                            $categories = \App\Http\Controllers\InsightsController::insightcategory(
+                                                $locale,
+                                            );
+                                            $specificCategories = \App\Http\Controllers\InsightsController::specificCategories(
+                                                $locale,
+                                            );
                                         @endphp
                                         @foreach ($categories as $cat)
                                             <a class="dropdown-item" data-id="{{ $cat['id'] }}"
@@ -77,34 +92,52 @@
                                     </div>
                                 </div>
                             </li>
+                            @foreach ($specificCategories as $threecat)
+                                <li><a data-id="{{ $threecat['id'] }}"
+                                        href="{{ $categoryUrlPrefix . $threecat['slug'] }}">{{ $threecat['catname'] }}</a>
+                                </li>
+                            @endforeach
 
                             <li><a href="{{ $categoryUrlPrefix }}topstories">{{ $topStoriesLabel }}</a></li>
-                            <li><a href="{{ $categoryUrlPrefix }}industryfocus">{{ $insightsLabel }}</a></li>
-                            <li><a href="{{ $categoryUrlPrefix }}interviews">{{ $interviewsLabel }}</a></li>
-                            <li><a href="{{ $categoryUrlPrefix }}events_reports">{{ $eventsReportsLabel }}</a></li>
+                            {{--  <li><a href="{{ $categoryUrlPrefix }}industryfocus">{{ $insightsLabel }}</a></li>  --}}
+                            <li>
+                                <div class="dropdown">
+                                    <button class="dbtn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        {{ $insightsLabel }}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="">
+                                        <a class="dropdown-item" href="{{ $categoryUrlPrefix }}industryfocus">{{ $ArticleLabel }}</a>
+                                        <a class="dropdown-item" href="{{ $categoryUrlPrefix }}interviews">{{ $interviewsLabel }}</a>
+                                        <a class="dropdown-item" href="{{ $categoryUrlPrefix }}events_reports">{{ $eventsReportsLabel }}</a>
+                                        <a class="dropdown-item" href="{{ $categoryUrlPrefix }}video_podcast">{{ $videoPodcastLabel }}</a>
+
+                                    </div>
+                                </div>
+                            </li>
+
 
                         </ul>
                     </nav>
                     <div class="search-main mx-auto">
                         <div class="ev-spk-icon">
                             <span id="tog1">
-                                <img src="https://www.opportunityindia.com/images/search.svg" alt="Search"
-                                    style="" />
-                                <img src="https://www.opportunityindia.com/images/cross.png" alt="Close"
+                                <img src="{{ url('insight-new/images/search.svg') }}" alt="Search" />
+                                <img src="{{ url('insight-new/images/cross.png') }}" alt="Close"
                                     style="display: none;" />
                             </span>
                         </div>
 
                         <div id="searchbar" style="display: none;">
 
-                                    <form action="{{ url('/insights/' . $locale .'/search') }}" method="get">
-                            <div class="input-group">
-                                <div class="form-outline">
-                                    <input type="search" name="search" id="form1" class="form-control1"
-                                        placeholder="Search here" />
+                            <form action="{{ url('/insights/' . $locale . '/search') }}" method="get">
+                                <div class="input-group">
+                                    <div class="form-outline">
+                                        <input type="search" name="search" id="form1" class="form-control1"
+                                            placeholder="Search here" />
+                                    </div>
+                                    <button type="submit" class="btn1 btn-primary" value="Search">Search</button>
                                 </div>
-                                <button type="submit" class="btn1 btn-primary" value="Search">Search</button>
-                            </div>
                             </form>
                         </div>
                     </div>

@@ -74,28 +74,21 @@
                         <form method="POST" class="form-horizontal" enctype="multipart/form-data"
                             action="{{ url('admin/hi/update-insights') }}" id="editform" />
                         <input type="hidden" name="news_id" value="{{ $data->news_id }}" />
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
+                        @csrf
                         <div class="control-group">
-                            <label class="control-label">Insights Publisher :</label>
-                            <div class="controls">
-                                <select class="span11" name="insights_publisher" title="author">
-                                    <option value="">Select Publisher</option>
-                                    @foreach ($authors as $author)
-                                        <option value="{{ $author->author_id }}"
-                                            @if ($author->author_id == $data->author_id) selected @endif>{{ $author->title }}
-                                        </option>
-                                    @endforeach
+                            <label class="control-label" for="publisher">Insights Publisher :</label>
+                            <div class="controls" id="insights_publisher">
+                                <select class="span11" name="insights_publisher" id="publisher">
+                                    <option value="{{ $data->author_id }}" selected>{{ $data->author[0]->title }}
+                                    </option>
                                 </select>
-                                @if ($errors->has('insights_publisher'))
-                                    @foreach ($errors->get('insights_publisher') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
                             </div>
+                            @if ($errors->has('insights_publisher'))
+                                @foreach ($errors->get('insights_publisher') as $error)
+                                    <br><span style="color: red;">{{ $error }}</span>
+                                @endforeach
+                            @endif
                         </div>
-
-
                         <div class="control-group">
                             <label class="control-label">Insights Type :</label>
                             <div class="controls">
@@ -158,11 +151,8 @@
                         <div class="control-group">
                             <label class="control-label">Publish Url :</label>
                             <div class="controls">
-
-                                <input type="text" name="slug" id="slugId" oninput="validateInput()"
-                                    maxlength="125" class="span11" pattern="[a-z0-9\-]+"
-                                    title="Only small letters, numbers, and hyphens are allowed"
-                                    value="{{ $data->slug }}" />
+                                <input type="text" name="slug" id="slugId" maxlength="125" class="span11"
+                                   value="{{ $data->slug }}" />
 
                             </div>
                         </div>
@@ -210,7 +200,9 @@
                         </div>
 
 
-
+                        @php
+                            $locale = request()->segment(2);
+                        @endphp
                         <div class="control-group">
                             <label for="inputStatus" class="control-label">Insights Content :</label>
                             <div class="controls span9">
@@ -222,7 +214,7 @@
                                             <br><span style="color: red;">{{ $error }}</span>
                                         @endforeach
                                     @endif
-                                    <img src="{{ Config('constants.franAwsS3Url') . ltrim($data->image, '/') }}"
+                                    <img src="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $locale) }}"
                                         height="106" width="187" style="padding-top: inherit;">
                                 </div>
                             </div>
@@ -232,7 +224,7 @@
                             <label class="control-label">Image :</label>
                             <div class="controls">
                                 <input type="hidden" name="old_image"
-                                    value="{{ Config('constants.franAwsS3Url') . ltrim($data->image, '/') }}" />
+                                    value="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $locale) }}" />
                                 <input type="file" id="showImage" class="span11" name="image">
                                 <div style="display: none; color: red;" id="showImage_msg">Invalid image type! Please
                                     select a valid image format (JPG, GIF, PNG, or WebP)</div>
@@ -302,8 +294,8 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
-            // $('#select2').html("<option>No Data</option>");
-
+            $('#select2').html("<option>No Data</option>");
+            var lang = '{{ $locale }}';
             //initialization and maximum values to be selected from text box
             $('#select3').select2({
                 placeholder: "Choose tags...",
@@ -312,6 +304,12 @@
                     url: '/associatedtags',
                     dataType: 'json',
                     delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term, // Search term
+                            lang: lang // Language variable
+                        };
+                    },
                     processResults: function(data) {
                         return {
                             results: $.map(data, function(item) {
@@ -362,6 +360,7 @@
                     url: '/publisher',
                     dataType: 'json',
                     delay: 250,
+
                     processResults: function(data) {
                         return {
                             results: $.map(data, function(item) {
@@ -379,28 +378,6 @@
 
         });
 
-        //initialozing maximum values to be selected from text box
-        $('#kicker').select2({
-            placeholder: "Choose kicker...",
-            minimumInputLength: 2,
-            ajax: {
-                url: '{{ url('admin/get-kickers?type=1') }}',
-                dataType: 'json',
-                delay: 250,
-                processResults: function(data) {
-                    return {
-                        results: $.map(data, function(item) {
-                            return {
-                                text: item.name,
-                                id: item.name
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
-        });
-
         $("#showImage").change(function() {
             var val = $(this).val();
             var fileInput = this;
@@ -416,43 +393,22 @@
                 default:
                     $(this).val('');
                     toastr.error(
-                    'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
+                        'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
                     $('#showImage_msg').css('display', 'block');
-                    setTimeout(function(){
+                    setTimeout(function() {
                         $('#showImage_msg').css('display', 'none');
                     }, 5000);
                     $('#newssubmit').prop('disabled', true);
                     break;
             }
         });
-        {{--  readImageDimensions(fileInput.files[0], function(width, height) {
-            if (width === 680 && height === 435) {
-                $('#showImage_msg_dimensions').css('display', 'none');
-                checkImageSize(fileInput);
-            } else {
-                toastr.error('Please select an image with dimensions 680x435.');
-                $(fileInput).val('');
-                $('#showImage_msg_dimensions').css('display', 'block');
-                $('#newssubmit').prop('disabled', true);
-            }
-        });  --}}
-        {{--  function readImageDimensions(file, callback) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var img = new Image();
-                img.onload = function() {
-                    callback(img.width, img.height);
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }  --}}
+
 
         function checkImageSize(fileInput) {
             if (fileInput.files[0].size > 153600) {
                 toastr.error('Image size should be 150 KB or less.');
                 $('#showImage_msg_size').css('display', 'block');
-                setTimeout(function(){
+                setTimeout(function() {
                     $('#showImage_msg_size').css('display', 'none');
                 }, 5000);
                 $('#newssubmit').prop('disabled', true);
@@ -462,10 +418,6 @@
                 $('#newssubmit').prop('disabled', false);
             }
         }
-
-        {{--  $('#showImage').bind('change', function() {
-            checkImageSize(this);
-        });  --}}
     </script>
 
 
@@ -534,100 +486,12 @@
                 }
             });
 
-            $('#authorId').select2({
-                placeholder: "Choose Publisher...",
-                minimumInputLength: 2,
-
-                ajax: {
-                    url: '{{ url('admin/articles/english/get-authors') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.name,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-
-            $('#associatedTags').select2({
-                placeholder: "Choose Associated Tags...",
-                minimumInputLength: 2,
-
-                ajax: {
-                    url: '{{ url('admin/articles/english/get-kickers') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.name,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-
-            $('#tagId').select2({
-                placeholder: "Choose Associated Tags...",
-                minimumInputLength: 2,
-
-                ajax: {
-                    url: '{{ url('admin/articles/english/get-kickers') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.name,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-
-            $('#audioId').select2({
-                placeholder: "Choose Audio Files...",
-                minimumInputLength: 2,
-
-                ajax: {
-                    url: '{{ url('admin/articles/english/get-audio-files') }}',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data, function(item) {
-                                return {
-                                    text: item.name,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
-            });
-
         });
 
         function Subcategoriesdata(catid) {
 
             $.ajax({
-                url: '{{ url('admin/getSubcategories') }}/' + catid,
+                url: '{{ url('admin/hi/getSubcategories') }}/' + catid,
                 type: 'GET',
                 dataType: 'json',
                 success: function(response) {
