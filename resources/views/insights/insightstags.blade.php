@@ -1,24 +1,27 @@
 @extends('layout.insights.master')
+@php
+    $locale = App::getLocale();
+    $hindiCategoryNames = [
+        'Education' => 'शिक्षा व्यापार',
+        'Retail' => 'खुदरा व्यापार',
+        'Food and Beverage' => 'खाद्य और पेय पदार्थ',
+        'expansion' => 'व्यापार विस्तार',
+        'Launch' => 'नया लॉन्च',
+        'Startup' => 'व्यापार स्टार्टअप',
+        'funding' => 'व्यापार में अनुदान',
+        'expansion plans' => 'व्यापार विस्तार योजनाएँ',
+        'Franchise 100' => 'फ्रेंचाइज़ 100',
+        'investment' => 'व्यापार में निवेश',
+    ];
+    $displayName = $locale == 'en' ? ucwords($seoTag->name) : $hindiCategoryNames[$seoTag->name] ?? $seoTag->name;
+@endphp
+@section('seoTitle', $displayName . ' latest News, Articles, Market Insights & Expert Analysis | Franchise India')
+@section('seoDesc', 'Stay updated with the latest ' . $displayName . ' news, articles, and market insights. Read expert analysis, industry reports, and business trends on FranchiseIndia.com. Explore top stories and key updates in ' . $displayName . ' industry today.')
 @section('content')
     <div class="maininnver homeh">
         <div class="inner-top-head">
             <div class="container">
-                @php
-                $locale = App::getLocale();
-                $hindiCategoryNames = [
-                    'Education' => 'शिक्षा व्यापार',
-                    'Retail' => 'खुदरा व्यापार',
-                    'Food and Beverage' => 'खाद्य और पेय पदार्थ',
-                    'expansion' => 'व्यापार विस्तार',
-                    'Launch' => 'नया लॉन्च',
-                    'Startup' => 'व्यापार स्टार्टअप',
-                    'funding' => 'व्यापार में अनुदान',
-                    'expansion plans' => 'व्यापार विस्तार योजनाएँ',
-                    'Franchise 100' => 'फ्रेंचाइज़ 100',
-                    'investment' => 'व्यापार में निवेश',
-                ];
-                $displayName = $locale == 'en' ? ucwords($seoTag->name) : $hindiCategoryNames[$seoTag->name] ?? $seoTag->name;
-            @endphp
+
                 <h1>{{ $displayName }}</h1>
             </div>
         </div>
