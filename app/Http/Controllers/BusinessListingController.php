@@ -1989,8 +1989,8 @@ class BusinessListingController extends Controller
 
         $count = request()->segment(1) == 'amp' ? 20 : 21;
 
-        $brandResults = $franData->paginate('20');
-        dd($brandResults->pluck('fran_detail_id'));
+        $brandResults = $franData->paginate($count);
+        // dd($brandResults->pluck('fran_detail_id'));
            // Get the current page and last page
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
