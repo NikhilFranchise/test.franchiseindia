@@ -1954,7 +1954,8 @@ class BusinessListingController extends Controller
             'free_logo_visibility',
             'brand_verified',
              'views',
-             'activated_at'
+             'activated_at',
+             'is_fixed_brand'
         )
             // ->whereIn('profile_status', [1,11]);
             ->whereIn('profile_status', [1, 11]);
