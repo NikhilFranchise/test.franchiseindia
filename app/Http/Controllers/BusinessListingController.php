@@ -1956,8 +1956,10 @@ class BusinessListingController extends Controller
              'views',
              'activated_at'
         )
-            ->whereIn('profile_status', [1,11]);
-
+            // ->whereIn('profile_status', [1,11]);
+            ->whereIn('profile_status', [1, 11])
+            ->orderBy('membership_weightage', 'desc');
+            // ->get(); // Fetch all data
 
         if ($cid[0] == 'ssc') {
             //$franData->where('ind_sub_cat', $cid[1])->orderby('membership_type', 'desc');
@@ -1988,7 +1990,6 @@ class BusinessListingController extends Controller
         }
 
         $count = request()->segment(1) == 'amp' ? 20 : 21;
-        $franData = $franData->orderBy('membership_weightage', 'desc');
         $brandResults = $franData->paginate($count);
         // dd($brandResults->pluck('fran_detail_id'));
            // Get the current page and last page
