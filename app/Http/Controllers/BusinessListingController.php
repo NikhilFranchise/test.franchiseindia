@@ -2032,7 +2032,7 @@ class BusinessListingController extends Controller
 
         $shuffledResults = $brandResults->shuffle()->sortByDesc('membership_weightage');
 
-        dd($shuffledResults->pluck('fran_detail_id'));  
+        // dd($shuffledResults->pluck('fran_detail_id'));  
         if (!empty($catArr->seoTitle)) {
             $seoTitle = $catArr->seoTitle;
             // dd($catArr);
