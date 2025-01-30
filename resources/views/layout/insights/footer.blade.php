@@ -288,11 +288,7 @@ Education</a>
   <div class="ftrbtm">
   <div class="container">
     <div class="row setordermob">
-<<<<<<< HEAD
-       <div class="col-xs-12 col-sm-12 col-md-4 ftrb"><div class="copytxt">Copyright © 2009 - 2025  Franchiseindia.com Ltd.</div></div>
-=======
        <div class="col-xs-12 col-sm-12 col-md-4 ftrb"><div class="copytxt">Copyright © 2009 - {{date('Y')}}  Franchiseindia.com Ltd.</div></div>
->>>>>>> 9c2534902bbd0f397c573101c94659087ff199e7
        <div class="col-xs-12 col-sm-12 col-md-8 ftrk">
          <ul class="footerlinks">
                       <li><a href="/">Home</a></li>
