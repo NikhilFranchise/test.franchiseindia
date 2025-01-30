@@ -245,49 +245,21 @@
                     @endphp
                     <li>
                     <label for="folder1">
-<<<<<<< HEAD
                         <a target="_blank"
                            href="{{ '/business-opportunities/'.Config('category.SeoCategoryArr.'.$key).'.m'.$key }}
                            ">{{$value}}</a>
-=======
-                        {{-- <a target="_blank"
-                           href="{{($key == '5') ? Config::get('constants.OIDomain') : '/business-opportunities/'.Config('category.SeoCategoryArr.'.$key).'.m'.$key }}
-                           ">{{$value}}</a> --}}
-                           <a target="_blank"
-                           href="{{'/business-opportunities/' . Config('category.SeoCategoryArr.' . $key) . '.m' . $key }}
-                  ">{{ $value }}</a>
->>>>>>> a36d9bfa500df8642e6794c0eac20c05efdb59ef
                     </label> <input type="checkbox" id="folder1">
                     <ol>
                         @foreach(Config('constants.subCategoryArr.'.$key) as $key1 => $value1)
                             <li>
                                 {{-- <label for="subsubfolder1">
                                     <a target="_blank"
-<<<<<<< HEAD
                                        href="{{ '/business-opportunities/'.Config('category.SeoSubCategoryArr.'.$key1).'.sc'.$key1 }}">{{$value1}}</a></label> <input type="checkbox" id="subsubfolder1">
                                 <ol>
                                     @foreach(Config('constants.subSubCategoryArr.'.$key1) as $key2 => $value2)
                                         @if(in_array($key2, json_decode(\Illuminate\Support\Facades\Storage::getFacadeRoot()->get('ssc.json'), true)))
                                             <li>
 <a target="_blank" href="{{ '/business-opportunities/'.Config('category.SeoSubSubCategoryArr.'.$key2).'.ssc'.$key2 }} ">{{$value2}}</a>
-=======
-                                       href="{{  ($key == '5') ?  Config::get('constants.OIDomain').((!empty(Config::get('category.SeoSubCategoryArr.'.$key1))) ? '/dir/'.Config('category.SeoSubCategoryArr.'.$key1) : '') : '/business-opportunities/'.Config('category.SeoSubCategoryArr.'.$key1).'.sc'.$key1 }}">{{$value1}}</a>
-                                    </label>  --}}
-                                    <label for="subsubfolder1">
-                                        <a target="_blank"
-                                            href="{{  '/business-opportunities/' . Config('category.SeoSubCategoryArr.' . $key1) . '.sc' . $key1 }}">{{ $value1 }}</a></label>
-                                       
-                                       <input type="checkbox" id="subsubfolder1">
-                                <ol>
-                                    @foreach(Config('constants.subSubCategoryArr.'.$key1) as $key2 => $value2)
-                                        @if(in_array($key2, json_decode(\Illuminate\Support\Facades\Storage::getFacadeRoot()->get('ssc.json'), true)))
-                                            {{-- <li>
-<a target="_blank" href="{{ ($key == '5') ? Config::get('constants.OIDomain').((!empty(Config::get('category.SeoSubSubCategoryArr.'.$key2))) ? '/dir/'.Config('category.SeoSubSubCategoryArr.'.$key2) : '') : '/business-opportunities/'.Config('category.SeoSubSubCategoryArr.'.$key2).'.ssc'.$key2 }} ">{{$value2}}</a>
-                                            </li> --}}
-                                            <li>
-                                                <a target="_blank"
-                                                    href="{{ '/business-opportunities/' . Config('category.SeoSubSubCategoryArr.' . $key2) . '.ssc' . $key2 }}">{{ $value2 }}</a>
->>>>>>> a36d9bfa500df8642e6794c0eac20c05efdb59ef
                                             </li>
                                         @endif
                                     @endforeach

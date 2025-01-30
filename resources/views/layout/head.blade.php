@@ -247,7 +247,6 @@
 <script>
     window.dataLayer = window.dataLayer || [];
 
-<<<<<<< HEAD
   gtag('config', 'AW-767541249');
 </script> --}}
 
@@ -258,14 +257,6 @@
   gtag('js', new Date());
 
   gtag('config', 'AW-16776470774');
-=======
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-
-    gtag('config', 'AW-767541249');
->>>>>>> 9c2534902bbd0f397c573101c94659087ff199e7
 </script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->

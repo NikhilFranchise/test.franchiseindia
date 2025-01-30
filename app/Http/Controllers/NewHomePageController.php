@@ -192,15 +192,10 @@ class NewHomePageController extends Controller
 
     public function homeNew(Request $request)
     {
-<<<<<<< HEAD
-
-        // dd(Config('constants.subSubCategoryArr'));
-=======
         if (request()->segment(1) != 'hi') {
             app()->setLocale('en');
             session()->put('locale', 'en');
         }
->>>>>>> 9c2534902bbd0f397c573101c94659087ff199e7
         $cacheKeys = [
             'brandslft' => 'brandslft_cache',
             'brandstbo' => 'brandstbo_cache',
