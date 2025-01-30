@@ -24,8 +24,7 @@
     //$author_details
     $authorSlug = $author_details->slug ?? strtolower(str_replace(' ', '-', $author_details->title));
     //dd($authorSlug);
-    $authorUrl =
-        Config('constants.MainDomain') . "/insights/author/" . $authorSlug . '-' . $author_details->author_id;
+    $authorUrl = Config('constants.MainDomain') . '/insights/author/' . $authorSlug . '-' . $author_details->author_id;
 
     $authorImage = !empty($author_details->image)
         ? \App\Http\Controllers\InsightsController::authorImageurl($author_details->image)
@@ -182,107 +181,6 @@
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
 
                         <div class="articlecontent">
-                            {{-- @php
-                                $custom_data = explode("\r\n", $newsDetails->content); // Split content into paragraphs
-                                $totalParagraphs = count($custom_data); // Get the total paragraph count
-                                $articleData = []; // Initialize array for final content with ads
-                                
-                                $adsInserted = 1;
-                                $i = 0;
-                                foreach ($custom_data as $index => $cdata) {
-                                    $articleData[] = $cdata; // Add the paragraph content
-                                    // Add ads dynamically based on the interval and maximum ads allowed
-                                    if ($index == 6) {
-                                        $articleData[] = '
-                                               <div class="inner-article-detail-desktop-ad">
-                                                   <div id="adslotInline_1_300x250">
-                                                       <script>
-                                                           googletag.cmd.push(function() {
-                                                               googletag.display("adslotInline_1_300x250");
-                                                           });
-                                                       </script>
-                                                   </div>
-                                               </div>';
-                                        $adsInserted++;
-                                        $i++;
-                                    } elseif ($index == 10) {
-                                        $articleData[] = '
-                                               <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
-                                                   <div id="adslotInline_2_300x250">
-                                                       <script>
-                                                           googletag.cmd.push(function() {
-                                                               googletag.display("adslotInline_2_300x250");
-                                                           });
-                                                       </script>
-                                                   </div>
-                                               </div></div>
-                                               ';
-                                        $adsInserted++;
-                                        $i++;
-                                    } elseif ($index == 16) {
-                                        $articleData[] = '
-                                               <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
-                                                   <div id="adslotInline_3_300x250">
-                                                       <script>
-                                                           googletag.cmd.push(function() {
-                                                               googletag.display("adslotInline_3_300x250");
-                                                           });
-                                                       </script>
-                                                   </div>
-                                               </div></div>
-                                               ';
-                                        $adsInserted++;
-                                        $i++;
-                                    } elseif ($index == 25) {
-                                        $articleData[] = '
-                                               <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
-                                                   <div id="adslotInline_4_300x250">
-                                                       <script>
-                                                           googletag.cmd.push(function() {
-                                                               googletag.display("adslotInline_4_300x250");
-                                                           });
-                                                       </script>
-                                                   </div>
-                                               </div></div>
-                                               ';
-                                        $adsInserted++;
-                                        $i++;
-                                        
-                                    } elseif ($totalParagraphs > 25) {
-                                        dd($custom_data,$totalParagraphs);
-                                        $articleData[] = '
-                                               <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
-                                                   <div id="adslot728x90_BTF">
-                                                       <script>
-                                                           googletag.cmd.push(function() {
-                                                               googletag.display("adslot728x90_BTF");
-                                                           });
-                                                       </script>
-                                                   </div>
-                                               </div></div>
-                                               ';
-                                        $adsInserted++;
-                                        $i++;
-                                    } else {
-                                        $articleData[] = '
-                                               <div id="v-franchiseindia"><div class="inner-article-detail-desktop-ad">
-                                                   <div id="adslotInline_5_300x250">
-                                                       <script>
-                                                           googletag.cmd.push(function() {
-                                                               googletag.display("adslotInline_5_300x250");
-                                                           });
-                                                       </script>
-                                                   </div>
-                                               </div></div>
-                                               ';
-                                        $adsInserted++;
-                                        $i++;
-                                    }
-                                }
-
-                                $resultArticle = implode("\r\n", $articleData); // Combine the content with ads
-                            @endphp
-                            {!! $resultArticle !!} --}}
                             @php
                                 $custom_data = explode("\r\n", $newsDetails->content); // Split content into paragraphs
                                 $totalParagraphs = count($custom_data); // Get the total paragraph count
@@ -444,4 +342,37 @@
     </div>
     </div>
     @include('layout.insights.magblock')
+    <script>
+        $(document).ready(function() {
+            let newsId = "{{ $newsDetails->news_id }}"; // Get news ID
+            let cat = "{{ $newsDetails->cat_id }}"; // Get category ID
+    
+            // Corrected AJAX call
+            $.ajax({
+                url: "/insights/nextarticle", // Use the correct URL route
+                type: "GET",
+                data: {
+                    news_id: newsId,
+                    cat_id: cat
+                },
+                dataType: "json",
+                success: function(data) {
+                    // Update the page content with the response data
+                    $("#newsTitle").text(data.title);
+                    $("#newsImage").attr("src", data.image);
+                    $("#newsShortDesc").text(data.shortDesc);
+                    $("#newsContent").html(data.content);
+                    $("#authorName").text("By - " + data.author.name);
+                    $("#authorImage").attr("src", data.author.image);
+                    $("#authorDesignation").text(data.author.designation);
+                    $("#newsDate").text(data.created_at);
+                    $("#newsViews").text(data.views);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error fetching news details:", error);
+                }
+            });
+        });
+    </script>
+
 @endsection

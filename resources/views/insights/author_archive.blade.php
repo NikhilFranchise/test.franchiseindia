@@ -3,7 +3,7 @@
     <div class="maininnver homeh">
         <div class="inner-top-head">
             <div class="container">
-                <h1>Author Archive</h1>
+                <h1>Authors</h1>
             </div>
         </div>
         <div class="authblk">
@@ -11,7 +11,7 @@
                 <ul class="nabva">
                     <li><a href="{{ url('/insights') }}">Home</a></li>
                     <li>/</li>
-                    <li>Author Archive</li>
+                    <li>Authors</li>
                 </ul>
             </div>
         </div>
