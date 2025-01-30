@@ -1114,7 +1114,7 @@ class BusinessListingController extends Controller
 
     public function searchBusinessListingnormalization(Request $request)
     {
-        dd('yes');
+        // dd('yes');
         $url = $request->url();
         $lowcost      = request()->lowcost;
         preg_match('/[a-zA-Z]+(\d+)/', $lowcost, $matches);
