@@ -7,8 +7,8 @@ return [
     | Application specific config array values
     |--------------------------------------------------------------------------
     */
-    // 'MainDomain' => env('APP_URL', 'https://www.franchiseindia.com'),
-    'MainDomain' => 'http://127.0.0.1:8000',
+    'MainDomain' => env('APP_URL', 'https://www.franchiseindia.com'),
+    // 'MainDomain' => 'http://127.0.0.1:8000',
 
     'brandPagePattern' => '%s/brands/%s.%s',
     'catListUrl' => '%s/%s/%s.%s',
@@ -771,7 +771,8 @@ return [
         "13" => array(
             "539" => "Bath Products",
             "540" => "Beauty Equipments",
-            "47" => "Beauty Salons",
+            // "47" => "Beauty Salons",
+            "47" => "Beauty Salons/ Unisex Salons/ Spa",
             "541" => "Cosmetic Accessories",
             "49" => "Cosmetics & Beauty Product Stores",
             "50" => "Pet Grooming",
@@ -858,7 +859,8 @@ return [
             "733" => "CAD/CAM/CAE & Multimedia",
             "89" => "Competitive Exam Coaching Institute",
             "90" => "Online Coaching",
-            "91" => "Robotics & Technical Training",
+            // "91" => "Robotics & Technical Training",
+            "91" => "Robotics & Technical Training/ AI",
             "92" => "School Tutoring",
         ),
         "20" => array(
