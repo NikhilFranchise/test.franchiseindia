@@ -75,9 +75,7 @@
                             </div>
                         </li>
                     @endforeach
-
                 </ul>
-
                 <h3 class="author-archive-cat">Guest Author</h3>
                 <ul>
                     @foreach ($guestAuthor as $article)
