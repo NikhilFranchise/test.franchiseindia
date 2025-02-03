@@ -17,8 +17,8 @@
         </div>
         <div class="author-archive">
             <div class="container">
-                <h2 class="author-archive-title">Author Archive</h2>
-                <p>A highly motivated and focused media professional with over 15 years of experience in writing,
+                <h2 class="author-archive-title" style="display: none">Author Archive</h2>
+                <p style="display: none">A highly motivated and focused media professional with over 15 years of experience in writing,
                     editing, media, print, digital, and magazine production. Combining the creative ingenuity of a
                     writer with the practical approach of an operations manager and a managing editor, she excels at
                     delivering high-quality content that not only engages audiences but also meets organizational goals.
@@ -49,9 +49,6 @@
                         </li>
                     @endforeach
                 </ul>
-
-
-
                 <h3 class="author-archive-cat">Contributory Author</h3>
                 <ul>
                     @foreach ($ContributoryAuthor as $article)
