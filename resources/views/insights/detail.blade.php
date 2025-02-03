@@ -202,6 +202,8 @@
                                     $adInterval = 8;
                                 } elseif ($totalParagraphs >= 50 && $totalParagraphs <= 80) {
                                     $adInterval = 5;
+                                }else{
+                                    $adInterval = 5;  
                                 }
                                 foreach ($custom_data as $index => $cdata) {
                                     $articleData[] = $cdata; // Add the paragraph content
