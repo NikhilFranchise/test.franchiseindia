@@ -41,7 +41,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL') . '/storage/app/public',
+            'url' => config('constants.MainDomain'). '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
