@@ -13,7 +13,7 @@
                         <li><a data-toggle="modal" data-target="#myModal">EXPAND YOUR BUSINESS</a> <span>|</span> </li>
                         <li><a href="https://www.franchiseindia.com/" target="_blank">GET FRANCHISE</a> <span>|</span>
                         </li>
-                        <li><a href="https://www.dealerindia.com/" target="_blank">GET DISTRIBUTORSHIP</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5" target="_blank">GET DISTRIBUTORSHIP</a></li>
 
                     </ul>
                 </div>
