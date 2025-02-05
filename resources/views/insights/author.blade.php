@@ -90,17 +90,13 @@
                                         $custom_data = explode("\r\n", $author->text);
                                         if (count($custom_data) == 1) {
                                             $articleData[0] =
-                                                $custom_data[0] .
-                                                '
-                                <div id="v-franchiseindia"></div>';
+                                                $custom_data[0] . '<div id="v-franchiseindia"></div>';
                                         } else {
                                             $counter = 0;
                                             foreach ($custom_data as $cdata) {
                                                 if ($counter == 2) {
                                                     $articleData[] =
-                                                        $cdata .
-                                                        '
-                                <div id="v-franchiseindia"></div>';
+                                                        $cdata . '<div id="v-franchiseindia"></div>';
                                                 } else {
                                                     $articleData[] = $cdata;
                                                 }
@@ -136,11 +132,11 @@
                             {{-- latest stories section start here --}}
                             <div class="tab-pane active stab" id="latest">
                                 <ul>
+                                    {{-- @dd($latestArticles); --}}
                                     @forelse ($latestArticles as $latest)
                                         @php
-                                            $image = \App\Http\Controllers\InsightsController::createimgurl(
-                                                $latest->image,
-                                            );
+                                            $image = \App\Http\Controllers\InsightsController::createimgurl1(
+                                                $latest->image, $latest->lang);
                                             $latestArticleURL =
                                                 Config('constants.MainDomain') .
                                                 "/insights/{$latest->lang}/" .
@@ -170,7 +166,7 @@
 
                                 </ul>
                                 <div class="video-pagination">
-                                    {{ $latestArticles->links('pagination::bootstrap-4') }}
+                                    {{ $latestArticles->links('pagination::bootstrap-5') }}
                                 </div>
                             </div>
                             {{-- latest stories section end here --}}
@@ -179,11 +175,9 @@
                                 <ul>
                                     @forelse ($mostViewedArticles as $viewed)
                                         @php
-                                            $image = \App\Http\Controllers\InsightsController::createimgurl(
-                                                $viewed->image,
-                                            );
-                                            $mostArticleURL =
-                                                Config('constants.MainDomain') .
+                                            $image = \App\Http\Controllers\InsightsController::createimgurl1(
+                                                $viewed->image, $viewed->lang);
+                                            $mostArticleURL = Config('constants.MainDomain') .
                                                 "/insights/{$viewed->lang}/" .
                                                 strtolower($viewed->insight_type) .
                                                 "/{$viewed->slug}.{$viewed->news_id}";
@@ -213,7 +207,7 @@
 
                                 <div class="video-pagination">
 
-                                    {{ $mostViewedArticles->links('pagination::bootstrap-4') }}
+                                    {{ $mostViewedArticles->links('pagination::bootstrap-5') }}
                                 </div>
                             </div>
                             {{-- most viewed section end here --}}
@@ -236,7 +230,7 @@
                         {{-- popular articles section start here --}}
 
                         <div class="popular-articles">
-                            <div class="popular-title">Popular Articles</div>
+                            <div class="popular-title">Trending Articles</div>
                             <div class="region region-home-top-right">
                                 <div class="views-element-container block block-views block-views-blockhome-popular-article-block-1"
                                     id="block-views-block-home-popular-article-block-1">
@@ -249,8 +243,7 @@
 
                                                         @forelse($popularArticles as $popular)
                                                             @php
-                                                                $popArticleURL =
-                                                                    Config('constants.MainDomain') .
+                                                                $popArticleURL = Config('constants.MainDomain') .
                                                                     "/insights/{$popular->lang}/" .
                                                                     strtolower($popular->insight_type) .
                                                                     "/{$popular->slug}.{$popular->news_id}";

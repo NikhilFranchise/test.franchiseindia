@@ -5,11 +5,15 @@
 </style>
 <div class="headblk">
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
         @if (App::getLocale() == 'en')
             <h1 class="mainhead">Opportunities. Growth.Trends. Business</h1>
         @else
             <h1 class="mainhead">अवसर.विकास.रुझान.व्यवसाय</h1>
         @endif
+    </div>
+    </div>
     </div>
 </div>
 <div class="topblk">

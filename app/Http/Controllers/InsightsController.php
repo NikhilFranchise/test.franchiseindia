@@ -24,9 +24,8 @@ use App\Models\SeoTagHindi;
 use App\Models\FihlPodcastVideo;
 use App\Models\FihlVideoCategory;
 use App\Models\InsightViews;
-use App\Models\Ip2Location;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class InsightsController extends Controller
 {
@@ -114,8 +113,8 @@ class InsightsController extends Controller
 
         $topcategories = SeoTag::orderByDesc('frequency')->take(10)->get();
 
-        // Get author IDs based on article filters
-        $authorIds = $model::query()
+        // Get author IDs from both tables
+        $authorIdsEn = InsightList::query()
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('author_id')
             ->where('status', 1)
@@ -123,8 +122,18 @@ class InsightsController extends Controller
             ->pluck('author_id')
             ->toArray();
 
-        // Get article count grouped by author
-        $authorCounts = $model::query()
+        $authorIdsHi = InsightListHindi::query()
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('author_id')
+            ->where('status', 1)
+            ->groupBy('author_id')
+            ->pluck('author_id')
+            ->toArray();
+
+        // Merge and remove duplicates
+        $authorIds = array_unique(array_merge($authorIdsEn, $authorIdsHi));
+        // Get article count from both tables
+        $authorCountsEn = InsightList::query()
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('author_id')
             ->where('status', 1)
@@ -132,6 +141,24 @@ class InsightsController extends Controller
             ->selectRaw('author_id, COUNT(*) as article_count')
             ->pluck('article_count', 'author_id')
             ->toArray();
+
+        $authorCountsHi = InsightListHindi::query()
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotNull('author_id')
+            ->where('status', 1)
+            ->groupBy('author_id')
+            ->selectRaw('author_id, COUNT(*) as article_count')
+            ->pluck('article_count', 'author_id')
+            ->toArray();
+
+        // Merge article counts for each author
+        $authorCounts = [];
+
+        foreach ($authorIds as $authorId) {
+            $countEn = $authorCountsEn[$authorId] ?? 0;
+            $countHi = $authorCountsHi[$authorId] ?? 0;
+            $authorCounts[$authorId] = $countEn + $countHi;
+        }
 
         // Get author details for the filtered IDs
         $authorDetails = AuthorList::query()
@@ -142,7 +169,6 @@ class InsightsController extends Controller
                 $author->count = $authorCounts[$author->author_id] ?? 0;
                 return $author;
             });
-
 
         return view('insights.insight_home', compact(
             'homeArticle',
@@ -302,139 +328,373 @@ class InsightsController extends Controller
     }
 
 
+    // public function authordata(Request $request)
+    // {
+    //     // Set the appropriate model and fetch data based on the language
+    //     $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+    //     app()->setLocale($locale);
+    //     session()->put('locale', $locale);
+    //     // Extract and validate the author ID from the slug
+    //     $author_id = explode('-', $request->slug);
+    //     $id = (int) end($author_id);
+
+    //     // Redirect if the ID is invalid
+    //     if ($id == 0) {
+    //         return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
+    //     }
+    //     // Choose the appropriate model based on the locale
+    //     $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+    //     $author = AuthorList::find($id);
+
+    //     // Count the articles
+    //     $articleCount = $model::where('author_id', $id)
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->count();
+
+    //     // Fetch articles with the necessary conditions
+    //     $latestArticles = $model::where('author_id', $id)
+    //         ->where('status', 1)
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->whereNotNull('image')
+    //         ->whereNotNull('cat_id')
+    //         ->orderByDesc('created_at')
+    //         ->paginate(12);
+    //     $latestArticles->getCollection()->transform(function ($item) use ($locale) {
+    //         $item->lang = $locale;
+    //         return $item;
+    //     });
+    //     // Apply URL slug transformation
+    //     $latestArticles = CommonController::contentUrlSlug($latestArticles);
+
+    //     $mostViewedArticles = $model::where('author_id', $id)
+    //         ->where('status', 1)
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->whereNotNull('image')
+    //         ->whereNotNull('cat_id')
+    //         ->orderByDesc('views')
+    //         ->paginate(12);
+    //     $mostViewedArticles->getCollection()->transform(function ($item) use ($locale) {
+    //         $item->lang = $locale;
+    //         return $item;
+    //     });
+
+    //     // Apply URL slug transformation
+    //     $mostViewedArticles = CommonController::contentUrlSlug($mostViewedArticles);
+
+    //     $popularArticles = $model::query()->with('category')
+    //         ->where('status', 1)
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->where('insight_type', 'Article')
+    //         ->whereNotNull('image')
+    //         ->whereNotNull('cat_id')
+    //         ->orderByDesc('created_at')
+    //         ->limit(5)->get()
+    //         ->map(function ($item) use ($locale) {
+    //             $item->lang = $locale;
+    //             return $item;
+    //         });
+    //     // dd($popularArticles);
+    //     $popularArticles = CommonController::contentUrlSlug($popularArticles);
+
+    //     // Return the view with the author data and articles
+    //     return view('insights.author', compact('author', 'latestArticles', 'mostViewedArticles', 'popularArticles', 'articleCount'));
+    // }
+
     public function authordata(Request $request)
     {
-        // Set the appropriate model and fetch data based on the language
-        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
-        app()->setLocale($locale);
-        session()->put('locale', $locale);
         // Extract and validate the author ID from the slug
         $author_id = explode('-', $request->slug);
         $id = (int) end($author_id);
+        $enLocale = 'en';
+        $hiLocale = 'hi';
 
         // Redirect if the ID is invalid
         if ($id == 0) {
-            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
+            return redirect('/insights');
         }
-        // Choose the appropriate model based on the locale
-        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+
+        // Fetch author details
         $author = AuthorList::find($id);
 
-        // Count the articles
-        $articleCount = $model::where('author_id', $id)
+        // Fetch article count from both tables
+        $articleCount = InsightList::where('author_id', $id)
             ->whereNotIn('news_type', ['ri', 'ir'])
+            ->where('status', 1)
+            ->count() +
+            InsightListHindi::where('author_id', $id)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->where('status', 1)
             ->count();
 
-        // Fetch articles with the necessary conditions
-        $latestArticles = $model::where('author_id', $id)
+        // Fetch latest articles from both tables (without pagination)
+        $latestArticlesEn = InsightList::where('author_id', $id)
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->orderByDesc('created_at')
-            ->paginate(12);
-        $latestArticles->getCollection()->transform(function ($item) use ($locale) {
-            $item->lang = $locale;
-            return $item;
-        });
-        // Apply URL slug transformation
-        $latestArticles = CommonController::contentUrlSlug($latestArticles);
+            ->get()
+            ->map(function ($item) use ($enLocale) {
+                $item->lang = $enLocale;
+                return $item;
+            });
 
-        $mostViewedArticles = $model::where('author_id', $id)
+        $latestArticlesHi = InsightListHindi::where('author_id', $id)
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->get()
+            ->map(function ($item) use ($hiLocale) {
+                $item->lang = $hiLocale;
+                return $item;
+            });
+        // dd($latestArticlesHi);
+
+        // Merge and sort by created_at
+        $latestArticles = $latestArticlesEn->merge($latestArticlesHi)->sortByDesc('created_at');
+
+        // Paginate the merged collection
+        $currentPage = Paginator::resolveCurrentPage();
+        $perPage = 12;
+        $sliced = $latestArticles->forPage($currentPage, $perPage);
+
+        $latestArticles = new LengthAwarePaginator(
+            $sliced,
+            $latestArticles->count(),
+            $perPage,
+            $currentPage,
+            ['path' => Paginator::resolveCurrentPath()]
+        );
+
+        // Fetch most viewed articles (apply same pagination logic)
+        $mostViewedArticlesEn = InsightList::where('author_id', $id)
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->orderByDesc('views')
-            ->paginate(12);
-        $mostViewedArticles->getCollection()->transform(function ($item) use ($locale) {
-            $item->lang = $locale;
-            return $item;
-        });
+            ->get()
+            ->map(function ($item) use ($enLocale) {
+                $item->lang = $enLocale;
+                return $item;
+            });
 
-        // Apply URL slug transformation
-        $mostViewedArticles = CommonController::contentUrlSlug($mostViewedArticles);
+        $mostViewedArticlesHi = InsightListHindi::where('author_id', $id)
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('views')
+            ->get()
+            ->map(function ($item) use ($hiLocale) {
+                $item->lang = $hiLocale;
+                return $item;
+            });
 
-        $popularArticles = $model::query()->with('category')
+        // Merge and paginate most viewed articles
+        $mostViewedArticles = $mostViewedArticlesEn->merge($mostViewedArticlesHi)->sortByDesc('views');
+        $sliced = $mostViewedArticles->forPage($currentPage, $perPage);
+
+        $mostViewedArticles = new LengthAwarePaginator(
+            $sliced,
+            $mostViewedArticles->count(),
+            $perPage,
+            $currentPage,
+            ['path' => Paginator::resolveCurrentPath()]
+        );
+
+        // Fetch popular articles (top 5)
+        $popularArticlesEn = InsightList::query()->with('category')
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Article')
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->orderByDesc('created_at')
-            ->limit(5)->get()
-            ->map(function ($item) use ($locale) {
-                $item->lang = $locale;
+            ->limit(5)
+            ->get()
+            ->map(function ($item) use ($enLocale) {
+                $item->lang = $enLocale;
                 return $item;
             });
-        // dd($popularArticles);
-        $popularArticles = CommonController::contentUrlSlug($popularArticles);
 
-        // Return the view with the author data and articles
-        return view('insights.author', compact('author', 'latestArticles', 'mostViewedArticles', 'popularArticles', 'articleCount'));
-    }
-
-    public function authorarchive(Request $request)
-    {
-        // Set the appropriate model and fetch data based on the language
-        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
-        app()->setLocale($locale);
-        session()->put('locale', $locale);
-        // Choose the appropriate model based on the locale
-        $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
-        // $author = AuthorList::find($id);
-        // Get author IDs based on article filters
-        $authorIds = $model::query()
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->whereNotNull('author_id')
+        $popularArticlesHi = InsightListHindi::query()->with('category')
             ->where('status', 1)
-            ->groupBy('author_id')
-            ->pluck('author_id')
-            ->toArray();
-
-        // Get article count grouped by author
-        $authorCounts = $model::query()
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->whereNotNull('author_id')
-            ->where('status', 1)
-            ->groupBy('author_id')
-            ->selectRaw('author_id, COUNT(*) as article_count')
-            ->pluck('article_count', 'author_id')
-            ->toArray();
-
-        // Get author details for the filtered IDs
-        $authorDetails = AuthorList::query()
-            ->whereNotIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau'])
-            ->whereIn('author_id', $authorIds)
-            ->where('status', 'A')
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->where('insight_type', 'Article')
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
             ->orderByDesc('created_at')
             ->limit(5)
             ->get()
-            ->map(function ($author) use ($authorCounts) {
-                $author->count = $authorCounts[$author->author_id] ?? 0;
-                return $author;
+            ->map(function ($item) use ($hiLocale) {
+                $item->lang = $hiLocale;
+                return $item;
             });
 
-        $ContributoryAuthor = AuthorList::query()->whereIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau'])
-            ->whereIn('author_id', $authorIds)
-            ->where('status', 'A')
-            ->get()
-            ->map(function ($author) use ($authorCounts) {
-                $author->count = $authorCounts[$author->author_id] ?? 0;
-                return $author;
-            });
+        $popularArticles = $popularArticlesEn->merge($popularArticlesHi);
 
-        $guestAuthor = AuthorList::query()
-            ->whereIn('title', ['Guest Author'])
-            ->where('status', 'A')
-            ->get()
-            ->map(function ($author) use ($authorCounts) {
-                $author->count = $authorCounts[$author->author_id] ?? 0;
-                return $author;
-            });
-
-        return view('insights.author_archive', compact('authorDetails', 'authorCounts', 'ContributoryAuthor', 'guestAuthor'));
+        // Return the view with the author data and articles
+        return view('insights.author', compact('author', 'latestArticles', 'articleCount', 'mostViewedArticles', 'popularArticles'));
     }
+
+
+    // public function authorarchive(Request $request)
+    // {
+    //     // Set the appropriate model and fetch data based on the language
+    //     $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+    //     app()->setLocale($locale);
+    //     session()->put('locale', $locale);
+    //     // Choose the appropriate model based on the locale
+    //     $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+    //     // $author = AuthorList::find($id);
+    //     // Get author IDs based on article filters
+    //     $authorIds = $model::query()
+    //         ->whereNotIn('news_type', ['ir', 'ri'])
+    //         ->whereNotNull('author_id')
+    //         ->where('status', 1)
+    //         ->groupBy('author_id')
+    //         ->pluck('author_id')
+    //         ->toArray();
+
+    //     // Get article count grouped by author
+    //     $authorCounts = $model::query()
+    //         ->whereNotIn('news_type', ['ir', 'ri'])
+    //         ->whereNotNull('author_id')
+    //         ->where('status', 1)
+    //         ->groupBy('author_id')
+    //         ->selectRaw('author_id, COUNT(*) as article_count')
+    //         ->pluck('article_count', 'author_id')
+    //         ->toArray();
+
+    //     // Get author details for the filtered IDs
+    //     $authorDetails = AuthorList::query()
+    //         ->whereNotIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau'])
+    //         ->whereIn('author_id', $authorIds)
+    //         ->where('status', 'A')
+    //         ->orderByDesc('created_at')
+    //         ->limit(5)
+    //         ->get()
+    //         ->map(function ($author) use ($authorCounts) {
+    //             $author->count = $authorCounts[$author->author_id] ?? 0;
+    //             return $author;
+    //         });
+
+    //     $ContributoryAuthor = AuthorList::query()->whereIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau'])
+    //         ->whereIn('author_id', $authorIds)
+    //         ->where('status', 'A')
+    //         ->get()
+    //         ->map(function ($author) use ($authorCounts) {
+    //             $author->count = $authorCounts[$author->author_id] ?? 0;
+    //             return $author;
+    //         });
+
+    //     $guestAuthor = AuthorList::query()
+    //         ->whereIn('title', ['Guest Author'])
+    //         ->where('status', 'A')
+    //         ->get()
+    //         ->map(function ($author) use ($authorCounts) {
+    //             $author->count = $authorCounts[$author->author_id] ?? 0;
+    //             return $author;
+    //         });
+
+    //     return view('insights.author_archive', compact('authorDetails', 'authorCounts', 'ContributoryAuthor', 'guestAuthor'));
+    // }
+
+
+    public function authorarchive(Request $request)
+{
+    // Fetch author IDs from both tables
+    $authorIdsEn = InsightList::query()
+        ->whereNotIn('news_type', ['ir', 'ri'])
+        ->whereNotNull('author_id')
+        ->where('status', 1)
+        ->groupBy('author_id')
+        ->pluck('author_id')
+        ->toArray();
+
+    $authorIdsHi = InsightListHindi::query()
+        ->whereNotIn('news_type', ['ir', 'ri'])
+        ->whereNotNull('author_id')
+        ->where('status', 1)
+        ->groupBy('author_id')
+        ->pluck('author_id')
+        ->toArray();
+
+    // Merge and remove duplicate author IDs
+    $authorIds = array_unique(array_merge($authorIdsEn, $authorIdsHi));
+
+    // Count articles per author from both tables
+    $authorCountsEn = InsightList::query()
+        ->whereNotIn('news_type', ['ir', 'ri'])
+        ->whereNotNull('author_id')
+        ->where('status', 1)
+        ->groupBy('author_id')
+        ->selectRaw('author_id, COUNT(*) as article_count')
+        ->pluck('article_count', 'author_id')
+        ->toArray();
+
+    $authorCountsHi = InsightListHindi::query()
+        ->whereNotIn('news_type', ['ir', 'ri'])
+        ->whereNotNull('author_id')
+        ->where('status', 1)
+        ->groupBy('author_id')
+        ->selectRaw('author_id, COUNT(*) as article_count')
+        ->pluck('article_count', 'author_id')
+        ->toArray();
+
+    // Merge article counts and track language
+    $authorCounts = [];
+    foreach ($authorIds as $authorId) {
+        $countEn = $authorCountsEn[$authorId] ?? 0;
+        $countHi = $authorCountsHi[$authorId] ?? 0;
+        $authorCounts[$authorId] = [
+            'total' => $countEn + $countHi,
+            'lang'  => $countEn > 0 ? 'en' : 'hi' // Assign language based on available data
+        ];
+    }
+
+    // Fetch author details and append article count & language
+    $authorDetails = AuthorList::query()
+        ->whereNotIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau'])
+        ->whereIn('author_id', $authorIds)
+        ->where('status', 'A')
+        ->orderByDesc('created_at')
+        ->limit(5)
+        ->get()
+        ->map(function ($author) use ($authorCounts) {
+            $author->count = $authorCounts[$author->author_id]['total'] ?? 0;
+            $author->lang = $authorCounts[$author->author_id]['lang'] ?? 'en';
+            return $author;
+        });
+
+    // Fetch Contributory Authors
+    $ContributoryAuthor = AuthorList::query()
+        ->whereIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau'])
+        ->whereIn('author_id', $authorIds)
+        ->where('status', 'A')
+        ->get()
+        ->map(function ($author) use ($authorCounts) {
+            $author->count = $authorCounts[$author->author_id]['total'] ?? 0;
+            $author->lang = $authorCounts[$author->author_id]['lang'] ?? 'en';
+            return $author;
+        });
+
+    // Fetch Guest Authors
+    $guestAuthor = AuthorList::query()
+        ->whereIn('title', ['Guest Author'])
+        ->where('status', 'A')
+        ->get()
+        ->map(function ($author) use ($authorCounts) {
+            $author->count = $authorCounts[$author->author_id]['total'] ?? 0;
+            $author->lang = $authorCounts[$author->author_id]['lang'] ?? 'en';
+            return $author;
+        });
+
+    return view('insights.author_archive', compact('authorDetails', 'authorCounts', 'ContributoryAuthor', 'guestAuthor'));
+}
 
 
     public function insightscategorydata(Request $request)
@@ -1020,6 +1280,7 @@ class InsightsController extends Controller
 
     public static function createimgurl($image)
     {
+        // dd($image);
         // Default image URL
         $defaultUrl = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/content/fi/int/5ff40e6aaa3da.jpeg';
 
@@ -1042,6 +1303,37 @@ class InsightsController extends Controller
 
         // Set path based on locale
         $uploadPath = App::getLocale() !== 'en'
+            ? Config('constants.ARTICLE_HINDI_UPLOAD_PATH')
+            : Config('constants.ARTICLE_UPLOAD_PATH');
+
+        return $baseUrl . $uploadPath . $imagePath;
+    }
+
+    public static function createimgurl1($image, $lang)
+    {
+        // dd($image,$lang);
+        // Default image URL
+        $defaultUrl = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/content/fi/int/5ff40e6aaa3da.jpeg';
+
+        if (!$image) {
+            return $defaultUrl;
+        }
+
+        // If the image is an absolute URL (contains 'https')
+        if (strstr($image, 'https')) {
+            return trim($image, '/');
+        }
+
+        $baseUrl = Config('constants.franAwsS3Url');
+        $imagePath = ltrim($image, '/'); // Clean the image path
+
+        // Check if the image contains a "/"
+        if (strstr($image, '/')) {
+            return $baseUrl . $imagePath;
+        }
+
+        // Set path based on locale
+        $uploadPath = $lang !== 'en'
             ? Config('constants.ARTICLE_HINDI_UPLOAD_PATH')
             : Config('constants.ARTICLE_UPLOAD_PATH');
 

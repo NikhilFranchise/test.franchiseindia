@@ -40,11 +40,6 @@ $url   = 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
                      //  $site   = Config('constants.articleArr.'.$most[0]['news_type']);
                       $image  = Config('constants.awsS3Url').$most[0]['image'];
                       $url    = Config('constants.MainDomain').'/insights/'.$most[0]['slug'].'.'.$most[0]['news_id'];
-
-                     // //  if ( $most[0]['news_type'] == 'ga' ) {
-                     //      $image  = $most[0]['image'];
-                     //      $url    = Config('constants.MainDomain').'/insights/'.str_slug($most[0]['title']).'.'.$most[0]['news_id'];
-                     // //  }
                   @endphp
                   <div class="img-txtlayout572">
                      <div class="img-valayout572">
