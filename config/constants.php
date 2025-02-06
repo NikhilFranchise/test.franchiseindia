@@ -1238,6 +1238,7 @@ return [
             "514" => "Household & Consumer Products",
             "518" => "Kitchen Appliances / Cookware",
             "529" => "Religious Products",
+            "530" => "LPG Distributors",
 
             "515" => "Lamps, Bulbs & Lighting",
             //"516" => "Builders Hardware - Knobs, Handles, Fittings",
@@ -1248,7 +1249,6 @@ return [
             //"524" => "Doors, Windows, Floorings, Panels, Laminates",
             //"525" => "Plumbing, Sanitary Ware And Bathroom Fittings",
             //"527" => "Inverters, UPS & Battery Charger",
-            "530" => "LPG Distributors",
             //"531" => "Security & Surveillance Products",
             "887" => "Home Decoration Items",
             "891" => "Laundry Products",
