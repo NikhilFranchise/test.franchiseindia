@@ -871,6 +871,7 @@ class InsightsController extends Controller
         $relatedArticles = $newsModel::with(['category', 'Subcategory'])
             ->where('status', 1)
             ->where('cat_id', $newsDetails->category[0]->id)
+            ->whereNot('news_id', $id)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->whereIn('insight_type', ['Article', 'News', 'Interview'])
             ->orderByDesc('created_at')
@@ -880,7 +881,7 @@ class InsightsController extends Controller
 
         $latestArticles = $newsModel::with(['category', 'Subcategory'])
             ->where('status', 1)
-            // ->where('cat_id', $newsDetails->category[0]->id)
+            ->whereNot('news_id', $id)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Article')
             ->orderByDesc('created_at')

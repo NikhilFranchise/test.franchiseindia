@@ -180,7 +180,7 @@
                         {{-- ads for mobile & desktop --}}
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
                         <div class="articlecontent">
-                            {{-- @php
+                            @php
                         // Split the article content into paragraphs
                         $paragraphs = preg_split('/\r\n|\r|\n/', $newsDetails->content);
                         $totalParagraphs = count($paragraphs);
@@ -213,63 +213,8 @@
                         }
                         $renderedContent = implode("\r\n", $contentBlocks);
                     @endphp
-                    {!! $renderedContent !!} --}}
-                            @php
-                                // Split the article content into paragraphs
-                                $paragraphs = preg_split('/\r\n|\r|\n/', $newsDetails->content);
-                                $totalParagraphs = count($paragraphs);
-
-                                // Define rotating ad slots
-                                $adSlots = [
-                                    'adslotInline_1_300x250',
-                                    'adslotInline_2_300x250',
-                                    'adslotInline_3_300x250',
-                                    'adslotInline_4_300x250',
-                                    'adslotInline_5_300x250',
-                                ];
-                                $adSlotCount = count($adSlots);
-
-                                $adsInserted = 0;
-                                $adInterval = $totalParagraphs >= 80 ? 8 : ($totalParagraphs >= 50 ? 5 : 3);
-                                $contentBlocks = [];
-
-                                foreach ($paragraphs as $index => $para) {
-                                    $contentBlocks[] = $para;
-
-                                    // Insert ads at intervals
-                                    if ($adInterval > 0 && ($index + 1) % $adInterval === 0) {
-                                        $slotId = $adSlots[$adsInserted % $adSlotCount]; // Rotate ads
-                                        $contentBlocks[] = '<div class="inner-article-detail-desktop-ad">
-                                                               <div id="' . $slotId . '">
-                                                                  <script>
-                                                                        googletag.cmd.push(function() {
-                                                                           googletag.display("' . $slotId . '");
-                                                                        });
-                                                                  </script>
-                                                               </div>
-                                                            </div>';
-                                        $adsInserted++;
-                                    }
-                                }
-
-                                // Ensure the last paragraph has an ad if one wasn’t added recently
-                                if ($adsInserted == 0 || $totalParagraphs % $adInterval !== 0) {
-                                    $slotId = $adSlots[$adsInserted % $adSlotCount]; // Continue rotating ads
-                                    $contentBlocks[] = '<div class="inner-article-detail-desktop-ad">
-                                                            <div id="' . $slotId . '">
-                                                               <script>
-                                                                  googletag.cmd.push(function() {
-                                                                        googletag.display("' . $slotId . '");
-                                                                  });
-                                                               </script>
-                                                            </div>
-                                                      </div>';
-                                }
-
-                                $renderedContent = implode("\r\n", $contentBlocks);
-                            @endphp
-
-                            {!! $renderedContent !!}
+                    {!! $renderedContent !!}
+                           
                         </div>
                         @if (!empty($franchiseData))
                             <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px;">
@@ -346,6 +291,7 @@
                                         </div>
                                     </li>
                                 @empty
+                                    <li>No Records.</li>
                                 @endforelse
                             </ul>
                         </div>
@@ -366,10 +312,10 @@
                                                     '/';
                                                 $latestUrl = $baseUrl1 . $latest->slug . '.' . $latest->news_id;
                                             @endphp
-                                            <div class="popular-sub">
+                                            {{-- <div class="popular-sub">
                                                 <a href="{{ $catURL }}"
                                                     hreflang="{{ $locale }}">{{ $cat->catname }}</a>
-                                            </div>
+                                            </div> --}}
                                         @endforeach
                                         <div class="popular-head">
                                             <a href="{{ $latestUrl }}">{{ $latest->title }}</a>
