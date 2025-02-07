@@ -540,70 +540,6 @@ class InsightsController extends Controller
         return view('insights.author', compact('author', 'latestArticles', 'articleCount', 'mostViewedArticles', 'popularArticles'));
     }
 
-
-    // public function authorarchive(Request $request)
-    // {
-    //     // Set the appropriate model and fetch data based on the language
-    //     $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
-    //     app()->setLocale($locale);
-    //     session()->put('locale', $locale);
-    //     // Choose the appropriate model based on the locale
-    //     $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
-    //     // $author = AuthorList::find($id);
-    //     // Get author IDs based on article filters
-    //     $authorIds = $model::query()
-    //         ->whereNotIn('news_type', ['ir', 'ri'])
-    //         ->whereNotNull('author_id')
-    //         ->where('status', 1)
-    //         ->groupBy('author_id')
-    //         ->pluck('author_id')
-    //         ->toArray();
-
-    //     // Get article count grouped by author
-    //     $authorCounts = $model::query()
-    //         ->whereNotIn('news_type', ['ir', 'ri'])
-    //         ->whereNotNull('author_id')
-    //         ->where('status', 1)
-    //         ->groupBy('author_id')
-    //         ->selectRaw('author_id, COUNT(*) as article_count')
-    //         ->pluck('article_count', 'author_id')
-    //         ->toArray();
-
-    //     // Get author details for the filtered IDs
-    //     $authorDetails = AuthorList::query()
-    //         ->whereNotIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau'])
-    //         ->whereIn('author_id', $authorIds)
-    //         ->where('status', 'A')
-    //         ->orderByDesc('created_at')
-    //         ->limit(5)
-    //         ->get()
-    //         ->map(function ($author) use ($authorCounts) {
-    //             $author->count = $authorCounts[$author->author_id] ?? 0;
-    //             return $author;
-    //         });
-
-    //     $ContributoryAuthor = AuthorList::query()->whereIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau'])
-    //         ->whereIn('author_id', $authorIds)
-    //         ->where('status', 'A')
-    //         ->get()
-    //         ->map(function ($author) use ($authorCounts) {
-    //             $author->count = $authorCounts[$author->author_id] ?? 0;
-    //             return $author;
-    //         });
-
-    //     $guestAuthor = AuthorList::query()
-    //         ->whereIn('title', ['Guest Author'])
-    //         ->where('status', 'A')
-    //         ->get()
-    //         ->map(function ($author) use ($authorCounts) {
-    //             $author->count = $authorCounts[$author->author_id] ?? 0;
-    //             return $author;
-    //         });
-
-    //     return view('insights.author_archive', compact('authorDetails', 'authorCounts', 'ContributoryAuthor', 'guestAuthor'));
-    // }
-
-
     public function authorarchive(Request $request)
     {
         // Fetch author IDs from both tables
@@ -658,7 +594,7 @@ class InsightsController extends Controller
 
         // Fetch author details and append article count & language
         $authorDetails = AuthorList::query()
-            ->whereNotIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau'])
+            ->whereNotIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau', 'Guest Author'])
             ->whereIn('author_id', $authorIds)
             ->where('status', 'A')
             ->orderByDesc('created_at')
@@ -890,7 +826,7 @@ class InsightsController extends Controller
         // $latestArticles = CommonController::contentUrlSlug($relatedArticles);
 
         // Return view with compacted variables
-        return view('insights.detail', compact('newsDetails', 'author_details', 'franchiseData', 'assocTags', 'trendingArticles','latestArticles'));
+        return view('insights.detail', compact('newsDetails', 'author_details', 'franchiseData', 'assocTags', 'trendingArticles', 'latestArticles'));
     }
 
 
