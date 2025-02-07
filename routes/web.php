@@ -1080,10 +1080,7 @@ Route::group(['prefix' => 'insights'], function () {
 });
 
 Route::middleware(['TrailingSlashRedirect'])->group(function () {
-    // temporally
-    //temporally
     Route::group(['prefix' => 'insights'], function () {
-        Route::get('/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails1']);
         Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
         Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
         Route::get('{insight_type}/{slug}.{id}', function ($insight_type, $slug, $id) {
@@ -1204,13 +1201,11 @@ Route::get('/getajax', [BusinessListingController::class, 'fetchtest']);
 
 Route::get('/items', [BusinessListingController::class, 'index'])->name('items.index');
 
-Route::get('advertise',                   function () {
-    return redirect('https://www.franchiseindia.com/advertise-with-us-payment', 301);
-});
+Route::get('advertise',                   function() { return redirect('https://www.franchiseindia.com/advertise-with-us-payment', 301);});
 
 
 // test email route
-Route::get('/sendmail', [CommonController::class, 'send_email']);
+Route::get('/sendmail',[CommonController::class,'send_email']);
 // Route::post('/password/email',[CommonController::class,'reset']);
 
 Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('password-reset');
