@@ -8,10 +8,9 @@
         </div>
         <div class="authblk">
             <div class="container">
-                <ul class="nabva">
-                    <li><a href="{{ url('/insights') }}">Home</a></li>
-                    <li>/</li>
-                    <li>Search for {{ Illuminate\Support\Str::limit($search, 30, '...') }}</li>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url('/insights') }}">Home</a></li>
+                    <li class="breadcrumb-item">Search for {{ Illuminate\Support\Str::limit($search, 30, '...') }}</li>
                 </ul>
             </div>
         </div>
@@ -35,8 +34,6 @@
                                                 strtolower($article->insight_type) .
                                                 "/{$article->slug}.{$article->news_id}";
                                             // Default author values
-                                            $authorname = 'Franchise India Bureau';
-                                            $authorUrl = '#';
                                             $author_image = url('images/defaultuser.png');
                                             // Check and set author details if available
                                             if ($article->author->isNotEmpty()) {
@@ -78,7 +75,7 @@
                                     @endforelse
                                 </ul>
                                 <div class="video-pagination">
-                                    {{ $articlesList->links('pagination::bootstrap-4') }}
+                                    {{ $articlesList->links('pagination::bootstrap-5') }}
                                 </div>
                             </div>
                         </div>

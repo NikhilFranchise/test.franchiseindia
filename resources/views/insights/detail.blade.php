@@ -77,9 +77,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="{{ url('/insights') }}" class="tip-bottom">Home</a>
-                        </li>
+                        <li class="breadcrumb-item"><a href="{{ url('/insights') }}" class="tip-bottom">Home</a></li>
                         @php
                             $insightTypeMap = [
                                 'News' => "{$locale}/topstories",

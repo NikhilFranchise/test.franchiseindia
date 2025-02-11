@@ -271,7 +271,7 @@ class InsightsController extends Controller
             ->whereNotNull('cat_id')
             ->where('status', 1)
             ->orderByDesc('created_at')
-            ->paginate(12);
+            ->paginate(15);
         $interviews = CommonController::contentUrlSlug($interviews);
 
         if ($interviews->isEmpty()) {
@@ -923,26 +923,6 @@ class InsightsController extends Controller
     }
 
 
-
-    // STATIC FUNCTIONS START HERE
-
-    // public function getNextArticle($contentIdParam)
-    // {
-    //     $nextArticle = InsightList::query()->where('status', 1)->where('news_id', '>', $contentIdParam);
-    //     $nextArticle = $nextArticle->where('status', 1)
-    //         ->orderBy('news_id', 'asc')
-    //         ->take(1)->get();
-
-    //     if (count($nextArticle) == 0) {
-    //         $nextArticle = InsightList::query()->where('news_id', '<', $contentIdParam);
-    //         $nextArticle = $nextArticle->where('status', 1)
-    //             ->orderBy('news_id', 'desc')
-    //             ->take(1)->get();
-    //     }
-    //     if (empty($nextArticle))
-    //         return [];
-    //     return CommonController::contentUrlSlug($nextArticle);
-    // }
     public static function calculateReadTime($obj)
     {
         // dd($obj);
@@ -957,14 +937,6 @@ class InsightsController extends Controller
         return round($articlelen / 200);
     }
 
-    // public static function insightcategory($locale)
-    // {
-    //     $model = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
-
-    //     $categories = $model::select('id', 'catname', 'slug')->get()->toArray();
-    //     // dd($categories);
-    //     return $categories;
-    // }
     public static function insightcategory($locale)
     {
         $model = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
@@ -1139,9 +1111,14 @@ class InsightsController extends Controller
             ->whereNotNull('cat_id')  // Ensure category ID is present
             ->whereNotNull('subcat_id')  // Ensure subcategory ID is present
             ->paginate(10);
-        // dd($contentData);
-        // Return the view with the appropriate language data
-        return view('insights.subcatdata', compact('contentData', 'subcatData', 'catData'));
+
+        $popArticles = $insightListModel::query()->with('category')->where('insight_type', 'Article')
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByDesc('created_at')
+            ->take(6)->get();
+
+        return view('insights.subcatdata', compact('contentData', 'subcatData', 'catData', 'popArticles'));
     }
 
     public function getVideoPodcast(Request $request)
@@ -1306,5 +1283,4 @@ class InsightsController extends Controller
 
         return @getimagesize($s3Url) !== false ? $s3Url : $defaultUrl;
     }
-    
 }
