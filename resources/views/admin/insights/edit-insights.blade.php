@@ -248,7 +248,7 @@
                         <div class="control-group">
                             <label class="control-label" for="select3">Associated Tags :</label>
                             <div class="controls" id="associatedTags">
-                                <select multiple required name="associated_tags[]" id="select3" class="span11">
+                                <select multiple name="associated_tags[]" id="select3" class="span11">
                                     @if (isset($assocTags))
                                         @foreach ($assocTags as $assocTagsData)
                                             <option value="{{ $assocTagsData->tag_id }}" selected>

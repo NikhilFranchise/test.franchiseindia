@@ -497,17 +497,16 @@
         });
     @endtablet
 </script>
-// <!-- Global site tag (gtag.js) - Google Ads: 767541249 -->
-// <script async src="https://www.googletagmanager.com/gtag/js?id=AW-767541249"></script>
-
-// <script>
-//     window.dataLayer = window.dataLayer || [];
-//     function gtag() {
-//         dataLayer.push(arguments);
-//     }
-//     gtag('js', new Date());
-//     gtag('config', 'AW-767541249');
-// </script>
+<!-- Global site tag (gtag.js) - Google Ads: 767541249 -->
+ {{-- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-767541249"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'AW-767541249');
+</script> --}}
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16776470774"></script>
 <script>
@@ -517,9 +516,8 @@
         dataLayer.push(arguments);
     }
     gtag('js', new Date());
-    gtag('config', 'AW-767541249');
+    gtag('config', 'AW-16776470774');
 </script>
-
 @if (request()->method() == 'POST' &&
         (url()->current() == url('thanks-advice-form') ||
             url()->current() == url('investor/register') ||

@@ -1080,8 +1080,6 @@ Route::group(['prefix' => 'insights'], function () {
 });
 
 Route::middleware(['TrailingSlashRedirect'])->group(function () {
-
-
     Route::group(['prefix' => 'insights'], function () {
         Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
         Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');

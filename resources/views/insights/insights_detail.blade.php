@@ -77,7 +77,9 @@
             <div class="row">
                 <div class="col-md-8">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/insights') }}" class="tip-bottom">Home</a></li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ url('/insights') }}" class="tip-bottom">Home</a>
+                        </li>
                         @php
                             $insightTypeMap = [
                                 'News' => "{$locale}/topstories",
@@ -178,41 +180,46 @@
                         {{-- ads for mobile & desktop --}}
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
                         <div class="articlecontent">
-                            @php
-                        // Split the article content into paragraphs
-                        $paragraphs = preg_split('/\r\n|\r|\n/', $newsDetails->content);
-                        $totalParagraphs = count($paragraphs);
-                        $adSlots = [
-                            'adslotInline_1_300x250',
-                            'adslotInline_2_300x250',
-                            'adslotInline_3_300x250',
-                            'adslotInline_4_300x250',
-                            'adslotInline_5_300x250',
-                        ];
-                        $adsInserted = 0;
-                        // Determine ad insertion interval based on total paragraphs
-                        $adInterval = ($totalParagraphs >= 80) ? 8 : (($totalParagraphs >= 50) ? 5 : 3);
-                        $contentBlocks = [];
-                        foreach ($paragraphs as $index => $para) {
-                            $contentBlocks[] = $para;
-                            if ($adInterval > 0 && (($index + 1) % $adInterval === 0) && $adsInserted < count($adSlots)) {
-                                $slotId = $adSlots[$adsInserted];
-                                $contentBlocks[] = '<div class="inner-article-detail-desktop-ad">
-                                    <div id="' . $slotId . '">
-                                        <script>
-                                            googletag.cmd.push(function() {
-                                                googletag.display("' . $slotId . '");
-                                            });
-                                        </script>
-                                    </div>
-                                </div>';
-                                $adsInserted++;
-                            }
-                        }
-                        $renderedContent = implode("\r\n", $contentBlocks);
-                    @endphp
-                    {!! $renderedContent !!}
-                           
+                            <!-- Content before ads -->
+                            <div class="content">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                            </div>
+
+                            <!-- Placeholder for ads (they will be injected dynamically) -->
+                            <div id="ad-container"></div>
+
+                            <!-- Content after ads -->
+                            <div class="content">
+                                <p>More content here...</p>
+                            </div>
+
+                            <script>
+                                googletag.cmd.push(function() {
+                                    let adContainer = document.getElementById("ad-container");
+
+                                    // Loop to create 5 ad slots dynamically
+                                    for (let i = 1; i <= 5; i++) {
+                                        let adDiv = document.createElement("div");
+                                        let uniqueId = "adslotInline_" + i + "_300x250";
+                                        adDiv.className = "inner-article-detail-desktop-ad fad ad-slot";
+                                        adDiv.id = uniqueId;
+                                        adContainer.appendChild(adDiv); // Append to content
+
+                                        // Define the ad slot
+                                        googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250', [
+                                                [300, 250],
+                                                [336, 280],
+                                                [250, 250]
+                                            ], uniqueId)
+                                            .addService(googletag.pubads());
+
+                                        googletag.display(uniqueId); // Display the ad
+                                    }
+
+                                    googletag.enableServices(); // Enable Google Ads
+                                });
+                            </script>
+
                         </div>
                         @if (!empty($franchiseData))
                             <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px;">
@@ -245,9 +252,9 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="contentarea">
+                    {{-- <div class="contentarea">
                         @include('layout.insights.subscribenewsletter')
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="col-md-4">
                     <div class="right-wrap">
@@ -262,7 +269,7 @@
                             </div>
                         </div>
                         {{-- ads top right sidebar --}}
-                        <div class="popular-articles">
+                        {{-- <div class="popular-articles">
                             <h3>Related Content</h3>
                             <ul>
                                 @forelse ($trendingArticles as $trend)
@@ -279,10 +286,7 @@
                                                     '/';
                                                 $trendUrl = $baseUrl1 . $trend->slug . '.' . $trend->news_id;
                                             @endphp
-                                            {{-- <div class="popular-sub">
-                           <a href="{{ $catURL }}"
-                              hreflang="{{ $locale }}">{{ $cat->catname }}</a>
-                        </div> --}}
+                                          
                                         @endforeach
                                         <div class="popular-head">
                                             <a href="{{ $trendUrl }}">{{ $trend->title }}</a>
@@ -310,10 +314,7 @@
                                                     '/';
                                                 $latestUrl = $baseUrl1 . $latest->slug . '.' . $latest->news_id;
                                             @endphp
-                                            {{-- <div class="popular-sub">
-                                                <a href="{{ $catURL }}"
-                                                    hreflang="{{ $locale }}">{{ $cat->catname }}</a>
-                                            </div> --}}
+                                           
                                         @endforeach
                                         <div class="popular-head">
                                             <a href="{{ $latestUrl }}">{{ $latest->title }}</a>
@@ -322,7 +323,7 @@
                                 @empty
                                 @endforelse
                             </ul>
-                        </div>
+                        </div> --}}
                         <div class="ad-right-sticky">
                             <div id="adslot300x250_1">
                                 <script>
@@ -338,5 +339,5 @@
         </div>
     </div>
     </div>
-    @include('layout.insights.magblock')
+    {{-- @include('layout.insights.magblock') --}}
 @endsection
