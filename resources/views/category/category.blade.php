@@ -9,7 +9,15 @@
     @section('robot', 'noindex, nofollow')
 @endif --}}
 
+{{-- //Pankaj start --}}
+@if ($mc ==5)
+{{-- @dd($catName) --}}
+@section('seoTitle', $brandResults->total() . '+ ' . $catName . ' Dealers & Distributors in India')
+@section('seoDesc', 'Dealer India offers wide variety of ' . $catName . ' Dealership& Distributorship opportunities to run a successful ' . $catName . ' business. You can explore some of the established and well known ' . $catName . ' Dealers here.')
+@section('seoKeywords', $catName .  ' dealership in India,' . $catName . ' distributorship in India,' . $catName . ' dealers in India,' . $catName . ' dealership opportunities in India, Dealer India,' . $catName . ' distributors in India"')
 
+@endif
+{{-- //Pankaj end --}}
 @if ($mc == 2)
     @section('seoTitle', 'Food and Beverage - Business Ideas and Franchise Opportunities')
 @elseif (URL::Current()  ==  Config('constants.MainDomain') .'/category/search' )
