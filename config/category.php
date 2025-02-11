@@ -204,7 +204,7 @@ return [
         873 =>'energy-drinks',
         872 =>'packaged-food-products',
         881 =>'snacks',
-        885 =>'spices-',
+        885 =>'spices',
         869 =>'tea-and-coffee-products',
         877 =>'meat-and-poultry',
         878 =>'frozen-and-dried-fruit',
