@@ -152,7 +152,7 @@
                         <img src="{{ url('insight-new/images/partners/entrepreneure-india.jpg') }}"
                             class="img-b lazyloaded" alt="entrepreneure">
                     </a></li>
-                <li><a href="https://indianretailer.com/" target="_blank"><img
+                <li><a href="https://www.indianretailer.com/" target="_blank"><img
                             src="{{ url('insight-new/images/partners/indianretailer.jpg') }}" class="img-b lazyloaded"
                             alt="indianretailer"></a>
                 </li>
