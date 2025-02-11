@@ -1,13 +1,9 @@
-<style>
-    .conblk {
-        padding-left: 10px;
-    }
-</style>
 <div class="headblk">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="mainhead">{{ App::getLocale() == 'en' ? 'Opportunities. Growth. Trends. Business' : 'अवसर.विकास.रुझान.व्यवसाय' }}
+                <h1 class="mainhead">
+                    {{ App::getLocale() == 'en' ? 'Opportunities. Growth. Trends. Business' : 'अवसर.विकास.रुझान.व्यवसाय' }}
             </div>
         </div>
     </div>
@@ -18,7 +14,8 @@
             @foreach ($homeArticle as $insightArticle)
                 @php
                     $locale = App::getLocale();
-                    $url = Config('constants.MainDomain') .
+                    $url =
+                        Config('constants.MainDomain') .
                         '/insights/' .
                         $locale .
                         '/' .
@@ -28,7 +25,6 @@
                         '.' .
                         $insightArticle['news_id'];
                 @endphp
-
                 <div class="col-xs-12 col-sm-12 col-md-7 topmod1">
                     <div class="topimgbl">
                         <img src="{{ \App\Http\Controllers\InsightsController::createimgurl($insightArticle['image']) }}"
@@ -47,15 +43,10 @@
                 </div>
             @endforeach
             <div class="col-xs-12 col-sm-12 col-md-5 topmod2">
-                @if (App::getLocale() == 'en')
-                    <h2 class="subhead">{{ (App::getLocale() == 'en') ? 'Top Trending Stories' : 'रुझान वाले प्रमुख समाचार (लेख)'}}</h2>
-                @else
-                    <h2 class="subhead"></h2>
-                @endif
+                    <h2 class="subhead">{{ App::getLocale() == 'en' ? 'Top Trending Stories' : 'रुझान वाले प्रमुख समाचार (लेख)' }}</h2>
                 <ul class="filist">
                     @foreach ($topstories as $topArticles)
                         @php
-                            //  $image2 = Config('constants.awsS3Url') . $topArticles['image'];
                             $url2 =
                                 Config('constants.MainDomain') .
                                 '/insights/' .
@@ -67,7 +58,6 @@
                                 '.' .
                                 $topArticles['news_id'];
                         @endphp
-
                         <li>
                             <div class="imgbl">
                                 <a href="{{ $url2 }}"><img

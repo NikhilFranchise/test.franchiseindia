@@ -33,7 +33,6 @@
     </form>
   </div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
  $(document).ready(function() {
@@ -47,7 +46,6 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
             });
-
             return result; // Add this line to return the result explicitly
         } catch (error) {
             // Log the error for debugging purposes
@@ -55,11 +53,9 @@
             throw error; // Re-throw the error to propagate it to the caller
         }
     }
-
     function validateForm() {
         // Reset previous error messages
         $(".text-danger").text("");
-
         var email = $("#emailId").val();
         var tel = $("#tel").val();
 
@@ -72,7 +68,6 @@
             $("#emailId").focus();
             return false;
         }
-
         if (tel === "") {
             $("#tel-error").text("Please enter your Mobile number.");
             $("#tel").focus();
@@ -82,10 +77,8 @@
             $("#tel").focus();
             return false;
         }
-
         return true;
     }
-
     $('#magsubscribe').submit(function(event) {
         event.preventDefault();
         
@@ -97,7 +90,6 @@
                     $('#magsubscribe input[type="email"]').val('');
                     $('#magsubscribe input[type="number"]').val('');
                     window.location.href = '{{ route("insights.thanks") }}';
-
                 } else {
                     // Display error messages in span elements
                     $("#email-error").text(data.fields.email ? data.message1 : '');
@@ -106,7 +98,6 @@
             }).catch((error) => {
     // Log the error for debugging purposes
     console.error('AJAX Error:', error);
-
     // Check if the error response contains a message
     if (error.response && error.response.data && error.response.data.message) {
         alert('Error: ' + error.response.data.message);
@@ -116,18 +107,14 @@
 });
         }
     });
-
     function isValidEmail(email) {
         // Use a regular expression for basic email format validation
         var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     }
-
     function isValidTel(tel) {
         // Validate telephone number length
         return /^\d{10}$/.test(tel);
     }
 });
-
-
 </script>

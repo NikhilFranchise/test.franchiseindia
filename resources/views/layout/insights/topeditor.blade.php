@@ -41,9 +41,7 @@
                                 "{$mainDomain}/insights/{$locale}/" .
                                 strtolower($focusArticle->insight_type) .
                                 "/{$focusArticle->slug}.{$focusArticle->news_id}";
-
                         @endphp
-
                         @if ($loop->index < 2)
                             <li>
                                 <div class="imgbl">
@@ -56,7 +54,6 @@
                                     @endforeach
                                     <div class="hname"><a
                                             href="{{ $url1 }}">{{ trim($focusArticle->title) }}</a></div>
-
                                 </div>
                             </li>
                         @endif
@@ -71,11 +68,9 @@
                     $locale = App::getLocale();
                     $mainDomain = Config('constants.MainDomain');
                     $image2 = \App\Http\Controllers\InsightsController::createimgurl($focusArticle->image);
-                    $url2 =
-                        "{$mainDomain}/insights/{$locale}/" .
+                    $url2 = "{$mainDomain}/insights/{$locale}/" .
                         strtolower($focusArticle->insight_type) .
                         "/{$focusArticle->slug}.{$focusArticle->news_id}";
-
                 @endphp
                 @if ($loop->index >= 2)
                     <li>
@@ -103,7 +98,6 @@
                     <div class="comhead">{{ App::getLocale() == 'en' ? 'Interviews' : 'कार्यकारी साक्षात्कार' }}</div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-12">
                     <div class="swiper-container">
@@ -130,7 +124,6 @@
                                                 @endforeach
                                                 <div class="hname"> <a
                                                         href="{{ $url }}">{{ $inter->title }}</a></div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -144,5 +137,4 @@
             </div>
         </div>
     </div>
-
 </div>

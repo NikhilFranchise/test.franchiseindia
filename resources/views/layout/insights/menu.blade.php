@@ -14,7 +14,6 @@
                         <li><a href="https://www.franchiseindia.com/" target="_blank">GET FRANCHISE</a> <span>|</span>
                         </li>
                         <li><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5" target="_blank">GET DISTRIBUTORSHIP</a></li>
-
                     </ul>
                 </div>
                 @mobile
@@ -22,10 +21,6 @@
                         <span class="top1">#ApneBrandsKiNayiMarket</span>
                     </div>
                 @endmobile
-                <div class="col-lg-2 col-xl-2 col-md-2">
-                    {{--  <span class="call">1800 102 2007 <span class="tel-img"><img
-                                src="{{ url('insight-new/images/tel.png') }}" alt="tel.png"></span> </span>  --}}
-                </div>
                 <div class="col-lg-2 col-md-2">
                     <div class="topright">
                         <ul class="togl">
@@ -57,7 +52,6 @@
 
                     <nav class="nav-menu d-none d-lg-block">
                         <ul>
-
                             @php
                                 $locale = App::getLocale(); // Store the locale value once
                                 $categoryUrlPrefix = $locale == 'en' ? '/insights/en/' : '/insights/hi/';
@@ -69,7 +63,6 @@
                                 $eventsReportsLabel = $locale == 'en' ? 'Events & Reports' : 'इवेंट और रिपोर्ट';
                                 $videoPodcastLabel = $locale == 'en' ? 'Videos & Podcast' : 'वीडियो और पॉडकास्ट';
                             @endphp
-
                             <li>
                                 <div class="dropdown">
                                     <button class="dbtn dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -97,9 +90,7 @@
                                         href="{{ $categoryUrlPrefix . $threecat['slug'] }}">{{ $threecat['catname'] }}</a>
                                 </li>
                             @endforeach
-
                             <li><a href="{{ $categoryUrlPrefix }}topstories">{{ $topStoriesLabel }}</a></li>
-                            {{--  <li><a href="{{ $categoryUrlPrefix }}industryfocus">{{ $insightsLabel }}</a></li>  --}}
                             <li>
                                 <div class="dropdown">
                                     <button class="dbtn dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -111,12 +102,9 @@
                                         <a class="dropdown-item" href="{{ $categoryUrlPrefix }}interviews">{{ $interviewsLabel }}</a>
                                         <a class="dropdown-item" href="{{ $categoryUrlPrefix }}events_reports">{{ $eventsReportsLabel }}</a>
                                         <a class="dropdown-item" href="{{ $categoryUrlPrefix }}video_podcast">{{ $videoPodcastLabel }}</a>
-
                                     </div>
                                 </div>
                             </li>
-
-
                         </ul>
                     </nav>
                     <div class="search-main mx-auto">
@@ -127,9 +115,7 @@
                                     style="display: none;" />
                             </span>
                         </div>
-
                         <div id="searchbar" style="display: none;">
-
                             <form action="{{ url('/insights/' . $locale . '/search') }}" method="get">
                                 <div class="input-group">
                                     <div class="form-outline">
@@ -146,5 +132,4 @@
         </div>
     </div>
 </header>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

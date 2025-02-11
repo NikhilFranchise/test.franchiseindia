@@ -9,9 +9,7 @@
                     @php
                         $slug = Str::slug(str_replace(' ', '-', $category->name));
                         $locale = App::getLocale();
-                        $tagslug =
-                            Config('constants.MainDomain') . '/insights/' . $locale . '/tag/' . strtolower($slug);
-
+                        $tagslug = Config('constants.MainDomain') . '/insights/' . $locale . '/tag/' . strtolower($slug);
                         // Determine image URL based on category name and locale
                         $imageMap = [
                             'Education' => 'Education.png',
@@ -25,7 +23,6 @@
                             'Franchise 100' => 'Franchise100.png',
                             'investment' => 'Investment.png',
                         ];
-
                         $hindiCategoryNames = [
                             'Education' => 'शिक्षा व्यापार',
                             'Retail' => 'खुदरा व्यापार',
@@ -38,11 +35,9 @@
                             'Franchise 100' => 'फ्रेंचाइज़ 100',
                             'investment' => 'व्यापार में निवेश',
                         ];
-
                         $categoryImage = isset($imageMap[$category->name])
                             ? url('insight-new/assets/images/' . $imageMap[$category->name])
                             : url('insight-new/assets/images/Investment.png');
-
                         $displayName =
                             $locale == 'en'
                                 ? ucwords($category->name)
