@@ -18,7 +18,7 @@
         @endphp
 @section('seoTitle', $brandResults->total() . '+ ' . $catName . ' Dealers & Distributors in ' .  $stateName )
 @section('seoDesc', 'Find ' . $catName . ' Dealership & Distributors in ' . $stateName . ' to run a successful ' . $catName . ' business in ' . $stateName . '. You can explore some of the established and well known ' .  $catName . ' Dealers in ' . $stateName .' here.')
-@section('seoKeywords', $catName . ' dealership in ' . $stateName . ', ' . $catName . ' distributorship in ' . $stateName . ' , ' . $catName . ' dealer in ' . $stateName . ' , ' . $catName . ' dealership opportunities in ' . $stateName . ' , Dealer India, ' . $catName . ' distributors in ' . $stateName . ' " '  )
+@section('seoKeywords', $catName . ' dealership in ' . $stateName . ', ' . $catName . ' distributorship in ' . $stateName . ', ' . $catName . ' dealer in ' . $stateName . ', ' . $catName . ' dealership opportunities in ' . $stateName . ' , Dealer India, ' . $catName . ' distributors in ' . $stateName)
 @else
         @section('seoTitle', $brandResults->total() . '+ ' . $catName . ' Dealers & Distributors in India')
         @section('seoDesc', 'Dealer India offers wide variety of ' . $catName . ' Dealership & Distributorship opportunities to run a successful ' . $catName . ' business. You can explore some of the established and well-known ' . $catName . ' Dealers here.')
