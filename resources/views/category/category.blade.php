@@ -10,13 +10,22 @@
 @endif --}}
 
 {{-- //Pankaj start --}}
-@if ($mc ==5)
-{{-- @dd($catName) --}}
-@section('seoTitle', $brandResults->total() . '+ ' . $catName . ' Dealers & Distributors in India')
-@section('seoDesc', 'Dealer India offers wide variety of ' . $catName . ' Dealership& Distributorship opportunities to run a successful ' . $catName . ' business. You can explore some of the established and well known ' . $catName . ' Dealers here.')
-@section('seoKeywords', $catName .  ' dealership in India,' . $catName . ' distributorship in India,' . $catName . ' dealers in India,' . $catName . ' dealership opportunities in India, Dealer India,' . $catName . ' distributors in India"')
-
+@if ($mc == 5)
+    @if (!empty($loc)) 
+        @php
+            $stateId = $loc[0]; // Extract the first element from the array
+            $stateName = Config::get("location.stateArr.$stateId"); // Get the state name
+        @endphp
+@section('seoTitle', $brandResults->total() . '+ ' . $catName . ' Dealers & Distributors in ' .  $stateName )
+@section('seoDesc', 'Find ' . $catName . ' Dealership & Distributors in ' . $stateName . ' to run a successful ' . $catName . ' business in ' . $stateName . '. You can explore some of the established and well known ' .  $catName . ' Dealers in ' . $stateName .' here.')
+@section('seoKeywords', $catName . ' dealership in ' . $stateName . ', ' . $catName . ' distributorship in ' . $stateName . ' , ' . $catName . ' dealer in ' . $stateName . ' , ' . $catName . ' dealership opportunities in ' . $stateName . ' , Dealer India, ' . $catName . ' distributors in ' . $stateName . ' " '  )
+@else
+        @section('seoTitle', $brandResults->total() . '+ ' . $catName . ' Dealers & Distributors in India')
+        @section('seoDesc', 'Dealer India offers wide variety of ' . $catName . ' Dealership & Distributorship opportunities to run a successful ' . $catName . ' business. You can explore some of the established and well-known ' . $catName . ' Dealers here.')
+        @section('seoKeywords', $catName . ' dealership in India,' . $catName . ' distributorship in India,' . $catName . ' dealers in India,' . $catName . ' dealership opportunities in India, Dealer India,' . $catName . ' distributors in India')
+    @endif
 @endif
+
 {{-- //Pankaj end --}}
 @if ($mc == 2)
     @section('seoTitle', 'Food and Beverage - Business Ideas and Franchise Opportunities')
