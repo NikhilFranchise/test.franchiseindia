@@ -179,26 +179,33 @@
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
                         <div class="articlecontent">
                             @php
-                        // Split the article content into paragraphs
-                        $paragraphs = preg_split('/\r\n|\r|\n/', $newsDetails->content);
-                        $totalParagraphs = count($paragraphs);
-                        $adSlots = [
-                            'adslotInline_1_300x250',
-                            'adslotInline_2_300x250',
-                            'adslotInline_3_300x250',
-                            'adslotInline_4_300x250',
-                            'adslotInline_5_300x250',
-                        ];
-                        $adsInserted = 0;
-                        // Determine ad insertion interval based on total paragraphs
-                        $adInterval = ($totalParagraphs >= 80) ? 8 : (($totalParagraphs >= 50) ? 5 : 3);
-                        $contentBlocks = [];
-                        foreach ($paragraphs as $index => $para) {
-                            $contentBlocks[] = $para;
-                            if ($adInterval > 0 && (($index + 1) % $adInterval === 0) && $adsInserted < count($adSlots)) {
-                                $slotId = $adSlots[$adsInserted];
-                                $contentBlocks[] = '<div class="inner-article-detail-desktop-ad">
-                                    <div id="' . $slotId . '">
+                                // Split the article content into paragraphs
+                                $paragraphs = preg_split('/\r\n|\r|\n/', $newsDetails->content);
+                                $totalParagraphs = count($paragraphs);
+                                $adSlots = [
+                                    'adslotInline_1_300x250',
+                                    'adslotInline_2_300x250',
+                                    'adslotInline_3_300x250',
+                                    'adslotInline_4_300x250',
+                                    'adslotInline_5_300x250',
+                                ];
+                                $adsInserted = 0;
+                                // Determine ad insertion interval based on total paragraphs
+                                $adInterval = $totalParagraphs >= 80 ? 8 : ($totalParagraphs >= 50 ? 5 : 3);
+                                $contentBlocks = [];
+                                foreach ($paragraphs as $index => $para) {
+                                    $contentBlocks[] = $para;
+                                    if (
+                                        $adInterval > 0 &&
+                                        ($index + 1) % $adInterval === 0 &&
+                                        $adsInserted < count($adSlots)
+                                    ) {
+                                        $slotId = $adSlots[$adsInserted];
+                                        $contentBlocks[] =
+                                            '<div class="inner-article-detail-desktop-ad">
+                                    <div id="' .
+                                            $slotId .
+                                            '">
                                         <script>
                                             googletag.cmd.push(function() {
                                                 googletag.display("' . $slotId . '");
@@ -206,13 +213,13 @@
                                         </script>
                                     </div>
                                 </div>';
-                                $adsInserted++;
-                            }
-                        }
-                        $renderedContent = implode("\r\n", $contentBlocks);
-                    @endphp
-                    {!! $renderedContent !!}
-                           
+                                        $adsInserted++;
+                                    }
+                                }
+                                $renderedContent = implode("\r\n", $contentBlocks);
+                            @endphp
+                            {!! $renderedContent !!}
+
                         </div>
                         @if (!empty($franchiseData))
                             <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px;">
@@ -245,10 +252,11 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="contentarea">
+                    <div class="contentarea" id="last-paragraph">
                         @include('layout.insights.subscribenewsletter')
-                    </div>
+                    </div>  
                 </div>
+                <div id="next-article"></div> <!-- New article will be loaded here -->
                 <div class="col-md-4">
                     <div class="right-wrap">
                         {{-- ads top right sidebar --}}
@@ -279,10 +287,6 @@
                                                     '/';
                                                 $trendUrl = $baseUrl1 . $trend->slug . '.' . $trend->news_id;
                                             @endphp
-                                            {{-- <div class="popular-sub">
-                           <a href="{{ $catURL }}"
-                              hreflang="{{ $locale }}">{{ $cat->catname }}</a>
-                        </div> --}}
                                         @endforeach
                                         <div class="popular-head">
                                             <a href="{{ $trendUrl }}">{{ $trend->title }}</a>
@@ -310,10 +314,6 @@
                                                     '/';
                                                 $latestUrl = $baseUrl1 . $latest->slug . '.' . $latest->news_id;
                                             @endphp
-                                            {{-- <div class="popular-sub">
-                                                <a href="{{ $catURL }}"
-                                                    hreflang="{{ $locale }}">{{ $cat->catname }}</a>
-                                            </div> --}}
                                         @endforeach
                                         <div class="popular-head">
                                             <a href="{{ $latestUrl }}">{{ $latest->title }}</a>
@@ -339,4 +339,38 @@
     </div>
     </div>
     @include('layout.insights.magblock')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    loadNextArticle();
+                }
+            }, { threshold: 1.0 });
+    
+            let lastParagraph = document.getElementById("last-paragraph");
+            if (lastParagraph) {
+                observer.observe(lastParagraph);
+            }
+        });
+    
+        function loadNextArticle() {
+            let nextArticleContainer = document.getElementById("next-article");
+    
+            // Check if already loading to prevent multiple requests
+            if (nextArticleContainer.getAttribute("data-loading") === "true") return;
+            nextArticleContainer.setAttribute("data-loading", "true");
+    
+            let currentNewsId = "{{ $newsDetails->news_id }}";
+            let catId = "{{ $newsDetails->cat_id }}";
+    
+            fetch(`/insights/next-article/${currentNewsId}/${catId}`)
+                .then(response => response.text())
+                .then(data => {
+                    nextArticleContainer.innerHTML = data;
+                    nextArticleContainer.removeAttribute("data-loading");
+                })
+                .catch(error => console.error("Error loading next article:", error));
+        }
+    </script>
+    
 @endsection
