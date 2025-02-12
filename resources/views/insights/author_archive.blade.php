@@ -8,10 +8,9 @@
         </div>
         <div class="authblk">
             <div class="container">
-                <ul class="nabva">
-                    <li><a href="{{ url('/insights') }}">Home</a></li>
-                    <li>/</li>
-                    <li>Authors</li>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url('/insights') }}">Home</a></li>
+                    <li class="breadcrumb-item">Authors</li>
                 </ul>
             </div>
         </div>
@@ -25,7 +24,6 @@
                     With a proven track record in managing teams and producing exceptional publications, she has played
                     a pivotal role in shaping the editorial direction of leading media publications and driving
                     strategic content initiatives.</p>
-
                 <h3 class="author-archive-cat">{{ App::getLocale() == 'en' ? 'Featured Authors' : 'फीचर्ड ऑथर्स' }}</h3>
                 <ul>
                     @foreach ($authorDetails as $article)
@@ -44,7 +42,6 @@
                                 <div class="home-author-name"><a href="{{ $authorURL }}">{{ $article->title }}</a></div>
                                 <div class="home-author-des">{{ $article->designation }}</div>
                                 <div class="home-author-count"><span>{{ $article->count }} </span>Stories </div>
-                                {{-- <a href="">View Articles</a> --}}
                             </div>
                         </li>
                     @endforeach
@@ -55,8 +52,7 @@
                         @php
                             $locale = App::getLocale();
                             $image = \App\Http\Controllers\InsightsController::authorImageurl($article->image);
-                            $authorURL =
-                                Config('constants.MainDomain') .
+                            $authorURL = Config('constants.MainDomain') .
                                 "/insights/author/{$article->slug}" .
                                 "-{$article->author_id}";
                         @endphp
@@ -68,7 +64,6 @@
                                 </div>
                                 <div class="home-author-des">{{ $article->designation }}</div>
                                 <div class="home-author-count"><span>{{ $article->count }} </span>Stories </div>
-                                {{-- <a href="">View Articles</a> --}}
                             </div>
                         </li>
                     @endforeach
@@ -92,7 +87,6 @@
                                 </div>
                                 <div class="home-author-des">{{ $article->designation }}</div>
                                 <div class="home-author-count"><span>{{ $article->count }} </span>Stories </div>
-                                {{-- <a href="">View Articles</a> --}}
                             </div>
                         </li>
                     @endforeach

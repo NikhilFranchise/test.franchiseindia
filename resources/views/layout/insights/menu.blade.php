@@ -21,6 +21,8 @@
                         <span class="top1">#ApneBrandsKiNayiMarket</span>
                     </div>
                 @endmobile
+                <div class="col-lg-2 col-xl-2 col-md-2">
+                </div>
                 <div class="col-lg-2 col-md-2">
                     <div class="topright">
                         <ul class="togl">

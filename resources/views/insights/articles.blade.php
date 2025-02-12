@@ -27,15 +27,11 @@
                                             $locale = App::getLocale();
                                             $mainDomain = Config('constants.MainDomain');
                                             $image = \App\Http\Controllers\InsightsController::createimgurl(
-                                                $article->image,
-                                            );
-                                            $url =
-                                                "{$mainDomain}/insights/{$locale}/" .
+                                                $article->image);
+                                            $url = "{$mainDomain}/insights/{$locale}/" .
                                                 strtolower($article->insight_type) .
                                                 "/{$article->slug}.{$article->news_id}";
                                             // Default author values
-                                            $authorname = 'Franchise India Bureau';
-                                            $authorUrl = '#';
                                             $author_image = url('images/defaultuser.png');
                                             // Check and set author details if available
                                             if ($article->author->isNotEmpty()) {
@@ -43,11 +39,8 @@
                                                 $authorname = $author->title ?: 'Franchise India Bureau';
                                                 $slug = $author->slug ?: strtolower(str_replace(' ', '-', $authorname));
                                                 $authorUrl = "{$mainDomain}/insights/author/{$slug}-{$author->author_id}";
-                                                $author_image = $author->image
-                                                    ? \App\Http\Controllers\InsightsController::authorImageurl(
-                                                        $author->image,
-                                                    )
-                                                    : $author_image;
+                                                $author_image = $author->image ? \App\Http\Controllers\InsightsController::authorImageurl(
+                                                        $author->image) : $author_image;
                                             }
                                         @endphp
                                         <li>
@@ -144,14 +137,11 @@
             </div>
         </div>
         @include('layout.insights.brandlist')
-
         @include('layout.insights.magblock')
-
         <div class="listblk">
             <div class="container">
                 <ul class="artilsit">
                 </ul>
             </div>
         </div>
-
-    @endsection
+@endsection

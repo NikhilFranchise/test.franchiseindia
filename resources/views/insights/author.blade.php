@@ -1,21 +1,17 @@
 @extends('layout.insights.master')
 @section('content')
-
     <div class="maininnver homeh">
         <div class="inner-top-head">
             <div class="container">
                 <h1>{{ 'Author' }}</h1>
             </div>
         </div>
-
         <div class="container">
             <div class="authblk">
-                <ul class="nabva">
-                    <li><a href="{{ url('/insights') }}">Home</a></li>
-                    <li>/</li>
-                    <li><a href="{{ url('/insights/author') }}">Author</a></li>
-                    <li>/</li>
-                    <li>{{ $author->title }}</li>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url('/insights') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('/insights/author') }}">Author</a></li>
+                    <li class="breadcrumb-item">{{ $author->title }}</li>
                 </ul>
             </div>
         </div>
@@ -23,11 +19,9 @@
         <div class="author-top-new">
             <div class="container">
                 @php
-                    if (!empty($author->image)) {
-                        $author_image = \App\Http\Controllers\InsightsController::authorImageurl($author->image);
-                    } else {
-                        $author_image = url('images/defaultuser.png');
-                    }
+                    $author_image = url('images/defaultuser.png');
+                    $author_image = $author->image ? \App\Http\Controllers\InsightsController::authorImageurl(
+                                                        $author->image) : $author_image;
                 @endphp
                 <div class="row">
                     <div class="col-md-12">
@@ -37,12 +31,10 @@
                                     <img src="{{ $author_image }}" alt="{{ $author->title }}" class="img-fluid" />
                                 </div>
                                 <div class="author-left-nam">{{ $author->title }}</div>
-
                                 <div class="author-left-des">{{ $author->designation }}</div>
                                 <div class="author-left-count">
                                     <span id="acount">{{ $articleCount }}</span> Stories
                                 </div>
-
                                 <div class="follows">Follow:</div>
                                 <div class="author-left-soc">
                                     <ul>
@@ -62,11 +54,11 @@
                                                         src="{{ url('/insight-new/images/social/twitter.jpg') }}" /></a>
                                             </li>
                                         @elseif(!empty($author->emailid))
-                                        <li>
-                                            <a href="mailto:{{ $author->emailid }}" target="_blank">
-                                                <img src="{{ url('/insight-new/images/social/mail.jpg') }}" />
-                                            </a>
-                                        </li>
+                                            <li>
+                                                <a href="mailto:{{ $author->emailid }}" target="_blank">
+                                                    <img src="{{ url('/insight-new/images/social/mail.jpg') }}" />
+                                                </a>
+                                            </li>
                                         @elseif(!@empty($author->insta_profile))
                                             <li>
                                                 <a href="{{ $author->insta_profile }}" target="_blank"><img
@@ -77,26 +69,21 @@
                                             <a href="" target="_blank"><img
                                                     src="{{ url('/insight-new/images/social/rss.jpg') }}" /></a>
                                         </li>
-
                                     </ul>
                                 </div>
                             </div>
-
                             <div class="author-new-wrap-right">
                                 <div class="author-left-nam-desc">{{ $author->title }}</div>
-                                {{-- <div class="author-overview">Professional Overview</div> --}}
                                 <div class="articlecontent">
                                     @php
                                         $custom_data = explode("\r\n", $author->text);
                                         if (count($custom_data) == 1) {
-                                            $articleData[0] =
-                                                $custom_data[0] . '<div id="v-franchiseindia"></div>';
+                                            $articleData[0] = $custom_data[0] . '<div id="v-franchiseindia"></div>';
                                         } else {
                                             $counter = 0;
                                             foreach ($custom_data as $cdata) {
                                                 if ($counter == 2) {
-                                                    $articleData[] =
-                                                        $cdata . '<div id="v-franchiseindia"></div>';
+                                                    $articleData[] = $cdata . '<div id="v-franchiseindia"></div>';
                                                 } else {
                                                     $articleData[] = $cdata;
                                                 }
@@ -107,7 +94,6 @@
                                     @endphp
                                     {!! $resultArticle !!}
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -119,7 +105,6 @@
         <div class="stories">
             <div class="container">
                 <h3>Stories From The Author</h3>
-
                 <div class="row">
                     <div class="col-md-8">
                         <ul class="nav nav-tabs">
@@ -132,17 +117,14 @@
                             {{-- latest stories section start here --}}
                             <div class="tab-pane active stab" id="latest">
                                 <ul>
-                                    {{-- @dd($latestArticles); --}}
                                     @forelse ($latestArticles as $latest)
                                         @php
                                             $image = \App\Http\Controllers\InsightsController::createimgurl1(
                                                 $latest->image, $latest->lang);
-                                            $latestArticleURL =
-                                                Config('constants.MainDomain') .
+                                            $latestArticleURL = Config('constants.MainDomain') .
                                                 "/insights/{$latest->lang}/" .
                                                 strtolower($latest->insight_type) .
                                                 "/{$latest->slug}.{$latest->news_id}";
-
                                         @endphp
                                         <li>
                                             <div class="author-fresh">
@@ -163,7 +145,6 @@
                                     @empty
                                         <p>No Records</p>
                                     @endforelse
-
                                 </ul>
                                 <div class="video-pagination">
                                     {{ $latestArticles->links('pagination::bootstrap-5') }}
@@ -181,7 +162,6 @@
                                                 "/insights/{$viewed->lang}/" .
                                                 strtolower($viewed->insight_type) .
                                                 "/{$viewed->slug}.{$viewed->news_id}";
-
                                         @endphp
                                         <li>
                                             <div class="author-fresh">
@@ -202,11 +182,9 @@
                                     @empty
                                         <p>No Records</p>
                                     @endforelse
-
                                 </ul>
 
                                 <div class="video-pagination">
-
                                     {{ $mostViewedArticles->links('pagination::bootstrap-5') }}
                                 </div>
                             </div>
@@ -228,7 +206,6 @@
                         </div>
                         {{-- ads section end here --}}
                         {{-- popular articles section start here --}}
-
                         <div class="popular-articles">
                             <div class="popular-title">Trending Articles</div>
                             <div class="region region-home-top-right">
@@ -240,7 +217,6 @@
                                             <div class="view-content">
                                                 <div>
                                                     <ul class="popular-list">
-
                                                         @forelse($popularArticles as $popular)
                                                             @php
                                                                 $popArticleURL = Config('constants.MainDomain') .
@@ -251,8 +227,7 @@
                                                             <li>
                                                                 @foreach ($popular->category as $cat)
                                                                     @php
-                                                                        $catURL =
-                                                                            Config('constants.MainDomain') .
+                                                                        $catURL = Config('constants.MainDomain') .
                                                                             "/insights/{$popular->lang}/{$cat->slug}";
                                                                     @endphp
                                                                     <div class="popular-sub">
@@ -260,7 +235,6 @@
                                                                             hreflang="{{ $popular->lang }}">{{ $cat->catname }}</a>
                                                                     </div>
                                                                 @endforeach
-
                                                                 <div class="popular-head">
                                                                     <a
                                                                         href="{{ $popArticleURL }}">{{ $popular->title }}</a>
@@ -269,21 +243,13 @@
                                                         @empty
                                                             <p>No Recods</p>
                                                         @endforelse
-
                                                     </ul>
-
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
-
                         </div>
                         {{-- popular articles section end here --}}
                         {{-- ads section start here --}}
@@ -302,12 +268,10 @@
             </div>
         </div>
         @include('layout.insights.magblock')
-
         <div class="listblk">
             <div class="container">
                 <ul class="artilsit"></ul>
             </div>
         </div>
     </div>
-
 @endsection

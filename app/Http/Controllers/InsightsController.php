@@ -829,6 +829,105 @@ class InsightsController extends Controller
         return view('insights.detail', compact('newsDetails', 'author_details', 'franchiseData', 'assocTags', 'trendingArticles', 'latestArticles'));
     }
 
+    public function nextArticle(Request  $request, $newsId, $catId){
+        // dd($newsId,$catId);
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+        $newsModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+        $tagTable = $locale == 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
+        $seoTagModel = $locale == 'hi' ? SeoTagHindi::class : SeoTag::class;
+
+        // $ipAddress = $_SERVER['REMOTE_ADDR'];
+        // $ipAsInt = ip2long($ipAddress);
+        // // Check if the IP has already viewed this article
+        // $ipExists = InsightViews::query()
+        //     ->whereNot('insightID', $id)
+        //     ->where('ip_address', $ipAddress)
+        //     ->exists();
+
+        // // If the IP has not viewed the article, increment the view count
+        // if (!$ipExists) {
+        //     // Increment the article's view count
+        //     $newsModel::where('news_id', $id)->increment('views');
+
+        //     // Add a record of the IP viewing the article
+        //     InsightViews::insert([
+        //         'insightID' => $id,
+        //         'ip_address' => $ipAddress,
+        //         'created_at' => now(),
+        //     ]);
+        // }
+
+        // Fetch news details
+        $newsDetails = $newsModel::with(['author', 'category', 'Subcategory'])
+            ->where('status', 1)
+            ->where('cat_id', $catId)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->where('news_id', '>', $newsId)
+            ->orderByDesc('news_id')
+            ->first();
+        // dd($newsDetails);
+        if (!$newsDetails) {
+            return redirect('insights/pagenotfound');
+        }
+        // dd($newsDetails->author);
+        // Fetch author details
+        if (empty($newsDetails->author[0])) {
+            // dd('hello');
+            $authorId = 466;
+        } else {
+            $authorId = $newsDetails->author_id;
+        }
+        // dd($authorId);
+        $author_details = AuthorList::query()->where('author_id', $authorId)->first();
+
+        // Fetch associated tags
+        $associatedTags = $tagTable::query()
+            ->where('content_id', $newsDetails->news_id)
+            // ->where('content_type', 2)
+            ->pluck('tag_id');
+
+        $assocTags = $seoTagModel::query()
+            ->whereIn('tag_id', $associatedTags)
+            ->select('tag_id', 'name')
+            ->distinct()
+            ->get();
+
+        // Find brand matches
+        $title = strtolower($newsDetails->title);
+        $titleWords = preg_split('/\s+/', $title);
+
+        $brandMatches = FranchisorBusinessDetail::where('profile_status', 1)
+            ->select('fran_detail_id', 'company_name', 'profile_name')
+            ->get()
+            ->filter(function ($item) use ($titleWords) {
+                $companyWords = array_map('strtolower', explode(' ', $item->company_name));
+                $pattern = '/\b' . implode('\b.*?\b', array_map('preg_quote', $companyWords, array_fill(0, count($companyWords), '/'))) . '\b/';
+                return preg_match($pattern, implode(' ', $titleWords));
+            })
+            ->take(10)
+            ->map(function ($item) {
+                return [
+                    'fran_detail_id' => $item->fran_detail_id,
+                    'company_name' => $item->company_name,
+                    'profile_name' => $item->profile_name,
+                ];
+            })
+            ->values();
+
+        // Prepare franchise data
+        $franchiseData = $brandMatches->map(function ($match) use ($title) {
+            return [
+                'fran_detail_id' => $match['fran_detail_id'],
+                'company_name' => $match['company_name'],
+                'profile_name' => $match['profile_name'],
+                'title' => $title,
+            ];
+        })->toArray();
+        return view('insights.partials.next-article', compact('newsDetails', 'franchiseData','assocTags','author_details'));
+    }
+
 
 
     public function insightSearch(Request $request)
@@ -1283,4 +1382,34 @@ class InsightsController extends Controller
 
         return @getimagesize($s3Url) !== false ? $s3Url : $defaultUrl;
     }
-}
+
+    public function loadMoreArticles(Request $request)
+    {
+        $catId = $request->catId;
+        $newsId = $request->newsId;
+        $page = $request->page;
+    
+        // Fetch related articles based on category
+        $articles = InsightList::with(['author','category','subcategory'])
+        ->where('cat_id', $catId)
+        ->whereNot('news_id',$newsId)
+        ->whereNotIn('news_type',['ir','ri'])
+        ->where('status', 1)
+        ->orderByDesc('created_at')
+        ->paginate(1, ['*'], 'page', $page);
+    dd($articles);
+        $html = "";
+        foreach ($articles as $article) {
+            $articleUrl = url("/insights/{$article->insight_type}/{$article->slug}.{$article->news_id}");
+            $html .= '
+                <div class="related-article">
+                    <h2><a href="'.$articleUrl.'">'.$article->title.'</a></h2>
+                    <p>'.$article->shortDesc.'</p>
+                    <img src="'.asset($article->image).'" class="img-fluid" alt="'.$article->title.'">
+                    <hr>
+                </div>';
+        }
+    
+        return response()->json(['html' => $html]);
+    }
+    }
