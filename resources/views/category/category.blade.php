@@ -10,21 +10,26 @@
 @endif --}}
 
 {{-- //Pankaj start --}}
-@if ($mc == 5)
-    @if (!empty($loc)) 
-        @php
-            $stateId = $loc[0]; // Extract the first element from the array
-            $stateName = Config::get("location.stateArr.$stateId"); // Get the state name
+
+
+@if(!empty($loc) && $mc == 5)
+@php
+            $stateId = $loc[0]; 
+            $stateName = Config::get("location.stateArr.$stateId");
         @endphp
-@section('seoTitle', $brandResults->total() . '+ ' . $catName . ' Dealers & Distributors in ' .  $stateName )
-@section('seoDesc', 'Find ' . $catName . ' Dealership & Distributors in ' . $stateName . ' to run a successful ' . $catName . ' business in ' . $stateName . '. You can explore some of the established and well known ' .  $catName . ' Dealers in ' . $stateName .' here.')
-@section('seoKeywords', $catName . ' dealership in ' . $stateName . ', ' . $catName . ' distributorship in ' . $stateName . ', ' . $catName . ' dealer in ' . $stateName . ', ' . $catName . ' dealership opportunities in ' . $stateName . ' , Dealer India, ' . $catName . ' distributors in ' . $stateName)
+  @section('seoTitle', $brandResults->total() . '+ ' . $catArr->catname . ' Dealers & Distributors in ' .  $stateName)
+  @section('seoDesc', 'Find ' . $catArr->catname . ' Dealership & Distributors in ' . $stateName . ' to run a successful ' . $catArr->catname . ' business in ' . $stateName . '. You can explore some of the established and well-known ' .  $catArr->catname . ' Dealers in ' . $stateName .' here.')
+  @section('seoKeywords', $catArr->catname . ' dealership in ' . $stateName . ', ' . $catArr->catname . ' distributorship in ' . $stateName . ', ' . $catArr->catname . ' dealer in ' . $stateName . ', ' . $catArr->catname . ' dealership opportunities in ' . $stateName . ', Dealer India, ' . $catArr->catname . ' distributors in ' . $stateName)
+
+@elseif(empty($loc) && $mc == 5)
+@section('seoTitle', $brandResults->total() . '+ ' . $catName . ' Dealers & Distributors in India')
+@section('seoDesc', 'Dealer India offers a wide variety of ' . $catName . ' Dealership & Distributorship opportunities to run a successful ' . $catName . ' business. You can explore some of the established and well-known ' . $catName . ' Dealers here.')
+@section('seoKeywords', $catName . ' dealership in India, ' . $catName . ' distributorship in India, ' . $catName . ' dealers in India, ' . $catName . ' dealership opportunities in India, Dealer India, ' . $catName . ' distributors in India')
 @else
-        @section('seoTitle', $brandResults->total() . '+ ' . $catName . ' Dealers & Distributors in India')
-        @section('seoDesc', 'Dealer India offers wide variety of ' . $catName . ' Dealership & Distributorship opportunities to run a successful ' . $catName . ' business. You can explore some of the established and well-known ' . $catName . ' Dealers here.')
-        @section('seoKeywords', $catName . ' dealership in India,' . $catName . ' distributorship in India,' . $catName . ' dealers in India,' . $catName . ' dealership opportunities in India, Dealer India,' . $catName . ' distributors in India')
-    @endif
+
 @endif
+
+{{-- //////////// --}}
 
 {{-- //Pankaj end --}}
 @if ($mc == 2)
