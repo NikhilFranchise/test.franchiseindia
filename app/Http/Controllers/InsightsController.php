@@ -718,26 +718,50 @@ class InsightsController extends Controller
         $tagTable = $locale == 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
         $seoTagModel = $locale == 'hi' ? SeoTagHindi::class : SeoTag::class;
 
+        // $ipAddress = $_SERVER['REMOTE_ADDR'];
+        // $ipAsInt = ip2long($ipAddress);
+        // // Check if the IP has already viewed this article
+        // $ipExists = InsightViews::query()->select('ip_address')
+        //     ->where('insightID', $id)
+        //     ->where('ip_address', $ipAddress)
+        //     ->exists(); 
+
+        // // If the IP has not viewed the article, increment the view count
+        // if (!$ipExists) {
+        //     // Increment the article's view count
+        //     $newsModel::where('news_id', $id)->increment('views');
+
+        //     // Add a record of the IP viewing the article
+        //     InsightViews::insert([
+        //         'insightID' => $id,
+        //         'ip_address' => $ipAddress,
+        //         'created_at' => now(),
+        //     ]);
+        // }
+
         $ipAddress = $_SERVER['REMOTE_ADDR'];
         $ipAsInt = ip2long($ipAddress);
-        // Check if the IP has already viewed this article
-        $ipExists = InsightViews::query()
-            ->where('insightID', $id)
-            ->where('ip_address', $ipAddress)
-            ->exists();
 
-        // If the IP has not viewed the article, increment the view count
-        if (!$ipExists) {
-            // Increment the article's view count
-            $newsModel::where('news_id', $id)->increment('views');
+        // Find existing IP entry
+        $existingView = InsightViews::where('ip_address', $ipAddress)->first();
 
-            // Add a record of the IP viewing the article
-            InsightViews::insert([
+        if (!$existingView) {
+            // If IP does not exist, insert a new record and increment view count
+            InsightViews::create([
                 'insightID' => $id,
                 'ip_address' => $ipAddress,
                 'created_at' => now(),
             ]);
+            $newsModel::where('news_id', $id)->increment('views');
+        } elseif ($existingView->insightID != $id) {
+            // If IP exists but insightID is different, update the record and increment the view count
+            $existingView->update([
+                'insightID' => $id,
+                'created_at' => now(),
+            ]);
+            $newsModel::where('news_id', $id)->increment('views');
         }
+
 
         // Fetch news details
         $newsDetails = $newsModel::with(['author', 'category', 'Subcategory'])
@@ -829,8 +853,12 @@ class InsightsController extends Controller
         return view('insights.detail', compact('newsDetails', 'author_details', 'franchiseData', 'assocTags', 'trendingArticles', 'latestArticles'));
     }
 
-    public function nextArticle(Request  $request, $newsId, $catId){
-        // dd($newsId,$catId);
+    public function nextArticle(Request  $request, $catId)
+    {
+        $loadedNewsIds = $request->input('loadedNewsIds', []);
+
+        // Debugging output
+        // dd($loadedNewsIds, $catId);
         $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
@@ -864,22 +892,18 @@ class InsightsController extends Controller
             ->where('status', 1)
             ->where('cat_id', $catId)
             ->whereNotIn('news_type', ['ri', 'ir'])
-            ->where('news_id', '>', $newsId)
+            ->whereNotIn('news_id', $loadedNewsIds)
             ->orderByDesc('news_id')
             ->first();
-        // dd($newsDetails);
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
         }
-        // dd($newsDetails->author);
         // Fetch author details
         if (empty($newsDetails->author[0])) {
-            // dd('hello');
             $authorId = 466;
         } else {
             $authorId = $newsDetails->author_id;
         }
-        // dd($authorId);
         $author_details = AuthorList::query()->where('author_id', $authorId)->first();
 
         // Fetch associated tags
@@ -925,7 +949,9 @@ class InsightsController extends Controller
                 'title' => $title,
             ];
         })->toArray();
-        return view('insights.partials.next-article', compact('newsDetails', 'franchiseData','assocTags','author_details'));
+        // Add the newly fetched `news_id` to the loaded list
+        $loadedNewsIds[] = $newsDetails->news_id;
+        return view('insights.partials.next-article', compact('newsDetails', 'franchiseData', 'assocTags', 'author_details', 'loadedNewsIds'));
     }
 
 
@@ -1388,28 +1414,28 @@ class InsightsController extends Controller
         $catId = $request->catId;
         $newsId = $request->newsId;
         $page = $request->page;
-    
+
         // Fetch related articles based on category
-        $articles = InsightList::with(['author','category','subcategory'])
-        ->where('cat_id', $catId)
-        ->whereNot('news_id',$newsId)
-        ->whereNotIn('news_type',['ir','ri'])
-        ->where('status', 1)
-        ->orderByDesc('created_at')
-        ->paginate(1, ['*'], 'page', $page);
-    dd($articles);
+        $articles = InsightList::with(['author', 'category', 'subcategory'])
+            ->where('cat_id', $catId)
+            ->whereNot('news_id', $newsId)
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->where('status', 1)
+            ->orderByDesc('created_at')
+            ->paginate(1, ['*'], 'page', $page);
+        dd($articles);
         $html = "";
         foreach ($articles as $article) {
             $articleUrl = url("/insights/{$article->insight_type}/{$article->slug}.{$article->news_id}");
             $html .= '
                 <div class="related-article">
-                    <h2><a href="'.$articleUrl.'">'.$article->title.'</a></h2>
-                    <p>'.$article->shortDesc.'</p>
-                    <img src="'.asset($article->image).'" class="img-fluid" alt="'.$article->title.'">
+                    <h2><a href="' . $articleUrl . '">' . $article->title . '</a></h2>
+                    <p>' . $article->shortDesc . '</p>
+                    <img src="' . asset($article->image) . '" class="img-fluid" alt="' . $article->title . '">
                     <hr>
                 </div>';
         }
-    
+
         return response()->json(['html' => $html]);
     }
-    }
+}
