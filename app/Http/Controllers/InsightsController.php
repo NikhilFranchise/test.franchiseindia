@@ -750,14 +750,16 @@ class InsightsController extends Controller
             InsightViews::create([
                 'insightID' => $id,
                 'ip_address' => $ipAddress,
-                'created_at' => now(),
+                'times' => 1, // First time viewing
+                'updated_at' => now(),
             ]);
             $newsModel::where('news_id', $id)->increment('views');
         } elseif ($existingView->insightID != $id) {
             // If IP exists but insightID is different, update the record and increment the view count
             $existingView->update([
                 'insightID' => $id,
-                'created_at' => now(),
+                'times' => $existingView->times + 1, // Increase count
+                'updated_at' => now(),
             ]);
             $newsModel::where('news_id', $id)->increment('views');
         }

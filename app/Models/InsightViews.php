@@ -14,9 +14,10 @@ class InsightViews extends Model
     protected $fillable = [
         'insightID',
         'ip_address',
+        'times',
         'created_at',
-        // 'updated_at', // Add if needed
+        'updated_at', // Add if needed
     ];
-    public $timestamps = false; // Disable timestamps if 'updated_at' is missing
+    // public $timestamps = false; // Disable timestamps if 'updated_at' is missing
 
 }
