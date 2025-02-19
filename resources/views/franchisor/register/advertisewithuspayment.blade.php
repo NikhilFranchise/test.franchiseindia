@@ -17,10 +17,17 @@
     {{-- $regType = $franData->looking_tradepartner == 1 ? 2 : 1; --}}
     {{-- @endphp --}}
     <!-- Google Tag Manager (noscript) -->
-    <noscript>
+{{-- -- added GTM as per shan mohammad on 19th feb 2025 --}}
+
+{{-- -- added GTM as per shan mohammad on 19th feb 2025 --}}
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KW4K6WV6"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+{{-- removed as per shan mohammad on 19th feb 2025 --}}
+    {{-- <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
             style="display:none;visibility:hidden"></iframe>
-    </noscript>
+    </noscript> --}}
     <!-- End Google Tag Manager (noscript) -->
     @php
         $pageType = request()->segment(1) == 'premiumbrand' || request()->segment(2) == 'premiumbrand' ? 2 : 1;
