@@ -6,7 +6,6 @@
 @section('seoDesc', $newsDetails->shortDesc)
 @section('seoKeywords', $newsDetails->kicker)
 @section('canonicalUrl', url()->current())
-{{-- @dd($newsDetails->image); --}}
 @php
     $ogimage = !empty($newsDetails->image)
         ? \App\Http\Controllers\InsightsController::createimgurl($newsDetails->image)
@@ -26,20 +25,6 @@
         ? \App\Http\Controllers\InsightsController::authorImageurl($author_details->image)
         : url('images/defaultuser.png');
 @endphp
-<style>
-    .article-wrapper {
-        margin-top: 40px;
-        padding-top: 40px;
-        border-top: 1px solid #eee;
-    }
-
-    #loading {
-        text-align: center;
-        padding: 20px;
-        font-size: 1.2em;
-        background: #f5f5f5;
-    }
-</style>
 @section('image', $ogimage)
 @section('shortDesc', $newsDetails->shortDesc)
 @section('imagesrc', $ogimage)
@@ -221,8 +206,8 @@
                             {!! $renderedContent !!}
 
                         </div>
-                        @if (!empty($franchiseData))
-                            <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px;">
+                            @if (!empty($franchiseData))
                                 <h4 style="margin-top:15px">Interested in Franchise:</h4>
                                 @foreach ($franchiseData as $franchise)
                                     <div
@@ -234,8 +219,8 @@
                                         </a>
                                     </div>
                                 @endforeach
-                            </div>
-                        @endif
+                            @endif
+                        </div>
                         <div class="tag-block">
                             <ul class="tag-list">
                                 @if (!empty($assocTags) && isset($assocTags))
@@ -252,11 +237,11 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="contentarea" id="last-paragraph">
+                    {{-- <div class="contentarea" id="last-paragraph-{{ $newsDetails->news_id }}"data-news-id="{{ $newsDetails->news_id }}"> --}}
+                    <div class="contentarea">
                         @include('layout.insights.subscribenewsletter')
-                    </div>  
+                    </div>
                 </div>
-                <div id="next-article"></div> <!-- New article will be loaded here -->
                 <div class="col-md-4">
                     <div class="right-wrap">
                         {{-- ads top right sidebar --}}
@@ -336,41 +321,60 @@
                 </div>
             </div>
         </div>
-    </div>
+        {{-- <div class="next-article-container" id="next-article"></div> --}}
+        <!-- New article will be loaded here -->
     </div>
     @include('layout.insights.magblock')
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    loadNextArticle();
-                }
-            }, { threshold: 1.0 });
-    
-            let lastParagraph = document.getElementById("last-paragraph");
-            if (lastParagraph) {
+    {{-- <script>
+        $(document).ready(function() {
+            let loadedNewsIds = new Set(); // Stores only unique news IDs
+
+            function loadNextArticle(currentNewsId, catId) {
+                if (loadedNewsIds.has(currentNewsId)) return; // Skip if already loaded
+                
+                loadedNewsIds.add(currentNewsId); // Mark as loaded
+                // alert(Array.from(loadedNewsIds).join(", "));
+
+                $.ajax({
+                    url: `/insights/next-article/${catId}`,
+                    method: "GET",
+                    data: {
+                        loadedNewsIds: Array.from(loadedNewsIds)
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(data) {
+                        if (!data.trim()) return; // Stop if no data
+
+                        let newArticle = $(data);
+                        $(".next-article-container").append(newArticle); // Append new article
+                        observeLastParagraph(newArticle.find(".last-paragraph").attr("data-news-id"));
+                    },
+                    error: function(error) {
+                        console.error("Error loading next article:", error);
+                    }
+                });
+            }
+
+            function observeLastParagraph(newsId) {
+                let lastParagraph = document.querySelector(`#last-paragraph-${newsId}`);
+                if (!lastParagraph) return;
+
+                let observer = new IntersectionObserver(entries => {
+                    if (entries[0].isIntersecting) {
+                        loadNextArticle(newsId, {{ $newsDetails->cat_id }});
+                    }
+                }, {
+                    threshold: 1.0
+                });
+
                 observer.observe(lastParagraph);
             }
+
+            // Start observing the first article
+            observeLastParagraph({{ $newsDetails->news_id }});
         });
-    
-        function loadNextArticle() {
-            let nextArticleContainer = document.getElementById("next-article");
-    
-            // Check if already loading to prevent multiple requests
-            if (nextArticleContainer.getAttribute("data-loading") === "true") return;
-            nextArticleContainer.setAttribute("data-loading", "true");
-    
-            let currentNewsId = "{{ $newsDetails->news_id }}";
-            let catId = "{{ $newsDetails->cat_id }}";
-    
-            fetch(`/insights/next-article/${currentNewsId}/${catId}`)
-                .then(response => response.text())
-                .then(data => {
-                    nextArticleContainer.innerHTML = data;
-                    nextArticleContainer.removeAttribute("data-loading");
-                })
-                .catch(error => console.error("Error loading next article:", error));
-        }
-    </script>
-    
+    </script> --}}
+
 @endsection

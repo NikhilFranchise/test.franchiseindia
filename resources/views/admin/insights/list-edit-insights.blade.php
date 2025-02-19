@@ -15,7 +15,6 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
-
     <style>
         .search-results {
             margin-top: 63px;
@@ -170,11 +169,9 @@
             box-shadow: none;
         }
     </style>
-
 </head>
 
 <body>
-
     <!--Header-part-->
     @include('admin.includes.header')
     <!--close-top-Header-menu-->
@@ -280,7 +277,19 @@
                                             @endphp
 
                                             <td>{{ $insights->news_id }}</td>
-                                            <td>{{ $insights->title }}</td>
+                                            {{-- <td
+                                                onmouseover="showQuickEdit({{ $insights->news_id }}, {{ $locale }});">
+                                                {{ $insights->title }} <div id="quick_edit" style="display: none"><a
+                                                        href="{{ url('admin/' . $locale . '/multilist-insights') }}">QuickEdit</a>
+                                                </div>
+                                            </td> --}}
+                                            <td onmouseover="showQuickEdit(this);" onmouseout="hideQuickEdit(this);" style="text-align: left">
+                                                {{ $insights->title }}
+                                                <button class="quick_edit" style="display: none; float:right;">
+                                                    <a
+                                                        href="{{ url('admin/' . $locale . '/multilist-insights') }}">QuickEdit</a>
+                                                </button>
+                                            </td>
                                             <td>
                                                 @if (empty($insights->insight_type) && $insights->insight_type == 0)
                                                     {{ 'No Insights Type ' }}
@@ -382,7 +391,7 @@
                     type: "POST",
                     //url: '/admin//updateinsightstatus',
                     url: '/admin/' + lang +
-                    '/updateinsightstatus', // Dynamically set the URL with the locale
+                        '/updateinsightstatus', // Dynamically set the URL with the locale
 
                     data: {
                         "News": id,
@@ -402,7 +411,7 @@
                 $.ajax({
                     type: "POST",
                     url: '/admin/' + lang +
-                    '/deleteinsights', // Dynamically set the URL with the locale
+                        '/deleteinsights', // Dynamically set the URL with the locale
                     data: {
                         "contentId": x,
                         "_token": "{{ csrf_token() }}"
@@ -427,6 +436,14 @@
             confirm.one('click', onConfirm);
             confirm.one('click', fClose);
             $("#confirmCancel").one("click", fClose);
+        }
+
+        function showQuickEdit(element) {
+            $(element).find('.quick_edit').css('display', 'block');
+        }
+
+        function hideQuickEdit(element) {
+            $(element).find('.quick_edit').css('display', 'none');
         }
     </script>
     <script src="{{ url('admin/js/jquery.ui.custom.js') }}"></script>
