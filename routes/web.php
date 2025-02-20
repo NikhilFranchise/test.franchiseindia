@@ -921,9 +921,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('login',                                [AdminController::class, 'loginView']);
     Route::get('list-news',                            [AdminController::class, 'listNews']);
     Route::get('edit-news-view/{id}',                  [AdminController::class, 'editNewsView']);
-    // Route::middleware(['admin'])->group(function () {
-        Route::get('dashboard',                            [AdminController::class, 'viewDashboard']);
-    // });
+    Route::get('dashboard',                            [AdminController::class, 'viewDashboard']);
     Route::get('create-author',                        [AdminController::class, 'createAuthor']);
     Route::get('edit-author/{id}',                     [AdminController::class, 'viewAuthor']);
     Route::get('list-magazine-articles/{id}',          [AdminController::class, 'listMagazineArticles']);
@@ -1118,7 +1116,6 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
             Route::middleware(['content.admin'])->group(function () {
-                // Route::get('/insights/details/{id}', [InsightController::class, 'getInsightsDetails']);
                 Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
             });
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
@@ -1146,7 +1143,6 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('video_podcast',                [InsightsController::class, 'getvideopodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
             Route::middleware(['content.admin'])->group(function () {
-                // Route::get('/insights/details/{id}', [InsightController::class, 'getInsightsDetails']);
                 Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails'])->name('insights.details');
             });
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);

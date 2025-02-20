@@ -1372,33 +1372,33 @@ class InsightsController extends Controller
         return @getimagesize($s3Url) !== false ? $s3Url : $defaultUrl;
     }
 
-    public function loadMoreArticles(Request $request)
-    {
-        $catId = $request->catId;
-        $newsId = $request->newsId;
-        $page = $request->page;
+    // public function loadMoreArticles(Request $request)
+    // {
+    //     $catId = $request->catId;
+    //     $newsId = $request->newsId;
+    //     $page = $request->page;
 
-        // Fetch related articles based on category
-        $articles = InsightList::with(['author', 'category', 'subcategory'])
-            ->where('cat_id', $catId)
-            ->whereNot('news_id', $newsId)
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->where('status', 1)
-            ->orderByDesc('created_at')
-            ->paginate(1, ['*'], 'page', $page);
-        dd($articles);
-        $html = "";
-        foreach ($articles as $article) {
-            $articleUrl = url("/insights/{$article->insight_type}/{$article->slug}.{$article->news_id}");
-            $html .= '
-                <div class="related-article">
-                    <h2><a href="' . $articleUrl . '">' . $article->title . '</a></h2>
-                    <p>' . $article->shortDesc . '</p>
-                    <img src="' . asset($article->image) . '" class="img-fluid" alt="' . $article->title . '">
-                    <hr>
-                </div>';
-        }
+    //     // Fetch related articles based on category
+    //     $articles = InsightList::with(['author', 'category', 'subcategory'])
+    //         ->where('cat_id', $catId)
+    //         ->whereNot('news_id', $newsId)
+    //         ->whereNotIn('news_type', ['ir', 'ri'])
+    //         ->where('status', 1)
+    //         ->orderByDesc('created_at')
+    //         ->paginate(1, ['*'], 'page', $page);
+    //     dd($articles);
+    //     $html = "";
+    //     foreach ($articles as $article) {
+    //         $articleUrl = url("/insights/{$article->insight_type}/{$article->slug}.{$article->news_id}");
+    //         $html .= '
+    //             <div class="related-article">
+    //                 <h2><a href="' . $articleUrl . '">' . $article->title . '</a></h2>
+    //                 <p>' . $article->shortDesc . '</p>
+    //                 <img src="' . asset($article->image) . '" class="img-fluid" alt="' . $article->title . '">
+    //                 <hr>
+    //             </div>';
+    //     }
 
-        return response()->json(['html' => $html]);
-    }
+    //     return response()->json(['html' => $html]);
+    // }
 }

@@ -1848,8 +1848,7 @@ class AdminController extends Controller
         }
     }
 
-
-
+    
     public function createInsights(Request $request)
     {
         // dd($request->all());
