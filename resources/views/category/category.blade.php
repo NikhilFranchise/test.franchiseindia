@@ -10,7 +10,11 @@
 @endif --}}
 
 {{-- //Pankaj start --}}
-
+@if(URL::Current() == Config('constants.MainDomain') .'/business-opportunities/dealers-and-distributors.m5')
+@section('seoTitle', $brandResults->total() . '+ ' .' Dealership and Distributorship Opportunities in India – Dealer India')
+@section('seoDesc','Access to ' . $brandResults->total() . '+ ' .'best dealership/distributorship business opportunities in India. Dealer and distributors a financially rewarding business in the growing industry.' )
+@section('seoKeywords','distributorship opportunities, looking for distributorship opportunities, dealership opportunities, looking for dealership opportunities, distributorship business ideas, distributorship business in india, distributorship business plan')
+@endif
 
 @if(!empty($loc) && $mc == 5)
 @php
