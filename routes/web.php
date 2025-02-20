@@ -1001,10 +1001,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('cat/create',                      [AdminController::class, 'categoryform']);
         Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
         Route::get('cat/list',                        [AdminController::class, 'catlist']);
+        Route::get('cat/edit/{id}',                        [AdminController::class, 'catEdit']);
         Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
         Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
         // category and subcategory post routes
         Route::post('create/cat',                      [AdminController::class, 'storecat']);
+        Route::post('update/cat',                      [AdminController::class, 'updateCat']);
         Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
         Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
         Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
@@ -1027,10 +1029,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('cat/create',                      [AdminController::class, 'categoryform']);
         Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
         Route::get('cat/list',                        [AdminController::class, 'catlist']);
+        Route::get('cat/edit/{id}',                        [AdminController::class, 'catEdit']);
         Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
         Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
         // category and subcategory post routes
         Route::post('create/cat',                      [AdminController::class, 'storecat']);
+        Route::post('update/cat',                      [AdminController::class, 'updateCat']);
         Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
         Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
         Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);

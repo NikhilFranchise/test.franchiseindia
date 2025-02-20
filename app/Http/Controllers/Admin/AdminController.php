@@ -2332,6 +2332,45 @@ class AdminController extends Controller
         return view('admin.category.list', compact('catdata'));
     }
 
+    public function catEdit(Request $request)
+    {
+        $locale = $request->segment(2);
+        $catClass = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
+
+        $editData = $catClass::find($request->id);
+
+        if (!$editData) {
+            return redirect()->back()->with('error', 'Category not found.');
+        }
+
+        return view('admin.category.edit', compact('editData'));
+    }
+
+    public function updateCat(Request $request)
+    {
+        $locale = $request->segment(2);
+        $catClass = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
+
+        $category = $catClass::find($request->catid);
+
+        if (!$category) {
+            return redirect()->back()->with('error', 'Category not found.');
+        }
+        if ($locale == 'hi') {
+            $slug = $request->slug;
+        } else {
+            $slug = Str::slug($request->maincat);
+        }
+
+        $category->update([
+            'catname' => $request->maincat,
+            'slug' => $slug,
+        ]);
+
+        return redirect()->to('admin/' . $locale . '/cat/list')->with('success', 'Category updated successfully.');
+    }
+
+
 
     public function deleteCat(Request $request)
     {

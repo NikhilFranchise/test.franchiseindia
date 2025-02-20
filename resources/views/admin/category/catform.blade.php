@@ -83,9 +83,9 @@
             <div id="breadcrumb">
                 <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
                         class="icon-home"></i>Home</a>
-                <a href="{{ url('admin/cat/list') }}" class="tip-bottom">{{ $locale }} Main
+                <a href="{{ url('admin/' . $lang . '/cat/list') }}" class="tip-bottom">{{ $locale }} Main
                     Category/{{ $locale }} Sub Category</a>
-                <a href="" class="current">Create {{ $locale }} Main Category</a>
+                <a class="current">Create {{ $locale }} Main Category</a>
             </div>
             <h1>Create {{ $locale }} Main Category</h1>
         </div>
@@ -100,7 +100,8 @@
                         @if (!empty(session()->get('failed')))
                             <div class="alert alert-danger">{{ session()->get('failed') }}</div>
                         @endif
-                        <form method="POST" class="form-horizontal" action="{{ url('admin/' . $lang . '/create/cat') }}">
+                        <form method="POST" class="form-horizontal"
+                            action="{{ url('admin/' . $lang . '/create/cat') }}">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                             <div class="control-group">
@@ -115,7 +116,8 @@
                                 <div class="control-group">
                                     <label class="control-label">Slug :</label>
                                     <div class="controls">
-                                        <input type="text" maxlength="125" required class="span11" name="slug" id="slug" placeholder="Slug" />
+                                        <input type="text" maxlength="125" required class="span11" name="slug"
+                                            id="slug" placeholder="Slug" />
                                         {{--  <div id="error-message" style="color: red;"></div>  --}}
                                     </div>
                                 </div>

@@ -1030,9 +1030,9 @@ class InsightsController extends Controller
         $model = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
 
         if ($locale == 'en') {
-            $specificCategories = ['Electric Vehicles', 'MSME', 'Education & Training'];
+            $specificCategories = ['Electric Vehicles', 'MSME', 'Education'];
         } else {
-            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई', 'शिक्षा और प्रशिक्षण'];
+            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई', 'शिक्षा'];
         }
 
         $categories = $model::select('id', 'catname', 'slug')
@@ -1046,9 +1046,9 @@ class InsightsController extends Controller
     {
         $model = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
         if ($locale == 'en') {
-            $specificCategories = ['Electric Vehicles', 'MSME', 'Education & Training'];
+            $specificCategories = ['Electric Vehicles', 'MSME', 'Education'];
         } else {
-            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई', 'शिक्षा और प्रशिक्षण'];
+            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई', 'शिक्षा'];
         }
         $categories = $model::select('id', 'catname', 'slug')
             ->whereIn('catname', $specificCategories)
