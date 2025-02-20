@@ -24,21 +24,22 @@ use App\Models\MagazineComment;
 use App\Models\MagazineCategory;
 use App\Models\ContentSliderImage;
 use App\Models\ContentTagsAssigned;
-use App\Mail\CommentReplyMail;
 use App\Models\FranchisorBusinessDetail;
 use App\Models\ArticleInterviewCommentReply;
 use App\Models\FihlPodcastVideo;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\Controller;
 use App\Models\FihlVideoCategory;
+use App\Mail\CommentReplyMail;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class AdminController extends Controller
@@ -83,27 +84,57 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
+    // public function loginCheck(Request $request)
+    // {
+    //     $email      = $request->email;
+    //     $password   = $request->password;
+    //     $admUser    = AdminUser::query()->where(['admin_email' => $email])->first();
+
+    //     if ($admUser == null)
+    //         return redirect('admin/login');
+
+    //     //checking if hash exists in the entered password
+    //     if (Hash::getFacadeRoot()->check($password, $admUser->admin_password)) {
+    //         session()->flush();
+    //         $adm_name = $admUser->admin_name;
+    //         $request->session()->put('admin_name', $adm_name);
+    //         $request->session()->put('adminEmail', $email);
+    //         $request->session()->put('role', $admUser->admin_dept);
+    //         $request->session()->put('author_creation_capability', $admUser->can_create_author);
+    //         return redirect('admin/dashboard');
+    //     }
+
+    //     return redirect('admin/login');
+    // }
     public function loginCheck(Request $request)
     {
-        $email      = $request->email;
-        $password   = $request->password;
-        $admUser    = AdminUser::query()->where(['admin_email' => $email])->first();
+        $credentials = [
+            'admin_email' => $request->email,
+            'password' => $request->password
+        ];
 
-        if ($admUser == null)
-            return redirect('admin/login');
+        // Find the admin user
+        $admUser = AdminUser::where('admin_email', $request->email)->first();
 
-        //checking if hash exists in the entered password
-        if (Hash::getFacadeRoot()->check($password, $admUser->admin_password)) {
-            session()->flush();
-            $adm_name = $admUser->admin_name;
-            $request->session()->put('admin_name', $adm_name);
-            $request->session()->put('adminEmail', $email);
-            $request->session()->put('role', $admUser->admin_dept);
-            $request->session()->put('author_creation_capability', $admUser->can_create_author);
-            return redirect('admin/dashboard');
+        if (!$admUser) {
+            return redirect('admin/login')->with('error', 'Invalid email or password.');
         }
 
-        return redirect('admin/login');
+        // Check the password manually if necessary
+        if (!Hash::check($request->password, $admUser->admin_password)) {
+            return redirect('admin/login')->with('error', 'Invalid email or password.');
+        }
+
+        // Use Auth guard to login admin
+        Auth::guard('admin')->login($admUser);
+
+        // Store additional session data if needed
+        session()->put('admin_name', $admUser->admin_name);
+        session()->put('adminEmail', $admUser->admin_email);
+        session()->put('role', $admUser->admin_dept);
+        session()->put('author_creation_capability', $admUser->can_create_author);
+
+        return redirect('admin/dashboard');
     }
 
     /**
@@ -1749,22 +1780,51 @@ class AdminController extends Controller
         if ($isHindi == 'en') {
             if ($isDelete == 1)
                 ContentTagsAssigned::query()->where('content_id', $id)->where('content_type', $type)->delete();
-
             foreach ($tags as $associatedTagsNew) {
-                ContentTagsAssigned::query()->insert(['content_type' => $type, 'content_id' => $id, 'tag_id' => $associatedTagsNew]);
+                // Check if the tag already exists
+                $exists = ContentTagsAssigned::query()
+                    ->where('content_id', $id)
+                    ->where('content_type', $type)
+                    ->where('tag_id', $associatedTagsNew)
+                    ->first();
 
-                //increasing frequency count
-                SeoTag::query()->where('tag_id', $associatedTagsNew)->increment('frequency');
+                if (!$exists) {
+                    // Insert new tag only if it doesn't exist
+                    ContentTagsAssigned::query()->insert([
+                        'content_type' => $type,
+                        'content_id' => $id,
+                        'tag_id' => $associatedTagsNew
+                    ]);
+
+                    // ContentTagsAssigned::query()->insert(['content_type' => $type, 'content_id' => $id, 'tag_id' => $associatedTagsNew]);
+
+                    //increasing frequency count
+                    SeoTag::query()->where('tag_id', $associatedTagsNew)->increment('frequency');
+                }
             }
         } elseif ($isHindi == 'hi') {
             if ($isDelete == 1)
                 ContentTagsAssignedHindi::query()->where('content_id', $id)->where('content_type', $type)->delete();
 
             foreach ($tags as $associatedTagsNew) {
-                ContentTagsAssignedHindi::query()->insert(['content_type' => $type, 'content_id' => $id, 'tag_id' => $associatedTagsNew]);
+                $exists = ContentTagsAssigned::query()
+                    ->where('content_id', $id)
+                    ->where('content_type', $type)
+                    ->where('tag_id', $associatedTagsNew)
+                    ->first();
 
-                //increasing frequency count
-                SeoTagHindi::query()->where('tag_id', $associatedTagsNew)->increment('frequency');
+                if (!$exists) {
+                    // Insert new tag only if it doesn't exist
+                    ContentTagsAssigned::query()->insert([
+                        'content_type' => $type,
+                        'content_id' => $id,
+                        'tag_id' => $associatedTagsNew
+                    ]);
+                    // ContentTagsAssignedHindi::query()->insert(['content_type' => $type, 'content_id' => $id, 'tag_id' => $associatedTagsNew]);
+
+                    //increasing frequency count
+                    SeoTagHindi::query()->where('tag_id', $associatedTagsNew)->increment('frequency');
+                }
             }
         }
     }
@@ -1891,7 +1951,7 @@ class AdminController extends Controller
                         ->orWhere('news_id', $search);
                 });
             })
-            ->whereIn('status', [0, 1]) // Filter by status (active/inactive)
+            ->whereIn('status', [0, 1, 2]) // Filter by status (active/inactive)
             ->orderByDesc('news_id') // Order by descending news ID
             ->paginate(25);
 
@@ -1916,10 +1976,11 @@ class AdminController extends Controller
                         ->orWhere('news_id', $search);
                 });
             })
-            ->whereIn('status', [0, 1]) // Filter by active/inactive status
+            ->whereIn('status', [0, 1, 2]) // Filter by active/inactive status
             ->orderByDesc('news_id') // Order by descending news ID
             ->paginate(30);
 
+        $totalCount = $data->total();
         // Fetch dropdown data
         $InsightCategory = $catModel::select('id', 'catname')
             ->where('status', 1)
@@ -1930,30 +1991,54 @@ class AdminController extends Controller
             ->get();
 
         // Return the view with data
-        return view('admin.insights.multilist-edit', compact('data', 'InsightCategory', 'InsightAuthor'));
+        return view('admin.insights.multilist-edit', compact('data', 'InsightCategory', 'InsightAuthor', 'totalCount'));
     }
 
 
 
     public function saveMultipleInsights(Request $request)
     {
+        // dd($request->all());
         // Determine the model based on language segment
         $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
+        $catmodel = ($request->segment(2) == 'en') ? InsightCategory::class : InsightsHindiCategory::class;
+        $subCatModel = ($request->segment(2) == 'en') ? InsightSubcategory::class : InsightsHindiSubCategory::class;
 
         // Get selected articles
         $articles = $request->input('articles', []);
-
+        // dd($articles);
         foreach ($articles as $newsId => $articleDetails) {
             $existingInsight = $model::find($newsId);
+            // dd($existingInsight);
             if ($existingInsight) {
+                $associatedTags = isset($articleDetails['associated_tags'])
+                    ? explode(',', $articleDetails['associated_tags'])
+                    : [];
+                // Retrieve new category and sub-category
+                $newCatId = $articleDetails['main_category'] ?? $existingInsight->cat_id;
+                $newSubCatId = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
+
+                // Validate sub-category: If it doesn't belong to the selected category, set it to null
+                $isValidSubCategory = $subCatModel::query()
+                    ->where('mcat_id', $newCatId)
+                    ->where('id', $newSubCatId)
+                    ->exists();
+
+                if ($newCatId != $existingInsight->cat_id && !$isValidSubCategory) {
+                    $newSubCatId = null;
+                }
+
                 // Update fields dynamically
                 $fieldsToUpdate = [
                     'insight_type' => $articleDetails['insight_type'] ?? $existingInsight->insight_type,
-                    'cat_id' => $articleDetails['main_category'] ?? $existingInsight->cat_id,
-                    'subcat_id' => $articleDetails['sub_category'] ?? $existingInsight->subcat_id,
+                    'cat_id' => $newCatId,
+                    'subcat_id' => $newSubCatId,
                     'status' => $articleDetails['status'] ?? $existingInsight->status,
                     'author_id' => $articleDetails['author'] ?? $existingInsight->author_id,
+                    'privacy' => $articleDetails['privacy'] ?? $existingInsight->privacy,
+                    // 'associated_tags' => json_encode($associatedTags),
                 ];
+                // dd($fieldsToUpdate);
 
                 // Apply updates
                 foreach ($fieldsToUpdate as $field => $value) {
@@ -1965,6 +2050,10 @@ class AdminController extends Controller
 
                 // Save the updated record
                 $existingInsight->save();
+                // Insert associated tags if provided
+                if (!empty($associatedTags)) {
+                    $this->insertAssociatedTags($associatedTags, $newsId, 2, 0, $request->segment(2));
+                }
             }
         }
 

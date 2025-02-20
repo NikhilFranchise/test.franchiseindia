@@ -80,6 +80,8 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         // Other middlewares
         'Localization' => \App\Http\Middleware\Localization::class,
+        'content.admin' => \App\Http\Middleware\ContentAdmin::class, // Add this line
+
     ];
 
 

@@ -22,10 +22,9 @@ use App\Models\FranchisorBusinessDetail;
 use App\Models\InsightListHindi;
 use App\Models\SeoTagHindi;
 use App\Models\FihlPodcastVideo;
-use App\Models\FihlVideoCategory;
-use App\Models\InsightViews;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class InsightsController extends Controller
 {
@@ -711,68 +710,30 @@ class InsightsController extends Controller
     public function getInsightsDetails(Request $request)
     {
         $id = $request->id;
+        // dd(Auth::check());
         $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
         $newsModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
         $tagTable = $locale == 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
         $seoTagModel = $locale == 'hi' ? SeoTagHindi::class : SeoTag::class;
-
-        // $ipAddress = $_SERVER['REMOTE_ADDR'];
-        // $ipAsInt = ip2long($ipAddress);
-        // // Check if the IP has already viewed this article
-        // $ipExists = InsightViews::query()->select('ip_address')
-        //     ->where('insightID', $id)
-        //     ->where('ip_address', $ipAddress)
-        //     ->exists(); 
-
-        // // If the IP has not viewed the article, increment the view count
-        // if (!$ipExists) {
-        //     // Increment the article's view count
-        //     $newsModel::where('news_id', $id)->increment('views');
-
-        //     // Add a record of the IP viewing the article
-        //     InsightViews::insert([
-        //         'insightID' => $id,
-        //         'ip_address' => $ipAddress,
-        //         'created_at' => now(),
-        //     ]);
-        // }
-
-        $ipAddress = $_SERVER['REMOTE_ADDR'];
-        $ipAsInt = ip2long($ipAddress);
-
-        // Find existing IP entry
-        $existingView = InsightViews::where('ip_address', $ipAddress)->first();
-
-        if (!$existingView) {
-            // If IP does not exist, insert a new record and increment view count
-            InsightViews::create([
-                'insightID' => $id,
-                'ip_address' => $ipAddress,
-                'times' => 1, // First time viewing
-                'updated_at' => now(),
-            ]);
-            $newsModel::where('news_id', $id)->increment('views');
-        } elseif ($existingView->insightID != $id) {
-            // If IP exists but insightID is different, update the record and increment the view count
-            $existingView->update([
-                'insightID' => $id,
-                'times' => $existingView->times + 1, // Increase count
-                'updated_at' => now(),
-            ]);
-            $newsModel::where('news_id', $id)->increment('views');
-        }
-
-
+        $newsModel::where('news_id', $id)->increment('views');
         // Fetch news details
         $newsDetails = $newsModel::with(['author', 'category', 'Subcategory'])
-            ->where('status', 1)
+            // ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('news_id', $id)
             ->first();
         // dd($newsDetails);
         if (!$newsDetails) {
+            return redirect('insights/pagenotfound');
+        }
+        // Handle access permissions
+        if ($newsDetails->status == 2) { // If status is 2, check authentication
+            if (!auth()->guard('admin')->check()) {  // Ensure admin authentication
+                return redirect('insights/pagenotfound')->with('error', 'You must be an admin to view this article.');
+            }
+        } elseif ($newsDetails->status == 0) { // If status is 0, block access
             return redirect('insights/pagenotfound');
         }
         // dd($newsDetails->author);
@@ -1069,9 +1030,9 @@ class InsightsController extends Controller
         $model = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
 
         if ($locale == 'en') {
-            $specificCategories = ['Electric Vehicles', 'MSME'];
+            $specificCategories = ['Electric Vehicles', 'MSME', 'Education & Training'];
         } else {
-            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई'];
+            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई', 'शिक्षा और प्रशिक्षण'];
         }
 
         $categories = $model::select('id', 'catname', 'slug')
@@ -1085,9 +1046,9 @@ class InsightsController extends Controller
     {
         $model = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
         if ($locale == 'en') {
-            $specificCategories = ['Electric Vehicles', 'MSME'];
+            $specificCategories = ['Electric Vehicles', 'MSME', 'Education & Training'];
         } else {
-            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई'];
+            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई', 'शिक्षा और प्रशिक्षण'];
         }
         $categories = $model::select('id', 'catname', 'slug')
             ->whereIn('catname', $specificCategories)
