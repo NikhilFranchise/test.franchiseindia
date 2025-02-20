@@ -2035,8 +2035,6 @@ class AdminController extends Controller
                     'subcat_id' => $newSubCatId,
                     'status' => $articleDetails['status'] ?? $existingInsight->status,
                     'author_id' => $articleDetails['author'] ?? $existingInsight->author_id,
-                    'privacy' => $articleDetails['privacy'] ?? $existingInsight->privacy,
-                    // 'associated_tags' => json_encode($associatedTags),
                 ];
                 // dd($fieldsToUpdate);
 
