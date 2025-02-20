@@ -1115,9 +1115,9 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('video_podcast',                [InsightsController::class, 'getvideopodcast']);
             Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
-            Route::middleware(['content.admin'])->group(function () {
+            // Route::middleware(['content.admin'])->group(function () {
                 Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
-            });
+            // });
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
@@ -1142,9 +1142,9 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
             Route::get('video_podcast',                [InsightsController::class, 'getvideopodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
-            Route::middleware(['content.admin'])->group(function () {
+            // Route::middleware(['content.admin'])->group(function () {
                 Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails'])->name('insights.details');
-            });
+            // });
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);

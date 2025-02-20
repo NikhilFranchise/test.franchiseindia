@@ -729,14 +729,21 @@ class InsightsController extends Controller
             return redirect('insights/pagenotfound');
         }
         // Handle access permissions
-        if ($newsDetails->status == 2) { // If status is 2, check authentication
-            if (!auth()->guard('admin')->check()) {  // Ensure admin authentication
-                return redirect('insights/pagenotfound')->with('error', 'You must be an admin to view this article.');
-            }
-        } elseif ($newsDetails->status == 0) { // If status is 0, block access
-            return redirect('insights/pagenotfound');
+        // Handle access permissions based on status
+        switch ($newsDetails->status) {
+            case 1:
+                // Status 1: Proceed as normal
+                break;
+            case 2:
+                // Status 2: Require admin authentication
+                if (!auth()->guard('admin')->check()) {
+                    return redirect('insights/pagenotfound')->with('error', 'You must be an admin to view this article.');
+                }
+                break;
+            case 0:
+                // Status 0: Block access
+                return redirect('insights/pagenotfound');
         }
-        // dd($newsDetails->author);
         // Fetch author details
         if (empty($newsDetails->author[0])) {
             // dd('hello');
