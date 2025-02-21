@@ -728,7 +728,6 @@ class InsightsController extends Controller
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
         }
-        // Handle access permissions
         // Handle access permissions based on status
         switch ($newsDetails->status) {
             case 1:

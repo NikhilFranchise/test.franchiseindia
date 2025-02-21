@@ -237,7 +237,7 @@
                                         <th>Category Id</th>
                                         <th>Main Category Name</th>
                                         <th>Slug</th>
-                                        <th>Action</th>
+                                        <th colspan="2">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tablecontent">

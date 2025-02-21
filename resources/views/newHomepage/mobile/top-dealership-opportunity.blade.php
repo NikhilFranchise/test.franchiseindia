@@ -1,72 +1,70 @@
 <section class="top-dealership-opportunities">
     <h2 class="brands-head">{{ Request::segment(1) == 'hi' ? 'शीर्ष डीलरशिप अवसर' : 'Top Dealership Opportunity' }}</h2>
     <div class="card-wrap">
+       
+
         <div class="leading-card">
             <div class="brand-ins">
-                <a href="https://www.dealerindia.com/manufacturer/supergas-29320320" target="_blank" aria-label="SUPERGAS">
-                    <img src="https://img.franchiseindia.com/brands/logo/846455832.jpg" alt="supergas"
-                    width="199"
-                        height="81" loading="lazy"></a>
+                <a href="https://www.franchiseindia.com/brands/supergas.103865" target="_blank" aria-label="SUPERGAS">
+                    <img src="{{ config('constants.MainDomain') . '/images/dealers-india/846455832.webp' }}" alt="SUPERGAS" width="199" height="81" loading="lazy"></a>
             </div>
-            <div class="leading-card-brand-category"><a
-                    href="https://www.dealerindia.com/dir/lpg-gas-cylinders-accessories" target="_blank" aria-label="SUPERGAS">
-                    LPG Gas cylinders & Accessories</a>
+            <div class="leading-card-brand-category"><a aria-label="SUPERGAS" href="https://www.franchiseindia.com/business-opportunities/lpg-distributors.ssc530" target="_blank">LPG Distributors</a>
             </div>
             <div class="leading-card-brand-title">
-                <h2><a href="https://www.dealerindia.com/manufacturer/supergas-29320320" target="_blank" aria-label="SUPERGAS">SUPERGAS </a>
+                <h2><a href="https://www.franchiseindia.com/brands/supergas.103865" target="_blank" aria-label="SUPERGAS">SUPERGAS </a>
                 </h2>
             </div>
             <div class="leading-card-investment">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
-                <div class="card-info-amt"> ₹ 20 Lac - 25 Lac</div>
+                <div class="card-info-amt"> ₹ 20 Lac - 30 Lac</div>
             </div>
             <div class="leading-card-area">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}</div>
-                <div class="card-info-amt">1500 - 4300 Sq. ft</div>
+                <div class="card-info-amt">1500 - 4500 Sq.ft</div>
             </div>
             <div class="leading-card-outlets">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'स्थान' : 'Location' }}</div>
-                <div class="card-info-amt">Delhi, Puducherry +13 More</div>
+                <div class="card-info-amt">Delhi, Haryana +33 More</div>
             </div>
-            <a href="https://www.dealerindia.com/manufacturer/supergas-29320320" target="_blank"
+            <a href="https://www.franchiseindia.com/brands/supergas.103865" target="_blank"
                 class="know-more" aria-label="SUPERGAS">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
 
         <div class="leading-card">
             <div class="brand-ins">
-                <a href="https://www.dealerindia.com/manufacturer/jiyo-india-sales-and-marketing-pvt-ltd-29320983"
-                    target="_blank" aria-label="NEK INSAN"><img loading="lazy" src="https://img.franchiseindia.com/brands/logo/1390859740.jpg"
-                        alt="jiyo-india" width="199" height="81" loading="lazy">
+                <a href="https://www.franchiseindia.com/brands/avpl-international.106003"
+                    target="_blank" aria-label="AVPL International"><img loading="lazy" src="{{ config('constants.MainDomain') . '/images/dealers-india/_3.webp' }}"
+                        alt="AVPL International" width="199" height="81">
             </div>
-            <div class="leading-card-brand-category"><a href="https://www.dealerindia.com/dir/roadway-safety"
-                    target="_blank" aria-label="NEK INSAN">Roadway safety </a>
+            <div class="leading-card-brand-category">
+                <a aria-label="AVPL International" target="_blank" href="https://www.franchiseindia.com/business-opportunities/farming-tools-equipments-and-machines.ssc1021">Farming Tools, equipments & Machines</a>
             </div>
             <div class="leading-card-brand-title">
-                <h2><a href="https://www.dealerindia.com/manufacturer/jiyo-india-sales-and-marketing-pvt-ltd-29320983"
-                        target="_blank" aria-label="NEK INSAN">NEK INSAN </a></h2>
+                <h2><a href="https://www.franchiseindia.com/brands/avpl-international.106003"
+                        target="_blank" aria-label="AVPL International">AVPL International</a></h2>
             </div>
             <div class="leading-card-investment">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
-                <div class="card-info-amt">₹ 30 K - 50 K</div>
+                <div class="card-info-amt">₹ 10 Lac - 20 Lac</div>
             </div>
             <div class="leading-card-area">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}</div>
-                <div class="card-info-amt"> 0 - 0 Sq. ft</div>
+                <div class="card-info-amt"> 200 - 500 Sq.ft</div>
             </div>
             <div class="leading-card-outlets">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'स्थान' : 'Location' }}</div>
-                <div class="card-info-amt">Delhi, Uttar Pradesh +1 More</div>
+                <div class="card-info-amt">Delhi, Haryana +33 More</div>
             </div>
-            <a href="https://www.dealerindia.com/manufacturer/jiyo-india-sales-and-marketing-pvt-ltd-29320983"
-                target="_blank" class="know-more" aria-label="NEK INSAN">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+            <a href="https://www.franchiseindia.com/brands/avpl-international.106003"
+                target="_blank" class="know-more" aria-label="AVPL International">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
 
         <div class="leading-card">
             <div class="brand-ins">
                 <a href="https://www.dealerindia.com/manufacturer/rocketpay-29321177"
-                    target="_blank" aria-label="RocketPay"><img src="https://img.franchiseindia.com/brands/logo/257198266.jpg" alt="rocketpay"
+                    target="_blank" aria-label="RocketPay"><img src="{{ config('constants.MainDomain') . '/images/dealers-india/257198266.webp' }}" alt="rocketpay"
                         width="199" height="81" loading="lazy">
             </div>
             <div class="leading-card-brand-category"><a
@@ -86,7 +84,7 @@
             <div class="leading-card-area">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}
                 </div>
-                <div class="card-info-amt">000 - 000 Sq. ft</div>
+                <div class="card-info-amt">NIL</div>
             </div>
             <div class="leading-card-outlets">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'स्थान' : 'Location' }}</div>
@@ -100,33 +98,32 @@
 
 
         <div class="leading-card">
-            <div class="brand-ins"><a href="https://www.dealerindia.com/manufacturer/bnc-motors-pvt-ltd-29320924"
-                    target="_blank" aria-label="BNC Motors"><img src="https://img.franchiseindia.com/brands/logo/1095036619.jpg"
-                        alt="bnc motors" width="188" height="81" loading="lazy"></a>
+            <div class="brand-ins"><a href="https://www.dealerindia.com/manufacturer/safedrugs-health-solutions-pvt-ltd-29321256"
+                    target="_blank" aria-label="Arogyamithra"><img src="{{ config('constants.MainDomain') . '/images/dealers-india/795871608.webp' }}"
+                        alt="Arogyamithra" width="188" height="81" loading="lazy"></a>
             </div>
-            <div class="leading-card-brand-category"><a href="https://www.dealerindia.com/dir/electric-vehicles-parts"
-                    target="_blank" aria-label="BNC Motors">Electric Vehicles & Parts</a>
+            <div class="leading-card-brand-category"><a href="https://www.dealerindia.com/dir/healthcare-medical-products"
+                    target="_blank" aria-label="Arogyamithra">Healthcare & Medical Products</a>
             </div>
             <div class="leading-card-brand-title">
-                <h2><a href="https://www.dealerindia.com/manufacturer/bnc-motors-pvt-ltd-29320924" target="_blank" aria-label="BNC Motors">BNC
-                        Motors</a></h2>
+                <h2><a href="https://www.dealerindia.com/manufacturer/safedrugs-health-solutions-pvt-ltd-29321256" target="_blank" aria-label="Arogyamithra">Arogyamithra</a></h2>
             </div>
             <div class="leading-card-investment">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
-                <div class="card-info-amt">₹ 20 Lac - 30 Lac</div>
+                <div class="card-info-amt">₹ 15 K - 7.5 Lac</div>
             </div>
             <div class="leading-card-area">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}
                 </div>
-                <div class="card-info-amt">500 - 1000 Sq. ft</div>
+                <div class="card-info-amt">100 - 250 Sq. ft</div>
             </div>
             <div class="leading-card-outlets">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'स्थान' : 'Location' }}</div>
-                <div class="card-info-amt">Karnataka, Kerala +7 More</div>
+                <div class="card-info-amt">Telangana, Andhra Pradesh</div>
             </div>
 
-            <a href="https://www.dealerindia.com/manufacturer/bnc-motors-pvt-ltd-29320924" target="_blank"
-                class="know-more" aria-label="BNC Motors">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+            <a href="https://www.dealerindia.com/manufacturer/safedrugs-health-solutions-pvt-ltd-29321256" target="_blank"
+                class="know-more" aria-label="Arogyamithra">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
 
