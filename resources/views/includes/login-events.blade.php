@@ -34,12 +34,12 @@
                         @desktop
                         <div class="homeadd728">
                            
-							 @if(isset($mc) && $mc == 2)
+							 {{-- @if(isset($mc) && $mc == 2)
 							<div style='width: 100%;'><a href="https://www.franchiseindia.com/brands/what-a-sandwich.51513"><img src="https://www.franchiseindia.com/images/go69pizza.jpg" style="width:100%;" alt="What a Sandwich"/></a></div>
 							
-                            @else 
+                            @else  --}}
                             @include('includes.banners-new.HP_DSK_ATF_728x90')
-							 @endif 
+							 {{-- @endif  --}}
                         </div>
                         @enddesktop
                         @tablet
