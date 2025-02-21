@@ -16,6 +16,27 @@
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
     <style>
+        a.visit {
+            background: #014ea5;
+            border-radius: 4px;
+            width: 93px;
+            display: block;
+            color: #ffffff;
+            margin: 0px 5px;
+            padding: 5px 0px;
+        }
+
+        .labelwrap {
+            display: flex;
+            justify-content: space-between;
+            padding: 0px 10px 0px 0px;
+        }
+
+        .labelwrap label {
+            width: 30%;
+            font-size: 11px;
+        }
+
         .search-results {
             margin-top: 63px;
             display: block;
@@ -223,8 +244,6 @@
             <div class="row-fluid">
                 <div class="span12">
                     <ul class="nav nav-tabs">
-                        {{--  <li @if (url()->current() == url('admin/allpodcastlist')) class="active" @endif><a
-                                href="{{ url('admin/allpodcastlist') }}">All Podcasts List</a></li>  --}}
                         <li @if (url()->current() == url('admin/en/list-insights')) class="active" @endif><a
                                 href="{{ url('admin/en/list-insights') }}">English Insights List</a></li>
                         <li @if (url()->current() == url('admin/hi/list-insights')) class="active" @endif><a
@@ -238,12 +257,11 @@
                                         <th>Id</th>
                                         <th>Title</th>
                                         <th>Insights Type</th>
-                                        {{--  <th>Insights Category</th>  --}}
+                                        {{-- <th>Insights Category</th>  --}}
                                         <th>Link</th>
                                         <th>Published Date</th>
-                                        <th>Status</th>
+                                        <th>Status/Privacy</th>
                                         <th>Edit</th>
-                                        {{-- <th>Hindi(New/Update)</th> --}}
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
@@ -277,19 +295,7 @@
                                             @endphp
 
                                             <td>{{ $insights->news_id }}</td>
-                                            {{-- <td
-                                                onmouseover="showQuickEdit({{ $insights->news_id }}, {{ $locale }});">
-                                                {{ $insights->title }} <div id="quick_edit" style="display: none"><a
-                                                        href="{{ url('admin/' . $locale . '/multilist-insights') }}">QuickEdit</a>
-                                                </div>
-                                            </td> --}}
-                                            <td onmouseover="showQuickEdit(this);" onmouseout="hideQuickEdit(this);" style="text-align: left">
-                                                {{ $insights->title }}
-                                                <button class="quick_edit" style="display: none; float:right;">
-                                                    <a
-                                                        href="{{ url('admin/' . $locale . '/multilist-insights') }}">QuickEdit</a>
-                                                </button>
-                                            </td>
+                                            <td>{{ $insights->title }}</td>
                                             <td>
                                                 @if (empty($insights->insight_type) && $insights->insight_type == 0)
                                                     {{ 'No Insights Type ' }}
@@ -297,23 +303,48 @@
                                                     {{ $insights->insight_type }}
                                                 @endif
                                             </td>
-                                            {{--  <td>{{$insights->category->catname}}</td>  --}}
+                                            {{-- <td>{{$insights->category[0]->catname}}</td>  --}}
                                             <td>
-                                                <div class="round-button">
+                                                {{-- <div class="round-button">
                                                     <div class="round-button-circle"><a href="{{ $url }}"
                                                             target="_blank" class="round-button">Go</a></div>
-                                                </div>
+                                                </div> --}}
+                                                <a href="{{ $url }}" target="_blank" class="visit">Visit</a>
+
                                             </td>
                                             <td>{{ date('d-m-Y', strtotime($insights->created_at)) }}</td>
                                             <td>
-                                                <center>
+                                                {{-- <center>
                                                     <label class="switch">
                                                         <input type="checkbox" value="{{ $insights->news_id }}"
                                                             class="activestate"
                                                             {{ $insights->status == 1 ? 'checked' : '' }}>
                                                         <span class="slider round"></span>
                                                     </label>
-                                                </center>
+                                                </center> --}}
+                                                <div class="labelwrap">
+                                                    <label>
+                                                        <input type="radio" name="status_{{ $insights->news_id }}"
+                                                            id="{{ $insights->news_id }}" value="1"
+                                                            class="activestate"
+                                                            {{ $insights->status == 1 ? 'checked' : '' }}>
+                                                        Public
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="status_{{ $insights->news_id }}"
+                                                            value="0"id="{{ $insights->news_id }}"
+                                                            class="activestate"
+                                                            {{ $insights->status == 0 ? 'checked' : '' }}>
+                                                        Draft
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="status_{{ $insights->news_id }}"
+                                                            value="2" class="activestate"
+                                                            id="{{ $insights->news_id }}"
+                                                            {{ $insights->status == 2 ? 'checked' : '' }}>
+                                                        Private
+                                                    </label>
+                                                </div>
                                             </td>
                                             <td>
                                                 <center><button class="btn btn-medium btn-warning"
@@ -381,17 +412,18 @@
         $(document).ready(function() {
             $(document).on('click', '.activestate', function() {
 
-                var id = this.value;
+                // var id = this.value;
+                var status = this.value;
+                var id = this.id;
                 var lang = '{{ $locale }}';
-                var status = 0;
-                if (this.checked)
-                    status = 1;
+                // var status = 0;
+                // if (this.checked)
+                //     status = 1;
 
                 $.ajax({
                     type: "POST",
                     //url: '/admin//updateinsightstatus',
-                    url: '/admin/' + lang +
-                        '/updateinsightstatus', // Dynamically set the URL with the locale
+                    url: '/admin/' + lang + '/updateinsightstatus', // Dynamically set the URL with the locale
 
                     data: {
                         "News": id,
@@ -436,14 +468,6 @@
             confirm.one('click', onConfirm);
             confirm.one('click', fClose);
             $("#confirmCancel").one("click", fClose);
-        }
-
-        function showQuickEdit(element) {
-            $(element).find('.quick_edit').css('display', 'block');
-        }
-
-        function hideQuickEdit(element) {
-            $(element).find('.quick_edit').css('display', 'none');
         }
     </script>
     <script src="{{ url('admin/js/jquery.ui.custom.js') }}"></script>

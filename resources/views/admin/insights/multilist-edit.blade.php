@@ -14,7 +14,81 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
     {{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
-    <style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <style type="text/css">
+        ul.quick-edits {
+            list-style: none;
+            padding-left: 0px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        a.visit{background:#014ea5;border-radius: 4px;
+    width: 93px;
+    display: block;
+    color: #ffffff;
+    margin: 0px 5px;
+    padding: 5px 0px;}
+
+        ul.quick-edits li {
+            width: 18%;
+        }
+
+        ul.quick-edits li.lastitem{
+            width: 100%!important;margin-bottom: 10px
+        }
+
+        ul.quick-edits .form-control {
+            width: 100%
+        }
+
+        .select2-container .select2-selection {
+            box-sizing: border-box;
+            cursor: pointer;
+            display: block;
+            min-height: 32px;
+            user-select: none;
+            -webkit-user-select: none;
+            width: 812px;
+        }
+
+        .labelwrap{display: flex;justify-content: space-between;padding: 0px 10px 0px 0px;}
+        .labelwrap label{width:30%;font-size: 11px;}
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            display: none;
+        }
+        ul.quick-edits .select2-selection__choice{width: auto;margin-bottom: 0px;}
+
+        
+
+        
+
+        .search-results {
+            /* margin-top: 63px; */
+            display: block;
+            width: 96%;
+            margin-top: 5%;
+            float: right;
+        }
+
+        .search-results input {
+            width: 400px;
+        }
+
+        .search-result-inner {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .search-result-inner a.greens {
+            height: 20px;
+        }
+
+
         .switch input {
             display: none
         }
@@ -47,6 +121,10 @@
             background-color: #2196f3
         }
 
+        input:checked+.slider.round.privacy {
+            background-color: #faa732
+        }
+
         input:focus+.slider {
             box-shadow: 0 0 1px #2196f3
         }
@@ -60,7 +138,7 @@
         .gradeX td,
         th {
             text-align: center;
-            border: 1px solid #000
+            border: 1px solid #000;
         }
 
         .slider.round {
@@ -166,13 +244,13 @@
     <div id="content">
         @if (Request::is('admin/hi/multilist-insights'))
             @php
-                $url = 'admin/hi/save-multiple-insights';
+                $saveUrl = 'admin/hi/save-multiple-insights';
                 $hi = 'Hindi';
                 $type = 'hi';
             @endphp
         @else
             @php
-                $url = 'admin/en/save-multiple-insights';
+                $saveUrl = 'admin/en/save-multiple-insights';
                 $hi = 'English';
                 $type = 'en';
             @endphp
@@ -180,22 +258,31 @@
         <!--breadcrumbs-->
         <div id="content-header">
             <div id="breadcrumb"> <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
-                        class="icon-home"></i> Home</a> <a href="list-insights" class="tip-bottom">List Insights</a>
-                <a href="" class="current">{{ 'Multiple ' . $hi . ' Insights' }}</a>
+                        class="icon-home"></i> Home</a> <a href="list-insights" class="tip-bottom">Insights List</a>
+                <a class="current">{{ 'Quick Edit Insights Dashboard (Hindi/English)' }}</a>
             </div>
-            <h1>{{ $hi . ' Insights List' }}</h1>
+            <h1>{{ 'Quick Edit Insights Dashboard (Hindi/English)' }}</h1>
         </div>
         <!--End-breadcrumbs-->
         <br>
-        <div style="margin-top: 5%;float: right;" class="container-fluid">
-            <form action="{{ url('admin/' . $type . '/list-insights') }}" method="get">
-                Search Keyword : <input type="text" name="search"class="span7"
-                    placeholder="Enter Title or Insights Id to search"
-                    @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
-                <input type="submit" class="btn"
-                    value="Search"style="margin-top: -12px; margin-left: 10px; width: 110px;" />
-                <a href="{{ url('admin/' . $type . '/list-insights') }}" class="btn"style="margin-top: -12px;">Reset Search</a>
-            </form>
+        <div class="search-results container-fluid">
+            <div class="search-result-inner">
+                @if (request()->search)
+                    <div style="text-align: center; color: #28b779;">
+                        Found {{ $totalCount }} Results For <strong>{{ request()->search }}</strong>
+                    </div>
+                @endif
+                <div></div>
+                <form action="{{ url('admin/' . $type . '/multilist-insights') }}" method="get">
+                    <input type="text" name="search"class="span7" placeholder="Enter Title or Insights Id to search"
+                        @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
+                    <input type="submit" class="btn"
+                        value="Search"style="margin-top: -12px; margin-left: 10px; width: 110px;" />
+                    <a href="{{ url('admin/' . $type . '/multilist-insights') }}"
+                        class="btn"style="margin-top: -12px;">Reset
+                        Search</a>
+                </form>
+            </div>
         </div>
 
         <div class="container-fluid">
@@ -209,69 +296,88 @@
                     </ul>
                     <div class="widget-box">
                         <div class="widget-content nopadding">
-                            <form method="POST" action="{{ url($url) }}">
+                            <form method="POST" action="{{ url($saveUrl) }}">
                                 @csrf <!-- Include CSRF token for security -->
                                 <!-- Global Select Boxes -->
                                 {{--  <h3 style="text-align:center">{{$hi . ' Insights List' }}</h3>  --}}
-                                <h3 style="text-align:center">Bulk Edit {{ $hi }} Insights</h3>
+                                <h3 style="text-align:center">Quick Edit Insights Dashboard (Hindi/English)</h3>
 
-                                <p style="text-align: center; color: #faa732;">
-                                    Make changes to multiple insights in a single action.
+                                <p style="text-align: center; color: #28b779;">
+                                    Edit multiple insights records at once with a single action.
                                 </p>
-                                <div class="bulk-actions">
-                                    <select required id="global_insight_type" name="global_insight_type[]"
-                                        class="form-control">
-                                        <option value="">Select Insight Type</option>
-                                        <option value="News">News</option>
-                                        <option value="Article">Article</option>
-                                        <option value="Interview">Interview</option>
-                                        <option value="Report">Report</option>
-                                        <option value="Event">Event</option>
-                                        <option value="Terms">Terms</option>
+                                <ul class="quick-edits">
+                                    <li>
+                                        <label for="">Insight Type</label>
+                                        <select required id="global_insight_type" name="global_insight_type[]"
+                                            class="form-control">
+                                            <option value="">Select Insight Type</option>
+                                            <option value="News">News</option>
+                                            <option value="Article">Article</option>
+                                            <option value="Interview">Interview</option>
+                                            <option value="Report">Report</option>
+                                            <option value="Event">Event</option>
+                                            <option value="Terms">Terms</option>
+                                        </select>
+                                    </li>
+                                    <li>
+                                        <label for="">Main Category</label>
+                                        <select required id="global_main_category" name="global_main_category[]"
+                                            class="form-control" onchange="Subcategoriesdata(this.value)">
+                                            <option value="">Select Main Category</option>
+                                            @foreach ($InsightCategory as $category)
+                                                <option value="{{ $category->id }}">{{ $category->catname }}</option>
+                                            @endforeach
+                                        </select>
+                                    </li>
+                                    <li>
+                                        <label for="">Sub Category</label>
+                                        <select id="global_sub_category" name="global_sub_category[]"
+                                            class="form-control">
+                                            <option value="">Select Sub Category</option>
+                                            <!-- Subcategories will be dynamically loaded based on Main Category -->
+                                        </select>
+                                    </li>
+                                    <li>
+                                        <label for="">Author</label>
+                                        <select required id="global_author" name="global_author[]" class="form-control">
+                                            <option value="">Select Author</option>
+                                            @foreach ($InsightAuthor as $author)
+                                                <option value="{{ $author->author_id }}">{{ $author->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </li>
+                                    <li>
+                                        <label for="">Status/Privacy</label>
+                                        <select required id="global_status" name="global_status[]" class="form-control">
+                                            <option value="">Select Status/Privacy</option>
+                                            <option value="1">Public</option>
+                                            <option value="0">Draft</option>
+                                            <option value="2">Private</option>
+                                        </select>
+                                    </li>
+                                    <li class="lastitem">
+                                    <label for="">Associated Tags</label>
+                                    <select multiple required name="associated_tags[]" id="select3"
+                                        class="form-control select2">
                                     </select>
-
-                                    <select required id="global_main_category" name="global_main_category[]"
-                                        class="form-control" onchange="Subcategoriesdata(this.value)">
-                                        <option value="">Select Main Category</option>
-                                        @foreach ($InsightCategory as $category)
-                                            <option value="{{ $category->id }}">{{ $category->catname }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    <select id="global_sub_category" name="global_sub_category[]" class="form-control">
-                                        <option value="">Select Sub Category</option>
-                                        <!-- Subcategories will be dynamically loaded based on Main Category -->
-                                    </select>
-
-                                    <select required id="global_status" name="global_status[]" class="form-control">
-                                        <option value="">Select Status</option>
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
-                                    </select>
-
-                                    <select required id="global_author" name="global_author[]" class="form-control">
-                                        <option value="">Select Author</option>
-                                        @foreach ($InsightAuthor as $author)
-                                            <option value="{{ $author->author_id }}">{{ $author->title }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    <button type="submit" class="btn btn-primary form-control" id="apply_bulk">Apply
-                                        Changes</button>
-                                </div>
+                                    </li>
+                                    <center><button type="submit" class="btn btn-primary form-control"
+                                            id="apply_bulk">Apply Changes</button></center>
+                                </ul>
                                 <!-- Table with Insights -->
                                 <table>
                                     <thead>
                                         <tr class="gradeX">
-                                            <th style="width:6%;">Check all<input type="checkbox" id="select_all"></th>
-                                            <th>News ID</th>
-                                            <th>Title</th>
-                                            <th>Insight Type</th>
-                                            <th>Main Category</th>
-                                            <th>Sub Category</th>
-                                            <th>Link</th>
-                                            <th>Author</th>
-                                            <th>Status</th>
+                                            <th style="width:6%;">Check all<input type="checkbox" id="select_all">
+                                            </th>
+                                            <th style="width: 4%">News ID</th>
+                                            <th style="width: 45%">Title</th>
+                                            <th style="width: 5%">Insight Type</th>
+                                            <th style="width: 6%">Main Category</th>
+                                            <th style="width: 3%">Sub Category</th>
+                                            <th style="width: 2%">Link</th>
+                                            <th style="width: 7%">Author</th>
+                                            <th>Status/Privacy</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -288,15 +394,15 @@
                                                         '.' .
                                                         $insights->news_id;
                                                 @endphp
-                                                <td>
+                                                <td style="width: 2%">
                                                     <input type="checkbox" class="bulk-checkbox"
                                                         value="{{ $insights->news_id }}" name="selected_articles[]">
                                                     <input type="hidden" name="insights_slug[]"
                                                         value="{{ $insights->slug }}">
                                                 </td>
                                                 <td>{{ $insights->news_id }}</td>
-                                                <td>{{ $insights->title }}</td>
-                                                <td>{{ $insights->insight_type }}</td>
+                                                <td style="text-align: left">{{ $insights->title }}</td>
+                                                <td style="text-align: left">{{ $insights->insight_type }}</td>
                                                 <td>
                                                     @foreach ($insights->category as $category)
                                                         {{ $category->catname }}
@@ -308,11 +414,13 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <div class="round-button">
+
+                                                    <a  href="{{ $url }}" target="_blank" class="visit">Visit</a>
+                                                    {{-- <div class="round-button">
                                                         <div class="round-button-circle"><a
                                                                 href="{{ $url }}" target="_blank"
                                                                 class="round-button">Go</a></div>
-                                                    </div>
+                                                    </div> --}}
                                                 </td>
                                                 <td>
                                                     @foreach ($insights->author as $author)
@@ -321,15 +429,37 @@
 
                                                 </td>
                                                 <td>
-                                                    <center>
-                                                        <label class="switch">
-                                                            <input type="checkbox" value="{{ $insights->news_id }}"
-                                                                class="activestate"
-                                                                {{ $insights->status == 1 ? 'checked' : '' }}>
-                                                            <span class="slider round"></span>
-                                                        </label>
-                                                    </center>
+                                                    {{-- <label class="switch">
+                                                        <input type="checkbox" value="{{ $insights->news_id }}"
+                                                            class="activestate"
+                                                            {{ $insights->status == 1 ? 'checked' : '' }}>
+                                                        <span class="slider round"></span>
+                                                    </label> --}}
+                                                    <div class="labelwrap">
+                                                    <label>
+                                                        <input type="radio" name="status_{{ $insights->news_id }}"
+                                                            id="{{ $insights->news_id }}" value="1"
+                                                            class="activestate"
+                                                            {{ $insights->status == 1 ? 'checked' : '' }}>
+                                                        Public
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="status_{{ $insights->news_id }}"
+                                                            value="0"id="{{ $insights->news_id }}"
+                                                            class="activestate"
+                                                            {{ $insights->status == 0 ? 'checked' : '' }}>
+                                                        Draft
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="status_{{ $insights->news_id }}"
+                                                            value="2" class="activestate"
+                                                            id="{{ $insights->news_id }}"
+                                                            {{ $insights->status == 2 ? 'checked' : '' }}>
+                                                        Private
+                                                    </label>
+                                                    </div>
                                                 </td>
+
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -368,6 +498,40 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
     <script>
+        $(document).ready(function() {
+
+            $('#select3').html("<option>No Data</option>");
+            var lang = '{{ $type }}';
+            //initialization and maximum values to be selected from text box
+            $('#select3').select2({
+                placeholder: "Choose Associated Tags...",
+                minimumInputLength: 2,
+                ajax: {
+                    url: '/associatedtags',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+
+                        return {
+                            q: params.term, // Search term
+                            lang: lang // Language variable
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data, function(item) {
+                                return {
+                                    text: item.name,
+                                    id: item.tag_id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+        });
+
         @if (Session::has('success'))
             toastr.options = {
                 "closeButton": true,
@@ -386,11 +550,13 @@
         $(document).ready(function() {
             $(document).on('click', '.activestate', function() {
 
-                var id = this.value;
+                var status = this.value;
+                var id = this.id;
                 var type = '{{ $type }}';
-                var status = 0;
-                if (this.checked)
-                    status = 1;
+                // console.log(id + '----' + newsid);
+                // var status = id;
+                // if (this.checked)
+                //     status = id;
 
                 $.ajax({
                     type: "POST",
@@ -491,7 +657,10 @@
                 const bulkSubCategory = $('#global_sub_category').val();
                 const bulkStatus = $('#global_status').val();
                 const bulkAuthor = $('#global_author').val();
-                // alert(bulkInsightType +'--'+ bulkMainCategory +'--'+ bulkSubCategory +'--'+ bulkStatus +'--'+ bulkAuthor);
+                const bulkprivacy = $('#privacy').val();
+                const bulkAssociatedTags = $('#select3').val();
+                // alert(bulkInsightType + '--' + bulkMainCategory + '--' + bulkSubCategory + '--' +
+                //     bulkStatus + '--' + bulkAuthor + '----' + bulkprivacy + '----' + bulkAssociatedTags);
                 // Attach these values to each selected article
                 selectedArticles.each(function() {
                     const row = $(this).closest('tr');
@@ -532,16 +701,32 @@
                             value: bulkAuthor,
                         }).appendTo(row);
                     }
+                    if (bulkprivacy) {
+                        $('<input>', {
+                            type: 'hidden',
+                            name: `articles[${articleId}][privacy]`,
+                            value: bulkprivacy,
+                        }).appendTo(row);
+                    }
+                    if (bulkAssociatedTags) {
+                        $('<input>', {
+                            type: 'hidden',
+                            name: `articles[${articleId}][associated_tags]`,
+                            value: bulkAssociatedTags,
+                        }).appendTo(row);
+                    }
                 });
 
                 // Submit the form
                 $(this).closest('form').submit();
             });
+
         });
     </script>
     <script src="{{ url('admin/js/jquery.ui.custom.js') }}"></script>
     <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url('admin/js/select2.min.js') }}"></script>
+    {{-- <script src="{{ url('admin/js/select2.min.js') }}"></script> --}}
+    <script src="{{ url('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js') }}"></script>
     <script src="{{ url('admin/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ url('admin/js/matrix.js') }}"></script>
     <script src="{{ url('admin/js/matrix.tables.js') }}"></script>

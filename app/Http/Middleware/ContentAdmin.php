@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class ContentAdmin
 {
@@ -15,8 +16,12 @@ class ContentAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!($request->session()->has('adminEmail')))
-            return redirect('admin/login');
+        // if (!($request->session()->has('adminEmail')))
+        //     return redirect('admin/login');
+        // dd(Auth::guard('admin')->user());
+        if (!Auth::guard('admin')->check()) {
+            return redirect('admin/login')->with('error', 'You must be an admin to access this page.');
+        }
         return $next($request);
     }
 }

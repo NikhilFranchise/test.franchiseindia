@@ -22,10 +22,9 @@ use App\Models\FranchisorBusinessDetail;
 use App\Models\InsightListHindi;
 use App\Models\SeoTagHindi;
 use App\Models\FihlPodcastVideo;
-use App\Models\FihlVideoCategory;
-use App\Models\InsightViews;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class InsightsController extends Controller
 {
@@ -711,63 +710,17 @@ class InsightsController extends Controller
     public function getInsightsDetails(Request $request)
     {
         $id = $request->id;
+        // dd(Auth::check());
         $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
         $newsModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
         $tagTable = $locale == 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
         $seoTagModel = $locale == 'hi' ? SeoTagHindi::class : SeoTag::class;
-
-        // $ipAddress = $_SERVER['REMOTE_ADDR'];
-        // $ipAsInt = ip2long($ipAddress);
-        // // Check if the IP has already viewed this article
-        // $ipExists = InsightViews::query()->select('ip_address')
-        //     ->where('insightID', $id)
-        //     ->where('ip_address', $ipAddress)
-        //     ->exists(); 
-
-        // // If the IP has not viewed the article, increment the view count
-        // if (!$ipExists) {
-        //     // Increment the article's view count
-        //     $newsModel::where('news_id', $id)->increment('views');
-
-        //     // Add a record of the IP viewing the article
-        //     InsightViews::insert([
-        //         'insightID' => $id,
-        //         'ip_address' => $ipAddress,
-        //         'created_at' => now(),
-        //     ]);
-        // }
-
-        $ipAddress = $_SERVER['REMOTE_ADDR'];
-        $ipAsInt = ip2long($ipAddress);
-
-        // Find existing IP entry
-        $existingView = InsightViews::where('ip_address', $ipAddress)->first();
-
-        if (!$existingView) {
-            // If IP does not exist, insert a new record and increment view count
-            InsightViews::create([
-                'insightID' => $id,
-                'ip_address' => $ipAddress,
-                'times' => 1, // First time viewing
-                'updated_at' => now(),
-            ]);
-            $newsModel::where('news_id', $id)->increment('views');
-        } elseif ($existingView->insightID != $id) {
-            // If IP exists but insightID is different, update the record and increment the view count
-            $existingView->update([
-                'insightID' => $id,
-                'times' => $existingView->times + 1, // Increase count
-                'updated_at' => now(),
-            ]);
-            $newsModel::where('news_id', $id)->increment('views');
-        }
-
-
+        $newsModel::where('news_id', $id)->increment('views');
         // Fetch news details
         $newsDetails = $newsModel::with(['author', 'category', 'Subcategory'])
-            ->where('status', 1)
+            // ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('news_id', $id)
             ->first();
@@ -775,7 +728,22 @@ class InsightsController extends Controller
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
         }
-        // dd($newsDetails->author);
+        // Handle access permissions
+        // Handle access permissions based on status
+        switch ($newsDetails->status) {
+            case 1:
+                // Status 1: Proceed as normal
+                break;
+            case 2:
+                // Status 2: Require admin authentication
+                if (!auth()->guard('admin')->check()) {
+                    return redirect('insights/pagenotfound')->with('error', 'You must be an admin to view this article.');
+                }
+                break;
+            case 0:
+                // Status 0: Block access
+                return redirect('insights/pagenotfound');
+        }
         // Fetch author details
         if (empty($newsDetails->author[0])) {
             // dd('hello');
@@ -1069,9 +1037,9 @@ class InsightsController extends Controller
         $model = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
 
         if ($locale == 'en') {
-            $specificCategories = ['Electric Vehicles', 'MSME'];
+            $specificCategories = ['Electric Vehicles', 'MSME', 'Education'];
         } else {
-            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई'];
+            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई', 'शिक्षा'];
         }
 
         $categories = $model::select('id', 'catname', 'slug')
@@ -1085,9 +1053,9 @@ class InsightsController extends Controller
     {
         $model = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
         if ($locale == 'en') {
-            $specificCategories = ['Electric Vehicles', 'MSME'];
+            $specificCategories = ['Electric Vehicles', 'MSME', 'Education'];
         } else {
-            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई'];
+            $specificCategories = ['इलेक्ट्रिक वाहन', 'एमएसएमई', 'शिक्षा'];
         }
         $categories = $model::select('id', 'catname', 'slug')
             ->whereIn('catname', $specificCategories)
@@ -1411,33 +1379,33 @@ class InsightsController extends Controller
         return @getimagesize($s3Url) !== false ? $s3Url : $defaultUrl;
     }
 
-    public function loadMoreArticles(Request $request)
-    {
-        $catId = $request->catId;
-        $newsId = $request->newsId;
-        $page = $request->page;
+    // public function loadMoreArticles(Request $request)
+    // {
+    //     $catId = $request->catId;
+    //     $newsId = $request->newsId;
+    //     $page = $request->page;
 
-        // Fetch related articles based on category
-        $articles = InsightList::with(['author', 'category', 'subcategory'])
-            ->where('cat_id', $catId)
-            ->whereNot('news_id', $newsId)
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->where('status', 1)
-            ->orderByDesc('created_at')
-            ->paginate(1, ['*'], 'page', $page);
-        dd($articles);
-        $html = "";
-        foreach ($articles as $article) {
-            $articleUrl = url("/insights/{$article->insight_type}/{$article->slug}.{$article->news_id}");
-            $html .= '
-                <div class="related-article">
-                    <h2><a href="' . $articleUrl . '">' . $article->title . '</a></h2>
-                    <p>' . $article->shortDesc . '</p>
-                    <img src="' . asset($article->image) . '" class="img-fluid" alt="' . $article->title . '">
-                    <hr>
-                </div>';
-        }
+    //     // Fetch related articles based on category
+    //     $articles = InsightList::with(['author', 'category', 'subcategory'])
+    //         ->where('cat_id', $catId)
+    //         ->whereNot('news_id', $newsId)
+    //         ->whereNotIn('news_type', ['ir', 'ri'])
+    //         ->where('status', 1)
+    //         ->orderByDesc('created_at')
+    //         ->paginate(1, ['*'], 'page', $page);
+    //     dd($articles);
+    //     $html = "";
+    //     foreach ($articles as $article) {
+    //         $articleUrl = url("/insights/{$article->insight_type}/{$article->slug}.{$article->news_id}");
+    //         $html .= '
+    //             <div class="related-article">
+    //                 <h2><a href="' . $articleUrl . '">' . $article->title . '</a></h2>
+    //                 <p>' . $article->shortDesc . '</p>
+    //                 <img src="' . asset($article->image) . '" class="img-fluid" alt="' . $article->title . '">
+    //                 <hr>
+    //             </div>';
+    //     }
 
-        return response()->json(['html' => $html]);
-    }
+    //     return response()->json(['html' => $html]);
+    // }
 }

@@ -249,7 +249,7 @@
                                             <td>{{ $data->id }}</td>
                                             <td>{{ $data->catname }}</td>
                                             <td>{{ $data->slug }}</td>
-                                            {{-- <td><center><button class="btn btn-medium btn-warning" style="border-radius: 4px"><a href="edit/{{$data->id}}">Edit</a></button></center></td> --}}
+                                            <td><center><button class="btn btn-medium btn-warning" style="border-radius: 4px"><a href="edit/{{$data->id}}">Edit</a></button></center></td>
                                             <td><button class="btn btn-medium btn-danger deletetag"
                                                     style="border-radius: 4px"
                                                     data-value="{{ $data->id }}">Delete</button></td>

@@ -999,10 +999,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('cat/create',                      [AdminController::class, 'categoryform']);
         Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
         Route::get('cat/list',                        [AdminController::class, 'catlist']);
+        Route::get('cat/edit/{id}',                        [AdminController::class, 'catEdit']);
         Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
         Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
         // category and subcategory post routes
         Route::post('create/cat',                      [AdminController::class, 'storecat']);
+        Route::post('update/cat',                      [AdminController::class, 'updateCat']);
         Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
         Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
         Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
@@ -1025,10 +1027,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('cat/create',                      [AdminController::class, 'categoryform']);
         Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
         Route::get('cat/list',                        [AdminController::class, 'catlist']);
+        Route::get('cat/edit/{id}',                        [AdminController::class, 'catEdit']);
         Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
         Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
         // category and subcategory post routes
         Route::post('create/cat',                      [AdminController::class, 'storecat']);
+        Route::post('update/cat',                      [AdminController::class, 'updateCat']);
         Route::post('create/subcat',                      [AdminController::class, 'storesubcat']);
         Route::post('delete-category',                 [AdminController::class, 'deleteCat']);
         Route::post('delete-subcategory',                 [AdminController::class, 'deletesubCat']);
@@ -1080,7 +1084,7 @@ Route::group(['prefix' => 'insights'], function () {
 });
 
 Route::middleware(['TrailingSlashRedirect'])->group(function () {
-    Route::group(['prefix' => 'insights'], function () { 
+    Route::group(['prefix' => 'insights'], function () {
         Route::get('/next-article/{newsId}/{catId}', [InsightsController::class, 'nextArticle']);
         Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
         Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
@@ -1111,7 +1115,9 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('video_podcast',                [InsightsController::class, 'getvideopodcast']);
             Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
-            Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
+            // Route::middleware(['content.admin'])->group(function () {
+                Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
+            // });
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
@@ -1136,7 +1142,9 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
             Route::get('video_podcast',                [InsightsController::class, 'getvideopodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
-            Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails'])->name('insights.details');
+            // Route::middleware(['content.admin'])->group(function () {
+                Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails'])->name('insights.details');
+            // });
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
@@ -1202,11 +1210,13 @@ Route::get('/getajax', [BusinessListingController::class, 'fetchtest']);
 
 Route::get('/items', [BusinessListingController::class, 'index'])->name('items.index');
 
-Route::get('advertise',                   function() { return redirect('https://www.franchiseindia.com/advertise-with-us-payment', 301);});
+Route::get('advertise',                   function () {
+    return redirect('https://www.franchiseindia.com/advertise-with-us-payment', 301);
+});
 
 
 // test email route
-Route::get('/sendmail',[CommonController::class,'send_email']);
+Route::get('/sendmail', [CommonController::class, 'send_email']);
 // Route::post('/password/email',[CommonController::class,'reset']);
 
 Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('password-reset');
