@@ -77,7 +77,7 @@ class DealersAndDistributorController extends Controller
      */
     public function searchDealer()
     {
-        dd('ues');
+        // dd('ues');
         request()->search = str_replace('-or-', '/', request()->search);
         $type = 'm';
         $catId = CategoryFinal::query()->select('catid', 'catname', 'parent_id')->where('catname', request()->search)->first();

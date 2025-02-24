@@ -3,7 +3,7 @@
     $TopInternationalOpportunities = [
         '0' => [
             'url' => 'https://www.franchiseindia.com/brands/pitman-training.88775',
-            'image' => 'https://www.franchiseindia.com/images/top-international/pitman.webp',
+            'image' => config("constants.MainDomain").'/images/top-international/pitman.webp',
             'category' => 'Other Online Education',
             'title' => 'Pitman Training',
             'description' =>
@@ -13,7 +13,7 @@
 
         '1' => [
             'url' => 'https://www.franchiseindia.com/brands/figaros-pizza.73238',
-            'image' => 'https://www.franchiseindia.com/images/top-international/figaros.webp',
+            'image' => config("constants.MainDomain").'/images/top-international/figaros.webp',
             'category' => 'FINE DINE RESTAURANTS',
             'title' => "Figaro's Italian Pizza",
             'description' =>
@@ -22,7 +22,7 @@
         ],
         '2' => [
             'url' => 'https://www.franchiseindia.com/brands/easygym.95394',
-            'image' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/easygym_1.jpg',
+            'image' => config("constants.MainDomain").'/images/top-international/easygym_1.webp',
             'category' => 'Gyms And Fitness Centres',
             'title' => 'Easygym',
             'description' =>
@@ -31,7 +31,7 @@
         ],
         '3' => [
             'url' => 'https://www.franchiseindia.com/brands/actioncoach.30037',
-            'image' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/actioncoach_1.jpg',
+            'image' => config("constants.MainDomain").'/images/top-international/actioncoach_1.webp',
             'category' => 'Service For SMEs',
             'title' => 'ActionCOACH India',
             'description' => 'ActionCOACH is a leading business coaching firm focussed on SMEs',

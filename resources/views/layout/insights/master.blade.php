@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
-
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -10,13 +9,11 @@
         <meta name="keywords" content="@yield('seoKeywords', 'franchise news india, franchise business india, india franchise opportunities, franchise in india, new franchise india ' . date('Y') . ', best franchise india, franchise for startups india, franchise expansion india, franchise tie ups india, franchise launches india, franchisor news india, franchisee success stories india, franchise industry trends india.')" />
     @endif
     <meta name="original-source" content="@yield('url')" />
-    {{-- <meta name="robots" content="NOODP" /> --}}
     <meta name='robots' content='noindex, nofollow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
     <link href="@yield('canonicalUrl', request()->get('page') ? url()->full() : url()->current())" rel="canonical">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-
         function gtag() {
             dataLayer.push(arguments);
         }
@@ -60,7 +57,6 @@
     @yield('header-schema')
     @include('layout.insights.menu')
 </head>
-
 <body>
     @yield('content')
     <div class="fixsocial">
@@ -82,5 +78,4 @@
     @include('layout.insights.footer')
     @include('layout.insights.footerlinks')
 </body>
-
 </html>

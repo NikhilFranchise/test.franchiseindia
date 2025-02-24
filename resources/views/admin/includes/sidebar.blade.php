@@ -93,7 +93,7 @@
                     <span>Insights List</span></a>
                 <ul>
                     <li><a href="/admin/en/list-insights">Insights List</a></li>
-                    <li><a href="/admin/en/multilist-insights">Bulk Insights Listing Edit</a></li>
+                    <li><a href="/admin/en/multilist-insights">Quick-Edit Insights List</a></li>
                 </ul>
             </li>
 

@@ -38,18 +38,10 @@ return [
             'throw' => false,
         ],
 
-        // 'public' => [
-        //     'driver' => 'local',
-        //     'root' => storage_path('app/public'),
-        //     'url' => env('APP_URL').'/storage',
-        //     'visibility' => 'public',
-        //     'throw' => false,
-        // ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            // 'root'   => public_path() . '/uploads'
-            'url' => '/storage',
+            'url' => config('constants.MainDomain'). '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],

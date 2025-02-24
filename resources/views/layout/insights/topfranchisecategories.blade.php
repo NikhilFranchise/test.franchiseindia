@@ -1,5 +1,6 @@
 <div class="topfranchise">
     <div class="container">
+        <div class="row">
         <div class="topfranchisecontent">
         <div class="topfranchise-left">
             <div class="tplogos"><a href="https://www.franchiseindia.com/"><img src="{{url('images/logo.svg')}}" alt="Franchise India"></a></div>
@@ -21,6 +22,7 @@
             <li><div class="imgcat"><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/sports-fitness-and-entertainment.m11"><img src="{{url('insight-new/images/categories/sports.svg')}}"></a></div> <div class="cattxt"><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/sports-fitness-and-entertainment.m11">Sports, Fitness &amp; Entertainment</a></div></li>
         </ul>
     </div>
+</div>
 </div>
     </div>
 </div>

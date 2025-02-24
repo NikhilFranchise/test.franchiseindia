@@ -43,7 +43,14 @@
       <link rel="stylesheet" href="{{ url('cwv-mobile/css/bootstrap.min.css') }}" rel="preload" as="style">
       <link rel="stylesheet" href="{{ url('cwv-mobile/css/jquery.mCustomScrollbar.min.css') }}" rel="preload" as="style">
       <!-- Google Tag Manager -->
-      <script async>
+
+      <script async>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+         })(window,document,'script','dataLayer','GTM-KW4K6WV6');</script>
+         
+      {{-- <script async>
          (function(w, d, s, l, i) {
              w[l] = w[l] || [];
              w[l].push({
@@ -57,7 +64,7 @@
              j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
              f.parentNode.insertBefore(j, f);
          })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
-      </script>
+      </script> --}}
       <!-- End Google Tag Manager -->
       <!-- Global site tag (gtag.js) - Google Analytics -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
@@ -163,8 +170,11 @@
         {{--  schema newly added 16-oct-2024  --}}
    </head>
    <body>
-      <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
-         style="display:none;visibility:hidden"></iframe></noscript>
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KW4K6WV6"
+         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+         
+      {{-- <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
+         style="display:none;visibility:hidden"></iframe></noscript> --}}
       <header class="header">
          <div class="container-fluid">
             <div class="row">

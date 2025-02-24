@@ -5,11 +5,9 @@
          <div class="swiper-wrapper">
             @foreach ($trendArticles as $article)
             @php
-
             $locale = App::getLocale();
             $url = Config('constants.MainDomain') . '/insights/' . $locale . '/' . strtolower($article['insight_type']) . '/' . $article['slug'] . '.' . $article['news_id'];
             @endphp
-
             @if ($loop->index < 8)
             <!-- below list start here  1-->
             <div class="swiper-slide">
@@ -22,8 +20,6 @@
                      <div class="hname"> <a href="{{$url}}">{{$article['title']}}</a></div>
                      <div class="aname"><img src="{{url('/insight-new/images/view.svg')}}" alt="views">&nbsp;&nbsp;{{ formatViews($article->views) }}
                      </div>
-
-
                   </div>
                </div>
             </div>

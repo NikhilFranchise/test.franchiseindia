@@ -8,7 +8,6 @@
     @section('robot', 'noindex, nofollow')
 @endif --}}
 
-
 {{-- //Pankaj start --}}
 @if(URL::Current() == Config('constants.MainDomain') .'/business-opportunities/dealers-and-distributors.m5')
 @section('seoTitle', $brandResults->total() . '+ ' .' Dealership and Distributorship Opportunities in India – Dealer India')
@@ -36,7 +35,6 @@
 {{-- //////////// --}}
 
 {{-- //Pankaj end --}}
-
 @if ($mc == 2)
     @section('seoTitle', $brandResults->total() . '+ ' . 'Food and Beverage - Business Ideas and Franchise Opportunities')
 @elseif (URL::Current()  ==  Config('constants.MainDomain') .'/category/search' )

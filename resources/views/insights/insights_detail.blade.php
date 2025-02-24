@@ -6,6 +6,7 @@
 @section('seoDesc', $newsDetails->shortDesc)
 @section('seoKeywords', $newsDetails->kicker)
 @section('canonicalUrl', url()->current())
+{{-- @dd($newsDetails->image); --}}
 @php
     $ogimage = !empty($newsDetails->image)
         ? \App\Http\Controllers\InsightsController::createimgurl($newsDetails->image)
@@ -25,6 +26,20 @@
         ? \App\Http\Controllers\InsightsController::authorImageurl($author_details->image)
         : url('images/defaultuser.png');
 @endphp
+<style>
+    .article-wrapper {
+        margin-top: 40px;
+        padding-top: 40px;
+        border-top: 1px solid #eee;
+    }
+
+    #loading {
+        text-align: center;
+        padding: 20px;
+        font-size: 1.2em;
+        background: #f5f5f5;
+    }
+</style>
 @section('image', $ogimage)
 @section('shortDesc', $newsDetails->shortDesc)
 @section('imagesrc', $ogimage)
@@ -62,7 +77,9 @@
             <div class="row">
                 <div class="col-md-8">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/insights') }}" class="tip-bottom">Home</a></li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ url('/insights') }}" class="tip-bottom">Home</a>
+                        </li>
                         @php
                             $insightTypeMap = [
                                 'News' => "{$locale}/topstories",
@@ -163,51 +180,49 @@
                         {{-- ads for mobile & desktop --}}
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
                         <div class="articlecontent">
-                            @php
-                                // Split the article content into paragraphs
-                                $paragraphs = preg_split('/\r\n|\r|\n/', $newsDetails->content);
-                                $totalParagraphs = count($paragraphs);
-                                $adSlots = [
-                                    'adslotInline_1_300x250',
-                                    'adslotInline_2_300x250',
-                                    'adslotInline_3_300x250',
-                                    'adslotInline_4_300x250',
-                                    'adslotInline_5_300x250',
-                                ];
-                                $adsInserted = 0;
-                                // Determine ad insertion interval based on total paragraphs
-                                $adInterval = $totalParagraphs >= 80 ? 8 : ($totalParagraphs >= 50 ? 5 : 3);
-                                $contentBlocks = [];
-                                foreach ($paragraphs as $index => $para) {
-                                    $contentBlocks[] = $para;
-                                    if (
-                                        $adInterval > 0 &&
-                                        ($index + 1) % $adInterval === 0 &&
-                                        $adsInserted < count($adSlots)
-                                    ) {
-                                        $slotId = $adSlots[$adsInserted];
-                                        $contentBlocks[] =
-                                            '<div class="inner-article-detail-desktop-ad">
-                                    <div id="' .
-                                            $slotId .
-                                            '">
-                                        <script>
-                                            googletag.cmd.push(function() {
-                                                googletag.display("' . $slotId . '");
-                                            });
-                                        </script>
-                                    </div>
-                                </div>';
-                                        $adsInserted++;
+                            <!-- Content before ads -->
+                            <div class="content">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                            </div>
+
+                            <!-- Placeholder for ads (they will be injected dynamically) -->
+                            <div id="ad-container"></div>
+
+                            <!-- Content after ads -->
+                            <div class="content">
+                                <p>More content here...</p>
+                            </div>
+
+                            <script>
+                                googletag.cmd.push(function() {
+                                    let adContainer = document.getElementById("ad-container");
+
+                                    // Loop to create 5 ad slots dynamically
+                                    for (let i = 1; i <= 5; i++) {
+                                        let adDiv = document.createElement("div");
+                                        let uniqueId = "adslotInline_" + i + "_300x250";
+                                        adDiv.className = "inner-article-detail-desktop-ad fad ad-slot";
+                                        adDiv.id = uniqueId;
+                                        adContainer.appendChild(adDiv); // Append to content
+
+                                        // Define the ad slot
+                                        googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250', [
+                                                [300, 250],
+                                                [336, 280],
+                                                [250, 250]
+                                            ], uniqueId)
+                                            .addService(googletag.pubads());
+
+                                        googletag.display(uniqueId); // Display the ad
                                     }
-                                }
-                                $renderedContent = implode("\r\n", $contentBlocks);
-                            @endphp
-                            {!! $renderedContent !!}
+
+                                    googletag.enableServices(); // Enable Google Ads
+                                });
+                            </script>
 
                         </div>
-                        <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px;">
-                            @if (!empty($franchiseData))
+                        @if (!empty($franchiseData))
+                            <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px;">
                                 <h4 style="margin-top:15px">Interested in Franchise:</h4>
                                 @foreach ($franchiseData as $franchise)
                                     <div
@@ -219,8 +234,8 @@
                                         </a>
                                     </div>
                                 @endforeach
-                            @endif
-                        </div>
+                            </div>
+                        @endif
                         <div class="tag-block">
                             <ul class="tag-list">
                                 @if (!empty($assocTags) && isset($assocTags))
@@ -237,10 +252,9 @@
                             </ul>
                         </div>
                     </div>
-                    {{-- <div class="contentarea" id="last-paragraph-{{ $newsDetails->news_id }}"data-news-id="{{ $newsDetails->news_id }}"> --}}
-                    <div class="contentarea">
+                    {{-- <div class="contentarea">
                         @include('layout.insights.subscribenewsletter')
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="col-md-4">
                     <div class="right-wrap">
@@ -255,7 +269,7 @@
                             </div>
                         </div>
                         {{-- ads top right sidebar --}}
-                        <div class="popular-articles">
+                        {{-- <div class="popular-articles">
                             <h3>Related Content</h3>
                             <ul>
                                 @forelse ($trendingArticles as $trend)
@@ -272,6 +286,7 @@
                                                     '/';
                                                 $trendUrl = $baseUrl1 . $trend->slug . '.' . $trend->news_id;
                                             @endphp
+                                          
                                         @endforeach
                                         <div class="popular-head">
                                             <a href="{{ $trendUrl }}">{{ $trend->title }}</a>
@@ -299,6 +314,7 @@
                                                     '/';
                                                 $latestUrl = $baseUrl1 . $latest->slug . '.' . $latest->news_id;
                                             @endphp
+                                           
                                         @endforeach
                                         <div class="popular-head">
                                             <a href="{{ $latestUrl }}">{{ $latest->title }}</a>
@@ -307,7 +323,7 @@
                                 @empty
                                 @endforelse
                             </ul>
-                        </div>
+                        </div> --}}
                         <div class="ad-right-sticky">
                             <div id="adslot300x250_1">
                                 <script>
@@ -321,60 +337,7 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="next-article-container" id="next-article"></div> --}}
-        <!-- New article will be loaded here -->
     </div>
-    @include('layout.insights.magblock')
-    {{-- <script>
-        $(document).ready(function() {
-            let loadedNewsIds = new Set(); // Stores only unique news IDs
-
-            function loadNextArticle(currentNewsId, catId) {
-                if (loadedNewsIds.has(currentNewsId)) return; // Skip if already loaded
-                
-                loadedNewsIds.add(currentNewsId); // Mark as loaded
-                // alert(Array.from(loadedNewsIds).join(", "));
-
-                $.ajax({
-                    url: `/insights/next-article/${catId}`,
-                    method: "GET",
-                    data: {
-                        loadedNewsIds: Array.from(loadedNewsIds)
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data) {
-                        if (!data.trim()) return; // Stop if no data
-
-                        let newArticle = $(data);
-                        $(".next-article-container").append(newArticle); // Append new article
-                        observeLastParagraph(newArticle.find(".last-paragraph").attr("data-news-id"));
-                    },
-                    error: function(error) {
-                        console.error("Error loading next article:", error);
-                    }
-                });
-            }
-
-            function observeLastParagraph(newsId) {
-                let lastParagraph = document.querySelector(`#last-paragraph-${newsId}`);
-                if (!lastParagraph) return;
-
-                let observer = new IntersectionObserver(entries => {
-                    if (entries[0].isIntersecting) {
-                        loadNextArticle(newsId, {{ $newsDetails->cat_id }});
-                    }
-                }, {
-                    threshold: 1.0
-                });
-
-                observer.observe(lastParagraph);
-            }
-
-            // Start observing the first article
-            observeLastParagraph({{ $newsDetails->news_id }});
-        });
-    </script> --}}
-
+    </div>
+    {{-- @include('layout.insights.magblock') --}}
 @endsection

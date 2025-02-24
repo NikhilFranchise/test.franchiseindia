@@ -840,6 +840,8 @@ class BusinessListingController extends Controller
                 ->havingRaw('count > 3')
                 ->get();
         }
+            $parentValue = null;
+
 
         $view = 'category.category';
         if (request()->segment(1) == 'amp')
@@ -857,6 +859,7 @@ class BusinessListingController extends Controller
             'shuffledResults',
             'breadCrumb',
             'catName',
+            'parentValue',
             'mc',
             'sc',
             'ssc',
@@ -1313,6 +1316,23 @@ class BusinessListingController extends Controller
             $catArr = $seoClass->select('catname', 'parent_id', 'seoTitle', 'description', 'keywords')
                 ->where('catid', $catId)
                 ->first();
+                // dd($catArr);
+                if ($catArr) {
+                    $parentId = $catArr->parent_id; // For catId 789, this will be 787
+                    // dd($parentId);
+                    // Now check if parentId (787) exists as catid with parent_id = 5
+                    $mcid = (request()->segment(1) == 'hi') ? CategoryFinalHindi::query() : CategoryFinal::query();
+                    $parentValue = $mcid->where('catid', (int)$parentId)
+                    ->where('parent_id', 5)
+                    ->value('parent_id'); // Fetch the parent_id
+                    // dd($parentValue);
+                // dd($parentValue);
+                //     $exists = $mcid->where('catid', (int)$parentId)
+                //     ->where('parent_id', 5)
+                //     ->exists();
+                //     dd($exists);
+
+                }      
             if (!empty(request()->loc) && count(request()->loc) == 1 && !empty($fTypeName) && !empty($catArr)) {
                 $seoTitle = "$catArr->catname $businessOpp $fTypeName $in $locName - Franchise India";
                 $seoDesc = "Franchise India provides $catArr->catname franchise opportunities '. $fTypeName .', business opportunities, business ideas. Buy $catArr->catname Franchise in $locName with affordable range.";
@@ -1726,7 +1746,6 @@ class BusinessListingController extends Controller
                 ->havingRaw('count > 3')
                 ->get();
         }
-
         $view = 'category.category';
         if (request()->segment(1) == 'amp')
             $view = 'category.hindi-category.amp-category';
@@ -1736,6 +1755,8 @@ class BusinessListingController extends Controller
         return view($view, compact(
             'brandResults',
             'shuffledResults',
+            'parentValue',
+            'catArr',
             'breadCrumb',
             'catName',
             'mc',

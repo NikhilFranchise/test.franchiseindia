@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>franchiseindia.com Admin</title>
+    <title>FranchiseIndia.com Admin Dashboard</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{ URL::asset('admin/css/bootstrap.min.css') }}" />
@@ -15,6 +15,12 @@
 
 <body>
     <div id="loginbox">
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <form id="loginform" class="form-vertical" action="login-check" method="POST">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="control-group normal_text">

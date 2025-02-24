@@ -13,8 +13,7 @@
                         <ul class="newsletter">
                             <li>
                                 <input type="hidden" name="site_type" value="insights">
-                                <input type="email" class="form-control
-                                                    emailer-main" aria-label="Enter Mail" aria-describedby="button-addon2" name="email" required="" placeholder="Enter your email">
+                                <input type="email" class="form-control emailer-main" aria-label="Enter Mail" aria-describedby="button-addon2" name="email" required="" placeholder="Enter your email">
                             </li>
                             <li><button class="btn-subscribe" type="submit" id="button-addon2">SignUp</button></li>
                         </ul>
