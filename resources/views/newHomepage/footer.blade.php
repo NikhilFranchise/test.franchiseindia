@@ -180,7 +180,7 @@ aria-hidden="true">
                     <div class="input-group input-group-search-section-main">
                         <div class="awesomplete"><input type="text"
                                 class="form-control form-control-search-custom" name="text"
-                                placeholder="Search for business opportunities" id="dealer-bar-search-top"
+                                placeholder="Search for business opportunities " id="dealer-bar-search-top"
                                 aria-describedby="basic-addon2" autocomplete="off" aria-expanded="false"
                                 aria-owns="awesomplete_list_1" role="combobox">
                             <ul hidden="" role="listbox" id="awesomplete_list_1"></ul><span

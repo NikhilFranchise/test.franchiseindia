@@ -1,5 +1,4 @@
 @extends('layout.master')
-{{-- @extends('listing_layout.master') --}}
 
 @php
     $brandCount = count($brandResults);
@@ -10,8 +9,36 @@
 @endif --}}
 
 
+{{-- //Pankaj start --}}
+@if(URL::Current() == Config('constants.MainDomain') .'/business-opportunities/dealers-and-distributors.m5')
+@section('seoTitle', $brandResults->total() . '+ ' .' Dealership and Distributorship Opportunities in India – Dealer India')
+@section('seoDesc','Access to ' . $brandResults->total() . '+ ' .'best dealership/distributorship business opportunities in India. Dealer and distributors a financially rewarding business in the growing industry.' )
+@section('seoKeywords','distributorship opportunities, looking for distributorship opportunities, dealership opportunities, looking for dealership opportunities, distributorship business ideas, distributorship business in india, distributorship business plan')
+@endif
+
+@if(!empty($loc) && $mc == 5)
+@php
+            $stateId = $loc[0]; 
+            $stateName = Config::get("location.stateArr.$stateId");
+        @endphp
+  @section('seoTitle', $brandResults->total() . '+ ' . $catArr->catname . ' Dealers & Distributors in ' .  $stateName)
+  @section('seoDesc', 'Find ' . $catArr->catname . ' Dealership & Distributors in ' . $stateName . ' to run a successful ' . $catArr->catname . ' business in ' . $stateName . '. You can explore some of the established and well-known ' .  $catArr->catname . ' Dealers in ' . $stateName .' here.')
+  @section('seoKeywords', $catArr->catname . ' dealership in ' . $stateName . ', ' . $catArr->catname . ' distributorship in ' . $stateName . ', ' . $catArr->catname . ' dealer in ' . $stateName . ', ' . $catArr->catname . ' dealership opportunities in ' . $stateName . ', Dealer India, ' . $catArr->catname . ' distributors in ' . $stateName)
+
+@elseif(empty($loc) && $mc == 5)
+@section('seoTitle', $brandResults->total() . '+ ' . $catName . ' Dealers & Distributors in India')
+@section('seoDesc', 'Dealer India offers a wide variety of ' . $catName . ' Dealership & Distributorship opportunities to run a successful ' . $catName . ' business. You can explore some of the established and well-known ' . $catName . ' Dealers here.')
+@section('seoKeywords', $catName . ' dealership in India, ' . $catName . ' distributorship in India, ' . $catName . ' dealers in India, ' . $catName . ' dealership opportunities in India, Dealer India, ' . $catName . ' distributors in India')
+@else
+
+@endif
+
+{{-- //////////// --}}
+
+{{-- //Pankaj end --}}
+
 @if ($mc == 2)
-    @section('seoTitle', 'Food and Beverage - Business Ideas and Franchise Opportunities')
+    @section('seoTitle', $brandResults->total() . '+ ' . 'Food and Beverage - Business Ideas and Franchise Opportunities')
 @elseif (URL::Current()  ==  Config('constants.MainDomain') .'/category/search' )
 
     @php
@@ -100,7 +127,7 @@ $c_Url = url()->current();
                 <!-- category left panel start here  -->
                 @include('category.category-left-section')
                 <!-- category left panel end here  -->
-                <div class="col-xs-12 col-sm-8 col-md-9 bor-radius backwhite catright row-no-padding" id='prannge'>
+                <div class="col-xs-12 col-sm-8 col-md-9 bor-radius backwhite catright row-no-padding">
 
                     @include('category.navigation-search-by')
 
@@ -118,13 +145,9 @@ $c_Url = url()->current();
                             $shortBox = 0;
                         @endphp
                         <div  id="renderedData">
-                            @php
-                            // dd($brandResult);
-                            // dd($shuffledResults->pluck('company_name')->toArray());
-                            @endphp
+
                         @foreach ($shuffledResults as $brandResult)
                             <!-- category list section start here-->
-
 
                             @php
                                 $brandUrl = sprintf(
@@ -554,7 +577,7 @@ $c_Url = url()->current();
                         <div class="frm-container" id="askForm">
                             <form id="homepage1" name="homepage1" method="post">
                                 @csrf
-                                <h2 class="ttl">Free Advice - Ask Our Experts  </h2>
+                                <h2 class="ttl">Free Advice - Ask Our Experts</h2>
                                 <div id="errMsg1" style="display:none;">
                                     <font color="red"> Please select one option..! </font>
                                 </div>

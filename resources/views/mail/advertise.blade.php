@@ -34,7 +34,7 @@
         <td valign="top"><table width="92%" class="menu-list" align="center" cellpadding="0" cellspacing="0" style="padding-left:20px; border-top:1px solid #eaeaea; border-bottom:1px solid #eaeaea; padding-top:12px; padding-bottom:12px; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#333;">
                 <tr>
                     <td valign="top" class="menu-item" width="100%" style="line-height: 24px;"><a href="{{Config('constants.MainDomain')}}" style="text-decoration: none; color: black;">15,000+ Business Opportunities</a> &nbsp; | &nbsp;
-                        {{-- <a href="{{ Config('constants.MainDomain') }}/content" style="text-decoration: none; color: black;">What's New</a> &nbsp; | &nbsp; --}}
+                        <a href="https://www.franchiseindia.com/insights" style="text-decoration: none; color: black;">What's New</a> &nbsp; | &nbsp;
                         <a href="https://www.franchiseindia.com/insights" style="text-decoration: none; color: black;">News</a> &nbsp; | &nbsp;
                          <a href="http://video.franchiseIndia.com/" style="text-decoration: none; color: black;">Videos</a> &nbsp; | &nbsp;
                         <a href="{{ Config('constants.MainDomain') }}/advertise" style="text-decoration: none; color: black;">Advertise</a> &nbsp; | &nbsp;

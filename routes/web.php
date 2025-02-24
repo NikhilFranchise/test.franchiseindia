@@ -1211,3 +1211,4 @@ Route::get('/sendmail',[CommonController::class,'send_email']);
 // Route::post('/password/email',[CommonController::class,'reset']);
 
 Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('password-reset');
+
