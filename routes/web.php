@@ -1083,11 +1083,10 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
 
 
     Route::group(['prefix' => 'insights'], function () {
-        Route::get('rss', [InsightSitemapController::class, 'rssFeed']);
-        Route::get('rss/{slug}', [InsightSitemapController::class, 'generateRssFeed']);
         Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
         Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
-        Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
+        Route::get('rss', [InsightSitemapController::class, 'rssFeed']);
+        Route::get('rss/{slug}', [InsightSitemapController::class, 'generateRssFeed']);
         Route::get('{insight_type}/{slug}.{id}', function ($insight_type, $slug, $id) {
             return redirect()->to("/insights/en/{$insight_type}/{$slug}.{$id}", 301);
         });
