@@ -8,8 +8,12 @@ use App\Models\NewsList;
 use App\Models\DealersFranchisor;
 use App\Models\FranchisorBusinessDetail;
 use App\Models\SeoTagHindi;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+
+use App\Models\UserAccount;
+use App\Models\InvestorDetails;
 
 class DealersAndDistributorController extends Controller
 {
@@ -91,4 +95,15 @@ class DealersAndDistributorController extends Controller
         return redirect('/category/search?text='.request()->search);
     }
 
+    public function dealerhomepage(Request $request)
+    {
+        // dd('yes');
+        // Validate the incoming request
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'phone' => 'required|numeric|digits:10',
+        ]);
+        return response()->json(['success' => true, 'message' => 'Query submitted successfully']);
+    }
 }

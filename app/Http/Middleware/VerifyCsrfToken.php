@@ -32,8 +32,8 @@ class VerifyCsrfToken extends Middleware
         'newslettersignup',
         'price_filter',
         'feedback',
-        'password/email'
-
+        'password/email',
+        'api/*', 
 
 
     ];

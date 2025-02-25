@@ -2062,12 +2062,9 @@ class BusinessListingController extends Controller
             // dd($catArr);
         } else {
             $seoTitle = $catArr->catname . ' - Franchise India';
-
             if (request()->segment(1) == 'hi')
                 $seoTitle = $catArr->catname . ' - फ्रेंचाइज इंडिया';
-        }
-
-
+        } 
         if (!empty($catArr->description))
             $seoDesc     = $catArr->description;
 
