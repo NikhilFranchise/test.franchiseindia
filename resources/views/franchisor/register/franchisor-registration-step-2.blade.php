@@ -992,7 +992,7 @@
                                         <select name="operations_start_year" id="operations_start_year"
                                             class="form-control myselectclass">
                                             <option value="">Select Year</option>
-                                            @for ($i = 1900; $i <= date('Y'); $i++)
+                                            @for ($i = 1901; $i <= date('Y'); $i++)
                                                 <option value='{{ $i }}'
                                                     @if ($i == $franData->operations_start_year) selected @endif>
                                                     {{ $i }}</option>

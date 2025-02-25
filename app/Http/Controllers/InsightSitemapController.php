@@ -14,6 +14,11 @@ use App\Models\ContentTagsAssignedHindi;
 use App\Models\InsightListHindi;
 use App\Models\SeoTagHindi;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\App;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\URL;
+use DOMDocument;
+
 
 class InsightSitemapController extends Controller
 {
@@ -72,35 +77,6 @@ class InsightSitemapController extends Controller
         // dd($allMonths);
         return view('insights.sitemaps.month_sitemap', compact('allMonths', 'Y'));
     }
-
-    // public function daysitemap(Request $request, $year, $month)
-    // {
-    //     $Y = $year;
-    //     $M = $month;
-    //     $englishDays = InsightList::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->where('status', 1)
-    //         ->whereRaw('YEAR(created_at) = ?', [$Y])
-    //         ->whereRaw('MONTH(created_at) = ?', [$M])
-    //         ->selectRaw('DAY(created_at) as day, COUNT(*) as total')
-    //         ->groupByRaw('DAY(created_at)')
-    //         ->orderBy('created_at')
-    //         ->pluck('day');
-    //     $hindiDays = InsightListHindi::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->where('status', 1)
-    //         ->whereRaw('YEAR(created_at) = ?', [$Y])
-    //         ->whereRaw('MONTH(created_at) = ?', [$M])
-    //         ->selectRaw('DAY(created_at) as day, COUNT(*) as total')
-    //         ->groupByRaw('DAY(created_at)')
-    //         ->orderBy('created_at')
-    //         ->pluck('day');
-
-    //     $allDays = $englishDays->merge($hindiDays)->unique()->sort()->values();
-    //     return view('insights.sitemaps.day_sitemap', compact('allDays', 'M', 'Y'));
-    // }
 
     public function daysitemap(Request $request, $year, $month)
     {
@@ -535,5 +511,109 @@ class InsightSitemapController extends Controller
         return response()
             ->view('insights.sitemaps.tags_sitemap', ['tagsData' => $tagsData])
             ->header('Content-Type', 'text/xml');
+    }
+
+    public function rssFeed()
+    {
+        return view('insights.rss-feed');
+    }
+
+    public function topStoriesRss1()
+    {
+        $locale = App::getLocale();
+        $topStoriesModel = $locale == 'en' ? InsightList::class : InsightListHindi::class;
+        $topStoriesRss = $topStoriesModel::query()->where('status', 1)->where('insight_type', 'News')->whereNotIn('news_type', ['ri', 'ir'])->orderByDesc('created_at')->limit(15)->get();
+        // dd($topStoriesRss);
+
+
+    }
+
+    public function generateRssFeed(Request $request)
+    {
+        // Map slug to insight type(s)
+        $insight_types = [
+            'topstories' => 'News',
+            'industryfocus' => 'Article',
+            'interviews' => 'Interview',
+            'events_reports' => ['Event', 'Report'], // Needs to match both
+        ];
+
+        // Get the correct insight type or default to an empty array
+        $insight_type = $insight_types[$request->slug] ?? [];
+
+        $locale = App::getLocale();
+        $newsModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+
+        $query = $newsModel::with(['author', 'category'])
+            ->where('status', 1)
+            // ->where('insight_type', $insight_type)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByDesc('created_at')
+            ->take(15);
+        // ->get();
+
+        // Apply filtering based on type
+        if (is_array($insight_type)) {
+            $query->whereIn('insight_type', $insight_type);
+        } elseif (!empty($insight_type)) {
+            $query->where('insight_type', $insight_type);
+        }
+        $articles = $query->get();
+
+        // Create a new DOMDocument
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->formatOutput = true;
+
+        // Create the root RSS element
+        $rss = $dom->createElement('rss');
+        $rss->setAttribute('version', '2.0');
+        $dom->appendChild($rss);
+
+        // Create the channel element
+        $channel = $dom->createElement('channel');
+        $rss->appendChild($channel);
+
+        // Add channel metadata
+        $channel->appendChild($dom->createElement('title', 'Latest Insights Stories'));
+        $channel->appendChild($dom->createElement('link', URL::to('/insights/rss/topstories')));
+        $channel->appendChild($dom->createElement('description', 'Latest insights News and Stories'));
+        $channel->appendChild($dom->createElement('language', $locale));
+
+        foreach ($articles as $article) {
+            $item = $dom->createElement('item');
+            $item->appendChild($dom->createElement('title', htmlspecialchars($article->title)));
+            $item->appendChild($dom->createElement('link', URL::to('/insights/' . $locale . '/' . strtolower($article->insight_type) . '/' . $article->slug . '.' . $article->news_id)));
+            $item->appendChild($dom->createElement('description', htmlspecialchars($article->shortDesc ?? '')));
+            $item->appendChild($dom->createElement('pubDate', date('d-M-Y', strtotime($article->created_at))));
+
+            $author = $article->author[0]->title ?? 'Unknown';
+            $item->appendChild($dom->createElement('author', htmlspecialchars($author)));
+
+            if (!empty($article->category[0]->catname)) {
+                $item->appendChild($dom->createElement('category', htmlspecialchars($article->category[0]->catname)));
+            }
+            // Add media content (image URL)
+            // Generate the image URL using createimgurl()
+            $imageUrl = \App\Http\Controllers\InsightsController::createimgurl($article->image);
+            // Get image size safely
+            $imageDetails = @getimagesize($imageUrl);
+            $width = is_array($imageDetails) ? $imageDetails[0] : 0;
+            $height = is_array($imageDetails) ? $imageDetails[1] : 0;
+            if (!empty($article->image)) {
+                $mediaContent = $dom->createElement('media:content');
+                $mediaContent->setAttribute('url', htmlspecialchars($imageUrl));
+                $mediaContent->setAttribute('medium', 'image');
+                $mediaContent->setAttribute('width', $width);  // You can set proper width
+                $mediaContent->setAttribute('height', $height);  // You can set proper height
+                $item->appendChild($mediaContent);
+            }
+
+            $channel->appendChild($item);
+        }
+
+        // Generate the formatted XML
+        $rssFeed = $dom->saveXML();
+
+        return response($rssFeed, 200)->header('Content-Type', 'application/rss+xml');
     }
 }

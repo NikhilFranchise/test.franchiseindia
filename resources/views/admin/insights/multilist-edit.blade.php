@@ -24,19 +24,23 @@
             justify-content: space-between;
         }
 
-        a.visit{background:#014ea5;border-radius: 4px;
-    width: 93px;
-    display: block;
-    color: #ffffff;
-    margin: 0px 5px;
-    padding: 5px 0px;}
+        a.visit {
+            background: #014ea5;
+            border-radius: 4px;
+            width: 93px;
+            display: block;
+            color: #ffffff;
+            margin: 0px 5px;
+            padding: 5px 0px;
+        }
 
         ul.quick-edits li {
             width: 18%;
         }
 
-        ul.quick-edits li.lastitem{
-            width: 100%!important;margin-bottom: 10px
+        ul.quick-edits li.lastitem {
+            width: 100% !important;
+            margin-bottom: 10px
         }
 
         ul.quick-edits .form-control {
@@ -53,17 +57,29 @@
             width: 812px;
         }
 
-        .labelwrap{display: flex;justify-content: space-between;padding: 0px 10px 0px 0px;}
-        .labelwrap label{width:30%;font-size: 11px;}
+        .labelwrap {
+            display: flex;
+            justify-content: space-between;
+            padding: 0px 10px 0px 0px;
+        }
+
+        .labelwrap label {
+            width: 30%;
+            font-size: 11px;
+        }
 
         .select2-container--default .select2-selection--single .select2-selection__arrow b {
             display: none;
         }
-        ul.quick-edits .select2-selection__choice{width: auto;margin-bottom: 0px;}
 
-        
+        ul.quick-edits .select2-selection__choice {
+            width: auto;
+            margin-bottom: 0px;
+        }
 
-        
+
+
+
 
         .search-results {
             /* margin-top: 63px; */
@@ -356,10 +372,10 @@
                                         </select>
                                     </li>
                                     <li class="lastitem">
-                                    <label for="">Associated Tags</label>
-                                    <select multiple required name="associated_tags[]" id="select3"
-                                        class="form-control select2">
-                                    </select>
+                                        <label for="">Associated Tags</label>
+                                        <select multiple required name="associated_tags[]" id="select3"
+                                            class="form-control select2">
+                                        </select>
                                     </li>
                                     <center><button type="submit" class="btn btn-primary form-control"
                                             id="apply_bulk">Apply Changes</button></center>
@@ -368,15 +384,15 @@
                                 <table>
                                     <thead>
                                         <tr class="gradeX">
-                                            <th style="width:6%;">Check all<input type="checkbox" id="select_all">
+                                            <th style="width: 6%;">Check all<input type="checkbox" id="select_all">
                                             </th>
-                                            <th style="width: 4%">News ID</th>
-                                            <th style="width: 45%">Title</th>
-                                            <th style="width: 5%">Insight Type</th>
-                                            <th style="width: 6%">Main Category</th>
-                                            <th style="width: 3%">Sub Category</th>
-                                            <th style="width: 2%">Link</th>
-                                            <th style="width: 7%">Author</th>
+                                            <th style="width: 4%;">News ID</th>
+                                            <th style="width: 45%;">Title</th>
+                                            <th style="width: 5%;">Insight Type</th>
+                                            <th style="width: 6%;">Main Category</th>
+                                            <th style="width: 3%;">Sub Category</th>
+                                            <th style="width: 2%;">Link</th>
+                                            <th style="width: 7%;">Author</th>
                                             <th>Status/Privacy</th>
                                         </tr>
                                     </thead>
@@ -401,8 +417,8 @@
                                                         value="{{ $insights->slug }}">
                                                 </td>
                                                 <td>{{ $insights->news_id }}</td>
-                                                <td style="text-align: left">{{ $insights->title }}</td>
-                                                <td style="text-align: left">{{ $insights->insight_type }}</td>
+                                                <td>{{ $insights->title }}</td>
+                                                <td>{{ $insights->insight_type }}</td>
                                                 <td>
                                                     @foreach ($insights->category as $category)
                                                         {{ $category->catname }}
@@ -415,7 +431,8 @@
                                                 </td>
                                                 <td>
 
-                                                    <a  href="{{ $url }}" target="_blank" class="visit">Visit</a>
+                                                    <a href="{{ $url }}" target="_blank"
+                                                        class="visit">Visit</a>
                                                     {{-- <div class="round-button">
                                                         <div class="round-button-circle"><a
                                                                 href="{{ $url }}" target="_blank"
@@ -436,27 +453,29 @@
                                                         <span class="slider round"></span>
                                                     </label> --}}
                                                     <div class="labelwrap">
-                                                    <label>
-                                                        <input type="radio" name="status_{{ $insights->news_id }}"
-                                                            id="{{ $insights->news_id }}" value="1"
-                                                            class="activestate"
-                                                            {{ $insights->status == 1 ? 'checked' : '' }}>
-                                                        Public
-                                                    </label>
-                                                    <label>
-                                                        <input type="radio" name="status_{{ $insights->news_id }}"
-                                                            value="0"id="{{ $insights->news_id }}"
-                                                            class="activestate"
-                                                            {{ $insights->status == 0 ? 'checked' : '' }}>
-                                                        Draft
-                                                    </label>
-                                                    <label>
-                                                        <input type="radio" name="status_{{ $insights->news_id }}"
-                                                            value="2" class="activestate"
-                                                            id="{{ $insights->news_id }}"
-                                                            {{ $insights->status == 2 ? 'checked' : '' }}>
-                                                        Private
-                                                    </label>
+                                                        <label>
+                                                            <input type="radio"
+                                                                name="status_{{ $insights->news_id }}"
+                                                                id="{{ $insights->news_id }}" value="1"
+                                                                class="activestate"
+                                                                {{ $insights->status == 1 ? 'checked' : '' }}>
+                                                            Public
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio"
+                                                                name="status_{{ $insights->news_id }}"
+                                                                value="0"id="{{ $insights->news_id }}"
+                                                                class="activestate"
+                                                                {{ $insights->status == 0 ? 'checked' : '' }}>
+                                                            Draft
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio"
+                                                                name="status_{{ $insights->news_id }}" value="2"
+                                                                class="activestate" id="{{ $insights->news_id }}"
+                                                                {{ $insights->status == 2 ? 'checked' : '' }}>
+                                                            Private
+                                                        </label>
                                                     </div>
                                                 </td>
 

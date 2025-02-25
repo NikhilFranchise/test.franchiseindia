@@ -1,7 +1,7 @@
 @extends('layout.insights.master')
 @section('seoTitle', $newsDetails->title)
 @section('header-schema')
-    @include('insights.schema', ['newsDetails' => $newsDetails])
+@include('insights.schema', ['newsDetails' => $newsDetails])
 @endsection
 @section('seoDesc', $newsDetails->shortDesc)
 @section('seoKeywords', $newsDetails->kicker)
