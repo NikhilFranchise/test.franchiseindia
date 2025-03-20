@@ -246,36 +246,47 @@ class BusinessListingController extends Controller
         // Set SEO title and description based on the segment
         if ($segment) {
             if ($segment == "range-10000-100000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 1 Lakh in India: Affordable Business Opportunities 2024';
                 $seoDesc = 'Discover the top franchises available under 1 lakh in India for 2024. Invest in affordable, high-return business opportunities ideal for first-time entrepreneurs. Begin your successful business journey today!';
             } elseif ($segment == "range-10000-200000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 2 Lakhs in India: Affordable Investments 2024';
                 $seoDesc = 'Explore high-potential franchises available under 2 lakhs in India for 2024. Seize low-cost, profitable business opportunities perfect for emerging entrepreneurs. Start your entrepreneurial journey now!';
             } elseif ($segment == "range-10000-300000") {
+                $catArr = '';
                 $seoTitle = 'Best Franchises Under 3 Lakhs in India: Start Your Business in 2024';
                 $seoDesc = 'Discover leading franchises under 3 lakhs in India for 2024. Invest in cost-effective, scalable business opportunities suitable for aspiring entrepreneurs. Launch your successful venture today!';
             } elseif ($segment == "range-10000-500000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 5 Lakhs in India: High ROI Business Opportunities 2024';
                 $seoDesc = 'Explore the best franchises available under 5 lakhs in India for 2024. Discover affordable, high-return business ventures perfect for budding entrepreneurs. Start your profitable journey today!';
             } elseif ($segment == "range-10000-1000000") {
+                $catArr = '';
                 $seoTitle = 'Best Franchises Under 10 Lakhs in India: Lucrative Opportunities 2024';
                 $seoDesc = 'Uncover top franchises available under 10 lakhs in India for 2024. Choose from profitable, low-cost business opportunities ideal for new entrepreneurs. Begin your successful journey now!';
             } elseif ($segment == "range-10000-1500000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 15 Lakhs in India: Affordable Business Ventures 2024';
                 $seoDesc = 'Explore affordable franchises under 15 lakhs in India for 2024. Seize low-investment, high-return business opportunities perfect for first-time entrepreneurs. Start building your business empire today!';
             } elseif ($segment == "range-10000-2000000") {
+                $catArr = '';
                 $seoTitle = 'Best Franchises Under 20 Lakhs in India: Smart Business Choices 2024';
                 $seoDesc = 'Explore leading franchises under 20 lakhs in India for 2024. Choose from cost-effective, high-return business opportunities perfect for savvy entrepreneurs looking to make a mark. Start your profitable venture today!';
             } elseif ($segment == "range-10000-2500000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 25 Lakh in India: Affordable Business Opportunities 2024';
                 $seoDesc = 'Discover leading franchises under 25 lakhs in India for 2024. Invest in cost-effective, high-potential business opportunities suitable for savvy entrepreneurs. Launch your profitable venture today!';
             } elseif ($segment == "range-10000-3000000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 30 Lakhs in India: Ideal Investments 2024';
                 $seoDesc = 'Explore the most promising franchises under 30 lakhs in India for 2024. Find affordable, scalable business opportunities perfect for emerging entrepreneurs. Kickstart your entrepreneurial success now!';
             } elseif ($segment == "range-10000-5000000") {
+                $catArr = '';
                 $seoTitle = 'Best Franchises Under 50 Lakhs in India: Profitable Investments 2024';
                 $seoDesc = 'Discover top franchises available under 50 lakhs in India for 2024. Secure profitable and sustainable business opportunities ideal for growth-focused entrepreneurs. Start your journey to success today!';
             } elseif ($segment == "range-10000-10000000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 1 Crore in India: Lucrative Business Opportunities 2024';
                 $seoDesc = 'Uncover leading franchises under 1 crore in India for 2024. Invest in high-return business opportunities suited for ambitious entrepreneurs. Begin your profitable venture now!';
             }
@@ -1163,6 +1174,7 @@ class BusinessListingController extends Controller
 
             $this->setSearchParams(request()->categoryIds);
         }
+
         if (!empty(request()->locationIds)) {
             // dd('hello');
             $this->setSearchParams(request()->locationIds);
@@ -1176,36 +1188,47 @@ class BusinessListingController extends Controller
         $seoDesc = '';
         if ($segment) {
             if ($segment == "range-10000-100000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 1 Lakh in India: Affordable Business Opportunities 2024';
                 $seoDesc = 'Discover the top franchises available under 1 lakh in India for 2024. Invest in affordable, high-return business opportunities ideal for first-time entrepreneurs. Begin your successful business journey today!';
             } elseif ($segment == "range-10000-200000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 2 Lakhs in India: Affordable Investments 2024';
                 $seoDesc = 'Explore high-potential franchises available under 2 lakhs in India for 2024. Seize low-cost, profitable business opportunities perfect for emerging entrepreneurs. Start your entrepreneurial journey now!';
             } elseif ($segment == "range-10000-300000") {
+                $catArr = '';
                 $seoTitle = 'Best Franchises Under 3 Lakhs in India: Start Your Business in 2024';
                 $seoDesc = 'Discover leading franchises under 3 lakhs in India for 2024. Invest in cost-effective, scalable business opportunities suitable for aspiring entrepreneurs. Launch your successful venture today!';
             } elseif ($segment == "range-10000-500000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 5 Lakhs in India: High ROI Business Opportunities 2024';
                 $seoDesc = 'Explore the best franchises available under 5 lakhs in India for 2024. Discover affordable, high-return business ventures perfect for budding entrepreneurs. Start your profitable journey today!';
             } elseif ($segment == "range-10000-1000000") {
+                $catArr = '';
                 $seoTitle = 'Best Franchises Under 10 Lakhs in India: Lucrative Opportunities 2024';
                 $seoDesc = 'Uncover top franchises available under 10 lakhs in India for 2024. Choose from profitable, low-cost business opportunities ideal for new entrepreneurs. Begin your successful journey now!';
             } elseif ($segment == "range-10000-1500000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 15 Lakhs in India: Affordable Business Ventures 2024';
                 $seoDesc = 'Explore affordable franchises under 15 lakhs in India for 2024. Seize low-investment, high-return business opportunities perfect for first-time entrepreneurs. Start building your business empire today!';
             } elseif ($segment == "range-10000-2000000") {
+                $catArr = '';
                 $seoTitle = 'Best Franchises Under 20 Lakhs in India: Smart Business Choices 2024';
                 $seoDesc = 'Explore leading franchises under 20 lakhs in India for 2024. Choose from cost-effective, high-return business opportunities perfect for savvy entrepreneurs looking to make a mark. Start your profitable venture today!';
             } elseif ($segment == "range-10000-2500000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 25 Lakh in India: Affordable Business Opportunities 2024';
                 $seoDesc = 'Discover leading franchises under 25 lakhs in India for 2024. Invest in cost-effective, high-potential business opportunities suitable for savvy entrepreneurs. Launch your profitable venture today!';
             } elseif ($segment == "range-10000-3000000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 30 Lakhs in India: Ideal Investments 2024';
                 $seoDesc = 'Explore the most promising franchises under 30 lakhs in India for 2024. Find affordable, scalable business opportunities perfect for emerging entrepreneurs. Kickstart your entrepreneurial success now!';
             } elseif ($segment == "range-10000-5000000") {
+                $catArr = '';
                 $seoTitle = 'Best Franchises Under 50 Lakhs in India: Profitable Investments 2024';
                 $seoDesc = 'Discover top franchises available under 50 lakhs in India for 2024. Secure profitable and sustainable business opportunities ideal for growth-focused entrepreneurs. Start your journey to success today!';
             } elseif ($segment == "range-10000-10000000") {
+                $catArr = '';
                 $seoTitle = 'Top Franchises Under 1 Crore in India: Lucrative Business Opportunities 2024';
                 $seoDesc = 'Uncover leading franchises under 1 crore in India for 2024. Invest in high-return business opportunities suited for ambitious entrepreneurs. Begin your profitable venture now!';
             }
@@ -1310,6 +1333,7 @@ class BusinessListingController extends Controller
                     $seoTitle = "$businessOpp $fTypeName $in $locName - फ्रेंचाइजी भारत";
             }
         }
+       
 
         if (!empty($catId)) {
             $seoClass = (request()->segment(1) == 'hi') ? CategoryFinalHindi::query() : CategoryFinal::query();
@@ -1546,6 +1570,7 @@ class BusinessListingController extends Controller
 
         // Fetch the request parameters
         if (!empty(request()->state_code)) {
+            $catArr = '';
             $locId       = preg_split('#(?<=[a-z])(?=\d)#i', request()->state_code);
             $locArrKey   = explode(',', $locId[1]);
             $seoTitle    = 'Business Opportunities in ' . Config('location.stateArr.' . $locArrKey[0]) . ' - Franchise India';
@@ -1562,6 +1587,7 @@ class BusinessListingController extends Controller
 
 
         if (!empty(request()->loc)) {
+
             if (is_array(request()->loc)) {
                 $locArrKey = implode(',', request()->loc);
             } else {
@@ -1725,7 +1751,16 @@ class BusinessListingController extends Controller
         $ftype = request()->ftype;
 
         if (!empty(request()->state_code))
+        //    $catArr='';
+       
+        if(!$catArr = ''){
             $catName     = (request()->segment(1) == 'hi') ?  Config('location.hindiStatesArr.' . Config('location.stateArr.' . $locArrKey[0])) : Config('location.stateArr.' . $locArrKey[0]);
+        }
+        else{
+            $catArr = '';
+        }
+        // dd($catArr);
+            // $catName     = (request()->segment(1) == 'hi') ?  Config('location.hindiStatesArr.' . Config('location.stateArr.' . $locArrKey[0])) : Config('location.stateArr.' . $locArrKey[0]);
 
         $franImageData   = [];
         if (!empty($brandResults)) {
@@ -1746,6 +1781,13 @@ class BusinessListingController extends Controller
                 ->havingRaw('count > 3')
                 ->get();
         }
+        // dd($catArr);
+        // $catArr='';
+// dd($mc);
+        if(!$mc){
+            $catArr = '';
+        }
+
         $view = 'category.category';
         if (request()->segment(1) == 'amp')
             $view = 'category.hindi-category.amp-category';
@@ -1755,7 +1797,6 @@ class BusinessListingController extends Controller
         return view($view, compact(
             'brandResults',
             'shuffledResults',
-            'parentValue',
             'catArr',
             'breadCrumb',
             'catName',
@@ -2205,43 +2246,43 @@ class BusinessListingController extends Controller
     $minrange = $request->input('minvaluerange');
     $maxrange = $request->input('maxvaluerange');
    
-$shuffledResults = FranchisorBusinessDetail::query()->select(
-    'fran_detail_id',
-    'franchisor_id',
-    'profile_name',
-    'company_name',
-    'state',
-    'ind_sub_cat',
-    'operations_start_year',
-    'looking_tradepartner',
-    'looking_franchise',
-    'membership_weightage',
-    'franchise_start_year',
-    'no_fran_outlets',
-    'franchise_partner_type',
-    'city',
-    'unit_investment',
-    'expansion_loc_type',
-    'business_desc',
-    'membership_plan',
-    'prop_area_min',
-    'prop_area_max',
-    'profile_status',
-    'business_desc',
-    'ind_main_cat',
-    'ind_cat',
-    'ind_sub_cat',
-    'membership_type',
-    'company_logo',
-    'unit_inv_min',
-    'unit_inv_max',
-    'is_hindi',
-    'business_desc_hindi',
-    'free_logo_visibility',
-    'brand_verified',
-    'views',
-    'activated_at'
-)
+    $shuffledResults = FranchisorBusinessDetail::query()->select(
+        'fran_detail_id',
+        'franchisor_id',
+        'profile_name',
+        'company_name',
+        'state',
+        'ind_sub_cat',
+        'operations_start_year',
+        'looking_tradepartner',
+        'looking_franchise',
+        'membership_weightage',
+        'franchise_start_year',
+        'no_fran_outlets',
+        'franchise_partner_type',
+        'city',
+        'unit_investment',
+        'expansion_loc_type',
+        'business_desc',
+        'membership_plan',
+        'prop_area_min',
+        'prop_area_max',
+        'profile_status',
+        'business_desc',
+        'ind_main_cat',
+        'ind_cat',
+        'ind_sub_cat',
+        'membership_type',
+        'company_logo',
+        'unit_inv_min',
+        'unit_inv_max',
+        'is_hindi',
+        'business_desc_hindi',
+        'free_logo_visibility',
+        'brand_verified',
+        'views',
+        'activated_at'
+    )
 ->whereIn('profile_status', [1, 11])
 ->where('membership_type', 1)
 // ->sortByDesc('membership_weightage')

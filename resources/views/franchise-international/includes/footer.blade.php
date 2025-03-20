@@ -48,7 +48,7 @@
                     </ul>
                 </div>
                 <div class="col-xs-12 col-sm-4 col-md-4">
-                    <h3 class="catfoot">Browse By Locations</h3>
+                    <h3 class="catfoot">Browse By States</h3>
                     <ul class="btmlinklist">
                         <li><a href="/business-opportunities/maharashtra.LOC18">Maharashtra</a></li>
                         <li><a href="/business-opportunities/delhi.LOC23">Delhi</a></li>

@@ -2,11 +2,52 @@
 
 @php
     $brandCount = count($brandResults);
+  
 @endphp
-
 {{-- @if ($brandCount < 2)
     @section('robot', 'noindex, nofollow')
 @endif --}}
+
+
+
+{{-- Pankaj start for cat+investment --}}
+@if($mc !== 5)
+    {{-- First Case: When $maxRangevalue is not empty --}}
+    @if(!empty($maxRangevalue) && empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
+        @section('seoTitle', $brandResults->total() . '+ Business opportunities in ' . $catArr->catname . ' under ' . $minRangeValue .'-' . $maxRangevalue . ' - Franchise India')
+        @section('seoDesc', 'Find '.  $brandResults->total() . ' Business Opportunities in ' .  $catArr->catname . ' under ' .  $minRangeValue .'-' . $maxRangevalue . ' as on ' . date("Y/m/d") . ' Connect with Franchise India and start your '. $catArr->catname .' business today! Sign up Today.' )
+    {{-- Second Case: When both $maxRangevalue and $loc are not empty --}}
+    @elseif(!empty($maxRangevalue) && !empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
+        @php
+            $stateId = $loc[0];
+            $stateName = Config::get("location.stateArr.$stateId");
+        @endphp
+        @section('seoTitle', $brandResults->total() . '+ Business opportunities in ' . $catArr->catname . ' under ' . $minRangeValue .'-' . $maxRangevalue . ' in ' . $stateName . ' , India - Franchise India')
+        @section('seoDesc', 'Find '.  $brandResults->total() . ' Business Opportunities in ' .  $catArr->catname . ' under ' .  $minRangeValue .'-' . $maxRangevalue .' in ' . $stateName.', India.' . ' Updated on ' . date("Y/m/d") . '. Connect with Franchise India and start your '. $catArr->catname .' business in ' . $stateName . ', India today! Register Now.'  )
+    @endif
+@endif
+
+
+{{-- /// Start For Dealer cat+investment rane --}}
+@if($mc == 5)
+    {{-- First Case: When $maxRangevalue is not empty --}}
+    @if(!empty($maxRangevalue) && empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
+        @section('seoTitle', $brandResults->total() . '+ Dealership & Distributorship opportunities in  ' . $catArr->catname . ' under ' . $minRangeValue .'-' . $maxRangevalue . ' - Dealer India')
+        @section('seoDesc', 'Find '.  $brandResults->total() . ' Dealership & Distributorship opportunities in  ' .  $catArr->catname . ' under ' .  $minRangeValue .'-' . $maxRangevalue . ' as on ' . date("Y/m/d") . ' Connect with Dealer India and start your '. $catArr->catname .' business today! Sign up Today.' )
+    {{-- Second Case: When both $maxRangevalue and $loc are not empty --}}
+    @elseif(!empty($maxRangevalue) && !empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
+        @php
+            $stateId = $loc[0];
+            $stateName = Config::get("location.stateArr.$stateId");
+        @endphp
+        @section('seoTitle', $brandResults->total() . '+ Dealership & Distributorship opportunities in ' . $catArr->catname . ' under ' . $minRangeValue .'-' . $maxRangevalue . ' in ' . $stateName . ', India - Dealer India')
+        @section('seoDesc', 'Find '.  $brandResults->total() . ' Dealership & Distributorship Opportunities in  ' .  $catArr->catname . ' under ' .  $minRangeValue .'-' . $maxRangevalue .' in ' . $stateName.', India.' . ' Updated on ' . date("Y/m/d") . '. Connect with Dealer India and start your '. $catArr->catname .' Dealership & Distributorship business in  ' . $stateName . ', India today! Register Now.'  )
+    @endif
+@endif
+{{-- ///End For Dealer cat+investment rane --}}
+
+{{-- Pankaj end for cat+investment --}}
+
 
 {{-- //Pankaj start --}}
 @if(URL::Current() == Config('constants.MainDomain') .'/business-opportunities/dealers-and-distributors.m5')
@@ -14,7 +55,7 @@
 @section('seoDesc','Access to ' . $brandResults->total() . '+ ' .'best dealership/distributorship business opportunities in India. Dealer and distributors a financially rewarding business in the growing industry.' )
 @section('seoKeywords','distributorship opportunities, looking for distributorship opportunities, dealership opportunities, looking for dealership opportunities, distributorship business ideas, distributorship business in india, distributorship business plan')
 @endif
-
+{{-- @dd($mc==5); --}}
 @if(!empty($loc) && $mc == 5)
 @php
             $stateId = $loc[0]; 
@@ -29,7 +70,6 @@
 @section('seoDesc', 'Dealer India offers a wide variety of ' . $catName . ' Dealership & Distributorship opportunities to run a successful ' . $catName . ' business. You can explore some of the established and well-known ' . $catName . ' Dealers here.')
 @section('seoKeywords', $catName . ' dealership in India, ' . $catName . ' distributorship in India, ' . $catName . ' dealers in India, ' . $catName . ' dealership opportunities in India, Dealer India, ' . $catName . ' distributors in India')
 @else
-
 @endif
 
 {{-- //////////// --}}

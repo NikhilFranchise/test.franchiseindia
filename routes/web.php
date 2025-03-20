@@ -491,6 +491,7 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('uttarakhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('himachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('jammu-and-kashmir.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get('ladakh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     // Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
     // Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
     // Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);

@@ -1,11 +1,12 @@
 <meta charset="UTF-8">
 <meta content="{{ request()->segment(1) == 'hi' ? 'hi-in' : 'en-in' }}" name="language" />
-<title>@if (strpos(collect(request()->segments())->last(), 'range-') !== false)@php
+{{-- <title>@if (strpos(collect(request()->segments())->last(), 'range-') !== false)@php
             $mainTitle = $seoTitle ? $seoTitle : '';$lastSegment = str_replace('range-', 'Under Range ', collect(request()->segments())->last());$title1 = $lastSegment . ' - Franchise India';$title = str_replace('- Franchise India', $title1, $seoTitle);
             if (preg_match('/ - Franchise India/', $title)) { $mainTitle = $title; } elseif (preg_match('/at Franchise India/', $title)) { $mainTitle = str_replace('at Franchise India', $title1, $seoTitle);}
         @endphp {{ $mainTitle }}
     @else @yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities') @endif
-</title>
+</title> --}}
+<title> @yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities')</title>
 <meta name="description" content="@yield('seoDesc', 'Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.')" />
 @if (request()->segment(1) == 'top-franchise-leaders')
 @else

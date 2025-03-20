@@ -96,12 +96,12 @@
             </div>-->
 			<div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2 col-lg-2">
                 <div class="footer-widget-link">
-                    <p><a href="https://www.dealerindia.com" target="_blank">Dealers &amp; Distributors</a></p>
+                    <p><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5" target="_blank">Dealers &amp; Distributors</a></p>
                     <ul class="footer-links">
-                        <li><a href="https://www.dealerindia.com/dir/automobile" target="_blank">Automobile</a></li>
-                        <li><a href="https://www.dealerindia.com/dir/food-beverages" target="_blank">FMCG</a></li>
-                        <li><a href="https://www.dealerindia.com/dir/office-school-supplies" target="_blank">Office supplies</a></li>
-                        <li><a href="https://www.dealerindia.com" target="_blank">View All &gt;</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/automobile.sc443" target="_blank">Automobile</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/education.sc950" target="_blank">Education</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/agriculture.sc787" target="_blank">Agriculture</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5" target="_blank">View All &gt;</a></li>
                     </ul>
                 </div>
             </div>
@@ -349,31 +349,44 @@
                 <p class="section-th">Browse By Location</p>
                 <div class="brows-by-location">
                     <ul class="fihl-loaction-browse">
-                            <li> <a href="https://www.franchiseindia.com/business-opportunities/maharashtra.LOC18">Maharashtra</a></li>
-                            <li> <a href="https://www.franchiseindia.com/business-opportunities/delhi.LOC23">Delhi</a>
-                            </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/karnataka.LOC14">Karnataka</a></li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/tamilnadu.LOC29">Tamil
-                                    Nadu</a>
-                            </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/west-bengal.LOC33">West
-                                    Bengal</a>
-                            </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/gujarat.LOC9">Gujarat</a></li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/uttar-pradesh.LOC32">Uttar
-                                    Pradesh</a>
-                            </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/madhya-pradesh.LOC17">Madhya
-                                    Pradesh</a>
-                            </li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/haryana.LOC10">Haryana</a></li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/rajasthan.LOC27">Rajasthan</a></li>
-                            <li> <a href="https://www.franchiseindia.com/business-opportunities/andhra-pradesh.LOC1">Andhra
-                                    Pradesh</a>
-                            </li>
-                            <li> <a href="https://www.franchiseindia.com/business-opportunities/kerala.LOC15">Kerala</a></li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/punjab.LOC26">Punjab</a></li>
-                            <li><a href="https://www.franchiseindia.com/business-opportunities/chandigarh.LOC5">Chandigarh</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/andhra-pradesh.LOC1">Andhra Pradesh</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/arunachal-pradesh.LOC2">Arunachal Pradesh</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/assam.LOC3">Assam</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/bihar.LOC4">Bihar</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/chandigarh.LOC5">Chandigarh</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/chhattisgarh.LOC6">Chhattisgarh</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/daman-and-diu.LOC7">Daman and Diu</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/goa.LOC8">Goa</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/gujarat.LOC9">Gujarat</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/haryana.LOC10">Haryana</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/himachal-pradesh.LOC11">Himachal Pradesh</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/jammu-and-kashmir.LOC12">Jammu and Kashmir</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/jharkhand.LOC13">Jharkhand</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/karnataka.LOC14">Karnataka</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/kerala.LOC15">Kerala</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/lakshadweep.LOC16">Lakshadweep</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/madhya-pradesh.LOC17">Madhya Pradesh</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/maharashtra.LOC18">Maharashtra</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/manipur.LOC19">Manipur</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/meghalaya.LOC20">Meghalaya</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/mizoram.LOC21">Mizoram</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/nagaland.LOC22">Nagaland</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/delhi.LOC23">Delhi</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/odisha.LOC24">Odisha</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/pondicherry.LOC25">Pondicherry</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/punjab.LOC26">Punjab</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/rajasthan.LOC27">Rajasthan</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/sikkim.LOC28">Sikkim</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/tamil-nadu.LOC29">Tamil Nadu</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/tripura.LOC30">Tripura</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/uttarakhand.LOC31">Uttarakhand</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/uttar-pradesh.LOC32">Uttar Pradesh</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/west-bengal.LOC33">West Bengal</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/telangana.LOC34">Telangana</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/andaman-and-nicobar.LOC35">Andaman and Nicobar</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/ladakh.LOC36">Ladakh</a></li>
+                        
+                        
                     </ul>
                 </div>
             </div>

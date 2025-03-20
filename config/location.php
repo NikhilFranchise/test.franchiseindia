@@ -423,7 +423,8 @@ return [
         "32" => "Uttar Pradesh", 
         "33" => "West Bengal", 
         "34" => "Telangana",
-        "35" => 'Andaman and Nicobar'
+        "35" => "Andaman and Nicobar",
+        "36"=>  "Ladakh"
     ],
 
     

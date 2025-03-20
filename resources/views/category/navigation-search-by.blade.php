@@ -67,14 +67,66 @@ $chk_homebased = !empty($chk_homebased)? $chk_homebased : 0;
 <div class="row pad20 row-no-margin">
     <div class="col-xs-12 col-sm-6 col-md-7 row-no-padding">
         <div class="haeding">
-            @if($mc === 2)
+            {{-- Pankaj start for cat+investment --}}
+                @if($mc !== 5)
+                {{-- First Case: When $maxRangevalue is not empty --}}
+                    @if(!empty($maxRangevalue) && empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000)
+                        <h1>{{'Business Opportunities in ' . $catArr->catname .' under ' . $minRangeValue .'-' . $maxRangevalue }}</h1> 
+                        {{-- Second Case: When both $maxRangevalue and $loc are not empty --}}
+                        @elseif(!empty($maxRangevalue) && !empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000)
+                            @php
+                                $stateId = $loc[0];
+                                $stateName = Config::get("location.stateArr.$stateId");
+                            @endphp
+                            <h1>{{'Business Opportunities in ' . $catArr->catname .' under ' . $minRangeValue .'-' . $maxRangevalue . ' in ' . $stateName . ', India'}}</h1> 
+                        @endif
+                    @endif
+                {{-- /// Start For Dealer cat+investment rane --}}
+                @if($mc == 5)
+                 {{-- First Case: When $maxRangevalue is not empty --}}
+                    @if(!empty($maxRangevalue) && empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
+                        <h1>{{'Dealership & Distributorship in ' . $catArr->catname .' under ' . $minRangeValue .'-' . $maxRangevalue }}</h1> 
+                        {{-- Second Case: When both $maxRangevalue and $loc are not empty --}}
+                    @elseif(!empty($maxRangevalue) && !empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000)
+                        @php
+                            $stateId = $loc[0];
+                            $stateName = Config::get("location.stateArr.$stateId");
+                        @endphp
+                    <h1>{{'Dealership & Distributorship in ' . $catArr->catname .' under ' . $minRangeValue .'-' . $maxRangevalue . ' in ' . $stateName . ', India'}}</h1> 
+                @endif
+                @endif
+                {{-- @dd($loc); --}}
+                @if($mc == 5  && !empty($loc))
+                    @php
+                    $stateId = $loc[0];
+                    $stateName = Config::get("location.stateArr.$stateId");
+                    @endphp
+                    <h1>{{'Dealership & Distributorship in ' . $catArr->catname . ' in ' . $stateName }}</h1> 
+                @elseif($mc !== 5  && !empty($loc))
+                    @php
+                    $stateId = $loc[0];
+                    $stateName = Config::get("location.stateArr.$stateId");
+                    @endphp
+                <h1>{{'Buseiness Opportunities in ' . $catArr->catname . ' in ' . $stateName }}</h1> 
+                @endif
+
+                {{-- @dd($minRangeValue); --}}
+                @if($mc == 5 && $minRangeValue == "" && $maxRangevalue == "" )
+                <h1>Dealership & Distributorship Opportunities in  {{$catName}}</h1>
+                @elseif($mc !== 5 && $minRangeValue == "" && $maxRangevalue == "" )
+                <h1>Business Opportunities in {{$catName}}</h1>
+                @endif
+            {{-- ///End For Dealer cat+investment rane --}}
+            {{-- Pankaj end for cat+investment --}}
+            {{-- @if($mc === 2)
             <h1>Food and Beverage - Business Ideas and Franchise Opportunities</h1> 
-            @else
-            <h1>{{($chk_homebased == 0)? $h1 : 'Home Based ' . $h1 .' Business'}}</h1>
-            <!-- <h1>Business Opportunities in {{$catName}}</h1> -->
-            @endif
+            @else --}}
+            {{-- <h1>{{($chk_homebased == 0)? $h1 : 'Home Based ' . $h1 .' Business'}}</h1> --}}
+            {{-- <h1>Business Opportunities in {{$catName}}</h1>
+            @endif --}}
             <span class="shorttxt">(Showing {{$brandResults->firstItem()}} - {{$brandResults->lastItem()}} Opportunities of {{$brandResults->total()}} Opportunities)</span></div>
     </div>
+    
     <div class="col-xs-12 col-sm-3 col-md-3 row-no-padding catmleft">
         <div class="form-group posrelv">
             <form method="get" action="{{Config('constants.MainDomain')}}/category/search">
@@ -83,14 +135,7 @@ $chk_homebased = !empty($chk_homebased)? $chk_homebased : 0;
             </form>
         </div>
     </div>
-    {{-- <div class="col-xs-12 col-sm-3 col-md-2 row-no-padding">
-        <select name="sortby" id="sortbynew" class="form-control myselectclasscat" onchange="changeFunction();">
-            <option value="x" selected="selected">Sort By</option>
-            <option value="1" @if($orderby == 1) selected @endif>Most Recent</option>
-            <option value="2" @if($orderby == 2) selected @endif>Alphabetical Order</option>
-            <option value="3" @if($orderby == 3) selected @endif>Most Popular</option>
-        </select>
-    </div> --}}
+
   
     <div class="col-xs-12 col-sm-3 col-md-2 row-no-padding">
         <select name="sortby" id="fetchDataBtn"  class="form-control myselectclasscat" >
