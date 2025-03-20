@@ -781,10 +781,10 @@ Route::group(['prefix' => 'hi'], function () {
     });
     //Directory Page Routes
     Route::group(['prefix' => 'business-opportunities'], function () {
-        // Route::get('dealers-and-distributors.m5',      'DealersAndDistributorController@getHomePage'); // International Page routes
-        Route::get('dealers-and-distributors.m5', function () {
-            return redirect('https://dealer.franchiseindia.com/', 301);
-        });
+        // Route::get('dealers-and-distributors.m5',    [DealersAndDistributorController::class,'getHomePage']);
+        // Route::get('dealers-and-distributors.m5', function () {
+        //     return redirect('https://dealer.franchiseindia.com/', 301);
+        // });
 
         Route::get('/', function () {
             return view('category/category');

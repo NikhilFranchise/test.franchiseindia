@@ -264,7 +264,7 @@ class ExpressInstaController extends Controller
             ->where('franchisor_id', $request->input('franId'))
             ->leftJoin('user_accounts', 'franchisor_business_details.franchisor_id', '=', 'user_accounts.profile_str')
             ->first();
-        // dd($franData->membership_type);
+        // dd($franData->email);
         if (!empty($check) && $check->visibility == 1)
             return json_encode(array('success' => true, 'user' => $franData));
 
@@ -352,10 +352,10 @@ class ExpressInstaController extends Controller
         $detailsInv = [
             'companyName' => $franData->company_name,
             'managerName' => $franData->fran_manager,
-            'email' => $franData->userDetail->email,
-            'mobile' => $franData->userDetail->mobile,
-            'state' => $franData->state,
-            'city' => $franData->city
+            // 'email' => $franData->userDetail->email,
+            // 'mobile' => $franData->userDetail->mobile,
+            // 'state' => $franData->state,
+            // 'city' => $franData->city
         ];
 
         $dataInvFree = [$franData->company_name, $request->user()->name];

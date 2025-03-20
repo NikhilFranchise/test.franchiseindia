@@ -11,6 +11,7 @@ use App\Models\MappingCategory;
 use App\Models\FranchisorSliderImage;
 use App\Models\FranchisorSliderTenure;
 use App\Models\FranchisorBusinessDetail;
+use App\Models\EventLocPopup;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -46,6 +47,7 @@ class BusinessListingController extends Controller
 
     public function listingLocation()
     {
+        // dd('yes');
         // Initialize the variables
         $seoTitle = '';
         $seoDesc = '';
@@ -90,6 +92,16 @@ class BusinessListingController extends Controller
             $city = ucwords(str_replace('-', ' ', request()->city));
 
             $stateNames = config('location.StateCity.' . $city);
+            // dd($stateNames);
+            $loc_id = array_search($stateNames, config('location.stateArr'));
+            // dd($loc_id);
+            $today = Carbon::today()->toDateString();  
+        // dd($today);   
+            $popup = EventLocPopup::where('location', $loc_id)
+            ->where('start_date', '<=', $today)  // start_date <= today
+            ->where('end_date', '>=', $today)    // end_date <= today
+            ->get();
+            // dd($popup);
             $cityArr = FranchisorLocState::query()->distinct('franchisor_id')
                 ->where('city', $city)
                 ->get()
@@ -195,7 +207,8 @@ class BusinessListingController extends Controller
             'minCost',
             'maxCost',
             'franImageData',
-            'city'
+            'city',
+            'popup'
         ));
     }
 
@@ -214,9 +227,23 @@ class BusinessListingController extends Controller
         // dd($request->getRequestUri());
         $requestUri = $request->getRequestUri();
         $segments = explode('/', $requestUri);
-        // dd($segments[3]);
+        // dd($segments[2]);
         // Check if the segments array has at least 4 elements
         $segment = isset($segments[3]) ? $segments[3] : null;
+
+        
+        $aa=  preg_match('/\.LOC(\d+)/', $segments[2], $matches);
+        $loc_id = $matches[1];
+            // dd($loc_id);
+
+        $today = Carbon::today()->toDateString();  
+        // dd($today);   
+        $popup = EventLocPopup::where('location', $loc_id)
+        ->where('start_date', '<=', $today)  // start_date <= today
+        ->where('end_date', '>=', $today)    // end_date <= today
+        ->where('status',1)
+        ->get();
+        // dd($popup);
 
 
 
@@ -890,7 +917,8 @@ class BusinessListingController extends Controller
             'minCost',
             'maxCost',
             'franImageData',
-            'city'
+            'city',
+            'popup'
         ));
     }
 
@@ -1188,6 +1216,7 @@ class BusinessListingController extends Controller
         $seoDesc = '';
         if ($segment) {
             if ($segment == "range-10000-100000") {
+                // dd('yes');
                 $catArr = '';
                 $seoTitle = 'Top Franchises Under 1 Lakh in India: Affordable Business Opportunities 2024';
                 $seoDesc = 'Discover the top franchises available under 1 lakh in India for 2024. Invest in affordable, high-return business opportunities ideal for first-time entrepreneurs. Begin your successful business journey today!';
@@ -1333,8 +1362,6 @@ class BusinessListingController extends Controller
                     $seoTitle = "$businessOpp $fTypeName $in $locName - फ्रेंचाइजी भारत";
             }
         }
-       
-
         if (!empty($catId)) {
             $seoClass = (request()->segment(1) == 'hi') ? CategoryFinalHindi::query() : CategoryFinal::query();
             $catArr = $seoClass->select('catname', 'parent_id', 'seoTitle', 'description', 'keywords')
@@ -1346,9 +1373,9 @@ class BusinessListingController extends Controller
                     // dd($parentId);
                     // Now check if parentId (787) exists as catid with parent_id = 5
                     $mcid = (request()->segment(1) == 'hi') ? CategoryFinalHindi::query() : CategoryFinal::query();
-                    $parentValue = $mcid->where('catid', (int)$parentId)
-                    ->where('parent_id', 5)
-                    ->value('parent_id'); // Fetch the parent_id
+                    // $parentValue = $mcid->where('catid', (int)$parentId)
+                    // ->where('parent_id', 5)
+                    // ->value('parent_id'); // Fetch the parent_id
                     // dd($parentValue);
                 // dd($parentValue);
                 //     $exists = $mcid->where('catid', (int)$parentId)
@@ -1357,6 +1384,8 @@ class BusinessListingController extends Controller
                 //     dd($exists);
 
                 }      
+
+                
             if (!empty(request()->loc) && count(request()->loc) == 1 && !empty($fTypeName) && !empty($catArr)) {
                 $seoTitle = "$catArr->catname $businessOpp $fTypeName $in $locName - Franchise India";
                 $seoDesc = "Franchise India provides $catArr->catname franchise opportunities '. $fTypeName .', business opportunities, business ideas. Buy $catArr->catname Franchise in $locName with affordable range.";
@@ -1587,7 +1616,6 @@ class BusinessListingController extends Controller
 
 
         if (!empty(request()->loc)) {
-
             if (is_array(request()->loc)) {
                 $locArrKey = implode(',', request()->loc);
             } else {
@@ -1794,6 +1822,9 @@ class BusinessListingController extends Controller
 
         if (request()->segment(1) == 'hi')
             $view = 'category.hindi-category.hindi-category';
+
+       
+        
         return view($view, compact(
             'brandResults',
             'shuffledResults',
@@ -1872,7 +1903,6 @@ class BusinessListingController extends Controller
             // dd($allIntegers);
 
             if (strpos($allIntegers, "sc") !== false) {
-
                 // dd($allIntegers);
                 $category = substr($allIntegers, 2, 4);
                 // dd($allIntegers,$category);

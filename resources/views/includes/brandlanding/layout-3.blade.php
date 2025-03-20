@@ -208,9 +208,15 @@
                         @endif
                     @endforeach
                     <div class="mortxt">
+                        @if($franDetails->ind_main_cat == 5)
+                        <h1 class="txtshow"><span>
+                            {{ Config('constants.subSubCategoryArr.' . $franDetails->ind_cat . '.' . $franDetails->ind_sub_cat) }}</span>
+                        {{ $franDetails->company_name }} Dealership & Distributorship Cost – How to get, Contact, Apply, Fee</h1>
+                        @else
                         <h1 class="txtshow"><span>
                                 {{ Config('constants.subSubCategoryArr.' . $franDetails->ind_cat . '.' . $franDetails->ind_sub_cat) }}</span>
                             {{ $franDetails->company_name }} Franchise Cost – How to get, Contact, Apply, Fee</h1>
+                        @endif    
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-3 col-md-3 mdf">

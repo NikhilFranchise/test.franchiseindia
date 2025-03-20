@@ -272,16 +272,16 @@ class NewHomePageController extends Controller
         //     }
         // });
 
-                $articles= InsightList::query()
+                $articles= InsightList::select('slug','image','news_id','title','content')
                 ->where('status', 1)
-                ->whereIn('insight_type', ['News'])
+                ->where('insight_type', ['News'])
                 ->orderByDesc('created_at')
                 ->limit(10)
                 ->get();
 
-                $articles2= InsightList::query()
+                $articles2= InsightList::select('slug','image','news_id','title','content')
                 ->where('status', 1)
-                ->whereIn('insight_type', ['Interview'])
+                ->where('insight_type', ['Interview'])
                 ->orderByDesc('created_at')
                 ->limit(10)
                 ->get();
@@ -1288,18 +1288,19 @@ class NewHomePageController extends Controller
     public function insights_news(){
         $articles= InsightList::query()
                 ->where('status', 1)
-                ->whereIn('insight_type', ['News'])
+                ->where('insight_type', ['News'])
                 ->orderByDesc('created_at')
                 ->limit(10)
                 ->get();
 
                 $articles2= InsightList::query()
                 ->where('status', 1)
-                ->whereIn('insight_type', ['Interview'])
+                ->where('insight_type', ['Interview'])
                 ->orderByDesc('created_at')
                 ->limit(10)
                 ->get();
 
+                dd($articles);
                 return view('newhomepage.f_news')->with(compact('articles','articles2'));
     }
 
@@ -1307,7 +1308,7 @@ class NewHomePageController extends Controller
     public function insights_news_hi(){
         $articles= InsightListHindi::query()
                 ->where('status', 1)
-                ->whereIn('insight_type', ['Article'])
+                ->where('insight_type', ['Article'])
                 ->orderByDesc('created_at')
                 ->limit(10)
                 ->get();
