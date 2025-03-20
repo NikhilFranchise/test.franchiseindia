@@ -41,6 +41,7 @@ class DealersAndDistributorController extends Controller
      */
     public function getDealersBrands($count)
   	{	
+        dd('yes');
     	$franchisors = DealersFranchisor::query()->select('franchisor_id')->where('status', 1)->take($count)->get()->pluck('franchisor_id');
     	return FranchisorBusinessDetail::query()->select('fran_detail_id', 'profile_name', 'company_logo', 'unit_inv_min', 'unit_inv_max')->whereIn('franchisor_id', $franchisors)->get();
   	}

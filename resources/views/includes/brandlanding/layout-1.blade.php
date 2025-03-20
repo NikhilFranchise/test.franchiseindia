@@ -38,8 +38,13 @@
                             <div class="sub-ttl">
                                 {{ Config('constants.subSubCategoryArr.' . $franDetails->ind_cat . '.' . $franDetails->ind_sub_cat) }}
                             </div>
+                            @if($franDetails->ind_main_cat == 5)
+                            <h1 class="ttl">{{ $franDetails->company_name }} Dealership & Distributorship Cost – How to get, Contact, Apply, Fee</h1>
+                            @else
                             <h1 class="ttl">{{ $franDetails->company_name }} Franchise Cost – How to get, Contact,
                                 Apply, Fee</h1>
+                            @endif
+                           
                         </div>
                         {{-- @if($franDetails->brand_verified == 1)
                         <div style="text-align: right;">

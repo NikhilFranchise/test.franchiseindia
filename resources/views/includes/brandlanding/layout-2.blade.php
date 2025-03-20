@@ -36,8 +36,13 @@
                         <div class="col-xs-12 col-sm-10 col-md-10 mdy-width">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <h1 class="ttl">{{$franDetails->company_name}} Franchise Cost – How to get, Contact, Apply, Fee</h1>
-                                      
+                                    {{-- <h1 class="ttl">{{$franDetails->company_name}} Franchise Cost – How to get, Contact, Apply, Fee</h1> --}}
+                            @if($franDetails->ind_main_cat == 5)
+                            <h1 class="ttl">{{ $franDetails->company_name }} Dealership & Distributorship Cost – How to get, Contact, Apply, Fee</h1>
+                            @else
+                            <h1 class="ttl">{{ $franDetails->company_name }} Franchise Cost – How to get, Contact,
+                                Apply, Fee</h1>
+                            @endif    
                                     <div class="sub-ttl">{{Config('constants.subSubCategoryArr.'.$franDetails->ind_cat.'.'.$franDetails->ind_sub_cat)}}</div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">

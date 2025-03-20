@@ -706,6 +706,56 @@ $c_Url = url()->current();
     </div>
     <!-- end of rating modal here -->
 
+    
+<style>
+    .cityEvent{background: #e02128;position: fixed;top: 0px;left: 0px;width: 100%;height: 100vh;z-index: 6;overflow: auto;}
+    .city-close{position: absolute;right: 10px;top: 10px;color: #000;font-size: 38px;font-weight: 600;background: #ffcc01;padding: 12px 20px 0px 23px;border-radius: 50px;line-height: 35px;width: 65px;height: 65px;cursor: pointer;}
+    @media screen and (min-width:993px){.city-desk{display: block; width: 100%;height: auto;}.city-mobile{display: none;}}
+    @media screen and (max-width:992px){.city-desk{display: none;}.city-mobile{display: block;width: 100%;height:auto;}
+    .city-close {right: 13px;top: 7px;font-size: 25px;padding: 10px 20px 0px 14px;line-height: 17px;width: 40px;height: 40px;}
+    }
+    </style>
+@php
+    $popup = $popup ?? collect();  // Set $popup to an empty collection if it's not set
+@endphp
+@if ($popup->isNotEmpty())
+@foreach ($popup as $event)
+    <div class="cityEvent">
+        <div class="city-close">x</div>
+
+        <!-- Desktop Banner -->
+        @if($event->desktop_banner)
+            <a href="{{$event->event_url}}" target="_blank">
+                <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/{{$event->desktop_banner}}" alt="Franchise India" class="city-desk">
+            </a>
+        @endif
+
+        <!-- Mobile Banner -->  
+        @if($event->mobile_banner)
+            <a href="{{$event->event_url}}" target="_blank">
+                <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/{{$event->mobile_banner}}" alt="Franchise India" class="city-mobile">
+            </a>
+        @endif
+    </div>
+@endforeach
+@endif
+
+    
+    <script>
+        $(document).ready(function(){
+    
+       setTimeout(function() {
+        $('.cityEvent').hide();
+      }, 10000);
+    
+      $('.city-close').click(function(){
+        $('.cityEvent').hide();
+      });
+    
+    
+    });
+    </script>
+
     <script type="text/javascript" src="{{ url('awesomplete/awesomplete.js') }}"></script>
 
     <script language="javascript">
