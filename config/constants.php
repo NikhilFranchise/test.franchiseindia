@@ -1501,7 +1501,7 @@ return [
         "909" => array(
             "919" => "Chargers",
             "915" => "Consumer Electronics",
-            "921" => "Electronic Intruments",
+            "921" => "Electronic Instruments",
             "911" => "Electronic Products & Components",
             "912" => "Energy Saving Devices",
             "924" => "Inverters, UPS & Battery Chargers",

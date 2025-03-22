@@ -306,11 +306,7 @@
                     <li>
                         <label for="folder1">
                             <a target="_blank"
-<<<<<<< HEAD
-                                href="{{  '/business-opportunities/' . Config('category.SeoCategoryArr.' . $key) . '.m' . $key }}
-=======
                                 href="{{ '/business-opportunities/' . Config('category.SeoCategoryArr.' . $key) . '.m' . $key }}
->>>>>>> 549462d0e9f58cae0de8f85218971e1f6bd11ee1
                            ">{{ $value }}</a>
                         </label> <input type="checkbox" id="folder1">
                         <ol>
@@ -331,11 +327,7 @@
                                             @if (is_array($sscArray) && in_array($key2, $sscArray))
                                                 <li>
                                                     <a target="_blank"
-<<<<<<< HEAD
-                                                        href="{{'/business-opportunities/' . Config('category.SeoSubSubCategoryArr.' . $key2) . '.ssc' . $key2 }}">{{ $value2 }}</a>
-=======
                                                         href="{{ '/business-opportunities/' . Config('category.SeoSubSubCategoryArr.' . $key2) . '.ssc' . $key2 }}">{{ $value2 }}</a>
->>>>>>> 549462d0e9f58cae0de8f85218971e1f6bd11ee1
                                                 </li>
                                             @endif
                                         @endforeach

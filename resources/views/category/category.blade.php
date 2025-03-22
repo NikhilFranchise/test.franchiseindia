@@ -7,45 +7,68 @@
 {{-- @if ($brandCount < 2)
     @section('robot', 'noindex, nofollow')
 @endif --}}
+@php
+    function formatCurrencyForlisting($number) {
+        if ($number >= 10000000) {
+            // Format to Crores (1 Cr = 10,000,000)
+            return number_format($number / 10000000, 3) . ' Cr';
+        } elseif ($number >= 100000) {
+            // Format to Lakhs (1 Lakh = 100,000)
+            return number_format($number / 100000, 3) . ' Lakh';
+        } elseif ($number >= 1000) {
+            // Format to Thousands (1 K = 1,000)
+            return number_format($number / 1000, 3) . ' K';
+        } else {
+            return $number;
+        }
+    }
+@endphp
 
+@php
+    // $formattedValue = formatCurrencyForlisting($maxRangevalue); // Example value: 33769507
+    $formattedValue = formatCurrencyForlisting($maxRangevalue); // Example value: 33769507
+
+@endphp
+
+{{-- @dd($formattedValue) --}}
 
 
 {{-- Pankaj start for cat+investment --}}
-@if($mc !== 5)
-    {{-- First Case: When $maxRangevalue is not empty --}}
-    @if(!empty($maxRangevalue) && empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
-        @section('seoTitle', $brandResults->total() . '+ Business opportunities in ' . $catArr->catname . ' under ' . $minRangeValue .'-' . $maxRangevalue . ' - Franchise India')
-        @section('seoDesc', 'Find '.  $brandResults->total() . ' Business Opportunities in ' .  $catArr->catname . ' under ' .  $minRangeValue .'-' . $maxRangevalue . ' as on ' . date("Y/m/d") . ' Connect with Franchise India and start your '. $catArr->catname .' business today! Sign up Today.' )
-    {{-- Second Case: When both $maxRangevalue and $loc are not empty --}}
-    @elseif(!empty($maxRangevalue) && !empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
-        @php
-            $stateId = $loc[0];
-            $stateName = Config::get("location.stateArr.$stateId");
-        @endphp
-        @section('seoTitle', $brandResults->total() . '+ Business opportunities in ' . $catArr->catname . ' under ' . $minRangeValue .'-' . $maxRangevalue . ' in ' . $stateName . ' , India - Franchise India')
-        @section('seoDesc', 'Find '.  $brandResults->total() . ' Business Opportunities in ' .  $catArr->catname . ' under ' .  $minRangeValue .'-' . $maxRangevalue .' in ' . $stateName.', India.' . ' Updated on ' . date("Y/m/d") . '. Connect with Franchise India and start your '. $catArr->catname .' business in ' . $stateName . ', India today! Register Now.'  )
+@php
+    $catArr = $catArr ?? collect();  // Set $popup to an empty collection if it's not set
+    // dd($catArr);
+@endphp
+@if ($catArr !== '')
+    @if($mc !== 5)
+        @if(!empty($maxRangevalue) && empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
+            @section('seoTitle', $brandResults->total() . '+ Business opportunities in ' . $catArr->catname . ' under ' . $formattedValue . ' - Franchise India')
+            @section('seoDesc', 'Find '.  $brandResults->total() . ' Business Opportunities in ' .  $catArr->catname . ' under ' . $formattedValue . ' as on ' . date("F j, Y") . ' Connect with Franchise India and start your '. $catArr->catname .' business today! Sign up Today.' )
+        @elseif(!empty($maxRangevalue) && !empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
+            @php
+                $stateId = $loc[0];
+                $stateName = Config::get("location.stateArr.$stateId");
+            @endphp
+            {{-- @dd($catArr->catname); --}}
+            @section('seoTitle', $brandResults->total() . '+ Business opportunities in ' . $catArr->catname . ' under ' . $formattedValue . ' in ' . $stateName . ' , India - Franchise India')
+            @section('seoDesc', 'Find '.  $brandResults->total() . ' Business Opportunities in ' .  $catArr->catname . ' under ' .  $formattedValue . ' in ' . $stateName.', India.' . ' Updated on ' . date("F j, Y") . '. Connect with Franchise India and start your '. $catArr->catname .' business in ' . $stateName . ', India today! Register Now.'  )
+        @endif
     @endif
-@endif
-
-
-{{-- /// Start For Dealer cat+investment rane --}}
-@if($mc == 5)
-    {{-- First Case: When $maxRangevalue is not empty --}}
-    @if(!empty($maxRangevalue) && empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
-        @section('seoTitle', $brandResults->total() . '+ Dealership & Distributorship opportunities in  ' . $catArr->catname . ' under ' . $minRangeValue .'-' . $maxRangevalue . ' - Dealer India')
-        @section('seoDesc', 'Find '.  $brandResults->total() . ' Dealership & Distributorship opportunities in  ' .  $catArr->catname . ' under ' .  $minRangeValue .'-' . $maxRangevalue . ' as on ' . date("Y/m/d") . ' Connect with Dealer India and start your '. $catArr->catname .' business today! Sign up Today.' )
-    {{-- Second Case: When both $maxRangevalue and $loc are not empty --}}
-    @elseif(!empty($maxRangevalue) && !empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
-        @php
-            $stateId = $loc[0];
-            $stateName = Config::get("location.stateArr.$stateId");
-        @endphp
-        @section('seoTitle', $brandResults->total() . '+ Dealership & Distributorship opportunities in ' . $catArr->catname . ' under ' . $minRangeValue .'-' . $maxRangevalue . ' in ' . $stateName . ', India - Dealer India')
-        @section('seoDesc', 'Find '.  $brandResults->total() . ' Dealership & Distributorship Opportunities in  ' .  $catArr->catname . ' under ' .  $minRangeValue .'-' . $maxRangevalue .' in ' . $stateName.', India.' . ' Updated on ' . date("Y/m/d") . '. Connect with Dealer India and start your '. $catArr->catname .' Dealership & Distributorship business in  ' . $stateName . ', India today! Register Now.'  )
+    @if($mc == 5)
+        @if(!empty($maxRangevalue) && empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
+            @section('seoTitle', $brandResults->total() . '+ Dealership & Distributorship opportunities in  ' . $catArr->catname . ' under ' . $formattedValue . ' - Dealer India')
+            @section('seoDesc', 'Find '.  $brandResults->total() . ' Dealership & Distributorship opportunities in  ' .  $catArr->catname . ' under ' .  $formattedValue . ' as on ' . date("F j, Y") . ' Connect with Dealer India and start your '. $catArr->catname .' business today! Sign up Today.' )
+        @elseif(!empty($maxRangevalue) && !empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
+            @php
+                $stateId = $loc[0];
+                $stateName = Config::get("location.stateArr.$stateId");
+            @endphp
+            {{-- @dd($maxRangevalue) --}}
+            @section('seoTitle', $brandResults->total() . '+ Dealership & Distributorship opportunities in ' . $catArr->catname . ' under ' . $formattedValue .  ' in ' . $stateName . ', India - Dealer India')
+            @section('seoDesc', 'Find '.  $brandResults->total() . ' Dealership & Distributorship Opportunities in  ' .  $catArr->catname . ' under '  . $formattedValue .' in ' . $stateName.', India.' . ' Updated on ' . date("F j, Y") . '. Connect with Dealer India and start your '. $catArr->catname .' Dealership & Distributorship business in  ' . $stateName . ', India today! Register Now.'  )
+        @endif
     @endif
-@endif
-{{-- ///End For Dealer cat+investment rane --}}
 
+@endif    
 {{-- Pankaj end for cat+investment --}}
 
 

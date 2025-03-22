@@ -143,7 +143,7 @@ return [
         1084 => 'projectors-presentation-board-and-accessories',
         919 => 'chargers',
         915 => 'consumer-electronics',
-        921 => 'electronic-intruments',
+        921 => 'electronic-instruments',
         911 => 'electronic-products-and-components',
         912 => 'energy-saving-devices',
         924 => 'inverters-ups-and-battery-chargers',

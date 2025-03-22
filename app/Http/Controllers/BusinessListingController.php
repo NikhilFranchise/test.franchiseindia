@@ -639,6 +639,7 @@ class BusinessListingController extends Controller
 
         // Fetch the request parameters
         if (!empty(request()->state_code)) {
+         
             $currentDate = Carbon::now()->format('Y');
 
             $locId       = preg_split('#(?<=[a-z])(?=\d)#i', request()->state_code);
@@ -892,6 +893,7 @@ class BusinessListingController extends Controller
         //  dd($loc,$seoKeywords,$orderby,$minRangeValue,$maxRangevalue,$text,$searchq);
         //  dd($catTabResult,$locTabResult,$invTabResult,$minCost,$maxCost,$franImageData,$city,$view);
 
+        
         return view($view, compact(
             'brandResults',
             'shuffledResults',
@@ -1777,7 +1779,6 @@ class BusinessListingController extends Controller
         $sc    = $subCatId;
         $ssc   = request()->ssc;
         $ftype = request()->ftype;
-
         if (!empty(request()->state_code))
         //    $catArr='';
        
@@ -1824,7 +1825,7 @@ class BusinessListingController extends Controller
             $view = 'category.hindi-category.hindi-category';
 
        
-        
+
         return view($view, compact(
             'brandResults',
             'shuffledResults',
