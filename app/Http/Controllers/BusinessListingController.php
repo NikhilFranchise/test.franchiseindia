@@ -100,6 +100,7 @@ class BusinessListingController extends Controller
             $popup = EventLocPopup::where('location', $loc_id)
             ->where('start_date', '<=', $today)  // start_date <= today
             ->where('end_date', '>=', $today)    // end_date <= today
+            ->where('status',1)
             ->get();
             // dd($popup);
             $cityArr = FranchisorLocState::query()->distinct('franchisor_id')
@@ -232,9 +233,17 @@ class BusinessListingController extends Controller
         $segment = isset($segments[3]) ? $segments[3] : null;
 
         
-        $aa=  preg_match('/\.LOC(\d+)/', $segments[2], $matches);
-        $loc_id = $matches[1];
+        $aa = preg_match('/\.LOC(\d+)/', $segments[2], $matches);
+
+        if ($aa && isset($matches[1])) {
+            $loc_id = $matches[1];
             // dd($loc_id);
+        } else {
+            // Handle the case where the match fails
+            // For example, set $loc_id to null or handle the error as needed
+            $loc_id = null;
+        }
+
 
         $today = Carbon::today()->toDateString();  
         // dd($today);   
@@ -845,7 +854,6 @@ class BusinessListingController extends Controller
 
         if (!empty(request()->state_code))
             $catName     = (request()->segment(1) == 'hi') ?  Config('location.hindiStatesArr.' . Config('location.stateArr.' . $locArrKey[0])) : Config('location.stateArr.' . $locArrKey[0]);
-
         $franImageData   = [];
 
         if (!empty($brandResults)) {
@@ -873,7 +881,7 @@ class BusinessListingController extends Controller
         $view = 'category.category';
         if (request()->segment(1) == 'amp')
             $view = 'category.hindi-category.amp-category';
-
+ 
         if (request()->segment(1) == 'hi')
             $view = 'category.hindi-category.hindi-category';
         // dd($brandResults,$shuffledResults,$breadCrumb,$catName);
@@ -1883,12 +1891,12 @@ class BusinessListingController extends Controller
             // dd($allIntegers);
 
             if (strpos($allIntegers, "sc") !== false) {
-                // dd($allIntegers);
+                // dd($allIntegers);        $newCatUrl = '/business-opportunities/' . $configCatUrl . '.' . $allIntegers;
+        
                 $category = substr($allIntegers, 2, 4);
                 // dd($allIntegers,$category);
                 $configCatUrl = Config('category.SeoSubCategoryArr.' . $category);
                 // dd($allIntegers,$configCatUrl);
-                $newCatUrl = '/business-opportunities/' . $configCatUrl . '.' . $allIntegers;
                 // dd($newCatUrl);
                 $oldCaturl = '/business-opportunities/' . $catUrl . '.' . $catParam;
                 // dd($oldCaturl);

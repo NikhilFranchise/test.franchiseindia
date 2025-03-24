@@ -183,7 +183,8 @@ aria-hidden="true">
                                 placeholder="Search for business opportunities " id="dealer-bar-search-top"
                                 aria-describedby="basic-addon2" autocomplete="off" aria-expanded="false"
                                 aria-owns="awesomplete_list_1" role="combobox">
-                            <ul hidden="" role="listbox" id="awesomplete_list_1"></ul><span
+                            <ul hidden="" role="listbox" id="awesomplete_list_1"></ul>
+                            <span
                                 class="visually-hidden" role="status" aria-live="assertive" aria-atomic="true">Type
                                 2 or more characters for results.</span>
                         </div><span class="input-group-addon input-group-addon-search-custom"
