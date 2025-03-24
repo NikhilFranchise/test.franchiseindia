@@ -194,7 +194,7 @@
 @include('includes.banners-new.google-tags')
 
 <!-- Google Tag Manager -->
-{{-- <script>
+<script>
     (function(w, d, s, l, i) {
         w[l] = w[l] || [];
         w[l].push({
@@ -209,7 +209,7 @@
             'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
         f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
-</script> --}}
+</script>
 
 {{-- --- added as per shan mohammad on 19th feb 2025 --}}
 <script async>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
