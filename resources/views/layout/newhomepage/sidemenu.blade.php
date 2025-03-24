@@ -778,12 +778,12 @@
                                             @endif
                                         @endforeach
 
-                                    </ol>
-                                </li>
-                            @endforeach
-                        </ol>
-                    </li>
-                @endforeach
+                                </ol>
+                            </li>
+                        @endforeach
+                    </ol>
+                </li>
+            @endforeach
                 <li>
 
                     <span class="shaicon">
