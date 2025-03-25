@@ -14,11 +14,12 @@
     @endsection
 @endif
 @php
-    $hindiUrl = url('/hi'); //str_replace( '/category/', '/hi/category/', str_replace('/business-opportunities/', '/hi/business-opportunities/', url()->current()));
-    $engUrl = url('/'); //url()->current();
+    $hindiUrl = url('/hi'); 
+    $engUrl = url('/');
 @endphp
 @section('seoTitle', 'व्यवसाय के अवसर, फ्रेंचाइज के अवसर, व्यापार मॉडल | Business Opportunities - Franchise India')
-@section('seoDesc', 'फ़्रैंचाइज इंडिया भारत में फ्रेंचाइजी के अवसर, व्यापार के अवसर, व्यावसायिक विचार, सर्वोत्तम व्यवसाय
+@section('seoDesc',
+    'फ़्रैंचाइज इंडिया भारत में फ्रेंचाइजी के अवसर, व्यापार के अवसर, व्यावसायिक विचार, सर्वोत्तम व्यवसाय
     प्रदान करता है और भारत में फ्रैंचाइजी को सस्ती सीमा के साथ खरीदता है।')
 
     @if (url()->current() == url('/hi'))
@@ -38,17 +39,13 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     @notmobile
-                        
                         @include('includes.homepage.hindi-homepagemenu')
-                        
                     @endnotmobile
                     <div class="brand-lst">
                         @include('includes.homepage.tbo')
                         @include('includes.homepage.homepage-banner2')
                         @notmobile
-                            
                             <div class="brand-lst-sec hidden-xs"> @include('includes.homepage.ffc') </div>
-                            
                         @endnotmobile
                     </div>
                 </div>
@@ -57,10 +54,8 @@
     </div>
     <!-- Top Business Opportunities scetion end here -->
     @notmobile
-        
         @include('includes.homepage.newsletter')
         @include('includes.homepage.homepage-banner3')
-        
     @endnotmobile
 
     <!-- Whats New -->
@@ -72,7 +67,7 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active">
                                 <a href="#" data-target="#whatsnew"
-                                    onClick="(function(){ $('#homepagecontentnewslink').attr('href', '/content'); return false; })();return false;"
+                                    onClick="(function(){ $('#homepagecontentnewslink').attr('href', '/insights/hindi'); return false; })();return false;"
                                     aria-controls="whatsnew" role="tab" data-toggle="tab">
                                     <h3>फ्रैंचिस इनसाइट्स</h3>
                                 </a>
@@ -85,8 +80,8 @@
                                 </a>
                             </li>
                         </ul>
-                        <div class="pull-right viewaall"><a href="/content" id="homepagecontentnewslink">सभी को देखें</a><i
-                                class="fa fa-angle-right fa-lg" aria-hidden="true"></i></div>
+                        <div class="pull-right viewaall"><a href="/insights/hindi" id="homepagecontentnewslink">सभी को
+                                देखें</a><i class="fa fa-angle-right fa-lg" aria-hidden="true"></i></div>
                         <!-- Tab panes -->
 
                         <div class="tab-content">
@@ -98,34 +93,68 @@
 
                                                 @foreach ($articles as $article)
                                                     @php
-                                                        $siteType = Config(
-                                                            'constants.articleArr.' . $article['site_type'],
-                                                        );
-                                                        $imagePath =
-                                                            Config('constants.MainDomain') .
-                                                            str_replace(
-                                                                'uploads/content/',
-                                                                'uploads/thumbnails/',
-                                                                $article['image'],
-                                                            );
-                                                        //dd($article->hindi);
-                                                        $kickerName = $tag
-                                                            ->where('tag_id', $article->hindi->kicker)
-                                                            ->first()->name;
+                                                        // $siteType = Config(
+                                                        //     'constants.articleArr.' . $article['site_type'],
+                                                        // );
+                                                        // $imagePath =
+                                                        //     Config('constants.MainDomain') .
+                                                        //     str_replace(
+                                                        //         'uploads/content/',
+                                                        //         'uploads/thumbnails/',
+                                                        //         $article['image'],
+                                                        //     );
+                                                        // //dd($article->hindi);
+                                                        // $kickerName = $tag
+                                                        //     ->where('tag_id', $article->hindi->kicker)
+                                                        //     ->first()->name;
 
-                                                        $kickerUrl =
-                                                            Config('constants.MainDomain') .
-                                                            '/hi/content/' .
-                                                            $kickerName .
-                                                            '/' .
-                                                            $article->hindi->kicker;
+                                                        // $kickerUrl =
+                                                        //     Config('constants.MainDomain') .
+                                                        //     '/hi/content/' .
+                                                        //     $kickerName .
+                                                        //     '/' .
+                                                        //     $article->hindi->kicker;
+                                                        // $articleUrl =
+                                                        //     '/hi/' .
+                                                        //     $siteType .
+                                                        //     '/' .
+                                                        //     $article['slug'] .
+                                                        //     '.' .
+                                                        //     $article['content_id'];
+                                                        $locale = App::getLocale();
+                                                        $imagePath = \App\Http\Controllers\InsightsController::createimgurl(
+                                                            $article->image,
+                                                        );
+                                                        $baseUrl =
+                                                            Config('constants.MainDomain') . "/insights/$locale/";
                                                         $articleUrl =
-                                                            '/hi/' .
-                                                            $siteType .
+                                                            $baseUrl .
+                                                            strtolower($article->insight_type) .
                                                             '/' .
-                                                            $article['slug'] .
+                                                            $article->slug .
                                                             '.' .
-                                                            $article['content_id'];
+                                                            $article->news_id;
+                                                        if ($article->category->isNotEmpty()) {
+                                                            $category = $article->category->first();
+                                                            $catName = $category->catname;
+                                                            $catUrl = $baseUrl . $category->slug;
+                                                        }
+                                                        if ($article->author->isNotEmpty()) {
+                                                            $author = $article->author->first();
+                                                            $authorname = $author->title ?: 'Franchise India Bureau';
+                                                            $slug =
+                                                                $author->slug ?:
+                                                                strtolower(str_replace(' ', '-', $authorname));
+                                                            $authorUrl =
+                                                                config('constants.MainDomain') .
+                                                                '/' .
+                                                                "insights/author/{$slug}-{$author->author_id}";
+                                                            $author_image = $author->image
+                                                                ? \App\Http\Controllers\InsightsController::authorImageurl(
+                                                                    $author->image,
+                                                                )
+                                                                : $author_image;
+                                                        }
                                                     @endphp
 
                                                     <div class="col-xs-12 col-sm-6 col-md-4 mdfiywidth">
@@ -139,18 +168,18 @@
                                                                         <div class="vertical-mid">
                                                                             <div class="bdr">
                                                                                 <div class="count">
-                                                                                    <a href="{{ $kickerUrl }}">
-                                                                                        {{ $kickerName }}
+                                                                                    <a href="{{ $catUrl }}">
+                                                                                        {{ $catName }}
                                                                                     </a>
                                                                                 </div>
                                                                                 <div class="name">
                                                                                     <a href="{{ $articleUrl }}">
-                                                                                        {{ $article->hindi->home_title }}
+                                                                                        {{ $article->title }}
                                                                                     </a>
                                                                                 </div>
                                                                                 <div class="count">
                                                                                     <a href="#">By
-                                                                                        {{ $article['author'] }}</a>
+                                                                                        {{ $authorname }}</a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -179,46 +208,84 @@
                                             <div class="row">
                                                 @foreach ($newsArticles as $article)
                                                     @php
-                                                        $a = date_create($article['time']);
-                                                        $date = date_format($a, 'd M Y');
-                                                        $site = Config('constants.articleArr.' . $article['news_type']);
-                                                        $kickerName = $tag
-                                                            ->where('tag_id', $article->hindi->kicker)
-                                                            ->first()->name;
-                                                        $kickerUrl =
-                                                            Config('constants.NewsDomain') .
-                                                            '/hi/' .
-                                                            $kickerName .
-                                                            '/' .
-                                                            $article->hindi->kicker;
-                                                        $imagePath = str_replace(
-                                                            'uploads/',
-                                                            'uploads/thumbnails/',
-                                                            $article['image'],
+                                                        //  $a = date_create($article['time']);
+                                                        //         $date = date_format($a, 'd M Y');
+                                                        //         $site = Config('constants.articleArr.' . $article['news_type']);
+                                                        //         $kickerName = $tag
+                                                        //             ->where('tag_id', $article->hindi->kicker)
+                                                        //             ->first()->name;
+                                                        //         $kickerUrl =
+                                                        //             Config('constants.NewsDomain') .
+                                                        //             '/hi/' .
+                                                        //             $kickerName .
+                                                        //             '/' .
+                                                        //             $article->hindi->kicker;
+                                                        //         $imagePath = str_replace(
+                                                        //             'uploads/',
+                                                        //             'uploads/thumbnails/',
+                                                        //             $article['image'],
+                                                        //         );
+
+                                                        // $locale = App::getLocale('hi');
+                                                        $locale = request()->segment(1) == 'hi' ? 'hi' : 'en';
+                                                        app()->setLocale($locale);
+                                                        // dd($locale);
+                                                        $imagePath = \App\Http\Controllers\InsightsController::createimgurl(
+                                                            $article->image,
                                                         );
+                                                        $baseUrl =
+                                                            Config('constants.MainDomain') . "/insights/$locale/";
+                                                        $articleUrl =
+                                                            $baseUrl .
+                                                            strtolower($article->insight_type) .
+                                                            '/' .
+                                                            $article->slug .
+                                                            '.' .
+                                                            $article->news_id;
+                                                        if ($article->category->isNotEmpty()) {
+                                                            $category = $article->category->first();
+                                                            $catName = $category->catname;
+                                                            $catUrl = $baseUrl . $category->slug;
+                                                        }
+                                                        if ($article->author->isNotEmpty()) {
+                                                            $author = $article->author->first();
+                                                            $authorname = $author->title ?: 'Franchise India Bureau';
+                                                            $slug =
+                                                                $author->slug ?:
+                                                                strtolower(str_replace(' ', '-', $authorname));
+                                                            $authorUrl =
+                                                                config('constants.MainDomain') .
+                                                                '/' .
+                                                                "insights/author/{$slug}-{$author->author_id}";
+                                                            $author_image = $author->image
+                                                                ? \App\Http\Controllers\InsightsController::authorImageurl(
+                                                                    $author->image,
+                                                                )
+                                                                : $author_image;
+                                                        }
                                                     @endphp
 
                                                     <div class="col-xs-12 col-sm-6 col-md-4 mdfiywidth">
                                                         <div class="new-cat-list">
                                                             <div class="cat-img"
-                                                                onclick="window.location = '{{ Config('constants.NewsDomain') }}/{{ $site }}/{{ $article['slug'] }}.n{{ $article['news_id'] }}';">
-                                                                <img class="lozad"
-                                                                    data-src="{{ Config('constants.MainDomain') . $imagePath }}"
-                                                                    alt="image" />
+                                                                onclick="window.location = '{{ $articleUrl }}';">
+                                                                <img class="lozad" data-src="{{ $imagePath }}"
+                                                                    alt="{{ $article->title }}" />
                                                                 <div class="info">
                                                                     <div class="search-count">
                                                                         <div class="vertical-mid">
                                                                             <div class="bdr">
                                                                                 <div class="count"><a
-                                                                                        href="{{ $kickerUrl }}">{{ $kickerName }}</a>
+                                                                                        href="{{ $catUrl }}">{{ $catName }}</a>
                                                                                 </div>
                                                                                 <div class="name">
-                                                                                    <a
-                                                                                        href="{{ Config('constants.NewsDomain') }}/hi/{{ $site }}/{{ $article['slug'] }}.n{{ $article['news_id'] }}">
-                                                                                        {{ $article->hindi->home_title }}
+                                                                                    <a href="{{ $articleUrl }}">
+                                                                                        {{ $article->title }}
                                                                                     </a>
                                                                                 </div>
-                                                                                <div class="count">{{ $date }}</div>
+                                                                                <div class="count">
+                                                                                    {{ date('d M Y', strtotime($article->created_at)) }}
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>

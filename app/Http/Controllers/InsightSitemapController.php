@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AuthorList;
 use Illuminate\Http\Request;
 use App\Models\SeoTag;
 use App\Models\InsightList;
@@ -15,9 +16,9 @@ use App\Models\InsightListHindi;
 use App\Models\SeoTagHindi;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\App;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\URL;
 use DOMDocument;
+use Illuminate\Support\Str;
 
 
 class InsightSitemapController extends Controller
@@ -288,7 +289,7 @@ class InsightSitemapController extends Controller
         // Fetch news sitemap data
         $newssitemap = $model::where('insight_type', 'News')
             ->whereNotIn('news_type', ['ri', 'ir'])
-            ->whereNotNull('cat_id')
+            ->whereNotNull(['cat_id', 'image'])
             ->where('status', 1)
             ->orderByDesc('created_at')
             ->get();
@@ -309,7 +310,7 @@ class InsightSitemapController extends Controller
 
         $articlesitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Article')
-            ->where('cat_id', '!=', '')
+            ->whereNotNull(['cat_id', 'image'])
             ->where('status', 1)->limit(10000)
             ->orderByDesc('created_at')
             ->get();
@@ -325,7 +326,7 @@ class InsightSitemapController extends Controller
 
         $articlesitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Article')
-            ->where('cat_id', '!=', '')
+            ->whereNotNull(['cat_id', 'image'])
             ->where('status', 1)
             ->orderByDesc('created_at')
             ->offset(10000) // Skip the first 12,000 records
@@ -345,7 +346,7 @@ class InsightSitemapController extends Controller
 
         $interviewsitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Interview')
-            ->where('cat_id', '!=', '')
+            ->whereNotNull(['cat_id', 'image'])
             ->where('status', 1)
             ->orderByDesc('created_at')
             ->get();
@@ -361,7 +362,7 @@ class InsightSitemapController extends Controller
 
         $eventsitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Event')
-            ->where('cat_id', '!=', '')
+            ->whereNotNull(['cat_id', 'image'])
             ->where('status', 1)
             ->orderByDesc('created_at')
             ->get();
@@ -375,8 +376,8 @@ class InsightSitemapController extends Controller
         $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
 
         $reportsitemap = $model::whereNotIn('news_type', ['ri', 'ir'])
-            ->where('insight_type', 'Event')
-            ->where('cat_id', '!=', '')
+            ->where('insight_type', 'Report')
+            ->whereNotNull(['cat_id', 'image'])
             ->where('status', 1)
             ->orderByDesc('created_at')
             ->get();
@@ -393,7 +394,7 @@ class InsightSitemapController extends Controller
             ->distinct()
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('status', 1)
-            ->whereNotNull('cat_id')
+            ->whereNotNull(['cat_id', 'image'])
             ->pluck('cat_id');
 
         $categories = $catmodel::whereIn('id', $categoryIds)->get();
@@ -515,50 +516,137 @@ class InsightSitemapController extends Controller
 
     public function rssFeed()
     {
-        return view('insights.rss-feed');
-    }
-
-    public function topStoriesRss1()
-    {
         $locale = App::getLocale();
-        $topStoriesModel = $locale == 'en' ? InsightList::class : InsightListHindi::class;
-        $topStoriesRss = $topStoriesModel::query()->where('status', 1)->where('insight_type', 'News')->whereNotIn('news_type', ['ri', 'ir'])->orderByDesc('created_at')->limit(15)->get();
-        // dd($topStoriesRss);
+        $catModel = $locale == 'hi' ? InsightsHindiCategory::class : InsightCategory::class;
+        $newsModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+        $categories = $catModel::all();
 
-
+        $latestarticles = $newsModel::query()
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->where('insight_type', 'Article')
+            ->orderByDesc('created_at')
+            ->limit(5)->get();
+        // dd($latestarticles);
+        return view('insights.rss-feed', compact('categories', 'latestarticles'));
     }
+
 
     public function generateRssFeed(Request $request)
     {
-        // Map slug to insight type(s)
+        // Extract insight type from slug (remove '/rss' suffix if present)
+        // $slug = str_replace('/rss', '', $request->slug);
+        $slug = request()->segment(3);
+        $locale = request()->segment(2);
+        // dd($slug);
+
+        // Define insight types
         $insight_types = [
             'topstories' => 'News',
             'industryfocus' => 'Article',
             'interviews' => 'Interview',
-            'events_reports' => ['Event', 'Report'], // Needs to match both
+            'events_reports' => ['Event', 'Report'], // Multiple types
         ];
 
-        // Get the correct insight type or default to an empty array
-        $insight_type = $insight_types[$request->slug] ?? [];
+        // Get the mapped insight type(s), default to an empty array
+        $insight_type = $insight_types[$slug] ?? [];
+        $insight_type_str = is_array($insight_type) ? implode(' & ', $insight_type) : $insight_type;
+        $insight_type_str = htmlspecialchars($insight_type_str, ENT_XML1, 'UTF-8');
+        // dd($insight_type_str, $insight_types);
+        // $locale = App::getLocale();
+        $newsModel = $locale === 'hi' ? InsightListHindi::class : InsightList::class;
 
-        $locale = App::getLocale();
-        $newsModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
-
+        // Query articles
         $query = $newsModel::with(['author', 'category'])
             ->where('status', 1)
-            // ->where('insight_type', $insight_type)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->orderByDesc('created_at')
             ->take(15);
-        // ->get();
 
         // Apply filtering based on type
-        if (is_array($insight_type)) {
-            $query->whereIn('insight_type', $insight_type);
-        } elseif (!empty($insight_type)) {
-            $query->where('insight_type', $insight_type);
+        if (!empty($insight_type)) {
+            is_array($insight_type) ? $query->whereIn('insight_type', $insight_type) : $query->where('insight_type', $insight_type);
         }
+
         $articles = $query->get();
+
+        // Create RSS Feed
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->formatOutput = true;
+
+        $rss = $dom->createElement('rss');
+        $rss->setAttribute('version', '2.0');
+        $dom->appendChild($rss);
+
+        $channel = $dom->createElement('channel');
+        $rss->appendChild($channel);
+
+        // Add channel metadata
+        $channel->appendChild($dom->createElement('title', "Latest Insights: $insight_type_str"));
+        // $channel->appendChild($dom->createElement('link', url()->current()));
+        // $channel->appendChild($dom->createElement('link', URL::to('/insights/' . $locale . '/' . $insight_types[$slug])));
+        $channel->appendChild($dom->createElement('link', URL::to('/insights/' . $locale . '/' . $slug)));
+        $channel->appendChild($dom->createElement('description', "Latest Insights on $insight_type_str"));
+        $channel->appendChild($dom->createElement('language', $locale));
+
+        foreach ($articles as $article) {
+            $item = $dom->createElement('item');
+            $item->appendChild($dom->createElement('title', htmlspecialchars($article->title, ENT_XML1, 'UTF-8')));
+            $item->appendChild($dom->createElement('link', URL::to("/insights/$locale/" . strtolower($article->insight_type) . "/{$article->slug}.{$article->news_id}")));
+            $item->appendChild($dom->createElement('description', htmlspecialchars($article->shortDesc ?? '', ENT_XML1, 'UTF-8')));
+            $item->appendChild($dom->createElement('pubDate', date('M, d Y', strtotime($article->created_at))));
+
+            // Safely fetch author
+            $authorName = $article->author->first()->title ?? 'Unknown';
+            $item->appendChild($dom->createElement('author', htmlspecialchars($authorName, ENT_XML1, 'UTF-8')));
+
+            // Safely fetch category
+            $categoryName = $article->category->first()->catname ?? null;
+            if ($categoryName) {
+                $item->appendChild($dom->createElement('category', htmlspecialchars($categoryName, ENT_XML1, 'UTF-8')));
+            }
+
+            // Add media content (image URL)
+            if (!empty($article->image)) {
+                $imageUrl = \App\Http\Controllers\InsightsController::createimgurl($article->image);
+                $imageDetails = @getimagesize($imageUrl);
+                $width = is_array($imageDetails) ? $imageDetails[0] : 0;
+                $height = is_array($imageDetails) ? $imageDetails[1] : 0;
+
+                $mediaContent = $dom->createElement('media:content');
+                $mediaContent->setAttribute('url', htmlspecialchars($imageUrl, ENT_XML1, 'UTF-8'));
+                $mediaContent->setAttribute('medium', 'image');
+                $mediaContent->setAttribute('width', $width);
+                $mediaContent->setAttribute('height', $height);
+                $item->appendChild($mediaContent);
+            }
+
+            $channel->appendChild($item);
+        }
+
+        return response($dom->saveXML(), 200)->header('Content-Type', 'application/rss+xml');
+    }
+
+
+    public function generateCatRssFeed(Request $request)
+    {
+        // dd($request->slug);
+        $locale = App::getLocale();
+        $dataModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+        $categoryModel = $locale == 'hi' ? InsightsHindiCategory::class : InsightCategory::class;
+        $slug = $request->slug;
+        $categoryId = $categoryModel::query()
+            ->where('slug', $slug)
+            ->where('status', 1)
+            ->first();
+        // dd($categoryId);
+        $articles = $dataModel::with(['author', 'category'])
+            ->where('status', 1)
+            ->where('cat_id', $categoryId->id)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByDesc('created_at')
+            ->take(15)->get();
+        // dd($query);
 
         // Create a new DOMDocument
         $dom = new DOMDocument('1.0', 'UTF-8');
@@ -574,9 +662,9 @@ class InsightSitemapController extends Controller
         $rss->appendChild($channel);
 
         // Add channel metadata
-        $channel->appendChild($dom->createElement('title', 'Latest Insights Stories'));
-        $channel->appendChild($dom->createElement('link', URL::to('/insights/rss/topstories')));
-        $channel->appendChild($dom->createElement('description', 'Latest insights News and Stories'));
+        $channel->appendChild($dom->createElement('title', "Latest Insights " . htmlspecialchars($categoryId->catname, ENT_XML1, 'UTF-8')));
+        $channel->appendChild($dom->createElement('link', URL::to('/insights/' . $locale . '/' . $categoryId->slug)));
+        $channel->appendChild($dom->createElement('description', 'Latest insights ' . htmlspecialchars($categoryId->catname, ENT_XML1, 'UTF-8')));
         $channel->appendChild($dom->createElement('language', $locale));
 
         foreach ($articles as $article) {
@@ -615,5 +703,280 @@ class InsightSitemapController extends Controller
         $rssFeed = $dom->saveXML();
 
         return response($rssFeed, 200)->header('Content-Type', 'application/rss+xml');
+    }
+
+    public function generateSubCatRssFeed(Request $request)
+    {
+        $locale = App::getLocale();
+
+        // Determine the correct models based on locale
+        $dataModel = $locale === 'hi' ? InsightListHindi::class : InsightList::class;
+        $categoryModel = $locale === 'hi' ? InsightsHindiCategory::class : InsightCategory::class;
+        $subcatModel = $locale === 'hi' ? InsightsHindiSubCategory::class : InsightSubcategory::class;
+
+        // Fetch category and subcategory
+        $category = $categoryModel::where('slug', $request->cat)->where('status', 1)->firstOrFail();
+        $subCategory = $subcatModel::where('slug', $request->subcat)->where('mcat_id', $category->id)->firstOrFail();
+
+        // Fetch articles efficiently
+        $articles = $dataModel::with(['author', 'category', 'Subcategory'])
+            ->where([
+                ['status', 1],
+                ['cat_id', $category->id],
+                ['subcat_id', $subCategory->id],
+            ])
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByDesc('created_at')
+            ->take(15)
+            ->get();
+
+        // Create XML document
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->formatOutput = true;
+
+        $rss = $dom->createElement('rss');
+        $rss->setAttribute('version', '2.0');
+        $dom->appendChild($rss);
+
+        $channel = $dom->createElement('channel');
+        $rss->appendChild($channel);
+
+        $channel->appendChild($dom->createElement('title', htmlspecialchars("Latest Insights {$category->catname} - {$subCategory->subcat_name}", ENT_XML1, 'UTF-8')));
+        $channel->appendChild($dom->createElement('link', URL::to("/insights/{$locale}/{$category->slug}/{$subCategory->slug}")));
+        $channel->appendChild($dom->createElement('description', htmlspecialchars("Latest insights in {$category->catname} - {$subCategory->subcat_name}", ENT_XML1, 'UTF-8')));
+        $channel->appendChild($dom->createElement('language', $locale));
+
+        foreach ($articles as $article) {
+            $item = $dom->createElement('item');
+
+            $item->appendChild($dom->createElement('title', htmlspecialchars($article->title, ENT_XML1, 'UTF-8')));
+            $item->appendChild($dom->createElement('link', URL::to("/insights/{$locale}/" . strtolower($article->insight_type) . "/{$article->slug}.{$article->news_id}")));
+            $item->appendChild($dom->createElement('description', htmlspecialchars($article->shortDesc ?? '', ENT_XML1, 'UTF-8')));
+            $item->appendChild($dom->createElement('pubDate', date('M, d Y', strtotime($article->created_at))));
+
+            // Get author name safely
+            $authorTitle = $article->author->pluck('title')->first() ?? 'Unknown';
+            $item->appendChild($dom->createElement('author', htmlspecialchars($authorTitle, ENT_XML1, 'UTF-8')));
+
+            // Get category name safely
+            $categoryName = $article->category->pluck('catname')->first();
+            if ($categoryName) {
+                $item->appendChild($dom->createElement('category', htmlspecialchars($categoryName, ENT_XML1, 'UTF-8')));
+            }
+            $subCategoryName = $article->Subcategory->pluck('subcat_name')->first();
+            if ($subCategoryName) {
+                $item->appendChild($dom->createElement('subcategory', htmlspecialchars($subCategoryName, ENT_XML1, 'UTF-8')));
+            }
+
+            // Append image if available
+            if (!empty($article->image)) {
+                $imageUrl = \App\Http\Controllers\InsightsController::createimgurl($article->image);
+                $imageDetails = @getimagesize($imageUrl);
+
+                $mediaContent = $dom->createElement('media:content');
+                $mediaContent->setAttribute('url', htmlspecialchars($imageUrl, ENT_XML1, 'UTF-8'));
+                $mediaContent->setAttribute('medium', 'image');
+                $mediaContent->setAttribute('width', is_array($imageDetails) ? $imageDetails[0] : 0);
+                $mediaContent->setAttribute('height', is_array($imageDetails) ? $imageDetails[1] : 0);
+
+                $item->appendChild($mediaContent);
+            }
+
+            $channel->appendChild($item);
+        }
+
+        return response($dom->saveXML(), 200)->header('Content-Type', 'application/rss+xml');
+    }
+
+    public function generateAuthorRssFeed(Request $request)
+    {
+        $locale = App::getLocale();
+        $enLocale = 'en';
+        $hiLocale = 'hi';
+
+        // Extract Author ID from Slug
+        $author_id = explode('-', $request->slug);
+        $id = (int) end($author_id);
+
+        // Fetch Author or Abort if Not Found
+        $author = AuthorList::findOrFail($id);
+        // Generate correct slug from Author title
+        $correctSlug = Str::slug($author->title) . '-' . $id;
+
+        // If the provided slug is incorrect, redirect to the correct one
+        if ($request->slug !== $correctSlug) {
+            return redirect()->to(url("/insights/author/{$correctSlug}/rss"), 301);
+        }
+        // Fetch latest 15 articles from both English & Hindi sources
+        $latestArticlesEn = InsightList::with(['category'])->where('author_id', $id)
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->take(15)
+            ->get()
+            ->map(function ($item) use ($enLocale) {
+                $item->lang = $enLocale;
+                return $item;
+            });
+
+        $latestArticlesHi = InsightListHindi::with(['category'])->where('author_id', $id)
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->take(15)
+            ->get()
+            ->map(function ($item) use ($hiLocale) {
+                $item->lang = $hiLocale;
+                return $item;
+            });
+
+        // Merge and keep only latest 15 articles
+        $latestArticles = $latestArticlesEn->merge($latestArticlesHi)->sortByDesc('created_at')->take(30);
+
+        // Create RSS Feed
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->formatOutput = true;
+
+        $rss = $dom->createElement('rss');
+        $rss->setAttribute('version', '2.0');
+        $dom->appendChild($rss);
+
+        $channel = $dom->createElement('channel');
+        $rss->appendChild($channel);
+
+        // Add channel metadata
+        $channel->appendChild($dom->createElement('title', htmlspecialchars("Latest Insights News & Articles by " . $author->title, ENT_XML1, 'UTF-8')));
+        $channel->appendChild($dom->createElement('link', URL::to("/author/{$request->slug}")));
+        $channel->appendChild($dom->createElement('description', htmlspecialchars("Latest Insights News & Articles by " . $author->title, ENT_XML1, 'UTF-8')));
+        $channel->appendChild($dom->createElement('language', "$enLocale-$hiLocale"));
+
+        foreach ($latestArticles as $article) {
+            $item = $dom->createElement('item');
+
+            $item->appendChild($dom->createElement('title', htmlspecialchars($article->title, ENT_XML1, 'UTF-8')));
+            $item->appendChild($dom->createElement('link', URL::to("/insights/{$article->lang}/" . strtolower($article->insight_type) . "/{$article->slug}.{$article->news_id}")));
+            $item->appendChild($dom->createElement('description', htmlspecialchars($article->shortDesc ?? '', ENT_XML1, 'UTF-8')));
+            $item->appendChild($dom->createElement('pubDate', date('M, d Y', strtotime($article->created_at))));
+
+            // Fetch category safely
+            if ($article->cat_id) {
+                $category = $article->lang === 'hi' ? InsightsHindiCategory::find($article->cat_id) : InsightCategory::find($article->cat_id);
+                if ($category) {
+                    $item->appendChild($dom->createElement('category', htmlspecialchars($category->catname, ENT_XML1, 'UTF-8')));
+                }
+            }
+
+            // Process image
+            if (!empty($article->image)) {
+                $imageUrl = \App\Http\Controllers\InsightsController::createimgurl($article->image);
+                $imageDetails = @getimagesize($imageUrl);
+
+                $mediaContent = $dom->createElement('media:content');
+                $mediaContent->setAttribute('url', htmlspecialchars($imageUrl, ENT_XML1, 'UTF-8'));
+                $mediaContent->setAttribute('medium', 'image');
+                $mediaContent->setAttribute('width', is_array($imageDetails) ? $imageDetails[0] : 0);
+                $mediaContent->setAttribute('height', is_array($imageDetails) ? $imageDetails[1] : 0);
+
+                $item->appendChild($mediaContent);
+            }
+
+            $channel->appendChild($item);
+        }
+
+        return response($dom->saveXML(), 200)->header('Content-Type', 'application/rss+xml');
+    }
+
+    public function generateTagRssFeed(Request $request)
+    {
+        $tag = $request->tagslug;
+        $tagstr = str_replace('-', ' ', $tag);
+        // dd($tag, $tagstr);
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        $redirectPath = $locale == 'en' ? '/insights' : '/insights/hindi';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+        $insightModel = $locale == 'en' ? InsightList::class : InsightListHindi::class;
+        $tagModel = $locale == 'en' ? SeoTag::class : SeoTagHindi::class;
+        $contentModel = $locale == 'en' ? ContentTagsAssigned::class : ContentTagsAssignedHindi::class;
+
+        // Fetch the tag data
+        $seoTag = $tagModel::query()->where('name', $tagstr)->first();
+        if (is_null($seoTag)) {
+            return redirect($redirectPath);
+        }
+
+        // Fetch the associated content IDs
+        $articleIds = $contentModel::where([
+            ['tag_id', $seoTag->tag_id],
+            ['content_type', 2]
+        ])->pluck('content_id')->unique()->toArray();
+
+        // Fetch the articles with conditions
+        $articlesList = $insightModel::query()
+            ->with(['author', 'category', 'Subcategory'])
+            ->whereIn('news_id', $articleIds)
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->orderByDesc('created_at')
+            ->take(15)->get();
+
+        // dd($articlesList);
+        // Create RSS Feed
+        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom->formatOutput = true;
+
+        $rss = $dom->createElement('rss');
+        $rss->setAttribute('version', '2.0');
+        $dom->appendChild($rss);
+
+        $channel = $dom->createElement('channel');
+        $rss->appendChild($channel);
+
+        // Add channel metadata
+        $channel->appendChild($dom->createElement('title', htmlspecialchars("Latest Insights News & Articles by " . $tagstr . " tag", ENT_XML1, 'UTF-8')));
+        $channel->appendChild($dom->createElement('link', URL::to("/author/{$request->slug}")));
+        $channel->appendChild($dom->createElement('description', htmlspecialchars("Latest Insights News & Articles by " . $tagstr . " tag", ENT_XML1, 'UTF-8')));
+        $channel->appendChild($dom->createElement('language', "$locale"));
+
+        foreach ($articlesList as $article) {
+            $item = $dom->createElement('item');
+
+            $item->appendChild($dom->createElement('title', htmlspecialchars($article->title, ENT_XML1, 'UTF-8')));
+            $item->appendChild($dom->createElement('link', URL::to("/insights/{$article->lang}/" . strtolower($article->insight_type) . "/{$article->slug}.{$article->news_id}")));
+            $item->appendChild($dom->createElement('description', htmlspecialchars($article->shortDesc ?? '', ENT_XML1, 'UTF-8')));
+            $item->appendChild($dom->createElement('pubDate', date('M, d Y', strtotime($article->created_at))));
+
+            // Fetch category safely
+            if ($article->cat_id) {
+                $category = $article->lang === 'hi' ? InsightsHindiCategory::find($article->cat_id) : InsightCategory::find($article->cat_id);
+                if ($category) {
+                    $item->appendChild($dom->createElement('category', htmlspecialchars($category->catname, ENT_XML1, 'UTF-8')));
+                }
+            }
+
+            // Process image
+            if (!empty($article->image)) {
+                $imageUrl = \App\Http\Controllers\InsightsController::createimgurl($article->image);
+                $imageDetails = @getimagesize($imageUrl);
+
+                $mediaContent = $dom->createElement('media:content');
+                $mediaContent->setAttribute('url', htmlspecialchars($imageUrl, ENT_XML1, 'UTF-8'));
+                $mediaContent->setAttribute('medium', 'image');
+                $mediaContent->setAttribute('width', is_array($imageDetails) ? $imageDetails[0] : 0);
+                $mediaContent->setAttribute('height', is_array($imageDetails) ? $imageDetails[1] : 0);
+
+                $item->appendChild($mediaContent);
+            }
+
+            $channel->appendChild($item);
+        }
+
+        return response($dom->saveXML(), 200)->header('Content-Type', 'application/rss+xml');
     }
 }

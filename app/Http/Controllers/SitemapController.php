@@ -73,132 +73,6 @@ class SitemapController extends Controller
                 file_put_contents(public_path("sitemap_brands.xml"), $siteMapBrandsIndexData);
             }
             //changes by GP 12-August-2024
-
-            /* Brands Site map Generation End */
-
-
-            // /* Education Articles Site map Generation Start */
-            // $siteMapData = '<url>
-            //                     <loc>https://www.franchiseindia.com/education/</loc>
-            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
-            //                 </url>
-            //                 <url>
-            //                 <loc>https://www.franchiseindia.com/education/about</loc>
-            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
-            //                 </url>
-            //                 <url>
-            //                 <loc>https://www.franchiseindia.com/education/contact/</loc>
-            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
-            //                 </url>
-            //                 <url>
-            //                     <loc>https://www.franchiseindia.com/education/feedback/</loc>
-            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
-            //                 </url>
-            //                 <url>
-            //                     <loc>https://www.franchiseindia.com/education/terms</loc>
-            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
-            //                 </url>';
-            // $eduArticles     = ContentList::query()->where('site_type', 'edu')->where('status', 1)->orderBy('content_id', 'desc')->get();
-
-            // foreach ($eduArticles as $article) {
-            //     $siteMapData .= "<url>
-            //                         <loc>
-            //                         https://www.franchiseindia.com/education/" . str_replace('&', '&amp;', $article->slug) . "." . $article->content_id . "</loc>
-            //                         <lastmod>" . substr($article->created_at, 0, 10) . "</lastmod>
-            //                     </url>";
-            // }
-
-            // //changes by GP 12-August-2024
-            // file_put_contents(public_path("sitemap_educontent.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            // //changes by GP 12-August-2024
-
-
-            // /* Wellness Articles Site map Generation Start */
-            // $siteMapData = '<url>
-            //                     <loc>https://www.franchiseindia.com/wellness/</loc>
-            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
-            //                 </url>
-            //                 <url>
-            //                 <loc>https://www.franchiseindia.com/wellness/about</loc>
-            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
-            //                 </url>
-            //                 <url>
-            //                 <loc>https://www.franchiseindia.com/wellness/contact/</loc>
-            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
-            //                 </url>
-            //                 <url>
-            //                     <loc>https://www.franchiseindia.com/wellness/feedback/</loc>
-            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
-            //                 </url>
-            //                 <url>
-            //                     <loc>https://www.franchiseindia.com/wellness/terms</loc>
-            //                     <lastmod>' . date('Y-m-d') . '</lastmod>
-            //                 </url>';
-            // $wellArticles     = ContentList::query()->where('site_type', 'wi')->where('status', 1)->orderBy('content_id', 'desc')->get();
-
-            // foreach ($wellArticles as $article) {
-            //     $siteMapData .= "<url>
-            //                         <loc>
-            //                         https://www.franchiseindia.com/wellness/" . str_replace('&', '&amp;', $article->slug) . "." . $article->content_id . "</loc>
-            //                         <lastmod>" . substr($article->created_at, 0, 10) . "</lastmod>
-            //                     </url>";
-            // }
-            // //changes by GP 12-August-2024
-            // file_put_contents(public_path("sitemap_wellness.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            // //changes by GP 12-August-2024
-
-            // /* Wellness Articles Site map Generation End */
-
-            // /* Article Kickers Site map Generation Start */
-            // $siteMapData = "";
-            // $kickers     = array_unique(ContentList::query()->select('kicker')->where('kicker', '!=', '')->where('status', 1)->get()->pluck('kicker')->toArray());
-            // foreach ($kickers as $kicker) {
-            //     $siteMapData .= "<url>
-            //                     <loc>https://www.franchiseindia.com/content/" . str_replace('&', '&amp;', Str::slug($kicker)) . "</loc>
-            //                     <lastmod>" . date('Y-m-d') . "</lastmod>
-            //                 </url>";
-            // }
-            // //changes by GP 12-August-2024
-            // file_put_contents(public_path("sitemap_kicker.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            // //changes by GP 12-August-2024
-
-            //  /* Article Kickers Site map Generation End */
-
-            // /* Hindi Article Kickers Site map Generation Start */
-            // $siteMapData  = '';
-            // $kickers     = SeoTagHindi::query()->get();
-            // foreach ($kickers as $kicker) {
-            //     $siteMapData .= "<url>
-            //                     <loc>https://www.franchiseindia.com/hi/content/" . $kicker->name . "/" . $kicker->tag_id . "</loc>
-            //                     <lastmod>" . date('Y-m-d') . "</lastmod>
-            //                 </url>";
-            // }
-            // //changes by GP 12-August-2024
-            // file_put_contents(public_path("sitemap_hindi_kicker.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            // //changes by GP 12-August-2024
-
-            // /*Hindi Article Kickers Site map Generation End */
-
-            // /* Hindi Articles Site map Generation Start */
-            // $siteMapData  = '';
-            // $hiArticles     = ContentList::query()->where('is_hindi', 1)->where('status', 1)->orderBy('content_id', 'desc')->get();
-
-            // foreach ($hiArticles as $article) {
-            //     $siteMapData .= "<url>
-            //                     <loc>
-            //                     https://www.franchiseindia.com/hi/" . Config('constants.articleArr.' . $article->site_type) . "/" . str_replace('&', '&amp;', $article->slug) . "." . $article->content_id . "</loc>
-            //                     <lastmod>" . substr($article->created_at, 0, 10) . "</lastmod>
-            //                 </url>";
-            // }
-            // //changes by GP 12-August-2024
-            // file_put_contents(public_path("sitemap_hindi_content.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
-            // //changes by GP 12-August-2024
-
-            //  /* Restaurant Articles Site map Generation End */
-
-
-
-
             /* Category page Site map Generation Start */
             $categories       = Config('category.SeoCategoryArr');
             unset($categories[5]);
@@ -574,16 +448,16 @@ class SitemapController extends Controller
             /* Top City Site map Generation End */
             /* Articles Site map Generation Start */
             $siteMapData = "";
-            $articles    = ContentList::query()->where('site_type', 'fi')->where('status', 1)->orderBy('content_id', 'desc')->get();
-            foreach ($articles as $article) {
-                $siteMapData .= "<url>
-                                <loc>
-                                https://www.franchiseindia.com/content/" . str_replace('&', '&amp;', $article->slug) . "." . $article->content_id . "</loc>
-                                <lastmod>" . substr($article->created_at, 0, 10) . "</lastmod>
-                            </url>";
-            }
-            //changes by GP 12-August-2024
-            file_put_contents(public_path("sitemap_articles.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
+            // $articles    = ContentList::query()->where('site_type', 'fi')->where('status', 1)->orderBy('content_id', 'desc')->get();
+            // foreach ($articles as $article) {
+            //     $siteMapData .= "<url>
+            //                     <loc>
+            //                     https://www.franchiseindia.com/content/" . str_replace('&', '&amp;', $article->slug) . "." . $article->content_id . "</loc>
+            //                     <lastmod>" . substr($article->created_at, 0, 10) . "</lastmod>
+            //                 </url>";
+            // }
+            // //changes by GP 12-August-2024
+            // file_put_contents(public_path("sitemap_articles.xml"), $siteMapInitializer . $siteMapData . $siteMapTerminator);
 
             //changes by GP 12-August-2024
 
@@ -736,10 +610,10 @@ class SitemapController extends Controller
             $siteMapIndexData .= "    <sitemap>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_brands.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_category.xml') . "</loc>\n";
-            $siteMapIndexData .= "<loc>" . url('sitemap_articles.xml') . "</loc>\n";
+            // $siteMapIndexData .= "<loc>" . url('sitemap_articles.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_hi_category.xml') . "</loc>\n";
-            $siteMapIndexData .= "<loc>" . url('entrepreneur_sitemap.xml') . "</loc>\n";
-            $siteMapIndexData .= "<loc>" . url('sitemap_magazine.xml') . "</loc>\n";
+            // $siteMapIndexData .= "<loc>" . url('entrepreneur_sitemap.xml') . "</loc>\n";
+            // $siteMapIndexData .= "<loc>" . url('sitemap_magazine.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_sscategory_price_location_60000.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_sscategory_price_location_50000.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_sscategory_price_location_40000.xml') . "</loc>\n";
@@ -758,19 +632,23 @@ class SitemapController extends Controller
             $siteMapIndexData .= "<loc>" . url('sitemap_hi_scategory_price_location.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_hi_category_location.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_category_location.xml') . "</loc>\n";
-            // $siteMapIndexData .= "<loc>" . url('sitemap_location.xml') . "</loc>\n";
-            // $siteMapIndexData .= "<loc>" . url('sitemap_master_categories.xml') . "</loc>\n";
-            // $siteMapIndexData .= "<loc>" . url('sitemap_articles.xml') . "</loc>\n";
-            // $siteMapIndexData .= "<loc>" . url('sitemap_articles.xml') . "</loc>\n";
-            // $siteMapIndexData .= "<loc>" . url('sitemap_articles.xml') . "</loc>\n";
-            $siteMapIndexData .= "<loc>" . url('insights/news.xml') . "</loc>\n";
-            $siteMapIndexData .= "<loc>" . url('insights/article.xml') . "</loc>\n";
-            $siteMapIndexData .= "<loc>" . url('insights/interview.xml') . "</loc>\n";
-            $siteMapIndexData .= "<loc>" . url('insights/report.xml') . "</loc>\n";
-            $siteMapIndexData .= "<loc>" . url('insights/event.xml') . "</loc>\n";
-            $siteMapIndexData .= "<loc>" . url('insights/categories.xml') . "</loc>\n";
-            $siteMapIndexData .= "<loc>" . url('insights/subcategories.xml') . "</loc>\n";
-            $siteMapIndexData .= "<loc>" . url('insights/tags.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/en/news.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/en/article.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/en/article2.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/en/interview.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/en/report.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/en/event.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/en/categories.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/en/subcategories.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/en/tags.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/hi/news.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/hi/article.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/hi/interview.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/hi/report.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/hi/event.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/hi/categories.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/hi/subcategories.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/hi/tags.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_static.xml') . "</loc>\n";
 
             $siteMapIndexData .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";

@@ -244,7 +244,7 @@ class MobileVerificationController extends Controller
     public function verifyLoginMobile(Request $request)
     {
         $mobileNo = request()->mobile;
-
+        // dd($mobileNo);
         if (strlen($mobileNo) == 12 && substr($mobileNo, 0, 2) == "91")
             $mobileNo = substr($mobileNo, 2, 10);
 
@@ -261,13 +261,11 @@ class MobileVerificationController extends Controller
         }
 
         $otpCode = $this->generateMobileOtp();
-
         if ($chkMobileNo > 0) {
             UserAccount::query()->where('mobile', $request->mobile)->update([
                 'loginotp_verification_code' => $otpCode
             ]);
             $this->sendSmsToMobile(request()->mobile, $otpCode);
-            echo "OTP sent: $otpCode";
             return response()->json('Success! OTP sent to customers mobile number');
         }
 

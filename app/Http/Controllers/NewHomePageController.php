@@ -118,7 +118,7 @@ class NewHomePageController extends Controller
  
         $articles= InsightListHindi::query()
                 ->where('status', 1)
-                ->whereIn('insight_type', ['Article'])
+                ->where('insight_type','Article')
                 ->orderByDesc('created_at')
                 ->limit(10)
                 ->get();
@@ -274,7 +274,7 @@ class NewHomePageController extends Controller
 
                 $articles= InsightList::query()
                 ->where('status', 1)
-                ->whereIn('insight_type', ['News'])
+                ->where('insight_type', 'News')
                 ->orderByDesc('created_at')
                 ->limit(10)
                 ->get();

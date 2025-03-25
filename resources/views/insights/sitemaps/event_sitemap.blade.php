@@ -7,7 +7,7 @@
         @if ($news->insight_type = 'Event')
             <url>
                 <loc>{{ url('/insights/' . $locale . '/' . $type . '/' . $news->slug . '.' . $news->news_id) }}</loc>
-                <lastmod>{{ date('d-m-Y', strtotime($news->created_at)) }}</lastmod>
+                <lastmod>{{ $news->created_at->format('Y-m-d\TH:i:sP') }}</lastmod>
             </url>
         @endif
     @endforeach

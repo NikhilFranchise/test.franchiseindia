@@ -6,7 +6,7 @@
         @endphp
         <url>
             <loc>{{ url('/insights/' . $locale . '/' . $type) }}</loc>
-            <lastmod>{{ date('d-m-Y', strtotime($data['created_at'])) }}</lastmod>
+            <lastmod>{{ $data->created_at->format('Y-m-d\TH:i:sP') }}</lastmod>
         </url>
     @endforeach
 </urlset>

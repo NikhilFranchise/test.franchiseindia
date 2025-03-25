@@ -27,10 +27,9 @@
         </div>
         <div class="authblk">
             <div class="container">
-                <ul class="nabva">
-                    <li><a href="{{ url('/insights') }}">Home</a></li>
-                    <li>/</li>
-                    <li>{{ $displayName }}</li>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url('/insights') }}">Home</a></li>
+                    <li class="breadcrumb-item">{{ $displayName }}</li>
                 </ul>
             </div>
         </div>

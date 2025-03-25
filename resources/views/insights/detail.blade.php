@@ -206,17 +206,13 @@
                             {!! $renderedContent !!}
 
                         </div>
-                        <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 20px;">
+                        <div class="franBrands">
                             @if (!empty($franchiseData))
-                                <h4 style="margin-top:15px">Interested in Franchise:</h4>
+                                <h4>Interested in Franchise:</h4>
                                 @foreach ($franchiseData as $franchise)
-                                    <div
-                                        style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 15px 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center; min-width: 95px; max-width: 200px;">
-                                        <a href="http://franchiseindia.com/brands/{{ strtolower($franchise['profile_name']) }}.{{ $franchise['fran_detail_id'] }}"
-                                            target="_blank"
-                                            style="text-decoration: none; color: #333; font-weight: bold; font-size: 16px;">
-                                            {{ $franchise['company_name'] }}
-                                        </a>
+                                    <div class="franInterest">
+                                        <a href="https://www.franchiseindia.com/brands/{{ strtolower($franchise['profile_name']) }}.{{ $franchise['fran_detail_id'] }}"
+                                            target="_blank">{{ $franchise['company_name'] }}</a>
                                     </div>
                                 @endforeach
                             @endif
@@ -237,7 +233,6 @@
                             </ul>
                         </div>
                     </div>
-                    {{-- <div class="contentarea" id="last-paragraph-{{ $newsDetails->news_id }}"data-news-id="{{ $newsDetails->news_id }}"> --}}
                     <div class="contentarea">
                         @include('layout.insights.subscribenewsletter')
                     </div>
@@ -325,56 +320,4 @@
         <!-- New article will be loaded here -->
     </div>
     @include('layout.insights.magblock')
-    {{-- <script>
-        $(document).ready(function() {
-            let loadedNewsIds = new Set(); // Stores only unique news IDs
-
-            function loadNextArticle(currentNewsId, catId) {
-                if (loadedNewsIds.has(currentNewsId)) return; // Skip if already loaded
-                
-                loadedNewsIds.add(currentNewsId); // Mark as loaded
-                // alert(Array.from(loadedNewsIds).join(", "));
-
-                $.ajax({
-                    url: `/insights/next-article/${catId}`,
-                    method: "GET",
-                    data: {
-                        loadedNewsIds: Array.from(loadedNewsIds)
-                    },
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(data) {
-                        if (!data.trim()) return; // Stop if no data
-
-                        let newArticle = $(data);
-                        $(".next-article-container").append(newArticle); // Append new article
-                        observeLastParagraph(newArticle.find(".last-paragraph").attr("data-news-id"));
-                    },
-                    error: function(error) {
-                        console.error("Error loading next article:", error);
-                    }
-                });
-            }
-
-            function observeLastParagraph(newsId) {
-                let lastParagraph = document.querySelector(`#last-paragraph-${newsId}`);
-                if (!lastParagraph) return;
-
-                let observer = new IntersectionObserver(entries => {
-                    if (entries[0].isIntersecting) {
-                        loadNextArticle(newsId, {{ $newsDetails->cat_id }});
-                    }
-                }, {
-                    threshold: 1.0
-                });
-
-                observer.observe(lastParagraph);
-            }
-
-            // Start observing the first article
-            observeLastParagraph({{ $newsDetails->news_id }});
-        });
-    </script> --}}
-
 @endsection

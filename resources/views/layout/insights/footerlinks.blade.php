@@ -229,3 +229,47 @@
         }
     });
 </script>
+<script>
+    var swiper = new Swiper('.slidereport .swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        loop: false,
+        // AutoPlay
+        autoplay: {
+            delay: 2700,
+            speed: 1000,
+            disableOnInteraction: true,
+            watchSlidesProgress: true,
+            watchVisibility: true,
+        },
+        // init: false,
+        pagination: {
+            el: '.slidereport  .swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.slidereport .swiper-button-next',
+            prevEl: '.slidereport .swiper-button-prev',
+        },
+        keyboard: {
+            enabled: true,
+            onlyInViewport: true,
+        },
+        breakpoints: {
+            320: {
+                slidesPerView: 1.5,
+                spaceBetween: 10,
+                loop: true,
+            },
+            768: {
+                slidesPerView: 4,
+                spaceBetween: 10,
+                loop: true,
+            },
+            1024: {
+                slidesPerView: 5,
+                spaceBetween: 10,
+            },
+        }
+    });
+</script>

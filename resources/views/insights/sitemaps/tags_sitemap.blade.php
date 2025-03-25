@@ -6,7 +6,7 @@
         @endphp
         <url>
             <loc>{{ url('/insights/' . $locale . '/tag/' . $tagtype) }}</loc>
-            <lastmod>{{ date('d-m-Y', strtotime($tag['created_at'])) }}</lastmod>
+            <lastmod>{{ $tag['created_at']->format('Y-m-d\TH:i:sP') }}</lastmod>
         </url>
     @endforeach
 </urlset>

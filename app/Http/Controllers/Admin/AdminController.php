@@ -1777,6 +1777,7 @@ class AdminController extends Controller
     private function insertAssociatedTags($tags, $id, $type, $isDelete, $isHindi)
     {
         //deleting and reinserting tags
+        // dd($isHindi);
         if ($isHindi == 'en') {
             if ($isDelete == 1)
                 ContentTagsAssigned::query()->where('content_id', $id)->where('content_type', $type)->delete();
@@ -1787,7 +1788,6 @@ class AdminController extends Controller
                     ->where('content_type', $type)
                     ->where('tag_id', $associatedTagsNew)
                     ->first();
-
                 if (!$exists) {
                     // Insert new tag only if it doesn't exist
                     ContentTagsAssigned::query()->insert([
@@ -1795,8 +1795,6 @@ class AdminController extends Controller
                         'content_id' => $id,
                         'tag_id' => $associatedTagsNew
                     ]);
-
-                    // ContentTagsAssigned::query()->insert(['content_type' => $type, 'content_id' => $id, 'tag_id' => $associatedTagsNew]);
 
                     //increasing frequency count
                     SeoTag::query()->where('tag_id', $associatedTagsNew)->increment('frequency');
@@ -1805,22 +1803,21 @@ class AdminController extends Controller
         } elseif ($isHindi == 'hi') {
             if ($isDelete == 1)
                 ContentTagsAssignedHindi::query()->where('content_id', $id)->where('content_type', $type)->delete();
-
+            // dd($tags);
             foreach ($tags as $associatedTagsNew) {
-                $exists = ContentTagsAssigned::query()
+                $exists = ContentTagsAssignedHindi::query()
                     ->where('content_id', $id)
                     ->where('content_type', $type)
                     ->where('tag_id', $associatedTagsNew)
                     ->first();
-
+                // dd($exists);
                 if (!$exists) {
                     // Insert new tag only if it doesn't exist
-                    ContentTagsAssigned::query()->insert([
+                    ContentTagsAssignedHindi::query()->insert([
                         'content_type' => $type,
                         'content_id' => $id,
                         'tag_id' => $associatedTagsNew
                     ]);
-                    // ContentTagsAssignedHindi::query()->insert(['content_type' => $type, 'content_id' => $id, 'tag_id' => $associatedTagsNew]);
 
                     //increasing frequency count
                     SeoTagHindi::query()->where('tag_id', $associatedTagsNew)->increment('frequency');
@@ -1848,7 +1845,7 @@ class AdminController extends Controller
         }
     }
 
-    
+
     public function createInsights(Request $request)
     {
         // dd($request->all());
@@ -2133,20 +2130,14 @@ class AdminController extends Controller
 
     public function updateInsights(Request $request)
     {
-        // dd($request->all());
         $this->validate($request, [
 
             'insights_publisher' => 'required',
             'insights_type' => 'required',
             'insights_cat' => 'required',
-            // 'insights_subcat' => 'required',
             'title' => 'required|max:255',
-            //'home_title' => 'required',
             'sub_title' => 'required',
             'content' => 'required',
-            //'brands' => 'required',
-            // 'associated_tags' => 'required',
-            // 'image' => 'required',
         ]);
         $role              = $request->session()->get('role');
         $brand             = !empty($request->brands) ? $this->stringyfyText($request->brands) : "";
@@ -2169,7 +2160,7 @@ class AdminController extends Controller
             $slug = str_replace(".", "-", $titleSlug);
         }
         // dd($role);
-        $kicker            = $request->kicker;
+        // $kicker            = $request->kicker;
         $homeTitle         = $request->home_title;
         $subTitle          = $request->sub_title;
         $desc              = $request->input('content');
@@ -2201,7 +2192,6 @@ class AdminController extends Controller
                 'insight_type'  => $insight_type,
                 'cat_id'       => $cat_id,
                 'subcat_id'   => $subcat_id,
-                //
                 'related_brand' => $brand,
                 'slug'          => $slug,
                 'is_intl'       => $isInternational,

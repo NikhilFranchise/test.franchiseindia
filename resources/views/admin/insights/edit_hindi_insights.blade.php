@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 
 <head>
     @include('admin.includes.head')
@@ -19,7 +19,6 @@
             display: none;
         }
     </style>
-
     <style type="text/css">
         .select2-container .select2-selection--multiple {
             box-sizing: border-box;
@@ -43,14 +42,12 @@
     <!--Header-part-->
     @include('admin.includes.header')
     <!--close-top-Header-menu-->
-
     <!--sidebar-menu-->
     @section('IN')
         active
     @endsection
     @include('admin.includes.sidebar')
     <!--sidebar-menu-->
-
     <div id="content">
         <!--breadcrumbs-->
         <div id="content-header">
@@ -67,221 +64,213 @@
             <hr>
             <div class="row-fluid">
                 <div class="widget-box">
-                    <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+                    <div class="widget-title">
+                        <span class="icon"> <i class="icon-align-justify"></i> </span>
                         <h5>Insights Hindi Details</h5>
                     </div>
                     <div class="widget-content nopadding">
-                        <form method="POST" class="form-horizontal" enctype="multipart/form-data"
-                            action="{{ url('admin/hi/update-insights') }}" id="editform" />
-                        <input type="hidden" name="news_id" value="{{ $data->news_id }}" />
-                        @csrf
-                        <div class="control-group">
-                            <label class="control-label" for="publisher">Insights Publisher :</label>
-                            <div class="controls" id="insights_publisher">
-                                <select class="span11" name="insights_publisher" id="publisher">
-                                    <option value="{{ $data->author_id }}" selected>{{ $data->author[0]->title }}
-                                    </option>
-                                </select>
-                            </div>
-                            @if ($errors->has('insights_publisher'))
-                                @foreach ($errors->get('insights_publisher') as $error)
-                                    <br><span style="color: red;">{{ $error }}</span>
-                                @endforeach
-                            @endif
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Insights Type :</label>
-                            <div class="controls">
-                                <select required class="span11" name="insights_type" title="insights_type">
-                                    <option value="">Select Insights Type</option>
-                                    <option value="News" @if ($data->insight_type == 'News') selected @endif>News
-                                    </option>
-                                    <option value="Article" @if ($data->insight_type == 'Article') selected @endif>
-                                        Article</option>
-                                    <option value="Interview" @if ($data->insight_type == 'Interview') selected @endif>
-                                        Interview</option>
-                                    <option value="Report" @if ($data->insight_type == 'Report') selected @endif>Report
-                                    </option>
-                                    <option value="Event" @if ($data->insight_type == 'Event') selected @endif>Event
-                                    </option>
-                                    <option value="Terms" @if ($data->insight_type == 'Terms') selected @endif>Terms
-                                    </option>
-                                </select>
-                                @if ($errors->has('insights_type'))
-                                    @foreach ($errors->get('insights_type') as $error)
+                        <form method="POST" class="form-horizontal" enctype="multipart/form-data" id="editform"
+                            action="{{ url('admin/hi/update-insights') }}">
+                            <input type="hidden" name="news_id" value="{{ $data->news_id }}" />
+                            @csrf
+                            <div class="control-group">
+                                <label class="control-label" for="publisher">Insights Publisher :</label>
+                                <div class="controls" id="insights_publisher">
+                                    <select class="span11" name="insights_publisher" id="publisher">
+                                        <option value="{{ $data->author_id }}" selected>{{ $data->author[0]->title }}
+                                        </option>
+                                    </select>
+                                </div>
+                                @if ($errors->has('insights_publisher'))
+                                    @foreach ($errors->get('insights_publisher') as $error)
                                         <br><span style="color: red;">{{ $error }}</span>
                                     @endforeach
                                 @endif
                             </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Main Category :</label>
-                            <div class="controls">
-                                <select class="span11" name="insights_cat" title="Main Category"
-                                    onchange="Subcategoriesdata(value);">
-                                    <option value="">Select Main Category</option>
-                                    @foreach ($InsightCategory as $category)
-                                        <option value="{{ $category->id }}"
-                                            @if ($category->id == $data->cat_id) selected @endif>
-                                            {{ $category->catname }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($errors->has('insights_cat'))
-                                    @foreach ($errors->get('insights_cat') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Sub Category :</label>
-                            <div class="controls">
-                                <select class="span11" name="insights_subcat" id="insights_subcat" title="Sub Category">
-                                    <option value="">Select Sub Category</option>
-                                    @foreach ($InsightSubcategory as $subcat)
-                                        <option value="{{ $subcat->id }}"
-                                            @if ($subcat->id == $data->subcat_id) selected @endif>
-                                            {{ $subcat->subcat_name }}</option>
-                                    @endforeach
-                                </select>
-
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Publish Url :</label>
-                            <div class="controls">
-                                <input type="text" name="slug" id="slugId" maxlength="125" class="span11"
-                                   value="{{ $data->slug }}" />
-
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Insights Title :</label>
-                            <div class="controls">
-                                <input type="text" required maxlength="125" class="span11" placeholder="Enter Title"
-                                    name="title" value="{{ $data->title }}" />
-                                @if ($errors->has('title'))
-                                    @foreach ($errors->get('title') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Insights Home Title :</label>
-                            <div class="controls">
-                                <input type="text" required maxlength="40" class="span11"
-                                    placeholder="Enter Home Title" name="home_title"
-                                    value="{{ $data->homeTitle }}" />
-
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Insights Sub Title :</label>
-                            <div class="controls">
-                                <input type="text" required maxlength="255" class="span11"
-                                    placeholder="Sub title" name="sub_title" value="{{ $data->shortDesc }}" />
-                                @if ($errors->has('sub_title'))
-                                    @foreach ($errors->get('sub_title') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label for="international_check" class="control-label">International Content?
-                                :</label>
-                            <div class="controls">
-                                <input type="checkbox" id="international_check" name="is_intl" value="1"
-                                    @if ($data->is_intl == 1) checked @endif>
-                            </div>
-                        </div>
-
-
-                        @php
-                            $locale = request()->segment(2);
-                        @endphp
-                        <div class="control-group">
-                            <label for="inputStatus" class="control-label">Insights Content :</label>
-                            <div class="controls span9">
-                                <div class="form-group">
-                                    <textarea name="content" id="inputDescription" class="form-control customError" minlength="2"
-                                        placeholder="Content Description" required>{{ $data->content }}</textarea>
-                                    @if ($errors->has('content'))
-                                        @foreach ($errors->get('content') as $error)
+                            <div class="control-group">
+                                <label class="control-label">Insights Type :</label>
+                                <div class="controls">
+                                    <select class="span11" name="insights_type" title="insights_type">
+                                        <option value="">Select Insights Type</option>
+                                        <option value="News" @if ($data->insight_type == 'News') selected @endif>News
+                                        </option>
+                                        <option value="Article" @if ($data->insight_type == 'Article') selected @endif>
+                                            Article</option>
+                                        <option value="Interview" @if ($data->insight_type == 'Interview') selected @endif>
+                                            Interview</option>
+                                        <option value="Report" @if ($data->insight_type == 'Report') selected @endif>Report
+                                        </option>
+                                        <option value="Event" @if ($data->insight_type == 'Event') selected @endif>Event
+                                        </option>
+                                        <option value="Terms" @if ($data->insight_type == 'Terms') selected @endif>Terms
+                                        </option>
+                                    </select>
+                                    @if ($errors->has('insights_type'))
+                                        @foreach ($errors->get('insights_type') as $error)
                                             <br><span style="color: red;">{{ $error }}</span>
                                         @endforeach
                                     @endif
-                                    <img src="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $locale) }}"
-                                        height="106" width="187" style="padding-top: inherit;">
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="control-group">
-                            <label class="control-label">Image :</label>
-                            <div class="controls">
-                                <input type="hidden" name="old_image"
-                                    value="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $locale) }}" />
-                                <input type="file" id="showImage" class="span11" name="image">
-                                <div style="display: none; color: red;" id="showImage_msg">Invalid image type! Please
-                                    select a valid image format (JPG, GIF, PNG, or WebP)</div>
-                                <div style="display: none; color: red;" id="showImage_msg_size">Please select a
-                                    image of size(Less than 150 KB)</div>
-                                <br />
-                                Note : * Image Size 1600x940
-                            </div>
-
-                        </div>
-                        <div class="control-group">
-                            <label for="select2" class="control-label">Related Brands :</label>
-                            <div class="controls" id="brands">
-                                <select multiple name="brands[]" id="select2" class="span11">
-                                    @if (isset($company))
-
-                                        @foreach ($company as $companyData)
-                                            @if ($companyData != '')
-                                                <option value="{{ $companyData->franchisor_id }}" selected>
-                                                    {{ $companyData->company_name }}</option>
-                                            @endif
+                            <div class="control-group">
+                                <label class="control-label">Main Category :</label>
+                                <div class="controls">
+                                    <select class="span11" name="insights_cat" title="Main Category"
+                                        onchange="Subcategoriesdata(value);">
+                                        <option value="">Select Main Category</option>
+                                        @foreach ($InsightCategory as $category)
+                                            <option value="{{ $category->id }}"
+                                                @if ($category->id == $data->cat_id) selected @endif>
+                                                {{ $category->catname }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('insights_cat'))
+                                        @foreach ($errors->get('insights_cat') as $error)
+                                            <br><span style="color: red;">{{ $error }}</span>
                                         @endforeach
                                     @endif
-
-                                </select>
-
+                                </div>
                             </div>
-                        </div>
-                        <div class="control-group">
-                            <label for="select3" class="control-label">Associated Tags :</label>
-                            <div class="controls" id="associatedTags">
-                                <select multiple style="display: none;" name="associated_tags[]" id="select3"
-                                    class="span11">
-                                    @if (isset($assocTags))
-                                        @foreach ($assocTags as $assocTagsData)
-                                            <option value="{{ $assocTagsData->tag_id }}" selected>
-                                                {{ $assocTagsData->name }}</option>
+                            <div class="control-group">
+                                <label class="control-label">Sub Category :</label>
+                                <div class="controls">
+                                    <select class="span11" name="insights_subcat" id="insights_subcat"
+                                        title="Sub Category">
+                                        <option value="">Select Sub Category</option>
+                                        @foreach ($InsightSubcategory as $subcat)
+                                            <option value="{{ $subcat->id }}"
+                                                @if ($subcat->id == $data->subcat_id) selected @endif>
+                                                {{ $subcat->subcat_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Publish Url :</label>
+                                <div class="controls">
+                                    <input type="text" name="slug" id="slugId" maxlength="125" class="span11"
+                                        value="{{ $data->slug }}" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Insights Title :</label>
+                                <div class="controls">
+                                    <input type="text" required maxlength="125" class="span11"
+                                        placeholder="Enter Title" name="title" value="{{ $data->title }}" />
+                                    @if ($errors->has('title'))
+                                        @foreach ($errors->get('title') as $error)
+                                            <br><span style="color: red;">{{ $error }}</span>
                                         @endforeach
                                     @endif
-                                </select>
-
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-actions" style="text-align: center">
-                            <button type="submit" class="btn btn-success" id="newssubmit">Save</button>
-                        </div>
+                            <div class="control-group">
+                                <label class="control-label">Insights Home Title :</label>
+                                <div class="controls">
+                                    <input type="text" required maxlength="40" class="span11"
+                                        placeholder="Enter Home Title" name="home_title"
+                                        value="{{ $data->homeTitle }}" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Insights Sub Title :</label>
+                                <div class="controls">
+                                    <input type="text" required maxlength="255" class="span11"
+                                        placeholder="Sub title" name="sub_title" value="{{ $data->shortDesc }}" />
+                                    @if ($errors->has('sub_title'))
+                                        @foreach ($errors->get('sub_title') as $error)
+                                            <br><span style="color: red;">{{ $error }}</span>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="international_check" class="control-label">International Content?
+                                    :</label>
+                                <div class="controls">
+                                    <input type="checkbox" id="international_check" name="is_intl" value="1"
+                                        @if ($data->is_intl == 1) checked @endif>
+                                </div>
+                            </div>
+                            @php
+                                $locale = request()->segment(2);
+                            @endphp
+                            <div class="control-group">
+                                <label for="inputStatus" class="control-label">Insights Content :</label>
+                                <div class="controls span9">
+                                    <div class="form-group">
+                                        @if ($errors->has('content'))
+                                            @foreach ($errors->get('content') as $error)
+                                                <span style="color:red;">{{ $error }}</span>
+                                            @endforeach
+                                        @endif
+                                        <textarea name="content" id="inputDescription" class="form-control customError" minlength="2"
+                                            placeholder="Content Description" required>{{ $data->content }}</textarea>
+                                        <img src="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $locale) }}"
+                                            height="106" width="187" style="padding-top: inherit;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Image :</label>
+                                <div class="controls">
+                                    <input type="hidden" name="old_image"
+                                        value="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $locale) }}" />
+                                    <input type="file" id="showImage" class="span11" name="image">
+                                    <div style="display: none; color: red;" id="showImage_msg">Invalid image type!
+                                        Please
+                                        select a valid image format (JPG, GIF, PNG, or WebP)
+                                    </div>
+                                    <div style="display: none; color: red;" id="showImage_msg_size">Please select a
+                                        image of size(Less than 150 KB)
+                                    </div>
+                                    <br />
+                                    Note : * Image Size 1600x940
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="select2" class="control-label">Related Brands :</label>
+                                <div class="controls" id="brands">
+                                    <select multiple name="brands[]" id="select2" class="span11">
+                                        @if (isset($company))
+                                            @foreach ($company as $companyData)
+                                                @if ($companyData != '')
+                                                    <option value="{{ $companyData->franchisor_id }}" selected>
+                                                        {{ $companyData->company_name }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label for="select3" class="control-label">Associated Tags :</label>
+                                <div class="controls" id="associatedTags">
+                                    <select multiple style="display: none;" name="associated_tags[]" id="select3"
+                                        class="span11">
+                                        @if (isset($assocTags))
+                                            @foreach ($assocTags as $assocTagsData)
+                                                <option value="{{ $assocTagsData->tag_id }}" selected>
+                                                    {{ $assocTagsData->name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-actions" style="text-align: center">
+                                <button type="submit" class="btn btn-success" id="newssubmit">Save</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <!--Footer-part-->
     @include('admin.includes.footer')
     <!--end-Footer-part-->
-
     <script src="{{ url('admin/js/jquery.min.js') }}"></script>
     <script src="{{ url('admin/js/jquery.ui.custom.js') }}"></script>
     <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
@@ -419,8 +408,6 @@
             }
         }
     </script>
-
-
     <script>
         $(document).ready(function() {
             var editor_config = {
@@ -428,14 +415,89 @@
                 height: 300,
                 selector: "textarea",
                 plugins: [
-                    "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                    "table advlist autolink lists link image charmap print preview hr anchor pagebreak",
                     "searchreplace wordcount visualblocks visualchars code fullscreen",
                     "insertdatetime media nonbreaking save table contextmenu directionality",
                     "emoticons template paste textcolor colorpicker textpattern"
                 ],
-                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | forecolor backcolor",
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | forecolor backcolor | table",
                 relative_urls: false,
                 remove_script_host: false,
+                table_default_attributes: {
+                    border: "1"
+                },
+                table_default_styles: {
+                    width: "100%",
+                    borderCollapse: "collapse"
+                },
+                table_template: `
+            <table style="width: 100%; border-collapse: collapse;" border="1">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>`,
+                setup: function(editor) {
+                    // Automatically transform first row into <thead> when inserting a new table
+                    editor.on('BeforeSetContent', function(event) {
+                        var content = event.content;
+                        if (content.includes("<table")) {
+                            var parser = new DOMParser();
+                            var doc = parser.parseFromString(content, "text/html");
+                            var tables = doc.querySelectorAll("table");
+
+                            tables.forEach(function(table) {
+                                var firstRow = table.querySelector("tr");
+                                var existingThead = table.querySelector("thead");
+                                var existingTbody = table.querySelector("tbody");
+
+                                // Convert first row into <thead> with <th>
+                                if (!existingThead && firstRow) {
+                                    var thead = document.createElement("thead");
+                                    var headerRow = document.createElement("tr");
+
+                                    firstRow.querySelectorAll("td").forEach(function(td) {
+                                        var th = document.createElement("th");
+                                        th.innerHTML = td.innerHTML;
+                                        headerRow.appendChild(th);
+                                    });
+
+                                    thead.appendChild(headerRow);
+                                    table.insertBefore(thead, table.firstChild);
+                                    firstRow.remove();
+                                }
+
+                                // Move remaining rows into <tbody>
+                                if (!existingTbody) {
+                                    var tbody = document.createElement("tbody");
+                                    var rows = table.querySelectorAll("tr");
+
+                                    rows.forEach((row, index) => {
+                                        if (index !== 0) {
+                                            tbody.appendChild(row);
+                                        }
+                                    });
+
+                                    table.appendChild(tbody);
+                                }
+                            });
+
+                            event.content = doc.body.innerHTML;
+                        }
+                    });
+                },
                 file_browser_callback: function(field_name, url, type) {
                     var x = window.innerWidth || document.documentElement.clientWidth || document
                         .getElementsByTagName('body')[0].clientWidth;
