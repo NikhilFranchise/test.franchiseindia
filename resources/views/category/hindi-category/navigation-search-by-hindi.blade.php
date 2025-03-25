@@ -15,6 +15,9 @@
         $_h1 = explode('- फ्रेंचाइजी भारत', $seoTitle);
         $h1 = $_h1[0];
     }
+    if(empty($h1)){
+        $h1 = 'test';
+    }
 @endphp
 <link rel=stylesheet href="{{ url('awesomplete/awesomplete.css')}}">
 <div class="row pad20 row-no-margin">

@@ -65,8 +65,6 @@
         background: url("https://www.franchiseindia.com/images/popup/popupbosbtm.jpg") no-repeat center top;
     }
 
-
-
     .sec .f1 .form-control,
     .sec .f3 .form-control {
         background:#fff!important;

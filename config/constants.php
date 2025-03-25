@@ -1508,12 +1508,9 @@ return [
             "916" => "LED Lights",
             "913" => "Lighting Products & Components",
             "910" => "Wires, Cables & Accessories & Conductors",
-
             //"914" => "Decorative Lights",
-
             //"917" => "Bulbs & Tubelights",
             "918" => "Electronic Signs",
-
             "920" => "Electric Power Tools",
             //"922" => "Solar Lights",
             //"923" => "Electric Fitting & Accessories",
@@ -1531,7 +1528,6 @@ return [
             "1093" => "Solar & Renewable Energy Products & Components",
             "1094" => "Transformer & Transformer Components",
             "1095" => "Vaoltage Stabilizers",
-
         ),
 
         "925" => array(
@@ -2117,7 +2113,7 @@ return [
             "716" => "Strectcher",
         ),
         "968" => array(),
-        "445"=>array()
+        "445"=>array(),
     ],
 
     // Mobile OTP, SMS URL, Msg template

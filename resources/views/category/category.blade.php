@@ -2,11 +2,75 @@
 
 @php
     $brandCount = count($brandResults);
+  
 @endphp
-
 {{-- @if ($brandCount < 2)
     @section('robot', 'noindex, nofollow')
 @endif --}}
+@php
+    function formatCurrencyForlisting($number) {
+        if ($number >= 10000000) {
+            // Format to Crores (1 Cr = 10,000,000)
+            return number_format($number / 10000000, 3) . ' Cr';
+        } elseif ($number >= 100000) {
+            // Format to Lakhs (1 Lakh = 100,000)
+            return number_format($number / 100000, 3) . ' Lakh';
+        } elseif ($number >= 1000) {
+            // Format to Thousands (1 K = 1,000)
+            return number_format($number / 1000, 3) . ' K';
+        } else {
+            return $number;
+        }
+    }
+@endphp
+
+@php
+    // $formattedValue = formatCurrencyForlisting($maxRangevalue); // Example value: 33769507
+    $formattedValue = formatCurrencyForlisting($maxRangevalue); // Example value: 33769507
+
+@endphp
+
+{{-- @dd($formattedValue) --}}
+
+
+{{-- Pankaj start for cat+investment --}}
+@php
+    $catArr = $catArr ?? collect();  // Set $popup to an empty collection if it's not set
+    // dd($catArr);
+@endphp
+@if ($catArr !== '')
+    @if($mc !== 5)
+        @if(!empty($maxRangevalue) && empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
+            @section('seoTitle', $brandResults->total() . '+ Business opportunities in ' . $catArr->catname . ' under ' . $formattedValue . ' - Franchise India')
+            @section('seoDesc', 'Find '.  $brandResults->total() . ' Business Opportunities in ' .  $catArr->catname . ' under ' . $formattedValue . ' as on ' . date("F j, Y") . ' Connect with Franchise India and start your '. $catArr->catname .' business today! Sign up Today.' )
+        @elseif(!empty($maxRangevalue) && !empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
+            @php
+                $stateId = $loc[0];
+                $stateName = Config::get("location.stateArr.$stateId");
+            @endphp
+            {{-- @dd($catArr->catname); --}}
+            @section('seoTitle', $brandResults->total() . '+ Business opportunities in ' . $catArr->catname . ' under ' . $formattedValue . ' in ' . $stateName . ' , India - Franchise India')
+            @section('seoDesc', 'Find '.  $brandResults->total() . ' Business Opportunities in ' .  $catArr->catname . ' under ' .  $formattedValue . ' in ' . $stateName.', India.' . ' Updated on ' . date("F j, Y") . '. Connect with Franchise India and start your '. $catArr->catname .' business in ' . $stateName . ', India today! Register Now.'  )
+        @endif
+    @endif
+    @if($mc == 5)
+        @if(!empty($maxRangevalue) && empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
+            @section('seoTitle', $brandResults->total() . '+ Dealership & Distributorship opportunities in  ' . $catArr->catname . ' under ' . $formattedValue . ' - Dealer India')
+            @section('seoDesc', 'Find '.  $brandResults->total() . ' Dealership & Distributorship opportunities in  ' .  $catArr->catname . ' under ' .  $formattedValue . ' as on ' . date("F j, Y") . ' Connect with Dealer India and start your '. $catArr->catname .' business today! Sign up Today.' )
+        @elseif(!empty($maxRangevalue) && !empty($loc) && $minRangeValue !== 0 && $maxRangevalue !==100000000 )
+            @php
+                $stateId = $loc[0];
+                $stateName = Config::get("location.stateArr.$stateId");
+            @endphp
+            {{-- @dd($maxRangevalue) --}}
+            @section('seoTitle', $brandResults->total() . '+ Dealership & Distributorship opportunities in ' . $catArr->catname . ' under ' . $formattedValue .  ' in ' . $stateName . ', India - Dealer India')
+            @section('seoDesc', 'Find '.  $brandResults->total() . ' Dealership & Distributorship Opportunities in  ' .  $catArr->catname . ' under '  . $formattedValue .' in ' . $stateName.', India.' . ' Updated on ' . date("F j, Y") . '. Connect with Dealer India and start your '. $catArr->catname .' Dealership & Distributorship business in  ' . $stateName . ', India today! Register Now.'  )
+        @endif
+    @endif
+
+@endif    
+{{-- Pankaj end for cat+investment --}}
+
 
 {{-- //Pankaj start --}}
 @if(URL::Current() == Config('constants.MainDomain') .'/business-opportunities/dealers-and-distributors.m5')
@@ -14,7 +78,7 @@
 @section('seoDesc','Access to ' . $brandResults->total() . '+ ' .'best dealership/distributorship business opportunities in India. Dealer and distributors a financially rewarding business in the growing industry.' )
 @section('seoKeywords','distributorship opportunities, looking for distributorship opportunities, dealership opportunities, looking for dealership opportunities, distributorship business ideas, distributorship business in india, distributorship business plan')
 @endif
-
+{{-- @dd($mc==5); --}}
 @if(!empty($loc) && $mc == 5)
 @php
             $stateId = $loc[0]; 
@@ -29,7 +93,6 @@
 @section('seoDesc', 'Dealer India offers a wide variety of ' . $catName . ' Dealership & Distributorship opportunities to run a successful ' . $catName . ' business. You can explore some of the established and well-known ' . $catName . ' Dealers here.')
 @section('seoKeywords', $catName . ' dealership in India, ' . $catName . ' distributorship in India, ' . $catName . ' dealers in India, ' . $catName . ' dealership opportunities in India, Dealer India, ' . $catName . ' distributors in India')
 @else
-
 @endif
 
 {{-- //////////// --}}
@@ -705,6 +768,88 @@ $c_Url = url()->current();
         </div>
     </div>
     <!-- end of rating modal here -->
+
+    <style>
+        .cityEvent{position: fixed;top: 0px;left: 0px;width: 100%;height: 100vh;z-index: 1000;overflow: auto;
+        
+            background: url('{{ asset('images/bg.webp') }}');
+            background-size: auto;
+          padding-top: 10px;
+          background-size: cover;display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        /*.city-close{position: absolute;right: 10px;top: 10px;color: #000;font-size: 38px;font-weight: 600;background: #ffcc01;padding: 12px 20px 0px 23px;border-radius: 50px;line-height: 35px;width: 65px;height: 65px;cursor: pointer;}*/
+        
+        
+        
+        .city-close {width: 40px;
+          height: 40px;
+          cursor: pointer;padding: 12px 20px 0px 16px;
+          border-radius: 50px;position: absolute;
+          right: 10px;
+          top: 10px;
+          color: #fff;
+          font-size: 19px;
+          font-weight: normal;}
+        
+        
+        @media screen and (min-width:993px){.city-desk{display: 
+            block; width: 75%;height: auto;margin:auto;}.city-mobile{display: none;}}
+        @media screen and (max-width:992px){.city-desk{display: none;}.city-mobile{display: block;width: 100%;height:auto;}
+        .city-close {width: 40px;
+          height: 40px;
+          cursor: pointer;padding: 12px 20px 0px 16px;
+          border-radius: 50px;position: absolute;
+          right: 0px;
+          top: 0px;
+          color: #fff;
+          font-size: 19px;
+          font-weight: normal;}
+          .cityEvent{align-items: top;}
+        }
+        </style>
+
+@php
+    $popup = $popup ?? collect();  // Set $popup to an empty collection if it's not set
+@endphp
+@if ($popup->isNotEmpty())
+@foreach ($popup as $event)
+    <div class="cityEvent">
+        <div class="city-close">x</div>
+
+        <!-- Desktop Banner -->
+        @if($event->desktop_banner)
+            <a href="{{$event->event_url}}" target="_blank">
+                <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/{{$event->desktop_banner}}" alt="Franchise India" class="city-desk">
+            </a>
+        @endif
+
+        <!-- Mobile Banner -->  
+        @if($event->mobile_banner)
+            <a href="{{$event->event_url}}" target="_blank">
+                <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/{{$event->mobile_banner}}" alt="Franchise India" class="city-mobile">
+            </a>
+        @endif
+    </div>
+@endforeach
+@endif
+
+    
+    <script>
+        $(document).ready(function(){
+    
+       setTimeout(function() {
+        $('.cityEvent').hide();
+      }, 10000);
+    
+      $('.city-close').click(function(){
+        $('.cityEvent').hide();
+      });
+    
+    
+    });
+    </script>
 
     <script type="text/javascript" src="{{ url('awesomplete/awesomplete.js') }}"></script>
 

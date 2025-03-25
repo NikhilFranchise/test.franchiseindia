@@ -26,22 +26,9 @@
     </script>
 
     <!-- Google Tag Manager -->
-   {{-- //GTM provided by shaan mohammad 19th feb 2025  --}}
-<!-- Google Tag Manager -->
-<script async>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KW4K6WV6');</script>
-    <!-- End Google Tag Manager -->
-    
-{{-- //GTM provided by shaan mohammad 19th feb 2025  end--}}
-
-
-
 
   {{-- // old GTM remnoved as per shaan --}}
-    {{-- <script>
+    <script>
         (function(w, d, s, l, i) {
             w[l] = w[l] || [];
             w[l].push({
@@ -56,7 +43,20 @@
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
-    </script> --}}
+    </script>
+
+   {{-- //GTM provided by shaan mohammad 19th feb 2025  --}}
+<!-- Google Tag Manager -->
+<script async>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KW4K6WV6');</script>
+    <!-- End Google Tag Manager -->
+    
+{{-- //GTM provided by shaan mohammad 19th feb 2025  end--}}
+
+
     <!-- End Google Tag Manager -->
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -2981,15 +2981,15 @@
 
 
                 <div class="industry-details">
-                    <p class="industry-head"><a href="https://www.dealerindia.com" target="_blank">Dealers &amp;
+                    <p class="industry-head"><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5" target="_blank">Dealers &amp;
                             Distributors</a></p>
                     <ul class="footer-links">
-                        <li><a href="https://www.dealerindia.com/dir/automobile" target="_blank">Automobile</a></li>
-                        <li><a href="https://www.dealerindia.com/dir/food-beverages" target="_blank">FMCG</a></li>
-                        <li><a href="https://www.dealerindia.com/dir/office-school-supplies" target="_blank">Office
-                                supplies</a></li>
-                        <li><a href="https://www.dealerindia.com" target="_blank">View All &gt;</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/automobile.sc443" target="_blank">Automobile</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/education.sc950" target="_blank">Education</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/agriculture.sc787" target="_blank">Agriculture</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5" target="_blank">View All &gt;</a></li>
                     </ul>
+            </div>
                 </div>
 
 

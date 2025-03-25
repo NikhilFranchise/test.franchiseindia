@@ -8,6 +8,7 @@ use App\Models\NewsList;
 use App\Models\DealersFranchisor;
 use App\Models\FranchisorBusinessDetail;
 use App\Models\SeoTagHindi;
+use App\Models\InsightList;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -41,6 +42,7 @@ class DealersAndDistributorController extends Controller
      */
     public function getDealersBrands($count)
   	{	
+        dd('yes');
     	$franchisors = DealersFranchisor::query()->select('franchisor_id')->where('status', 1)->take($count)->get()->pluck('franchisor_id');
     	return FranchisorBusinessDetail::query()->select('fran_detail_id', 'profile_name', 'company_logo', 'unit_inv_min', 'unit_inv_max')->whereIn('franchisor_id', $franchisors)->get();
   	}
@@ -56,20 +58,39 @@ class DealersAndDistributorController extends Controller
             ->where('company_name', 'LIKE', "%".request()->search."%")
             ->leftJoin('category_final', 'category_final.catid', '=', 'franchisor_business_details.ind_sub_cat');
 
-        $result = CategoryFinal::query()
+            $result = CategoryFinal::query()
             ->select("catname as name")
             ->where('category_final.catname', 'LIKE', "%".request()->search."%")
             ->union($companies)
             ->take(20)
             ->get();
-        $i = 0;
-        foreach ($result as $res) {
-            $result[$i]['name'] = str_replace('/', '-or-', $result[$i]['name']);
-            $result[$i]['name'] = str_replace('%2F', '/', $result[$i]['name']);
-            $i++;
-        }
-
+        
+        // $result2 = InsightList::query()
+        //     ->select('title as name')  // Renamed 'title' to 'name' for consistency
+        //     ->where('title', 'LIKE', "%".request()->search."%")
+        //     ->where('status', 1)
+        //     ->take(20)
+        //     ->get();
+        
+        // Convert collections to arrays
+        // $resultArray = $result->toArray();
+        // $result2Array = $result2->toArray();
+        
+        // Merge the two arrays
+        // $mergedResults = array_merge($resultArray, $result2Array);
+        
+        // Now apply the transformations on the names
+        // foreach ($mergedResults as $key => $res) {
+        //     $mergedResults[$key]['name'] = str_replace('/', '-or-', $res['name']);
+        //     $mergedResults[$key]['name'] = str_replace('%2F', '/', $res['name']);
+        // }
+        
+        // Return the merged and modified result as a JSON response
+        // return response()->json($mergedResults, 200);
         return response()->json($result, 200);
+
+        
+        
     }
 
     /**
@@ -105,5 +126,27 @@ class DealersAndDistributorController extends Controller
             'phone' => 'required|numeric|digits:10',
         ]);
         return response()->json(['success' => true, 'message' => 'Query submitted successfully']);
+    }
+
+
+    public function getRelatedArticles($query)
+    {
+        // Example: Fetch related articles based on the search query
+        // Replace with your actual database or logic to find related articles
+
+        $articles = [
+            [
+                'title' => 'How to Find Business Opportunities',
+                'url' => url('/articles/business-opportunities'),
+            ],
+            [
+                'title' => 'Top Dealers in Your Area',
+                'url' => url('/articles/top-dealers'),
+            ],
+            // You can dynamically fetch articles based on the query from the database
+        ];
+
+        // Return the related articles as a JSON response
+        return response()->json($articles);
     }
 }

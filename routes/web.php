@@ -181,6 +181,10 @@ Route::get('newsletter/subscriptionForm', [NewsLetterController::class, 'newslet
 Route::get('premiumbrand', [HomepageController::class, 'premiumHome']);
 Route::get('dealers-search/{search}',        [DealersAndDistributorController::class, 'searchForDealerHomePage']);
 Route::get('dealers-india/search/{search}',  [DealersAndDistributorController::class, 'searchDealer']);
+
+Route::get('/related-articles-search/{query}', [DealersAndDistributorController::class, 'getRelatedArticles']);
+
+
 Route::get('mailer',                         [MailerController::class, 'feedbackMailer']);
 Route::get('mailermessage',                  [MailerController::class, 'thanksMessage']);
 Route::get('cy_mails/unsubscribeme/',        [MailerController::class, 'unsub']);
@@ -492,6 +496,7 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     Route::get('uttarakhand.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('himachal-pradesh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('jammu-and-kashmir.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get('ladakh.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     // Route::get('{searchTerm}.FT{ftype}', [BusinessListingController::class, 'searchBusinessListing']);
     // Route::get('{searchTerm}/{categoryIds}', [BusinessListingController::class, 'searchBusinessListing']);
     // Route::get('{searchTerm}/{categoryIds}/{locationIds}', [BusinessListingController::class, 'searchBusinessListing']);
@@ -781,10 +786,10 @@ Route::group(['prefix' => 'hi'], function () {
     });
     //Directory Page Routes
     Route::group(['prefix' => 'business-opportunities'], function () {
-        // Route::get('dealers-and-distributors.m5',      'DealersAndDistributorController@getHomePage'); // International Page routes
-        Route::get('dealers-and-distributors.m5', function () {
-            return redirect('https://dealer.franchiseindia.com/', 301);
-        });
+        // Route::get('dealers-and-distributors.m5',    [DealersAndDistributorController::class,'getHomePage']);
+        // Route::get('dealers-and-distributors.m5', function () {
+        //     return redirect('https://dealer.franchiseindia.com/', 301);
+        // });
 
         Route::get('/', function () {
             return view('category/category');

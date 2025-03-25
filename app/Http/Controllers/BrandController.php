@@ -50,22 +50,24 @@ class BrandController extends Controller
         //  });
                  $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
 
+                //  dd($franDetails);
                  $main_cat = Config('constants.CategoryArr');
                  // dd($franDetails->ind_main_cat);
                  $a = $franDetails->ind_main_cat;
-                 // dd($main_cat[$a]);
+                //  dd($main_cat[$a]);
                  $index_value = $main_cat[$a];
                 //  dd($index_value);
                  $u_slug = Config('category.SeoCategoryArr');
                  $url_slug = $u_slug[$a];
                  // dd($url_slug);
               $fran_new_data = FranchisorBusinessDetail::query()
-             ->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name','unit_inv_min','unit_inv_max','company_logo')
+             ->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name','unit_inv_min','unit_inv_max','company_logo','ind_main_cat')
              ->where('profile_status', 1)
              ->where('membership_type',1)
              ->where('ind_main_cat', $franDetails->ind_main_cat)
              ->take(9)
              ->get();
+            //  dd($fran_new_data);
                 // Cache key for insight matches
                 $insightMatchesCacheKey = "insight_matches_{$franDetails->company_name}";
 $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
@@ -228,7 +230,14 @@ $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, funct
             $seoTitle = "3D Technology Dealership and Distributorship Opportunities in India";
             $seoDesc = "Get 3D Technology distributorship opportunities for sale to drive commercial growth. You will find here distributors of 3D printer, 3D scanner, Steam Lab, Atal Lab, 3D consumables manufacturers in India.";
             $seoKeywords = "3D printer dealers, 3D printer distributors 3D scanner distributors, Steam Lab distributors, Atal Lab distributors, 3D consumables manufacturer, 3D printer distributors";
-        } else {
+        } 
+        elseif($franDetails->ind_main_cat == 5){
+            $seoTitle = sprintf('%s  Dealership & Distributorship – Cost, How to Get, Contact, Fee, Apply', $franDetails->company_name);
+            $seoDesc = sprintf('Get %1$s Dealership & Distributorship. Get the %1$s dealership/distributorship information including start-up costs, dealership fees, requirements, growth history and more. Join %1$s dealership/distributorship and be on your way to owning and running a successful business.', $franDetails->company_name);
+            $seoKeywords = sprintf('%1$s Dealership, %1$s Distributorship, %1$s dealership cost, %1$s distributorship cost, %1$s contact number, how to get %1$s dealership/distributorship, %1$s dealership/distributorship profit, %1$s franchise enquiry, %1$s dealership/distributorship requirements, %1$s dealership/distributorship apply , %1$s fee, %1$s dealership/distributorship monthly income.', $franDetails->company_name);
+       
+        }
+        else { 
             // SEO Meta Tags
             // SEO Meta Tags
             $seoTitle = sprintf('%s Franchise Cost |How to Get | Contact| Fee | Apply', $franDetails->company_name);

@@ -225,7 +225,7 @@
                 <div class="col-sm-8 col-md-9 headmodfiy">
                     <ul class="sublink">
                         <li><a href="{{ Config('constants.MainDomain') }}/insights/">What's New</a></li>
-                        <li><a href="https://www.opportunityindia.com">News</a></li>
+                        <li><a href="https://www.franchiseindia.com/insights">News</a></li>
                         <li><a href="https://video.franchiseindia.com/">Videos</a></li>
                         <li><a href="{{ Config('constants.MainDomain') }}/advertise-with-us-payment/">Advertise</a>
                         </li>
@@ -245,12 +245,12 @@
                                         class="irin"> </a></li>
                                 <li><a href="https://www.entrepreneur.com/" rel="nofollow" target="_blank"
                                         class="entin"> </a></li>
-                                <li><a href="{{ Config('constants.MainDomain') }}/restaurant" class="riin"> </a>
+                                <li><a href="https://indianretailer.com/restaurant" class="riin"> </a>
                                 </li>
-                                <li><a href="https://www.opportunityindia.com/english/tag/wellness" class="wiin"> </a></li>
-                                <li><a href="https://www.opportunityindia.com/english/tag/education" class="eiin"></a></li>
+                                <li><a href="https://www.franchiseindia.com/insights/en/beauty-wellness" class="wiin"> </a></li>
+                                <li><a href="https://www.franchiseindia.com/insights/en/education" class="eiin"></a></li>
                                 <li><a href="https://www.licenseindia.com/" target="_blank" class="liin"></a></li>
-                                <li><a href="https://www.dealerindia.com" class="dealerin"></a>
+                                <li><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5" class="dealerin"></a>
                                 </li>
                             </ul>
                         </div>

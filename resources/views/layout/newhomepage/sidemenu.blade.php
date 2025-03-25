@@ -306,7 +306,7 @@
                     <li>
                         <label for="folder1">
                             <a target="_blank"
-                                href="{{ $key == '5' ? Config::get('constants.OIDomain') : '/business-opportunities/' . Config('category.SeoCategoryArr.' . $key) . '.m' . $key }}
+                                href="{{ '/business-opportunities/' . Config('category.SeoCategoryArr.' . $key) . '.m' . $key }}
                            ">{{ $value }}</a>
                         </label> <input type="checkbox" id="folder1">
                         <ol>
@@ -314,7 +314,7 @@
                                 <li>
                                     <label for="subsubfolder1">
                                         <a target="_blank"
-                                            href="{{ $key == '5' ? Config::get('constants.OIDomain') . (!empty(Config::get('category.SeoSubCategoryArr.' . $key1)) ? '/dir/' . Config('category.SeoSubCategoryArr.' . $key1) : '') : '/business-opportunities/' . Config('category.SeoSubCategoryArr.' . $key1) . '.sc' . $key1 }}">{{ $value1 }}</a></label>
+                                            href="{{ '/business-opportunities/' . Config('category.SeoSubCategoryArr.' . $key1) . '.sc' . $key1 }}">{{ $value1 }}</a></label>
                                     <input type="checkbox" id="subsubfolder1">
                                     <ol>
                                         @foreach (Config('constants.subSubCategoryArr.' . $key1) as $key2 => $value2)
@@ -327,7 +327,7 @@
                                             @if (is_array($sscArray) && in_array($key2, $sscArray))
                                                 <li>
                                                     <a target="_blank"
-                                                        href="{{ $key == '5' ? Config::get('constants.OIDomain') . (!empty(Config::get('category.SeoSubSubCategoryArr.' . $key2)) ? '/dir/' . Config('category.SeoSubSubCategoryArr.' . $key2) : '') : '/business-opportunities/' . Config('category.SeoSubSubCategoryArr.' . $key2) . '.ssc' . $key2 }}">{{ $value2 }}</a>
+                                                        href="{{ '/business-opportunities/' . Config('category.SeoSubSubCategoryArr.' . $key2) . '.ssc' . $key2 }}">{{ $value2 }}</a>
                                                 </li>
                                             @endif
                                         @endforeach
@@ -750,7 +750,7 @@
                     <li>
                         <label for="folder1">
                             <a target="_blank"
-                                href="{{ $key == '5' ? Config::get('constants.OIDomain') : '/business-opportunities/' . Config('category.SeoCategoryArr.' . $key) . '.m' . $key }}
+                                href="{{ '/business-opportunities/' . Config('category.SeoCategoryArr.' . $key) . '.m' . $key }}
                            ">{{ $value }}</a>
                         </label> <input type="checkbox" id="folder1">
                         <ol>
@@ -758,7 +758,7 @@
                                 <li>
                                     <label for="subsubfolder1">
                                         <a target="_blank"
-                                            href="{{ $key == '5' ? Config::get('constants.OIDomain') . (!empty(Config::get('category.SeoSubCategoryArr.' . $key1)) ? '/dir/' . Config('category.SeoSubCategoryArr.' . $key1) : '') : '/business-opportunities/' . Config('category.SeoSubCategoryArr.' . $key1) . '.sc' . $key1 }}">{{ $value1 }}</a></label>
+                                            href="{{  '/business-opportunities/' . Config('category.SeoSubCategoryArr.' . $key1) . '.sc' . $key1 }}">{{ $value1 }}</a></label>
                                     <input type="checkbox" id="subsubfolder1">
                                     <ol>
                                         @foreach (Config('constants.subSubCategoryArr.' . $key1) as $key2 => $value2)
@@ -773,17 +773,17 @@
                                             @if (is_array($sscJson) && in_array($key2, $sscJson))
                                                 <li>
                                                     <a target="_blank"
-                                                        href="{{ $key == '5' ? Config::get('constants.OIDomain') . (!empty(Config::get('category.SeoSubSubCategoryArr.' . $key2)) ? '/dir/' . Config('category.SeoSubSubCategoryArr.' . $key2) : '') : '/business-opportunities/' . Config('category.SeoSubSubCategoryArr.' . $key2) . '.ssc' . $key2 }} ">{{ $value2 }}</a>
+                                                        href="{{  '/business-opportunities/' . Config('category.SeoSubSubCategoryArr.' . $key2) . '.ssc' . $key2 }} ">{{ $value2 }}</a>
                                                 </li>
                                             @endif
                                         @endforeach
 
-                                    </ol>
-                                </li>
-                            @endforeach
-                        </ol>
-                    </li>
-                @endforeach
+                                </ol>
+                            </li>
+                        @endforeach
+                    </ol>
+                </li>
+            @endforeach
                 <li>
 
                     <span class="shaicon">
