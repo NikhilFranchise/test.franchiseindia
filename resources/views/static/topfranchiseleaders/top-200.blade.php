@@ -64,7 +64,6 @@
             font-family: Arial, sans-serif;
             font-size: 14px
         }
-
         .filter-head span {
             font-size: 15px;
             font-weight: normal;
