@@ -64,13 +64,12 @@
             font-family: Arial, sans-serif;
             font-size: 14px
         }
-
         .filter-head span {
             font-size: 15px;
             font-weight: normal;
             float: right;
             margin-top: 5px;
-            background: #16254c;
+            background: #000000;
             padding: 4px 18px;
             border-radius: 5px;
             color: #ffffff;
@@ -428,6 +427,8 @@
         }
 
         @media screen and (min-width:768px) and (max-width:993px) {
+            
+            .mstick{position: unset;}
             .wrapper .col {
                 width: 31.4%
             }
@@ -442,6 +443,8 @@
         }
 
         @media screen and (max-width:768px) {
+            .top-two-banner{margin-top: 66px;}
+            .mstick{position: unset;}
             .finner .catbtn input[type=checkbox]+label span {
                 width: 120px;
                 background-size: cover;
@@ -511,10 +514,7 @@
                 font-size: 13px
             }
 
-            .header {
-                display: none
-            }
-
+         
             .top-two-banner img {
                 width: 209px
             }
