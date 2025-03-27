@@ -1191,9 +1191,10 @@ class InsightsController extends Controller
     {
         // Fetch all active franchisors
         $franchisors = FranchisorBusinessDetail::query()
-            ->select('franchisor_id', 'profile_name', 'company_name')
+            ->select('company_name')
             ->where('profile_status', 1)
             // ->where('membership_type', 1)
+            ->take(500)
             ->get();
 
         $matchedBrands = [];
@@ -1209,7 +1210,7 @@ class InsightsController extends Controller
 
             // Find matching articles
             $matchingArticles = InsightList::query()
-                ->select('news_id', 'title')
+                ->select('title')
                 ->where('status', 1)
                 ->whereRaw("LOWER(title) REGEXP LOWER(?)", ["(^|[[:space:]]){$companyNameRegex}([[:space:]]|$)"])
                 ->orderByDesc('created_at')
@@ -1218,26 +1219,12 @@ class InsightsController extends Controller
             if ($matchingArticles->isEmpty()) {
                 // No matching articles found, add to unmatched brands
                 $unmatchedBrands[] = [
-                    // 'fran_detail_id' => $franDetails->fran_detail_id,
-                    'franchisor_id'  => $franDetails->franchisor_id,
-                    // 'profile_name'   => $franDetails->profile_name,
                     'company_name'   => $franDetails->company_name,
-                    // 'unit_inv_min'   => $franDetails->unit_inv_min,
-                    // 'unit_inv_max'   => $franDetails->unit_inv_max,
-                    // 'company_logo'   => $franDetails->company_logo,
-                    // 'ind_main_cat'   => $franDetails->ind_main_cat
                 ];
             } else {
                 // Matching articles found, add to matched brands
                 $matchedBrands[] = [
-                    // 'fran_detail_id' => $franDetails->fran_detail_id,
-                    'franchisor_id'  => $franDetails->franchisor_id,
-                    // 'profile_name'   => $franDetails->profile_name,
                     'company_name'   => $franDetails->company_name,
-                    // 'unit_inv_min'   => $franDetails->unit_inv_min,
-                    // 'unit_inv_max'   => $franDetails->unit_inv_max,
-                    // 'company_logo'   => $franDetails->company_logo,
-                    // 'ind_main_cat'   => $franDetails->ind_main_cat,
                     'articles'       => $matchingArticles // Include matching articles
                 ];
             }
