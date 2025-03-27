@@ -1186,4 +1186,67 @@ class InsightsController extends Controller
 
         return @getimagesize($s3Url) !== false ? $s3Url : $defaultUrl;
     }
+
+    public function relatedarticles()
+    {
+        // Fetch all active franchisors
+        $franchisors = FranchisorBusinessDetail::query()
+            ->select('franchisor_id', 'profile_name', 'company_name')
+            ->where('profile_status', 1)
+            // ->where('membership_type', 1)
+            ->get();
+
+        $matchedBrands = [];
+        $unmatchedBrands = [];
+
+        foreach ($franchisors as $franDetails) {
+            $companyName = trim($franDetails->company_name);
+
+            // Prepare regex-friendly company name
+            $cleanCompanyName = preg_replace('/[^a-zA-Z0-9\s]/', '', $companyName);
+            $cleanCompanyName = preg_replace('/\s+/', ' ', $cleanCompanyName);
+            $companyNameRegex = addslashes($cleanCompanyName); // Escape special characters
+
+            // Find matching articles
+            $matchingArticles = InsightList::query()
+                ->select('news_id', 'title')
+                ->where('status', 1)
+                ->whereRaw("LOWER(title) REGEXP LOWER(?)", ["(^|[[:space:]]){$companyNameRegex}([[:space:]]|$)"])
+                ->orderByDesc('created_at')
+                ->get();
+
+            if ($matchingArticles->isEmpty()) {
+                // No matching articles found, add to unmatched brands
+                $unmatchedBrands[] = [
+                    // 'fran_detail_id' => $franDetails->fran_detail_id,
+                    'franchisor_id'  => $franDetails->franchisor_id,
+                    // 'profile_name'   => $franDetails->profile_name,
+                    'company_name'   => $franDetails->company_name,
+                    // 'unit_inv_min'   => $franDetails->unit_inv_min,
+                    // 'unit_inv_max'   => $franDetails->unit_inv_max,
+                    // 'company_logo'   => $franDetails->company_logo,
+                    // 'ind_main_cat'   => $franDetails->ind_main_cat
+                ];
+            } else {
+                // Matching articles found, add to matched brands
+                $matchedBrands[] = [
+                    // 'fran_detail_id' => $franDetails->fran_detail_id,
+                    'franchisor_id'  => $franDetails->franchisor_id,
+                    // 'profile_name'   => $franDetails->profile_name,
+                    'company_name'   => $franDetails->company_name,
+                    // 'unit_inv_min'   => $franDetails->unit_inv_min,
+                    // 'unit_inv_max'   => $franDetails->unit_inv_max,
+                    // 'company_logo'   => $franDetails->company_logo,
+                    // 'ind_main_cat'   => $franDetails->ind_main_cat,
+                    'articles'       => $matchingArticles // Include matching articles
+                ];
+            }
+        }
+
+        // Return JSON response with both matched and unmatched brands
+        return response()->json([
+            'matched_brands'   => $matchedBrands,
+            'unmatched_brands' => $unmatchedBrands
+        ]);
+    }
 }
