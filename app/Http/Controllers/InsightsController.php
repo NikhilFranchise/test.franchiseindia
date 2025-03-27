@@ -1194,7 +1194,7 @@ class InsightsController extends Controller
             ->select('company_name')
             ->where('profile_status', 1)
             // ->where('membership_type', 1)
-            ->take(500)
+            ->take(10)
             ->get();
 
         $matchedBrands = [];
