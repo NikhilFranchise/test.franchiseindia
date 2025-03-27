@@ -1,8 +1,9 @@
 <?php
 $host = "localhost";
-$username = "root";
-$password = "";
-$database = "franchiseindia";
+$username = "franchis_usrfranchisnewcopy";
+$password = "M{3k-nF^HV0-";
+$database = "franchis_franchisnewcopy";
+
 
 $conn = new mysqli($host, $username, $password, $database);
 // echo $conn;die;
