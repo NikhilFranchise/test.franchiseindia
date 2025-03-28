@@ -1,25 +1,44 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
+
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>@yield('seoTitle', 'Franchise News India Today ' . date('Y') . ' : Startups & Franchise Expansion | FranchiseIndia')</title>
-    <meta name="description" content="@yield('seoDesc', 'Get the latest franchise news in India ' . date('d-M-Y') . '!Explore articles on startups, franchisor updates, business & industry trends. Discover franchisee success stories, expansion plans, tie-ups, and new launches. Find your perfect franchise opportunity!')" />
+    <title>@yield('seoTitle', 'Business News, Startup News, Latest Industry Updates, Articles, Insights & Stories - Franchise India')</title>
+    <meta name="description" content="@yield('seoDesc', 'Latest Business News, Entrepreneurship Insights, Stories, Updates & Articles. Discover India Business Analysis, Trends, Reports, Funding, Expansion, Mergers, Case Studies & Videos. Trusted Source for Entrepreneurs')" />
     @if (Request::url() == config('constants.MainDomain') . '/insights')
-        <meta name="keywords" content="@yield('seoKeywords', 'franchise news india, franchise business india, india franchise opportunities, franchise in india, new franchise india ' . date('Y') . ', best franchise india, franchise for startups india, franchise expansion india, franchise tie ups india, franchise launches india, franchisor news india, franchisee success stories india, franchise industry trends india.')" />
+        <meta name="keywords" content="@yield('seoKeywords', 'Business News, Franchise News, Entrepreneurship News, Business news India, Start a Business, latest business news, business India, Franchise India, Industry News')" />
     @endif
     <meta name="original-source" content="@yield('url')" />
-    <meta name='robots' content='noindex, nofollow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+    <meta name='robots' content='noindex, nofollow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'  />
     <link href="@yield('canonicalUrl', request()->get('page') ? url()->full() : url()->current())" rel="canonical">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
+
         function gtag() {
             dataLayer.push(arguments);
         }
         gtag('js', new Date());
         gtag('config', 'G-8MKFEZLR18');
     </script>
+    <!-- Google Tag Manager -->
+    <script async>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l !== 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
+    </script>
+
     <meta property="fb:pages" content="118224094883095" />
     <meta itemprop="headline" content="@yield('seoTitle')" />
     <meta itemprop="description" content="@yield('shortDesc')">
@@ -57,7 +76,10 @@
     @yield('header-schema')
     @include('layout.insights.menu')
 </head>
+
 <body>
+    <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
     @yield('content')
     <div class="fixsocial">
         <ul class="sociallist">
@@ -78,4 +100,5 @@
     @include('layout.insights.footer')
     @include('layout.insights.footerlinks')
 </body>
+
 </html>

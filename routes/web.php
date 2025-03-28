@@ -47,7 +47,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\InsightSitemapController;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\App;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -1041,38 +1042,52 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/videolist', [AdminController::class, 'videolist'])->name('hindivideolist');
     });
 });
-
 Route::get('location/{city}',              [BusinessListingController::class, 'listingLocation']);
+
 // INSIGHTS ROUTES START HERE //
-Route::get('insights/en/sitemap.xml', function () {
-    return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
-});
-Route::get('insights/hi/sitemap.xml', function () {
-    return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
-});
-// /*Language setter*/
 
 Route::group(['prefix' => 'insights'], function () {
-    Route::get('sitemap', [InsightSitemapController::class, 'sitemap']);
-    Route::get('sitemap/today', [InsightSitemapController::class, 'todaysitemap']);
-    Route::get('sitemap/yesterday', [InsightSitemapController::class, 'yesterdaysitemap']);
-    Route::get('sitemap/thisweek', [InsightSitemapController::class, 'thisweeksitemap']);
-    Route::get('sitemap/lastweek', [InsightSitemapController::class, 'lastweeksitemap']);
-    Route::get('sitemap/{year}', [InsightSitemapController::class, 'monthsitemap']);
-    Route::get('sitemap/{year}/{month}', [InsightSitemapController::class, 'daysitemap']);
-    Route::get('sitemap/{year}/{month}/{day}', [InsightSitemapController::class, 'datesitemap']);
+    Route::get('sitemap',                       [InsightSitemapController::class, 'sitemap']);
+    Route::get('sitemap/today',                 [InsightSitemapController::class, 'todaysitemap']);
+    Route::get('sitemap/yesterday',             [InsightSitemapController::class, 'yesterdaysitemap']);
+    Route::get('sitemap/thisweek',              [InsightSitemapController::class, 'thisweeksitemap']);
+    Route::get('sitemap/lastweek',              [InsightSitemapController::class, 'lastweeksitemap']);
+    Route::get('sitemap/{year}',                [InsightSitemapController::class, 'monthsitemap']);
+    Route::get('sitemap/{year}/{month}',        [InsightSitemapController::class, 'daysitemap']);
+    Route::get('sitemap/{year}/{month}/{day}',  [InsightSitemapController::class, 'datesitemap']);
+
+    // Rss Feed routes
+    Route::get('rss',                           [InsightSitemapController::class, 'rssFeed']);
+    Route::get('author/{slug}/rss',             [InsightSitemapController::class, 'generateAuthorRssFeed']);
+
     Route::group(['prefix' => 'en'], function () {
+        Route::get('sitemap.xml', function () {
+            return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
+        });
         Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
         Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
-        Route::get('article2.xml',                   [InsightSitemapController::class, 'articlesitemaptwo'])->name('article2.xml');
+        Route::get('article2.xml',                  [InsightSitemapController::class, 'articlesitemaptwo'])->name('article2.xml');
         Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
         Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap'])->name('event.xml');
         Route::get('report.xml',                    [InsightSitemapController::class, 'reportsitemap'])->name('report.xml');
         Route::get('categories.xml',                [InsightSitemapController::class, 'categorysitemap'])->name('categories.xml');
         Route::get('subcategories.xml',             [InsightSitemapController::class, 'subcategorysitemap'])->name('subcategories.xml');
         Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap'])->name('tags.xml');
+
+        // Rss feed Routes
+        Route::get('tag/{tagslug}/rss',             [InsightSitemapController::class, 'generateTagRssFeed']);
+        Route::get('/topstories/rss',                [InsightSitemapController::class, 'generateRssFeed']);
+        Route::get('/industryfocus/rss',             [InsightSitemapController::class, 'generateRssFeed']);
+        Route::get('/interviews/rss',                [InsightSitemapController::class, 'generateRssFeed']);
+        Route::get('/events_reports/rss',            [InsightSitemapController::class, 'generateRssFeed']);
+        Route::get('/{slug}/rss',                   [InsightSitemapController::class, 'generateCatRssFeed']);
+        Route::get('/{cat}/{subcat}/rss',           [InsightSitemapController::class, 'generateSubCatRssFeed']);
+        // Rss feed Routes
     });
     Route::group(['prefix' => 'hi'], function () {
+        Route::get('sitemap.xml', function () {
+            return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
+        });
         Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
         Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
         Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
@@ -1081,64 +1096,68 @@ Route::group(['prefix' => 'insights'], function () {
         Route::get('categories.xml',                [InsightSitemapController::class, 'categorysitemap'])->name('categories.xml');
         Route::get('subcategories.xml',             [InsightSitemapController::class, 'subcategorysitemap'])->name('subcategories.xml');
         Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap'])->name('tags.xml');
+
+        // Rss feed Routes
+        Route::get('/tag/{tagslug}/rss',             [InsightSitemapController::class, 'generateTagRssFeed']);
+        Route::get('/topstories/rss',                [InsightSitemapController::class, 'generateRssFeed']);
+        Route::get('/industryfocus/rss',             [InsightSitemapController::class, 'generateRssFeed']);
+        Route::get('/interviews/rss',                [InsightSitemapController::class, 'generateRssFeed']);
+        Route::get('/events_reports/rss',            [InsightSitemapController::class, 'generateRssFeed']);
+        Route::get('/{slug}/rss',                   [InsightSitemapController::class, 'generateCatRssFeed']);
+        Route::get('/{cat}/{subcat}/rss',           [InsightSitemapController::class, 'generateSubCatRssFeed']);
+        // Rss feed Routes
     });
 });
 
+// insights frontend routes start here//  
 Route::middleware(['TrailingSlashRedirect'])->group(function () {
-
-
     Route::group(['prefix' => 'insights'], function () {
         Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
         Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
-        Route::get('rss', [InsightSitemapController::class, 'rssFeed']);
-        Route::get('rss/{slug}', [InsightSitemapController::class, 'generateRssFeed']);
-        Route::get('{insight_type}/{slug}.{id}', function ($insight_type, $slug, $id) {
+        Route::get('author',                        [InsightsController::class, 'authorarchive']);
+        Route::get('author/{slug}',                 [InsightsController::class, 'authordata']);
+        Route::get('{insight_type}/{slug}.{id}',    function ($insight_type, $slug, $id) {
             return redirect()->to("/insights/en/{$insight_type}/{$slug}.{$id}", 301);
         });
-        Route::get('tag/{tagslug}', function ($tagslug) {
+        Route::get('tag/{tagslug}',                 function ($tagslug) {
             return redirect()->to("/insights/en/tag/$tagslug", 301);
         });
-        Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
-        Route::get('author',              [InsightsController::class, 'authorarchive']);
-        Route::group(['prefix' => 'en'], function () {
-            Route::get('/search',               [InsightsController::class, 'insightSearch']);
-            Route::get('thanks', function () {
+        Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
+        Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
+        /*English Language setter*/
+        Route::group(['prefix' => 'en'],            function () {
+            Route::get('thanks',                    function () {
                 return view('insights.thanks');
             })->name('insights.thanks');
-            Route::get('pagenotfound', function () {
+            Route::get('pagenotfound',              function () {
                 return view('static.404');
             }); //404 ERROR PAGE
-            Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
-            Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
-            // Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
-            // Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
             Route::get('topstories',                    [InsightsController::class, 'getinsightstories']);
-            Route::get('trendstories',                  [InsightsController::class, 'trendstories']);
+            Route::get('/search',                       [InsightsController::class, 'insightSearch']);
+            // Route::get('trendstories',                  [InsightsController::class, 'trendstories']);
             Route::get('interviews',                    [InsightsController::class, 'getinsightsinterviews']);
             Route::get('events_reports',                [InsightsController::class, 'geteventsreports']);
-            Route::get('video_podcast',                [InsightsController::class, 'getvideopodcast']);
+            Route::get('video_podcast',                 [InsightsController::class, 'getvideopodcast']);
             Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
             Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
-            Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
+            Route::get('/{category}/{subcategory}',     [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
+            // Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
+            // Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
         });
-
-        /*Language setter*/
+        /*Hindi Language setter*/
         Route::group(['prefix' => 'hi'], function () {
             Route::get('/search',               [InsightsController::class, 'insightSearch']);
-            // Route::get('author/{slug}',              [InsightsController::class, 'authordata']);
             Route::get('thanks', function () {
                 return view('insights.thanks');
             })->name('insights.thanks');
             Route::get('pagenotfound', function () {
                 return view('static.404');
             }); //404 ERROR PAGE
-            Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
-            Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
             Route::get('topstories',                    [InsightsController::class, 'getinsightstories']);
-            Route::get('trendstories',                  [InsightsController::class, 'trendstories']);
+            // Route::get('trendstories',                  [InsightsController::class, 'trendstories']);
             Route::get('interviews',                    [InsightsController::class, 'getinsightsinterviews']);
             Route::get('events_reports',                [InsightsController::class, 'geteventsreports']);
             Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
@@ -1149,11 +1168,10 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
         });
-
-        /*Language setter*/
     });
 });
-// });
+//insights frontend routes end here//
+
 Route::get('categoryall',       [StaticPageController::class, 'categoryAll']);
 Route::get('search',                                 function () {
     return view('site.google-search-result');
@@ -1202,20 +1220,15 @@ Route::post('/price_filter', [BusinessListingController::class, 'pricefilter']);
 Route::post('/fetch-data2', [CommonController::class, 'fetchDataajax2']);
 Route::get('/price_filter', [BusinessListingController::class, 'pricefilter']);
 Route::post('/price_filter', [BusinessListingController::class, 'pricefilter'])->name('price_filter');;
-
 Route::get('/ajax', [BusinessListingController::class, 'fetchtest']);
 Route::get('/getajax', [BusinessListingController::class, 'fetchtest']);
-// Route::get('/getajax', [BusinessListingController::class, 'fetchtest'])->name('getajax');
-
-
 Route::get('/items', [BusinessListingController::class, 'index'])->name('items.index');
-
-Route::get('advertise',                   function() { return redirect('https://www.franchiseindia.com/advertise-with-us-payment', 301);});
-
-
-// test email route
-Route::get('/sendmail',[CommonController::class,'send_email']);
-// Route::post('/password/email',[CommonController::class,'reset']);
-
+Route::get('advertise',                   function () {
+    return redirect('https://www.franchiseindia.com/advertise-with-us-payment', 301);
+});
 Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('password-reset');
 
+Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
+Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
+
+Route::get('related', [InsightsController::class,'relatedarticles']);

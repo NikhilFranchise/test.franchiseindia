@@ -64,17 +64,17 @@
                     <div class="col-xs-12 col-sm-9 col-md-9 mdy-width hidden-xs">
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"> <a href="#" data-target="#whatsnew"
-                                    onClick="(function(){ $('#homepagecontentnewslink').attr('href', '/content'); return false; })();return false;"
+                                    onClick="(function(){ $('#homepagecontentnewslink').attr('href', '/insights'); return false; })();return false;"
                                     aria-controls="whatsnew" role="tab" data-toggle="tab">
                                     <h3>FRANCHISE INSIGHTS</h3>
                                 </a> </li>
                             <li role="presentation"> <a href="#" data-target="#news"
-                                    onClick="(function(){ $('#homepagecontentnewslink').attr('href', 'https://news.franchiseindia.com/'); return false; })();return false;"
+                                    onClick="(function(){ $('#homepagecontentnewslink').attr('href', '/insights'); return false; })();return false;"
                                     class="sliderfunction" aria-controls="news" role="tab" data-toggle="tab">
                                     <h3>NEWS</h3>
                                 </a> </li>
                         </ul>
-                        <div class="pull-right viewaall"><a href="/content" id="homepagecontentnewslink">View All</a><i
+                        <div class="pull-right viewaall"><a href="/insights" id="homepagecontentnewslink">View All</a><i
                                 class="fa fa-angle-right fa-lg" aria-hidden="true"></i></div>
                         <!-- Tab panes -->
                         <div class="tab-content">

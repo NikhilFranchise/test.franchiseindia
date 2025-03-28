@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserAccount;
 use Illuminate\Http\Request;
 use App\Models\PropertyLoan;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 use App\Models\ContentList;
+use App\Models\FranchisorBusinessDetail;
 use App\Models\TopFranchiseLeader;
+use App\Models\TopFranchisorLeaders;
 use Illuminate\Support\Facades\DB;
 
 class StaticPageController extends Controller
@@ -268,5 +271,179 @@ class StaticPageController extends Controller
         $leader = TopFranchiseLeader::query()->where('id', $id)->first();
         // dd($leader);
         return view('static.topfranchiseleaders.leader_profile', compact('leader'));
+    }
+
+    // new dynamic function here
+
+    // public function topfranchiseleaders(Request $request)
+    // {
+    //     $years = TopFranchisorLeaders::query()
+    //         ->select('franchisor_year')
+    //         ->distinct()
+    //         ->orderByDesc('franchisor_year')
+    //         ->get();
+
+    //     $latestYear = TopFranchisorLeaders::query()
+    //         ->select('franchisor_year')
+    //         ->distinct()
+    //         ->orderByDesc('franchisor_year')
+    //         ->pluck('franchisor_year')
+    //         ->first();
+    //     $franType = TopFranchisorLeaders::query()
+    //         ->select('franchisor_type')
+    //         ->distinct()
+    //         ->where('franchisor_year', $latestYear)
+    //         ->pluck('franchisor_type')
+    //         ->first();
+    //     $data = TopFranchisorLeaders::with(['franchisorLeaders' => function ($q) {
+    //         $q->select('franchisor_id', 'profile_name', 'company_name', 'ind_main_cat', 'ind_sub_cat', 'fran_detail_id', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'unit_investment');
+    //     }])->where('franchisor_year', $latestYear)
+    //         ->get();
+
+    //     $count = $data->count();
+    //     return view('static.topfranchiseleaders.top-200', compact('data', 'years', 'count', 'latestYear', 'franType'));
+    // }
+
+
+    // public function filterByYear(Request $request)
+    // {
+    //     $year = $request->year;
+    //     $filterType = $request->filterType;
+    //     // $limit = 25; // Default limit per page
+    //     $offset = $request->offset ?? 0; // Offset for pagination
+    //     $industry = $request->industry;
+    //     $investment = $request->investmentRange;
+    //     $perPage = 25; // Items per page
+
+    //     $query = TopFranchisorLeaders::with(['franchisorLeaders' => function ($q) {
+    //         $q->select('franchisor_id', 'profile_name', 'company_name', 'ind_main_cat', 'ind_sub_cat', 'fran_detail_id', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'unit_investment');
+    //     }])->where('franchisor_year', $year); // Filter by year
+
+    //     // Apply industry filter (Join only if industry is provided)
+    //     if (!empty($industry)) {
+    //         $query->join('franchisor_business_details as fbd_industry', 'fbd_industry.franchisor_id', '=', 'top_franchisor_brands.franchisor_id')
+    //             ->where('fbd_industry.ind_main_cat', $industry)
+    //             ->select('top_franchisor_brands.*');
+    //     }
+
+    //     // Apply investment filter (Join only if investment range is provided)
+    //     if (!empty($investment)) {
+    //         $query->join('franchisor_business_details as fbd_investment', 'fbd_investment.franchisor_id', '=', 'top_franchisor_brands.franchisor_id')
+    //             ->where('fbd_investment.unit_investment', $investment)
+    //             ->select('top_franchisor_brands.*');
+    //     }
+    //     $franchiseType = TopFranchisorLeaders::where('franchisor_year', $year)->value('franchisor_type');
+
+
+    //     // Apply sorting based on filterType
+    //     if ($filterType == 'top-100') {
+    //         $query->where('franchisor_type', 'top-100');
+    //     } elseif ($filterType == 'top-200') {
+    //         $query->where('franchisor_type', 'top-200');
+    //     } elseif ($filterType == 'alphabetical') {
+    //         $query->join('franchisor_business_details as fbd_order', 'fbd_order.franchisor_id', '=', 'top_franchisor_brands.franchisor_id')
+    //             ->orderBy('fbd_order.company_name', 'asc')
+    //             ->select('top_franchisor_brands.*');
+    //     } elseif ($filterType == 'investMin') {
+    //         $query->join('franchisor_business_details as fbd_order', 'fbd_order.franchisor_id', '=', 'top_franchisor_brands.franchisor_id')
+    //             ->orderBy('fbd_order.unit_inv_min', 'asc')
+    //             ->select('top_franchisor_brands.*');
+    //     } elseif ($filterType == 'investMax') {
+    //         $query->join('franchisor_business_details as fbd_order', 'fbd_order.franchisor_id', '=', 'top_franchisor_brands.franchisor_id')
+    //             ->orderBy('fbd_order.unit_inv_max', 'desc')
+    //             ->select('top_franchisor_brands.*');
+    //     }
+
+    //     // Fetch results with LIMIT & OFFSET
+    //     // $data = $query->offset($offset)->limit($limit)->get();
+    //     $data = $query->paginate($perPage);
+    //     // $count = $data->count();
+
+    //     return response()->json([
+    //         'count' => $data->total(), // Total records
+    //         'franchisor_type' => $franchiseType,
+    //         'hasMore' => $data->hasMorePages(),
+    //         'html' => view('static.topfranchiseleaders.dynamicData', compact('data'))->render()
+    //     ]);
+    // }
+
+// single function
+
+    public function topFranchiseLeaders(Request $request)
+    {
+        $year = $request->year ?? null;
+        $filterType = $request->filterType ?? null;
+        $industry = $request->industry ?? null;
+        $investment = $request->investmentRange ?? null;
+        // $perPage = 25; // Items per page
+
+        // Get available years for the dropdown
+        $years = TopFranchisorLeaders::select('franchisor_year')
+            ->distinct()
+            ->orderByDesc('franchisor_year')
+            ->get();
+
+        // If no year is provided, fetch the latest year
+        if (!$year) {
+            $year = TopFranchisorLeaders::select('franchisor_year')
+                ->distinct()
+                ->orderByDesc('franchisor_year')
+                ->pluck('franchisor_year')
+                ->first();
+        }
+
+        // Get the franchise type for the selected year
+        $franchiseType = TopFranchisorLeaders::where('franchisor_year', $year)->value('franchisor_type');
+
+        // Build the query
+        $query = TopFranchisorLeaders::with(['franchisorLeaders' => function ($q) {
+            $q->select('franchisor_id', 'profile_name', 'company_name', 'ind_main_cat', 'ind_sub_cat', 'fran_detail_id', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'unit_investment');
+        }])->where('franchisor_year', $year);
+
+        // Apply industry filter
+        if (!empty($industry)) {
+            $query->join('franchisor_business_details as fbd_industry', 'fbd_industry.franchisor_id', '=', 'top_franchisor_brands.franchisor_id')
+                ->where('fbd_industry.ind_main_cat', $industry);
+        }
+
+        // Apply investment filter
+        if (!empty($investment)) {
+            $query->join('franchisor_business_details as fbd_investment', 'fbd_investment.franchisor_id', '=', 'top_franchisor_brands.franchisor_id')
+                ->where('fbd_investment.unit_investment', $investment);
+        }
+
+        // Apply sorting
+        if ($filterType == 'top-100') {
+            $query->where('franchisor_type', 'top-100');
+        } elseif ($filterType == 'top-200') {
+            $query->where('franchisor_type', 'top-200');
+        } elseif ($filterType == 'alphabetical') {
+            $query->join('franchisor_business_details as fbd_order', 'fbd_order.franchisor_id', '=', 'top_franchisor_brands.franchisor_id')
+                ->orderBy('fbd_order.company_name', 'asc');
+        } elseif ($filterType == 'investMin') {
+            $query->join('franchisor_business_details as fbd_order', 'fbd_order.franchisor_id', '=', 'top_franchisor_brands.franchisor_id')
+                ->orderBy('fbd_order.unit_inv_min', 'asc');
+        } elseif ($filterType == 'investMax') {
+            $query->join('franchisor_business_details as fbd_order', 'fbd_order.franchisor_id', '=', 'top_franchisor_brands.franchisor_id')
+                ->orderBy('fbd_order.unit_inv_max', 'desc');
+        }
+
+        // Use pagination
+        $data = $query->get();
+        // dd($data);
+        $count = $data->count();
+
+        // If request is AJAX, return JSON response for filters
+        if ($request->ajax()) {
+            return response()->json([
+                'count' => $data->count(),
+                'franchisor_type' => $franchiseType,
+                //'hasMore' => $data->hasMorePages(),
+                'html' => view('static.topfranchiseleaders.dynamicData', compact('data','count'))->render(),
+            ]);
+        }
+
+        // If it's a normal request, return the main view
+        return view('static.topfranchiseleaders.top-200', compact('data', 'years', 'franchiseType', 'year','count'));
     }
 }

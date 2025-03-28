@@ -358,14 +358,89 @@
                 height: 300,
                 selector: "textarea",
                 plugins: [
-                    "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                    "table advlist autolink lists link image charmap print preview hr anchor pagebreak",
                     "searchreplace wordcount visualblocks visualchars code fullscreen",
                     "insertdatetime media nonbreaking save table contextmenu directionality",
                     "emoticons template paste textcolor colorpicker textpattern"
                 ],
-                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | forecolor backcolor",
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | forecolor backcolor | table",
                 relative_urls: false,
                 remove_script_host: false,
+                table_default_attributes: {
+                    border: "1"
+                },
+                table_default_styles: {
+                    width: "100%",
+                    borderCollapse: "collapse"
+                },
+                table_template: `
+            <table style="width: 100%; border-collapse: collapse;" border="1">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>`,
+                setup: function(editor) {
+                    // Automatically transform first row into <thead> when inserting a new table
+                    editor.on('BeforeSetContent', function(event) {
+                        var content = event.content;
+                        if (content.includes("<table")) {
+                            var parser = new DOMParser();
+                            var doc = parser.parseFromString(content, "text/html");
+                            var tables = doc.querySelectorAll("table");
+
+                            tables.forEach(function(table) {
+                                var firstRow = table.querySelector("tr");
+                                var existingThead = table.querySelector("thead");
+                                var existingTbody = table.querySelector("tbody");
+
+                                // Convert first row into <thead> with <th>
+                                if (!existingThead && firstRow) {
+                                    var thead = document.createElement("thead");
+                                    var headerRow = document.createElement("tr");
+
+                                    firstRow.querySelectorAll("td").forEach(function(td) {
+                                        var th = document.createElement("th");
+                                        th.innerHTML = td.innerHTML;
+                                        headerRow.appendChild(th);
+                                    });
+
+                                    thead.appendChild(headerRow);
+                                    table.insertBefore(thead, table.firstChild);
+                                    firstRow.remove();
+                                }
+
+                                // Move remaining rows into <tbody>
+                                if (!existingTbody) {
+                                    var tbody = document.createElement("tbody");
+                                    var rows = table.querySelectorAll("tr");
+
+                                    rows.forEach((row, index) => {
+                                        if (index !== 0) {
+                                            tbody.appendChild(row);
+                                        }
+                                    });
+
+                                    table.appendChild(tbody);
+                                }
+                            });
+
+                            event.content = doc.body.innerHTML;
+                        }
+                    });
+                },
                 file_browser_callback: function(field_name, url, type) {
                     var x = window.innerWidth || document.documentElement.clientWidth || document
                         .getElementsByTagName('body')[0].clientWidth;

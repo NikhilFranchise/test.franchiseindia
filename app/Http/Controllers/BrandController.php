@@ -40,80 +40,85 @@ class BrandController extends Controller
         if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
-         //cache start
+        //cache start
 
-         $cacheDuration = 604800;
+        $cacheDuration = 604800;
         //  // Cache key for franchisor details
         //  $franDetailsCacheKey = "fran_details_{$brandParamsArr[1]}";
         //  $franDetails = Cache::remember($franDetailsCacheKey, $cacheDuration, function () use ($brandParamsArr) {
         //      return FranchisorBusinessDetail::find($brandParamsArr[1]);
         //  });
-                 $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
+        $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
 
-                //  dd($franDetails);
-                 $main_cat = Config('constants.CategoryArr');
-                 // dd($franDetails->ind_main_cat);
-                 $a = $franDetails->ind_main_cat;
-                //  dd($main_cat[$a]);
-                 $index_value = $main_cat[$a];
-                //  dd($index_value);
-                 $u_slug = Config('category.SeoCategoryArr');
-                 $url_slug = $u_slug[$a];
-                 // dd($url_slug);
-              $fran_new_data = FranchisorBusinessDetail::query()
-             ->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name','unit_inv_min','unit_inv_max','company_logo','ind_main_cat')
-             ->where('profile_status', 1)
-             ->where('membership_type',1)
-             ->where('ind_main_cat', $franDetails->ind_main_cat)
-             ->take(9)
-             ->get();
-            //  dd($fran_new_data);
-                // Cache key for insight matches
-                $insightMatchesCacheKey = "insight_matches_{$franDetails->company_name}";
-$insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
-    // Prepare the regex pattern
-    $companyNameRegex = preg_quote($franDetails->company_name, '/'); // Escape special regex characters
-    // Add boundaries to the company name, allowing spaces or punctuation around it
-    $pattern = '(?i)(^|[[:space:][:punct:]])' . $companyNameRegex . '([[:space:][:punct:]]|$)';
-    
-    return InsightList::query()
-        ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
-        ->where('status', 1)
-        // ->whereIn('insight_type', ['News', 'Article', 'Interview']) // Uncomment if needed
-        ->whereRaw("title REGEXP ?", [$pattern])
-        ->orderByDesc('created_at')
-        ->limit(3)
-        ->get()
-        ->map(function ($item) {
-            $item->url = url('insights/en/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
-            return $item;
+        //  dd($franDetails);
+        $main_cat = Config('constants.CategoryArr');
+        // dd($franDetails->ind_main_cat);
+        $a = $franDetails->ind_main_cat;
+        //  dd($main_cat[$a]);
+        $index_value = $main_cat[$a];
+        //  dd($index_value);
+        $u_slug = Config('category.SeoCategoryArr');
+        $url_slug = $u_slug[$a];
+        // dd($url_slug);
+        $fran_new_data = FranchisorBusinessDetail::query()
+            ->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'unit_inv_min', 'unit_inv_max', 'company_logo', 'ind_main_cat')
+            ->where('profile_status', 1)
+            ->where('membership_type', 1)
+            ->where('ind_main_cat', $franDetails->ind_main_cat)
+            ->take(9)
+            ->get();
+        //  dd($fran_new_data);
+        // Cache key for insight matches
+        $insightMatchesCacheKey = "insight_matches_{$franDetails->company_name}";
+        $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
+            // Prepare the regex pattern
+            $cleanCompanyName = preg_replace('/[^a-zA-Z0-9\s]/', '', $franDetails->company_name);
+            $cleanCompanyName = preg_replace('/\s+/', ' ', trim($cleanCompanyName));
+            $companyNameRegex = preg_quote($cleanCompanyName, '/');
+            // $companyNameRegex = preg_quote($franDetails->company_name, '/'); // Escape special regex characters
+            // Add boundaries to the company name, allowing spaces or punctuation around it
+            // $pattern = '(?i)(^|[[:space:][:punct:]])' . $companyNameRegex . '([[:space:][:punct:]]|$)';
+            $pattern = '(?i)(^|[[:space:]])' . $companyNameRegex . '([[:space:]]|$)';
+
+
+            return InsightList::query()
+                ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
+                ->where('status', 1)
+                // ->whereIn('insight_type', ['News', 'Article', 'Interview']) // Uncomment if needed
+                ->whereRaw("LOWER(title) REGEXP LOWER(?)", [$pattern])
+                ->orderByDesc('created_at')
+                ->limit(3)
+                ->get()
+                ->map(function ($item) {
+                    $item->url = url('insights/en/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
+                    return $item;
+                });
         });
-});
 
-// dd($insightMatches);
-               
-
-            // Cache key for API response
-            // $apiDataCacheKey = "api_data_{$franDetails->company_name}";
-            // $dataFromB = Cache::remember($apiDataCacheKey, $cacheDuration, function () use ($franDetails) {
-            //     $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
-            //     $response = Http::get($apiUrl, ['company_name' => $franDetails->company_name]);
-
-            //     return $response->json();
-            // });
-
-            // $insightMatchesArray = $insightMatches->toArray();
-            // $dataFromBArray = $dataFromB;
-
-            // // Combine both arrays into one
-            // $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
-            $combinedDataCollection = $insightMatches->toArray();
-            $combinedDataCollection = collect($combinedDataCollection);
+        // dd($insightMatches);
 
 
+        // Cache key for API response
+        // $apiDataCacheKey = "api_data_{$franDetails->company_name}";
+        // $dataFromB = Cache::remember($apiDataCacheKey, $cacheDuration, function () use ($franDetails) {
+        //     $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
+        //     $response = Http::get($apiUrl, ['company_name' => $franDetails->company_name]);
 
-            //cache end
-            // dd($combinedDataCollection);
+        //     return $response->json();
+        // });
+
+        // $insightMatchesArray = $insightMatches->toArray();
+        // $dataFromBArray = $dataFromB;
+
+        // // Combine both arrays into one
+        // $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
+        $combinedDataCollection = $insightMatches->toArray();
+        $combinedDataCollection = collect($combinedDataCollection);
+
+
+
+        //cache end
+        // dd($combinedDataCollection);
 
 
         //OI Redirection Start
@@ -138,8 +143,8 @@ $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, funct
         if (!empty($franDetails) && $franDetails->franchisor_id == "FIHL978776")
             return redirect(Config('constants.MainDomain') . '/brands/GodrejInterio-123.8762', 301);
 
-         if (empty($franDetails) || ($franDetails->profile_status != 1 && $franDetails->profile_status != 11)) 
-                return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
+        if (empty($franDetails) || ($franDetails->profile_status != 1 && $franDetails->profile_status != 11))
+            return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
 
         if ($franDetails->profile_name != $brandParamsArr[0] && $request->segment(1) == 'brands')
             return redirect('brands/' . $franDetails->profile_name . '.' . $brandParamsArr[1], 301);
@@ -230,14 +235,11 @@ $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, funct
             $seoTitle = "3D Technology Dealership and Distributorship Opportunities in India";
             $seoDesc = "Get 3D Technology distributorship opportunities for sale to drive commercial growth. You will find here distributors of 3D printer, 3D scanner, Steam Lab, Atal Lab, 3D consumables manufacturers in India.";
             $seoKeywords = "3D printer dealers, 3D printer distributors 3D scanner distributors, Steam Lab distributors, Atal Lab distributors, 3D consumables manufacturer, 3D printer distributors";
-        } 
-        elseif($franDetails->ind_main_cat == 5){
+        } elseif ($franDetails->ind_main_cat == 5) {
             $seoTitle = sprintf('%s  Dealership & Distributorship – Cost, How to Get, Contact, Fee, Apply', $franDetails->company_name);
             $seoDesc = sprintf('Get %1$s Dealership & Distributorship. Get the %1$s dealership/distributorship information including start-up costs, dealership fees, requirements, growth history and more. Join %1$s dealership/distributorship and be on your way to owning and running a successful business.', $franDetails->company_name);
             $seoKeywords = sprintf('%1$s Dealership, %1$s Distributorship, %1$s dealership cost, %1$s distributorship cost, %1$s contact number, how to get %1$s dealership/distributorship, %1$s dealership/distributorship profit, %1$s franchise enquiry, %1$s dealership/distributorship requirements, %1$s dealership/distributorship apply , %1$s fee, %1$s dealership/distributorship monthly income.', $franDetails->company_name);
-       
-        }
-        else { 
+        } else {
             // SEO Meta Tags
             // SEO Meta Tags
             $seoTitle = sprintf('%s Franchise Cost |How to Get | Contact| Fee | Apply', $franDetails->company_name);
@@ -270,7 +272,7 @@ $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, funct
             return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection'));
         } else {
             // return the data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection','fran_new_data','index_value','main_cat','url_slug'));
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection', 'fran_new_data', 'index_value', 'main_cat', 'url_slug'));
         }
     }
 

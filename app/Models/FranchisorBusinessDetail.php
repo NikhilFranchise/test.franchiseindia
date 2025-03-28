@@ -13,8 +13,7 @@ use App\Models\UserActivity;
 use App\Models\UniqueVisit;
 use App\Models\UserClick;
 use App\Models\UserAccount;
-;
-
+use App\Models\TopFranchisorLeaders;
 class FranchisorBusinessDetail extends Model
 {
     use HasFactory;
@@ -85,5 +84,10 @@ class FranchisorBusinessDetail extends Model
     public function userDetail()
     {
         return $this->hasOne(UserAccount::class, 'profile_str', 'franchisor_id');
+    }
+
+    public function topFranchisorLeaders()
+    {
+        return $this->hasOne(TopFranchisorLeaders::class, 'franchisor_id', 'franchisor_id');
     }
 }

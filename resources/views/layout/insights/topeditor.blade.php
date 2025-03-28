@@ -68,7 +68,8 @@
                     $locale = App::getLocale();
                     $mainDomain = Config('constants.MainDomain');
                     $image2 = \App\Http\Controllers\InsightsController::createimgurl($focusArticle->image);
-                    $url2 = "{$mainDomain}/insights/{$locale}/" .
+                    $url2 =
+                        "{$mainDomain}/insights/{$locale}/" .
                         strtolower($focusArticle->insight_type) .
                         "/{$focusArticle->slug}.{$focusArticle->news_id}";
                 @endphp
@@ -91,6 +92,56 @@
         </ul>
         <!-- below list start here  -->
     </div>
+    {{-- report section in blow div --}}
+    <div class="slidereport">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="comhead">{{ App::getLocale() == 'en' ? 'Reports' : 'रिपोर्ट' }}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            @foreach ($reports as $report)
+                                @php
+                                    $locale = App::getLocale();
+                                    $mainDomain = Config('constants.MainDomain');
+                                    $image = \App\Http\Controllers\InsightsController::createimgurl($report->image);
+                                    $url =
+                                        "{$mainDomain}/insights/{$locale}/" .
+                                        strtolower($report->insight_type) .
+                                        "/{$report->slug}.{$report->news_id}";
+                                @endphp
+                                @if ($loop->index < 8)
+                                    <div class="swiper-slide">
+                                        <div class="innerlist">
+                                            <div class="imgbl"><a href="{{ $url }}"><img
+                                                        src="{{ $image }}"
+                                                        alt="{{ $report->title . ' image' }}"></a></div>
+                                            <div class="conblk">
+                                                @foreach ($report->category as $category)
+                                                    <div class="tagl">{{ $category->catname }}</div>
+                                                @endforeach
+                                                <div class="hname"> <a
+                                                        href="{{ $url }}">{{ $report->title }}</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- report section in above div --}}
+
+    {{-- interview section in blow div --}}
     <div class="slidercomman">
         <div class="container">
             <div class="row">
@@ -137,4 +188,6 @@
             </div>
         </div>
     </div>
+    {{-- interview section in above div --}}
+
 </div>
