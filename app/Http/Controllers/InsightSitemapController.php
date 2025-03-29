@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use DOMDocument;
 use Illuminate\Support\Str;
+use Illuminate\Http\Response;
 
 
 class InsightSitemapController extends Controller
@@ -925,7 +926,11 @@ class InsightSitemapController extends Controller
             ->whereNotNull('image')
             ->whereNotNull('cat_id')
             ->orderByDesc('created_at')
-            ->take(15)->get();
+            ->take(15)->get()
+            ->map(function ($item) use ($locale) {
+                $item->lang = $locale;
+                return $item;
+            });
 
         // dd($articlesList);
         // Create RSS Feed
@@ -979,5 +984,46 @@ class InsightSitemapController extends Controller
         }
 
         return response($dom->saveXML(), 200)->header('Content-Type', 'application/rss+xml');
+    }
+
+    public function googleNewsSitemap()
+    {
+        $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
+        //   $redirectPath = $locale == 'en' ? '/insights' : '/insights/hindi';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
+        $insightModel = $locale == 'en' ? InsightList::class : InsightListHindi::class;
+
+        $articles = $insightModel::query()
+            ->where('status', 1)
+            ->where('cat_id', '!=', '')
+            ->where('insight_type', 'News')
+            ->orderByDesc('created_at')
+            ->limit(25)->get()
+            ->map(function ($item) use ($locale) {
+                $item->lang = $locale;
+                return $item;
+            });
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>';
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+                         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">';
+
+        foreach ($articles as $article) {
+            $xml .= '<url>';
+            $xml .= '<loc>' . URL::to("/insights/{$article->lang}/" . strtolower($article->insight_type) . "/{$article->slug}.{$article->news_id}") . '</loc>';
+            $xml .= '<news:news>';
+            $xml .= '<news:publication>';
+            $xml .= '<news:name>' . Config('constants.MainDomain') . '/insights' . '</news:name>';
+            $xml .= '<news:language>' . $locale . '</news:language>'; // Change language if needed
+            $xml .= '</news:publication>';
+            $xml .= '<news:publication_date>' . date('Y-m-d', strtotime($article->created_at)) . '</news:publication_date>';
+            $xml .= '<news:title>' . htmlspecialchars($article->title) . '</news:title>';
+            $xml .= '</news:news>';
+            $xml .= '</url>';
+        }
+
+        $xml .= '</urlset>';
+
+        return response($xml, 200, ['Content-Type' => 'application/xml']);
     }
 }
