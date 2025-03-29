@@ -254,6 +254,7 @@ class BusinessListingController extends Controller
         ->get();
         // dd($popup);
 
+        // dd('yes');
 
 
         if (!empty(request()->franchiseType)) {
@@ -971,7 +972,21 @@ class BusinessListingController extends Controller
         $catArr   = $seoClass->select('catname', 'parent_id', 'seoTitle', 'description', 'keywords')
             ->where('catid', $cid[1])
             ->first();
-        if ($catArr == null)
+              //These are the dealer categories where brands are not present so its redirected to all, and commented from constant file and category file
+        $redirectCatids = [
+            1024, 1025, 1026, 1029, 1032, 1035, 1037, 1039, 1043, 1044, 1046, 1080, 967, 
+            1087, 1094, 899, 906, 1096, 1097, 1098, 1104, 1105, 1114, 856, 1125, 1126, 
+            1127, 892, 1132, 1133, 1134, 946, 949, 743, 747, 1144, 1145, 1147, 1149, 
+            1154, 1170, 1172, 1174, 1175, 1210, 1213, 1214, 1215, 1217, 1220, 1223, 
+            1225, 1226, 1227, 1047, 1053, 1057, 1061, 1066, 1067, 1070, 1072, 1116, 
+            1119, 1123, 1135, 1137, 1139, 1140, 1141, 1142, 1156, 1177, 1181, 1182, 
+            1184, 1185, 1188, 1191, 1194, 1195, 1196, 1197, 1198, 1199, 1208, 1209, 
+            1231, 1232, 1235, 1238, 1240, 1241, 1242, 1243, 1244, 1159, 1160, 1162, 
+            1163
+        ];
+        
+        if ($catArr == null || in_array($cid[1], $redirectCatids))
+        // if ($catArr == null)
             return redirect('/business-opportunities/all/all', 301);
 
         $catName = $catArr->catname;
@@ -1864,7 +1879,7 @@ class BusinessListingController extends Controller
     }
     public function getBusinessListingnormalization(Request $request)
     {
-        // dd('yes');
+        // dd('oye');
         // $lowcost = $request->route('lowcost');
 
         // Fetch the request parameters
@@ -2001,8 +2016,22 @@ class BusinessListingController extends Controller
         $catArr   = $seoClass->select('catname', 'parent_id', 'seoTitle', 'description', 'keywords')
             ->where('catid', $cid[1])
             ->first();
-            // dd($catArr);
-        if ($catArr == null)
+        // dd($catArr); // Dump the catid from the result (if available)
+
+        //These are the dealer categories where brands are not present so its redirected to all, and commented from constant file and category file
+        $redirectCatids = [
+            1024, 1025, 1026, 1029, 1032, 1035, 1037, 1039, 1043, 1044, 1046, 1080, 967, 
+            1087, 1094, 899, 906, 1096, 1097, 1098, 1104, 1105, 1114, 856, 1125, 1126, 
+            1127, 892, 1132, 1133, 1134, 946, 949, 743, 747, 1144, 1145, 1147, 1149, 
+            1154, 1170, 1172, 1174, 1175, 1210, 1213, 1214, 1215, 1217, 1220, 1223, 
+            1225, 1226, 1227, 1047, 1053, 1057, 1061, 1066, 1067, 1070, 1072, 1116, 
+            1119, 1123, 1135, 1137, 1139, 1140, 1141, 1142, 1156, 1177, 1181, 1182, 
+            1184, 1185, 1188, 1191, 1194, 1195, 1196, 1197, 1198, 1199, 1208, 1209, 
+            1231, 1232, 1235, 1238, 1240, 1241, 1242, 1243, 1244, 1159, 1160, 1162, 
+            1163
+        ];
+        
+        if ($catArr == null || in_array($cid[1], $redirectCatids))
             return redirect('/business-opportunities/all/all', 301);
 
         $catName = $catArr->catname;
