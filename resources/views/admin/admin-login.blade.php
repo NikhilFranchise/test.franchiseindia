@@ -22,7 +22,8 @@
         @endif
 
         <form id="loginform" class="form-vertical" action="login-check" method="POST">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            {{-- <input type="hidden" name="_token" value="{{ csrf_token() }}"> --}}
+            @csrf
             <div class="control-group normal_text">
                 <h3><img src="img/logo.png" alt="Logo" /></h3>
             </div>
