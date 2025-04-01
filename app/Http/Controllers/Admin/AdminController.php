@@ -93,25 +93,17 @@ class AdminController extends Controller
 
         $admUser = AdminUser::where('admin_email', $request->email)->first();
 
-        if (!$admUser) {
+        if (!$admUser || !Hash::check($request->password, $admUser->admin_password)) {
             return redirect('admin/login')->with('error', 'Invalid email or password.');
         }
 
-        if (!Hash::check($request->password, $admUser->admin_password)) {
-            return redirect('admin/login')->with('error', 'Invalid email or password.');
-        }
-
-        // 🔥 Authenticate Admin
         Auth::guard('admin')->login($admUser);
 
-        // 🔹 Manually save session to ensure it persists
         session()->put('admin_name', $admUser->admin_name);
         session()->save();
 
-        // 🚀 Debug authentication before redirecting
+        // 🔥 Debug before redirecting
         dd(Auth::guard('admin')->user(), session()->all());
-
-        return redirect('admin/dashboard');
     }
 
     // public function loginCheck(Request $request)

@@ -927,7 +927,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('login',                                [AdminController::class, 'loginView']);
     Route::get('list-news',                            [AdminController::class, 'listNews']);
     Route::get('edit-news-view/{id}',                  [AdminController::class, 'editNewsView']);
-    Route::get('dashboard',                            [AdminController::class, 'viewDashboard']);
+    // Route::get('dashboard',                            [AdminController::class, 'viewDashboard']);
     Route::get('create-author',                        [AdminController::class, 'createAuthor']);
     Route::get('edit-author/{id}',                     [AdminController::class, 'viewAuthor']);
     Route::get('list-magazine-articles/{id}',          [AdminController::class, 'listMagazineArticles']);
@@ -967,10 +967,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('update-magazine-article',             [AdminController::class, 'updateMagazineArticle']);
     Route::post('author-edit',                         [AdminController::class, 'updateAuthor']);
     Route::post('author-register',                     [AdminController::class, 'registerAuthor']);
-    // Route::post('login-check',                         [AdminController::class, 'loginCheck']);
-    // Route::middleware(['ContentAdmin'])->group(function () {
-    Route::post('/login-check', [AdminController::class, 'loginCheck'])->name('admin.loginCheck');
-    // });
+    Route::middleware(['web'])->group(function () {
+        Route::post('/login-check', [AdminController::class, 'loginCheck']);
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware('ContentAdmin');
+    });
+
     // Route::post('/login-check', [AdminController::class, 'loginCheck'])->name('admin.loginCheck');
 
     Route::post('update-news',                         [AdminController::class, 'updateNews']);
