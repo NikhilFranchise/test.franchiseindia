@@ -15,7 +15,8 @@ class ContentAdmin
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    {
+    { 
+        dd($request->session()->has('adminEmail'));
         // if (!($request->session()->has('adminEmail')))
         //     return redirect('admin/login');
         dd(Auth::guard('admin')->user());
