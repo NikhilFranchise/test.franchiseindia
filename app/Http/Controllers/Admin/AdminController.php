@@ -108,7 +108,7 @@ class AdminController extends Controller
     // }
     public function loginCheck(Request $request)
     {
-        dd($request->all());
+        dd($request->email);
         $credentials = [
             'admin_email' => $request->email,
             'password' => $request->password
