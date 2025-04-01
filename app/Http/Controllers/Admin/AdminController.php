@@ -46,7 +46,7 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
+        $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
     }
 
     /**
@@ -86,8 +86,6 @@ class AdminController extends Controller
      */
     public function loginCheck(Request $request)
     {
-        session()->put('test_key', 'Session Working');
-        dd(session()->all());
         $credentials = [
             'admin_email' => $request->email,
             'password' => $request->password
