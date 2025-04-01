@@ -15,8 +15,8 @@ class ContentAdmin
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
-    { 
-        dd(Auth::guard('admin')->user());
+    {
+        dd(Auth::guard('admin')->user(), session()->all());
         if (!Auth::guard('admin')->check()) {
             return redirect('admin/login')->with('error', 'You must be an admin to access this page.');
         }
