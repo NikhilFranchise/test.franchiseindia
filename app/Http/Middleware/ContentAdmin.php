@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ContentAdmin
 {
+
+    protected $except = [
+        'login-check'
+    ];
+
     /**
      * Handle an incoming request.
      *
@@ -16,10 +21,9 @@ class ContentAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if (!($request->session()->has('adminEmail')))
-        //     return redirect('admin/login');
-        dd($request->session()->has('adminEmail'));
-
+        if ($request->is('login-check')) {
+            dd($request->all());  // Check if token is included
+        }
         if (!Auth::guard('admin')->check()) {
             return redirect('admin/login')->with('error', 'You must be an admin to access this page.');
         }

@@ -967,7 +967,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('update-magazine-article',             [AdminController::class, 'updateMagazineArticle']);
     Route::post('author-edit',                         [AdminController::class, 'updateAuthor']);
     Route::post('author-register',                     [AdminController::class, 'registerAuthor']);
-    Route::post('login-check',                         [AdminController::class, 'loginCheck']);
+    // Route::post('login-check',                         [AdminController::class, 'loginCheck']);
+    Route::post('/login-check', [AdminController::class, 'loginCheck'])->name('admin.loginCheck');
+
     Route::post('update-news',                         [AdminController::class, 'updateNews']);
     Route::post('edit-article-interview-comment',      [AdminController::class, 'updateArticleInterviewComment']);
     Route::post('edit-news-comment',                   [AdminController::class, 'updateNewsComment']);
@@ -1233,4 +1235,4 @@ Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('pass
 Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
 Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
 
-Route::get('related', [InsightsController::class, 'relatedarticles']);
+// Route::get('related', [InsightsController::class, 'relatedarticles']);

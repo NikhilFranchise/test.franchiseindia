@@ -46,7 +46,7 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
+        // $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
     }
 
     /**
@@ -84,31 +84,10 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    // public function loginCheck(Request $request)
-    // {
-    //     $email      = $request->email;
-    //     $password   = $request->password;
-    //     $admUser    = AdminUser::query()->where(['admin_email' => $email])->first();
-
-    //     if ($admUser == null)
-    //         return redirect('admin/login');
-
-    //     //checking if hash exists in the entered password
-    //     if (Hash::getFacadeRoot()->check($password, $admUser->admin_password)) {
-    //         session()->flush();
-    //         $adm_name = $admUser->admin_name;
-    //         $request->session()->put('admin_name', $adm_name);
-    //         $request->session()->put('adminEmail', $email);
-    //         $request->session()->put('role', $admUser->admin_dept);
-    //         $request->session()->put('author_creation_capability', $admUser->can_create_author);
-    //         return redirect('admin/dashboard');
-    //     }
-
-    //     return redirect('admin/login');
-    // }
     public function loginCheck(Request $request)
     {
-        dd($request->email);
+        session()->put('test_key', 'Session Working');
+        dd(session()->all());
         $credentials = [
             'admin_email' => $request->email,
             'password' => $request->password
@@ -2111,7 +2090,8 @@ class AdminController extends Controller
             ->get();
 
         // Return the view with data
-        return view('admin.insights.multilist-edit', compact('data',
+        return view('admin.insights.multilist-edit', compact(
+            'data',
             'InsightCategory',
             'InsightAuthor',
             'totalCount',
