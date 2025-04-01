@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\TrailingSlashRedirect::class,
             \App\Http\Middleware\Localization::class,
+            \App\Http\Middleware\ContentAdmin::class,
         ],
 
         'api' => [
