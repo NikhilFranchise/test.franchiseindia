@@ -34,7 +34,6 @@ class VerifyCsrfToken extends Middleware
         'feedback',
         'password/email',
         'api/*', 
-        'admin/login-check',
 
 
     ];
