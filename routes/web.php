@@ -969,7 +969,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('author-register',                     [AdminController::class, 'registerAuthor']);
     // Route::post('login-check',                         [AdminController::class, 'loginCheck']);
     // Route::middleware(['ContentAdmin'])->group(function () {
-        Route::post('/login-check', [AdminController::class, 'loginCheck'])->name('admin.loginCheck');
+    Route::post('/login-check', [AdminController::class, 'loginCheck'])->name('admin.loginCheck');
     // });
     // Route::post('/login-check', [AdminController::class, 'loginCheck'])->name('admin.loginCheck');
 
@@ -1239,3 +1239,8 @@ Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
 Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
 
 // Route::get('related', [InsightsController::class, 'relatedarticles']);
+Route::get('/test-session', function () {
+    session()->put('test_key', 'Test Value');
+    session()->save();
+    return session()->all();
+});
