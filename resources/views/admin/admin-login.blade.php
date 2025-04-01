@@ -21,8 +21,8 @@
             </div>
         @endif
 
-        {{-- <form id="loginform" class="form-vertical" action="login-check" method="POST"> --}}
-        <form id="loginform" action="{{ route('admin.loginCheck') }}" method="POST">
+        <form id="loginform" class="form-vertical" action="login-check" method="POST">
+        {{-- <form id="loginform" action="{{ route('admin.loginCheck') }}" method="POST"> --}}
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="control-group normal_text">
                 <h3><img src="img/logo.png" alt="Logo" /></h3>
