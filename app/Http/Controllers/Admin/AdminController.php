@@ -46,7 +46,7 @@ class AdminController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
+        // $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
     }
 
     /**
