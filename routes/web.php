@@ -927,7 +927,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('login',                                [AdminController::class, 'loginView']);
     Route::get('list-news',                            [AdminController::class, 'listNews']);
     Route::get('edit-news-view/{id}',                  [AdminController::class, 'editNewsView']);
-    // Route::get('dashboard',                            [AdminController::class, 'viewDashboard']);
+    Route::get('dashboard',                            [AdminController::class, 'viewDashboard']);
     Route::get('create-author',                        [AdminController::class, 'createAuthor']);
     Route::get('edit-author/{id}',                     [AdminController::class, 'viewAuthor']);
     Route::get('list-magazine-articles/{id}',          [AdminController::class, 'listMagazineArticles']);
@@ -967,13 +967,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('update-magazine-article',             [AdminController::class, 'updateMagazineArticle']);
     Route::post('author-edit',                         [AdminController::class, 'updateAuthor']);
     Route::post('author-register',                     [AdminController::class, 'registerAuthor']);
-    Route::middleware(['web'])->group(function () {
-        Route::post('/login-check', [AdminController::class, 'loginCheck']);
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware('ContentAdmin');
-    });
-
-    // Route::post('/login-check', [AdminController::class, 'loginCheck'])->name('admin.loginCheck');
-
+    Route::post('login-check',                         [AdminController::class, 'loginCheck']);
     Route::post('update-news',                         [AdminController::class, 'updateNews']);
     Route::post('edit-article-interview-comment',      [AdminController::class, 'updateArticleInterviewComment']);
     Route::post('edit-news-comment',                   [AdminController::class, 'updateNewsComment']);
@@ -1240,8 +1234,3 @@ Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
 Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
 
 // Route::get('related', [InsightsController::class, 'relatedarticles']);
-Route::get('/test-session', function () {
-    session()->put('test_key', 'Test Value');
-    session()->save();
-    return session()->all();
-});

@@ -44,10 +44,10 @@ use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
-    // }
+    public function __construct()
+    {
+        $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
+    }
 
     /**
      *View the dashboard Page
@@ -84,6 +84,28 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
+    // public function loginCheck(Request $request)
+    // {
+    //     $email      = $request->email;
+    //     $password   = $request->password;
+    //     $admUser    = AdminUser::query()->where(['admin_email' => $email])->first();
+
+    //     if ($admUser == null)
+    //         return redirect('admin/login');
+
+    //     //checking if hash exists in the entered password
+    //     if (Hash::getFacadeRoot()->check($password, $admUser->admin_password)) {
+    //         session()->flush();
+    //         $adm_name = $admUser->admin_name;
+    //         $request->session()->put('admin_name', $adm_name);
+    //         $request->session()->put('adminEmail', $email);
+    //         $request->session()->put('role', $admUser->admin_dept);
+    //         $request->session()->put('author_creation_capability', $admUser->can_create_author);
+    //         return redirect('admin/dashboard');
+    //     }
+
+    //     return redirect('admin/login');
+    // }
     public function loginCheck(Request $request)
     {
         $credentials = [
@@ -91,51 +113,29 @@ class AdminController extends Controller
             'password' => $request->password
         ];
 
+        // Find the admin user
         $admUser = AdminUser::where('admin_email', $request->email)->first();
 
-        if (!$admUser || !Hash::check($request->password, $admUser->admin_password)) {
+        if (!$admUser) {
             return redirect('admin/login')->with('error', 'Invalid email or password.');
         }
 
+        // Check the password manually if necessary
+        if (!Hash::check($request->password, $admUser->admin_password)) {
+            return redirect('admin/login')->with('error', 'Invalid email or password.');
+        }
+
+        // Use Auth guard to login admin
         Auth::guard('admin')->login($admUser);
 
+        // Store additional session data if needed
         session()->put('admin_name', $admUser->admin_name);
-        session()->save();
+        session()->put('adminEmail', $admUser->admin_email);
+        session()->put('role', $admUser->admin_dept);
+        session()->put('author_creation_capability', $admUser->can_create_author);
 
-        // 🔥 Debug before redirecting
-        dd(Auth::guard('admin')->user(), session()->all());
+        return redirect('admin/dashboard');
     }
-
-    // public function loginCheck(Request $request)
-    // {
-    //     $credentials = [
-    //         'admin_email' => $request->email,
-    //         'password' => $request->password
-    //     ];
-
-    //     // Find the admin user
-    //     $admUser = AdminUser::where('admin_email', $request->email)->first();
-
-    //     if (!$admUser) {
-    //         return redirect('admin/login')->with('error', 'Invalid email or password.');
-    //     }
-
-    //     // Check the password manually if necessary
-    //     if (!Hash::check($request->password, $admUser->admin_password)) {
-    //         return redirect('admin/login')->with('error', 'Invalid email or password.');
-    //     }
-
-    //     // Use Auth guard to login admin
-    //     Auth::guard('admin')->login($admUser);
-
-    //     // Store additional session data if needed
-    //     session()->put('admin_name', $admUser->admin_name);
-    //     session()->put('adminEmail', $admUser->admin_email);
-    //     session()->put('role', $admUser->admin_dept);
-    //     session()->put('author_creation_capability', $admUser->can_create_author);
-
-    //     return redirect('admin/dashboard');
-    // }
 
     /**
      * Function to create author
