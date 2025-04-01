@@ -16,7 +16,7 @@ class ContentAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        dd(Auth::guard('admin')->user(), session()->all(), $request->all());
+        // dd(Auth::guard('admin')->user(), session()->all(), $request->all());
         if (!Auth::guard('admin')->check()) {
             return redirect('admin/login')->with('error', 'You must be an admin to access this page.');
         }
