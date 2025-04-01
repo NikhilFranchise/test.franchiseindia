@@ -22,6 +22,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        
     ];
 
     /**
@@ -80,7 +81,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         // Other middlewares
         'Localization' => \App\Http\Middleware\Localization::class,
-        'content.admin' => \App\Http\Middleware\ContentAdmin::class, // Add this line
+        'contentAdmin' => \App\Http\Middleware\ContentAdmin::class, // Add this line
 
     ];
 
