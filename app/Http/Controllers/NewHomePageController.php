@@ -93,6 +93,14 @@ class NewHomePageController extends Controller
             ->limit(16)
             ->get();
 
+        $articles = InsightListHindi::query()->with('category')->select('slug', 'cat_id', 'image', 'news_id', 'title')
+            ->where('status', 1)
+            ->where('insight_type', 'Article')
+            ->whereNot('cat_id', '=', '')
+            ->orderByDesc('created_at')
+            ->limit(16)
+            ->get();
+
         $interviews = InsightListHindi::with('category')->select('slug', 'cat_id', 'image', 'news_id', 'title')
             ->where('status', 1)
             ->where('insight_type', 'Interview')
@@ -147,7 +155,7 @@ class NewHomePageController extends Controller
             return $videosData;
         });
 
-        return view('newHomepage.newmasterhomepage')->with(compact('news', 'interviews',  'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
+        return view('newHomepage.newmasterhomepage')->with(compact('news', 'articles', 'interviews',  'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
     }
 
     public function homeNew(Request $request)
@@ -224,6 +232,13 @@ class NewHomePageController extends Controller
             ->limit(16)
             ->get();
 
+        $articles = InsightList::query()->with('category')->select('slug', 'cat_id', 'image', 'news_id', 'title')
+            ->where('status', 1)
+            ->where('insight_type', 'Article')
+            ->whereNot('cat_id', '=', '')
+            ->orderByDesc('created_at')
+            ->limit(16)
+            ->get();
         $interviews = InsightList::with('category')->select('slug', 'cat_id', 'image', 'news_id', 'title')
             ->where('status', 1)
             ->where('insight_type', 'Interview')
@@ -278,7 +293,7 @@ class NewHomePageController extends Controller
             return $videosData;
         });
 
-        return view('newHomepage.newmasterhomepage')->with(compact('news', 'interviews', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
+        return view('newHomepage.newmasterhomepage')->with(compact('news', 'articles', 'interviews', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
     }
 
 
