@@ -968,7 +968,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('author-edit',                         [AdminController::class, 'updateAuthor']);
     Route::post('author-register',                     [AdminController::class, 'registerAuthor']);
     // Route::post('login-check',                         [AdminController::class, 'loginCheck']);
-    Route::post('/login-check', [AdminController::class, 'loginCheck'])->name('admin.loginCheck');
+    Route::middleware(['ContentAdmin'])->group(function () {
+        Route::post('/login-check', [AdminController::class, 'loginCheck'])->name('admin.loginCheck');
+    });
+    // Route::post('/login-check', [AdminController::class, 'loginCheck'])->name('admin.loginCheck');
 
     Route::post('update-news',                         [AdminController::class, 'updateNews']);
     Route::post('edit-article-interview-comment',      [AdminController::class, 'updateArticleInterviewComment']);
