@@ -18,8 +18,7 @@
         .select2-container--default .select2-selection--single .select2-selection__arrow b {
             display: none;
         }
-    </style>
-    <style type="text/css">
+
         .select2-container .select2-selection--multiple {
             box-sizing: border-box;
             cursor: pointer;
@@ -55,18 +54,18 @@
                 <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
                         class="icon-home"></i>Home</a>
                 <a href="{{ url('admin/list-insights') }}" class="tip-bottom">Hindi Insights</a>
-                <a href="" class="current">Edit-Hindi Insights</a>
+                <a href="" class="current">Edit Hindi Insights</a>
             </div>
-            <h1>Edit Hindi Insights</h1>
+            {{-- <h1>Edit Hindi Insights</h1> --}}
         </div>
         <!--End-breadcrumbs-->
         <div class="container-fluid">
-            <hr>
+            {{-- <hr> --}}
             <div class="row-fluid">
                 <div class="widget-box">
                     <div class="widget-title">
                         <span class="icon"> <i class="icon-align-justify"></i> </span>
-                        <h5>Insights Hindi Details</h5>
+                        <h5>Edit Hindi Insights</h5>
                     </div>
                     <div class="widget-content nopadding">
                         <form method="POST" class="form-horizontal" enctype="multipart/form-data" id="editform"
@@ -145,13 +144,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="control-group">
-                                <label class="control-label">Publish Url :</label>
-                                <div class="controls">
-                                    <input type="text" name="slug" id="slugId" maxlength="125" class="span11"
-                                        value="{{ $data->slug }}" />
-                                </div>
-                            </div>
+
                             <div class="control-group">
                                 <label class="control-label">Insights Title :</label>
                                 <div class="controls">
@@ -165,31 +158,32 @@
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">Insights Home Title :</label>
+                                <label class="control-label">Published Url :</label>
                                 <div class="controls">
-                                    <input type="text" required maxlength="40" class="span11"
-                                        placeholder="Enter Home Title" name="home_title"
-                                        value="{{ $data->homeTitle }}" />
+                                    <input type="text" name="slug" id="slugId" maxlength="125" class="span11"
+                                        value="{{ $data->slug }}" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Published Date :</label>
+                                <div class="controls">
+                                    <input type="date" class="span11" name="published_date" id="published_date"
+                                        value="{{ !empty($data->published_date) ? date('Y-m-d', strtotime($data->published_date)) : date('Y-m-d', strtotime($data->created_at)) }}"
+                                        max="{{ date('Y-m-d') }}" />
                                 </div>
                             </div>
                             <div class="control-group">
                                 <label class="control-label">Insights Sub Title :</label>
                                 <div class="controls">
                                     <input type="text" required maxlength="255" class="span11"
-                                        placeholder="Sub title" name="sub_title" value="{{ $data->shortDesc }}" />
+                                        placeholder="Sub title" id="sub_title" name="sub_title"
+                                        value="{{ $data->shortDesc }}" />
                                     @if ($errors->has('sub_title'))
                                         @foreach ($errors->get('sub_title') as $error)
                                             <br><span style="color: red;">{{ $error }}</span>
                                         @endforeach
                                     @endif
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label for="international_check" class="control-label">International Content?
-                                    :</label>
-                                <div class="controls">
-                                    <input type="checkbox" id="international_check" name="is_intl" value="1"
-                                        @if ($data->is_intl == 1) checked @endif>
+                                    <p id="char_count" style="color: gray; margin-top: 5px;">(0 / 255 characters)</p>
                                 </div>
                             </div>
                             @php
@@ -206,8 +200,7 @@
                                         @endif
                                         <textarea name="content" id="inputDescription" class="form-control customError" minlength="2"
                                             placeholder="Content Description" required>{{ $data->content }}</textarea>
-                                        <img src="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $locale) }}"
-                                            height="106" width="187" style="padding-top: inherit;">
+
                                     </div>
                                 </div>
                             </div>
@@ -226,22 +219,20 @@
                                     </div>
                                     <br />
                                     Note : * Image Size 1600x940
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label for="select2" class="control-label">Related Brands :</label>
-                                <div class="controls" id="brands">
-                                    <select multiple name="brands[]" id="select2" class="span11">
-                                        @if (isset($company))
-                                            @foreach ($company as $companyData)
-                                                @if ($companyData != '')
-                                                    <option value="{{ $companyData->franchisor_id }}" selected>
-                                                        {{ $companyData->company_name }}
-                                                    </option>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </select>
+                                    <!-- Alt Text Input (Initially Hidden) -->
+                                    <br>
+                                    <input type="text" id="altText" name="img_alt" class="span11"
+                                        value="{{ $data->img_alt }}" placeholder="Enter image alt text"
+                                        style="margin-top: 10px;">
+                                    <br>
+                                    <img class="oldImage"
+                                        src="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $locale) }}"
+                                        style="max-width: 300px; margin-top: 10px; padding-top:inherit; border-radius: 5px;">
+                                    <br>
+                                    <!-- New image preview (hidden initially) -->
+                                    <img id="imagePreview" src="#" alt="Image Preview"
+                                        style="max-width: 300px; margin-top: 10px; display: none; border-radius: 5px;">
+
                                 </div>
                             </div>
                             <div class="control-group">
@@ -367,48 +358,142 @@
 
         });
 
+        // $("#showImage").change(function() {
+        //     var val = $(this).val();
+        //     var fileInput = this;
+        //     val = val.replace('jpeg', 'jpg');
+        //     switch (val.substring(val.lastIndexOf('.') + 1).toLowerCase()) {
+        //         case 'gif':
+        //         case 'jpg':
+        //         case 'jpeg':
+        //         case 'png':
+        //         case 'webp':
+        //             checkImageSize(fileInput);
+        //             break;
+        //         default:
+        //             $(this).val('');
+        //             toastr.error(
+        //                 'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
+        //             $('#showImage_msg').css('display', 'block');
+        //             setTimeout(function() {
+        //                 $('#showImage_msg').css('display', 'none');
+        //             }, 5000);
+        //             $('#newssubmit').prop('disabled', true);
+        //             break;
+        //     }
+        // });
+
+
+        // function checkImageSize(fileInput) {
+        //     if (fileInput.files[0].size > 153600) {
+        //         toastr.error('Image size should be 150 KB or less.');
+        //         $('#showImage_msg_size').css('display', 'block');
+        //         setTimeout(function() {
+        //             $('#showImage_msg_size').css('display', 'none');
+        //         }, 5000);
+        //         $('#newssubmit').prop('disabled', true);
+        //     } else {
+        //         //toastr.success('Image size is valid. You can proceed.');
+        //         $('#showImage_msg_size').css('display', 'none');
+        //         $('#newssubmit').prop('disabled', false);
+        //     }
+        // }
         $("#showImage").change(function() {
-            var val = $(this).val();
             var fileInput = this;
-            val = val.replace('jpeg', 'jpg');
-            switch (val.substring(val.lastIndexOf('.') + 1).toLowerCase()) {
-                case 'gif':
-                case 'jpg':
-                case 'jpeg':
-                case 'png':
-                case 'webp':
-                    checkImageSize(fileInput);
-                    break;
-                default:
-                    $(this).val('');
-                    toastr.error(
-                        'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
-                    $('#showImage_msg').css('display', 'block');
-                    setTimeout(function() {
-                        $('#showImage_msg').css('display', 'none');
-                    }, 5000);
-                    $('#newssubmit').prop('disabled', true);
-                    break;
+            var file = fileInput.files[0];
+
+            if (!file) {
+                return; // Exit if no file is selected
+            }
+
+            var validTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/webp'];
+
+            if (!validTypes.includes(file.type)) {
+                $(this).val('');
+                toastr.error('Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
+                $('#showImage_msg').show();
+                setTimeout(function() {
+                    $('#showImage_msg').hide();
+                }, 5000);
+                $('#newssubmit').prop('disabled', true);
+                return;
+            }
+
+            // Check Image Size
+            if (file.size > 153600) {
+                toastr.error('Image size should be 150 KB or less.');
+                $('#showImage_msg_size').show();
+                setTimeout(function() {
+                    $('#showImage_msg_size').hide();
+                }, 5000);
+                $('#newssubmit').prop('disabled', true);
+                return;
+            }
+
+            // Hide Old Image & Show New Preview
+            $(".oldImage").hide(); // Hide the old image
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $("#imagePreview").attr("src", e.target.result).show();
+            };
+            reader.readAsDataURL(file);
+
+            // Enable submit button if everything is valid
+            $('#showImage_msg, #showImage_msg_size').hide();
+            $('#newssubmit').prop('disabled', false);
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            let subTitleInput = document.getElementById("sub_title");
+            let charCount = document.getElementById("char_count");
+
+            // Update character count initially (for edit page)
+            updateCharCount();
+
+            // Update character count when typing
+            subTitleInput.addEventListener("input", updateCharCount);
+
+            function updateCharCount() {
+                let currentLength = subTitleInput.value.length;
+                let maxLength = subTitleInput.getAttribute("maxlength");
+                charCount.textContent = `(${currentLength} / ${maxLength} characters)`;
+            }
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            let slugInput = document.getElementById("slugId");
+            let isSlugModified = false; // Track if the slug is manually changed
+
+            // Detect manual slug changes
+            slugInput.addEventListener("input", function() {
+                isSlugModified = true;
+                validateSlug();
+            });
+            if (!isSlugModified) {
+                generateSlug();
+            }
+
+            function generateSlug() {
+                let title = titleInput.value;
+                let slug = title.toLowerCase()
+                    .trim()
+                    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
+                    .replace(/\s+/g, "-") // Replace spaces with dashes
+                    .replace(/-+/g, "-"); // Remove multiple dashes
+
+                slugInput.value = slug;
+            }
+
+            function validateSlug() {
+                let slug = slugInput.value;
+                slug = slug.toLowerCase()
+                    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
+                    .replace(/\s+/g, "-") // Replace spaces with hyphens
+                    .replace(/-+/g, "-"); // Remove multiple dashes
+
+                slugInput.value = slug;
             }
         });
 
-
-        function checkImageSize(fileInput) {
-            if (fileInput.files[0].size > 153600) {
-                toastr.error('Image size should be 150 KB or less.');
-                $('#showImage_msg_size').css('display', 'block');
-                setTimeout(function() {
-                    $('#showImage_msg_size').css('display', 'none');
-                }, 5000);
-                $('#newssubmit').prop('disabled', true);
-            } else {
-                //toastr.success('Image size is valid. You can proceed.');
-                $('#showImage_msg_size').css('display', 'none');
-                $('#newssubmit').prop('disabled', false);
-            }
-        }
-    </script>
-    <script>
         $(document).ready(function() {
             var editor_config = {
                 path_absolute: "/",

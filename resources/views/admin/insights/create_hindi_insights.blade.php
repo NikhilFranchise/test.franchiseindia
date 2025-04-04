@@ -33,174 +33,190 @@
     <!--sidebar-menu-->
     @php
         $locale = request()->segment(2);
+        $lang = $locale == 'en' ? 'English' : 'Hindi';
+
     @endphp
     <div id="content">
         <!--breadcrumbs-->
         <div id="content-header">
             <div id="breadcrumb">
                 <a href="dashboard" title="Go to Home" class="tip-bottom"><i class="icon-home"></i>Home</a>
-                <a href="list-insights" class="tip-bottom">Insights</a>
-                <a href="" class="current">Create-Insights</a>
+                <a href="list-insights" class="tip-bottom">{{ $lang . ' Insights' }}</a>
+                <a href="" class="current">{{ 'Create ' . $lang . ' Insights' }}</a>
             </div>
-            <h1>Create Hindi Insights</h1>
+            {{-- <h1>Create Hindi Insights</h1> --}}
         </div>
         <!--End-breadcrumbs-->
         <div class="container-fluid">
-            <hr>
+            {{-- <hr> --}}
             <div class="row-fluid">
                 <div class="widget-box">
                     <div class="widget-title">
                         <span class="icon"> <i class="icon-align-justify"></i> </span>
-                        <h5>Insights Details</h5>
+                        <h5>{{ 'Create ' . $lang . ' Insights' }}</h5>
                     </div>
                     <div class="widget-content nopadding">
                         <form method="POST" class="form-horizontal" enctype="multipart/form-data"
                             action="{{ Config('constants.MainDomain') }}/admin/hi/create-insights" id="editform"
-                            novalidate />
-                        @csrf
-                        <div class="control-group">
-                            <label class="control-label" for="publisher">Insights Publisher :</label>
-                            <div class="controls" id="insights_publisher">
-                                <select style="display: none;" name="insights_publisher" id="publisher"
-                                    class=""></select>
-                            </div>
-                            @if ($errors->has('insights_publisher'))
-                                @foreach ($errors->get('insights_publisher') as $error)
-                                    <br><span style="color: red;">{{ $error }}</span>
-                                @endforeach
-                            @endif
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Insights Type :</label>
-                            <div class="controls">
-                                <select required class="span11" name="insights_type" title="insights_type">
-                                    <option value="">Select Insights Type</option>
-                                    <option value="News">News</option>
-                                    <option value="Article">Article</option>
-                                    <option value="Interview">Interview</option>
-                                    <option value="Report">Report</option>
-                                    <option value="Event">Event</option>
-                                    <option value="Terms">Terms</option>
-                                </select>
-                                @if ($errors->has('insights_type'))
-                                    @foreach ($errors->get('insights_type') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Main Category :</label>
-                            <div class="controls">
-                                <select required class="span11" name="insights_cat" title="Main Category"
-                                    onchange="Subcategoriesdata(value);">
-                                    <option value="">Select Main Category</option>
-                                    @foreach ($InsightCategory as $category)
-                                        <option value="{{ $category->id }}">{{ $category->catname }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($errors->has('insights_cat'))
-                                    @foreach ($errors->get('insights_cat') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Sub Category :</label>
-                            <div class="controls">
-                                <select required class="span11" name="insights_subcat" id="insights_subcat"
-                                    title="Sub Category">
-                                    <option value="">Select Sub Category</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Insights Title :</label>
-                            <div class="controls">
-                                <input type="text" maxlength="125" required class="span11" placeholder="Enter Title"
-                                    name="title" />
-                                @if ($errors->has('title'))
-                                    @foreach ($errors->get('title') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Insights Home Title :</label>
-                            <div class="controls">
-                                <input type="text" maxlength="40" required class="span11"
-                                    placeholder="Enter Home Title" name="home_title" />
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">International Content? :</label>
-                            <div class="controls">
-                                <input type="checkbox" name="is_intl" value="1">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Insights Sub Title :</label>
-                            <div class="controls">
-                                <input type="text" maxlength="255" required class="span11" placeholder="Sub title"
-                                    name="sub_title" />
-                                @if ($errors->has('sub_title'))
-                                    @foreach ($errors->get('sub_title') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label for="inputStatus" class="control-label">Insights Content :</label>
-                            <div class="controls span9">
-                                <div class="form-group">
-                                    <textarea name="content" id="inputDescription" class="form-control customError" minlength="2"
-                                        placeholder="Content Description" required></textarea>
-                                    @if ($errors->has('content'))
-                                        @foreach ($errors->get('content') as $error)
+                            novalidate>
+                            @csrf
+                            <div class="control-group">
+                                <label class="control-label" for="publisher">Insights Publisher :</label>
+                                <div class="controls" id="insights_publisher">
+                                    <select style="display: none;" name="insights_publisher" id="publisher"
+                                        class=""></select>
+                                    @if ($errors->has('insights_publisher'))
+                                        @foreach ($errors->get('insights_publisher') as $error)
                                             <br><span style="color: red;">{{ $error }}</span>
                                         @endforeach
                                     @endif
                                 </div>
                             </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Image :</label>
+                            <div class="control-group">
+                                <label class="control-label">Insights Type :</label>
+                                <div class="controls">
+                                    <select required class="span11" name="insights_type" title="insights_type">
+                                        <option value="">Select Insights Type</option>
+                                        <option value="News">News</option>
+                                        <option value="Article">Article</option>
+                                        <option value="Interview">Interview</option>
+                                        <option value="Report">Report</option>
+                                        <option value="Event">Event</option>
+                                        <option value="Terms">Terms</option>
+                                    </select>
+                                    @if ($errors->has('insights_type'))
+                                        @foreach ($errors->get('insights_type') as $error)
+                                            <br><span style="color: red;">{{ $error }}</span>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Main Category :</label>
+                                <div class="controls">
+                                    <select required class="span11" name="insights_cat" title="Main Category"
+                                        onchange="Subcategoriesdata(value);">
+                                        <option value="">Select Main Category</option>
+                                        @foreach ($InsightCategory as $category)
+                                            <option value="{{ $category->id }}">{{ $category->catname }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('insights_cat'))
+                                        @foreach ($errors->get('insights_cat') as $error)
+                                            <br><span style="color: red;">{{ $error }}</span>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Sub Category :</label>
+                                <div class="controls">
+                                    <select required class="span11" name="insights_subcat" id="insights_subcat"
+                                        title="Sub Category">
+                                        <option value="">Select Sub Category</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Insights Title :</label>
+                                <div class="controls">
+                                    <input type="text" maxlength="125" required class="span11"
+                                        placeholder="Enter Title" name="title" id="title" />
+                                    @if ($errors->has('title'))
+                                        @foreach ($errors->get('title') as $error)
+                                            <br><span style="color: red;">{{ $error }}</span>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                            <!-- Slug Input (Editable) -->
+                            <div class="control-group" id="slug-container" style="display: none;">
+                                <label class="control-label">Published URL :</label>
+                                <div class="controls">
+                                    <input type="text" class="span11" id="slug" name="slug"
+                                        pattern="[a-z0-9\-]+"
+                                        title="Only small letters, numbers, and hyphens are allowed" />
+                                </div>
+                            </div>
+                            {{-- <div class="control-group">
+                            <label class="control-label">Insights Home Title :</label>
                             <div class="controls">
-                                <input type="file" required id="showImage" class="span11" name="image">
-                                @if ($errors->has('image'))
-                                    @foreach ($errors->get('image') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
-                                <div style="display: none; color: red;" id="showImage_msg">Invalid image type! Please
-                                    select a valid image format (JPG, GIF, PNG, or WebP)
+                                <input type="text" maxlength="40" required class="span11"
+                                    placeholder="Enter Home Title" name="home_title" />
+                            </div>
+                        </div> --}}
+                            {{-- <div class="control-group">
+                            <label class="control-label">International Content? :</label>
+                            <div class="controls">
+                                <input type="checkbox" name="is_intl" value="1">
+                            </div>
+                        </div> --}}
+                            <div class="control-group">
+                                <label class="control-label">Insights Sub Title :</label>
+                                <div class="controls">
+                                    <input type="text" maxlength="255" required class="span11"
+                                        placeholder="Sub title" id="sub_title" name="sub_title"
+                                        oninput="updateCharCount()" />
+                                    @if ($errors->has('sub_title'))
+                                        @foreach ($errors->get('sub_title') as $error)
+                                            <br><span style="color: red;">{{ $error }}</span>
+                                        @endforeach
+                                    @endif
+                                    <p id="char_count" style="color: gray; margin-top: 5px;">(0 / 255 characters)</p>
                                 </div>
-                                <div style="display: none; color: red;" id="showImage_msg_size">Please select a image
-                                    of size(Less than 150 KB)
+                            </div>
+                            <div class="control-group">
+                                <label for="inputStatus" class="control-label">Insights Content :</label>
+                                <div class="controls span9">
+                                    <div class="form-group">
+                                        <textarea name="content" id="inputDescription" class="form-control customError" minlength="2"
+                                            placeholder="Content Description" required></textarea>
+                                        @if ($errors->has('content'))
+                                            @foreach ($errors->get('content') as $error)
+                                                <br><span style="color: red;">{{ $error }}</span>
+                                            @endforeach
+                                        @endif
+                                    </div>
                                 </div>
-                                <br />
-                                Note : * Image Size 1600x940
                             </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="select2">Related Brands :</label>
-                            <div class="controls" id="brands">
-                                <select multiple style="display: none;" name="brands[]" id="select2"></select>
+                            <div class="control-group">
+                                <label class="control-label">Image :</label>
+                                <div class="controls">
+                                    <input type="file" required id="showImage" class="span11" name="image">
+                                    @if ($errors->has('image'))
+                                        @foreach ($errors->get('image') as $error)
+                                            <br><span style="color: red;">{{ $error }}</span>
+                                        @endforeach
+                                    @endif
+                                    <div style="display: none; color: red;" id="showImage_msg">Invalid image type!
+                                        Please
+                                        select a valid image format (JPG, GIF, PNG, or WebP)</div>
+                                    <div style="display: none; color: red;" id="showImage_msg_size">Please select a
+                                        image
+                                        of size(Less than 150 KB)</div>
+                                    <br />
+                                    Note : * Image Size 1600x940
+                                    <!-- Alt Text Input (Initially Hidden) -->
+                                    <br>
+                                    <input type="text" id="altText" name="img_alt" class="span11"
+                                        placeholder="Enter image alt text" style="display: none; margin-top: 10px;">
+
+                                    <!-- Image Preview Section -->
+                                    <br>
+                                    <img id="imagePreview" src="#" alt="Image Preview"
+                                        style="display: none; max-width: 300px; margin-top: 10px; border-radius: 5px;">
+                                </div>
                             </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="select3">Associated Tags :</label>
-                            <div class="controls" id="associatedTags">
-                                <select multiple required style="display: none;" name="associated_tags[]"
-                                    id="select3"></select>
+                            <div class="control-group">
+                                <label class="control-label" for="select3">Associated Tags :</label>
+                                <div class="controls" id="associatedTags">
+                                    <select multiple required style="display: none;" name="associated_tags[]"
+                                        id="select3"></select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-actions" style="text-align: center">
-                            <button type="submit" class="btn btn-success" id="newssubmit">Save</button>
-                        </div>
+                            <div class="form-actions" style="text-align: center">
+                                <button type="submit" class="btn btn-success" id="newssubmit">Save</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -319,16 +335,21 @@
                 case 'webp':
                     //toastr.success('Valid image type selected. You may proceed.');
                     checkImageSize(fileInput);
+                    previewImage(fileInput); // Show image preview
+                    $("#altText").show(); // Show alt input
+
                     break;
                 default:
                     $(this).val('');
                     toastr.error(
                         'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
                     $('#showImage_msg').css('display', 'block');
-                    setTimeout(function() {
-                        $('#showImage_msg').css('display', 'none');
-                    }, 5000);
+                    // setTimeout(function() {
+                    //     $('#showImage_msg').css('display', 'none');
+                    // }, 5000);
                     $('#newssubmit').prop('disabled', true);
+                    $('#imagePreview').hide(); // Hide preview if invalid
+
                     break;
             }
         });
@@ -340,18 +361,31 @@
             if (fileInput.files[0].size > 153600) {
                 toastr.error('Image size should be 150 KB or less.');
                 $('#showImage_msg_size').css('display', 'block');
-                setTimeout(function() {
-                    $('#showImage_msg_size').css('display', 'none');
-                }, 5000);
+                // setTimeout(function() {
+                //     $('#showImage_msg_size').css('display', 'none');
+                // }, 5000);
                 $('#newssubmit').prop('disabled', true);
+                $('#imagePreview').hide(); // Hide preview if invalid
+                $("#altText").hide(); // Hide alt input if invalid
             } else {
-                // toastr.success('Image size is valid. You can proceed.');
+                toastr.success('Image size is valid. You can proceed.');
                 $('#showImage_msg_size').css('display', 'none');
                 $('#newssubmit').prop('disabled', false);
             }
         }
-    </script>
-    <script>
+
+        function previewImage(fileInput) {
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#imagePreview').attr('src', e.target.result).show();
+                    $("#altText").show(); // Show alt input on image preview
+
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
         $(document).ready(function() {
             var editor_config = {
                 path_absolute: "/",
@@ -515,6 +549,138 @@
                     console.error('AJAX Error:', textStatus, errorThrown);
                 }
             });
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            let titleInput = document.getElementById("title");
+            let slugInput = document.getElementById("slug");
+            let slugContainer = document.getElementById("slug-container");
+            let subTitleInput = document.getElementById("sub_title");
+            let isSlugModified = false; // Track if the slug is manually changed
+
+            // Detect manual slug changes
+            slugInput.addEventListener("input", function() {
+                isSlugModified = true;
+                validateSlug();
+            });
+
+            // Generate slug when moving to "Sub Title" field
+            subTitleInput.addEventListener("focus", function() {
+                let title = titleInput.value.trim();
+                if (title === "") {
+                    slugContainer.style.display = "none"; // Hide slug if title is empty
+                } else {
+                    if (!isSlugModified) {
+                        generateSlug();
+                    }
+                    slugContainer.style.display = "block"; // Show slug field
+                }
+            });
+
+            // Hide slug field if title is empty while typing
+            titleInput.addEventListener("input", function() {
+                let title = titleInput.value.trim();
+                if (title === "") {
+                    slugContainer.style.display = "none";
+                }
+            });
+
+            function generateSlug() {
+                let title = titleInput.value.trim();
+                let slug = transliterate(title) // Convert Hindi to English
+                    .toLowerCase()
+                    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
+                    .replace(/\s+/g, "-") // Replace spaces with hyphens
+                    .replace(/-+/g, "-"); // Remove multiple hyphens
+
+                slugInput.value = slug;
+            }
+
+            function validateSlug() {
+                let slug = slugInput.value;
+                slug = slug.toLowerCase()
+                    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
+                    .replace(/\s+/g, "-") // Replace spaces with hyphens
+                    .replace(/-+/g, "-"); // Remove multiple hyphens
+
+                slugInput.value = slug;
+            }
+
+            // Improved Hindi to English transliteration function
+            function transliterate(text) {
+                const mapping = {
+                    "अ": "a",
+                    "आ": "aa",
+                    "इ": "i",
+                    "ई": "ee",
+                    "उ": "u",
+                    "ऊ": "oo",
+                    "ए": "e",
+                    "ऐ": "ai",
+                    "ओ": "o",
+                    "औ": "au",
+                    "क": "k",
+                    "ख": "kh",
+                    "ग": "g",
+                    "घ": "gh",
+                    "च": "ch",
+                    "छ": "chh",
+                    "ज": "j",
+                    "झ": "jh",
+                    "ट": "t",
+                    "ठ": "th",
+                    "ड": "d",
+                    "ढ": "dh",
+                    "ण": "n",
+                    "त": "t",
+                    "थ": "th",
+                    "द": "d",
+                    "ध": "dh",
+                    "न": "n",
+                    "प": "p",
+                    "फ": "ph",
+                    "ब": "b",
+                    "भ": "bh",
+                    "म": "m",
+                    "य": "y",
+                    "र": "r",
+                    "ल": "l",
+                    "व": "v",
+                    "श": "sh",
+                    "ष": "sh",
+                    "स": "s",
+                    "ह": "h",
+                    "ज्ञ": "gy",
+                    "श्र": "shr",
+                    "त्र": "tra",
+                    "क्ष": "ksh",
+                    "एं": "en",
+                    "ऑ": "o",
+                    "इं": "in",
+                    "ईं": "een",
+                    "उं": "un",
+                    "ऊं": "oon",
+                    " ": "-",
+                    "1": "1",
+                    "2": "2",
+                    "3": "3",
+                    "4": "4",
+                    "5": "5",
+                    "6": "6",
+                    "7": "7",
+                    "8": "8",
+                    "9": "9",
+                    "0": "0"
+                };
+
+                return text.split("").map(char => mapping[char] || char).join("");
+            }
+        });
+
+        function updateCharCount() {
+            let inputField = document.getElementById('sub_title');
+            let charCount = inputField.value.length;
+            let maxLength = inputField.getAttribute('maxlength');
+            document.getElementById('char_count').textContent = charCount + " / " + maxLength + " characters";
         }
     </script>
 </body>

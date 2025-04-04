@@ -90,7 +90,7 @@
         }
 
         .search-results input {
-            width: 400px;
+            width: 210px;
         }
 
         .search-result-inner {
@@ -283,15 +283,55 @@
         <br>
         <div class="search-results container-fluid">
             <div class="search-result-inner">
-                @if (request()->search)
+                @php
+                    // Determine the correct category model based on locale
+                    $locale = request()->segment(2);
+                    $catModel =
+                        $locale === 'en'
+                            ? \App\Models\InsightCategory::class
+                            : \App\Models\InsightsHindiCategory::class;
+
+                    // Fetch category name if a category is selected
+                    $categoryName = request()->category ? $catModel::find(request()->category)?->catname : null;
+                @endphp
+
+                @if (request()->search || request()->type || request()->category)
                     <div style="text-align: center; color: #28b779;">
-                        Found {{ $totalCount }} Results For <strong>{{ request()->search }}</strong>
+                        Found <strong>{{ $totalCount }} </strong>Results For:
+                        <strong>
+                            {{ request()->search ? 'Search: ' . request()->search : '' }}
+                            {{ request()->type ? ' | Type: ' . request()->type : '' }}
+                            {{ $categoryName ? ' | Category: ' . $categoryName : '' }}
+                        </strong>
                     </div>
                 @endif
+
+
                 <div></div>
-                <form action="{{ url('admin/' . $type . '/multilist-insights') }}" method="get">
+                <form method="get">
                     <input type="text" name="search"class="span7" placeholder="Enter Title or Insights Id to search"
                         @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
+                    @if (!empty(request()->search))
+                    <select name="type" class="span" onchange="this.form.submit()">
+                        <option value="">Insight Types</option>
+                        @foreach ($insightTypes as $insightType)
+                            <option value="{{ $insightType }}"
+                                {{ request()->query('type') == $insightType ? 'selected' : '' }}>
+                                {{ $insightType }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @endif
+                    <select name="category" onchange="this.form.submit()">
+                        <option value="">Insights Category</option>
+                        @foreach ($InsightCategory as $cat)
+                            <option value="{{ $cat->id }}"
+                                {{ request()->query('category') == $cat->id ? 'selected' : '' }}>
+                                {{ $cat->catname }}
+                            </option>
+                        @endforeach
+                    </select>
+                    {{-- @endif --}}
                     <input type="submit" class="btn"
                         value="Search"style="margin-top: -12px; margin-left: 10px; width: 110px;" />
                     <a href="{{ url('admin/' . $type . '/multilist-insights') }}"
@@ -432,12 +472,7 @@
                                                 <td>
 
                                                     <a href="{{ $url }}" target="_blank"
-                                                        class="visit">Visit</a>
-                                                    {{-- <div class="round-button">
-                                                        <div class="round-button-circle"><a
-                                                                href="{{ $url }}" target="_blank"
-                                                                class="round-button">Go</a></div>
-                                                    </div> --}}
+                                                        class="btn btn-info"><i class="fa fa-external-link"></i></a>
                                                 </td>
                                                 <td>
                                                     @foreach ($insights->author as $author)
@@ -500,7 +535,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="custpagin">{{ $data->links('pagination::bootstrap-4') }}</div>
+                        <div class="custpagin">
+                            {{-- {{ $data->links('pagination::bootstrap-4') }} --}}
+                            {{ $data->appends(request()->query())->links('pagination::bootstrap-4') }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -510,6 +548,7 @@
     <!--Footer-part-->
     @include('admin.includes.footer')
     <!--end-Footer-part-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>

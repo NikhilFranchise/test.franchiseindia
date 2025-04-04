@@ -84,28 +84,7 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    // public function loginCheck(Request $request)
-    // {
-    //     $email      = $request->email;
-    //     $password   = $request->password;
-    //     $admUser    = AdminUser::query()->where(['admin_email' => $email])->first();
-
-    //     if ($admUser == null)
-    //         return redirect('admin/login');
-
-    //     //checking if hash exists in the entered password
-    //     if (Hash::getFacadeRoot()->check($password, $admUser->admin_password)) {
-    //         session()->flush();
-    //         $adm_name = $admUser->admin_name;
-    //         $request->session()->put('admin_name', $adm_name);
-    //         $request->session()->put('adminEmail', $email);
-    //         $request->session()->put('role', $admUser->admin_dept);
-    //         $request->session()->put('author_creation_capability', $admUser->can_create_author);
-    //         return redirect('admin/dashboard');
-    //     }
-
-    //     return redirect('admin/login');
-    // }
+    
     public function loginCheck(Request $request)
     {
         $credentials = [
@@ -1872,6 +1851,8 @@ class AdminController extends Controller
         $catId = $request->insights_cat;
         $subcatId = $request->insights_subcat;
         $isInternational = $request->is_intl == 1 ? 1 : 0;
+        $alt = $request->img_alt;
+
         // dd($titleslug);
         // Generate slug based on language
         if ($request->segment(2) == 'en') {
@@ -1922,6 +1903,7 @@ class AdminController extends Controller
         $newsData->subcat_id = $subcatId;
         $newsData->related_brand = $brand;
         $newsData->image = $imageUrl;
+        $newsData->img_alt = $alt;
         $newsData->slug = $slug;
         $newsData->is_intl = $isInternational;
         $newsData->author_id = $request->insights_publisher;
@@ -1940,32 +1922,6 @@ class AdminController extends Controller
             return redirect($redirectUrl)->with('error', "Insights Data Couldn't Be Saved.");
         }
     }
-
-
-    // public function listinsights(Request $request)
-    // {
-    //     // Determine the model based on the language segment
-    //     $locale = $request->segment(2);
-    //     $model = ($locale === 'en') ? InsightList::class : InsightListHindi::class;
-
-    //     // Fetch data with filters
-    //     $search = $request->query('search'); // Fetch search query from request
-    //     $data = $model::query()
-    //         ->whereNotIn('news_type', ['ri', 'ir']) // Exclude specific news types
-    //         ->when($search, function ($query) use ($search) {
-    //             $query->where(function ($q) use ($search) {
-    //                 $q->where('title', 'LIKE', "%{$search}%")
-    //                     ->orWhere('news_id', $search);
-    //             });
-    //         })
-    //         ->whereIn('status', [0, 1, 2]) // Filter by status (active/inactive)
-    //         ->orderByDesc('news_id') // Order by descending news ID
-    //         ->paginate(25)
-    //         ->appends(['search' => $search]); // Append search to pagination;
-
-    //     // Return the view with data
-    //     return view('admin.insights.list-edit-insights', compact('data'));
-    // }
 
     public function listinsights(Request $request)
     {
@@ -2008,57 +1964,6 @@ class AdminController extends Controller
         // Return the view with data and count
         return view('admin.insights.list-edit-insights', compact('data', 'totalRecords', 'insightTypes', 'type', 'InsightsCategory'));
     }
-
-
-
-    // public function multilistinsights(Request $request)
-    // {
-    //     // Determine the model and category model based on the language segment
-    //     $locale = $request->segment(2);
-    //     $model = ($locale === 'en') ? InsightList::class : InsightListHindi::class;
-    //     $catModel = ($locale === 'en') ? InsightCategory::class : InsightsHindiCategory::class;
-
-    //     // Fetch filtered and paginated data
-    //     $search = $request->query('search');
-    //     $type = $request->query('type');
-    //     $ctgry = $request->query('category');
-    //     $query = $model::with(['category', 'subcategory', 'author'])
-    //         ->whereNotIn('news_type', ['ri', 'ir']) // Exclude specific news types
-    //         ->when($search, function ($query) use ($search) {
-    //             $query->where(function ($q) use ($search) {
-    //                 $q->where('title', 'LIKE', "%{$search}%")
-    //                     ->orWhere('news_id', $search);
-    //             });
-    //         })
-    //         ->when($type, function ($query) use ($type) {
-    //             $query->where('insight_type', $type); // Filter by selected insight type
-    //         })
-    //         ->when($ctgry, function ($query) use ($ctgry) {
-    //             $query->where('cat_id', $ctgry); // Filter by selected category
-    //         })
-
-    //         ->whereIn('status', [0, 1, 2]); // Filter by active/inactive status
-    //     $totalRecords = $query->count(); // Get total count before pagination
-
-    //     $data = $query->orderByDesc('news_id') // Order by descending news ID
-    //         ->paginate(30)
-    //         ->appends(['search' => $search, 'type' => $type]);
-
-    //     $insightTypes = $model::distinct()->pluck('insight_type');
-    //     // $InsightsCategory = $catModel::query()->select('id', 'catname')->get();
-    //     $totalCount = $query->total();
-    //     // Fetch dropdown data
-    //     $InsightCategory = $catModel::select('id', 'catname')
-    //         ->where('status', 1)
-    //         ->get();
-
-    //     $InsightAuthor = AuthorList::select('author_id', 'title', 'slug')
-    //         ->where('status', 'A')
-    //         ->get();
-
-    //     // Return the view with data
-    //     return view('admin.insights.multilist-edit', compact('data', 'InsightCategory', 'InsightAuthor', 'totalCount', 'insightTypes'));
-    // }
 
     public function multilistinsights(Request $request)
     {
@@ -2118,9 +2023,6 @@ class AdminController extends Controller
             'insightTypes'
         ));
     }
-
-
-
 
     public function saveMultipleInsights(Request $request)
     {
@@ -2209,6 +2111,7 @@ class AdminController extends Controller
             $associatedTags     = ContentTagsAssigned::query()->where('content_id', $newsId)->where('content_type', 2)->select('tag_id')->get();
             $assocTags = [];
             //fetching associated tags to a array
+            // dd($data);
             if ($associatedTags != null) {
                 foreach ($associatedTags as $tags) {
                     $assocTags[]    = SeoTag::query()->where('tag_id', $tags->tag_id)->select('tag_id', 'name')->first();
@@ -2260,6 +2163,7 @@ class AdminController extends Controller
 
     public function updateInsights(Request $request)
     {
+        // dd($request->all());
         $this->validate($request, [
 
             'insights_publisher' => 'required',
@@ -2277,22 +2181,8 @@ class AdminController extends Controller
         } else if (!empty($request->slug) && request()->segment(2) == 'hi') {
             $slug              = $request->slug;
         } else {
-            // Hindi slug generation
-            // $titleSlug = trim($title);
-            // $titleSlug = mb_strtolower($titleSlug, "UTF-8");
-            // // Retain valid Hindi characters, English letters, numbers, and spaces
-            // $titleSlug = preg_replace("/[^a-z0-9\s\p{Devanagari}]/u", "", $titleSlug);
-            // // Replace multiple spaces with a single space
-            // $titleSlug = preg_replace("/\s+/", " ", $titleSlug);
-            // // Replace spaces with dashes
-            // $titleSlug = str_replace(" ", "-", $titleSlug);
-            // // Replace dots with dashes
-            // $slug = str_replace(".", "-", $titleSlug);
             $slug = Str::slug($title);
-            // dd($slug);
         }
-        // dd($role);
-        // $kicker            = $request->kicker;
         $homeTitle         = $request->home_title;
         $subTitle          = $request->sub_title;
         $desc              = $request->input('content');
@@ -2301,6 +2191,8 @@ class AdminController extends Controller
         $subcat_id         = $request->insights_subcat;
         $imageUrl          = $request->old_image;
         $isInternational   = ($request->is_intl == 1) ? 1 : 0;
+        $alt               = $request->img_alt;
+        $published_date    = $request->published_date;
 
         //inserting files
         if ($request->hasFile('image')) {
@@ -2316,7 +2208,6 @@ class AdminController extends Controller
         if ($request->segment(2) == 'en') {
             $update = [
                 'title'         => $title,
-                // 'kicker'        => $kicker,
                 'news_type'     => $role,
                 'homeTitle'     => $homeTitle,
                 'shortDesc'     => $subTitle,
@@ -2328,7 +2219,9 @@ class AdminController extends Controller
                 'slug'          => $slug,
                 'is_intl'       => $isInternational,
                 'updated_by'    => $request->session()->get('adminEmail'),
-                'author_id'     => request()->insights_publisher
+                'author_id'     => request()->insights_publisher,
+                'img_alt'       => $alt,
+                'published_date'=> $published_date,
             ];
 
             if ($request->hasFile('image'))
@@ -2348,7 +2241,6 @@ class AdminController extends Controller
         } else {
             $update = [
                 'title'         => $title,
-                // 'kicker'        => $kicker,
                 'news_type'     => $role,
                 'homeTitle'     => $homeTitle,
                 'shortDesc'     => $subTitle,
@@ -2356,12 +2248,13 @@ class AdminController extends Controller
                 'insight_type'  => $insight_type,
                 'cat_id'       => $cat_id,
                 'subcat_id'   => $subcat_id,
-                //
                 'related_brand' => $brand,
                 'slug'          => $slug,
                 'is_intl'       => $isInternational,
                 'updated_by'    => $request->session()->get('adminEmail'),
-                'author_id'     => request()->insights_publisher
+                'author_id'     => request()->insights_publisher,
+                'img_alt'       => $alt,
+                'published_date'=> $published_date,
             ];
 
             if ($request->hasFile('image'))

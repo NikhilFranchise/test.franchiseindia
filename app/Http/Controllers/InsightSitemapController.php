@@ -1011,10 +1011,6 @@ class InsightSitemapController extends Controller
         $articleIds = $articles->pluck('news_id')->toArray();
 
         // Get associated tag IDs for each article
-        // $associatedTags = $contentModel::query()
-        //     ->whereIn('content_id', $articleIds)
-        //     ->where('content_type', 2)
-        //     ->pluck('tag_id', 'content_id'); // key = news_id, value = tag_id
         $associatedTags = $contentModel::query()
             ->whereIn('content_id', $articleIds)
             ->where('content_type', 2)
@@ -1030,20 +1026,6 @@ class InsightSitemapController extends Controller
 
         // Group tags by news_id
         $groupedTags = [];
-        // foreach ($associatedTags as $newsId => $tags) {
-        //     if (!isset($groupedTags[$newsId])) {
-        //         $groupedTags[$newsId] = [];
-        //     }
-        //     // if (isset($tagNames[$tagId])) {
-        //     //     $groupedTags[$newsId][] = $tagNames[$tagId];
-        //     // }
-        //     foreach ($tags as $tag) {
-        //         if (isset($tagNames[$tag->tag_id])) {
-        //             $groupedTags[$newsId][] = $tagNames[$tag->tag_id];
-        //             // dd($groupedTags[$newsId][]);
-        //         }
-        //     }
-        // }
         foreach ($associatedTags as $newsId => $tags) {
             $groupedTags[$newsId] = collect($tags)->pluck('tag_id')->map(function ($tagId) use ($tagNames) {
                 return $tagNames[$tagId] ?? null;

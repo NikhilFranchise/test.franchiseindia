@@ -33,5 +33,8 @@
     <sitemap>
         <loc>{{ url('/insights/' . $lang . '/tags.xml') }}</loc>
     </sitemap>
+    <sitemap>
+        <loc>{{ url('/insights/' . $lang . '/googlenews.xml') }}</loc>
+    </sitemap>
 
 </sightmapindex>
