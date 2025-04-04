@@ -193,8 +193,9 @@
             border-color: #28a745;
             box-shadow: none;
         }
-        .table td{
-            padding: 6px!important;
+
+        .table td {
+            padding: 6px !important;
         }
     </style>
 </head>
@@ -352,8 +353,8 @@
                                                 @endif
 
                                             </td>
-                                            <td><a href="{{ $url }}" target="_blank"
-                                                    class="btn btn-info"><i class="fa fa-external-link"></i>
+                                            <td><a href="{{ $url }}" target="_blank" class="btn btn-info"><i
+                                                        class="fa fa-external-link"></i>
                                                 </a></td>
                                             <td>
                                                 <div class="labelwrap">
@@ -381,8 +382,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <center><button class="btn btn-warning"
-                                                        style="border-radius: 4px"><a
+                                                <center><button class="btn btn-warning" style="border-radius: 4px"><a
                                                             href="edit-insights-view/{{ $insights->news_id }}"><i
                                                                 class='fas fa-edit'></i>
                                                         </a></button>
@@ -432,6 +432,12 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="{{ url('admin/js/jquery.ui.custom.js') }}"></script>
+    <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('admin/js/select2.min.js') }}"></script>
+    <script src="{{ url('admin/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url('admin/js/matrix.js') }}"></script>
+    <script src="{{ url('admin/js/matrix.tables.js') }}"></script>
 
     <script>
         @if (Session::has('success'))
@@ -511,12 +517,6 @@
             $("#confirmCancel").one("click", fClose);
         }
     </script>
-    {{-- <script src="{{ url('admin/js/jquery.ui.custom.js') }}"></script>
-    <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url('admin/js/select2.min.js') }}"></script>
-    <script src="{{ url('admin/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ url('admin/js/matrix.js') }}"></script>
-    <script src="{{ url('admin/js/matrix.tables.js') }}"></script> --}}
 </body>
 
 </html>
