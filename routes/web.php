@@ -18,6 +18,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentNewController;
 use App\Http\Controllers\InvPaymentController;
 use App\Http\Controllers\FranPaymentController;
 use App\Http\Controllers\NewsLetterController;
@@ -230,6 +231,16 @@ Route::post('unsub', [MailerController::class, 'unsubMailer']); //Newsletter uns
 Route::post('inv-lead',                       [ExpressInstaController::class, 'invLead']);       // inv view cont & exp int & category page exp int
 Route::post('inv-lead-normal',                [ExpressInstaController::class, 'invNormalLead']); // paid inv not want
 //Payment Routes
+Route::get('paymentnew', [PaymentNewController::class, 'paymentnew']);
+
+Route::post('paymentnewsubmit', [PaymentNewController::class, 'initiatePayment']);
+Route::post('handlePaymentResponse', [PaymentNewController::class, 'handlePaymentResponse']);
+Route::get('payment-success', function () {
+    return view('payment.success');
+})->name('payment.success');
+// routes/web.php
+Route::get('payment-cancel', [PaymentNewController::class, 'showCancelPage'])->name('payment.cancel');
+
 Route::get('payment', [PaymentController::class, 'payment']);
 Route::group(['prefix' => 'investor'], function () {
     Route::get('plan', [InvestorController::class, 'campaignPlan']);
@@ -1234,3 +1245,7 @@ Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
 Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
 
 // Route::get('related', [InsightsController::class, 'relatedarticles']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

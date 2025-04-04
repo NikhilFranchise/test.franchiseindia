@@ -24,6 +24,7 @@ class PaymentController extends Controller
     {
         return view('site/payment');
     }
+ 
 
     /**
      * Failed Payment
@@ -447,7 +448,7 @@ class PaymentController extends Controller
     public function paymentHdfcPayuPg(Request $request)
     {
         $name     = $request->name;
-        $amt   = $request->camount;
+        $amt      = $request->camount;
         $address  = $request->address;
         $email    = $request->email;
         $mobile   = $request->mobile;
