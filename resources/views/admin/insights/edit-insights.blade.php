@@ -31,28 +31,29 @@
     @endsection
     @include('admin.includes.sidebar')
     <!--sidebar-menu-->
-    @php
-        $locale = request()->segment(2);
-    @endphp
     <div id="content">
         <!--breadcrumbs-->
+        @php
+            $locale = request()->segment(2);
+            $lang = $locale == 'en' ? 'English' : 'Hindi';
+        @endphp
         <div id="content-header">
             <div id="breadcrumb">
                 <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
                         class="icon-home"></i>Home</a>
-                <a href="{{ url('admin/list-insights') }}" class="tip-bottom">Insights</a>
-                <a href="" class="current">Edit-Insights</a>
+                <a href="list-insights" class="tip-bottom">{{ $lang . ' Insights' }}</a>
+                <a href="" class="current">{{ 'Edit ' . $lang . ' Insights' }}</a>
             </div>
-            <h1>Edit Insights</h1>
+            {{-- <h1>Edit Insights</h1> --}}
         </div>
         <!--End-breadcrumbs-->
         <div class="container-fluid">
-            <hr>
+            {{-- <hr> --}}
             <div class="row-fluid">
                 <div class="widget-box">
                     <div class="widget-title">
                         <span class="icon"> <i class="icon-align-justify"></i> </span>
-                        <h5>Insights Details</h5>
+                        <h5>{{ 'Edit ' . $lang . ' Insights' }}</h5>
                     </div>
                     <div class="widget-content nopadding">
                         <form method="POST" class="form-horizontal" enctype="multipart/form-data"
@@ -66,12 +67,12 @@
                                         <option value="{{ $data->author_id }}" selected>{{ $data->author[0]->title }}
                                         </option>
                                     </select>
+                                    @if ($errors->has('insights_publisher'))
+                                        @foreach ($errors->get('insights_publisher') as $error)
+                                            <br><span style="color: red;">{{ $error }}</span>
+                                        @endforeach
+                                    @endif
                                 </div>
-                                @if ($errors->has('insights_publisher'))
-                                    @foreach ($errors->get('insights_publisher') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
                             </div>
                             <div class="control-group">
                                 <label class="control-label">Insights Type :</label>
@@ -132,15 +133,6 @@
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">Publish Url :</label>
-                                <div class="controls">
-                                    <input type="text" name="slug" id="slugId" oninput="validateInput()"
-                                        maxlength="125" class="span11" pattern="[a-z0-9\-]+"
-                                        title="Only small letters, numbers, and hyphens are allowed"
-                                        value="{{ $data->slug }}" />
-                                </div>
-                            </div>
-                            <div class="control-group">
                                 <label class="control-label">Insights Title :</label>
                                 <div class="controls">
                                     <input type="text" required maxlength="125" class="span11"
@@ -153,18 +145,32 @@
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">Insights Home Title :</label>
+                                <label class="control-label">Published Url :</label>
                                 <div class="controls">
-                                    <input type="text" required maxlength="40" class="span11"
-                                        placeholder="Enter Home Title" name="home_title"
-                                        value="{{ $data->homeTitle }}" />
+                                    <input type="text" name="slug" id="slugId" oninput="validateInput()"
+                                        maxlength="125" class="span11" pattern="[a-z0-9\-]+"
+                                        title="Only small letters, numbers, and hyphens are allowed"
+                                        value="{{ $data->slug }}" />
                                 </div>
                             </div>
+                            <div class="control-group">
+                                <label class="control-label">Published Date :</label>
+                                <div class="controls">
+                                    <input type="date" class="span11" name="published_date" id="published_date"
+                                        value="{{ !empty($data->published_date) ? date('Y-m-d', strtotime($data->published_date)) : date('Y-m-d', strtotime($data->created_at)) }}"
+                                        max="{{ date('Y-m-d') }}" />
+                                </div>
+                            </div>
+
                             <div class="control-group">
                                 <label class="control-label">Insights Sub Title :</label>
                                 <div class="controls">
                                     <input type="text" required maxlength="255" class="span11"
-                                        placeholder="Sub title" name="sub_title" value="{{ $data->shortDesc }}" />
+                                        placeholder="Sub title" name="sub_title" id="sub_title"
+                                        value="{{ $data->shortDesc }}"onload="updateCharCount()" />
+                                    <p id="char_count" style="color: gray; margin-top: 5px;">
+                                        ({{ strlen(old('sub_title', $data->shortDesc)) }} / 255 characters)</p>
+
                                     @if ($errors->has('sub_title'))
                                         @foreach ($errors->get('sub_title') as $error)
                                             <br><span style="color: red;">{{ $error }}</span>
@@ -172,17 +178,6 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="control-group">
-                                <label for="international_check" class="control-label">International Content?
-                                    :</label>
-                                <div class="controls">
-                                    <input type="checkbox" id="international_check" name="is_intl" value="1"
-                                        @if ($data->is_intl == 1) checked @endif>
-                                </div>
-                            </div>
-                            @php
-                                $lang = request()->segment(2);
-                            @endphp
                             <div class="control-group">
                                 <label for="inputStatus" class="control-label">Insights Content :</label>
                                 @if ($errors->has('content'))
@@ -194,8 +189,6 @@
                                     <div class="form-group">
                                         <textarea name="content" id="inputDescription" class="form-control customError" minlength="2"
                                             placeholder="Content Description" required>{{ $data->content }}</textarea>
-                                        <img src="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $lang) }}"
-                                            height="106" width="187" style="padding-top: inherit;">
                                     </div>
                                 </div>
                             </div>
@@ -203,7 +196,7 @@
                                 <label class="control-label">Image :</label>
                                 <div class="controls">
                                     <input type="hidden" name="old_image"
-                                        value="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $lang) }}" />
+                                        value="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $locale) }}" />
                                     <input type="file" id="showImage" class="span11" name="image">
                                     <div style="display: none; color: red;" id="showImage_msg">Invalid image type!
                                         Please
@@ -214,23 +207,21 @@
                                     </div>
                                     <br />
                                     Note : * Image Size 1600x940
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label for="select2" class="control-label">Related Brands :</label>
-                                <div class="controls" id="brands">
-                                    <select multiple name="brands[]" id="select2" class="span11">
-                                        @if (isset($company) && !empty($company))
-                                            @foreach ($company as $companyData)
-                                                @if ($companyData)
-                                                    <option value="{{ $companyData->franchisor_id }}"
-                                                        @if (in_array($companyData->franchisor_id, $brands)) selected @endif>
-                                                        {{ $companyData->company_name }}
-                                                    </option>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </select>
+
+                                    <!-- Alt Text Input (Initially Hidden) -->
+                                    <br>
+                                    <input type="text" id="altText" name="img_alt" class="span11"
+                                        value="{{ $data->img_alt }}" placeholder="Enter image alt text"
+                                        style="margin-top: 10px;">
+                                    <!-- Existing image -->
+                                    <img class="oldImage"
+                                        src="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $locale) }}"
+                                        style="max-width: 300px; margin-top: 10px; padding-top:inherit; border-radius: 5px;">
+                                    <br>
+                                    <!-- New image preview (hidden initially) -->
+                                    <img id="imagePreview" src="#" alt="Image Preview"
+                                        style="max-width: 300px; margin-top: 10px; display: none; border-radius: 5px;">
+
                                 </div>
                             </div>
                             <div class="control-group">
@@ -351,46 +342,149 @@
 
         });
 
+        // $("#showImage").change(function() {
+        //     var val = $(this).val();
+        //     var fileInput = this;
+        //     val = val.replace('jpeg', 'jpg');
+        //     switch (val.substring(val.lastIndexOf('.') + 1).toLowerCase()) {
+        //         case 'gif':
+        //         case 'jpg':
+        //         case 'jpeg':
+        //         case 'png':
+        //         case 'webp':
+        //             checkImageSize(fileInput);
+        //             break;
+        //         default:
+        //             $(this).val('');
+        //             toastr.error(
+        //                 'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
+        //             $('#showImage_msg').css('display', 'block');
+        //             setTimeout(function() {
+        //                 $('#showImage_msg').css('display', 'none');
+        //             }, 5000);
+        //             $('#newssubmit').prop('disabled', true);
+        //             break;
+        //     }
+        // });
+
+
+        // function checkImageSize(fileInput) {
+        //     if (fileInput.files[0].size > 153600) {
+        //         toastr.error('Image size should be 150 KB or less.');
+        //         $('#showImage_msg_size').css('display', 'block');
+        //         setTimeout(function() {
+        //             $('#showImage_msg_size').css('display', 'none');
+        //         }, 5000);
+        //         $('#newssubmit').prop('disabled', true);
+        //     } else {
+        //         //toastr.success('Image size is valid. You can proceed.');
+        //         $('#showImage_msg_size').css('display', 'none');
+        //         $('#newssubmit').prop('disabled', false);
+        //     }
+
+        // }
         $("#showImage").change(function() {
-            var val = $(this).val();
             var fileInput = this;
-            val = val.replace('jpeg', 'jpg');
-            switch (val.substring(val.lastIndexOf('.') + 1).toLowerCase()) {
-                case 'gif':
-                case 'jpg':
-                case 'jpeg':
-                case 'png':
-                case 'webp':
-                    checkImageSize(fileInput);
-                    break;
-                default:
-                    $(this).val('');
-                    toastr.error(
-                        'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
-                    $('#showImage_msg').css('display', 'block');
-                    setTimeout(function() {
-                        $('#showImage_msg').css('display', 'none');
-                    }, 5000);
-                    $('#newssubmit').prop('disabled', true);
-                    break;
+            var file = fileInput.files[0];
+
+            if (!file) {
+                return; // Exit if no file is selected
             }
-        });
 
+            var validTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/webp'];
 
-        function checkImageSize(fileInput) {
-            if (fileInput.files[0].size > 153600) {
-                toastr.error('Image size should be 150 KB or less.');
-                $('#showImage_msg_size').css('display', 'block');
+            if (!validTypes.includes(file.type)) {
+                $(this).val('');
+                toastr.error('Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
+                $('#showImage_msg').show();
                 setTimeout(function() {
-                    $('#showImage_msg_size').css('display', 'none');
+                    $('#showImage_msg').hide();
                 }, 5000);
                 $('#newssubmit').prop('disabled', true);
+                return;
+            }
+
+            // Check Image Size
+            if (file.size > 153600) {
+                toastr.error('Image size should be 150 KB or less.');
+                $('#showImage_msg_size').show();
+                setTimeout(function() {
+                    $('#showImage_msg_size').hide();
+                }, 5000);
+                $('#newssubmit').prop('disabled', true);
+                return;
+            }
+
+            // Hide Old Image & Show New Preview
+            $(".oldImage").hide(); // Hide the old image
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $("#imagePreview").attr("src", e.target.result).show();
+            };
+            reader.readAsDataURL(file);
+
+            // Show & Require Alt Text Input
+            $("#altText").show().val('').prop('required', true);
+
+            // Validate form before enabling submit button
+            validateForm();
+        });
+
+        $("#altText").on("input", function() {
+            validateForm();
+        });
+
+        function validateForm() {
+            var altText = $("#altText").val().trim();
+            var imageSelected = $("#showImage").val() !== "";
+
+            if (imageSelected && altText !== "") {
+                $("#newssubmit").prop("disabled", false);
             } else {
-                //toastr.success('Image size is valid. You can proceed.');
-                $('#showImage_msg_size').css('display', 'none');
-                $('#newssubmit').prop('disabled', false);
+                $("#newssubmit").prop("disabled", true);
             }
         }
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // let titleInput = document.getElementById("title");
+            let slugInput = document.getElementById("slugId");
+            // let slugContainer = document.getElementById("slug-container");
+            // let subTitleInput = document.getElementById("sub_title");
+            let isSlugModified = false; // Track if the slug is manually changed
+
+            // Detect manual slug changes
+            slugInput.addEventListener("input", function() {
+                isSlugModified = true;
+                validateSlug();
+            });
+            if (!isSlugModified) {
+                generateSlug();
+            }
+            // slugContainer.style.display = "block"; // Show slug field
+
+
+            function generateSlug() {
+                let title = titleInput.value;
+                let slug = title.toLowerCase()
+                    .trim()
+                    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
+                    .replace(/\s+/g, "-") // Replace spaces with dashes
+                    .replace(/-+/g, "-"); // Remove multiple dashes
+
+                slugInput.value = slug;
+            }
+
+            function validateSlug() {
+                let slug = slugInput.value;
+                slug = slug.toLowerCase()
+                    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
+                    .replace(/\s+/g, "-") // Replace spaces with hyphens
+                    .replace(/-+/g, "-"); // Remove multiple dashes
+
+                slugInput.value = slug;
+            }
+        });
     </script>
     <script>
         $(document).ready(function() {
@@ -556,6 +650,23 @@
                 }
             });
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            let subTitleInput = document.getElementById("sub_title");
+            let charCount = document.getElementById("char_count");
+
+            // Update character count initially (for edit page)
+            updateCharCount();
+
+            // Update character count when typing
+            subTitleInput.addEventListener("input", updateCharCount);
+
+            function updateCharCount() {
+                let currentLength = subTitleInput.value.length;
+                let maxLength = subTitleInput.getAttribute("maxlength");
+                charCount.textContent = `(${currentLength} / ${maxLength} characters)`;
+            }
+        });
     </script>
 </body>
 

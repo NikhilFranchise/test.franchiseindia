@@ -19,7 +19,7 @@
         a.visit {
             background: #014ea5;
             border-radius: 4px;
-            width: 93px;
+            width: 70px;
             display: block;
             color: #ffffff;
             margin: 0px 5px;
@@ -44,7 +44,11 @@
         }
 
         .search-results input {
-            width: 400px;
+            width: 210px;
+        }
+
+        .search-results select {
+            width: 160px;
         }
 
         .search-result-inner {
@@ -189,6 +193,10 @@
             border-color: #28a745;
             box-shadow: none;
         }
+
+        .table td {
+            padding: 6px !important;
+        }
     </style>
 </head>
 
@@ -213,7 +221,7 @@
         <div id="content-header">
             <div id="breadcrumb"> <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
                         class="icon-home"></i> Home</a> <a href="list-insights" class="tip-bottom">Insights List</a>
-                <a href="" class="current">{{ $lang }} List-Insights</a>
+                <a href="" class="current">{{ $lang }} List Insights</a>
             </div>
             <h1>{{ $lang }} Insights Listing</h1>
         </div>
@@ -228,12 +236,33 @@
                     class="greens float-right btn btn-md btn-success">
                     <i class="fa fa-plus-circle"></i>{{ ' Add New ' . $lang . ' Insights' }}
                 </a>
-                <form action="{{ url('admin/en/list-insights') }}" method="get">
+                <form method="get">
                     <input type="text" name="search"class="span7" placeholder="Enter Title or Insights Id to search"
                         @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
+                    @if (!empty(request()->search))
+                        <select name="type" class="span" onchange="this.form.submit()">
+                            <option value="">Insight Types</option>
+                            @foreach ($insightTypes as $insightType)
+                                <option value="{{ $insightType }}"
+                                    {{ request()->query('type') == $insightType ? 'selected' : '' }}>
+                                    {{ $insightType }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <select name="category" onchange="this.form.submit()">
+                            <option value="">Insights Category</option>
+                            @foreach ($InsightsCategory as $cat)
+                                <option value="{{ $cat->id }}"
+                                    {{ request()->query('category') == $cat->id ? 'selected' : '' }}>
+                                    {{ $cat->catname }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @endif
                     <input type="submit" class="btn"
                         value="Search"style="margin-top: -12px; margin-left: 10px; width: 110px;" />
-                    <a href="{{ url('admin/list-insights') }}" class="btn"style="margin-top: -12px;">Reset
+                    <a href="{{ url('admin/' . $locale . '/list-insights') }}"
+                        class="btn"style="margin-top: -12px;">Reset
                         Search</a>
                 </form>
             </div>
@@ -249,7 +278,15 @@
                         <li @if (url()->current() == url('admin/hi/list-insights')) class="active" @endif><a
                                 href="{{ url('admin/hi/list-insights') }}">Hindi Insights List</a></li>
                     </ul>
+
                     <div class="widget-box">
+
+                        @if (request()->query('search'))
+                            <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+                                <h5>Showing {{ $totalRecords }} Records for
+                                    "<strong>{{ request()->query('search') }}</strong>"</h5>
+                            </div>
+                        @endif
                         <div class="widget-content nopadding">
                             <table class="table table-bordered table-striped">
                                 <thead>
@@ -257,9 +294,10 @@
                                         <th>Id</th>
                                         <th>Title</th>
                                         <th>Insights Type</th>
-                                        {{-- <th>Insights Category</th>  --}}
-                                        <th>Link</th>
+                                        <th>Views</th>
+                                        <th>Created Date</th>
                                         <th>Published Date</th>
+                                        <th>Link</th>
                                         <th>Status/Privacy</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -303,25 +341,22 @@
                                                     {{ $insights->insight_type }}
                                                 @endif
                                             </td>
-                                            {{-- <td>{{$insights->category[0]->catname}}</td>  --}}
-                                            <td>
-                                                {{-- <div class="round-button">
-                                                    <div class="round-button-circle"><a href="{{ $url }}"
-                                                            target="_blank" class="round-button">Go</a></div>
-                                                </div> --}}
-                                                <a href="{{ $url }}" target="_blank" class="visit">Visit</a>
-
-                                            </td>
+                                            <td>{{ $insights->views }}</td>
                                             <td>{{ date('d-m-Y', strtotime($insights->created_at)) }}</td>
                                             <td>
-                                                {{-- <center>
-                                                    <label class="switch">
-                                                        <input type="checkbox" value="{{ $insights->news_id }}"
-                                                            class="activestate"
-                                                            {{ $insights->status == 1 ? 'checked' : '' }}>
-                                                        <span class="slider round"></span>
-                                                    </label>
-                                                </center> --}}
+                                                @if ($insights->published_date && $insights->created_at == $insights->published_date)
+                                                    {{ date('d-m-Y', strtotime($insights->created_at)) }}
+                                                @elseif ($insights->published_date)
+                                                    {{ date('d-m-Y', strtotime($insights->published_date)) }}
+                                                @else
+                                                    {{ date('d-m-Y', strtotime($insights->created_at)) }}
+                                                @endif
+
+                                            </td>
+                                            <td><a href="{{ $url }}" target="_blank" class="btn btn-info"><i
+                                                        class="fa fa-external-link"></i>
+                                                </a></td>
+                                            <td>
                                                 <div class="labelwrap">
                                                     <label>
                                                         <input type="radio" name="status_{{ $insights->news_id }}"
@@ -347,16 +382,18 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <center><button class="btn btn-medium btn-warning"
-                                                        style="border-radius: 4px"><a
-                                                            href="edit-insights-view/{{ $insights->news_id }}">Edit</a></button>
+                                                <center><button class="btn btn-warning" style="border-radius: 4px"><a
+                                                            href="edit-insights-view/{{ $insights->news_id }}"><i
+                                                                class='fas fa-edit'></i>
+                                                        </a></button>
                                                 </center>
                                             </td>
                                             {{-- <td ><a href="{{url("admin/news/hindi/$insights->news_id")}}" class="btn btn-medium btn-{{ $insights->is_hindi == 1 ? 'success' : 'danger' }}" style="border-radius: 4px">Hindi</a></td> --}}
                                             <td>
-                                                <center><button class="btn btn-medium btn-danger deleteauthor"
+                                                <center><button class="btn btn-danger deleteauthor"
                                                         style="border-radius: 4px"
-                                                        data-value="{{ $insights->news_id }}">Delete</button></center>
+                                                        data-value="{{ $insights->news_id }}"><i
+                                                            class='fas fa-trash-alt'></i></button></center>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -377,7 +414,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="custpagin">{{ $data->links('pagination::bootstrap-4') }}</div>
+                        {{-- <div class="custpagin">{{ $data->links('pagination::bootstrap-4') }}</div> --}}
+                        <div class="custpagin">
+                            {{ $data->appends(request()->query())->links('pagination::bootstrap-4') }}</div>
                     </div>
                 </div>
             </div>
@@ -388,10 +427,17 @@
     @include('admin.includes.footer')
     <!--end-Footer-part-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="{{ url('admin/js/jquery.ui.custom.js') }}"></script>
+    <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('admin/js/select2.min.js') }}"></script>
+    <script src="{{ url('admin/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url('admin/js/matrix.js') }}"></script>
+    <script src="{{ url('admin/js/matrix.tables.js') }}"></script>
 
     <script>
         @if (Session::has('success'))
@@ -423,7 +469,8 @@
                 $.ajax({
                     type: "POST",
                     //url: '/admin//updateinsightstatus',
-                    url: '/admin/' + lang + '/updateinsightstatus', // Dynamically set the URL with the locale
+                    url: '/admin/' + lang +
+                        '/updateinsightstatus', // Dynamically set the URL with the locale
 
                     data: {
                         "News": id,
@@ -470,12 +517,6 @@
             $("#confirmCancel").one("click", fClose);
         }
     </script>
-    <script src="{{ url('admin/js/jquery.ui.custom.js') }}"></script>
-    <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url('admin/js/select2.min.js') }}"></script>
-    <script src="{{ url('admin/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ url('admin/js/matrix.js') }}"></script>
-    <script src="{{ url('admin/js/matrix.tables.js') }}"></script>
 </body>
 
 </html>

@@ -610,10 +610,10 @@ class SitemapController extends Controller
             $siteMapIndexData .= "    <sitemap>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_brands.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_category.xml') . "</loc>\n";
-            // $siteMapIndexData .= "<loc>" . url('sitemap_articles.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_articles.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_hi_category.xml') . "</loc>\n";
-            // $siteMapIndexData .= "<loc>" . url('entrepreneur_sitemap.xml') . "</loc>\n";
-            // $siteMapIndexData .= "<loc>" . url('sitemap_magazine.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('entrepreneur_sitemap.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('sitemap_magazine.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_sscategory_price_location_60000.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_sscategory_price_location_50000.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_sscategory_price_location_40000.xml') . "</loc>\n";
@@ -632,6 +632,7 @@ class SitemapController extends Controller
             $siteMapIndexData .= "<loc>" . url('sitemap_hi_scategory_price_location.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_hi_category_location.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_category_location.xml') . "</loc>\n";
+            // english insights sitemaps
             $siteMapIndexData .= "<loc>" . url('insights/en/news.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('insights/en/article.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('insights/en/article2.xml') . "</loc>\n";
@@ -641,6 +642,8 @@ class SitemapController extends Controller
             $siteMapIndexData .= "<loc>" . url('insights/en/categories.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('insights/en/subcategories.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('insights/en/tags.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/en/googlenews.xml') . "</loc>\n";
+            // hindi insights sitemaps
             $siteMapIndexData .= "<loc>" . url('insights/hi/news.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('insights/hi/article.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('insights/hi/interview.xml') . "</loc>\n";
@@ -649,6 +652,7 @@ class SitemapController extends Controller
             $siteMapIndexData .= "<loc>" . url('insights/hi/categories.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('insights/hi/subcategories.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('insights/hi/tags.xml') . "</loc>\n";
+            $siteMapIndexData .= "<loc>" . url('insights/hi/googlenews.xml') . "</loc>\n";
             $siteMapIndexData .= "<loc>" . url('sitemap_static.xml') . "</loc>\n";
 
             $siteMapIndexData .= "        <lastmod>" . date('Y-m-d') . "</lastmod>\n";

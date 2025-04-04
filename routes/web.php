@@ -1076,6 +1076,7 @@ Route::group(['prefix' => 'insights'], function () {
             return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
         });
         Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
+        Route::get('googlenews.xml',                [InsightSitemapController::class, 'googleNewsSitemap']);
         Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
         Route::get('article2.xml',                  [InsightSitemapController::class, 'articlesitemaptwo'])->name('article2.xml');
         Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
@@ -1100,6 +1101,7 @@ Route::group(['prefix' => 'insights'], function () {
             return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
         });
         Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
+        Route::get('googlenews.xml',                [InsightSitemapController::class, 'googleNewsSitemap']);
         Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
         Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
         Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap'])->name('event.xml');
@@ -1242,4 +1244,8 @@ Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('pass
 Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
 Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
 
-Route::get('related', [InsightsController::class,'relatedarticles']);
+// Route::get('related', [InsightsController::class, 'relatedarticles']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -1187,53 +1187,53 @@ class InsightsController extends Controller
         return @getimagesize($s3Url) !== false ? $s3Url : $defaultUrl;
     }
 
-    public function relatedarticles()
-    {
-        // Fetch all active franchisors
-        $franchisors = FranchisorBusinessDetail::query()
-            ->select('company_name')
-            ->where('profile_status', 1)
-            // ->where('membership_type', 1)
-            ->take(10)
-            ->get();
+    // public function relatedarticles()
+    // {
+    //     // Fetch all active franchisors
+    //     $franchisors = FranchisorBusinessDetail::query()
+    //         ->select('company_name')
+    //         ->where('profile_status', 1)
+    //         // ->where('membership_type', 1)
+    //         ->take(10)
+    //         ->get();
 
-        $matchedBrands = [];
-        $unmatchedBrands = [];
+    //     $matchedBrands = [];
+    //     $unmatchedBrands = [];
 
-        foreach ($franchisors as $franDetails) {
-            $companyName = trim($franDetails->company_name);
+    //     foreach ($franchisors as $franDetails) {
+    //         $companyName = trim($franDetails->company_name);
 
-            // Prepare regex-friendly company name
-            $cleanCompanyName = preg_replace('/[^a-zA-Z0-9\s]/', '', $companyName);
-            $cleanCompanyName = preg_replace('/\s+/', ' ', $cleanCompanyName);
-            $companyNameRegex = addslashes($cleanCompanyName); // Escape special characters
+    //         // Prepare regex-friendly company name
+    //         $cleanCompanyName = preg_replace('/[^a-zA-Z0-9\s]/', '', $companyName);
+    //         $cleanCompanyName = preg_replace('/\s+/', ' ', $cleanCompanyName);
+    //         $companyNameRegex = addslashes($cleanCompanyName); // Escape special characters
 
-            // Find matching articles
-            $matchingArticles = InsightList::query()
-                ->select('title')
-                ->where('status', 1)
-                ->whereRaw("LOWER(title) REGEXP LOWER(?)", ["(^|[[:space:]]){$companyNameRegex}([[:space:]]|$)"])
-                ->orderByDesc('created_at')
-                ->get();
+    //         // Find matching articles
+    //         $matchingArticles = InsightList::query()
+    //             ->select('title')
+    //             ->where('status', 1)
+    //             ->whereRaw("LOWER(title) REGEXP LOWER(?)", ["(^|[[:space:]]){$companyNameRegex}([[:space:]]|$)"])
+    //             ->orderByDesc('created_at')
+    //             ->get();
 
-            if ($matchingArticles->isEmpty()) {
-                // No matching articles found, add to unmatched brands
-                $unmatchedBrands[] = [
-                    'company_name'   => $franDetails->company_name,
-                ];
-            } else {
-                // Matching articles found, add to matched brands
-                $matchedBrands[] = [
-                    'company_name'   => $franDetails->company_name,
-                    'articles'       => $matchingArticles // Include matching articles
-                ];
-            }
-        }
+    //         if ($matchingArticles->isEmpty()) {
+    //             // No matching articles found, add to unmatched brands
+    //             $unmatchedBrands[] = [
+    //                 'company_name'   => $franDetails->company_name,
+    //             ];
+    //         } else {
+    //             // Matching articles found, add to matched brands
+    //             $matchedBrands[] = [
+    //                 'company_name'   => $franDetails->company_name,
+    //                 'articles'       => $matchingArticles // Include matching articles
+    //             ];
+    //         }
+    //     }
 
-        // Return JSON response with both matched and unmatched brands
-        return response()->json([
-            'matched_brands'   => $matchedBrands,
-            'unmatched_brands' => $unmatchedBrands
-        ]);
-    }
+    //     // Return JSON response with both matched and unmatched brands
+    //     return response()->json([
+    //         'matched_brands'   => $matchedBrands,
+    //         'unmatched_brands' => $unmatchedBrands
+    //     ]);
+    // }
 }

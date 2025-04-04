@@ -64,6 +64,7 @@
             font-family: Arial, sans-serif;
             font-size: 14px
         }
+
         .filter-head span {
             font-size: 15px;
             font-weight: normal;
@@ -427,8 +428,11 @@
         }
 
         @media screen and (min-width:768px) and (max-width:993px) {
-            
-            .mstick{position: unset;}
+
+            .mstick {
+                position: unset;
+            }
+
             .wrapper .col {
                 width: 31.4%
             }
@@ -443,8 +447,14 @@
         }
 
         @media screen and (max-width:768px) {
-            .top-two-banner{margin-top: 66px;}
-            .mstick{position: unset;}
+            .top-two-banner {
+                margin-top: 66px;
+            }
+
+            .mstick {
+                position: unset;
+            }
+
             .finner .catbtn input[type=checkbox]+label span {
                 width: 120px;
                 background-size: cover;
@@ -514,7 +524,7 @@
                 font-size: 13px
             }
 
-         
+
             .top-two-banner img {
                 width: 209px
             }
@@ -778,56 +788,64 @@
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.franchiseindia.com/business-opportunities/karnataka.LOC14" aria-label="" target="_blank">
+                    <a href="https://www.franchiseindia.com/business-opportunities/karnataka.LOC14" aria-label=""
+                        target="_blank">
                         <div class="city-icon"><img src="{{ url('topfranchiseleaders/images/city/karnataka.png') }}"
                                 alt="Karnataka"></div>
                         <div class="city-nam">Karnataka</div>
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.franchiseindia.com/business-opportunities/madhya-pradesh.LOC17" aria-label="" target="_blank">
+                    <a href="https://www.franchiseindia.com/business-opportunities/madhya-pradesh.LOC17" aria-label=""
+                        target="_blank">
                         <div class="city-icon"><img src="{{ url('topfranchiseleaders/images/city/madhya-pradesh.png') }}"
                                 alt="Madhya Pradesh"></div>
                         <div class="city-nam">Madhya Pradesh</div>
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.franchiseindia.com/business-opportunities/maharashtra.LOC18" aria-label="" target="_blank">
+                    <a href="https://www.franchiseindia.com/business-opportunities/maharashtra.LOC18" aria-label=""
+                        target="_blank">
                         <div class="city-icon"><img src="{{ url('topfranchiseleaders/images/city/maharashtra.png') }}"
                                 alt="Maharashtra"></div>
                         <div class="city-nam">Maharashtra</div>
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.franchiseindia.com/business-opportunities/delhi.LOC23" aria-label="" target="_blank">
+                    <a href="https://www.franchiseindia.com/business-opportunities/delhi.LOC23" aria-label=""
+                        target="_blank">
                         <div class="city-icon"><img src="{{ url('topfranchiseleaders/images/city/delhi.png') }}"
                                 alt="Delhi"></div>
                         <div class="city-nam">Delhi</div>
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.franchiseindia.com/business-opportunities/punjab.LOC26" aria-label="" target="_blank">
+                    <a href="https://www.franchiseindia.com/business-opportunities/punjab.LOC26" aria-label=""
+                        target="_blank">
                         <div class="city-icon"><img src="{{ url('topfranchiseleaders/images/city/punjab.png') }}"
                                 alt="Punjab"></div>
                         <div class="city-nam">Punjab</div>
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.franchiseindia.com/business-opportunities/tamilnadu.LOC29" aria-label="" target="_blank">
+                    <a href="https://www.franchiseindia.com/business-opportunities/tamilnadu.LOC29" aria-label=""
+                        target="_blank">
                         <div class="city-icon"><img src="{{ url('topfranchiseleaders/images/city/tamil-nadu.png') }}"
                                 alt="Tamil Nadu"></div>
                         <div class="city-nam">Tamil Nadu</div>
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.franchiseindia.com/business-opportunities/uttar-pradesh.LOC32" aria-label="" target="_blank">
+                    <a href="https://www.franchiseindia.com/business-opportunities/uttar-pradesh.LOC32" aria-label=""
+                        target="_blank">
                         <div class="city-icon"><img src="{{ url('topfranchiseleaders/images/city/uttar-pradesh.png') }}"
                                 alt="Uttar Pradesh"></div>
                         <div class="city-nam">Uttar Pradesh</div>
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.franchiseindia.com/business-opportunities/telangana.LOC34" aria-label="" target="_blank">
+                    <a href="https://www.franchiseindia.com/business-opportunities/telangana.LOC34" aria-label=""
+                        target="_blank">
                         <div class="city-icon"><img src="{{ url('topfranchiseleaders/images/city/telangana.png') }}"
                                 alt="Telangana"></div>
                         <div class="city-nam">Telangana</div>
@@ -835,7 +853,11 @@
                 </li>
             </ul>
         </div>
+        <div class="top-seoDesc">
+            @include('static.top100_seo_desc')
+        </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         var wrapper = document.getElementById("wrapper");
