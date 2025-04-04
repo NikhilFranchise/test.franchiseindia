@@ -34,7 +34,8 @@ class VerifyCsrfToken extends Middleware
         'feedback',
         'password/email',
         'api/*', 
-
+        'handlePaymentResponse',
+        'paymentnewsubmit',
 
     ];
 }
