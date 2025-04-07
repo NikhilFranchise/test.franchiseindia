@@ -100,7 +100,7 @@ class AdminController extends Controller
         if (!$admUser) {
             return redirect('admin/login')->with('error', 'Invalid email or password.');
         }
-        dd($admUser);
+        dd(!Hash::check($request->password, $admUser->admin_password));
         // Check the password manually if necessary
         if (!Hash::check($request->password, $admUser->admin_password)) {
             return redirect('admin/login')->with('error', 'Invalid email or password.');
