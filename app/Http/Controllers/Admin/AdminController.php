@@ -91,6 +91,7 @@ class AdminController extends Controller
         //     'admin_email' => $request->email,
         //     'password' => $request->password
         // ];
+        dd($request->all());
 
 
         // Find the admin user
