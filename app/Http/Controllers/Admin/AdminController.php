@@ -44,10 +44,10 @@ use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
-    // }
+    public function __construct()
+    {
+        $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
+    }
 
     /**
      *View the dashboard Page
@@ -84,28 +84,26 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-
+    
     public function loginCheck(Request $request)
     {
-        // $credentials = [
-        //     'admin_email' => $request->email,
-        //     'password' => $request->password
-        // ];
-        // dd($request->all());
-
+        $credentials = [
+            'admin_email' => $request->email,
+            'password' => $request->password
+        ];
 
         // Find the admin user
         $admUser = AdminUser::where('admin_email', $request->email)->first();
-        
+
         if (!$admUser) {
             return redirect('admin/login')->with('error', 'Invalid email or password.');
         }
-        dd(!Hash::check($request->password, $admUser->admin_password));
+
         // Check the password manually if necessary
         if (!Hash::check($request->password, $admUser->admin_password)) {
             return redirect('admin/login')->with('error', 'Invalid email or password.');
         }
-        dd($request->all(), $admUser, Auth::guard('admin')->login($admUser));
+
         // Use Auth guard to login admin
         Auth::guard('admin')->login($admUser);
 
@@ -2223,7 +2221,7 @@ class AdminController extends Controller
                 'updated_by'    => $request->session()->get('adminEmail'),
                 'author_id'     => request()->insights_publisher,
                 'img_alt'       => $alt,
-                'published_date' => $published_date,
+                'published_date'=> $published_date,
             ];
 
             if ($request->hasFile('image'))
@@ -2256,7 +2254,7 @@ class AdminController extends Controller
                 'updated_by'    => $request->session()->get('adminEmail'),
                 'author_id'     => request()->insights_publisher,
                 'img_alt'       => $alt,
-                'published_date' => $published_date,
+                'published_date'=> $published_date,
             ];
 
             if ($request->hasFile('image'))
