@@ -44,10 +44,10 @@ use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('ContentAdmin')->except('loginView', 'relatedBrands');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('ContentAdmin')->except('loginView', 'relatedBrands');
+    // }
 
     /**
      *View the dashboard Page
