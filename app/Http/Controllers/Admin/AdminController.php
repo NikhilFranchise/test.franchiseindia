@@ -96,11 +96,11 @@ class AdminController extends Controller
 
         // Find the admin user
         $admUser = AdminUser::where('admin_email', $request->email)->first();
-        dd($admUser);
+        
         if (!$admUser) {
             return redirect('admin/login')->with('error', 'Invalid email or password.');
         }
-
+        dd($admUser);
         // Check the password manually if necessary
         if (!Hash::check($request->password, $admUser->admin_password)) {
             return redirect('admin/login')->with('error', 'Invalid email or password.');
