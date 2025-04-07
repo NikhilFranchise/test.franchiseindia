@@ -91,12 +91,12 @@ class AdminController extends Controller
         //     'admin_email' => $request->email,
         //     'password' => $request->password
         // ];
-        dd($request->all());
+        // dd($request->all());
 
 
         // Find the admin user
         $admUser = AdminUser::where('admin_email', $request->email)->first();
-
+        dd($admUser);
         if (!$admUser) {
             return redirect('admin/login')->with('error', 'Invalid email or password.');
         }
