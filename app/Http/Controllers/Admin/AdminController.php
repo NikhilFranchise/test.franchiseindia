@@ -84,13 +84,14 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    
+
     public function loginCheck(Request $request)
     {
-        $credentials = [
-            'admin_email' => $request->email,
-            'password' => $request->password
-        ];
+        // $credentials = [
+        //     'admin_email' => $request->email,
+        //     'password' => $request->password
+        // ];
+
 
         // Find the admin user
         $admUser = AdminUser::where('admin_email', $request->email)->first();
@@ -103,7 +104,7 @@ class AdminController extends Controller
         if (!Hash::check($request->password, $admUser->admin_password)) {
             return redirect('admin/login')->with('error', 'Invalid email or password.');
         }
-
+        dd($request->all(), $admUser, Auth::guard('admin')->login($admUser));
         // Use Auth guard to login admin
         Auth::guard('admin')->login($admUser);
 
@@ -2221,7 +2222,7 @@ class AdminController extends Controller
                 'updated_by'    => $request->session()->get('adminEmail'),
                 'author_id'     => request()->insights_publisher,
                 'img_alt'       => $alt,
-                'published_date'=> $published_date,
+                'published_date' => $published_date,
             ];
 
             if ($request->hasFile('image'))
@@ -2254,7 +2255,7 @@ class AdminController extends Controller
                 'updated_by'    => $request->session()->get('adminEmail'),
                 'author_id'     => request()->insights_publisher,
                 'img_alt'       => $alt,
-                'published_date'=> $published_date,
+                'published_date' => $published_date,
             ];
 
             if ($request->hasFile('image'))
