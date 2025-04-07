@@ -46,7 +46,7 @@ class AdminController extends Controller
 {
     // public function __construct()
     // {
-    //     $this->middleware('ContentAdmin')->except('loginView', 'relatedBrands');
+    //     $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
     // }
 
     /**
@@ -87,11 +87,10 @@ class AdminController extends Controller
     
     public function loginCheck(Request $request)
     {
-        dd($request->all(), 'hello');
-        // $credentials = [
-        //     'admin_email' => $request->email,
-        //     'password' => $request->password
-        // ];
+        $credentials = [
+            'admin_email' => $request->email,
+            'password' => $request->password
+        ];
 
         // Find the admin user
         $admUser = AdminUser::where('admin_email', $request->email)->first();
