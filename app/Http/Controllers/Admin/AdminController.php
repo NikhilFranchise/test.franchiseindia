@@ -105,7 +105,7 @@ class AdminController extends Controller
         }
 
         // Use Auth guard to login admin
-        Auth::guard('admin')->login($admUser);
+        dd(Auth::guard('admin')->login($admUser));
 
         // Store additional session data if needed
         session()->put('admin_name', $admUser->admin_name);
