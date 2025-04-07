@@ -36,7 +36,7 @@ class VerifyCsrfToken extends Middleware
         'api/*', 
         'handlePaymentResponse',
         'paymentnewsubmit',
-        // 'admin/login-check',
+        'admin/login-check',
 
 
     ];
