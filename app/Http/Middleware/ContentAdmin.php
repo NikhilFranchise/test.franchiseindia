@@ -18,7 +18,7 @@ class ContentAdmin
     {
         // if (!($request->session()->has('adminEmail')))
         //     return redirect('admin/login');
-        dd($request->session()->has('adminEmail'));
+        // dd($request->session()->has('adminEmail'));
         if (!Auth::guard('admin')->check()) {
             return redirect('admin/login')->with('error', 'You must be an admin to access this page.');
         }
