@@ -44,10 +44,10 @@ use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
-    // }
+    public function __construct()
+    {
+        $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
+    }
 
     /**
      *View the dashboard Page
@@ -85,32 +85,54 @@ class AdminController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
 
+    // public function loginCheck(Request $request)
+    // {
+    //     $credentials = [
+    //         'admin_email' => $request->email,
+    //         'password' => $request->password
+    //     ];
+
+    //     // Find the admin user
+    //     $admUser = AdminUser::where('admin_email', $request->email)->first();
+
+    //     if (!$admUser) {
+    //         return redirect('admin/login')->with('error', 'Invalid email or password.');
+    //     }
+
+    //     // Check the password manually if necessary
+    //     if (!Hash::check($request->password, $admUser->admin_password)) {
+    //         return redirect('admin/login')->with('error', 'Invalid email or password.');
+    //     }
+
+    //     // Use Auth guard to login admin
+    //     Auth::guard('admin')->login($admUser);
+
+    //     // Store additional session data if needed
+    //     session()->put('admin_name', $admUser->admin_name);
+    //     session()->put('adminEmail', $admUser->admin_email);
+    //     session()->put('role', $admUser->admin_dept);
+    //     session()->put('author_creation_capability', $admUser->can_create_author);
+
+    //     return redirect('admin/dashboard');
+    // }
+
     public function loginCheck(Request $request)
     {
-        $credentials = [
-            'admin_email' => $request->email,
-            'password' => $request->password
-        ];
-
         $admUser = AdminUser::where('admin_email', $request->email)->first();
 
         if (!$admUser || !Hash::check($request->password, $admUser->admin_password)) {
             return redirect('admin/login')->with('error', 'Invalid email or password.');
         }
 
-        // Login admin
-        Auth::guard('admin')->login($admUser);
-
-        // Double-check login success
-        if (!Auth::guard('admin')->check()) {
-            return redirect('admin/login')->with('error', 'Login failed. Please try again.');
-        }
-
-        // Store session
-        session()->put('admin_name', $admUser->admin_name);
-        session()->put('adminEmail', $admUser->admin_email);
-        session()->put('role', $admUser->admin_dept);
-        session()->put('author_creation_capability', $admUser->can_create_author);
+        // 🔥 Manual "login" via session (skip Auth::guard)
+        session([
+            'is_admin_logged_in' => true,
+            'admin_id' => $admUser->id,
+            'admin_name' => $admUser->admin_name,
+            'admin_email' => $admUser->admin_email,
+            'role' => $admUser->admin_dept,
+            'author_creation_capability' => $admUser->can_create_author,
+        ]);
 
         return redirect('admin/dashboard');
     }
