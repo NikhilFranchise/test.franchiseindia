@@ -429,18 +429,18 @@
 
                         const user = data.user;
 
-                        $('#ceocontactinsta1').text(user.ceo_name || 'N/A');
-                        $('#telephonecontactinsta1').text(user.telephone || 'N/A');
-                        $('#addressocontactinsta1').text(
+                        $('#ceocontactinsta').html(user.ceo_name || 'N/A');
+                        $('#telephonecontactinsta').html(user.telephone || 'N/A');
+                        $('#addressocontactinsta').html(
                             (user.fran_address || '') + ' ' +
                             (user.city || '') + ' ' +
                             (user.state || '') + ' ' +
                             (user.pincode || '')
                         );
-                        $('#emailcontactinsta1').html("<a href='mailto:" + user.email +
+                        $('#emailcontactinsta').html("<a href='mailto:" + user.email +
                             "' target='_blank'>" + user.email + "</a>");
-                        $('#mobilecontactinsta1').text(user.mobile || 'N/A');
-                        $('#websitecontactinsta1').html("<a href='http://" + user.website +
+                        $('#mobilecontactinsta').html(user.mobile || 'N/A');
+                        $('#websitecontactinsta').html("<a href='http://" + user.website +
                             "' target='_blank'>" + user.website + "</a>");
                     }
                     // Fallback
