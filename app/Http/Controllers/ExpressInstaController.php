@@ -195,42 +195,42 @@ class ExpressInstaController extends Controller
             $nameTrunc = Str::limit($user->name, 40, '..');
             $mobileTrunc = Str::limit($user->mobile, 15, '..');
 
-            // if ($franIsFree) {
-            //     $this->sendFranNotifications(
-            //         $franData->userDetail->email,
-            //         $details[1],
-            //         $franData->userDetail->mobile,
-            //         sprintf(config('txtlocal.FranFree'), $nameTrunc),
-            //         'free'
-            //     );
-            // } else {
-            //     $this->sendFranNotifications(
-            //         $franData->userDetail->email,
-            //         $details,
-            //         $franData->userDetail->mobile,
-            //         sprintf(config('txtlocal.FranPaid'), $nameTrunc, $mobileTrunc),
-            //         'paid'
-            //     );
-            // }
+            if ($franIsFree) {
+                $this->sendFranNotifications(
+                    $franData->userDetail->email,
+                    $details[1],
+                    $franData->userDetail->mobile,
+                    sprintf(config('txtlocal.FranFree'), $nameTrunc),
+                    'free'
+                );
+            } else {
+                $this->sendFranNotifications(
+                    $franData->userDetail->email,
+                    $details,
+                    $franData->userDetail->mobile,
+                    sprintf(config('txtlocal.FranPaid'), $nameTrunc, $mobileTrunc),
+                    'paid'
+                );
+            }
 
             // Investor Notifications
-            // if (!$invIsPaid && !$lastApply) {
-            //     $this->sendInvNotifications(
-            //         $user->email,
-            //         $dataInvFree,
-            //         $user->mobile,
-            //         sprintf(config('txtlocal.InvFree'), $nameTrunc, Str::limit($franData->company_name, 40, '..')),
-            //         'free'
-            //     );
-            // } else {
-            //     $this->sendInvNotifications(
-            //         $user->email,
-            //         $detailsInv,
-            //         $user->mobile,
-            //         sprintf(config('txtlocal.InvPaid'), $nameTrunc, Str::limit($franData->company_name, 40, '..'), $mobileTrunc),
-            //         'paid'
-            //     );
-            // }
+            if (!$invIsPaid && !$lastApply) {
+                $this->sendInvNotifications(
+                    $user->email,
+                    $dataInvFree,
+                    $user->mobile,
+                    sprintf(config('txtlocal.InvFree'), $nameTrunc, Str::limit($franData->company_name, 40, '..')),
+                    'free'
+                );
+            } else {
+                $this->sendInvNotifications(
+                    $user->email,
+                    $detailsInv,
+                    $user->mobile,
+                    sprintf(config('txtlocal.InvPaid'), $nameTrunc, Str::limit($franData->company_name, 40, '..'), $mobileTrunc),
+                    'paid'
+                );
+            }
         }
 
         // Return conditions
