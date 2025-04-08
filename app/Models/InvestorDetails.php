@@ -9,6 +9,7 @@ class InvestorDetails extends Model
 {
     use HasFactory;
     protected $table="investor_details";
+    protected $primaryKey = 'inv_det_id';
 
     public function userDetail()
     {

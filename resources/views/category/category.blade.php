@@ -1164,37 +1164,29 @@
                     franId: franId,
                     "_token": "{{ csrf_token() }}"
                 },
-                dataType: 'json', // Important
                 success: function(data) {
-                    // console.log('AJAX Response:', data);
 
                     if ($.isNumeric(data)) {
                         $('#expintbutton').css('display', 'block');
                         $('#creditRemaining').html('You have ' + data +
                             ' credits remaining. Do you want to use the credit');
-                    } else if (data === "showMsg") {
+                    } else if (data == "showMsg") {
                         window.location.assign(
                             '{{ Config('constants.MainDomain') }}/investor/myaccount/payment');
-                    } else if (data.user) {
+                    } else {
                         document.getElementById("expbtnloading").style.display = "none";
                         document.getElementById("expmsg").style.display = "block";
-
                         $('#companyContactinsta').html(data.user.company_name);
                         $('#ceocontactinsta').html(data.user.ceo_name);
                         $('#telephonecontactinsta').html(data.user.telephone);
-                        $('#addressocontactinsta').html(
-                            data.user.fran_address + " " +
-                            data.user.city + " " +
-                            data.user.state + " " +
-                            data.user.pincode
-                        );
+                        $('#addressocontactinsta').html(data.user.fran_address + "" + data.user.city +
+                            "" + data.user.state + "" + data.user.pincode);
                         $('#emailcontactinsta').html("<a href='mailto:" + data.user.email +
                             "' target='_blank'>" + data.user.email + "</a>");
                         $('#mobilecontactinsta').html(data.user.mobile);
                         $('#websitecontactinsta').html("<a href='http://" + data.user.website +
                             "' target='_blank'>" + data.user.website + "</a>");
-                    } else {
-                        alert("Unexpected data format");
+
                     }
                 }
             });
@@ -1205,32 +1197,52 @@
 
             $('#expintbutton').css('display', 'none');
             $('#creditRemaining').html('Please wait....');
+
             var franId = document.getElementById('expIntFranId').value;
+
             $.ajax({
                 type: 'post',
                 url: '{{ URL('/inv-lead') }}',
                 data: {
                     franId: franId,
+                    "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
+                    $('#expbtnloading').hide();
+                    $('#expmsg').show();
 
-                    document.getElementById("expbtnloading").style.display = "none";
-                    document.getElementById("expmsg").style.display = "block";
-                    $('#companyContactinsta').html(data.user.company_name);
-                    $('#ceocontactinsta').html(data.user.ceo_name);
-                    $('#telephonecontactinsta').html(data.user.telephone);
-                    $('#addressocontactinsta').html(data.user.fran_address + "" + data.user.city + "" +
-                        data.user.state + "" + data.user.pincode);
-                    $('#emailcontactinsta').html("<a href='mailto:" + data.user.email +
-                        "' target='_blank'>" + data.user.email + "</a>");
-                    $('#mobilecontactinsta').html(data.user.mobile);
-                    $('#websitecontactinsta').html("<a href='http://" + data.user.website +
-                        "' target='_blank'>" + data.user.website + "</a>");
+                    if (data.success) {
+                        alert('category blade');
+                        const user = data.user;
 
+                        $('#companyContactinsta').html(user.company_name || 'N/A');
+                        $('#ceocontactinsta').html(user.ceo_name || 'N/A');
+                        $('#telephonecontactinsta').html(user.telephone || 'N/A');
+                        $('#addressocontactinsta').html(
+                            (user.fran_address || '') + ' ' +
+                            (user.city || '') + ' ' +
+                            (user.state || '') + ' ' +
+                            (user.pincode || '')
+                        );
+                        $('#emailcontactinsta').html("<a href='mailto:" + user.email +
+                            "' target='_blank'>" + user.email + "</a>");
+                        $('#mobilecontactinsta').html(user.mobile || 'N/A');
+                        $('#websitecontactinsta').html("<a href='http://" + user.website +
+                            "' target='_blank'>" + user.website + "</a>");
+                    } else {
+                        $('#creditRemaining').html('Unexpected response received.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                    $('#expbtnloading').hide();
+                    $('#expintbutton').show();
+                    $('#creditRemaining').html('Something went wrong. Please try again.');
                 }
             });
 
         });
+
 
         $('#cancelinterest').on('click', function() {
             $('#creditRemaining').html('Please wait...');
@@ -1554,7 +1566,7 @@
                         // Handle the response (this can be any content, e.g. update the page with the sorted data)
                         console.log("Response received:",
                             response
-                        ); // For debugging, you can check the response in the console
+                            ); // For debugging, you can check the response in the console
 
                         // Example: you could populate the response data into an HTML element
                         // $('#someElement').html(response);

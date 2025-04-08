@@ -13,7 +13,17 @@ class UserActivity extends Model
     protected $table      = "useractivity";
     protected $primaryKey = 'clickID';
     public $timestamps    = false;
-    
+    protected $fillable = [
+        'investor_id',
+        'franchisor_id',
+        'email',
+        'expressInt',
+        'visibility',
+        'visit_date',
+        'franchisor_visibility',
+        'franchisor_visibility_date',
+    ];
+
     /**
      * Get the record associated with the user: franchisor.
      */
