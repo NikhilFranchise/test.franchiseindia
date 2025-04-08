@@ -384,7 +384,7 @@
                                             <td>
                                                 <center><button class="btn btn-warning" style="border-radius: 4px"><a
                                                             href="edit-insights-view/{{ $insights->news_id }}"><i
-                                                                class='fas fa-edit'></i>
+                                                                class='fa fa-edit'></i>
                                                         </a></button>
                                                 </center>
                                             </td>
@@ -392,7 +392,8 @@
                                             <td>
                                                 <center><button class="btn btn-danger deleteauthor"
                                                         style="border-radius: 4px"
-                                                        data-value="{{ $insights->news_id }}"><i
+                                                        data-value="{{ $insights->news_id }}"
+                                                        data-type="{{ $insights->insight_type }}"><i
                                                             class='fas fa-trash-alt'></i></button></center>
                                             </td>
                                         </tr>
@@ -458,20 +459,13 @@
         $(document).ready(function() {
             $(document).on('click', '.activestate', function() {
 
-                // var id = this.value;
                 var status = this.value;
                 var id = this.id;
                 var lang = '{{ $locale }}';
-                // var status = 0;
-                // if (this.checked)
-                //     status = 1;
-
                 $.ajax({
                     type: "POST",
-                    //url: '/admin//updateinsightstatus',
                     url: '/admin/' + lang +
                         '/updateinsightstatus', // Dynamically set the URL with the locale
-
                     data: {
                         "News": id,
                         "contentStatus": status,
@@ -481,16 +475,42 @@
             });
         });
 
-        var YOUR_MESSAGE_STRING_CONST = "Are you sure to delete this news?";
+        // var YOUR_MESSAGE_STRING_CONST = "Are you sure to delete this news?";
+        // $('.deleteauthor').click(function() {
+        //     // alert('delete');
+        //     var x = $(this).attr('data-value');
+        //     var lang = '{{ $locale }}';
+        //     confirmDialog(YOUR_MESSAGE_STRING_CONST, function() {
+        //         $.ajax({
+        //             type: "POST",
+        //             url: '/admin/' + lang +
+        //                 '/deleteinsights', // Dynamically set the URL with the locale
+        //             data: {
+        //                 "contentId": x,
+        //                 "_token": "{{ csrf_token() }}"
+        //             },
+        //             success: function(data) {
+        //                 $(document).ajaxStop(function() {
+        //                     window.location.reload();
+        //                 });
+        //             }
+        //         });
+        //     });
+        // });
+
         $('.deleteauthor').click(function() {
-            // alert('delete');
             var x = $(this).attr('data-value');
+            var insightType = $(this).attr('data-type'); // Make sure you set this in your HTML
             var lang = '{{ $locale }}';
-            confirmDialog(YOUR_MESSAGE_STRING_CONST, function() {
+
+            // Capitalize first letter and build the confirmation message
+            var capitalizedType = insightType.charAt(0).toUpperCase() + insightType.slice(1);
+            var message = "Are you sure you want to delete this " + insightType + "?";
+
+            confirmDialog(message, function() {
                 $.ajax({
                     type: "POST",
-                    url: '/admin/' + lang +
-                        '/deleteinsights', // Dynamically set the URL with the locale
+                    url: '/admin/' + lang + '/deleteinsights',
                     data: {
                         "contentId": x,
                         "_token": "{{ csrf_token() }}"
@@ -518,5 +538,4 @@
         }
     </script>
 </body>
-
 </html>
