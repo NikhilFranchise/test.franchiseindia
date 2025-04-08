@@ -394,7 +394,8 @@
                                                         style="border-radius: 4px"
                                                         data-value="{{ $insights->news_id }}"
                                                         data-type="{{ $insights->insight_type }}"><i
-                                                            class='fas fa-trash-alt'></i></button></center>
+                                                            class="fa fa-trash" aria-hidden="true"></i>
+                                                    </button></center>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -538,4 +539,5 @@
         }
     </script>
 </body>
+
 </html>
