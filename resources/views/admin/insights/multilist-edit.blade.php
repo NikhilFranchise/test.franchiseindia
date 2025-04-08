@@ -59,12 +59,12 @@
 
         .labelwrap {
             display: flex;
-            justify-content: space-between;
-            padding: 0px 10px 0px 0px;
+            /* justify-content: space-between; */
+            /* padding: 0px 30px 0px 20px; */
         }
 
         .labelwrap label {
-            width: 30%;
+            /* width: 30%; */
             font-size: 11px;
         }
 
@@ -312,15 +312,15 @@
                     <input type="text" name="search"class="span7" placeholder="Enter Title or Insights Id to search"
                         @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
                     @if (!empty(request()->search))
-                    <select name="type" class="span" onchange="this.form.submit()">
-                        <option value="">Insight Types</option>
-                        @foreach ($insightTypes as $insightType)
-                            <option value="{{ $insightType }}"
-                                {{ request()->query('type') == $insightType ? 'selected' : '' }}>
-                                {{ $insightType }}
-                            </option>
-                        @endforeach
-                    </select>
+                        <select name="type" class="span" onchange="this.form.submit()">
+                            <option value="">Insight Types</option>
+                            @foreach ($insightTypes as $insightType)
+                                <option value="{{ $insightType }}"
+                                    {{ request()->query('type') == $insightType ? 'selected' : '' }}>
+                                    {{ $insightType }}
+                                </option>
+                            @endforeach
+                        </select>
                     @endif
                     <select name="category" onchange="this.form.submit()">
                         <option value="">Insights Category</option>
@@ -354,8 +354,6 @@
                         <div class="widget-content nopadding">
                             <form method="POST" action="{{ url($saveUrl) }}">
                                 @csrf <!-- Include CSRF token for security -->
-                                <!-- Global Select Boxes -->
-                                {{--  <h3 style="text-align:center">{{$hi . ' Insights List' }}</h3>  --}}
                                 <h3 style="text-align:center">Quick Edit Insights Dashboard (Hindi/English)</h3>
 
                                 <p style="text-align: center; color: #28b779;">
@@ -390,7 +388,6 @@
                                         <select id="global_sub_category" name="global_sub_category[]"
                                             class="form-control">
                                             <option value="">Select Sub Category</option>
-                                            <!-- Subcategories will be dynamically loaded based on Main Category -->
                                         </select>
                                     </li>
                                     <li>
@@ -404,7 +401,8 @@
                                     </li>
                                     <li>
                                         <label for="">Status/Privacy</label>
-                                        <select required id="global_status" name="global_status[]" class="form-control">
+                                        <select required id="global_status" name="global_status[]"
+                                            class="form-control">
                                             <option value="">Select Status/Privacy</option>
                                             <option value="1">Public</option>
                                             <option value="0">Draft</option>
@@ -420,19 +418,18 @@
                                     <center><button type="submit" class="btn btn-primary form-control"
                                             id="apply_bulk">Apply Changes</button></center>
                                 </ul>
-                                <!-- Table with Insights -->
                                 <table>
                                     <thead>
                                         <tr class="gradeX">
-                                            <th style="width: 6%;">Check all<input type="checkbox" id="select_all">
+                                            <th>Check all<input type="checkbox" id="select_all">
                                             </th>
-                                            <th style="width: 4%;">News ID</th>
-                                            <th style="width: 45%;">Title</th>
-                                            <th style="width: 5%;">Insight Type</th>
-                                            <th style="width: 6%;">Main Category</th>
-                                            <th style="width: 3%;">Sub Category</th>
-                                            <th style="width: 2%;">Link</th>
-                                            <th style="width: 7%;">Author</th>
+                                            <th>News ID</th>
+                                            <th>Title</th>
+                                            <th>Insight Type</th>
+                                            <th>Main Category</th>
+                                            <th>Sub Category</th>
+                                            <th>Link</th>
+                                            <th>Author</th>
                                             <th>Status/Privacy</th>
                                         </tr>
                                     </thead>
@@ -450,7 +447,7 @@
                                                         '.' .
                                                         $insights->news_id;
                                                 @endphp
-                                                <td style="width: 2%">
+                                                <td>
                                                     <input type="checkbox" class="bulk-checkbox"
                                                         value="{{ $insights->news_id }}" name="selected_articles[]">
                                                     <input type="hidden" name="insights_slug[]"
@@ -469,9 +466,7 @@
                                                         {{ $subcategory->subcat_name }}
                                                     @endforeach
                                                 </td>
-                                                <td>
-
-                                                    <a href="{{ $url }}" target="_blank"
+                                                <td><a href="{{ $url }}" target="_blank"
                                                         class="btn btn-info"><i class="fa fa-external-link"></i></a>
                                                 </td>
                                                 <td>
@@ -480,14 +475,7 @@
                                                     @endforeach
 
                                                 </td>
-                                                <td>
-                                                    {{-- <label class="switch">
-                                                        <input type="checkbox" value="{{ $insights->news_id }}"
-                                                            class="activestate"
-                                                            {{ $insights->status == 1 ? 'checked' : '' }}>
-                                                        <span class="slider round"></span>
-                                                    </label> --}}
-                                                    <div class="labelwrap">
+                                                <td><div class="labelwrap">
                                                         <label>
                                                             <input type="radio"
                                                                 name="status_{{ $insights->news_id }}"
@@ -513,7 +501,6 @@
                                                         </label>
                                                     </div>
                                                 </td>
-
                                             </tr>
                                         @endforeach
                                     </tbody>
