@@ -9,6 +9,7 @@ public
 /composer.lock
 /config/constants.php
 .env
+.envuat
 .env.backup
 .env.production
 .phpunit.result.cache
