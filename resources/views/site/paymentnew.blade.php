@@ -147,9 +147,9 @@
                                 <option value="OPTCRDC">Mode Of Payment</option>
                                 <option value="CREDIT">Credit Card</option>
                                 <option value="DEBIT">Debit Card</option>
-                                <option value="NBK">Net Banking</option>
-                                <option value="EMI">EMI</option>
                                 <option value="UPI">UPI</option>
+                                <option value="NB">NET BANKING</option>
+
                             </select>
                         </div>
                     </div>

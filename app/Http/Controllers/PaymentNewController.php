@@ -35,7 +35,59 @@ class PaymentNewController extends Controller
     $cdetails = $request->input('details');
     $pgateway = 'HDFC';
     $userIp   = $request->ip();
-// dd($userIp);
+
+    // Default values for payment filters
+    $paymentMethodType = "CARD"; // Default to "CARD" for CREDIT/DEBIT
+    $cardTypes = []; // This will dynamically hold the card type for CREDIT/DEBIT
+    $paymentFilterOptions = [];  // This will hold the filter options dynamically
+
+     // Charges based on payment method (CREDIT, DEBIT, and NETBANK)
+    $Charges = array(
+        "CREDIT" => 2.06,  // Credit Card charge percentage
+        "DEBIT" => 0,      // Debit Card charge percentage (no extra charge)
+        "UPI" => 0,        // UPI charge percentage (no extra charge)
+        "NB" => 2.12       // Net Banking charge percentage
+    );
+
+    // Set paymentMethodType and cardTypes based on the selected mode of payment (CREDIT, DEBIT, UPI)
+    if ($mopt === 'CREDIT') {
+        $paymentMethodType = "CARD";  // Set paymentMethodType to "CARD" for CREDIT
+        $cardTypes = ['CREDIT'];      // Set cardTypes to ["CREDIT"]
+    } elseif ($mopt === 'DEBIT') {
+        $paymentMethodType = "CARD";  // Set paymentMethodType to "CARD" for DEBIT
+        $cardTypes = ['DEBIT'];       // Set cardTypes to ["DEBIT"]
+    } elseif ($mopt === 'UPI') {
+        $paymentMethodType = "UPI";   // Set paymentMethodType to "UPI" for UPI
+    }elseif($mopt === 'NB'){
+        $paymentMethodType = "NB";
+    }
+
+    // If cardTypes are defined (for CREDIT/DEBIT), build the card filters
+    if (!empty($cardTypes)) {
+        $paymentFilterOptions = [
+            "enable" => true,
+            "cardFilters" => [
+                [
+                    "enable" => true,
+                    "cardTypes" => $cardTypes  // Dynamic card types based on CREDIT or DEBIT selection
+                ]
+            ]
+        ];
+    } else {
+        // No cardFilters for UPI, so just enable the payment method
+        $paymentFilterOptions = [
+            "enable" => true
+        ];
+    }
+    // Calculate extra charge based on the selected payment method (CREDIT, DEBIT, UPI, NETBANK)
+    if (isset($Charges[$mopt])) {
+        // Calculate the charge percentage and add it to the amount
+        $extraCharge = round($amount * $Charges[$mopt] / 100, 2);  // Calculate extra charge
+        $amount = round($amount + $extraCharge, 2);  // Add the extra charge to the total amount
+    }
+
+
+// dd($mopt);  
 // dd($cdetails);
     // Insert payment details into the database
     $payment = DB::table('general_payments')->insertGetId([
@@ -77,22 +129,25 @@ class PaymentNewController extends Controller
         "description" => "Complete your payment",
         "first_name" => $cname,  // Corrected column name for name
         "last_name" => "",
+
         "payment_filter" => [
             "allowDefaultOptions" => false,
             "options" => [
                 [
-                    "paymentMethodType" => $paymentMethodType,
-                    "enable" => true
+                    "paymentMethodType" => $paymentMethodType,  // "CARD" for both Credit/Debit, "UPI" if selected
+                    "enable" => true,
+                    "cardFilters" => $paymentFilterOptions['cardFilters'] ?? []  // Dynamically set card filters only if needed
                 ]
             ]
-        ]
+        ],
+       
     ];
 
     // Initialize CURL for the API request
     $curl = curl_init();
 
     curl_setopt_array($curl, [
-        CURLOPT_URL => 'https://smartgatewayuat.hdfcbank.com/session',
+        CURLOPT_URL => 'https://smartgateway.hdfcbank.com/session',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -111,7 +166,7 @@ class PaymentNewController extends Controller
 
     $response = curl_exec($curl);
     curl_close($curl);
-
+// dd($curl);
     // Handle the API response
     $responseData = json_decode($response, true);
     if (json_last_error() !== JSON_ERROR_NONE) {
@@ -170,7 +225,7 @@ class PaymentNewController extends Controller
         ]);
     
         return ($status === "CHARGED") 
-            ? redirect()->route('payment.success')
+            ? redirect()->route('payment.success',['order_id' => $orderId])
             : redirect()->route('payment.cancel', ['order_id' => $orderId]);
     }
 
