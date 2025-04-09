@@ -262,6 +262,9 @@ Route::group(['prefix' => 'investor'], function () {
     Route::post('register', [InvestorController::class, 'createInvestor']);
     Route::post('plan-submit', [InvestorController::class, 'setcampaignPlan']);
     Route::post('makepayment', [PaymentController::class, 'upgradeInvestorMembership']);
+    // Route::post('campaign/plan', [InvestorController::class, 'campaignPlanCheck']);
+    // Route::post('campaign/login', 'Auth\LoginController@loginInvCampaign');
+    // Route::post('campaign/update', [InvestorController::class, 'updateCampaignInfo']);
     //myaccount routes for investor
     Route::group(['prefix' => 'myaccount'], function () {
         //Get routes
@@ -1013,6 +1016,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('cat/create',                      [AdminController::class, 'categoryform']);
         Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
         Route::get('cat/list',                        [AdminController::class, 'catlist']);
+        Route::get('cat/edit/{id}',                        [AdminController::class, 'catEdit']);
         Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
         Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
         // category and subcategory post routes
@@ -1039,6 +1043,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('cat/create',                      [AdminController::class, 'categoryform']);
         Route::get('subcat/create',                  [AdminController::class, 'subcatform']);
         Route::get('cat/list',                        [AdminController::class, 'catlist']);
+        Route::get('cat/edit/{id}',                        [AdminController::class, 'catEdit']);
         Route::get('subcat/list',                        [AdminController::class, 'subcatlist']);
         Route::get('getSubcategories/{catid}', [AdminController::class, 'getSubcategories']);
         // category and subcategory post routes
