@@ -42,7 +42,7 @@ class DealersAndDistributorController extends Controller
      */
     public function getDealersBrands($count)
   	{	
-        dd('yes');
+        // dd('yes');
     	$franchisors = DealersFranchisor::query()->select('franchisor_id')->where('status', 1)->take($count)->get()->pluck('franchisor_id');
     	return FranchisorBusinessDetail::query()->select('fran_detail_id', 'profile_name', 'company_logo', 'unit_inv_min', 'unit_inv_max')->whereIn('franchisor_id', $franchisors)->get();
   	}
@@ -52,44 +52,63 @@ class DealersAndDistributorController extends Controller
      */
     public function searchForDealerHomePage()
     {
+// dd('yeee');
         $companies = FranchisorBusinessDetail::query()
             ->select(DB::raw("CONCAT(franchisor_business_details.company_name, ' - <strong> in ', category_final.catname,'<%2Fstrong>') AS name"))
             ->whereIn('profile_status', [1,11])
             ->where('company_name', 'LIKE', "%".request()->search."%")
-            ->leftJoin('category_final', 'category_final.catid', '=', 'franchisor_business_details.ind_sub_cat');
+            ->leftJoin('category_final', 'category_final.catid', '=', 'franchisor_business_details.ind_sub_cat')
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                $item['type'] = 'company';
+                return $item;
+            });
 
             $result = CategoryFinal::query()
             ->select("catname as name")
             ->where('category_final.catname', 'LIKE', "%".request()->search."%")
-            ->union($companies)
-            ->take(20)
-            ->get();
+            // ->union($companies)
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                $item['type'] = 'category'; // Add this line
+                return $item;
+            });
+            // dd($result);
         
-        // $result2 = InsightList::query()
-        //     ->select('title as name')  // Renamed 'title' to 'name' for consistency
-        //     ->where('title', 'LIKE', "%".request()->search."%")
-        //     ->where('status', 1)
-        //     ->take(20)
-        //     ->get();
+        $result2 = InsightList::query()
+            ->select('title as name','news_id')  // Renamed 'title' to 'name' for consistency
+            ->where('title', 'LIKE', "%".request()->search."%")
+            ->where('status', 1)
+            ->take(5)
+            ->get()
+            ->map(function ($item) {
+                $item['type'] = 'article'; // Add this line
+
+                return $item;
+            });
         
         // Convert collections to arrays
-        // $resultArray = $result->toArray();
-        // $result2Array = $result2->toArray();
+        $companiesArray = $companies->toArray();
+        $resultArray = $result->toArray();
+        $result2Array = $result2->toArray();
         
         // Merge the two arrays
+        $mergedResults = array_merge($companiesArray, $resultArray, $result2Array);
         // $mergedResults = array_merge($resultArray, $result2Array);
         
         // Now apply the transformations on the names
-        // foreach ($mergedResults as $key => $res) {
-        //     $mergedResults[$key]['name'] = str_replace('/', '-or-', $res['name']);
-        //     $mergedResults[$key]['name'] = str_replace('%2F', '/', $res['name']);
-        // }
-        
-        // Return the merged and modified result as a JSON response
-        // return response()->json($mergedResults, 200);
-        return response()->json($result, 200);
+        foreach ($mergedResults as $key => $res) {
+            $mergedResults[$key]['name'] = str_replace('/', '-or-', $res['name']);
+            // $mergedResults[$key]['name'] = str_replace('%2F', '/', $res['name']);
+            $mergedResults[$key]['name'] = str_replace('%2F', '/', $mergedResults[$key]['name']);
+        }
+        // dd($mergedResults); // <---- ADD THIS TO SEE RESULT
 
-        
+        // Return the merged and modified result as a JSON response
+        return response()->json($mergedResults, 200);
+        // return response()->json($result, 200);        
         
     }
 
@@ -98,11 +117,14 @@ class DealersAndDistributorController extends Controller
      */
     public function searchDealer()
     {
+        // dd(request()->search);
         // dd('ues');
         request()->search = str_replace('-or-', '/', request()->search);
         $type = 'm';
         $catId = CategoryFinal::query()->select('catid', 'catname', 'parent_id')->where('catname', request()->search)->first();
+        // dd($catId);
         if(!empty($catId)) {
+            
             if(!empty($catId->parent_id)){
                 $subCatCheck = CategoryFinal::query()->select('parent_id')->where('catid', $catId->parent_id)->first();
                 if(!empty($subCatCheck) && empty($subCatCheck->parent_id))
@@ -113,6 +135,7 @@ class DealersAndDistributorController extends Controller
             $url =  'business-opportunities/'.Str::slug($catId->catname).'.'.$type.$catId->catid;
             return redirect($url);
         }
+ 
         return redirect('/category/search?text='.request()->search);
     }
 

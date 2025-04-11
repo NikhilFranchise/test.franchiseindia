@@ -218,6 +218,7 @@ class BusinessListingController extends Controller
      */
     public function searchBusinessListing(Request $request)
     {
+        // dd($request);
         // dd('searchBusinessListing');
         $searchTerm = $request->route('searchTerm');
         $categoryIds = $request->route('categoryIds');
