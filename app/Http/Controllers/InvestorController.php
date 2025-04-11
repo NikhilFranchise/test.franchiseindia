@@ -1022,8 +1022,7 @@ class InvestorController extends Controller
                 ->where('order_status', 1)
                 ->where('payment_status', 1)
                 ->first();
-
-            if ($paymentDetail->count() == 1) {
+            if ($paymentDetail->count() > 0) {
                 // Via the global helper...
                 session(['membership_expiry' => $paymentDetail->expiry_date]);
             }
@@ -1503,10 +1502,10 @@ class InvestorController extends Controller
                 ->where('membership_type', 1)
                 ->take(15 - count($franchisors))
                 ->get();
-        
+
             $franchisors = array_merge($franchisors, $franchisor3->toArray());
         }
-        
+
 
         //fetching states for the franchisors
         if (is_array($franchisors)) {

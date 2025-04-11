@@ -122,46 +122,6 @@
                     <div class="lft-pnl">
                         <div class="business-infonoimg">
                             <ul>
-                                {{--  @php
-                                    $area =
-                                        $franDetails->prop_area_min . ' - ' . $franDetails->prop_area_max . ' Sq.ft';
-                                    if (empty($franDetails->prop_area_max)) {
-                                        $area = $franDetails->prop_area_min;
-                                    }
-                                    if (is_numeric($franDetails->prop_area_min) && empty($franDetails->prop_area_max)) {
-                                        $area = $franDetails->prop_area_min . ' Sq.ft';
-                                    }
-                                    if (empty($franDetails->prop_area_min)) {
-                                        $area = '-N/A-';
-                                    }
-
-                                    $minValue = $franDetails->unit_inv_min;
-
-                                    if ($minValue < 100000 && $minValue > 10000) {
-                                        $minValue = substr($minValue / 1000, 0, 5) . ' K';
-                                    }
-
-                                    if ($minValue <= 9999999 && $minValue > 100000) {
-                                        $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
-                                    }
-
-                                    if ($minValue > 9999999) {
-                                        $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
-                                    }
-
-                                    $maxValue = $franDetails->unit_inv_max;
-                                    if ($maxValue < 100000 && $maxValue > 10000) {
-                                        $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
-                                    }
-
-                                    if ($maxValue <= 9999999 && $maxValue > 100000) {
-                                        $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
-                                    }
-
-                                    if ($maxValue > 9999999) {
-                                        $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
-                                    }
-                                @endphp  --}}
                                 @php
                                     $area =
                                         $franDetails->prop_area_min . ' - ' . $franDetails->prop_area_max . ' Sq.ft';
