@@ -82,7 +82,7 @@ class DealersAndDistributorController extends Controller
             ->select('title as name','news_id')  // Renamed 'title' to 'name' for consistency
             ->where('title', 'LIKE', "%".request()->search."%")
             ->where('status', 1)
-            ->whereNotEmpty('cat_id')
+            ->whereNotNull('cat_id')
             ->where('insight_type','Article')
             // ->take(2)
             ->limit(2)
