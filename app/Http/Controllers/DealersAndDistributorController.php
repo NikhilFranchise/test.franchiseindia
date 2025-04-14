@@ -52,13 +52,14 @@ class DealersAndDistributorController extends Controller
      */
     public function searchForDealerHomePage()
     {
-// dd('yeee');
+        // dd('yeee');
         $companies = FranchisorBusinessDetail::query()
             ->select(DB::raw("CONCAT(franchisor_business_details.company_name, ' - <strong> in ', category_final.catname,'<%2Fstrong>') AS name"))
             ->whereIn('profile_status', [1,11])
             ->where('company_name', 'LIKE', "%".request()->search."%")
             ->leftJoin('category_final', 'category_final.catid', '=', 'franchisor_business_details.ind_sub_cat')
-            ->take(2)
+            // ->take(2)
+            ->limit(2)
             ->get()
             ->map(function ($item) {
                 $item['type'] = 'company';
@@ -68,8 +69,8 @@ class DealersAndDistributorController extends Controller
             $result = CategoryFinal::query()
             ->select("catname as name")
             ->where('category_final.catname', 'LIKE', "%".request()->search."%")
-            // ->union($companies)
-            ->take(2)
+            // ->take(2)
+            ->limit(2)
             ->get()
             ->map(function ($item) {
                 $item['type'] = 'category'; // Add this line
@@ -81,7 +82,8 @@ class DealersAndDistributorController extends Controller
             ->select('title as name','news_id')  // Renamed 'title' to 'name' for consistency
             ->where('title', 'LIKE', "%".request()->search."%")
             ->where('status', 1)
-            ->take(2)
+            // ->take(2)
+            ->limit(2)
             ->get()
             ->map(function ($item) {
                 $item['type'] = 'article'; // Add this line
