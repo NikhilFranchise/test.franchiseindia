@@ -17,6 +17,7 @@
   
             @media (max-width: 768px) {
         #search-suggestions {
+            position: fixed;
             width: 90%;
             top: 70px; /* Optional: adjust top margin */
         }
@@ -25,6 +26,7 @@
         @media (max-width: 480px) {
         #search-suggestions {
             width: 95%;
+            position: fixed;
             top: 65px;
         }
         }
