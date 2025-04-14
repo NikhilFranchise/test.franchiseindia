@@ -1,3 +1,35 @@
+<style>
+    #search-suggestions {
+    position: fixed;
+    top: 60px; /* Adjust based on your header */
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border: 1px solid #ccc;
+    z-index: 999;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    box-sizing: border-box;
+    }
+
+  
+            @media (max-width: 768px) {
+        #search-suggestions {
+            width: 90%;
+            top: 70px; /* Optional: adjust top margin */
+        }
+        }
+
+        @media (max-width: 480px) {
+        #search-suggestions {
+            width: 95%;
+            top: 65px;
+        }
+        }
+
+  </style>
 @php
     $catArr = Config('constants.CategoryArr');
     asort($catArr);
@@ -57,10 +89,11 @@
                         <div class="input-group input-group-search-section-main">
                             <div class="awesomplete"><input type="text"
                                     class="form-control form-control-search-custom" name="text"
-                                    placeholder="Search for business opportunities" id="dealer-bar-search-top"
+                                    placeholder="Search for business opportunities" id="dealer-bar-search-tops"
                                     aria-describedby="basic-addon2" autocomplete="off" aria-expanded="false"
                                     aria-owns="awesomplete_list_1" role="combobox">
-                                <ul hidden="" role="listbox" id="awesomplete_list_1"></ul><span
+                                {{-- <ul hidden="" role="listbox" id="awesomplete_list_1"></ul> --}}
+                                <span
                                     class="visually-hidden" role="status" aria-live="assertive" aria-atomic="true">Type
                                     2 or more characters for results.</span>
                             </div><span class="input-group-addon input-group-addon-search-custom"
@@ -72,6 +105,8 @@
                                             d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
                                         </path>
                                     </svg></button></span>
+                        <div id="search-suggestions" style=" margin-top:39px; position: absolute; background: white; border: 1px solid #ccc; display: none; z-index: 999;"></div>
+
                         </div>
                     </form>
                 </div>
@@ -1030,3 +1065,143 @@
                     "slug": getSlugAmount[21]['max']
                 }).text("Above"));}function customResetForm(){document.getElementById("invform").reset(),document.getElementById("maxAmount").innerHTML='<option value="" hidden>Select Max Investment</option>'}function customResetForm(){document.getElementById("invform_desktop").reset(),document.getElementById("maxAmount").innerHTML='<option value="" hidden>Select Max Investment</option>'}$(window).scroll((function(e){0!==header.offset().top?header.hasClass("shadow")||header.addClass("shadow"):header.removeClass("shadow")})),screen.width<767&&$(document).ready((function(){setTimeout((function(){$("#searchblk").slideUp(800),$("#clickhidebtn").show(),$("#clickshowbtn").hide()}),3e3),$("#clickhidebtn").click((function(){$("#searchblk").slideDown("slow"),$("#clickhidebtn").hide(),$("#clickshowbtn").show()})),$("#clickshowbtn").click((function(){$("#searchblk").slideUp("slow"),$("#clickhidebtn").show(),$("#clickshowbtn").hide()}))})),$("#registerselect").click((function(){$("#registeractive").click()})),$("#loginselect").click((function(){$("#loginactive").click()})),$("#mobilereg").click((function(){$("#registeractive").click()})),$("#changeLang").on("click",(function(){$("#langType").slideToggle()})),$("#registerselect1").click((function(){$("#login").addClass("active"),$("#register").removeClass("active"),$("#loginactiveopen").addClass("active"),$("#registeractiveopen").removeClass("active")})),$("#loginselect1").click((function(){$("#login").removeClass("active"),$("#register").addClass("active"),$("#loginactiveopen").removeClass("active"),$("#registeractiveopen").addClass("active")})),document.addEventListener("DOMContentLoaded",(function(){var e=document.getElementById("getMainCategoryDataHeader");e.value&&getSubCategoryHeader(e.value)})),$(document).ready((function(){$("#searchoptnew").click((function(){$(".searchblknew").show(400),$(".searchspace").hide(400)})),$("#closegsearch").click((function(){$(".searchspace").show(400),$(".searchblknew").hide(400)})),screen.width>1199&&screen.height<=768&&$(".gsc-wrapper").css({"max-height":"340px",overflow:"auto"}),$("#searchopt").click((function(){return $(".open").click(),$(".searchoption").toggle(400),!1})),$("#searchopt2").click((function(){$(".searchoption").hide(400)})),$(".dropdown-toggle").click((function(){$(".searchoption").hide(400)}))}));
     </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
+
+<script>
+    const input = document.getElementById("dealer-bar-search-tops");
+    const awesomplete = new Awesomplete(input, {
+        minChars: 2,
+        autoFirst: true
+    });
+
+    const navBarSearch = $("#dealer-bar-search-tops");
+    let resultMap = {}; // To map name -> URL
+
+    navBarSearch.on("keyup", function () {
+        const keyword = $(this).val().trim();
+
+        if (keyword.length >= 2) {
+            $.ajax({
+                url: "/dealers-search/" + encodeURIComponent(keyword),
+                type: "GET",
+                dataType: "json",
+                success: function (response) {
+                    console.log('RESSS',response);
+                    prepareList(response);
+                },
+                error: function (err) {
+                    console.log(err);
+                },
+            });
+        }
+    });
+
+    function prepareList(list) {
+        const groupedResults = {};
+        resultMap = {}; // Clear old data
+        const suggestions = [];
+        let html = "";
+
+        list.forEach(item => {
+            if (!groupedResults[item.type]) {
+                groupedResults[item.type] = [];
+            }
+            groupedResults[item.type].push(item);
+        });
+
+
+        for (const [type, items,news_id,category] of Object.entries(groupedResults)) {
+            html += `<div class="suggestion-group">
+                        <strong style="display:block; padding:5px 10px; background:#f7f7f7;">${capitalize(type)}</strong>
+                        <ul class="list-unstyled" style="margin:0;">`;
+
+            items.forEach(item => {
+                const display = `${item.name} - ${capitalize(type)}`;
+                suggestions.push(display);
+                // resultMap[item.name] = item.url; 
+                resultMap[display] = item.url;
+                console.log("Pankajs",item);
+
+                // html += `<li class="suggestion-item" data-display="${display}" style="padding: 8px 10px; cursor:pointer;">${item.name}</li>`;
+                html += `<li class="suggestion-item" 
+                            data-display="${display}" 
+                            data-type="${item.type}" 
+                            data-name="${item.name}" 
+                            data-newsid="${item.news_id}"
+                            data-category="${item.category}" 
+                            style="padding: 8px 10px; cursor:pointer;">
+                            ${item.name}
+                        </li>`;
+            });
+            html += `</ul></div>`;
+        }
+
+        // awesomplete.list = suggestions;
+        $("#search-suggestions").html(html).show();
+        $("#search-suggestions").off("click", ".suggestion-item").on("click", ".suggestion-item", function () {
+            const display = $(this).data("display");
+            const name = $(this).data("name");
+            const type = $(this).data("type");
+            const news_id = $(this).data("newsid");
+            const category= $(this).data("category");
+
+            $("#dealer-bar-search-tops").val(display);
+            $("#search-suggestions").hide();
+            if (type === "company") {
+                const value = display.split(" - ")[0];
+                window.location.href = "/dealers-india/search/" + encodeURIComponent(value);
+            } else if (type === "article") {
+                window.location.href = "/insights/en/article/" + encodeURIComponent(name) + '.' + news_id;
+            }else if(type === "category"){
+                const value = display.split(" - ")[0];
+                window.location.href = "/dealers-india/search/" + encodeURIComponent(value);
+            } 
+            else {
+                // fallback
+                const value = display.split(" - ")[0];
+                window.location.href = "/dealers-india/search/" + encodeURIComponent(value);
+            }
+            // const value = display.split(" - ")[0]; // extract name
+            // window.location.href = "/dealers-india/search/" + encodeURIComponent(value);
+        });
+    }
+
+    
+    // navBarSearch.on("awesomplete-selectcomplete", function () {
+    //     const selected = $(this).val();
+    //     const url = resultMap[selected];
+
+    //     if (url) {
+    //         window.location.href = url;
+    //     } else {
+    //         // fallback if not found
+    //         window.location.href = "/dealers-india/search/" + encodeURIComponent(selected);
+    //     }
+    // });
+
+    // On button click
+    $("#textcompany").on("click", function () {
+        let value = $("#dealer-bar-search-tops").val();
+        const items = value.split(" - ");
+        if (items.length > 1) value = items[0];
+
+        if (value !== "") {
+            window.location.href = "/dealers-india/search/" + encodeURIComponent(value);
+        }
+    });
+
+
+    function capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+    // Hide suggestion box when clicking outside
+    $(document).on("click", function (e) {
+        const $target = $(e.target);
+
+        // If the clicked element is not inside the input or suggestion box
+        if (!$target.closest("#dealer-bar-search-tops").length && !$target.closest("#search-suggestions").length) {
+            $("#search-suggestions").hide();
+        }
+    });
+
+</script>
