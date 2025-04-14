@@ -699,7 +699,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
             html += `</ul></div>`;
         }
 
-        awesomplete.list = suggestions;
+        // awesomplete.list = suggestions;
         $("#search-suggestions").html(html).show();
         $("#search-suggestions").off("click", ".suggestion-item").on("click", ".suggestion-item", function () {
             const display = $(this).data("display");
@@ -730,17 +730,17 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
     }
 
     
-    navBarSearch.on("awesomplete-selectcomplete", function () {
-        const selected = $(this).val();
-        const url = resultMap[selected];
+    // navBarSearch.on("awesomplete-selectcomplete", function () {
+    //     const selected = $(this).val();
+    //     const url = resultMap[selected];
 
-        if (url) {
-            window.location.href = url;
-        } else {
-            // fallback if not found
-            window.location.href = "/dealers-india/search/" + encodeURIComponent(selected);
-        }
-    });
+    //     if (url) {
+    //         window.location.href = url;
+    //     } else {
+    //         // fallback if not found
+    //         window.location.href = "/dealers-india/search/" + encodeURIComponent(selected);
+    //     }
+    // });
 
     // On button click
     $("#textcompany").on("click", function () {
