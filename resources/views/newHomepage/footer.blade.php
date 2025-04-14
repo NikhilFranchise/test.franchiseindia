@@ -628,7 +628,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
     }
 </script>
 {{-- //Pankaj --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script> --}}
 
 <script>
     const input = document.getElementById("dealer-bar-search-tops");
