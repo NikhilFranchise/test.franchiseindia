@@ -1339,8 +1339,8 @@
 
                     },
                     success: function(response) {
-                        console.log(response.count);
-                        console.log(response.data);
+                        // console.log(response.count);
+                        // console.log(response.data);
                         $("#wrapper").html(response.html); // Replace with filtered content
                         $("#recordCount").text(response.count + " RESULTS"); // Update count
                         // Update Franchise Type if available in response
