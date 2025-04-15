@@ -356,7 +356,7 @@
             <li><a target="_blank" href="https://www.entrepreneur.com/" rel="nofollow">entrepreneur.com</a></li>
             <li><a target="_blank" href="https://www.indianretailer.com/" rel="nofollow">indianretailer.com</a></li>
 
-            <li><a target="_blank" href="https://restaurant.indianretailer.com/">restaurantindia.in</a></li>
+            <li><a target="_blank" href="https://www.restaurantindia.in/">restaurantindia.in</a></li>
             <li><a target="_blank"
                     href="https://www.opportunityindia.com/english/tag/health-and-wellness">wellnessindia.org</a></li>
             <li><a target="_blank" href="https://www.opportunityindia.com/english/tag/education">educationbiz.com</a>
@@ -805,7 +805,7 @@
             <li><a target="_blank" href="https://www.entrepreneur.com/" rel="nofollow">entrepreneur.com</a></li>
             <li><a target="_blank" href="https://www.indianretailer.com/" rel="nofollow">indianretailer.com</a></li>
 
-            <li><a target="_blank" href="https://restaurant.indianretailer.com">restaurantindia.in</a></li>
+            <li><a target="_blank" href="https://www.restaurantindia.in">restaurantindia.in</a></li>
             <li><a target="_blank"
                     href="https://www.opportunityindia.com/english/tag/health-and-wellness">wellnessindia.org</a></li>
             <li><a target="_blank" href="https://www.opportunityindia.com/english/tag/education">educationbiz.com</a>

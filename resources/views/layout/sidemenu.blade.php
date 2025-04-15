@@ -292,7 +292,7 @@
         <!--<li><a target="_blank" href="https://www.restaurantindia.in">restaurantindia.in</a></li>
         <li><a target="_blank" href="https://www.franchiseindia.com/wellness/">wellnessindia.org</a></li>
         <li><a target="_blank" href="https://www.franchiseindia.com/education/">educationbiz.com</a></li>-->
-		<li><a target="_blank" href="https://restaurant.indianretailer.com">restaurantindia.in</a></li>
+		<li><a target="_blank" href="https://www.restaurantindia.in">restaurantindia.in</a></li>
         <li><a target="_blank" href="https://www.opportunityindia.com/english/tag/health-and-wellness">wellnessindia.org</a></li>
         <li><a target="_blank" href="https://www.opportunityindia.com/english/tag/education">educationbiz.com</a></li>
         <!--<li><a target="_blank" href="https://www.franchise.ae/" rel="nofollow">franchise.ae</a></li>-->
