@@ -2,10 +2,205 @@
 @section('content')
     <!--TOP 200 FRANCHISE -->
     <style>
+        button.btn.btn-primary {
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .dset:hover {
+            color: #ffffff;
+        }
+
+        .top-modal-head {
+            color: #333333;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        #topFranchise .modal-dialog {
+            width: 539px;
+            margin: 152px auto;
+        }
+
+        #topFranchise .modal-content {
+            border-radius: 0px;
+            box-shadow: none;
+            padding: 10px;
+        }
+
+        ul.topp {
+            list-style: none;
+            padding-left: 0px;
+        }
+
+        ul.topp li {
+            color: #333333;
+            font-size: 15px;
+            margin-bottom: 5px;
+            position: relative;
+            padding-left: 24px;
+            background-image: url(https://www.franchiseindia.com/images/top100/bullets.png);
+            background-repeat: no-repeat;
+            background-position: left;
+        }
+
+        .top-hundred {
+            margin-top: 80px;
+            margin-bottom: 30px;
+        }
+
+        .staicp h1,
+        .staicp h1.bookhead {
+            margin-bottom: 15px;
+            border-bottom:
+                1px solid #dfdfdf;
+            padding-bottom: 15px;
+            font-family: 'Open Sans Light', serif;
+            color: #333;
+        }
+
+        .top-hundred .crit {
+            color: #ED1C25;
+            font-size: 16px;
+            text-decoration:
+                underline;
+            cursor: pointer;
+        }
+
+        .top-hundred p {
+            color: #333333;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .scriteria {
+            border: 1px solid #E9ECF4;
+            padding: 10px 25px 25px 25px;
+            border-radius: 4px;
+            background: #ffffff;
+            margin-bottom: 25px;
+            margin-top: 20px;
+        }
+
+        .scriteria ul li {
+            margin-bottom: 10px;
+        }
+
+        .dset {
+            background: #000000;
+            color: #ffffff;
+            font-size: 14px;
+            padding: 6px 15px;
+            border-radius: 3px;
+        }
+
+        a.mapply {
+            background: #d50000;
+            /* display: none; */
+            cursor: pointer;
+            text-align: center;
+            color: #ffffff;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+
+        }
+
+        .city-icon {
+            width: 80px;
+            height: 80px;
+            margin: auto;
+            background: #f4f4f4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .city-nam {
+            margin-top: 10px;
+        }
+
+        ul li:nth-child(1) img {
+            width: 38px;
+        }
+
+        ul li:nth-child(2) img {
+            width: 46px;
+        }
+
+        ul li:nth-child(3) img {
+            width: 45px;
+        }
+
+        ul li:nth-child(4) img {
+            width: 38px;
+        }
+
+        ul li:nth-child(5) img {
+            width: 46px;
+        }
+
+        ul li:nth-child(6) img {
+            width: 45px;
+        }
+
+        ul li:nth-child(7) img {
+            width: 46px;
+        }
+
+        ul li:nth-child(8) img {
+            width: 34px;
+        }
+
+        ul li:nth-child(9) img {
+            width: 45px;
+        }
+
+        ul li:nth-child(10) img {
+            width: 34px;
+        }
+
+        .mstick span {
+            position: absolute;
+            top: 10px;
+            right: 13px;
+        }
+
+        /* .mobile-reset {
+                    display: none;
+                } */
+
+        .mcloser {
+            display: none;
+        }
+
+        .fmob {
+            display: none;
+        }
+
+        .fshow {
+            display: block !important;
+            position: fixed;
+            top: 0px;
+            height: 100vh;
+            width: 100%;
+            background: #fff;
+            left: 0px;
+            z-index: 9999;
+            padding: 28px !important;
+        }
+
         .banner-line,
         .ttl-brnd-list {
             color: #fff;
             text-align: center
+        }
+
+        #recordCount {
+            font-size: 20px;
         }
 
         .ttl-brnd-list {
@@ -65,16 +260,16 @@
             font-size: 14px
         }
 
-        .filter-head span {
-            font-size: 15px;
-            font-weight: normal;
-            float: right;
-            margin-top: 5px;
-            background: #000000;
-            padding: 4px 18px;
-            border-radius: 5px;
-            color: #ffffff;
-        }
+        /* .filter-head span {
+                                font-size: 15px;
+                                font-weight: normal;
+                                float: right;
+                                margin-top: 5px;
+                                background: #000000;
+                                padding: 4px 18px;
+                                border-radius: 5px;
+                                color: #ffffff;
+                            }*/
 
         .finner .catbtn input[type=checkbox]+label span {
             display: block;
@@ -158,7 +353,7 @@
         .more-franchise-rankings ul li {
             /* width: 19%; */
             background: #fff;
-            box-shadow: 0 0 20px 0 #f5f5f5;
+            /*            box-shadow: 0 0 20px 0 #f5f5f5;*/
             margin-bottom: 20px;
             border-radius: 5px
         }
@@ -422,15 +617,49 @@
         }
 
         @media screen and (min-width:1000px) and (max-width:1199px) {
-            .wrapper .col {
+            .list .col {
                 width: 100%
             }
         }
 
         @media screen and (min-width:768px) and (max-width:993px) {
+            .mcloser img {
+                width: 21px;
+                cursor: pointer;
+            }
+
+            .mstick span {
+                display: none;
+            }
+
+            .mstick span.fmob {
+                display: block;
+            }
+
+            span.mcloser {
+                display: block;
+            }
+
+            .fmob img {
+                position: absolute;
+                right: 2px;
+                top: -12px;
+                width: 20px;
+                cursor: pointer;
+            }
+
+            .fmob {
+                display: block;
+            }
+
+            .mobile-reset {
+                display: block;
+                margin-bottom: 35px;
+            }
 
             .mstick {
-                position: unset;
+                position: relative;
+                top: 0px;
             }
 
             .wrapper .col {
@@ -441,12 +670,103 @@
                 width: 100%
             }
 
+            .filter-brand-apply {
+                display: none;
+            }
+
             .more-franchise-rankings ul li {
                 width: 32%
             }
+
+            #recordCount {
+                font-size: 19px;
+            }
+
+            .filter-head {
+                margin-bottom: 30px;
+            }
         }
 
+
         @media screen and (max-width:768px) {
+            .top-hundred {
+                margin-top: 50px;
+            }
+
+            #topFranchise .modal-dialog {
+                width: 100%;
+            }
+
+            .mobile-reset a {
+                position: absolute;
+                right: 30px;
+                top: 41px;
+                color: #4986f1;
+                text-decoration: none;
+                font-weight: 500;
+                font-size: 14px;
+            }
+
+            .more-franchise-rankings ul li {
+                width: 45% !important;
+            }
+
+            a.mapply {
+                display: block;
+            }
+
+            .top-two-hundred-wrap .fa {
+                font-size: 14px;
+            }
+
+            .filter-brand-apply {
+                overflow: scroll;
+            }
+
+            .filter-list-brand {
+                padding: 20px 0px 0px 0px;
+            }
+
+            #recordCount {
+                font-size: 16px;
+            }
+
+            .mobile-reset {
+                display: block;
+            }
+
+            .mcloser {
+                display: block;
+                position: absolute;
+                right: 17px;
+                top: 10px;
+            }
+
+            .mcloser img {
+                width: 21px;
+                cursor: pointer;
+            }
+
+            .filter-wrapper {
+                position: relative;
+            }
+
+            .fmob img {
+                position: absolute;
+                right: -5px;
+                top: -4px;
+                width: 18px;
+                cursor: pointer;
+            }
+
+            .fmob {
+                display: block;
+            }
+
+            .filter-brand-apply {
+                display: none;
+            }
+
             .top-two-banner {
                 margin-top: 66px;
             }
@@ -456,13 +776,13 @@
             }
 
             .finner .catbtn input[type=checkbox]+label span {
-                width: 120px;
+                width: 140px;
                 background-size: cover;
-                height: 30px
+                height: 34px
             }
 
             .finner .catbtn input[type=checkbox]:checked+label span {
-                background-position: 0 -30px
+                background-position: 0 -36px
             }
 
             .modal .close {
@@ -530,10 +850,10 @@
             }
 
             .wrapper .col {
-                width: 48.49%;
-                min-height: 276px;
+                width: 100%;
+                min-height: 221px;
                 background: #fff;
-                margin: 2px 0
+                margin: 2px 0 10px 0px;
             }
 
             .no-pad-rgt {
@@ -570,62 +890,6 @@
             width: 100%
         }
     </style>
-    <style>
-        .city-icon {
-            width: 80px;
-            height: 80px;
-            margin: auto;
-            background: #f4f4f4;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .city-nam {
-            margin-top: 10px;
-        }
-
-        ul li:nth-child(1) img {
-            width: 38px;
-        }
-
-        ul li:nth-child(2) img {
-            width: 46px;
-        }
-
-        ul li:nth-child(3) img {
-            width: 45px;
-        }
-
-        ul li:nth-child(4) img {
-            width: 38px;
-        }
-
-        ul li:nth-child(5) img {
-            width: 46px;
-        }
-
-        ul li:nth-child(6) img {
-            width: 45px;
-        }
-
-        ul li:nth-child(7) img {
-            width: 46px;
-        }
-
-        ul li:nth-child(8) img {
-            width: 34px;
-        }
-
-        ul li:nth-child(9) img {
-            width: 45px;
-        }
-
-        ul li:nth-child(10) img {
-            width: 34px;
-        }
-    </style>
     <!--TOP 200 FRANCHISE -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <div class="loadman" id="loading" style="display:none">
@@ -635,24 +899,32 @@
             </div>
         </div>
     </div>
-    <div class="top-two-banner">
-        <img src="{{ url('/topfranchiseleaders/logo.png') }}" alt="">
-        {{-- <div class="banner-line">Learn how the <span>rankings are determined </span></div> --}}
-    </div>
     <div class="container formsection margintop60 staicp">
+
+        <div class="top-hundred">
+            <br>
+            <h1 id="ftype_with_year">{{ $franchiseType == 'top-100' ? 'Top 100' : 'Top 200' }} Franchise 2025</h1>
+            <p>Revealing brand impact, consumer value, and dynamic opportunities. Explore trends in Indian franchises,
+                including global giants and emerging innovators. Rankings consider financial strength, expansion, growth
+                rate, and success, reflecting a distinct identity, robust planning, support, innovation, and cultural
+                sensitivity. This analysis assists franchisees and franchisors alike, offering insights into the franchise
+                sector that underpin thriving business ventures.</p>
+
+            <div data-target="#topFranchise" data-toggle="modal" class="crit">Understand Selection Criteria</div>
+        </div>
         <div class="top-two-hundred-wrap">
             <div class="row">
                 <div class="col-md-3 mstick">
                     <div class="filter-wrapper">
+                        <div class="filter-head">Filter & Sort <span class="fmob"><img
+                                    src="{{ url('/topfranchiseleaders/mtoggle.png') }}" alt=""></span></div>
                         <div class="filter-brand-apply">
-                            <div class="filter-head">Filter & Sort <span><a href="{{ url('topleaders') }}">Reset</a></span>
-                            </div>
-                            {{-- <div class="reset-filters">Reset Filters</div> --}}
+                            <span class="mcloser"><img src="{{ url('/topfranchiseleaders/mcloser.png') }}"
+                                    alt=""></span>
                             <div class="flabel lfirst"><img src="{{ url('/topfranchiseleaders/dates.png') }}"
                                     class="date"> Sort By
                                 Year</div>
                             <select id="yearSelect" class="form-controls">
-                                {{-- <option value="">Select Year</option> --}}
                                 @foreach ($years as $item)
                                     <option value="{{ $item->franchisor_year }}"
                                         {{ $item->franchisor_year == $year ? 'selected' : '' }}>
@@ -666,7 +938,8 @@
                                     {{ $franchiseType == 'top-100' ? 'Top 100' : 'Top 200' }}
                                 </option>
                             </select>
-                            <div class="flabel"><img src="{{ url('/topfranchiseleaders/filter.png') }}" class="filter"> Sort
+                            <div class="flabel"><img src="{{ url('/topfranchiseleaders/filter.png') }}" class="filter">
+                                Sort
                                 By
                             </div>
                             <div class="main-filter-apply">
@@ -727,9 +1000,18 @@
                                 l
                                 <option value="21">Rs. 5 Cr above</option>
                             </select>
+                            <button class="btn btn-primary" onclick="window.location.href='{{ url()->current() }}'">Reset
+                                Filters</button>
+
                         </div>
                     </div>
+
+
+
                 </div>
+
+
+
                 <!--- Get Free Info stickely start here  -->
                 @if (!Auth::check() || Auth::user()->profile_type == 1 || Auth::user()->mobile == '')
                     <div id="getFreeInfo" class="ttl-brnd-list">
@@ -853,9 +1135,160 @@
                 </li>
             </ul>
         </div>
-        <div class="top-seoDesc">
-            @include('static.top100_seo_desc')
+
+
+        <div class="company-profile scriteria">
+            <h2 class="catbheading">
+                Understanding the Top 200 Franchise Selection Criteria:
+            </h2>
+            <ul>
+                <li> <strong> 1. Annual Turnover of the Company:</strong>
+
+                    This metric assesses the total revenue generated by the franchise in a year. It is crucial for
+                    understanding the financial scale and market influence of the franchise, offering insights into its
+                    viability and stability.
+                </li>
+                <li>
+                    <strong> 2. Years of Operation:</strong> Reflects how long the company has been in business. This
+                    indicates the market experience and longevity of the franchise, crucial for assessing its ability to
+                    withstand economic fluctuations and maintain operational continuity.
+                </li>
+
+                <li>
+                    <strong> 3. Year of Starting Franchising:</strong>
+                    This reveals how long the franchise model has been in place. A longer history often suggests a tested
+                    and refined business model, important for potential franchisees seeking proven systems.
+
+                </li>
+                <li>
+                    <strong> 4. Presence Across Cities:</strong>
+                    The number of cities where the franchise is present indicates its geographical spread and market
+                    penetration. This metric is important for evaluating the brand’s <br> appeal across diverse markets and
+                    its scalability.
+                </li>
+                <li>
+
+                    <strong> 5. Number of Franchise Units:</strong>
+                    Shows how many franchise units operate under the brand. A higher number suggests a successful franchise
+                    model and widespread acceptance, which is vital for assessing the network's strength and growth
+                    potential.
+                </li>
+                <li>
+                    <strong> 6. Percentage of Business from Franchise Operations: </strong>
+
+                    Indicates what portion of the business's total revenue comes from franchising. High percentages
+                    demonstrate a strong reliance on franchises, underscoring the importance of franchise operations to the
+                    overall business model.
+
+                </li>
+
+                <li>
+                    <strong>7. Total Investment and Area Required:</strong>
+                    This encompasses the capital and space needed to start a franchise, impacting the accessibility and
+                    initial costs for franchisees. It is essential for <br> gauging the entry barriers and potential
+                    financial commitment involved.
+
+                </li>
+
+                <li>
+                    <strong> 8. Franchisee Fees:</strong>
+                    The initial fees paid by franchisees to join the franchise. These fees are critical for understanding
+                    the upfront costs involved and the franchisor’s valuation of their brand and support services.
+                </li>
+
+                <li>
+                    <strong> 9. Royalty Fees:</strong>
+                    Ongoing fees paid by franchisees, typically a percentage of their revenue, to the franchisor. This is
+                    key for understanding the continuing financial obligations and the cost structure of operating the
+                    franchise.
+                </li>
+                <li>
+                    <strong> 10. Marketing Cost as Percentage of Sales:</strong>
+                    Measures the proportion of revenue dedicated to marketing. This is important for assessing how much
+                    support the franchisor provides in terms of advertising and promotional activities, which can
+                    significantly impact the franchise's visibility and growth.
+
+                </li>
+                <li>
+                    <strong>
+                        11. Monthly Working Capital:
+                    </strong>
+                    The amount of capital required to manage daily operations. It is crucial for potential franchisees to
+                    understand the liquidity needed to sustain the business until it becomes profitable.
+
+                </li>
+                <li>
+                    <strong>
+                        12. Return on Investment (ROI):
+                    </strong>
+                    Calculates the efficiency and profitability of the franchise investment. High ROI indicates a lucrative
+                    business model, crucial for attracting and retaining investors and franchisees.
+                </li>
+                <li>
+                    <strong>
+                        13. Number of Employees Required to Run a Franchise Unit:
+                    </strong>
+                    Indicates staffing needs, which affect operational complexity and costs. Important for potential
+                    franchisees to consider when assessing the human resources needed and the operational demands of the
+                    franchise.
+
+                </li>
+                <li>
+                    <strong>
+                        14. Expected Break-Even Time:
+                    </strong>
+                    The time it takes for a franchise unit to become profitable. Shorter break-even times are preferable as
+                    they reduce financial risk and reflect efficient business operations, crucial for evaluating the
+                    financial attractiveness of the franchise.
+                </li>
+                <li>
+                    <strong>
+                        15. Average Business from a Franchise Unit:
+                    </strong>
+                    Shows the typical revenue generated per unit. This metric is crucial for prospective franchisees to
+                    assess potential earnings and compare &nbsp; performance across different franchises.
+                </li>
+                <li>
+                    <strong>
+                        16. Franchisees Owning More Than One Unit:
+                    </strong>
+                    Reflects franchisee satisfaction and success within the franchise system. Multiple units under single
+                    franchisee ownership suggest a strong <br>
+                    business model and franchisee confidence, important for assessing the franchise's appeal and operational
+                    success.
+
+                </li>
+                <li>
+                    <strong>
+                        17. Number of Stores in Small, Mid, and Large Format:
+                    </strong>
+                    This diversity in store sizes can cater to different market needs and locations. It is important for
+                    evaluating the franchise's adaptability to various environments and its potential to expand into new
+                    areas.
+
+                </li>
+                <li>
+                    <strong>
+                        18. Year-on-Year Growth for the Last Three Years:
+                    </strong>
+                    Tracks the franchise's growth trends over time. Consistent growth is indicative of a thriving business,
+                    important for assessing the momentum and future prospects of the franchise.
+                </li>
+                <li>
+                    <strong>
+                        19. Franchise Success Milestones:
+                    </strong>
+                    Key achievements and benchmarks reached by the franchise that signal its progress and success. These
+                    milestones are important for gauging the franchise's development, market impact, and operational
+                    excellence, providing potential franchisees with indicators of success and stability.
+
+                </li>
+            </ul>
+
         </div>
+
+
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -920,13 +1353,18 @@
                     ${response.franchisor_type === "top-100" ? "Top 100" : "Top 200"}
                 </option>`
                             );
+                            // Get selected year from the select box
+                            const franchiseYear = $('#yearSelect').val();
+                            const franchiseLabel = response.franchisor_type === "top-100" ? "Top 100" :
+                                "Top 200";
+
+                            // Update the heading
+                            $('#ftype_with_year').html(`${franchiseLabel} Franchise ${franchiseYear}`);
+
                         }
-                        // Hide "Load More" button if no more records
-                        // if (response.hasMore === false) {
-                        //     $("#loadmore").hide();
-                        // } else {
-                        //     $("#loadmore").show();
-                        // }
+
+
+
                         $("#loading").hide();
                         isLoading = false;
 
@@ -1000,11 +1438,6 @@
                 fetchData();
             });
 
-            // Load more event
-            // $("#loadmore").on("click", function() {
-            //     // currentPage++; // Increment page
-            //     fetchData(true);
-            // });
             // Initialize checkbox events on page load
             reinitializeCheckboxEvents();
         });
@@ -1021,5 +1454,47 @@
                 }
             });
         }
+
+        $(".fmob").click(function() {
+            $(".filter-brand-apply").toggleClass('fshow');
+        });
+        $(".mcloser").click(function() {
+            $(".filter-brand-apply").toggleClass('fshow');
+        });
     </script>
+
+
+    <div class="modal fade" id="topFranchise" tabindex="-1" role="dialog" aria-labelledby="topFranchise">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="https://www.franchiseindia.com/images/top100/close.png" alt="">
+                    </button>
+                    <div class="top-modal-head">Understand Selection Criteria</div>
+                    <ul class="topp">
+                        <li>Annual Turnover of the Company Company</li>
+                        <li>Operational Since</li>
+                        <li>Year of starting Franchising</li>
+                        <li>Number of Cities present in</li>
+                        <li>Number of Franchise Units</li>
+                        <li>Percentage of total business from franchise</li>
+                        <li>Total Investment and area required</li>
+                        <li>Franchisee fees</li>
+                        <li>Royalty Fees</li>
+                        <li>Marketing cost as percentage of sales</li>
+                        <li>Working Capital per month</li>
+                        <li>Return on investment</li>
+                        <li>Number of employees required to run a franchise unit</li>
+                        <li>Expected break-even time</li>
+                        <li>Average business from a franchise unit</li>
+                        <li>Number of franchisees owning more than one unit</li>
+                        <li>Number of stores in small, mid and large format</li>
+                        <li>Year-on-year growth for the last three years</li>
+                        <li>Franchise success milestone</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
