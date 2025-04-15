@@ -1248,8 +1248,3 @@ Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('pass
 Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
 Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
 
-// Route::get('related', [InsightsController::class, 'relatedarticles']);
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

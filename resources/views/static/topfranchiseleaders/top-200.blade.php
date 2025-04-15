@@ -170,8 +170,8 @@
         }
 
         /* .mobile-reset {
-                    display: none;
-                } */
+                        display: none;
+                    } */
 
         .mcloser {
             display: none;
@@ -261,15 +261,15 @@
         }
 
         /* .filter-head span {
-                                font-size: 15px;
-                                font-weight: normal;
-                                float: right;
-                                margin-top: 5px;
-                                background: #000000;
-                                padding: 4px 18px;
-                                border-radius: 5px;
-                                color: #ffffff;
-                            }*/
+                                    font-size: 15px;
+                                    font-weight: normal;
+                                    float: right;
+                                    margin-top: 5px;
+                                    background: #000000;
+                                    padding: 4px 18px;
+                                    border-radius: 5px;
+                                    color: #ffffff;
+                                }*/
 
         .finner .catbtn input[type=checkbox]+label span {
             display: block;
@@ -1336,28 +1336,21 @@
                         filterType: selectedSort,
                         industry: selectedIndustry,
                         investmentRange: selectedInvestment,
-                        // page: currentPage, // Pass current page for pagination
 
                     },
                     success: function(response) {
-                        // if (isLoadMore) {
-                        //     $("#").append(response.html); // Append new results
-                        // } else {
                         $("#wrapper").html(response.html); // Replace with filtered content
-                        // }
                         $("#recordCount").text(response.count + " RESULTS"); // Update count
                         // Update Franchise Type if available in response
                         if (response.franchisor_type) {
                             $("#ftypeSelect").html(
                                 `<option value="${response.franchisor_type}">
-                    ${response.franchisor_type === "top-100" ? "Top 100" : "Top 200"}
-                </option>`
+                            ${response.franchisor_type === "top-100" ? "Top 100" : "Top 200"}
+                        </option>`
                             );
-                            // Get selected year from the select box
                             const franchiseYear = $('#yearSelect').val();
                             const franchiseLabel = response.franchisor_type === "top-100" ? "Top 100" :
                                 "Top 200";
-
                             // Update the heading
                             $('#ftype_with_year').html(`${franchiseLabel} Franchise ${franchiseYear}`);
 
