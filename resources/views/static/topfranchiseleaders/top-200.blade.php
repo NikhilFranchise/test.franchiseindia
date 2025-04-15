@@ -1,8 +1,12 @@
 @extends('layout.master')
 @section('content')
     <!--TOP 200 FRANCHISE -->
-
     <style>
+        button.btn.btn-primary {
+            width: 100%;
+            font-size: 16px;
+        }
+
         .dset:hover {
             color: #ffffff;
         }
@@ -93,7 +97,7 @@
 
         a.mapply {
             background: #d50000;
-            display: none;
+            /* display: none; */
             cursor: pointer;
             text-align: center;
             color: #ffffff;
@@ -101,6 +105,7 @@
             font-size: 16px;
             border: none;
             border-radius: 5px;
+
         }
 
         .city-icon {
@@ -164,9 +169,9 @@
             right: 13px;
         }
 
-        .mobile-reset {
-            display: none;
-        }
+        /* .mobile-reset {
+                    display: none;
+                } */
 
         .mcloser {
             display: none;
@@ -256,15 +261,15 @@
         }
 
         /* .filter-head span {
-                        font-size: 15px;
-                        font-weight: normal;
-                        float: right;
-                        margin-top: 5px;
-                        background: #000000;
-                        padding: 4px 18px;
-                        border-radius: 5px;
-                        color: #ffffff;
-                    }*/
+                                font-size: 15px;
+                                font-weight: normal;
+                                float: right;
+                                margin-top: 5px;
+                                background: #000000;
+                                padding: 4px 18px;
+                                border-radius: 5px;
+                                color: #ffffff;
+                            }*/
 
         .finner .catbtn input[type=checkbox]+label span {
             display: block;
@@ -894,15 +899,11 @@
             </div>
         </div>
     </div>
-    {{-- <div class="top-two-banner">
-        <img src="{{ url('/topfranchiseleaders/logo.png') }}" alt="">
-      
-    </div> --}}
     <div class="container formsection margintop60 staicp">
 
         <div class="top-hundred">
             <br>
-            <h1>Top 200 Franchise 2025</h1>
+            <h1 id="ftype_with_year">{{ $franchiseType == 'top-100' ? 'Top 100' : 'Top 200' }} Franchise 2025</h1>
             <p>Revealing brand impact, consumer value, and dynamic opportunities. Explore trends in Indian franchises,
                 including global giants and emerging innovators. Rankings consider financial strength, expansion, growth
                 rate, and success, reflecting a distinct identity, robust planning, support, innovation, and cultural
@@ -914,26 +915,16 @@
         <div class="top-two-hundred-wrap">
             <div class="row">
                 <div class="col-md-3 mstick">
-                    <span><a href="{{ url('/topleaders') }}" class="dset">Reset</a></span>
                     <div class="filter-wrapper">
                         <div class="filter-head">Filter & Sort <span class="fmob"><img
                                     src="{{ url('/topfranchiseleaders/mtoggle.png') }}" alt=""></span></div>
                         <div class="filter-brand-apply">
-                            <div class="mobile-reset"><a href="{{ url('/topleaders') }}">Reset
-                                    Filters</a></div>
-
                             <span class="mcloser"><img src="{{ url('/topfranchiseleaders/mcloser.png') }}"
                                     alt=""></span>
-
-                            {{-- <div class="filter-head">Filter & Sort <span><a href="{{ url('topleaders') }}">Reset</a></span>
-                            </div> --}}
-                            {{-- <div class="reset-filters">Reset Filters</div> --}}
-
                             <div class="flabel lfirst"><img src="{{ url('/topfranchiseleaders/dates.png') }}"
                                     class="date"> Sort By
                                 Year</div>
                             <select id="yearSelect" class="form-controls">
-                                {{-- <option value="">Select Year</option> --}}
                                 @foreach ($years as $item)
                                     <option value="{{ $item->franchisor_year }}"
                                         {{ $item->franchisor_year == $year ? 'selected' : '' }}>
@@ -1009,7 +1000,8 @@
                                 l
                                 <option value="21">Rs. 5 Cr above</option>
                             </select>
-                            <a onclick="" class="mapply">Apply</a>
+                            <button class="btn btn-primary" onclick="window.location.href='{{ url()->current() }}'">Reset
+                                Filters</button>
 
                         </div>
                     </div>
@@ -1361,13 +1353,18 @@
                     ${response.franchisor_type === "top-100" ? "Top 100" : "Top 200"}
                 </option>`
                             );
+                            // Get selected year from the select box
+                            const franchiseYear = $('#yearSelect').val();
+                            const franchiseLabel = response.franchisor_type === "top-100" ? "Top 100" :
+                                "Top 200";
+
+                            // Update the heading
+                            $('#ftype_with_year').html(`${franchiseLabel} Franchise ${franchiseYear}`);
+
                         }
-                        // Hide "Load More" button if no more records
-                        // if (response.hasMore === false) {
-                        //     $("#loadmore").hide();
-                        // } else {
-                        //     $("#loadmore").show();
-                        // }
+
+
+
                         $("#loading").hide();
                         isLoading = false;
 
@@ -1441,11 +1438,6 @@
                 fetchData();
             });
 
-            // Load more event
-            // $("#loadmore").on("click", function() {
-            //     // currentPage++; // Increment page
-            //     fetchData(true);
-            // });
             // Initialize checkbox events on page load
             reinitializeCheckboxEvents();
         });
