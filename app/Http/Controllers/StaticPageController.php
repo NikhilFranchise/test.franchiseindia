@@ -336,7 +336,7 @@ class StaticPageController extends Controller
 
         // Use pagination
         $data = $query->get();
-        dd($data);
+        // dd($data);
         $count = $data->count();
 
         // If request is AJAX, return JSON response for filters
