@@ -1143,6 +1143,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
         /*English Language setter*/
         Route::group(['prefix' => 'en'],            function () {
+            Route::get('/export',                        [InsightsController::class, 'exportInsights']);
             Route::get('thanks',                    function () {
                 return view('insights.thanks');
             })->name('insights.thanks');
@@ -1161,8 +1162,6 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('/{category}/{subcategory}',     [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
-            // Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
-            // Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
         });
         /*Hindi Language setter*/
         Route::group(['prefix' => 'hi'], function () {
@@ -1184,6 +1183,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
+            Route::get('/export',              [InsightsController::class, 'exportInsights']);
         });
     });
 });
@@ -1247,4 +1247,3 @@ Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('pass
 
 Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
 Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
-
