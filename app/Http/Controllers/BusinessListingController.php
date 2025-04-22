@@ -747,7 +747,6 @@ class BusinessListingController extends Controller
 
         if (isset(request()->searchq)) {
             $searchq = request()->searchq;
-            dd($searchq);
             $franData->where('company_name', 'LIKE', '%' . $searchq . '%');
         }
 
@@ -761,15 +760,16 @@ class BusinessListingController extends Controller
         if (!empty($franType))
             $franData->where('franchise_partner_type',  $franType);
 
+        // For location pages data
         if (count($locArrKey) > 0) {
             $stateNames = [];
 
             foreach ($locArrKey as $key => $val) {
                 $stateNames[] = config('location.stateArr.' . $val);
+                // dd($stateNames);
             }
             $franData->where(function ($query) use ($stateNames) {
                 $query->where('expansion_location', 'LIKE', '%' . $stateNames[0] . '%');
-
                 for ($i = 1; $i < count($stateNames); $i++) {
                     $query->orWhere('expansion_location', 'LIKE', '%' . $stateNames[$i] . '%');
                 }

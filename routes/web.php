@@ -1253,3 +1253,4 @@ Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLea
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/sendmail',[CommonController::class,'send_email']);
