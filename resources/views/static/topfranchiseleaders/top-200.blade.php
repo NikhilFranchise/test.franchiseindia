@@ -1394,7 +1394,7 @@
 
                     },
                     success: function(response) {
-                        alert(response);
+                        // alert(response);     
                         $("#wrapper").html(response.html); // Replace with filtered content
                         $("#recordCount").text(response.count + " RESULTS"); // Update count
                         if (response.franchisor_type) {
