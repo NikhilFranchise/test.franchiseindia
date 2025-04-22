@@ -1411,8 +1411,6 @@
 
                         }
 
-
-
                         $("#loading").hide();
                         isLoading = false;
 
@@ -1470,7 +1468,6 @@
                     </div>
                 </div>
             `;
-
                             selectedIds.push(brandId);
                         });
 
@@ -1484,7 +1481,6 @@
             $("#yearSelect, input[name='sortBy'], input[name='limit'], #industry_type, #investment_range").on(
                 "change",
                 function() {
-                    // currentPage = 1; // Reset page on new filter selection
                     fetchData();
                 });
 

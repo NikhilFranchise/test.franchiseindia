@@ -13,6 +13,7 @@ use App\Models\FranchisorBusinessDetail;
 use App\Models\TopFranchiseLeader;
 use App\Models\TopFranchisorLeaders;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class StaticPageController extends Controller
 {
@@ -343,14 +344,16 @@ class StaticPageController extends Controller
 
         // If request is AJAX, return JSON response for filters
         if ($request->ajax()) {
+            $html = view('static.topfranchiseleaders.dynamicData', compact('data', 'count'))->render();
+            Log::info('Rendered HTML:', ['html' => $html]); // Add this
             return response()->json([
                 'count' => $data->count(),
                 'franchisor_type' => $franchiseType,
-                'html' => view('static.topfranchiseleaders.dynamicData', compact('data', 'count'))->render()
+                'html' => $html,
             ]);
+        } else {
+            // If it's a normal request, return the main view
+            return view('static.topfranchiseleaders.top-200', compact('data', 'years', 'franchiseType', 'year', 'count'));
         }
-
-        // If it's a normal request, return the main view
-        return view('static.topfranchiseleaders.top-200', compact('data', 'years', 'franchiseType', 'year', 'count'));
     }
 }
