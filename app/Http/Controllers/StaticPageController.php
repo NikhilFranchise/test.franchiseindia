@@ -277,13 +277,14 @@ class StaticPageController extends Controller
 
     public function topFranchiseLeaders(Request $request)
     {
+        if($request->ajax()){
+            dd($request->all());
+        }
         $year = $request->year ?? null;
         $filterType = $request->filterType ?? null;
         $filterLimit = $request->filterLimit ?? null;
         $industry = $request->industry ?? null;
         $investment = $request->investmentRange ?? null;
-        // $perPage = 25; // Items per page
-
         // Get available years for the dropdown
         $years = TopFranchisorLeaders::select('franchisor_year')
             ->distinct()
