@@ -25,6 +25,7 @@ use App\Models\FihlPodcastVideo;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
+use Illuminate\Http\Response;
 
 class InsightsController extends Controller
 {
@@ -479,6 +480,7 @@ class InsightsController extends Controller
 
         // Determine the appropriate models based on the language
         $categoryModel = $locale == 'hi' ? InsightsHindiCategory::class : InsightCategory::class;
+        $subcategoryModel = $locale == 'hi' ? InsightsHindiSubCategory::class : InsightSubcategory::class;
         $insightListModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
 
         // Fetch the category
@@ -508,13 +510,39 @@ class InsightsController extends Controller
             ->orderByDesc('views')
             ->take(6)->get();
 
+        // Subcategories under the main category
+        $subcat = $subcategoryModel::query()
+            ->select('id', 'subcat_name', 'slug')
+            ->where('mcat_id', $category->id)
+            ->get();
+
+        $subcatids = $subcat->pluck('id');
+
+        // Get insight articles under those subcategories
+        $subcatData = $insightListModel::query()
+            ->select('subcat_id') // Just need subcat_id for counting
+            ->whereIn('subcat_id', $subcatids)
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->get();
+
+        // Count the articles per subcategory ID
+        $subcatCounts = $subcatData->groupBy('subcat_id')->map(function ($items) {
+            return $items->count();
+        });
+
+        // Now you can access the count like this:
+        foreach ($subcat as $sc) {
+            $count = $subcatCounts[$sc->id] ?? 0;
+        }
+
         // Check if insights are available
         if ($insightcategories->isEmpty()) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
 
         // Return the view with compacted data
-        return view('insights.categorylist', compact('insightcategories', 'category', 'popularArticles'));
+        return view('insights.categorylist', compact('insightcategories', 'category', 'popularArticles', 'subcat'));
     }
 
 
@@ -1187,53 +1215,85 @@ class InsightsController extends Controller
         return @getimagesize($s3Url) !== false ? $s3Url : $defaultUrl;
     }
 
-    // public function relatedarticles()
-    // {
-    //     // Fetch all active franchisors
-    //     $franchisors = FranchisorBusinessDetail::query()
-    //         ->select('company_name')
-    //         ->where('profile_status', 1)
-    //         // ->where('membership_type', 1)
-    //         ->take(10)
-    //         ->get();
+    public function exportInsights()
+    {
+        // Handle localization
+        $locale = request()->segment(2) === 'hi' ? 'hi' : 'en';
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
 
-    //     $matchedBrands = [];
-    //     $unmatchedBrands = [];
+        // Select the correct model based on the locale
+        $insightModel = $locale === 'en' ? InsightList::class : InsightListHindi::class;
 
-    //     foreach ($franchisors as $franDetails) {
-    //         $companyName = trim($franDetails->company_name);
+        // Fetch insights with category relationship
+        try {
+            $insights = $insightModel::with('category') // Eager loading category
+                ->select('news_id', 'title', 'insight_type', 'slug', 'views', 'cat_id', 'published_date', 'created_at')
+                ->where('status', 1)
+                // ->orderByDesc('views')
+                ->orderByDesc('created_at')
+                // ->limit(100) // You can adjust the limit based on the number of records you need
+                ->get();
+        } catch (\Exception $e) {
+            // Log the error if the query fails
+            Log::error('Error fetching insights: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to fetch insights'], 500);
+        }
 
-    //         // Prepare regex-friendly company name
-    //         $cleanCompanyName = preg_replace('/[^a-zA-Z0-9\s]/', '', $companyName);
-    //         $cleanCompanyName = preg_replace('/\s+/', ' ', $cleanCompanyName);
-    //         $companyNameRegex = addslashes($cleanCompanyName); // Escape special characters
+        // Define CSV headers
+        $csvHeader = ['Title', 'URL', 'Insight Type', 'Category', 'Views', 'Created At'];
+        $filename = 'insights_export_' . now()->format('dmy_His') . '.csv';
 
-    //         // Find matching articles
-    //         $matchingArticles = InsightList::query()
-    //             ->select('title')
-    //             ->where('status', 1)
-    //             ->whereRaw("LOWER(title) REGEXP LOWER(?)", ["(^|[[:space:]]){$companyNameRegex}([[:space:]]|$)"])
-    //             ->orderByDesc('created_at')
-    //             ->get();
+        $callback = function () use ($insights, $csvHeader, $locale) {
+            // Clear any previous output
+            if (ob_get_level()) {
+                ob_end_clean();
+            }
 
-    //         if ($matchingArticles->isEmpty()) {
-    //             // No matching articles found, add to unmatched brands
-    //             $unmatchedBrands[] = [
-    //                 'company_name'   => $franDetails->company_name,
-    //             ];
-    //         } else {
-    //             // Matching articles found, add to matched brands
-    //             $matchedBrands[] = [
-    //                 'company_name'   => $franDetails->company_name,
-    //                 'articles'       => $matchingArticles // Include matching articles
-    //             ];
-    //         }
-    //     }
+            // Open file stream for CSV output
+            $file = fopen('php://output', 'w');
+            // Add BOM for UTF-8 (important for Excel compatibility)
+            fputs($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-    //     // Return JSON response with both matched and unmatched brands
-    //     return response()->json([
-    //         'matched_brands'   => $matchedBrands,
-    //         'unmatched_brands' => $unmatchedBrands
-    //     ]);
-    // }
+            // Write the header row to the CSV
+            fputcsv($file, $csvHeader);
+
+            foreach ($insights as $insight) {
+                // Check if category exists and if it has a 'name' property (in case it's a collection)
+                $categoryName = $insight->category && $insight->category->isNotEmpty()
+                    ? $insight->category->first()->catname : 'N/A';
+
+                // Construct URL for the insight
+                $url = config('constants.MainDomain', 'https://www.franchiseindia.com')
+                    . '/insights/'
+                    . $locale
+                    . '/'
+                    . strtolower($insight->insight_type)
+                    . '/'
+                    . $insight->slug
+                    . '.'
+                    . $insight->news_id;
+
+                // Write the row for each insight
+                fputcsv($file, [
+                    $insight->title,
+                    $url,
+                    $insight->insight_type,
+                    $categoryName,
+                    $insight->views,
+                    // $insight->published_date?->format('d-m-Y') ?? 'N/A',
+                    $insight->created_at?->format('d-m-Y') ?? 'N/A',
+                ]);
+            }
+
+            // Close the file
+            fclose($file);
+        };
+
+        // Return the CSV as a streamed response
+        return response()->stream($callback, 200, [
+            "Content-Type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=\"$filename\"",
+        ]);
+    }
 }

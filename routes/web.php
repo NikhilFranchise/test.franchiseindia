@@ -145,7 +145,7 @@ Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBysta
 Route::get('invester-verifyformmobilenumber', [MobileVerificationController::class, 'investerverifyMobile']);
 Route::get('/user/check-mobile-status', [CommonController::class, 'verifyMobile']);
 Route::get('verifyformmobilenumber', [MobileVerificationController::class, 'verifyMobile']);
-Route::get('verify', [MobileVerificationController::class, 'verifyMobile']);
+Route::get('3', [MobileVerificationController::class, 'verifyMobile']);
 Route::get('login_verify_mobile', [MobileVerificationController::class, 'verifyLoginMobile']);
 Route::get('/user/investor-mobile-verify', [CommonController::class, 'investormobileverify']);
 Route::get('validate-email', [CommonController::class, 'emailValidation']);
@@ -1143,6 +1143,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
         /*English Language setter*/
         Route::group(['prefix' => 'en'],            function () {
+            Route::get('/export',                        [InsightsController::class, 'exportInsights']);
             Route::get('thanks',                    function () {
                 return view('insights.thanks');
             })->name('insights.thanks');
@@ -1161,8 +1162,6 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('/{category}/{subcategory}',     [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
-            // Route::post('instasubsribe',                [InsightsController::class, 'instasubsribe']);
-            // Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
         });
         /*Hindi Language setter*/
         Route::group(['prefix' => 'hi'], function () {
@@ -1184,6 +1183,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
+            Route::get('/export',              [InsightsController::class, 'exportInsights']);
         });
     });
 });
@@ -1247,10 +1247,3 @@ Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('pass
 
 Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
 Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
-
-// Route::get('related', [InsightsController::class, 'relatedarticles']);
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/sendmail',[CommonController::class,'send_email']);
