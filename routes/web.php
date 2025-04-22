@@ -145,7 +145,7 @@ Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBysta
 Route::get('invester-verifyformmobilenumber', [MobileVerificationController::class, 'investerverifyMobile']);
 Route::get('/user/check-mobile-status', [CommonController::class, 'verifyMobile']);
 Route::get('verifyformmobilenumber', [MobileVerificationController::class, 'verifyMobile']);
-Route::get('verify', [MobileVerificationController::class, 'verifyMobile']);
+Route::get('3', [MobileVerificationController::class, 'verifyMobile']);
 Route::get('login_verify_mobile', [MobileVerificationController::class, 'verifyLoginMobile']);
 Route::get('/user/investor-mobile-verify', [CommonController::class, 'investormobileverify']);
 Route::get('validate-email', [CommonController::class, 'emailValidation']);

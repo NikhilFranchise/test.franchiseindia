@@ -182,7 +182,7 @@ aria-hidden="true">
                     <div class="input-group input-group-search-section-main">
                         <div class="awesomplete"><input type="text"
                                 class="form-control form-control-search-custom" name="text"
-                                placeholder="Search for business opportunities " id="dealer-bar-search-tops"
+                                placeholder="Search for business opportunities " id="dealer-bar-search-top"
                                 aria-describedby="basic-addon2" autocomplete="off" aria-expanded="false"
                                 aria-owns="awesomplete_list_1" role="combobox">
                             <ul hidden="" role="listbox" id="awesomplete_list_1"></ul>
@@ -198,7 +198,7 @@ aria-hidden="true">
                                         d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z">
                                     </path>
                                 </svg></button></span>
-                                <div id="search-suggestions" style=" margin-top:39px; position: absolute; background: white; border: 1px solid #ccc; display: none; z-index: 999;"></div>
+                                {{-- <div id="search-suggestions" style=" margin-top:39px; position: absolute; background: white; border: 1px solid #ccc; display: none; z-index: 999;"></div> --}}
 
                     </div>
                 </form>
@@ -629,7 +629,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 </script>
 
 {{-- //Pankaj --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
 
 <script>
     const input = document.getElementById("dealer-bar-search-tops");
@@ -730,18 +730,6 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
         });
     }
 
-    
-    // navBarSearch.on("awesomplete-selectcomplete", function () {
-    //     const selected = $(this).val();
-    //     const url = resultMap[selected];
-
-    //     if (url) {
-    //         window.location.href = url;
-    //     } else {
-    //         // fallback if not found
-    //         window.location.href = "/dealers-india/search/" + encodeURIComponent(selected);
-    //     }
-    // });
 
     // On button click
     $("#textcompany").on("click", function () {
@@ -768,4 +756,4 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
         }
     });
 
-</script>
+</script> --}}
