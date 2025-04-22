@@ -277,9 +277,9 @@ class StaticPageController extends Controller
 
     public function topFranchiseLeaders(Request $request)
     {
-        if($request->ajax()){
-            dd($request->all());
-        }
+        // if($request->ajax()){
+        //     dd($request->all());
+        // }
         $year = $request->year ?? null;
         $filterType = $request->filterType ?? null;
         $filterLimit = $request->filterLimit ?? null;
@@ -334,10 +334,7 @@ class StaticPageController extends Controller
         } elseif ($filterType == 'investMax') {
             $query->join('franchisor_business_details as fbd_order', 'fbd_order.franchisor_id', '=', 'top_franchisor_brands.franchisor_id')
                 ->orderBy('fbd_order.unit_inv_max', 'desc');
-        }
-
-        // Apply filter limit if provided
-        if (!empty($filterLimit) && is_numeric($filterLimit)) {
+        } else if (!empty($filterLimit) && is_numeric($filterLimit)) {
             $query->limit((int) $filterLimit);
         }
 
@@ -349,8 +346,7 @@ class StaticPageController extends Controller
             return response()->json([
                 'count' => $data->count(),
                 'franchisor_type' => $franchiseType,
-                //'hasMore' => $data->hasMorePages(),
-                'html' => view('static.topfranchiseleaders.dynamicData', compact('data', 'count'))->render(),
+                'html' => view('static.topfranchiseleaders.dynamicData', compact('data', 'count'))->render()
             ]);
         }
 
