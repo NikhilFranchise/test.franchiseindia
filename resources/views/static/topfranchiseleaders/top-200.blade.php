@@ -1395,8 +1395,8 @@
 
                     },
                     success: function(response) {
-                        console.log(response); // ✅ Should now show full JSON
-                        alert(response.html);
+                        // console.log(response); // ✅ Should now show full JSON
+                        // alert(response.html);
                         $("#wrapper").html(response.html); // Replace with filtered content
                         $("#recordCount").text(response.count + " RESULTS"); // Update count
                         if (response.franchisor_type) {
