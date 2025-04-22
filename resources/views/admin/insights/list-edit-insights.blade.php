@@ -280,13 +280,17 @@
                     </ul>
 
                     <div class="widget-box">
-
-                        @if (request()->query('search'))
-                            <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+                        <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+                            @if (request()->query('search'))
                                 <h5>Showing {{ $totalRecords }} Records for
                                     "<strong>{{ request()->query('search') }}</strong>"</h5>
+                            @endif
+                            <div class="" style=" position: relative; left:965px; padding-top: 2px;">
+                                <a href="{{ request()->fullUrlWithQuery(['export' => 1]) }}" class="btn btn-success">
+                                    Export Data
+                                </a>
                             </div>
-                        @endif
+                        </div>
                         <div class="widget-content nopadding">
                             <table class="table table-bordered table-striped">
                                 <thead>
@@ -430,8 +434,8 @@
     <!--end-Footer-part-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="{{ url('admin/js/jquery.ui.custom.js') }}"></script>

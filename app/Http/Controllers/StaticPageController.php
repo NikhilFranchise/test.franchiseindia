@@ -279,6 +279,7 @@ class StaticPageController extends Controller
     {
         $year = $request->year ?? null;
         $filterType = $request->filterType ?? null;
+        $filterLimit = $request->filterLimit ?? null;
         $industry = $request->industry ?? null;
         $investment = $request->investmentRange ?? null;
         // $perPage = 25; // Items per page
@@ -334,9 +335,12 @@ class StaticPageController extends Controller
                 ->orderBy('fbd_order.unit_inv_max', 'desc');
         }
 
-        // Use pagination
+        // Apply filter limit if provided
+        if (!empty($filterLimit) && is_numeric($filterLimit)) {
+            $query->limit((int) $filterLimit);
+        }
+
         $data = $query->get();
-        // dd($data);
         $count = $data->count();
 
         // If request is AJAX, return JSON response for filters
@@ -345,11 +349,11 @@ class StaticPageController extends Controller
                 'count' => $data->count(),
                 'franchisor_type' => $franchiseType,
                 //'hasMore' => $data->hasMorePages(),
-                'html' => view('static.topfranchiseleaders.dynamicData', compact('data','count'))->render(),
+                'html' => view('static.topfranchiseleaders.dynamicData', compact('data', 'count'))->render(),
             ]);
         }
 
         // If it's a normal request, return the main view
-        return view('static.topfranchiseleaders.top-200', compact('data', 'years', 'franchiseType', 'year','count'));
+        return view('static.topfranchiseleaders.top-200', compact('data', 'years', 'franchiseType', 'year', 'count'));
     }
 }

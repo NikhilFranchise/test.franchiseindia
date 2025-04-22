@@ -84,7 +84,7 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    
+
     public function loginCheck(Request $request)
     {
         $credentials = [
@@ -1923,19 +1923,59 @@ class AdminController extends Controller
         }
     }
 
+    // public function listinsights(Request $request)
+    // {
+    //     // Determine the model based on the language segment
+    //     $locale = $request->segment(2);
+    //     $model = ($locale === 'en') ? InsightList::class : InsightListHindi::class;
+    //     $catModel = ($locale === 'en') ? InsightCategory::class : InsightsHindiCategory::class;
+
+    //     // Fetch data with filters
+    //     $search = $request->query('search');
+    //     $type = $request->query('type');
+    //     $ctgry = $request->query('category');
+    //     $query = $model::query()
+    //         ->whereNotIn('news_type', ['ri', 'ir']) // Exclude specific news types
+    //         ->when($search, function ($query) use ($search) {
+    //             $query->where(function ($q) use ($search) {
+    //                 $q->where('title', 'LIKE', "%{$search}%")
+    //                     ->orWhere('news_id', $search);
+    //             });
+    //         })
+    //         ->when($type, function ($query) use ($type) {
+    //             $query->where('insight_type', $type); // Filter by selected insight type
+    //         })
+    //         ->when($ctgry, function ($query) use ($ctgry) {
+    //             $query->where('cat_id', $ctgry); // Filter by selected category
+    //         })
+    //         ->whereIn('status', [0, 1, 2]); // Filter by status (active/inactive)
+
+    //     $totalRecords = $query->count(); // Get total count before pagination
+    //     // Get distinct insight types
+    //     // $insightTypes = $query->distinct()->pluck('insight_type');
+    //     $insightTypes = $model::distinct()->pluck('insight_type');
+    //     $InsightsCategory = $catModel::query()->select('id', 'catname')->get();
+    //     // dd($InsightsCategory);
+
+    //     $data = $query->orderByDesc('news_id') // Order by descending news ID
+    //         ->paginate(25)
+    //         ->appends(['search' => $search, 'type' => $type]); // Append search to pagination
+
+    //     // Return the view with data and count
+    //     return view('admin.insights.list-edit-insights', compact('data', 'totalRecords', 'insightTypes', 'type', 'InsightsCategory'));
+    // }
     public function listinsights(Request $request)
     {
-        // Determine the model based on the language segment
         $locale = $request->segment(2);
         $model = ($locale === 'en') ? InsightList::class : InsightListHindi::class;
         $catModel = ($locale === 'en') ? InsightCategory::class : InsightsHindiCategory::class;
 
-        // Fetch data with filters
         $search = $request->query('search');
         $type = $request->query('type');
         $ctgry = $request->query('category');
+
         $query = $model::query()
-            ->whereNotIn('news_type', ['ri', 'ir']) // Exclude specific news types
+            ->whereNotIn('news_type', ['ri', 'ir'])
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('title', 'LIKE', "%{$search}%")
@@ -1943,27 +1983,64 @@ class AdminController extends Controller
                 });
             })
             ->when($type, function ($query) use ($type) {
-                $query->where('insight_type', $type); // Filter by selected insight type
+                $query->where('insight_type', $type);
             })
             ->when($ctgry, function ($query) use ($ctgry) {
-                $query->where('cat_id', $ctgry); // Filter by selected category
+                $query->where('cat_id', $ctgry);
             })
-            ->whereIn('status', [0, 1, 2]); // Filter by status (active/inactive)
+            ->whereIn('status', [0, 1, 2]);
 
-        $totalRecords = $query->count(); // Get total count before pagination
-        // Get distinct insight types
-        // $insightTypes = $query->distinct()->pluck('insight_type');
+        // 👉 Export to CSV if ?export=1 is present
+        if ($request->has('export')) {
+            $filename = "insights_export_" . now()->format('Y-m-d_H-i-s') . ".csv";
+            $data = $query->orderByDesc('news_id')->get();
+
+            $headers = [
+                "Content-Type" => "text/csv",
+                "Content-Disposition" => "attachment; filename=\"$filename\"",
+            ];
+
+            $columns = ['news_id', 'title', 'insight_type', 'cat_id', 'status', 'created_at'];
+
+            $callback = function () use ($data, $columns) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+                foreach ($data as $row) {
+                    fputcsv($file, [
+                        $row->news_id,
+                        $row->title,
+                        $row->insight_type,
+                        $row->cat_id,
+                        $row->status,
+                        $row->created_at,
+                    ]);
+                }
+
+                fclose($file);
+            };
+
+            return response()->stream($callback, 200, $headers);
+        }
+
+        // Normal listing view logic
+        $totalRecords = $query->count();
         $insightTypes = $model::distinct()->pluck('insight_type');
-        $InsightsCategory = $catModel::query()->select('id', 'catname')->get();
-        // dd($InsightsCategory);
+        $InsightsCategory = $catModel::select('id', 'catname')->get();
 
-        $data = $query->orderByDesc('news_id') // Order by descending news ID
+        $data = $query->orderByDesc('news_id')
             ->paginate(25)
-            ->appends(['search' => $search, 'type' => $type]); // Append search to pagination
+            ->appends(['search' => $search, 'type' => $type]);
 
-        // Return the view with data and count
-        return view('admin.insights.list-edit-insights', compact('data', 'totalRecords', 'insightTypes', 'type', 'InsightsCategory'));
+        return view('admin.insights.list-edit-insights', compact(
+            'data',
+            'totalRecords',
+            'insightTypes',
+            'type',
+            'InsightsCategory'
+        ));
     }
+
 
     public function multilistinsights(Request $request)
     {
@@ -2221,7 +2298,7 @@ class AdminController extends Controller
                 'updated_by'    => $request->session()->get('adminEmail'),
                 'author_id'     => request()->insights_publisher,
                 'img_alt'       => $alt,
-                'published_date'=> $published_date,
+                'published_date' => $published_date,
             ];
 
             if ($request->hasFile('image'))
@@ -2254,7 +2331,7 @@ class AdminController extends Controller
                 'updated_by'    => $request->session()->get('adminEmail'),
                 'author_id'     => request()->insights_publisher,
                 'img_alt'       => $alt,
-                'published_date'=> $published_date,
+                'published_date' => $published_date,
             ];
 
             if ($request->hasFile('image'))
@@ -2410,12 +2487,26 @@ class AdminController extends Controller
     {
         $locale = request()->segment(2);
         $cat =  $locale == 'en' ? InsightCategory::all() : InsightsHindiCategory::all();
-
-        return view('admin.subcategory.create', compact('cat'));
+        $subCat = $locale == 'en' ? InsightSubcategory::class : InsightsHindiSubCategory::class;
+        $subCategories = $subCat::query()
+            ->select('mcat_id', 'subcat_name', 'slug')
+            ->get()
+            ->map(function ($item) use ($locale) {
+                $item->lang = $locale;
+                return $item;
+            });
+        return view('admin.subcategory.create', compact('cat', 'subCategories'));
     }
 
     public function storesubcat(Request $request)
     {
+
+        // dd($request->all());
+        $request->validate([
+            'maincat' => 'required|integer',
+            'sub_categories' => 'required',
+        ]);
+        // dd($request->all());
         // Determine the locale and model class
         $locale = request()->segment(2);
         $subcatclass = $locale == 'en' ? InsightSubcategory::query() : InsightsHindiSubCategory::query();
