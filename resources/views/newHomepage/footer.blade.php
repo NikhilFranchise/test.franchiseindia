@@ -182,7 +182,7 @@ aria-hidden="true">
                     <div class="input-group input-group-search-section-main">
                         <div class="awesomplete"><input type="text"
                                 class="form-control form-control-search-custom" name="text"
-                                placeholder="Search for business opportunities " id="dealer-bar-search-tops"
+                                placeholder="Search for business opportunities " id="dealer-bar-search-top"
                                 aria-describedby="basic-addon2" autocomplete="off" aria-expanded="false"
                                 aria-owns="awesomplete_list_1" role="combobox">
                             <ul hidden="" role="listbox" id="awesomplete_list_1"></ul>
@@ -629,7 +629,7 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
 </script>
 
 {{-- //Pankaj --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.5/awesomplete.min.js"></script>
 
 <script>
     const input = document.getElementById("dealer-bar-search-tops");
@@ -730,18 +730,6 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
         });
     }
 
-    
-    // navBarSearch.on("awesomplete-selectcomplete", function () {
-    //     const selected = $(this).val();
-    //     const url = resultMap[selected];
-
-    //     if (url) {
-    //         window.location.href = url;
-    //     } else {
-    //         // fallback if not found
-    //         window.location.href = "/dealers-india/search/" + encodeURIComponent(selected);
-    //     }
-    // });
 
     // On button click
     $("#textcompany").on("click", function () {
@@ -768,4 +756,4 @@ aria-labelledby="exampleModalLabel" aria-hidden="true">
         }
     });
 
-</script>
+</script> --}}
