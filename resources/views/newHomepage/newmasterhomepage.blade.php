@@ -12,7 +12,7 @@
         @include('newHomepage.mobile.hgps')
         @include('newHomepage.mobile.tfo')
         @include('newHomepage.mobile.ffc')
-        @include('newHomepage.mobile.franchise_insights_news')
+        {{-- @include('newHomepage.mobile.franchise_insights_news') --}}
         @include('newHomepage.mobile.testimonials')
     </main>
     @include('newHomepage.mobile.sidemenu-mobile')

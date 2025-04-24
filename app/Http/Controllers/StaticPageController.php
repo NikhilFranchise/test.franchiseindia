@@ -13,6 +13,7 @@ use App\Models\FranchisorBusinessDetail;
 use App\Models\TopFranchiseLeader;
 use App\Models\TopFranchisorLeaders;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class StaticPageController extends Controller
 {
@@ -277,12 +278,14 @@ class StaticPageController extends Controller
 
     public function topFranchiseLeaders(Request $request)
     {
+        // if($request->ajax()){
+        //     dd($request->all());
+        // }
         $year = $request->year ?? null;
         $filterType = $request->filterType ?? null;
+        $filterLimit = $request->filterLimit ?? null;
         $industry = $request->industry ?? null;
         $investment = $request->investmentRange ?? null;
-        // $perPage = 25; // Items per page
-
         // Get available years for the dropdown
         $years = TopFranchisorLeaders::select('franchisor_year')
             ->distinct()
@@ -332,24 +335,25 @@ class StaticPageController extends Controller
         } elseif ($filterType == 'investMax') {
             $query->join('franchisor_business_details as fbd_order', 'fbd_order.franchisor_id', '=', 'top_franchisor_brands.franchisor_id')
                 ->orderBy('fbd_order.unit_inv_max', 'desc');
+        } else if (!empty($filterLimit) && is_numeric($filterLimit)) {
+            $query->limit((int) $filterLimit);
         }
 
-        // Use pagination
         $data = $query->get();
-        // dd($data);
         $count = $data->count();
 
         // If request is AJAX, return JSON response for filters
         if ($request->ajax()) {
+            $html = view('static.topfranchiseleaders.dynamicData', compact('data', 'count'))->render();
+            Log::info('Rendered HTML:', ['html' => $html]); // Add this
             return response()->json([
                 'count' => $data->count(),
                 'franchisor_type' => $franchiseType,
-                //'hasMore' => $data->hasMorePages(),
-                'html' => view('static.topfranchiseleaders.dynamicData', compact('data','count'))->render(),
+                'html' => $html,
             ]);
+        } else {
+            // If it's a normal request, return the main view
+            return view('static.topfranchiseleaders.top-200', compact('data', 'years', 'franchiseType', 'year', 'count'));
         }
-
-        // If it's a normal request, return the main view
-        return view('static.topfranchiseleaders.top-200', compact('data', 'years', 'franchiseType', 'year','count'));
     }
 }

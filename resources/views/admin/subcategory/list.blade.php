@@ -11,7 +11,6 @@
     <link rel="stylesheet" type='text/css' href="{{ url('admin/css/matrix-style.css') }}" />
     <link rel="stylesheet" type='text/css' href="{{ url('admin/css/matrix-media.css') }}" />
     <link rel="stylesheet" type='text/css' href="{{ url('admin/font-awesome/css/font-awesome.css') }}" />
-    <link rel="stylesheet" type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <style>
         .search-results {

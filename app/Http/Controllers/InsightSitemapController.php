@@ -27,7 +27,6 @@ class InsightSitemapController extends Controller
 
     public function sitemap()
     {
-        dd('yes');
         // Query years from English table
         $englishYears = InsightList::query()
             ->whereIn('insight_type', ['News', 'Article', 'Interview'])

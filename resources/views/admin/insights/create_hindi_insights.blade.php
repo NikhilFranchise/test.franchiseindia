@@ -358,8 +358,8 @@
         // we are using these functions for validate image dimensions end here
 
         function checkImageSize(fileInput) {
-            if (fileInput.files[0].size > 153600) {
-                toastr.error('Image size should be 150 KB or less.');
+            if (fileInput.files[0].size > 307200) {
+                toastr.error('Image size should be 300 KB or less.');
                 $('#showImage_msg_size').css('display', 'block');
                 // setTimeout(function() {
                 //     $('#showImage_msg_size').css('display', 'none');

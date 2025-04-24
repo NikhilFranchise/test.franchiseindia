@@ -358,46 +358,6 @@
 
         });
 
-        // $("#showImage").change(function() {
-        //     var val = $(this).val();
-        //     var fileInput = this;
-        //     val = val.replace('jpeg', 'jpg');
-        //     switch (val.substring(val.lastIndexOf('.') + 1).toLowerCase()) {
-        //         case 'gif':
-        //         case 'jpg':
-        //         case 'jpeg':
-        //         case 'png':
-        //         case 'webp':
-        //             checkImageSize(fileInput);
-        //             break;
-        //         default:
-        //             $(this).val('');
-        //             toastr.error(
-        //                 'Invalid image type! Please select a valid image format (JPG, GIF, PNG, or WebP).');
-        //             $('#showImage_msg').css('display', 'block');
-        //             setTimeout(function() {
-        //                 $('#showImage_msg').css('display', 'none');
-        //             }, 5000);
-        //             $('#newssubmit').prop('disabled', true);
-        //             break;
-        //     }
-        // });
-
-
-        // function checkImageSize(fileInput) {
-        //     if (fileInput.files[0].size > 153600) {
-        //         toastr.error('Image size should be 150 KB or less.');
-        //         $('#showImage_msg_size').css('display', 'block');
-        //         setTimeout(function() {
-        //             $('#showImage_msg_size').css('display', 'none');
-        //         }, 5000);
-        //         $('#newssubmit').prop('disabled', true);
-        //     } else {
-        //         //toastr.success('Image size is valid. You can proceed.');
-        //         $('#showImage_msg_size').css('display', 'none');
-        //         $('#newssubmit').prop('disabled', false);
-        //     }
-        // }
         $("#showImage").change(function() {
             var fileInput = this;
             var file = fileInput.files[0];
@@ -420,8 +380,8 @@
             }
 
             // Check Image Size
-            if (file.size > 153600) {
-                toastr.error('Image size should be 150 KB or less.');
+            if (file.size > 307200) {
+                toastr.error('Image size should be 300 KB or less.');
                 $('#showImage_msg_size').show();
                 setTimeout(function() {
                     $('#showImage_msg_size').hide();

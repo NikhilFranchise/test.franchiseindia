@@ -170,8 +170,8 @@
         }
 
         /* .mobile-reset {
-                        display: none;
-                    } */
+                                    display: none;
+                                } */
 
         .mcloser {
             display: none;
@@ -261,15 +261,15 @@
         }
 
         /* .filter-head span {
-                                    font-size: 15px;
-                                    font-weight: normal;
-                                    float: right;
-                                    margin-top: 5px;
-                                    background: #000000;
-                                    padding: 4px 18px;
-                                    border-radius: 5px;
-                                    color: #ffffff;
-                                }*/
+                                                font-size: 15px;
+                                                font-weight: normal;
+                                                float: right;
+                                                margin-top: 5px;
+                                                background: #000000;
+                                                padding: 4px 18px;
+                                                border-radius: 5px;
+                                                color: #ffffff;
+                                            }*/
 
         .finner .catbtn input[type=checkbox]+label span {
             display: block;
@@ -956,6 +956,30 @@
                                     <label for="investMax">High to Low $</label>
                                     <input type="radio" name="sortBy" id="investMax" value="investMax">
                                 </div>
+                                <hr>
+                                <div class="sort-row">
+                                    <label for="25">Display 25 Results</label>
+                                    <input type="radio" name="limit" id="25" value="25" checked>
+                                </div>
+
+
+                                <div class="sort-row">
+                                    <label for="50">Display 50 Results</label>
+                                    <input type="radio" name="limit" id="50" value="50">
+                                </div>
+
+                                <div class="sort-row">
+                                    <label for="100">Display 100 Results</label>
+                                    <input type="radio" name="limit" id="100" value="100">
+                                </div>
+                                {{-- <div class="sort-row">
+                                    <label for="150">Display 150 Results</label>
+                                    <input type="radio" name="limit" id="150" value="150">
+                                </div> --}}
+                                <div class="sort-row">
+                                    <label for="200">Display 200 Results</label>
+                                    <input type="radio" name="limit" id="200" value="200">
+                                </div>
                             </div>
                             <div class="flabel"><img src="{{ url('/topfranchiseleaders/industry.png') }}" class="industry">
                                 Industry</div>
@@ -1016,7 +1040,8 @@
                 @if (!Auth::check() || Auth::user()->profile_type == 1 || Auth::user()->mobile == '')
                     <div id="getFreeInfo" class="ttl-brnd-list">
                         <span class="count">0</span>Brands in my List
-                        <a href="#" data-toggle="modal" data-target="#modalGetFree" id="getfreewindowstate">Request
+                        <a href="#" data-toggle="modal" data-target="#modalGetFree"
+                            id="getfreewindowstate">Request
                             Now</a>
                     </div>
                 @else
@@ -1286,11 +1311,40 @@
             </ul>
 
         </div>
-
-
-
     </div>
-
+    <div class="modal fade" id="topFranchise" tabindex="-1" role="dialog" aria-labelledby="topFranchise">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="https://www.franchiseindia.com/images/top100/close.png" alt="">
+                    </button>
+                    <div class="top-modal-head">Understand Selection Criteria</div>
+                    <ul class="topp">
+                        <li>Annual Turnover of the Company Company</li>
+                        <li>Operational Since</li>
+                        <li>Year of starting Franchising</li>
+                        <li>Number of Cities present in</li>
+                        <li>Number of Franchise Units</li>
+                        <li>Percentage of total business from franchise</li>
+                        <li>Total Investment and area required</li>
+                        <li>Franchisee fees</li>
+                        <li>Royalty Fees</li>
+                        <li>Marketing cost as percentage of sales</li>
+                        <li>Working Capital per month</li>
+                        <li>Return on investment</li>
+                        <li>Number of employees required to run a franchise unit</li>
+                        <li>Expected break-even time</li>
+                        <li>Average business from a franchise unit</li>
+                        <li>Number of franchisees owning more than one unit</li>
+                        <li>Number of stores in small, mid and large format</li>
+                        <li>Year-on-year growth for the last three years</li>
+                        <li>Franchise success milestone</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         var wrapper = document.getElementById("wrapper");
@@ -1314,7 +1368,6 @@
     <script>
         $(document).ready(function() {
             let isLoading = false;
-            // let currentPage = 1; // Track the current page
             let getfreecount = 0; // Initialize the counter
 
             function fetchData() {
@@ -1323,27 +1376,29 @@
 
                 let selectedYear = $("#yearSelect").val();
                 let selectedSort = $('input[name="sortBy"]:checked').val();
+                let filterLimit = $('input[name="limit"]:checked').val();
                 let selectedIndustry = $("#industry_type").val();
                 let selectedInvestment = $("#investment_range").val();
-
+                // alert(filterLimit + '-' + selectedSort);
                 $("#loading").show(); // Show loader
 
                 $.ajax({
                     url: "{{ route('filterFranchisorsByYear') }}",
                     type: "GET",
+                    dataType: "json", // ✅ Force jQuery to treat response as JSON
                     data: {
                         year: selectedYear,
                         filterType: selectedSort,
+                        filterLimit: filterLimit,
                         industry: selectedIndustry,
                         investmentRange: selectedInvestment,
 
                     },
                     success: function(response) {
-                        // console.log(response.count);
-                        // console.log(response.data);
+                        // console.log(response); // ✅ Should now show full JSON
+                        // alert(response.html);
                         $("#wrapper").html(response.html); // Replace with filtered content
                         $("#recordCount").text(response.count + " RESULTS"); // Update count
-                        // Update Franchise Type if available in response
                         if (response.franchisor_type) {
                             $("#ftypeSelect").html(
                                 `<option value="${response.franchisor_type}">
@@ -1357,8 +1412,6 @@
                             $('#ftype_with_year').html(`${franchiseLabel} Franchise ${franchiseYear}`);
 
                         }
-
-
 
                         $("#loading").hide();
                         isLoading = false;
@@ -1417,7 +1470,6 @@
                     </div>
                 </div>
             `;
-
                             selectedIds.push(brandId);
                         });
 
@@ -1428,10 +1480,11 @@
             }
 
             // Event listeners for filter changes
-            $("#yearSelect, input[name='sortBy'], #industry_type, #investment_range").on("change", function() {
-                // currentPage = 1; // Reset page on new filter selection
-                fetchData();
-            });
+            $("#yearSelect, input[name='sortBy'], input[name='limit'], #industry_type, #investment_range").on(
+                "change",
+                function() {
+                    fetchData();
+                });
 
             // Initialize checkbox events on page load
             reinitializeCheckboxEvents();
@@ -1457,39 +1510,4 @@
             $(".filter-brand-apply").toggleClass('fshow');
         });
     </script>
-
-
-    <div class="modal fade" id="topFranchise" tabindex="-1" role="dialog" aria-labelledby="topFranchise">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <img src="https://www.franchiseindia.com/images/top100/close.png" alt="">
-                    </button>
-                    <div class="top-modal-head">Understand Selection Criteria</div>
-                    <ul class="topp">
-                        <li>Annual Turnover of the Company Company</li>
-                        <li>Operational Since</li>
-                        <li>Year of starting Franchising</li>
-                        <li>Number of Cities present in</li>
-                        <li>Number of Franchise Units</li>
-                        <li>Percentage of total business from franchise</li>
-                        <li>Total Investment and area required</li>
-                        <li>Franchisee fees</li>
-                        <li>Royalty Fees</li>
-                        <li>Marketing cost as percentage of sales</li>
-                        <li>Working Capital per month</li>
-                        <li>Return on investment</li>
-                        <li>Number of employees required to run a franchise unit</li>
-                        <li>Expected break-even time</li>
-                        <li>Average business from a franchise unit</li>
-                        <li>Number of franchisees owning more than one unit</li>
-                        <li>Number of stores in small, mid and large format</li>
-                        <li>Year-on-year growth for the last three years</li>
-                        <li>Franchise success milestone</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection

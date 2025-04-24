@@ -185,7 +185,7 @@
                                         select a valid image format (JPG, GIF, PNG, or WebP)</div>
                                     <div style="display: none; color: red;" id="showImage_msg_size">Please select a
                                         image
-                                        of size(Less than 150 KB)</div>
+                                        of size(Less than 300 KB)</div>
                                     <br />
                                     Note : * Image Size 1600x940
                                     <!-- Alt Text Input (Initially Hidden) -->
@@ -348,8 +348,8 @@
         });
 
         function checkImageSize(fileInput) {
-            if (fileInput.files[0].size > 153600) {
-                toastr.error('Image size should be 150 KB or less.');
+            if (fileInput.files[0].size > 307200) {
+                toastr.error('Image size should be 300 KB or less.');
                 $('#showImage_msg_size').css('display', 'block');
                 // setTimeout(function() {
                 //     $('#showImage_msg_size').css('display', 'none');

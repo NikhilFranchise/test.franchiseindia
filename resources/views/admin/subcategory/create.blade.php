@@ -123,19 +123,25 @@
                                 <div class="controls">
 
                                     <select class="span11" name="maincat" spellcheck="false">
-                                        <option selected>Select Main Category</option>
+                                        <option value="">Select Main Category</option>
                                         @foreach ($cat as $value)
                                             <option value="{{ $value->id }}">{{ $value->catname }}</option>
                                         @endforeach
                                     </select>
-
+                                    <br>
+                                    @error('maincat')
+                                        <span style="color: red">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="control-group">
                                 <label class="control-label">Sub Category :</label>
                                 <div class="controls" id="sub_categories">
-                                    <select multiple required style="display: none;" name="sub_categories[]"
+                                    <select multiple style="display: none;" name="sub_categories[]"
                                         id="select3"></select>
+                                    @error('sub_categories')
+                                        <div style="color: red">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             @if ($locale == 'hi')
@@ -172,102 +178,44 @@
     <script src="{{ url('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js') }}"></script>
     <script src="{{ url('admin/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ url('admin/js/typeahead.bundle.js') }}"></script>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> --}}
-    {{--  <script>
-  $(document).ready(function () {
-        // Your array of tags
-       var businessCategories = [
-    "Apparel", "Footwear", "Sportswear", "Leisure wear", "Innerwear",
-    "QSR", "Fine dine", "Café", "Cloud Kitchen", "Takeaway", "Specialty Restaurant",
-    "Shakes", "Rolls", "Salon", "Spas", "Nail Salon", "Beauty Retail",
-    "Specialty Clinics", "Dentist", "Ayurveda", "Homeopathy", "Flower Retail",
-    "Stationery", "Bookstore", "Store Launch", "Car services", "Automobile Retail",
-    "Pre-owned", "Car agency", "EV", "EV stations", "Biogas", "Petrol Pump",
-    "Car Rental", "Fashion Rental", "K-12", "Pre School", "After School",
-    "Vocational", "Skill Training", "Patient Care", "Edutainment",
-    "Trampoline Parks", "Theatres", "Pet Salons", "Pet Retail",
-    "Veterinary Doctors", "Diagnostics Labs", "Collection Centres", "Courier services", "Aggregators", "Hot & Trending", "Elderly Care", "Child Care", "Beauty Services", "Gym", "Yoga Centre", "HIIT", "Hotels & Hospitality", "Malls",
-];
-
-var tagArray = businessCategories.map(function (category, index) {
-    return { name: category, tag_id: 'tag_' + (index + 1) };
-});
-
-        // Initialize Select2 with the array data
-        $('#select3').select2({
-            placeholder: "Choose Subcategories...",
-            minimumInputLength: 2,
-            data: $.map(tagArray, function (item) {
-                return {
-                    text: item.name,
-                    id: item.name
-                };
-            })
-        });
-    });
-        </script>  --}}
-
     <script>
         $(document).ready(function() {
             // Define your English and Hindi categories
-            var businessCategories = {
-                en: [
-                    "Apparel", "Footwear", "Sportswear", "Leisure wear", "Innerwear",
-                    "QSR", "Fine dine", "Café", "Cloud Kitchen", "Takeaway", "Specialty Restaurant",
-                    "Shakes", "Rolls", "Salon", "Spas", "Nail Salon", "Beauty Retail",
-                    "Specialty Clinics", "Dentist", "Ayurveda", "Homeopathy", "Flower Retail",
-                    "Stationery", "Bookstore", "Store Launch", "Car services", "Automobile Retail",
-                    "Pre-owned", "Car agency", "EV", "EV stations", "Biogas", "Petrol Pump",
-                    "Car Rental", "Fashion Rental", "K-12", "Pre School", "After School",
-                    "Vocational", "Skill Training", "Patient Care", "Edutainment",
-                    "Trampoline Parks", "Theatres", "Pet Salons", "Pet Retail",
-                    "Veterinary Doctors", "Diagnostics Labs", "Collection Centres", "Courier services",
-                    "Aggregators", "Hot & Trending", "Elderly Care", "Child Care", "Beauty Services", "Gym",
-                    "Yoga Centre", "HIIT", "Hotels & Hospitality", "Malls",
-                ],
-                hi: [
-                    "परिधान", "जूते", "खेल परिधान", "अवकाश परिधान", "अंतर्वस्त्र",
-                    "क्यूएसआर (त्वरित सेवा रेस्तरां)",
-                    "फाइन डाइन", "कैफे", "क्लाउड किचन", "टेकअवे", "विशेष रेस्तरां", "शेक्स", "रोल्स",
-                    "सैलून", "स्पा",
-                    "नेल सैलून", "सौंदर्य रिटेल", "विशेष क्लीनिक", "दंत चिकित्सक", "आयुर्वेद", "होम्योपैथी",
-                    "फूल रिटेल",
-                    "स्टेशनरी", "पुस्तकालय", "स्टोर लॉन्च", "कार सेवाएं", "ऑटोमोबाइल रिटेल",
-                    "प्री-ओन्ड (पुरानी कार एजेंसी)",
-                    "एजेंसी", "इलेक्ट्रिक वाहन", "ईवी स्टेशन", "बायोगैस", "पेट्रोल पंप", "कार रेंटल",
-                    "फैशन रेंटल",
-                    "के-12 (विद्यालय शिक्षा)", "प्री-स्कूल", "आफ्टर स्कूल", "व्यावसायिक प्रशिक्षण",
-                    "कौशल प्रशिक्षण",
-                    "रोगी देखभाल", "एजुटेनमेंट", "ट्रैम्पोलिन पार्क्स", "थिएटर", "पालतू सैलून",
-                    "पालतू रिटेल",
-                    "पशु चिकित्सक", "डायग्नोस्टिक लैब्स", "कलेक्शन सेंटर", "फूल रिटेल"
-                ]
-            };
+            var businessCategories = @json($subCategories);
+            console.log(businessCategories);
 
-            // Get the current locale from the backend (use Laravel to inject)
-            var locale = "{{ $locale }}"; // Assume locale is passed from backend
+            // Get current locale
+            var locale = "{{ $locale }}";
 
-            // Get the categories based on the locale
-            var categories = businessCategories[locale] || [];
+            // Filter by language
+            var categories = businessCategories.filter(function(category) {
+                return category.lang === locale;
+            });
 
-            // Convert categories to an array of objects for Select2
-            var tagArray = categories.map(function(category, index) {
+            // Map to Select2 format using subcat_name
+            var tagArray = categories.map(function(category) {
                 return {
-                    name: category,
-                    tag_id: 'tag_' + (index + 1)
+                    id: category.subcat_name, // What gets submitted
+                    text: category.subcat_name // What gets shown
                 };
             });
 
-            // Initialize Select2 for dynamic subcategories
+            // Initialize Select2
             $('#select3').select2({
                 placeholder: locale === 'en' ? "Choose Subcategories..." : "उप श्रेणियाँ चुनें...",
                 minimumInputLength: 2,
-                data: $.map(tagArray, function(item) {
+                tags: true,
+                data: tagArray,
+                createTag: function(params) {
+                    var term = $.trim(params.term);
+                    if (term === '') {
+                        return null;
+                    }
                     return {
-                        text: item.name,
-                        id: item.name
+                        id: term, // Save subcat_name directly
+                        text: term // Display it as-is
                     };
-                })
+                }
             });
         });
     </script>
