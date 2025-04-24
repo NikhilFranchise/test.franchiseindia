@@ -78,6 +78,8 @@ Route::get('https://www.franchiseindia.com/business-opportunities/robotics-and-t
     return redirect('https://www.franchiseindia.com/business-opportunities/robotics-technical-training-coding-ai.ssc91', 301);
 });
 
+
+
 Route::get('content/{slug_and_id}', function ($slug_and_id) {
     // Check if the slug_and_id contains a dot or a dash and split accordingly
 
@@ -1247,3 +1249,4 @@ Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('pass
 
 Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
 Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
+Route::get('/sendmail',[CommonController::class,'send_email']);
