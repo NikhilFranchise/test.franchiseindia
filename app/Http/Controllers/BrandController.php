@@ -34,9 +34,8 @@ class BrandController extends Controller
         $brandParamsArr = explode('.', $brandUrlParam);  // Explode it by separator & fetch details from DB
         $images = [];
         $view = "brandlanding";
-
         if ($brandUrlParam =="fiery-pot-foods-pvt-ltd.96936"){
-            $brandUrlParam = "fiery-pot-foods-pvt-ltd.96936";
+            $brandUrlParam = "fiery-pot-foods.103010";
             return redirect(Config('constants.MainDomain') .'/brands/' . $brandUrlParam, 301);
         }
         // dd($brandParamsArr);
