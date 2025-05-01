@@ -694,7 +694,8 @@ class InsightsController extends Controller
             'profile_name' => $match['profile_name'],
             'title' => $newsDetails->title,
         ])->toArray();
-
+        $category = $newsDetails->category->first();
+        if($category){
         $trendingArticles = $newsModel::with(['category', 'Subcategory'])
             ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
             ->withEffectiveDate()
@@ -706,7 +707,9 @@ class InsightsController extends Controller
             // ->orderByDesc('created_at')
             ->orderByEffectiveDate('desc')
             ->take(5)->get();
-
+        }else{
+            $trendingArticles = collect();
+        }
         $latestArticles = $newsModel::with(['category', 'Subcategory'])
             ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
             ->withEffectiveDate()
