@@ -1994,7 +1994,7 @@ class AdminController extends Controller
         $data = $query->orderByDesc('news_id')
             ->paginate(25)
             ->appends(['search' => $search, 'type' => $type]);
-dd($data);
+        dd($data);
         return view('admin.insights.list-edit-insights', compact(
             'data',
             'totalRecords',
