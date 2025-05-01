@@ -2130,7 +2130,7 @@ class AdminController extends Controller
             $kickerData         = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
             $kicker             = array_column($kickerData, 'name');
             $data               = InsightList::query()->with('author')->where('news_id', $newsId)->first();
-            dd($data);
+            // dd($data);
             $InsightCategory    = InsightCategory::query()->where('status', '1')->get();
             // dd($InsightCategory);
             $InsightSubcategory    = InsightSubcategory::query()->where('mcat_id', $data->cat_id)->get();
