@@ -1974,7 +1974,7 @@ class AdminController extends Controller
         $type = $request->query('type');
         $ctgry = $request->query('category');
 
-        $query = $model::query()
+        $query = $model::query()->with(['author'])
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {

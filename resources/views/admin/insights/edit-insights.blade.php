@@ -60,11 +60,15 @@
                             action="{{ url('admin/en/update-insights') }}" id="editform">
                             <input type="hidden" name="news_id" value="{{ $data->news_id }}" />
                             @csrf
+                            @php
+                                $author = $data->author->first();
+                                // dd($author);
+                            @endphp
                             <div class="control-group">
                                 <label class="control-label" for="publisher">Insights Publisher :</label>
                                 <div class="controls" id="insights_publisher">
                                     <select class="span11" name="insights_publisher" id="publisher">
-                                        <option value="{{ $data->author_id }}" selected>{{ $data->author->title }}
+                                        <option value="{{ $data->author_id }}" selected>{{ $author->title }}
                                         </option>
                                     </select>
                                     @if ($errors->has('insights_publisher'))
