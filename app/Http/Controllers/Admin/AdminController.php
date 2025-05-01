@@ -1922,48 +1922,11 @@ class AdminController extends Controller
             return redirect($redirectUrl)->with('error', "Insights Data Couldn't Be Saved.");
         }
     }
-
-    // public function listinsights(Request $request)
-    // {
-    //     // Determine the model based on the language segment
-    //     $locale = $request->segment(2);
-    //     $model = ($locale === 'en') ? InsightList::class : InsightListHindi::class;
-    //     $catModel = ($locale === 'en') ? InsightCategory::class : InsightsHindiCategory::class;
-
-    //     // Fetch data with filters
-    //     $search = $request->query('search');
-    //     $type = $request->query('type');
-    //     $ctgry = $request->query('category');
-    //     $query = $model::query()
-    //         ->whereNotIn('news_type', ['ri', 'ir']) // Exclude specific news types
-    //         ->when($search, function ($query) use ($search) {
-    //             $query->where(function ($q) use ($search) {
-    //                 $q->where('title', 'LIKE', "%{$search}%")
-    //                     ->orWhere('news_id', $search);
-    //             });
-    //         })
-    //         ->when($type, function ($query) use ($type) {
-    //             $query->where('insight_type', $type); // Filter by selected insight type
-    //         })
-    //         ->when($ctgry, function ($query) use ($ctgry) {
-    //             $query->where('cat_id', $ctgry); // Filter by selected category
-    //         })
-    //         ->whereIn('status', [0, 1, 2]); // Filter by status (active/inactive)
-
-    //     $totalRecords = $query->count(); // Get total count before pagination
-    //     // Get distinct insight types
-    //     // $insightTypes = $query->distinct()->pluck('insight_type');
-    //     $insightTypes = $model::distinct()->pluck('insight_type');
-    //     $InsightsCategory = $catModel::query()->select('id', 'catname')->get();
-    //     // dd($InsightsCategory);
-
-    //     $data = $query->orderByDesc('news_id') // Order by descending news ID
-    //         ->paginate(25)
-    //         ->appends(['search' => $search, 'type' => $type]); // Append search to pagination
-
-    //     // Return the view with data and count
-    //     return view('admin.insights.list-edit-insights', compact('data', 'totalRecords', 'insightTypes', 'type', 'InsightsCategory'));
-    // }
+    /**
+     * Function to list insights
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function listinsights(Request $request)
     {
         $locale = $request->segment(2);
