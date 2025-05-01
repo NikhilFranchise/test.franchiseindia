@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\AuthorList;
 use App\Models\InsightsHindiCategory;
 use App\Models\InsightsHindiSubCategory;
+use App\Traits\hasEffectiveDate;
 
 class InsightListHindi extends Model
 {
-    use HasFactory;
+    use HasFactory, hasEffectiveDate;
     protected $table = 'insights_list_hindi';
     protected $primaryKey = 'news_id';
 

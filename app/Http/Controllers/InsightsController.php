@@ -40,11 +40,12 @@ class InsightsController extends Controller
 
         $homeArticle = $model::with('category')
             ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->where('insight_type', 'News')
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
-            ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->take(1)
             ->get();
 
@@ -53,11 +54,13 @@ class InsightsController extends Controller
         }
         $topstories = $model::with('category')
             ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->where('insight_type', 'News')
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->skip(1)
             ->take(5)
             ->get();
@@ -65,42 +68,50 @@ class InsightsController extends Controller
 
         $industry_focus = $model::with('category')
             ->select('news_id', 'insight_type', 'news_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')->where('insight_type', 'Article')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->take(1)
             ->get();
 
         $industry_data = $model::with('category')
             ->select('news_id', 'insight_type', 'news_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
+            ->withEffectiveDate()
             ->where('insight_type', 'Article')
             ->where('status', 1)
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->skip(1)
             ->take(6)
             ->get();
 
         $reports = $model::with('category')
             ->select('news_id', 'insight_type', 'news_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
+            ->withEffectiveDate()
             ->where('insight_type', 'Report')
             ->where('status', 1)
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
             ->whereNot('image', '=', '')
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->take(8)
             ->get();
 
         $interview = $model::with('category')
             ->select('news_id', 'insight_type', 'news_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
+            ->withEffectiveDate()
             ->where('insight_type', 'Interview')
             ->where('status', 1)
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->take(8)
             ->get();
 
@@ -154,21 +165,25 @@ class InsightsController extends Controller
 
         $insightstories = $model::with('author')
             ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'author_id', 'created_at', 'content')
+            ->withEffectiveDate()
             ->where('insight_type', 'News')
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->where('status', 1)
             ->whereNotNull(['image', 'cat_id'])
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->paginate(15);
 
         $popArticles = $model::with('category')
             ->select('news_id', 'insight_type', 'cat_id', 'title', 'slug')
             // ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
+            ->withEffectiveDate()
             ->where('insight_type', 'Article')
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->where('status', 1)
             ->whereNotNull(['image', 'cat_id'])
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->limit(6)
             ->get();
 
@@ -188,11 +203,13 @@ class InsightsController extends Controller
         // Fetch the insights articles
         $insArticles = $model::with('author')
             ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'author_id', 'created_at', 'content')
+            ->withEffectiveDate()
             ->where('insight_type', 'Article')
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
             ->where('status', 1)
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->paginate(15);
 
         // Handle empty results
@@ -203,13 +220,15 @@ class InsightsController extends Controller
         $insArticleIds = $insArticles->pluck('news_id');
         $popArticles = $model::with('category')
             ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
+            ->withEffectiveDate()
             ->where('insight_type', 'Article')
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
             ->where('status', 1)
             ->whereNotIn('news_id', $insArticleIds) // Exclude already shown articles
             // ->skip(15)
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->take(6)
             ->get();
 
@@ -227,11 +246,13 @@ class InsightsController extends Controller
         $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
         $interviews  = $model::with('author')
             ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'author_id', 'created_at', 'content')
+            ->withEffectiveDate()
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->where('insight_type', 'Interview')
             ->whereNotNull(['image', 'cat_id'])
             ->where('status', 1)
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->paginate(15);
 
         if ($interviews->isEmpty()) {
@@ -239,11 +260,13 @@ class InsightsController extends Controller
         }
         $popArticles = $model::with('category')
             ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
+            ->withEffectiveDate()
             ->where('insight_type', 'Article')
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
             ->where('status', 1)
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->take(6)
             ->get();
 
@@ -258,24 +281,29 @@ class InsightsController extends Controller
 
         // Choose the appropriate model based on the locale
         $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
-        $events_reports = $model::with('author')->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'author_id', 'created_at', 'content')
+        $events_reports = $model::with('author')
+            ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'author_id', 'created_at', 'content')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Event')
             ->orWhere('insight_type', 'Report')
             ->whereNotNull(['image', 'cat_id'])
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->paginate(15);
 
         if ($events_reports->isEmpty()) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
         $popArticles = $model::with('category')->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
+            ->withEffectiveDate()
             ->where('insight_type', 'Article')
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
             ->where('status', 1)
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->take(6)
             ->get();
 
@@ -325,14 +353,18 @@ class InsightsController extends Controller
         $latestArticles = collect([
             InsightList::query()
                 ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type', 'shortDesc', 'image')
+                ->withEffectiveDate()
                 ->where($articleQuery)
-                ->orderByDesc('created_at')
+                // ->orderByDesc('created_at')
+                ->orderByEffectiveDate('desc')
                 ->get()
                 ->map(fn($item) => $item->setAttribute('lang', 'en')),
             InsightListHindi::query()
                 ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type', 'shortDesc', 'image')
+                ->withEffectiveDate()
                 ->where($articleQuery)
-                ->orderByDesc('created_at')
+                // ->orderByDesc('created_at')
+                ->orderByEffectiveDate('desc')
                 ->get()
                 ->map(fn($item) => $item->setAttribute('lang', 'hi'))
         ])->flatten()->sortByDesc('created_at');
@@ -374,17 +406,21 @@ class InsightsController extends Controller
         $popularArticles = collect([
             InsightList::with('category')
                 ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type')
+                ->withEffectiveDate()
                 ->where($articleQuery)
                 ->where('insight_type', 'Article')
-                ->orderByDesc('created_at')
+                // ->orderByDesc('created_at')
+                ->orderByEffectiveDate('desc')
                 ->limit(5)
                 ->get()
                 ->map(fn($item) => $item->setAttribute('lang', 'en')),
             InsightListHindi::with('category')
                 ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type')
+                ->withEffectiveDate()
                 ->where($articleQuery)
                 ->where('insight_type', 'Article')
-                ->orderByDesc('created_at')
+                // ->orderByDesc('created_at')
+                ->orderByEffectiveDate('desc')
                 ->limit(5)
                 ->get()
                 ->map(fn($item) => $item->setAttribute('lang', 'hi'))
@@ -495,7 +531,8 @@ class InsightsController extends Controller
 
 
         // Fetch the insights for the category
-        $insightcategories = $insightListModel::with(['author'])->select('news_id', 'title', 'cat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at')
+        $insightcategories = $insightListModel::with(['author'])
+            ->select('news_id', 'title', 'cat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at')
             ->where('cat_id', $category->id)
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
@@ -660,21 +697,25 @@ class InsightsController extends Controller
 
         $trendingArticles = $newsModel::with(['category', 'Subcategory'])
             ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->where('cat_id', $newsDetails->category[0]->id)
             ->whereNot('news_id', $id)
             ->whereNotIn('news_type', ['ri', 'ir'])
             // ->whereIn('insight_type', ['Article', 'News', 'Interview'])
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->take(5)->get();
 
         $latestArticles = $newsModel::with(['category', 'Subcategory'])
             ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->whereNot('news_id', $id)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Article')
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')  
             ->take(5)->get();
 
         // Return view with compacted variables
@@ -689,7 +730,9 @@ class InsightsController extends Controller
         session()->put('locale', $locale);
         $insightModel = $locale == 'en' ? InsightList::class : InsightListHindi::class;
         // Build the base query
-        $query = $insightModel::with('author')->select('news_id', 'title', 'cat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at')
+        $query = $insightModel::with('author')
+            ->select('news_id', 'title', 'cat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->where(function ($query) use ($search) {
                 $query->where('title', 'LIKE', '%' . $search . '%');
@@ -697,7 +740,7 @@ class InsightsController extends Controller
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id');
-        $articlesList = $query->orderByDesc('created_at')->paginate(10);
+        $articlesList = $query->orderByEffectiveDate('desc')->paginate(10);
         $ids = $query->pluck('news_id');
         // Count matching articles
 
@@ -705,13 +748,16 @@ class InsightsController extends Controller
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
 
-        $popArticles = $insightModel::with('category')->select('news_id', 'cat_id', 'title', 'slug', 'insight_type')
+        $popArticles = $insightModel::with('category')
+            ->select('news_id', 'cat_id', 'title', 'slug', 'insight_type')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($search) . '([[:space:]]|$)'])
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('cat_id')
             ->whereNotIn('news_id', $ids)
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->limit(6)->get();
         // Return the view
         return view('insights.search', compact('articlesList', 'search', 'popArticles'));
@@ -795,20 +841,24 @@ class InsightsController extends Controller
 
         $articlesList = $insightModel::with('author')
             ->select('news_id', 'title', 'cat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at')
+            ->withEffectiveDate()
             ->whereIn('news_id', $articleIds)
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->whereNotNull(['image', 'cat_id'])
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->paginate(15);
 
         $popArticles = $insightModel::with('category')
             ->select('news_id', 'cat_id', 'title', 'slug', 'insight_type')
+            ->withEffectiveDate()
             ->where('insight_type', 'Article')
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->whereNotIn('news_id', $articleIds)
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->limit(6)
             ->get();
 
