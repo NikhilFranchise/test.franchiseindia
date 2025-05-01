@@ -64,7 +64,7 @@
                                 <label class="control-label" for="publisher">Insights Publisher :</label>
                                 <div class="controls" id="insights_publisher">
                                     <select class="span11" name="insights_publisher" id="publisher">
-                                        <option value="{{ $data->author_id }}" selected>{{ $data->author[0]->title }}
+                                        <option value="{{ $data->author_id }}" selected>{{ $data->author->title }}
                                         </option>
                                     </select>
                                     @if ($errors->has('insights_publisher'))
