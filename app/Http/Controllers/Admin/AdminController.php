@@ -1922,11 +1922,7 @@ class AdminController extends Controller
             return redirect($redirectUrl)->with('error', "Insights Data Couldn't Be Saved.");
         }
     }
-    /**
-     * Function to list insights
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
+
     public function listinsights(Request $request)
     {
         $locale = $request->segment(2);
@@ -1937,7 +1933,7 @@ class AdminController extends Controller
         $type = $request->query('type');
         $ctgry = $request->query('category');
 
-        $query = $model::query()->with(['author'])
+        $query = $model::query()
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
@@ -1994,7 +1990,7 @@ class AdminController extends Controller
         $data = $query->orderByDesc('news_id')
             ->paginate(25)
             ->appends(['search' => $search, 'type' => $type]);
-        dd($data);
+
         return view('admin.insights.list-edit-insights', compact(
             'data',
             'totalRecords',
@@ -2134,7 +2130,7 @@ class AdminController extends Controller
             $kickerData         = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
             $kicker             = array_column($kickerData, 'name');
             $data               = InsightList::query()->with('author')->where('news_id', $newsId)->first();
-            // dd($data);
+            dd($data);
             $InsightCategory    = InsightCategory::query()->where('status', '1')->get();
             // dd($InsightCategory);
             $InsightSubcategory    = InsightSubcategory::query()->where('mcat_id', $data->cat_id)->get();
