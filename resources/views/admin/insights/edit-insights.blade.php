@@ -62,7 +62,7 @@
                             @csrf
                             @php
                                 $author = $data->author->first();
-                                dd($author);
+                                // dd($author);
                             @endphp
                             <div class="control-group">
                                 <label class="control-label" for="publisher">Insights Publisher :</label>
