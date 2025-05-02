@@ -24,8 +24,7 @@
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
         style="display:none;visibility:hidden"></iframe>
 </noscript>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KW4K6WV6"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
     
 {{-- removed as per shan mohammad on 19th feb 2025 --}}
    
