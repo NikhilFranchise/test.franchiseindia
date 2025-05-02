@@ -18,17 +18,17 @@
                 @if (
                     (session()->get('role') != 'ga' && session()->get('adminEmail') == 'techsupport@franchiseindia.net') ||
                         (session()->get('role') != 'ga' && session()->get('adminEmail') == 'pganesh@franchiseindia.net'))
-                    <li class="bg_ly"> <a href="list-author"> <i class="icon-th"></i>Authors</a> </li>
-                    <li class="bg_lo"> <a href="list-article-interview"> <i class="icon-th"></i>Articles/Interviews</a>
+                    <li class="bg_lg"> <a href="list-author"> <i class="icon-th"></i>Authors</a> </li>
+                    <li class="bg_dy"> <a href="/admin/en/cat/list"> <i class="icon-th"></i>Main/Sub Category List</a>
                     </li>
-                    <li class="bg_ls"> <a href="list-news"> <i class="icon-th"></i>News</a> </li>
+                    {{--  <li class="bg_ls"> <a href="list-news"> <i class="icon-th"></i>News</a> </li>
                     <li class="bg_lg"> <a href="list-magazine"> <i class="icon-th"></i>Magazine</a> </li>
-                    <li class="bg_lb"> <a href="list-comments"> <i class="icon-th"></i>Comments</a> </li>
+                    <li class="bg_lb"> <a href="list-comments"> <i class="icon-th"></i>Comments</a> </li> --}}
                 @endif
-                <li class="bg_lb"> <a href="kickers/list/english"> <i class="icon-list-alt"></i>Associated Tags</a> </li>
-                <li class="bg_lb"> <a href="en/list-insights"> <i class="icon-list-alt"></i>Insights List</a> </li>
-                <li class="bg_lb"> <a href="en/podcastlist"> <i class="icon-list-alt"></i>Podcast List</a> </li>
-                <li class="bg_lb"> <a href="en/videolist"> <i class="icon-list-alt"></i>Video List</a> </li>
+                <li class="bg_dg"> <a href="kickers/list/english"> <i class="icon-list-alt"></i>Associated Tags</a> </li>
+                <li class="bg_ly"> <a href="en/list-insights"> <i class="icon-list-alt"></i>Insights List</a> </li>
+                <li class="bg_lr"> <a href="en/podcastlist"> <i class="icon-list-alt"></i>Podcast List</a> </li>
+                <li class="bg_db"> <a href="en/videolist"> <i class="icon-list-alt"></i>Video List</a> </li>
             </ul>
         </div>
     </div>

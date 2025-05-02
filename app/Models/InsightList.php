@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\AuthorList;
 use App\Models\InsightCategory;
 use App\Models\InsightSubcategory;
+use App\Traits\hasEffectiveDate;
 class InsightList extends Model
 {
-    use HasFactory;
+    use HasFactory, hasEffectiveDate;
     protected $table = 'insights_list_english';
     protected $primaryKey = 'news_id';
 
