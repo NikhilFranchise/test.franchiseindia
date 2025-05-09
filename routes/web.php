@@ -474,7 +474,7 @@ Route::group(['prefix' => 'business-opportunities'], function () {
     });
     Route::get('all/all', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('franchises-{price_range}', [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('tamilnadu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get('tamil-nadu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('telangana.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('andaman-and-nicobar.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('maharashtra.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
@@ -809,7 +809,7 @@ Route::group(['prefix' => 'hi'], function () {
         });
         Route::get('all/all', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('franchises-{price_range}', [BusinessListingController::class, 'searchBusinessListing']);
-        Route::get('tamilnadu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
+        Route::get('tamil-nadu.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('telangana.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('andaman-and-nicobar.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
         Route::get('maharashtra.{state_code}', [BusinessListingController::class, 'searchBusinessListing']);
