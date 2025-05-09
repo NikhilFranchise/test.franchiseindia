@@ -8005,7 +8005,7 @@ a.desklink{display: none;}
         </a>
     </td>
 </tr>
-<tr>
+{{-- <tr>
     <td>75</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/rasna-buzz.30285"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/rasna-buzz_1.gif" alt="Rasna Buzz"> Rasna Buzz</a></td>
     <td>Food and Beverage</td>
@@ -8019,7 +8019,7 @@ a.desklink{display: none;}
         </a>
 
     </td>
-</tr>
+</tr> --}}
 <tr>
     <td>76</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/tea-post.72087"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/tea-post_1.jpg" alt="Tea Post"> Tea Post</a></td>
@@ -9453,7 +9453,7 @@ a.desklink{display: none;}
         </a>
     </td>
 </tr>
-<tr>
+{{-- <tr>
     <td>10</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/rasna-buzz.30285"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/rasna-buzz_1.gif" alt="Rasna Buzz"> Rasna Buzz</a></td>
     <td>Food and Beverage</td>
@@ -9462,7 +9462,7 @@ a.desklink{display: none;}
          <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/juices-smoothies-dairy-parlors.ssc426" class="desklink">View more</a>
         <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/juices-smoothies-dairy-parlors.ssc426" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
     </td>
-</tr>
+</tr> --}}
 <tr>
     <td>11</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/tea-post.72087"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/tea-post_1.jpg" alt="Tea Post"> Tea Post</a></td>
@@ -10839,7 +10839,7 @@ a.desklink{display: none;}
 
     </td>
 </tr>
-<tr>
+{{-- <tr>
     <td>71</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/rasna-buzz.30285"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/rasna-buzz_1.gif" alt="Rasna Buzz">Rasna Buzz</a></td>
     <td>Food and Beverage</td>
@@ -10848,7 +10848,7 @@ a.desklink{display: none;}
          <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/juices-smoothies-dairy-parlors.ssc426" class="desklink">View more</a>
         <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/juices-smoothies-dairy-parlors.ssc426" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
     </td>
-</tr>
+</tr> --}}
 <tr>
     <td>72</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="{{ url('images/top100/brands/bubble-recap.gif') }}" alt="Bubble Recap Beverage">Bubble Recap Beverage</a></td>
@@ -12275,7 +12275,7 @@ a.desklink{display: none;}
         </a>
     </td>
 </tr>
-<tr>
+{{-- <tr>
     <td>9</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/rasna-buzz.30285"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/rasna-buzz_1.gif" alt="Rasna Buzz">Rasna Buzz</a></td>
     <td>Food and Beverage</td>
@@ -12284,7 +12284,7 @@ a.desklink{display: none;}
          <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/juices-smoothies-dairy-parlors.ssc426" class="desklink">View more</a>
         <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/juices-smoothies-dairy-parlors.ssc426" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
     </td>
-</tr>
+</tr> --}}
 <tr>
     <td>10</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="{{ url('images/top100/brands/bubble-recap.gif') }}" alt="Bubble Recap Beverage">Bubble Recap Beverage</a></td>
@@ -13681,7 +13681,7 @@ a.desklink{display: none;}
         </a>
     </td>
 </tr>
-<tr>
+{{-- <tr>
     <td>69</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/rasna-buzz.30285"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/rasna-buzz_1.gif" alt="Rasna Buzz"> Rasna Buzz</a></td>
     <td>Food and Beverage</td>
@@ -13690,7 +13690,7 @@ a.desklink{display: none;}
          <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/juices-smoothies-dairy-parlors.ssc426" class="desklink">View more</a>
         <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/juices-smoothies-dairy-parlors.ssc426" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
     </td>
-</tr>
+</tr> --}}
 <tr>
     <td>70</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="{{ url('images/top100/no-img.gif') }}" alt="Superman"> Superman</a></td>
@@ -15087,7 +15087,7 @@ a.desklink{display: none;}
         </a>
     </td>
 </tr>
-<tr>
+{{-- <tr>
     <td>10</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/brands/rasna-buzz.30285"><img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/rasna-buzz_1.gif" alt="Rasna Buzz"> Rasna Buzz</a></td>
     <td>Food and Beverage</td>
@@ -15096,7 +15096,7 @@ a.desklink{display: none;}
          <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/juices-smoothies-dairy-parlors.ssc426" class="desklink">View more</a>
         <a target="_blank" href="https://www.franchiseindia.com/business-opportunities/juices-smoothies-dairy-parlors.ssc426" class="moblink"><img src="{{ url('images/top100/arrow-new.png') }}"></a>
     </td>
-</tr>
+</tr> --}}
 <tr>
     <td>11</td>
     <td><a target="_blank" href="https://www.franchiseindia.com/business-opportunities/all/all"><img src="{{url('images/top100/no-img.gif')}}" alt="Superman"> Superman</a></td>

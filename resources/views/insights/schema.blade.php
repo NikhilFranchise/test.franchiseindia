@@ -105,7 +105,7 @@
               "url": "{{$newsUrl}}",
               "name": "{{$newsDetails->title}} - FranchiseIndia",
               "datePublished": "{{$newsDetails->created_at}}",
-              "dateModified": "{{$newsDetails->updated_at}}",
+              "dateModified": "{{$newsDetails->published_date}}",
               "isPartOf": { "@id": "{{ Config('constants.MainDomain')}}/#website" },
               "primaryImageOfPage": { "@id": "{{$ogimage}}" },
               "inLanguage": "en-IN",

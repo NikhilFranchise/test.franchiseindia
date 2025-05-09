@@ -125,12 +125,16 @@ class InsightsController extends Controller
             ->get();
         $authorDetails = $authors->map(function ($author) use ($model) {
             // Count articles for each author (Direct Query, No whereIn)
-            $count = $model::where('author_id', $author->author_id)
+            $Encount = InsightList::where('author_id', $author->author_id)
                 ->whereNotIn('news_type', ['ir', 'ri'])
                 ->where('status', 1)
                 ->count();
 
-            $author->count = $count;
+            $Hicount = InsightListHindi::where('author_id', $author->author_id)
+                ->whereNotIn('news_type', ['ir', 'ri'])
+                ->where('status', 1)
+                ->count();
+            $author->count = $Encount + $Hicount;
             return $author;
         });
 
@@ -164,7 +168,7 @@ class InsightsController extends Controller
         $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
 
         $insightstories = $model::with('author')
-            ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'author_id', 'created_at', 'content')
+            ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'author_id', 'created_at', 'content', 'published_date')
             ->withEffectiveDate()
             ->where('insight_type', 'News')
             ->whereNotIn('news_type', ['ir', 'ri'])
@@ -202,7 +206,7 @@ class InsightsController extends Controller
 
         // Fetch the insights articles
         $insArticles = $model::with('author')
-            ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'author_id', 'created_at', 'content')
+            ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'author_id', 'created_at', 'content', 'published_date')
             ->withEffectiveDate()
             ->where('insight_type', 'Article')
             ->whereNotIn('news_type', ['ir', 'ri'])
@@ -245,7 +249,7 @@ class InsightsController extends Controller
         // Choose the appropriate model based on the locale
         $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
         $interviews  = $model::with('author')
-            ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'author_id', 'created_at', 'content')
+            ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'author_id', 'created_at', 'content', 'published_date')
             ->withEffectiveDate()
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->where('insight_type', 'Interview')
@@ -282,7 +286,7 @@ class InsightsController extends Controller
         // Choose the appropriate model based on the locale
         $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
         $events_reports = $model::with('author')
-            ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'author_id', 'created_at', 'content')
+            ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'author_id', 'created_at', 'content', 'published_date')
             ->withEffectiveDate()
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
@@ -532,16 +536,19 @@ class InsightsController extends Controller
 
         // Fetch the insights for the category
         $insightcategories = $insightListModel::with(['author'])
-            ->select('news_id', 'title', 'cat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at')
+            ->select('news_id', 'title', 'cat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at', 'published_date')
+            ->withEffectiveDate()
             ->where('cat_id', $category->id)
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
-            ->orderByDesc('news_id')
+            // ->orderByDesc('news_id')
+            ->orderByEffectiveDate('desc')
             ->paginate(15);
         // dd($insightcategories);
         // Apply content URL slug transformation
 
-        $popularArticles = $insightListModel::with('category')->select('news_id', 'title', 'cat_id', 'insight_type', 'slug')->where('insight_type', 'Article')
+        $popularArticles = $insightListModel::with('category')->select('news_id', 'title', 'cat_id', 'insight_type', 'slug')
+            ->where('insight_type', 'Article')
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->orderByDesc('views')
@@ -581,31 +588,6 @@ class InsightsController extends Controller
         // Return the view with compacted data
         return view('insights.categorylist', compact('insightcategories', 'category', 'popularArticles', 'subcat'));
     }
-
-
-    // public function trendstories()
-    // {
-    //     $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
-    //     app()->setLocale($locale);
-    //     session()->put('locale', $locale);
-
-    //     // Choose the appropriate model based on the locale
-    //     $model = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
-    //     $trendstories = $model::with('author')
-    //         ->where('insight_type', 'News')
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->whereNotNull('image')
-    //         ->whereNotNull('cat_id')
-    //         ->where('status', 1)
-    //         ->orderByDesc('created_at')
-    //         ->paginate(8);
-
-    //     $trendstories = CommonController::contentUrlSlug($trendstories);
-    //     if ($trendstories->isEmpty()) {
-    //         return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
-    //     }
-    //     return view('insights.trendstories', compact('trendstories'));
-    // }
 
     public function getInsightsDetails(Request $request)
     {
@@ -695,19 +677,19 @@ class InsightsController extends Controller
             'title' => $newsDetails->title,
         ])->toArray();
         $category = $newsDetails->category->first();
-        if($category){
-        $trendingArticles = $newsModel::with(['category', 'Subcategory'])
-            ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
-            ->withEffectiveDate()
-            ->where('status', 1)
-            ->where('cat_id', $newsDetails->category[0]->id)
-            ->whereNot('news_id', $id)
-            ->whereNotIn('news_type', ['ri', 'ir'])
-            // ->whereIn('insight_type', ['Article', 'News', 'Interview'])
-            // ->orderByDesc('created_at')
-            ->orderByEffectiveDate('desc')
-            ->take(5)->get();
-        }else{
+        if ($category) {
+            $trendingArticles = $newsModel::with(['category', 'Subcategory'])
+                ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
+                ->withEffectiveDate()
+                ->where('status', 1)
+                ->where('cat_id', $newsDetails->category[0]->id)
+                ->whereNot('news_id', $id)
+                ->whereNotIn('news_type', ['ri', 'ir'])
+                // ->whereIn('insight_type', ['Article', 'News', 'Interview'])
+                // ->orderByDesc('created_at')
+                ->orderByEffectiveDate('desc')
+                ->take(5)->get();
+        } else {
             $trendingArticles = collect();
         }
         $latestArticles = $newsModel::with(['category', 'Subcategory'])
@@ -718,7 +700,7 @@ class InsightsController extends Controller
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('insight_type', 'Article')
             // ->orderByDesc('created_at')
-            ->orderByEffectiveDate('desc')  
+            ->orderByEffectiveDate('desc')
             ->take(5)->get();
 
         // Return view with compacted variables
@@ -734,7 +716,7 @@ class InsightsController extends Controller
         $insightModel = $locale == 'en' ? InsightList::class : InsightListHindi::class;
         // Build the base query
         $query = $insightModel::with('author')
-            ->select('news_id', 'title', 'cat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at')
+            ->select('news_id', 'title', 'cat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at', 'published_date')
             ->withEffectiveDate()
             ->where('status', 1)
             ->where(function ($query) use ($search) {
@@ -766,58 +748,6 @@ class InsightsController extends Controller
         return view('insights.search', compact('articlesList', 'search', 'popArticles'));
     }
 
-
-    // public function insightstags(Request $request)
-    // {
-    //     $tag = $request->tagslug;
-    //     $tagstr = str_replace('-', ' ', $tag);
-
-    //     // Determine the language and set table/model dynamically
-    //     $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
-    //     $redirectPath = $locale == 'en' ? '/insights' : '/insights/hindi';
-    //     app()->setLocale($locale);
-    //     session()->put('locale', $locale);
-    //     $insightModel = $locale == 'en' ? InsightList::class : InsightListHindi::class;
-    //     $tagModel = $locale == 'en' ? SeoTag::class : SeoTagHindi::class;
-    //     $contentModel = $locale == 'en' ? ContentTagsAssigned::class : ContentTagsAssignedHindi::class;
-
-    //     // Fetch the tag data
-    //     $seoTag = $tagModel::query()->where('name', $tagstr)->first();
-    //     if (is_null($seoTag)) {
-    //         return redirect($redirectPath);
-    //     }
-
-    //     // Fetch the associated content IDs
-    //     $articleIds = $contentModel::where([
-    //         ['tag_id', $seoTag->tag_id],
-    //         ['content_type', 2]
-    //     ])->pluck('content_id')->unique()->toArray();
-
-    //     // Fetch the articles with conditions
-    //     $articlesList = $insightModel::query()
-    //         ->with('author')
-    //         ->whereIn('news_id', $articleIds)
-    //         ->where('status', 1)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->whereNotNull('image')
-    //         ->whereNotNull('cat_id')
-    //         ->orderByDesc('created_at')
-    //         ->paginate(15);
-
-    //     // Apply URL slugs
-
-    //     $popArticles = $insightModel::query()->with('category')->where('insight_type', 'Article')
-    //         ->where('status', 1)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->orderByDesc('created_at')
-    //         ->take(6)->get();
-    //     // Check for results and return the view or redirect
-    //     if ($articlesList->count() > 0) {
-    //         return view('insights.insightstags', compact('articlesList', 'seoTag', 'popArticles'));
-    //     }
-
-    //     return redirect($redirectPath);
-    // }
     public function insightstags(Request $request)
     {
         $tag = str_replace('-', ' ', $request->tagslug);
@@ -1088,18 +1018,24 @@ class InsightsController extends Controller
 
         // Fetch content data for the selected subcategory
         $contentData = $insightListModel::with(['author', 'category', 'subcategory'])
+            ->select('news_id', 'title', 'cat_id', 'subcat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at')
+            ->withEffectiveDate()
             ->where('subcat_id', $subcatData->id)
             ->whereNotIn('news_type', ['ri', 'ir'])  // Exclude specific news types
             ->where('status', 1)  // Only active insights
             ->whereNotNull('image')  // Only insights with images
             ->whereNotNull('cat_id')  // Ensure category ID is present
             ->whereNotNull('subcat_id')  // Ensure subcategory ID is present
-            ->paginate(10);
+            ->orderByEffectiveDate('desc')  // Order by effective date
+            ->paginate(15);
 
-        $popArticles = $insightListModel::query()->with('category')->where('insight_type', 'Article')
+        $popArticles = $insightListModel::query()->with('category')
+            ->withEffectiveDate()
+            ->where('insight_type', 'Article')
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->take(6)->get();
 
         return view('insights.subcatdata', compact('contentData', 'subcatData', 'catData', 'popArticles'));

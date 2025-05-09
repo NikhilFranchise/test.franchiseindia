@@ -1,7 +1,13 @@
 @extends('layout.insights.master')
-@section('seoTitle', 'Latest ' . $category['catname'] . ' News & Articles | Trends, Insights & Expert Analysis |
+@section('seoTitle',
+    'Latest ' .
+    $category['catname'] .
+    ' News & Articles | Trends, Insights & Expert Analysis |
     Franchise India')
-@section('seoDesc', 'Stay updated with the latest ' . $category['catname'] . ' news and articles. Explore industry
+@section('seoDesc',
+    'Stay updated with the latest ' .
+    $category['catname'] .
+    ' news and articles. Explore industry
     trends, expert insights, and business reports. Get market analysis, growth strategies, and top stories on
     FranchiseIndia.com.')
 @section('content')
@@ -76,8 +82,13 @@
                                                         <li>By - <a href="{{ $authorUrl }}"
                                                                 hreflang="{{ $locale }}">{{ $authorname }}</a>
                                                         </li>
-                                                        <li><time datetime="33Z"
-                                                                class="datetime">{{ date('M d, Y', strtotime($article->created_at)) }}</time>/
+                                                        <li><time datetime="33Z" class="datetime">
+                                                                @if ($article->created_at >= $article->published_date)
+                                                                    {{ date('M d, Y', strtotime($article->created_at)) }}
+                                                                @else
+                                                                    {{ 'Last Updated ' . date('M d, Y', strtotime($article->published_date)) }}
+                                                                @endif
+                                                            </time>/
                                                             {{ app\Http\Controllers\InsightsController::calculateReadTime($article) }}
                                                             MIN READ</li>
                                                     </ul>
@@ -110,41 +121,7 @@
                             </div>
                         </div>
                         {{-- ads section end here --}}
-                        <div class="popular-articles">
-                            {{-- <div class="popular-title">Popular Articles</div> --}}
-                            <ul class="popular-list">
-                                @forelse ($subcat as $subcategory)
-                                    {{-- @php
-                                        $image = \App\Http\Controllers\InsightsController::createimgurl(
-                                            $popular->image,
-                                        );
-                                        $popUrl =
-                                            "{$mainDomain}/insights/{$locale}/" .
-                                            strtolower($popular->insight_type) .
-                                            "/{$popular->slug}.{$popular->news_id}";
-                                    @endphp --}}
-
-                                    <li>
-                                        {{-- @foreach ($popular->category as $cat)
-                                            @php
-                                                $catURL = "{$mainDomain}/insights/{$locale}/{$cat->slug}";
-                                                $catName = $cat->catname;
-                                            @endphp
-                                            <div class="popular-sub"><a href="{{ $catURL }}"
-                                                    hreflang="{{ $locale }}">{{ ucwords($catName) }}</a>
-                                            </div>
-                                        @endforeach --}}
-                                        <div class="popular-head">{{ $subcategory->subcat_name }}
-                                            ({{ $subcategory->article_count }})
-                                        </div>
-                                    </li>
-
-                                @empty
-                                <p>No Record Found</p>
-                                @endforelse
-                            </ul>
-                        </div>
-                        
+                     
                         <div class="popular-articles">
                             <div class="popular-title">Popular Articles</div>
                             <ul class="popular-list">

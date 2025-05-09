@@ -39,15 +39,15 @@
                                             $author_image = url('images/defaultuser.png');
                                             // Check and set author details if available
                                             if ($article->author->isNotEmpty()) {
-                                            $author = $article->author->first();
-                                            $authorname = $author->title ?: 'Franchise India Bureau';
-                                            $slug = $author->slug ?: strtolower(str_replace(' ', '-', $authorname));
-                                            $authorUrl = "{$mainDomain}/insights/author/{$slug}-{$author->author_id}";
-                                            $author_image = $author->image
-                                            ? \App\Http\Controllers\InsightsController::authorImageurl(
-                                            $author->image,
-                                            )
-                                            : $author_image;
+                                                $author = $article->author->first();
+                                                $authorname = $author->title ?: 'Franchise India Bureau';
+                                                $slug = $author->slug ?: strtolower(str_replace(' ', '-', $authorname));
+                                                $authorUrl = "{$mainDomain}/insights/author/{$slug}-{$author->author_id}";
+                                                $author_image = $author->image
+                                                    ? \App\Http\Controllers\InsightsController::authorImageurl(
+                                                        $author->image,
+                                                    )
+                                                    : $author_image;
                                             }
                                         @endphp
                                         <li>
@@ -64,8 +64,13 @@
                                                         <li>By - <a href="{{ $authorUrl }}"
                                                                 hreflang="{{ $locale }}">{{ $authorname }}</a>
                                                         </li>
-                                                        <li><time datetime="33Z"
-                                                                class="datetime">{{ date('M d, Y', strtotime($article->created_at)) }}</time>/
+                                                        <li><time datetime="33Z" class="datetime">
+                                                                @if ($article->created_at >= $article->published_date)
+                                                                    {{ date('M d, Y', strtotime($article->created_at)) }}
+                                                                @else
+                                                                    {{ 'Last Updated ' . date('M d, Y', strtotime($article->published_date)) }}
+                                                                @endif
+                                                            </time>/
                                                             {{ app\Http\Controllers\InsightsController::calculateReadTime($article) }}
                                                             MIN READ</li>
                                                     </ul>
