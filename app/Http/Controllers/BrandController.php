@@ -34,10 +34,14 @@ class BrandController extends Controller
         $brandParamsArr = explode('.', $brandUrlParam);  // Explode it by separator & fetch details from DB
         $images = [];
         $view = "brandlanding";
-        // if ($brandUrlParam =="fiery-pot-foods-pvt-ltd.96936"){
-        //     $brandUrlParam = "fiery-pot-foods.103010";
-        //     return redirect(Config('constants.MainDomain') .'/brands/' . $brandUrlParam, 301);
-        // }
+        if ($brandUrlParam =="fpf.96936"){
+            $brandUrlParam = "fiery-pot-foods.103010";
+            return redirect(Config('constants.MainDomain') .'/brands/' . $brandUrlParam, 301);
+        }
+        if ($brandUrlParam =="berger-paints-india-limited.59427"){
+            $brandUrlParam = "berger-paints.93087";
+            return redirect(Config('constants.MainDomain') .'/brands/' . $brandUrlParam, 301);
+        }
         // dd($brandParamsArr);
         if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
