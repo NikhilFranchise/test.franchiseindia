@@ -6,6 +6,8 @@
 @section('seoDesc', $newsDetails->shortDesc)
 @section('seoKeywords', $newsDetails->kicker)
 @section('canonicalUrl', url()->current())
+@section('datePublished', $newsDetails->created_at)
+@section('dateModified', $newsDetails->published_date)
 @php
     $ogimage = !empty($newsDetails->image)
         ? \App\Http\Controllers\InsightsController::createimgurl($newsDetails->image)
@@ -106,7 +108,12 @@
                                         {{ $author_details->designation }}
                                     </span>
                                     <span>
-                                        {{ date('M d, Y', strtotime($newsDetails->created_at)) }} /
+                                        @if ($newsDetails->created_at >= $newsDetails->published_date)
+                                            {{ date('M d, Y', strtotime($newsDetails->created_at)) }} /
+                                        @else
+                                            {{ 'Last updated ' . date('M d, Y', strtotime($newsDetails->published_date)) }}
+                                            /
+                                        @endif
                                         <img src="{{ url('/insight-new/images/vicon.webp') }}" height="10"
                                             width="17" alt="Franchise Insights" class="img-fluid">
                                         {{ $newsDetails->views }}

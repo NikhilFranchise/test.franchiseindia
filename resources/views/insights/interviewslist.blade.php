@@ -10,7 +10,8 @@
             <div class="container">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('/insights') }}">Home</a></li>
-                    <li class="breadcrumb-item">{{ App::getLocale() == 'en' ? 'Executive Interviews' : 'कार्यकारी साक्षात्कार' }}</li>
+                    <li class="breadcrumb-item">
+                        {{ App::getLocale() == 'en' ? 'Executive Interviews' : 'कार्यकारी साक्षात्कार' }}</li>
                 </ul>
             </div>
         </div>
@@ -64,8 +65,13 @@
                                                         <li>By - <a href="{{ $authorUrl }}"
                                                                 hreflang="{{ $locale }}">{{ $authorname }}</a>
                                                         </li>
-                                                        <li><time datetime="33Z"
-                                                                class="datetime">{{ date('M d, Y', strtotime($article->created_at)) }}</time>/
+                                                        <li><time datetime="33Z" class="datetime">
+                                                                @if ($article->created_at >= $article->published_date)
+                                                                    {{ date('M d, Y', strtotime($article->created_at)) }}
+                                                                @else
+                                                                    {{ 'Last Updated ' . date('M d, Y', strtotime($article->published_date)) }}
+                                                                @endif
+                                                            </time>/
                                                             {{ app\Http\Controllers\InsightsController::calculateReadTime($article) }}
                                                             MIN READ</li>
                                                     </ul>

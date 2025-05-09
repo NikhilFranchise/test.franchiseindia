@@ -16,7 +16,9 @@
     $displayName = $locale == 'en' ? ucwords($seoTag->name) : $hindiCategoryNames[$seoTag->name] ?? $seoTag->name;
 @endphp
 @section('seoTitle', $displayName . ' latest News, Articles, Market Insights & Expert Analysis | Franchise India')
-@section('seoDesc', 'Stay updated with the latest ' . $displayName . ' news, articles, and market insights. Read expert analysis, industry reports, and business trends on FranchiseIndia.com. Explore top stories and key updates in ' . $displayName . ' industry today.')
+@section('seoDesc', 'Stay updated with the latest ' . $displayName . ' news, articles, and market insights. Read expert
+    analysis, industry reports, and business trends on FranchiseIndia.com. Explore top stories and key updates in ' .
+    $displayName . ' industry today.')
 @section('content')
     <div class="maininnver homeh">
         <div class="inner-top-head">
@@ -83,8 +85,13 @@
                                                         <li>By - <a href="{{ $authorUrl }}"
                                                                 hreflang="{{ $locale }}">{{ $authorname }}</a>
                                                         </li>
-                                                        <li><time datetime="33Z"
-                                                                class="datetime">{{ date('M d, Y', strtotime($article->created_at)) }}</time>/
+                                                        <li><time datetime="33Z" class="datetime">
+                                                                @if ($newsDetails->created_at >= $newsDetails->published_date)
+                                                                    {{ date('M d, Y', strtotime($newsDetails->created_at)) }}
+                                                                @else
+                                                                    {{ 'Last updated ' . date('M d, Y', strtotime($newsDetails->published_date)) }}
+                                                                @endif
+                                                            </time>/
                                                             {{ app\Http\Controllers\InsightsController::calculateReadTime($article) }}
                                                             MIN READ</li>
                                                     </ul>
