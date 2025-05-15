@@ -11,9 +11,9 @@
     trends, expert insights, and business reports. Get market analysis, growth strategies, and top stories on
     FranchiseIndia.com.')
 @section('content')
-    @php 
-    use Illuminate\Support\Str;
-    $locale = App::getLocale();
+    @php
+        use Illuminate\Support\Str;
+        $locale = App::getLocale();
     @endphp
     <div class="maininnver homeh">
         <div class="inner-top-head">
@@ -25,7 +25,9 @@
             <div class="container">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('/insights') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ url("/insights/{$locale}/{$subcatData->category[0]['slug']}") }}">{{ $subcatData->category[0]['catname'] }}</a></li>
+                    <li class="breadcrumb-item"><a
+                            href="{{ url("/insights/{$locale}/{$subcatData->category[0]['slug']}") }}">{{ $subcatData->category[0]['catname'] }}</a>
+                    </li>
                     <li class="breadcrumb-item">{{ $subcatData->subcat_name }}</li>
                 </ul>
             </div>
@@ -96,8 +98,13 @@
                                                         <li>By - <a href="{{ $authorUrl }}"
                                                                 hreflang="{{ $locale }}">{{ $authorname }}</a>
                                                         </li>
-                                                        <li><time datetime="33Z"
-                                                                class="datetime">{{ date('M d, Y', strtotime($article->created_at)) }}</time>/
+                                                        <li><time datetime="33Z" class="datetime">
+                                                                @if ($article->created_at >= $article->published_date)
+                                                                    {{ date('M d, Y', strtotime($article->created_at)) }}
+                                                                @else
+                                                                    {{ 'Last updated ' . date('M d, Y', strtotime($article->published_date)) }}
+                                                                @endif
+                                                            </time>/
                                                             {{ app\Http\Controllers\InsightsController::calculateReadTime($article) }}
                                                             MIN READ</li>
                                                     </ul>

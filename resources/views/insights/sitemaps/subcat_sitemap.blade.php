@@ -7,7 +7,7 @@
         @endphp
         <url>
             <loc>{{ url('/insights/' . $locale . '/' . $ctype . '/' . $sctype) }}</loc>
-            <lastmod>{{ $sdata['created_at']->format('Y-m-d\TH:i:sP') }}</lastmod>
+            <lastmod>{{ \Carbon\Carbon::parse($sdata['created_at'])->format('Y-m-d\TH:i:sP') }}</lastmod>
         </url>
     @endforeach
 </urlset>

@@ -1130,6 +1130,16 @@ Route::group(['prefix' => 'insights'], function () {
 
 // insights frontend routes start here//  
 Route::middleware(['TrailingSlashRedirect'])->group(function () {
+
+    // Route::get('/insights/{lang}/next-article', [InsightsController::class, 'nextArticle'])
+    //     ->name('insights.nextArticle')
+    //     ->where('lang', 'en|hi');
+
+    // // For previous article (this was incorrect in your code)
+    // Route::get('/insights/{lang}/prev-article', [InsightsController::class, 'prevArticle'])
+    // ->name('insights.prevArticle')->where('lang', 'en|hi');
+
+
     Route::group(['prefix' => 'insights'], function () {
         Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
         Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
@@ -1160,7 +1170,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('video_podcast',                 [InsightsController::class, 'getvideopodcast']);
             Route::get('podcast',                       [InsightsController::class, 'getpodcast']);
             Route::get('tag/{tagslug}',                 [InsightsController::class, 'insightstags']);
-            Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails']);
+            Route::get('{insight_type}/{slug}.{id}',    [InsightsController::class, 'getInsightsDetails'])->name('insights.view');
             Route::get('/{category}/{subcategory}',     [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
@@ -1249,4 +1259,4 @@ Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('pass
 
 Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
 Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
-Route::get('/sendmail',[CommonController::class,'send_email']);
+Route::get('/sendmail', [CommonController::class, 'send_email']);

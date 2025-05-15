@@ -6,7 +6,9 @@
         @endphp
         <url>
             <loc>{{ url('/insights/' . $locale . '/tag/' . $tagtype) }}</loc>
-            <lastmod>{{ $tag['created_at']->format('Y-m-d\TH:i:sP') }}</lastmod>
+            {{-- <lastmod>{{ $tag['created_at']->format('Y-m-d\TH:i:sP') }}</lastmod> --}}
+            <lastmod>{{ \Carbon\Carbon::parse($tag['created_at'])->format('Y-m-d\TH:i:sP') }}</lastmod>
+
         </url>
     @endforeach
 </urlset>

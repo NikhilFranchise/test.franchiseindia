@@ -59,8 +59,6 @@
     </div>
     <div class="contentwrapper">
         <div class="container">
-        </div>
-        <div class="container">
             <div class="row">
                 <div class="col-md-8">
                     <ul class="breadcrumb">
@@ -169,7 +167,7 @@
                         </div>
                         {{-- ads for mobile & desktop --}}
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
-                        <div class="articlecontent">
+                        <div class="articlecontent" data-article-id="{{ $newsDetails->news_id }}">
                             @php
                                 // Split the article content into paragraphs
                                 $paragraphs = preg_split('/\r\n|\r|\n/', $newsDetails->content);
@@ -186,7 +184,8 @@
                                 $adInterval = $totalParagraphs >= 80 ? 8 : ($totalParagraphs >= 50 ? 5 : 3);
                                 $contentBlocks = [];
                                 foreach ($paragraphs as $index => $para) {
-                                    $contentBlocks[] = $para;
+                                    // $contentBlocks[] = $para;
+                                    $contentBlocks[] = '<p>' . $para . '</p>';
                                     if (
                                         $adInterval > 0 &&
                                         ($index + 1) % $adInterval === 0 &&
@@ -211,8 +210,8 @@
                                 $renderedContent = implode("\r\n", $contentBlocks);
                             @endphp
                             {!! $renderedContent !!}
-
                         </div>
+                        {{-- </div> --}}
                         <div class="franBrands">
                             @if (!empty($franchiseData))
                                 <h4>Interested in Franchise:</h4>
@@ -323,8 +322,196 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="next-article-container" id="next-article"></div> --}}
         <!-- New article will be loaded here -->
+        <div id="next-article-container"></div>
     </div>
     @include('layout.insights.magblock')
+    @php
+        $nextArticleParams = [
+            'currentId' => $newsDetails->news_id,
+            'categoryId' => $newsDetails->category[0]->id ?? $newsDetails->cat_id,
+            'lang' => $locale,
+        ];
+        $nextUrl = isset($nextArticleParams) ? route('insights.nextArticle', $nextArticleParams) : '';
+    @endphp
+    <script>
+        let isLoading = false;
+        let nextArticleUrl = @json($nextUrl); // passed from controller
+        let prevArticleUrls = {}; // { articleId: url }
+        console.log(prevArticleUrls);
+        const updateMetadata = (data) => {
+            if (data.meta) {
+                document.title = data.meta.title || document.title;
+                if (data.meta.description) {
+                    document.querySelector('meta[name="description"]').setAttribute('content', data.meta.description);
+                }
+                if (data.meta.ogTitle) {
+                    document.querySelector('meta[property="og:title"]').setAttribute('content', data.meta.ogTitle);
+                }
+            }
+        };
+
+        const loadArticle = (direction, currentArticleId = null) => {
+            if (isLoading) return;
+            isLoading = true;
+
+            let url = (direction === 'down') ? nextArticleUrl : prevArticleUrls[currentArticleId] || null;
+            if (!url) {
+                
+                isLoading = false;
+                return;
+            }
+
+            $.ajax({
+                url,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    if (data.success && data.html) {
+                        const $container = $('#next-article-container');
+
+                        if (direction === 'down') {
+                            $container.append(data.html);
+                            nextArticleUrl = data.nextUrl || null;
+                            if (data.articleId && data.prevUrl) {
+                                prevArticleUrls[data.articleId] = data.prevUrl;
+                            }
+                        } else {
+                            const scrollTopBefore = window.scrollY;
+                            $container.prepend(data.html);
+                            const newFirstArticle = document.querySelector('.articlecontent');
+                            if (newFirstArticle) {
+                                const newHeight = newFirstArticle.offsetHeight;
+                                window.scrollTo(0, scrollTopBefore + newHeight);
+                            }
+                            if (data.articleId && data.prevUrl) {
+                                prevArticleUrls[data.articleId] = data.prevUrl;
+                            }
+                        }
+
+                        if (data.newUrl) {
+                            history.pushState(null, '', data.newUrl);
+                        }
+
+                        updateMetadata(data);
+                        observeArticles(); // re-attach observers
+                    }
+                },
+                complete: function() {
+                    isLoading = false;
+                }
+            });
+        };
+
+        const observeArticles = () => {
+            const articles = document.querySelectorAll('.articlecontent');
+            articleTopObserver.disconnect();
+            articleBottomObserver.disconnect();
+
+            articles.forEach((article, index) => {
+                const ps = article.querySelectorAll('p');
+                if (ps.length) {
+                    if (index !== 0) articleTopObserver.observe(ps[0]);
+                    if (index === articles.length - 1) articleBottomObserver.observe(ps[ps.length - 1]);
+                }
+            });
+        };
+
+        const articleTopObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const article = entry.target.closest('.articlecontent');
+                    const currentId = article?.dataset?.articleId;
+                    if (currentId) loadArticle('up', currentId);
+                }
+            });
+        }, {
+            threshold: 1
+        });
+
+        const articleBottomObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    loadArticle('down', currentId);
+                }
+            });
+        }, {
+            threshold: 1
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            observeArticles();
+        });
+    </script>
+
+
+
+    {{-- <script>
+        let isLoading = false;
+        let nextArticleUrl = @json(route('insights.nextArticle', $nextArticleParams));
+        let isFirstArticle = true;
+
+        const loadNextArticle = () => {
+            if (isLoading || !nextArticleUrl) return;
+            isLoading = true;
+
+            $.ajax({
+                url: nextArticleUrl,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    if (data.success && data.html) {
+                        $('#next-article-container').append(data.html);
+                        nextArticleUrl = data.nextUrl || null;
+
+                        if (data.newUrl) {
+                            console.log("New URL to update:", data.newUrl); // Debugging log
+                            // Update the browser URL without reloading the page
+                            history.pushState(null, '', data.newUrl);
+                        }
+                        // Set the flag to false after the first article
+                        isFirstArticle = false;
+                        observeLastParagraph(); // 👈 VERY IMPORTANT
+
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX error:', error, xhr.responseText);
+                },
+                complete: function() {
+                    isLoading = false;
+                }
+            });
+        };
+
+        const lastParagraphObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    loadNextArticle();
+                }
+            });
+        }, {
+            threshold: 1.0
+        });
+
+        function observeLastParagraph() {
+            const paragraphs = document.querySelectorAll('.articlecontent p');
+            if (paragraphs.length) {
+                lastParagraphObserver.disconnect(); // disconnect old
+                lastParagraphObserver.observe(paragraphs[paragraphs.length - 1]); // observe last
+            }
+        }
+        $(document).ready(function() {
+            observeLastParagraph(); // initial page only
+        });
+
+        // $(document).ready(function() {
+        //     const paragraphs = $('.articlecontent p');
+        //     if (paragraphs.length) {
+        //         lastParagraphObserver.observe(paragraphs[paragraphs.length - 1]);
+        //     }
+        // });
+    </script> --}}
+
+
 @endsection

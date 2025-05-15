@@ -25,7 +25,8 @@ use App\Models\FihlPodcastVideo;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
-use Illuminate\Http\Response;
+use App\Helpers\FranchiseHelper;
+
 
 class InsightsController extends Controller
 {
@@ -82,11 +83,12 @@ class InsightsController extends Controller
             ->withEffectiveDate()
             ->where('insight_type', 'Article')
             ->where('status', 1)
+            ->whereNot('news_id', $industry_focus[0]->news_id)
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
             // ->orderByDesc('created_at')
             ->orderByEffectiveDate('desc')
-            ->skip(1)
+            // ->skip(1)
             ->take(6)
             ->get();
 
@@ -656,7 +658,7 @@ class InsightsController extends Controller
             ->get()
             ->filter(function ($item) use ($titleWords) {
                 $companyWords = array_map('strtolower', explode(' ', $item->company_name));
-                $pattern = '/\b' . implode('\b.*?\b', array_map('preg_quote', $companyWords, array_fill(0, count($companyWords), '/'))) . '\b/';
+                $pattern = '/\b' . implode('\b.*?\b', array_map(fn($word) => preg_quote($word, '/'), $companyWords)) . '\b/';
                 return preg_match($pattern, implode(' ', $titleWords));
             })
             ->take(10)
@@ -773,7 +775,7 @@ class InsightsController extends Controller
             ->toArray();
 
         $articlesList = $insightModel::with('author')
-            ->select('news_id', 'title', 'cat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at')
+            ->select('news_id', 'title', 'cat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at','published_date')
             ->withEffectiveDate()
             ->whereIn('news_id', $articleIds)
             ->where('status', 1)
@@ -1013,30 +1015,31 @@ class InsightsController extends Controller
             ->first();
         // dd($catData);
         if (!$catData) {
-            return redirect('/insights');  // Redirect if category not found
+            return redirect('/insights');  
         }
 
         // Fetch content data for the selected subcategory
         $contentData = $insightListModel::with(['author', 'category', 'subcategory'])
-            ->select('news_id', 'title', 'cat_id', 'subcat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at')
+            ->select('news_id', 'title', 'cat_id', 'subcat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at','published_date')
             ->withEffectiveDate()
             ->where('subcat_id', $subcatData->id)
-            ->whereNotIn('news_type', ['ri', 'ir'])  // Exclude specific news types
-            ->where('status', 1)  // Only active insights
-            ->whereNotNull('image')  // Only insights with images
-            ->whereNotNull('cat_id')  // Ensure category ID is present
-            ->whereNotNull('subcat_id')  // Ensure subcategory ID is present
-            ->orderByEffectiveDate('desc')  // Order by effective date
+            ->whereNotIn('news_type', ['ri', 'ir'])  
+            ->where('status', 1)  
+            ->whereNotNull('image')  
+            ->whereNotNull('cat_id')  
+            ->whereNotNull('subcat_id') 
+            ->orderByEffectiveDate('desc')
             ->paginate(15);
 
-        $popArticles = $insightListModel::query()->with('category')
+        $popArticles = $insightListModel::query()->select('news_id', 'title', 'cat_id', 'subcat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at', 'published_date')
+            ->with('category')
             ->withEffectiveDate()
             ->where('insight_type', 'Article')
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
-            // ->orderByDesc('created_at')
             ->orderByEffectiveDate('desc')
             ->take(6)->get();
+        // dd()
 
         return view('insights.subcatdata', compact('contentData', 'subcatData', 'catData', 'popArticles'));
     }
@@ -1285,4 +1288,340 @@ class InsightsController extends Controller
             "Content-Disposition" => "attachment; filename=\"$filename\"",
         ]);
     }
+
+
+    // public function nextArticle(Request $request)
+    // {
+    //     dd($request->all());
+    //     $currentId = $request->get('currentId');
+    //     $categoryId = $request->get('categoryId');
+    //     $lang = $request->get('lang');
+    //     $locale = $lang == 'hi' ? 'hi' : 'en';
+
+    //     app()->setLocale($locale);
+    //     session()->put('locale', $locale);
+
+    //     $newsModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
+    //     // $currentId = $request->input('currentId');
+    //     // $categoryId = $request->input('categoryId');
+
+    //     // Find the next article (customize logic as needed)
+    //     $nextArticle = $newsModel::with(['category', 'Subcategory', 'author'])
+    //         ->where('news_id', '>', $currentId)
+    //         ->whereHas('category', function ($q) use ($categoryId) {
+    //             $q->where('id', $categoryId);
+    //         })
+    //         ->where('status', 1)
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->whereNotNull('image')
+    //         ->whereNotNull('cat_id')
+    //         ->orderByEffectiveDate('desc')
+    //         ->first();
+
+    //     if (!$nextArticle) {
+    //         return response()->json(['success' => false]);
+    //     }
+
+    //     // Render partial view with next article content
+    //     $html = view('insights.partials.nextArticle', compact('nextArticle'))->render();
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'html' => $html,
+    //         'nextUrl' => route('insights.nextArticle', [
+    //             'currentId' => $nextArticle->news_id,
+    //             'categoryId' => $categoryId,
+    //         ]),
+    //         'newUrl' => route('insights.view', [
+    //             'slug' => $nextArticle->slug,
+    //             'id' => $nextArticle->news_id,
+    //         ]),
+    //     ]);
+    // }
+    // 5:27 running code blow
+    // public function nextArticle(Request $request, $lang)
+    // {
+    //     // Dump request data for debugging
+    //     // dd($request->all());
+
+    //     // Ensure locale is set properly
+    //     $locale = ($lang == 'hi') ? 'hi' : 'en';
+    //     app()->setLocale($locale);
+    //     session()->put('locale', $locale);
+
+    //     // Fetch the current article ID and category ID
+    //     $currentId = $request->get('currentId');
+    //     $categoryId = $request->get('categoryId');
+
+    //     // Validate inputs
+    //     if (!$currentId || !$categoryId) {
+    //         return response()->json(['error' => 'Invalid parameters'], 400);
+    //     }
+
+    //     // Choose the appropriate model based on locale
+    //     $newsModel = ($locale == 'hi') ? InsightListHindi::class : InsightList::class;
+    //     $tagTable = $locale == 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
+    //     $seoTagModel = $locale == 'hi' ? SeoTagHindi::class : SeoTag::class;
+    //     // Find the next article based on current article ID and category
+    //     $nextArticle = $newsModel::with(['category', 'Subcategory', 'author'])
+    //         ->where('news_id', '>', $currentId) // Get the next article by ID
+    //         ->whereHas('category', function ($query) use ($categoryId) {
+    //             $query->where('id', $categoryId); // Ensure the article is in the selected category
+    //         })
+    //         ->where('status', 1) // Only published articles
+    //         ->whereNotIn('news_type', ['ri', 'ir']) // Exclude specific types
+    //         ->whereNotNull('image') // Ensure an image is available
+    //         ->whereNotNull('cat_id') // Ensure a category is available
+    //         ->orderBy('published_date', 'desc') // Order by published date, newest first
+    //         ->first();
+
+    //     // Fetch associated tags
+    //     $associatedTags = $tagTable::query()
+    //         ->where('content_id', $currentId)
+    //         ->where('content_type', 2)
+    //         ->pluck('tag_id');
+    //     // dd($tagTable);
+    //     $assocTags = $seoTagModel::query()
+    //         ->whereIn('tag_id', $associatedTags)
+    //         ->select('tag_id', 'name')
+    //         ->distinct()
+    //         ->get();
+
+    //     // Find brand matches
+    //     $titleWords = preg_split('/\s+/', strtolower($nextArticle->title));
+    //     $brandMatches = FranchisorBusinessDetail::where('profile_status', 1)
+    //         ->select('fran_detail_id', 'company_name', 'profile_name')
+    //         ->get()
+    //         ->filter(function ($item) use ($titleWords) {
+    //             $companyWords = array_map('strtolower', explode(' ', $item->company_name));
+    //             $pattern = '/\b' . implode('\b.*?\b', array_map('preg_quote', $companyWords, array_fill(0, count($companyWords), '/'))) . '\b/';
+    //             return preg_match($pattern, implode(' ', $titleWords));
+    //         })
+    //         ->take(10)
+    //         ->map(function ($item) {
+    //             return [
+    //                 'fran_detail_id' => $item->fran_detail_id,
+    //                 'company_name' => $item->company_name,
+    //                 'profile_name' => $item->profile_name,
+    //             ];
+    //         })
+    //         ->values();
+
+    //     // Prepare franchise data
+    //     $franchiseData = $brandMatches->map(fn($match) => [
+    //         'fran_detail_id' => $match['fran_detail_id'],
+    //         'company_name' => $match['company_name'],
+    //         'profile_name' => $match['profile_name'],
+    //         'title' => $nextArticle->title,
+    //     ])->toArray();
+    //     // $category = $nextArticle->category->first();
+    //     if ($categoryId) {
+    //         $trendingArticles = $newsModel::with(['category', 'Subcategory'])
+    //             ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
+    //             ->withEffectiveDate()
+    //             ->where('status', 1)
+    //             ->where('cat_id', $categoryId)
+    //             ->whereNot('news_id', $currentId)
+    //             ->whereNotIn('news_type', ['ri', 'ir'])
+    //             ->orderByEffectiveDate('desc')
+    //             ->take(5)->get();
+    //     } else {
+    //         $trendingArticles = collect();
+    //     }
+    //     $latestArticles = $newsModel::with(['category', 'Subcategory'])
+    //         ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
+    //         ->withEffectiveDate()
+    //         ->where('status', 1)
+    //         ->whereNot('news_id', $currentId)
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->where('insight_type', 'Article')
+    //         ->orderByEffectiveDate('desc')
+    //         ->take(5)->get();
+    //     // If no next article is found, return a failure response
+    //     if (!$nextArticle) {
+    //         return response()->json(['success' => false, 'message' => 'No more articles in this category.']);
+    //     }
+    //     if ($request->ajax()) {
+    //         // Render the HTML for the next article's content
+    //         $html = view('insights.partials.nextArticle', compact('nextArticle', 'lang', 'latestArticles', 'trendingArticles'))->render();
+    //         // dd($html);
+    //         $insightType = strtolower($nextArticle->insight_type);
+    //         // Return the response with the next article HTML and URLs
+    //         return response()->json([
+    //             'success' => true,
+    //             'html' => $html,
+    //             'nextUrl' => route('insights.nextArticle', [
+    //                 'lang' => $lang,
+    //                 'currentId' => $nextArticle->news_id,
+    //                 'categoryId' => $categoryId,
+    //             ]),
+    //             'newUrl' => route('insights.view', [
+    //                 'insight_type' => $insightType,
+    //                 // 'lang' => $lang,
+    //                 'slug' => $nextArticle->slug,
+    //                 'id' => $nextArticle->news_id,
+    //             ]),
+    //         ]);
+    //     }
+    // }
+
+    // Function to fetch the next article`
+    // public function nextArticle(Request $request, $lang)
+    // {
+    //     // Set locale
+
+
+    //     // Validate required params
+    //     $currentId = $request->get('currentId');
+    //     $categoryId = $request->get('categoryId');
+    //     $loadedIds = $request->get('loadedIds', []); // Get loaded IDs from the request
+    //     $lang = $request->get('lang', 'en'); // Default to 'en' if not provided
+    //     $locale = $lang;
+    //     app()->setLocale($locale);
+    //     session()->put('locale', $locale);
+    //     if (!$currentId || !$categoryId) {
+    //         return response()->json(['error' => 'Invalid parameters'], 400);
+    //     }
+
+    //     // Determine models based on locale
+    //     $newsModel = $locale === 'hi' ? InsightListHindi::class : InsightList::class;
+    //     $tagTable = $locale === 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
+    //     $seoTagModel = $locale === 'hi' ? SeoTagHindi::class : SeoTag::class;
+
+    //     // ✅ Get the next article based on effective date (descending for latest)
+    //     $nextArticle = $newsModel::with(['category', 'Subcategory', 'author'])
+    //         ->where('news_id', '!=', $currentId)
+    //         ->where('cat_id', $categoryId)
+    //         ->where('status', 1)
+    //         ->whereNotIn('news_id', $loadedIds) // ✅ Prevent duplicate
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->orderByEffectiveDate('asc')
+    //         ->first();
+
+    //     if (!$nextArticle) {
+    //         return response()->json(['success' => false, 'message' => 'No next article available.']);
+    //     }
+
+    //     // Optional: SEO Tags (for future use or analytics)
+    //     $associatedTags = $tagTable::where('content_id', $currentId)
+    //         ->where('content_type', 2)
+    //         ->pluck('tag_id');
+
+    //     $seoTagModel::whereIn('tag_id', $associatedTags)
+    //         ->select('tag_id', 'name')
+    //         ->distinct()
+    //         ->get();
+
+    //     // ✅ Match franchises by article title using helper
+    //     $franchiseData = FranchiseHelper::matchFranchisesByTitle($nextArticle->title);
+
+    //     // ✅ Trending & Latest articles
+    //     $trendingArticles = $newsModel::with(['category', 'Subcategory'])
+    //         ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
+    //         ->withEffectiveDate()
+    //         ->where('status', 1)
+    //         ->where('cat_id', $categoryId)
+    //         ->whereNot('news_id', $currentId)
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->orderByEffectiveDate('desc')
+    //         ->take(5)
+    //         ->get();
+
+    //     $latestArticles = $newsModel::with(['category', 'Subcategory'])
+    //         ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
+    //         ->withEffectiveDate()
+    //         ->where('status', 1)
+    //         ->whereNot('news_id', $currentId)
+    //         ->where('insight_type', 'Article')
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->orderByEffectiveDate('desc')
+    //         ->take(5)
+    //         ->get();
+
+    //     // ✅ Render the partial view
+    //     $html = view('insights.partials.nextArticle', [
+    //         'nextArticle' => $nextArticle,
+    //         'franchiseData' => $franchiseData,
+    //         'lang' => $lang,
+    //         'latestArticles' => $latestArticles,
+    //         'trendingArticles' => $trendingArticles
+    //     ])->render();
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'html' => $html,
+    //         'newUrl' => route('insights.view', [
+    //             'insight_type' => strtolower($nextArticle->insight_type),
+    //             'slug' => $nextArticle->slug,
+    //             'id' => $nextArticle->news_id
+    //         ]),
+    //         'nextUrl' => route('insights.nextArticle', [
+    //             'lang' => $lang,
+    //             'currentId' => $nextArticle->news_id,
+    //             'categoryId' => $categoryId
+    //         ]),
+    //         'meta' => [
+    //             'title' => $nextArticle->title,
+    //             'description' => $nextArticle->shortDesc,
+    //             'keywords' => $nextArticle->shortDesc,
+    //         ]
+    //     ]);
+    // }
+
+    // Function to fetch the previous article
+
+    // public function prevArticle(Request $request, $lang)
+    // {
+    //     $locale = ($lang == 'hi') ? 'hi' : 'en';
+    //     app()->setLocale($locale);
+    //     session()->put('locale', $locale);
+
+    //     $currentId = $request->get('currentId');
+    //     $categoryId = $request->get('categoryId');
+
+    //     if (!$currentId || !$categoryId) {
+    //         return response()->json(['error' => 'Invalid parameters'], 400);
+    //     }
+
+    //     $newsModel = ($locale == 'hi') ? InsightListHindi::class : InsightList::class;
+
+    //     $prevArticle = $newsModel::with(['category', 'Subcategory', 'author'])
+    //         ->where('news_id', '<', $currentId)
+    //         ->where('cat_id', $categoryId)
+    //         ->where('status', 1)
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->whereNotNull('image')
+    //         ->whereNotNull('cat_id')
+    //         // ->orderBy('news_id', 'desc') // show closest previous
+    //         ->orderByEffectiveDate('asc') // For closest previous
+    //         ->first();
+
+    //     if (!$prevArticle) {
+    //         return response()->json(['success' => false, 'message' => 'No previous articles available.']);
+    //     }
+
+    //     $html = view('insights.partials.nextArticle', [
+    //         'nextArticle' => $prevArticle,
+    //         'lang' => $lang,
+    //         'latestArticles' => collect(), // Optional: fetch like in nextArticle
+    //         'trendingArticles' => collect()
+    //     ])->render();
+
+    //     $insightType = strtolower($prevArticle->insight_type);
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'html' => $html,
+    //         'newUrl' => route('insights.view', [
+    //             'insight_type' => $insightType,
+    //             'slug' => $prevArticle->slug,
+    //             'id' => $prevArticle->news_id
+    //         ]),
+    //         'prevUrl' => route('insights.prevArticle', [
+    //             'lang' => $lang,
+    //             'currentId' => $prevArticle->news_id,
+    //             'categoryId' => $categoryId
+    //         ])
+    //     ]);
+    // }
 }

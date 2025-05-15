@@ -8,7 +8,7 @@
         @if ($news->insight_type = 'Article')
             <url>
                 <loc>{{ url('/insights/' . $locale . '/' . $type . '/' . $news->slug . '.' . $news->news_id) }}</loc>
-                <lastmod>{{ $news->created_at->format('Y-m-d\TH:i:sP') }}</lastmod>
+                <lastmod>{{ \Carbon\Carbon::parse($news->effective_date)->format('Y-m-d\TH:i:sP') }}</lastmod>
             </url>
         @endif
     @endforeach
