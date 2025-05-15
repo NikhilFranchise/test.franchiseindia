@@ -134,6 +134,8 @@ $chk_homebased = !empty($chk_homebased)? $chk_homebased : 0;
                             @endphp
                             @isset($catArr->catname)
                             <h1>{{ 'Business Opportunities in ' . $catArr->catname . ' in ' . $stateName }}</h1>
+                        {{-- @elseif(request()->is('business-opportunities/ladakh.LOC36'))
+                            <h1>Business Opportunities in Ladakh</h1> --}}
                         @else
                             <h1>{{ 'Business Opportunities in ' . $stateName }}</h1>
                         @endisset
@@ -155,6 +157,7 @@ $chk_homebased = !empty($chk_homebased)? $chk_homebased : 0;
                 {{-- <h1>Business Opportunities in {{$catName}}</h1> --}}
                     @endif 
                     <span class="shorttxt">(Showing {{$brandResults->firstItem()}} - {{$brandResults->lastItem()}} Opportunities of {{$brandResults->total()}} Opportunities)</span></div>
+                    
             </div>
             
             <div class="col-xs-12 col-sm-3 col-md-3 row-no-padding catmleft">
