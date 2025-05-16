@@ -1131,13 +1131,13 @@ Route::group(['prefix' => 'insights'], function () {
 // insights frontend routes start here//  
 Route::middleware(['TrailingSlashRedirect'])->group(function () {
 
-    // Route::get('/insights/{lang}/next-article', [InsightsController::class, 'nextArticle'])
-    //     ->name('insights.nextArticle')
-    //     ->where('lang', 'en|hi');
+    Route::get('/insights/{lang}/next-article', [InsightsController::class, 'nextArticle'])
+        ->name('insights.nextArticle')
+        ->where('lang', 'en|hi');
 
-    // // For previous article (this was incorrect in your code)
-    // Route::get('/insights/{lang}/prev-article', [InsightsController::class, 'prevArticle'])
-    // ->name('insights.prevArticle')->where('lang', 'en|hi');
+    // For previous article (this was incorrect in your code)
+    Route::get('/insights/{lang}/prev-article', [InsightsController::class, 'prevArticle'])
+    ->name('insights.prevArticle')->where('lang', 'en|hi');
 
 
     Route::group(['prefix' => 'insights'], function () {
