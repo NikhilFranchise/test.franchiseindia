@@ -1,0 +1,47 @@
+User-agent: *
+Disallow:
+
+Disallow: ?page=
+Disallow: ?sortby
+
+Sitemap: https://www.franchiseindia.com/sitemap.xml
+Sitemap: https://www.franchiseindia.com/sitemap_articles.xml
+Sitemap: https://www.franchiseindia.com/sitemap_category.xml
+Sitemap: https://www.franchiseindia.com/sitemap_hi_category.xml
+Sitemap: https://www.franchiseindia.com/entrepreneur_sitemap.xml
+Sitemap: https://www.franchiseindia.com/sitemap_brands.xml
+Sitemap: https://www.franchiseindia.com/sitemap_kicker.xml
+Sitemap: https://www.franchiseindia.com/sitemap_magazine.xml
+Sitemap: https://www.franchiseindia.com/sitemap_wellness.xml
+Sitemap: https://www.franchiseindia.com/sitemap_educontent.xml
+Sitemap: https://www.franchiseindia.com/sitemap_hindi_content.xml
+Sitemap: https://www.franchiseindia.com/sitemap_hindi_kicker.xml
+Sitemap: https://www.franchiseindia.com/sitemap_sscategory_price_location_60000.xml
+Sitemap: https://www.franchiseindia.com/sitemap_sscategory_price_location_50000.xml
+Sitemap: https://www.franchiseindia.com/sitemap_sscategory_price_location_40000.xml
+Sitemap: https://www.franchiseindia.com/sitemap_sscategory_price_location_30000.xml
+Sitemap: https://www.franchiseindia.com/sitemap_sscategory_price_location_20000.xml
+Sitemap: https://www.franchiseindia.com/sitemap_sscategory_price_location_10000.xml
+Sitemap: https://www.franchiseindia.com/sitemap_sscategory_price_location.xml
+Sitemap: https://www.franchiseindia.com/sitemap_scategory_price_location.xml
+Sitemap: https://www.franchiseindia.com/sitemap_hi_sscategory_price_location_60000.xml
+Sitemap: https://www.franchiseindia.com/sitemap_hi_sscategory_price_location_50000.xml
+Sitemap: https://www.franchiseindia.com/sitemap_hi_sscategory_price_location_40000.xml
+Sitemap: https://www.franchiseindia.com/sitemap_hi_sscategory_price_location_30000.xml
+Sitemap: https://www.franchiseindia.com/sitemap_hi_sscategory_price_location_20000.xml
+Sitemap: https://www.franchiseindia.com/sitemap_hi_sscategory_price_location_10000.xml
+Sitemap: https://www.franchiseindia.com/sitemap_hi_sscategory_price_location.xml
+Sitemap: https://www.franchiseindia.com/sitemap_hi_scategory_price_location.xml
+Sitemap: https://www.franchiseindia.com/sitemap_hi_category_location.xml
+Sitemap: https://www.franchiseindia.com/sitemap_category_location.xml
+Sitemap: https://www.franchiseindia.com/sitemap_location.xml
+Sitemap: https://www.franchiseindia.com/sitemap_master_categories.xml
+
+Sitemap: https://www.franchiseindia.com/insights/news.xml
+Sitemap: https://www.franchiseindia.com/insights/article.xml
+Sitemap: https://www.franchiseindia.com/insights/interview.xml
+Sitemap: https://www.franchiseindia.com/insights/report.xml
+Sitemap: https://www.franchiseindia.com/insights/event.xml
+Sitemap: https://www.franchiseindia.com/insights/categories.xml
+Sitemap: https://www.franchiseindia.com/insights/subcategories.xml
+Sitemap: https://www.franchiseindia.com/insights/tags.xml

@@ -1,0 +1,11 @@
+<?php
+//FRANCHISEINDIA COM PRIVATE LIMITED
+$merchant_key_new = "344760";
+$working_key_new ='15208D7E5FABDCCC3FC14480DBB91A69';//Shared by CCAVENUES
+$access_code_new ='AVIW03IC84AF89WIFA';//Shared by CCAVENUES
+
+//FRANCHISE INDIA HOLDINGS LTD
+//$merchant_key_new = "146311";
+//$working_key_new ='3AC29CBF75955134A73E13D42C2CE53C';//Shared by CCAVENUES
+//$access_code_new ='AVPC72EH82CN84CPNC';//Shared by CCAVENUES
+?>

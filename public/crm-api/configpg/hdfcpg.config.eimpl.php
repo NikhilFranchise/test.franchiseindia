@@ -1,0 +1,6 @@
+<?php
+//ENTREPRENEUR INDIA MEDIA PRIVATE LIMITED
+$merchant_key_new = "241178";
+$working_key_new ='AED22120E7FCA16C3028279884E3918B';//Shared by CCAVENUES
+$access_code_new ='AVEO89GL26AS04OESA';//Shared by CCAVENUES
+?>
