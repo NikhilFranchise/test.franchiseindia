@@ -146,7 +146,7 @@
                 </div>
                 {{-- ads for mobile & desktop --}}
                 <div class="shortdes">{{ $nextArticle->shortDesc }}</div>
-                <div class="articlecontent">
+                <div class="articlecontent" data-article-id="{{ $nextArticle->news_id }}">
                     @php
                         // Split the article content into paragraphs
                         $paragraphs = preg_split('/\r\n|\r|\n/', $nextArticle->content);

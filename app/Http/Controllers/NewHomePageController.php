@@ -85,27 +85,35 @@ class NewHomePageController extends Controller
                 ->shuffle();
         });
 
-        $news = InsightListHindi::query()->with('category')->select('slug', 'cat_id', 'image', 'news_id', 'title')
+        $news = InsightListHindi::query()->with('category')
+            ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->where('insight_type', 'News')
             ->whereNot('cat_id', '=', '')
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->limit(16)
             ->get();
 
-        $articles = InsightListHindi::query()->with('category')->select('slug', 'cat_id', 'image', 'news_id', 'title')
+        $articles = InsightListHindi::query()->with('category')
+            ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->where('insight_type', 'Article')
             ->whereNot('cat_id', '=', '')
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->limit(16)
             ->get();
 
-        $interviews = InsightListHindi::with('category')->select('slug', 'cat_id', 'image', 'news_id', 'title')
+        $interviews = InsightListHindi::with('category')->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->where('insight_type', 'Interview')
             ->whereNot('cat_id', '=', '')
-            ->orderByDesc('created_at')
+            // ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->limit(16)
             ->get();
 
@@ -224,26 +232,33 @@ class NewHomePageController extends Controller
                 ->shuffle();
         });
 
-        $news = InsightList::query()->with('category')->select('slug', 'cat_id', 'image', 'news_id', 'title')
+        $news = InsightList::query()->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
+            ->with('category')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->where('insight_type', 'News')
             ->whereNot('cat_id', '=', '')
-            ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->limit(16)
             ->get();
 
-        $articles = InsightList::query()->with('category')->select('slug', 'cat_id', 'image', 'news_id', 'title')
+        $articles = InsightList::query()->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
+            ->with('category')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->where('insight_type', 'Article')
             ->whereNot('cat_id', '=', '')
-            ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->limit(16)
             ->get();
-        $interviews = InsightList::with('category')->select('slug', 'cat_id', 'image', 'news_id', 'title')
+            // dd($articles);
+        $interviews = InsightList::with('category')
+            ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
+            ->withEffectiveDate()
             ->where('status', 1)
             ->where('insight_type', 'Interview')
             ->whereNot('cat_id', '=', '')
-            ->orderByDesc('created_at')
+            ->orderByEffectiveDate('desc')
             ->limit(16)
             ->get();
 

@@ -387,26 +387,26 @@
             reader.readAsDataURL(file);
 
             // Show & Require Alt Text Input
-            $("#altText").show().val('').prop('required', true);
+            // $("#altText").show().val('').prop('required', true);
 
-            // Validate form before enabling submit button
-            validateForm();
+            // // Validate form before enabling submit button
+            // validateForm();
         });
 
-        $("#altText").on("input", function() {
-            validateForm();
-        });
+        // $("#altText").on("input", function() {
+        //     validateForm();
+        // });
 
-        function validateForm() {
-            var altText = $("#altText").val().trim();
-            var imageSelected = $("#showImage").val() !== "";
+        // function validateForm() {
+        //     var altText = $("#altText").val().trim();
+        //     var imageSelected = $("#showImage").val() !== "";
 
-            if (imageSelected && altText !== "") {
-                $("#newssubmit").prop("disabled", false);
-            } else {
-                $("#newssubmit").prop("disabled", true);
-            }
-        }
+        //     if (imageSelected && altText !== "") {
+        //         $("#newssubmit").prop("disabled", false);
+        //     } else {
+        //         $("#newssubmit").prop("disabled", true);
+        //     }
+        // }
 
 
         document.addEventListener("DOMContentLoaded", function() {

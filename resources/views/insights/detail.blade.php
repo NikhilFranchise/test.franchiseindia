@@ -35,6 +35,83 @@
 @section('width', $width)
 @section('height', $height)
 @section('content')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <style>
+        .loadman {
+            z-index: -999;
+            min-height: 100%;
+            width: 100%;
+            height: auto;
+            position: fixed;
+            top: 0;
+            left: 0;
+            /* background: rgba(15, 9, 9, 0.7); */
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .loadingimg {
+            width: 300px;
+            border: 1px solid #dfdfdf;
+            height: 150px;
+            margin-left: auto;
+            margin-right: auto;
+            top: 50%;
+            border-radius: 4px;
+            z-index: 2;
+            position: relative;
+            margin-top: 30%;
+            padding: 10px;
+            /* background: #f3f3f3; */
+            opacity: 0.5;
+            -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, .1);
+            -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, .1);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, .1);
+        }
+
+        .loadingimg img {
+            text-align: center;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .limg {
+            margin-top: 10px;
+        }
+
+        .loader {
+            border: 10px solid #f3f3f3;
+            border-top: 16px solid #202020;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            animation: spin 2s linear infinite;
+            z-index: 2;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .thanku {
+            display: table;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .tbl-cell {
+            display: table-cell;
+            vertical-align: middle;
+        }
+    </style>
     <div class="maininnver homeh">
         <div class="inner-top-head">
             <div class="container">
@@ -323,116 +400,162 @@
             </div>
         </div>
         <!-- New article will be loaded here -->
-        <div id="next-article-container"></div>
+        <div id="next-article-container" class="next-article-container"></div>
+        <div class="loadman" id="loading" style="display:none">
+            <div class="thanku">
+                <div class="tbl-cell">
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
+
     </div>
     @include('layout.insights.magblock')
-    @php
-        $nextArticleParams = [
-            'currentId' => $newsDetails->news_id,
-            'categoryId' => $newsDetails->category[0]->id ?? $newsDetails->cat_id,
+
+    {{-- 20-5-25 running code is start here --}}
+    {{-- @php
+        $currentId = $newsDetails->news_id;
+        $categoryId = $newsDetails->category[0]->id ?? $newsDetails->cat_id;
+        $locale = app()->getLocale();
+        $nextUrl = route('insights.nextArticle', [
             'lang' => $locale,
-        ];
-        $nextUrl = isset($nextArticleParams) ? route('insights.nextArticle', $nextArticleParams) : '';
+            'currentId' => $currentId,
+            'categoryId' => $categoryId,
+            'direction' => 'down',
+        ]);
+        $prevUrl = route('insights.prevArticle', [
+            'lang' => $locale,
+            'currentId' => $currentId,
+            'categoryId' => $categoryId,
+            'direction' => 'up',
+        ]);
     @endphp
+
     <script>
         let isLoading = false;
-        let nextArticleUrl = @json($nextUrl); // passed from controller
-        let prevArticleUrls = {}; // { articleId: url }
-        console.log(prevArticleUrls);
-        const updateMetadata = (data) => {
-            if (data.meta) {
-                document.title = data.meta.title || document.title;
-                if (data.meta.description) {
-                    document.querySelector('meta[name="description"]').setAttribute('content', data.meta.description);
-                }
-                if (data.meta.ogTitle) {
-                    document.querySelector('meta[property="og:title"]').setAttribute('content', data.meta.ogTitle);
-                }
-            }
+        let hasScrolledDown = false;
+        let nextUrl = @json($nextUrl);
+        let prevUrls = {
+            @json($currentId): @json($prevUrl)
         };
+        let loadedIds = new Set([@json($newsDetails->news_id)]);
 
-        const loadArticle = (direction, currentArticleId = null) => {
-            if (isLoading) return;
+        function updateMetadata(meta) {
+            if (meta?.title) document.title = meta.title;
+            if (meta?.description) document.querySelector('meta[name="description"]')?.setAttribute('content', meta
+                .description);
+            if (meta?.keywords) document.querySelector('meta[property="keywords"]')?.setAttribute('content', meta.keywords);
+        }
+
+        function fireGTM(articleId) {
+            if (typeof dataLayer !== 'undefined') {
+                dataLayer.push({
+                    event: 'articleScroll',
+                    articleId: articleId
+                });
+            }
+        }
+
+        function toggleLoader(show) {
+            const loader = document.getElementById('scroll-loader');
+            loader.style.display = show ? 'block' : 'none';
+        }
+
+        function loadArticle(direction, currentId) {
+            if (isLoading || !currentId) return;
             isLoading = true;
 
-            let url = (direction === 'down') ? nextArticleUrl : prevArticleUrls[currentArticleId] || null;
+            const url = direction === 'down' ? nextUrl : prevUrls[currentId] || null;
             if (!url) {
-                
+                toggleLoader(false);
                 isLoading = false;
                 return;
             }
 
             $.ajax({
-                url,
-                type: 'GET',
+                url: url,
+                method: 'GET',
+                data: {
+                    loadedIds: Array.from(loadedIds),
+                },
                 dataType: 'json',
                 success: function(data) {
-                    if (data.success && data.html) {
+                    if (data.success && data.html && !loadedIds.has(data.articleId)) {
                         const $container = $('#next-article-container');
-
                         if (direction === 'down') {
                             $container.append(data.html);
-                            nextArticleUrl = data.nextUrl || null;
-                            if (data.articleId && data.prevUrl) {
-                                prevArticleUrls[data.articleId] = data.prevUrl;
-                            }
+                            nextUrl = data.nextUrl;
                         } else {
                             const scrollTopBefore = window.scrollY;
                             $container.prepend(data.html);
-                            const newFirstArticle = document.querySelector('.articlecontent');
-                            if (newFirstArticle) {
-                                const newHeight = newFirstArticle.offsetHeight;
-                                window.scrollTo(0, scrollTopBefore + newHeight);
+                            const newFirst = document.querySelector('.articlecontent');
+                            if (newFirst) {
+                                const height = newFirst.offsetHeight;
+                                window.scrollTo(0, scrollTopBefore + height);
                             }
-                            if (data.articleId && data.prevUrl) {
-                                prevArticleUrls[data.articleId] = data.prevUrl;
-                            }
+                            prevUrls[data.articleId] = data.prevUrl || null; // ✅ Store new prevUrl
+
                         }
+                        loadedIds.add(data.articleId);
+                        // if (data.articleId) {
+                        //     loadedIds.add(data.articleId);
+                        //     prevUrls[data.articleId] = data.prevUrl || null;
+                        // }
 
                         if (data.newUrl) {
                             history.pushState(null, '', data.newUrl);
                         }
 
-                        updateMetadata(data);
-                        observeArticles(); // re-attach observers
+                        updateMetadata(data.meta);
+                        fireGTM(data.articleId);
+                        observeArticles();
                     }
                 },
-                complete: function() {
+                complete: () => {
                     isLoading = false;
+                    toggleLoader(false);
                 }
-            });
-        };
 
-        const observeArticles = () => {
+            });
+        }
+
+        function observeArticles() {
             const articles = document.querySelectorAll('.articlecontent');
-            articleTopObserver.disconnect();
-            articleBottomObserver.disconnect();
+            topObserver.disconnect();
+            bottomObserver.disconnect();
 
             articles.forEach((article, index) => {
                 const ps = article.querySelectorAll('p');
                 if (ps.length) {
-                    if (index !== 0) articleTopObserver.observe(ps[0]);
-                    if (index === articles.length - 1) articleBottomObserver.observe(ps[ps.length - 1]);
+                    if (index === 0) topObserver.observe(ps[0]);
+                    if (index === articles.length - 1) bottomObserver.observe(ps[ps.length - 1]);
                 }
             });
-        };
+        }
 
-        const articleTopObserver = new IntersectionObserver(entries => {
+        const topObserver = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const article = entry.target.closest('.articlecontent');
-                    const currentId = article?.dataset?.articleId;
-                    if (currentId) loadArticle('up', currentId);
+                    const id = article?.dataset.articleId;
+                    if (id && hasScrolledDown) {
+                        loadArticle('up', id);
+                    }
                 }
             });
         }, {
             threshold: 1
         });
 
-        const articleBottomObserver = new IntersectionObserver(entries => {
+        const bottomObserver = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    loadArticle('down', currentId);
+                    const article = entry.target.closest('.articlecontent');
+                    const id = article?.dataset.articleId;
+                    if (id) {
+                        hasScrolledDown = true; // ✅ Mark that user has scrolled down
+                        loadArticle('down', id);
+                    }
                 }
             });
         }, {
@@ -442,76 +565,567 @@
         document.addEventListener('DOMContentLoaded', () => {
             observeArticles();
         });
-    </script>
-
-
-
+    </script> --}}
+    {{-- 20-5-25 running code is start here --}}
+    @php
+        $currentId = $newsDetails->news_id;
+        $categoryId = $newsDetails->cat_id ?? $newsDetails->category[0]->id;
+        $locale = app()->getLocale();
+        $nextUrl = route('insights.nextArticle', [
+            'lang' => $locale,
+            'currentId' => $currentId,
+            'categoryId' => $categoryId,
+            'direction' => 'down',
+        ]);
+        $prevUrl = route('insights.prevArticle', [
+            'lang' => $locale,
+            'currentId' => $currentId,
+            'categoryId' => $categoryId,
+            'direction' => 'up',
+        ]);
+    @endphp
     {{-- <script>
         let isLoading = false;
-        let nextArticleUrl = @json(route('insights.nextArticle', $nextArticleParams));
-        let isFirstArticle = true;
+        let hasScrolledDown = false;
 
-        const loadNextArticle = () => {
-            if (isLoading || !nextArticleUrl) return;
-            isLoading = true;
+        let nextUrl = @json($nextUrl);
+        let loadedIds = new Set([@json($newsDetails->news_id)]);
+        let currentActiveArticleId = null;
 
-            $.ajax({
-                url: nextArticleUrl,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    if (data.success && data.html) {
-                        $('#next-article-container').append(data.html);
-                        nextArticleUrl = data.nextUrl || null;
-
-                        if (data.newUrl) {
-                            console.log("New URL to update:", data.newUrl); // Debugging log
-                            // Update the browser URL without reloading the page
-                            history.pushState(null, '', data.newUrl);
-                        }
-                        // Set the flag to false after the first article
-                        isFirstArticle = false;
-                        observeLastParagraph(); // 👈 VERY IMPORTANT
-
-                    }
+        // Store metadata + URL for each article
+        let articleMetaMap = {
+            [@json($newsDetails->news_id)]: {
+                meta: {
+                    title: @json($newsDetails->meta_title),
+                    description: @json($newsDetails->meta_description),
+                    keywords: @json($newsDetails->meta_keywords)
                 },
-                error: function(xhr, status, error) {
-                    console.error('AJAX error:', error, xhr.responseText);
-                },
-                complete: function() {
-                    isLoading = false;
-                }
-            });
+                url: window.location.href
+            }
         };
 
-        const lastParagraphObserver = new IntersectionObserver(entries => {
+        function updateMetadata(meta) {
+            if (meta?.title) document.title = meta.title;
+            if (meta?.description) document.querySelector('meta[name="description"]')?.setAttribute('content', meta
+                .description);
+            if (meta?.keywords) document.querySelector('meta[name="keywords"]')?.setAttribute('content', meta.keywords);
+        }
+
+        function fireGTM(articleId) {
+            if (typeof dataLayer !== 'undefined') {
+                dataLayer.push({
+                    event: 'articleScroll',
+                    articleId: articleId
+                });
+            }
+        }
+
+        function toggleLoader(show) {
+            const loader = document.getElementById('loading');
+            if (loader) loader.style.display = show ? 'block' : 'none';
+        }
+
+        function loadArticle(currentId) {
+            if (isLoading || !nextUrl) return;
+            isLoading = true;
+            // $('#loading').show();
+            toggleLoader(true); // ✅ Show fullscreen loader
+
+
+            $.ajax({
+                url: nextUrl,
+                method: 'GET',
+                data: {
+                    loadedIds: Array.from(loadedIds),
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.success && data.html && !loadedIds.has(data.articleId)) {
+                        const $container = $('#next-article-container');
+                        $container.append(data.html);
+                        nextUrl = data.nextUrl;
+
+                        loadedIds.add(data.articleId);
+
+                        // Store meta + URL
+                        if (data.articleId && data.meta && data.newUrl) {
+                            articleMetaMap[data.articleId] = {
+                                meta: data.meta,
+                                url: data.newUrl
+                            };
+                        }
+
+                        updateMetadata(data.meta);
+                        history.pushState(null, '', data.newUrl);
+                        fireGTM(data.articleId);
+                        observeArticles();
+                    }
+                },
+                complete: () => {
+                    isLoading = false;
+                    toggleLoader(false); // ✅ Hide fullscreen loader
+                }
+            });
+        }
+
+        // ✅ Observer for activating article (both up/down)
+        const articleObserver = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    loadNextArticle();
+                    const article = entry.target.closest('.articlecontent');
+                    const articleId = article?.dataset.articleId;
+
+                    if (articleId && articleId !== currentActiveArticleId) {
+                        currentActiveArticleId = articleId;
+
+                        const data = articleMetaMap[articleId];
+                        if (data) {
+                            updateMetadata(data.meta);
+                            history.pushState(null, '', data.url);
+                            fireGTM(articleId);
+                        }
+                    }
                 }
             });
         }, {
-            threshold: 1.0
+            threshold: 0.75
         });
 
-        function observeLastParagraph() {
-            const paragraphs = document.querySelectorAll('.articlecontent p');
-            if (paragraphs.length) {
-                lastParagraphObserver.disconnect(); // disconnect old
-                lastParagraphObserver.observe(paragraphs[paragraphs.length - 1]); // observe last
+        const bottomObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const article = entry.target.closest('.articlecontent');
+                    const id = article?.dataset.articleId;
+                    if (id) {
+                        hasScrolledDown = true;
+                        loadArticle(id); // Only loads NEXT article
+                    }
+                }
+            });
+        }, {
+            threshold: 1
+        });
+
+        function observeArticles() {
+            const articles = document.querySelectorAll('.articlecontent');
+            articleObserver.disconnect();
+            bottomObserver.disconnect();
+
+            articles.forEach((article, index) => {
+                const ps = article.querySelectorAll('p');
+                if (ps.length) {
+                    articleObserver.observe(ps[ps.length - 1]); // Observe bottom of each article
+                    if (index === articles.length - 1) {
+                        bottomObserver.observe(ps[ps.length - 1]); // Only last one triggers load
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            observeArticles();
+        });
+    </script> --}}
+
+    {{-- latest code running state --}}
+    {{-- <script>
+        let isLoading = false;
+        let hasScrolledDown = false;
+
+        let nextUrl = @json($nextUrl);
+        let loadedIds = new Set([@json($newsDetails->news_id)]);
+        let currentActiveArticleId = null;
+
+        let articleMetaMap = {
+            [@json($newsDetails->news_id)]: {
+                meta: {
+                    title: @json($newsDetails->meta_title),
+                    description: @json($newsDetails->meta_description),
+                    keywords: @json($newsDetails->meta_keywords)
+                },
+                url: window.location.href
+            }
+        };
+
+        function updateMetadata(meta) {
+            if (meta?.title) document.title = meta.title;
+            if (meta?.description) document.querySelector('meta[name="description"]')?.setAttribute('content', meta
+                .description);
+            if (meta?.keywords) document.querySelector('meta[name="keywords"]')?.setAttribute('content', meta.keywords);
+        }
+
+        function fireGTM(articleId) {
+            if (typeof dataLayer !== 'undefined') {
+                dataLayer.push({
+                    event: 'articleScroll',
+                    articleId: articleId
+                });
             }
         }
-        $(document).ready(function() {
-            observeLastParagraph(); // initial page only
+
+        function toggleLoader(show) {
+            const loader = document.getElementById('loading');
+            if (loader) loader.style.display = show ? 'block' : 'none';
+        }
+
+        function loadArticle(currentId) {
+            if (isLoading || !nextUrl) return;
+            isLoading = true;
+            toggleLoader(true);
+
+            $.ajax({
+                url: nextUrl,
+                method: 'GET',
+                data: {
+                    loadedIds: Array.from(loadedIds),
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.success && data.html && !loadedIds.has(data.articleId)) {
+                        const $container = $('#next-article-container');
+                        $container.append(data.html);
+                        nextUrl = data.nextUrl;
+
+                        loadedIds.add(data.articleId);
+
+                        if (data.articleId && data.meta && data.newUrl) {
+                            articleMetaMap[data.articleId] = {
+                                meta: data.meta,
+                                url: data.newUrl
+                            };
+                        }
+
+                        updateMetadata(data.meta);
+                        history.pushState(null, '', data.newUrl);
+                        fireGTM(data.articleId);
+                        observeArticles();
+                    }
+                },
+                complete: () => {
+                    isLoading = false;
+                    toggleLoader(false);
+                }
+            });
+        }
+
+        const articleObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const article = entry.target.closest('.articlecontent');
+                    const articleId = article?.dataset.articleId;
+                    if (articleId) {
+                        const isNew = articleId !== currentActiveArticleId;
+                        currentActiveArticleId = articleId;
+
+                        const data = articleMetaMap[articleId];
+                        if (data) {
+                            updateMetadata(data.meta);
+                            if (isNew || articleId == @json($newsDetails->news_id)) {
+                                history.pushState(null, '', data.url);
+                                fireGTM(articleId);
+                            }
+                        }
+                    }
+                }
+            });
+        }, {
+            threshold: 0.75
         });
 
-        // $(document).ready(function() {
-        //     const paragraphs = $('.articlecontent p');
-        //     if (paragraphs.length) {
-        //         lastParagraphObserver.observe(paragraphs[paragraphs.length - 1]);
-        //     }
-        // });
+        const bottomObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const article = entry.target.closest('.articlecontent');
+                    const id = article?.dataset.articleId;
+                    if (id) {
+                        hasScrolledDown = true;
+                        loadArticle(id);
+                    }
+                }
+            });
+        }, {
+            threshold: 1
+        });
+        const nextTriggerObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const article = entry.target.closest('.articlecontent');
+                    const articleId = article?.dataset.articleId;
+
+                    if (articleId && articleId !== currentActiveArticleId) {
+                        currentActiveArticleId = articleId;
+
+                        const data = articleMetaMap[articleId];
+                        if (data) {
+                            updateMetadata(data.meta);
+                            history.pushState(null, '', data.url);
+                            fireGTM(articleId);
+                        }
+                    }
+                }
+            });
+        }, {
+            threshold: 0.9
+        });
+
+        // Scroll-up observer for first paragraph of each article
+        const topParagraphObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const article = entry.target.closest('.articlecontent');
+                    const articleId = article?.dataset.articleId;
+
+                    if (articleId && articleId !== currentActiveArticleId) {
+                        currentActiveArticleId = articleId;
+
+                        const data = articleMetaMap[articleId];
+                        if (data) {
+                            updateMetadata(data.meta);
+                            history.pushState(null, '', data.url);
+                            fireGTM(articleId);
+                        }
+                    }
+                }
+            });
+        }, {
+            threshold: 1
+        });
+
+
+        function observeArticles() {
+            const articles = document.querySelectorAll('.articlecontent');
+            articleObserver.disconnect();
+            bottomObserver.disconnect();
+            topParagraphObserver.disconnect();
+            nextTriggerObserver.disconnect();
+
+            articles.forEach((article, index) => {
+                const ps = article.querySelectorAll('p');
+                if (ps.length) {
+                    const firstP = ps[0];
+                    const lastP = ps[ps.length - 1];
+
+                    // For regular active article observation
+                    articleObserver.observe(lastP);
+
+                    // Scroll down: observe .article-next inside this article
+                    const nextDiv = article.querySelector('.article-next');
+                    if (nextDiv) nextTriggerObserver.observe(nextDiv);
+
+                    // Scroll up: observe first paragraph
+                    topParagraphObserver.observe(firstP);
+
+                    // Last article triggers loading next article
+                    if (index === articles.length - 1) {
+                        bottomObserver.observe(lastP);
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            observeArticles();
+        });
     </script> --}}
+    <script>
+        let isLoading = false;
+        let hasScrolledDown = false;
+
+        let nextUrl = @json($nextUrl);
+        let loadedIds = new Set([@json($newsDetails->news_id)]);
+        let currentActiveArticleId = null;
+
+        let articleMetaMap = {
+            [@json($newsDetails->news_id)]: {
+                meta: {
+                    title: @json($newsDetails->title),
+                    description: @json($newsDetails->shortDesc),
+                    keywords: @json($newsDetails->shortDesc)
+                },
+                url: window.location.href
+            }
+        };
+
+        function updateMetadata(meta) {
+            if (meta?.title) document.title = meta.title;
+            if (meta?.description) document.querySelector('meta[name="description"]')?.setAttribute('content', meta
+                .description);
+            if (meta?.keywords) document.querySelector('meta[name="keywords"]')?.setAttribute('content', meta.keywords);
+        }
+
+        function fireGTM(articleId) {
+            if (typeof dataLayer !== 'undefined') {
+                dataLayer.push({
+                    event: 'articleScroll',
+                    articleId: articleId
+                });
+            }
+        }
+
+        function toggleLoader(show) {
+            const loader = document.getElementById('loading');
+            if (loader) loader.style.display = show ? 'block' : 'none';
+        }
+
+        function loadArticle(currentId) {
+            if (isLoading || !nextUrl) return;
+            isLoading = true;
+            toggleLoader(true);
+
+            $.ajax({
+                url: nextUrl,
+                method: 'GET',
+                data: {
+                    loadedIds: Array.from(loadedIds),
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.success && data.html && !loadedIds.has(data.articleId)) {
+                        const $container = $('#next-article-container');
+                        $container.append(data.html);
+                        nextUrl = data.nextUrl;
+
+                        loadedIds.add(data.articleId);
+
+                        if (data.articleId && data.meta && data.newUrl) {
+                            articleMetaMap[data.articleId] = {
+                                meta: data.meta,
+                                url: data.newUrl
+                            };
+                        }
+
+                        updateMetadata(data.meta);
+                        history.pushState(null, '', data.newUrl);
+                        fireGTM(data.articleId);
+                        observeArticles();
+                    }
+                },
+                complete: () => {
+                    isLoading = false;
+                    toggleLoader(false);
+                }
+            });
+        }
+
+        const articleObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const article = entry.target.closest('.articlecontent');
+                    const articleId = article?.dataset.articleId;
+                    if (articleId) {
+                        const isNew = articleId !== currentActiveArticleId;
+                        currentActiveArticleId = articleId;
+
+                        const data = articleMetaMap[articleId];
+                        if (data) {
+                            updateMetadata(data.meta);
+                            if (isNew || articleId == @json($newsDetails->news_id)) {
+                                history.pushState(null, '', data.url);
+                                fireGTM(articleId);
+                            }
+                        }
+                    }
+                }
+            });
+        }, {
+            threshold: 0.75
+        });
+
+        const bottomObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const article = entry.target.closest('.articlecontent');
+                    const id = article?.dataset.articleId;
+                    if (id) {
+                        hasScrolledDown = true;
+                        loadArticle(id);
+                    }
+                }
+            });
+        }, {
+            threshold: 1
+        });
+        const nextTriggerObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const article = entry.target.closest('.articlecontent');
+                    const articleId = article?.dataset.articleId;
+
+                    if (articleId && articleId !== currentActiveArticleId) {
+                        currentActiveArticleId = articleId;
+
+                        const data = articleMetaMap[articleId];
+                        if (data) {
+                            updateMetadata(data.meta);
+                            history.pushState(null, '', data.url);
+                            fireGTM(articleId);
+                        }
+                    }
+                }
+            });
+        }, {
+            threshold: 0.9
+        });
+
+        // Scroll-up observer for first paragraph of each article
+        const topParagraphObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const article = entry.target.closest('.articlecontent');
+                    const articleId = article?.dataset.articleId;
+
+                    if (articleId && articleId !== currentActiveArticleId) {
+                        currentActiveArticleId = articleId;
+
+                        const data = articleMetaMap[articleId];
+                        if (data) {
+                            updateMetadata(data.meta);
+                            history.pushState(null, '', data.url);
+                            fireGTM(articleId);
+                        }
+                    }
+                }
+            });
+        }, {
+            threshold: 1
+        });
+
+
+        function observeArticles() {
+            const articles = document.querySelectorAll('.articlecontent');
+            articleObserver.disconnect();
+            bottomObserver.disconnect();
+            topParagraphObserver.disconnect();
+            nextTriggerObserver.disconnect();
+
+            articles.forEach((article, index) => {
+                const ps = article.querySelectorAll('p');
+                if (ps.length) {
+                    const firstP = ps[0];
+                    const lastP = ps[ps.length - 1];
+
+                    // For regular active article observation
+                    articleObserver.observe(lastP);
+
+                    // Scroll down: observe .article-next inside this article
+                    const nextDiv = article.querySelector('.article-next');
+                    if (nextDiv) nextTriggerObserver.observe(nextDiv);
+
+                    // Scroll up: observe first paragraph
+                    topParagraphObserver.observe(firstP);
+
+                    // Last article triggers loading next article
+                    if (index === articles.length - 1) {
+                        bottomObserver.observe(lastP);
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            observeArticles();
+        });
+    </script>
 
 
 @endsection
