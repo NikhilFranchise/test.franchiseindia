@@ -1640,7 +1640,7 @@ class InsightsController extends Controller
 
         // Get the next or previous article
         $article = $baseQuery->first();
-        dd($article);
+        // dd($article);
         if (!$article) {
             return response()->json(['success' => false, 'message' => 'No article available']);
         }
