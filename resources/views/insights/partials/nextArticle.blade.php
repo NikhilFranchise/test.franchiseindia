@@ -39,6 +39,7 @@
         <div class="col-md-12">
             <hr class="similar-article-line">
             <div class="article-next">Next Story</div>
+            <p></p>
             {{-- <div class="maininnver homeh">
                 <div class="inner-top-head">
                     <div class="container">
