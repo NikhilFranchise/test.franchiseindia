@@ -1717,143 +1717,129 @@ class InsightsController extends Controller
 
     // Function to fetch the previous article
 
-    // public function prevArticle(Request $request, $lang)
-    // {
+    public function prevArticle(Request $request, $lang)
+    {
+        $currentId = $request->get('currentId');
+        $categoryId = $request->get('categoryId');
+        $loadedIds = $request->get('loadedIds', []);
+        $locale = $lang;
 
+        app()->setLocale($locale);
+        session()->put('locale', $locale);
 
-    //     $currentId = $request->get('currentId');
-    //     $categoryId = $request->get('categoryId');
-    //     $loadedIds = $request->get('loadedIds', []);
-    //     $direction = $request->get('direction', 'up'); // 'down' or 'up'
-    //     $locale = $lang;
+        if (!$currentId || !$categoryId) {
+            return response()->json(['error' => 'Invalid parameters'], 400);
+        }
 
-    //     app()->setLocale($locale);
-    //     session()->put('locale', $locale);
+        $newsModel = $locale === 'hi' ? InsightListHindi::class : InsightList::class;
+        $tagTable = $locale === 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
+        $seoTagModel = $locale === 'hi' ? SeoTagHindi::class : SeoTag::class;
 
-    //     if (!$currentId || !$categoryId) {
-    //         return response()->json(['error' => 'Invalid parameters'], 400);
-    //     }
+        $currentArticle = $newsModel::where('news_id', $currentId)->first();
+        if (!$currentArticle) {
+            return response()->json(['error' => 'Current article not found'], 404);
+        }
 
-    //     $newsModel = $locale === 'hi' ? InsightListHindi::class : InsightList::class;
-    //     $tagTable = $locale === 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
-    //     $seoTagModel = $locale === 'hi' ? SeoTagHindi::class : SeoTag::class;
+        // Determine effective date
+        if (is_null($currentArticle->published_date)) {
+            $currentEffectiveDate = $currentArticle->created_at;
+        } elseif ($currentArticle->published_date == $currentArticle->created_at) {
+            $currentEffectiveDate = $currentArticle->created_at;
+        } elseif ($currentArticle->published_date > $currentArticle->created_at) {
+            $currentEffectiveDate = $currentArticle->published_date;
+        } else {
+            $currentEffectiveDate = $currentArticle->created_at;
+        }
 
-    //     $currentArticle = $newsModel::where('news_id', $currentId)->first();
-    //     if (!$currentArticle) {
-    //         return response()->json(['error' => 'Current article not found'], 404);
-    //     }
+        // CASE expression
+        $caseExpr = "CASE 
+        WHEN published_date IS NULL THEN created_at
+        WHEN published_date = created_at THEN created_at
+        WHEN published_date > created_at THEN published_date
+        ELSE created_at 
+    END";
 
-    //     // Determine effective date
-    //     if (is_null($currentArticle->published_date)) {
-    //         $currentEffectiveDate = $currentArticle->created_at;
-    //     } elseif ($currentArticle->published_date == $currentArticle->created_at) {
-    //         $currentEffectiveDate = $currentArticle->created_at;
-    //     } elseif ($currentArticle->published_date > $currentArticle->created_at) {
-    //         $currentEffectiveDate = $currentArticle->published_date;
-    //     } else {
-    //         $currentEffectiveDate = $currentArticle->created_at;
-    //     }
+        // Query to get the closest previous article
+        $query = $newsModel::with(['category', 'Subcategory', 'author'])
+            ->where('cat_id', $categoryId)
+            ->where('status', 1)
+            ->whereNotIn('news_id', $loadedIds)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->whereNotNull('image')
+            ->whereNotNull('cat_id')
+            ->whereRaw("$caseExpr < ?", [$currentEffectiveDate])
+            ->orderByRaw("$caseExpr desc");
 
-    //     // CASE expression
-    //     $caseExpr = "CASE 
-    //     WHEN published_date IS NULL THEN created_at
-    //     WHEN published_date = created_at THEN created_at
-    //     WHEN published_date > created_at THEN published_date
-    //     ELSE created_at END";
+        $article = $query->first();
 
-    //     // Query to get the closest previous article
-    //     $baseQuery = $newsModel::with(['category', 'Subcategory', 'author'])
-    //         ->where('cat_id', $categoryId)
-    //         ->where('status', 1)
-    //         ->whereNotIn('news_id', $loadedIds)
-    //         ->whereNotIn('news_type', ['ri', 'ir']);
-    //     $article = (clone $baseQuery)
-    //         ->whereRaw("$caseExpr > ?", [$currentEffectiveDate])
-    //         ->orderByRaw("$caseExpr desc")
-    //         ->first();
+        if (!$article) {
+            return response()->json(['success' => false, 'message' => 'No previous article available']);
+        }
 
-    //     $article = $baseQuery->first();
+        // Optional: SEO tags for analytics
+        $associatedTags = $tagTable::where('content_id', $currentId)
+            ->where('content_type', 2)
+            ->pluck('tag_id');
 
-    //     // Fallback: older articles (asc)
-    //     if (!$article) {
-    //         $article = (clone $baseQuery)
-    //             ->whereRaw("$caseExpr < ?", [$currentEffectiveDate])
-    //             ->orderByRaw("$caseExpr asc")
-    //             ->first();
-    //     }
+        $seoTagModel::whereIn('tag_id', $associatedTags)
+            ->select('tag_id', 'name')
+            ->distinct()
+            ->get();
 
+        // Franchise match
+        $franchiseData = FranchiseHelper::matchFranchisesByTitle($article->title);
 
+        // Trending & Latest
+        $trendingArticles = $newsModel::with(['category', 'Subcategory'])
+            ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
+            ->withEffectiveDate()
+            ->where('status', 1)
+            ->where('cat_id', $categoryId)
+            ->whereNot('news_id', $currentId)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByEffectiveDate('desc')
+            ->take(5)
+            ->get();
 
-    //     if (!$article) {
-    //         return response()->json(['success' => false, 'message' => 'No previous article available']);
-    //     }
+        $latestArticles = $newsModel::with(['category', 'Subcategory'])
+            ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
+            ->withEffectiveDate()
+            ->where('status', 1)
+            ->whereNot('news_id', $currentId)
+            ->where('insight_type', 'Article')
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByEffectiveDate('desc')
+            ->take(5)
+            ->get();
 
-    //     // Optional: SEO tags for analytics
-    //     $associatedTags = $tagTable::where('content_id', $currentId)
-    //         ->where('content_type', 2)
-    //         ->pluck('tag_id');
+        // Render view
+        $html = view('insights.partials.nextArticle', [
+            'nextArticle' => $article,
+            'franchiseData' => $franchiseData,
+            'trendingArticles' => $trendingArticles,
+            'latestArticles' => $latestArticles,
+            'lang' => $lang,
+        ])->render();
 
-    //     $seoTagModel::whereIn('tag_id', $associatedTags)
-    //         ->select('tag_id', 'name')
-    //         ->distinct()
-    //         ->get();
-
-    //     // Franchise match
-    //     $franchiseData = FranchiseHelper::matchFranchisesByTitle($article->title);
-
-    //     // Trending & Latest
-    //     $trendingArticles = $newsModel::with(['category', 'Subcategory'])
-    //         ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
-    //         ->withEffectiveDate()
-    //         ->where('status', 1)
-    //         ->where('cat_id', $categoryId)
-    //         ->whereNot('news_id', $currentId)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->orderByEffectiveDate('desc')
-    //         ->take(5)
-    //         ->get();
-
-    //     $latestArticles = $newsModel::with(['category', 'Subcategory'])
-    //         ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
-    //         ->withEffectiveDate()
-    //         ->where('status', 1)
-    //         ->whereNot('news_id', $currentId)
-    //         ->where('insight_type', 'Article')
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->orderByEffectiveDate('desc')
-    //         ->take(5)
-    //         ->get();
-
-    //     // Render view
-    //     $html = view('insights.partials.nextArticle', [
-    //         'nextArticle' => $article,
-    //         'franchiseData' => $franchiseData,
-    //         'trendingArticles' => $trendingArticles,
-    //         'latestArticles' => $latestArticles,
-    //         'lang' => $lang,
-
-    //     ])->render();
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'html' => $html,
-    //         'newUrl' => route('insights.view', [
-    //             'insight_type' => strtolower($article->insight_type),
-    //             'slug' => $article->slug,
-    //             'id' => $article->news_id,
-    //         ]),
-    //         'prevUrl' => route('insights.prevArticle', [
-    //             'lang' => $lang,
-    //             'currentId' => $article->news_id,
-    //             'categoryId' => $categoryId,
-    //             'direction' => $direction
-    //         ]),
-    //         'articleId' => $article->news_id,
-    //         'meta' => [
-    //             'title' => $article->title,
-    //             'description' => $article->shortDesc,
-    //             'keywords' => $article->shortDesc,
-    //         ],
-    //     ]);
-    // }
+        return response()->json([
+            'success' => true,
+            'html' => $html,
+            'newUrl' => route('insights.view', [
+                'insight_type' => strtolower($article->insight_type),
+                'slug' => $article->slug,
+                'id' => $article->news_id,
+            ]),
+            'prevUrl' => route('insights.prevArticle', [
+                'lang' => $lang,
+                'currentId' => $article->news_id,
+                'categoryId' => $categoryId,
+            ]),
+            'articleId' => $article->news_id,
+            'meta' => [
+                'title' => $article->title,
+                'description' => $article->shortDesc,
+                'keywords' => $article->shortDesc,
+            ],
+        ]);
+    }
 }

@@ -35,83 +35,7 @@
 @section('width', $width)
 @section('height', $height)
 @section('content')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <style>
-        .loadman {
-            z-index: -999;
-            min-height: 100%;
-            width: 100%;
-            height: auto;
-            position: fixed;
-            top: 0;
-            left: 0;
-            /* background: rgba(15, 9, 9, 0.7); */
-            opacity: 1;
-            z-index: 1;
-        }
-
-        .loadingimg {
-            width: 300px;
-            border: 1px solid #dfdfdf;
-            height: 150px;
-            margin-left: auto;
-            margin-right: auto;
-            top: 50%;
-            border-radius: 4px;
-            z-index: 2;
-            position: relative;
-            margin-top: 30%;
-            padding: 10px;
-            /* background: #f3f3f3; */
-            opacity: 0.5;
-            -webkit-box-shadow: 0px 2px 5px rgba(0, 0, 0, .1);
-            -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, .1);
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, .1);
-        }
-
-        .loadingimg img {
-            text-align: center;
-            display: block;
-            margin: 10px auto;
-        }
-
-        .limg {
-            margin-top: 10px;
-        }
-
-        .loader {
-            border: 10px solid #f3f3f3;
-            border-top: 16px solid #202020;
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            animation: spin 2s linear infinite;
-            z-index: 2;
-            position: relative;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .thanku {
-            display: table;
-            width: 100%;
-            height: 100vh;
-        }
-
-        .tbl-cell {
-            display: table-cell;
-            vertical-align: middle;
-        }
-    </style>
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"> --}}
     <div class="maininnver homeh">
         <div class="inner-top-head">
             <div class="container">
@@ -401,172 +325,51 @@
         </div>
         <!-- New article will be loaded here -->
         <div id="next-article-container" class="next-article-container"></div>
-        <div class="loadman" id="loading" style="display:none">
-            <div class="thanku">
-                <div class="tbl-cell">
-                    <div class="loader"></div>
-                </div>
-            </div>
-        </div>
-
     </div>
+    <style>
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Black background with opacity */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            /* Ensure it appears above other content */
+        }
+
+        /* Spinner styles */
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid white;
+            /* Color of the spinning bar */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Spinner animation */
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <div id="loader" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
     @include('layout.insights.magblock')
-
-    {{-- 20-5-25 running code is start here --}}
-    {{-- @php
-        $currentId = $newsDetails->news_id;
-        $categoryId = $newsDetails->category[0]->id ?? $newsDetails->cat_id;
-        $locale = app()->getLocale();
-        $nextUrl = route('insights.nextArticle', [
-            'lang' => $locale,
-            'currentId' => $currentId,
-            'categoryId' => $categoryId,
-            'direction' => 'down',
-        ]);
-        $prevUrl = route('insights.prevArticle', [
-            'lang' => $locale,
-            'currentId' => $currentId,
-            'categoryId' => $categoryId,
-            'direction' => 'up',
-        ]);
-    @endphp
-
-    <script>
-        let isLoading = false;
-        let hasScrolledDown = false;
-        let nextUrl = @json($nextUrl);
-        let prevUrls = {
-            @json($currentId): @json($prevUrl)
-        };
-        let loadedIds = new Set([@json($newsDetails->news_id)]);
-
-        function updateMetadata(meta) {
-            if (meta?.title) document.title = meta.title;
-            if (meta?.description) document.querySelector('meta[name="description"]')?.setAttribute('content', meta
-                .description);
-            if (meta?.keywords) document.querySelector('meta[property="keywords"]')?.setAttribute('content', meta.keywords);
-        }
-
-        function fireGTM(articleId) {
-            if (typeof dataLayer !== 'undefined') {
-                dataLayer.push({
-                    event: 'articleScroll',
-                    articleId: articleId
-                });
-            }
-        }
-
-        function toggleLoader(show) {
-            const loader = document.getElementById('scroll-loader');
-            loader.style.display = show ? 'block' : 'none';
-        }
-
-        function loadArticle(direction, currentId) {
-            if (isLoading || !currentId) return;
-            isLoading = true;
-
-            const url = direction === 'down' ? nextUrl : prevUrls[currentId] || null;
-            if (!url) {
-                toggleLoader(false);
-                isLoading = false;
-                return;
-            }
-
-            $.ajax({
-                url: url,
-                method: 'GET',
-                data: {
-                    loadedIds: Array.from(loadedIds),
-                },
-                dataType: 'json',
-                success: function(data) {
-                    if (data.success && data.html && !loadedIds.has(data.articleId)) {
-                        const $container = $('#next-article-container');
-                        if (direction === 'down') {
-                            $container.append(data.html);
-                            nextUrl = data.nextUrl;
-                        } else {
-                            const scrollTopBefore = window.scrollY;
-                            $container.prepend(data.html);
-                            const newFirst = document.querySelector('.articlecontent');
-                            if (newFirst) {
-                                const height = newFirst.offsetHeight;
-                                window.scrollTo(0, scrollTopBefore + height);
-                            }
-                            prevUrls[data.articleId] = data.prevUrl || null; // ✅ Store new prevUrl
-
-                        }
-                        loadedIds.add(data.articleId);
-                        // if (data.articleId) {
-                        //     loadedIds.add(data.articleId);
-                        //     prevUrls[data.articleId] = data.prevUrl || null;
-                        // }
-
-                        if (data.newUrl) {
-                            history.pushState(null, '', data.newUrl);
-                        }
-
-                        updateMetadata(data.meta);
-                        fireGTM(data.articleId);
-                        observeArticles();
-                    }
-                },
-                complete: () => {
-                    isLoading = false;
-                    toggleLoader(false);
-                }
-
-            });
-        }
-
-        function observeArticles() {
-            const articles = document.querySelectorAll('.articlecontent');
-            topObserver.disconnect();
-            bottomObserver.disconnect();
-
-            articles.forEach((article, index) => {
-                const ps = article.querySelectorAll('p');
-                if (ps.length) {
-                    if (index === 0) topObserver.observe(ps[0]);
-                    if (index === articles.length - 1) bottomObserver.observe(ps[ps.length - 1]);
-                }
-            });
-        }
-
-        const topObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const article = entry.target.closest('.articlecontent');
-                    const id = article?.dataset.articleId;
-                    if (id && hasScrolledDown) {
-                        loadArticle('up', id);
-                    }
-                }
-            });
-        }, {
-            threshold: 1
-        });
-
-        const bottomObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const article = entry.target.closest('.articlecontent');
-                    const id = article?.dataset.articleId;
-                    if (id) {
-                        hasScrolledDown = true; // ✅ Mark that user has scrolled down
-                        loadArticle('down', id);
-                    }
-                }
-            });
-        }, {
-            threshold: 1
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            observeArticles();
-        });
-    </script> --}}
-    {{-- 20-5-25 running code is start here --}}
     @php
         $currentId = $newsDetails->news_id;
         $categoryId = $newsDetails->cat_id ?? $newsDetails->category[0]->id;
@@ -577,156 +380,8 @@
             'categoryId' => $categoryId,
             'direction' => 'down',
         ]);
-        $prevUrl = route('insights.prevArticle', [
-            'lang' => $locale,
-            'currentId' => $currentId,
-            'categoryId' => $categoryId,
-            'direction' => 'up',
-        ]);
+
     @endphp
-    {{-- <script>
-        let isLoading = false;
-        let hasScrolledDown = false;
-
-        let nextUrl = @json($nextUrl);
-        let loadedIds = new Set([@json($newsDetails->news_id)]);
-        let currentActiveArticleId = null;
-
-        // Store metadata + URL for each article
-        let articleMetaMap = {
-            [@json($newsDetails->news_id)]: {
-                meta: {
-                    title: @json($newsDetails->meta_title),
-                    description: @json($newsDetails->meta_description),
-                    keywords: @json($newsDetails->meta_keywords)
-                },
-                url: window.location.href
-            }
-        };
-
-        function updateMetadata(meta) {
-            if (meta?.title) document.title = meta.title;
-            if (meta?.description) document.querySelector('meta[name="description"]')?.setAttribute('content', meta
-                .description);
-            if (meta?.keywords) document.querySelector('meta[name="keywords"]')?.setAttribute('content', meta.keywords);
-        }
-
-        function fireGTM(articleId) {
-            if (typeof dataLayer !== 'undefined') {
-                dataLayer.push({
-                    event: 'articleScroll',
-                    articleId: articleId
-                });
-            }
-        }
-
-        function toggleLoader(show) {
-            const loader = document.getElementById('loading');
-            if (loader) loader.style.display = show ? 'block' : 'none';
-        }
-
-        function loadArticle(currentId) {
-            if (isLoading || !nextUrl) return;
-            isLoading = true;
-            // $('#loading').show();
-            toggleLoader(true); // ✅ Show fullscreen loader
-
-
-            $.ajax({
-                url: nextUrl,
-                method: 'GET',
-                data: {
-                    loadedIds: Array.from(loadedIds),
-                },
-                dataType: 'json',
-                success: function(data) {
-                    if (data.success && data.html && !loadedIds.has(data.articleId)) {
-                        const $container = $('#next-article-container');
-                        $container.append(data.html);
-                        nextUrl = data.nextUrl;
-
-                        loadedIds.add(data.articleId);
-
-                        // Store meta + URL
-                        if (data.articleId && data.meta && data.newUrl) {
-                            articleMetaMap[data.articleId] = {
-                                meta: data.meta,
-                                url: data.newUrl
-                            };
-                        }
-
-                        updateMetadata(data.meta);
-                        history.pushState(null, '', data.newUrl);
-                        fireGTM(data.articleId);
-                        observeArticles();
-                    }
-                },
-                complete: () => {
-                    isLoading = false;
-                    toggleLoader(false); // ✅ Hide fullscreen loader
-                }
-            });
-        }
-
-        // ✅ Observer for activating article (both up/down)
-        const articleObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const article = entry.target.closest('.articlecontent');
-                    const articleId = article?.dataset.articleId;
-
-                    if (articleId && articleId !== currentActiveArticleId) {
-                        currentActiveArticleId = articleId;
-
-                        const data = articleMetaMap[articleId];
-                        if (data) {
-                            updateMetadata(data.meta);
-                            history.pushState(null, '', data.url);
-                            fireGTM(articleId);
-                        }
-                    }
-                }
-            });
-        }, {
-            threshold: 0.75
-        });
-
-        const bottomObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const article = entry.target.closest('.articlecontent');
-                    const id = article?.dataset.articleId;
-                    if (id) {
-                        hasScrolledDown = true;
-                        loadArticle(id); // Only loads NEXT article
-                    }
-                }
-            });
-        }, {
-            threshold: 1
-        });
-
-        function observeArticles() {
-            const articles = document.querySelectorAll('.articlecontent');
-            articleObserver.disconnect();
-            bottomObserver.disconnect();
-
-            articles.forEach((article, index) => {
-                const ps = article.querySelectorAll('p');
-                if (ps.length) {
-                    articleObserver.observe(ps[ps.length - 1]); // Observe bottom of each article
-                    if (index === articles.length - 1) {
-                        bottomObserver.observe(ps[ps.length - 1]); // Only last one triggers load
-                    }
-                }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            observeArticles();
-        });
-    </script> --}}
-
     {{-- latest code running state --}}
     {{-- <script>
         let isLoading = false;
@@ -927,7 +582,9 @@
             observeArticles();
         });
     </script> --}}
-    <script>
+
+    {{-- 21-5-25 --}}
+    {{-- <script>
         let isLoading = false;
         let hasScrolledDown = false;
 
@@ -962,15 +619,10 @@
             }
         }
 
-        function toggleLoader(show) {
-            const loader = document.getElementById('loading');
-            if (loader) loader.style.display = show ? 'block' : 'none';
-        }
-
         function loadArticle(currentId) {
             if (isLoading || !nextUrl) return;
             isLoading = true;
-            toggleLoader(true);
+            $('#loader').show();
 
             $.ajax({
                 url: nextUrl,
@@ -994,15 +646,15 @@
                             };
                         }
 
-                        updateMetadata(data.meta);
-                        history.pushState(null, '', data.newUrl);
-                        fireGTM(data.articleId);
+                        // updateMetadata(data.meta);
+                        // history.pushState(null, '', data.newUrl);
+                        // fireGTM(data.articleId);
                         observeArticles();
                     }
                 },
                 complete: () => {
                     isLoading = false;
-                    toggleLoader(false);
+                    $('#loader').hide();
                 }
             });
         }
@@ -1125,7 +777,229 @@
         document.addEventListener('DOMContentLoaded', () => {
             observeArticles();
         });
+    </script> --}}
+
+    <script>
+        let isLoading = false;
+        let hasScrolledDown = false;
+
+        let nextUrl = @json($nextUrl);
+        let loadedIds = new Set([@json($newsDetails->news_id)]);
+        let currentActiveArticleId = null;
+
+        let articleMetaMap = {
+            [@json($newsDetails->news_id)]: {
+                meta: {
+                    title: @json($newsDetails->title),
+                    description: @json($newsDetails->shortDesc),
+                    keywords: @json($newsDetails->shortDesc)
+                },
+                url: window.location.href
+            }
+        };
+
+        function updateMetadata(meta) {
+            if (meta?.title) document.title = meta.title;
+            if (meta?.description) document.querySelector('meta[name="description"]')?.setAttribute('content', meta
+                .description);
+            if (meta?.keywords) document.querySelector('meta[name="keywords"]')?.setAttribute('content', meta.keywords);
+        }
+
+        function fireGTM(articleId) {
+            if (typeof dataLayer !== 'undefined') {
+                dataLayer.push({
+                    event: 'articleScroll',
+                    articleId: articleId
+                });
+            }
+        }
+
+        function loadArticle(currentId) {
+            if (isLoading || !nextUrl) return;
+            isLoading = true;
+            $('#loader').show();
+
+            $.ajax({
+                url: nextUrl,
+                method: 'GET',
+                data: {
+                    loadedIds: Array.from(loadedIds),
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.success && data.html && !loadedIds.has(data.articleId)) {
+                        const $container = $('#next-article-container');
+                        $container.append(data.html);
+                        nextUrl = data.nextUrl;
+
+                        loadedIds.add(data.articleId);
+
+                        if (data.articleId && data.meta && data.newUrl) {
+                            articleMetaMap[data.articleId] = {
+                                meta: data.meta,
+                                url: data.newUrl
+                            };
+                        }
+
+                        observeArticles();
+                    }
+                },
+                complete: () => {
+                    isLoading = false;
+                    $('#loader').hide();
+                }
+            });
+        }
+
+        const articleObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const article = entry.target.closest('.articlecontent');
+                    const articleId = article?.dataset.articleId;
+                    if (articleId) {
+                        const isNew = articleId !== currentActiveArticleId;
+                        currentActiveArticleId = articleId;
+
+                        const data = articleMetaMap[articleId];
+                        if (data) {
+                            updateMetadata(data.meta);
+                            if (isNew || articleId == @json($newsDetails->news_id)) {
+                                history.pushState(null, '', data.url);
+                                fireGTM(articleId);
+                            }
+                        }
+                    }
+                }
+            });
+        }, {
+            threshold: 0.75
+        });
+
+        const bottomObserver = new IntersectionObserver(entries => {
+            // console.log(bottomObserver + 'bottom');
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const article = entry.target.closest('.articlecontent');
+                    const id = article?.dataset.articleId;
+                    // if (id) {
+                    //     hasScrolledDown = true;
+                    //     loadArticle(id);
+                    // }
+                    if (id) {
+                        hasScrolledDown = true;
+                        loadArticle(id); // still trigger next article load
+
+                        // ✅ Also update meta, URL, GTM
+                        if (id !== currentActiveArticleId) {
+                            currentActiveArticleId = id;
+
+                            const data = articleMetaMap[id];
+                            if (data) {
+                                updateMetadata(data.meta);
+                                history.pushState(null, '', data.url);
+                                fireGTM(id);
+                            }
+                        }
+                    }
+                }
+            });
+        }, {
+            threshold: 0.5
+        });
+
+        const header = document.querySelector('header');
+        const footer = document.querySelector('footer');
+
+        const nextTriggerObserver = new IntersectionObserver(entries => {
+            // console.log(nextTriggerObserver + 'nextTrigger');
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const trigger = entry.target;
+                    const article = trigger.closest('.articlecontent');
+                    const articleId = article?.dataset.articleId;
+
+                    if (!articleId || articleId === currentActiveArticleId) return;
+
+                    const data = articleMetaMap[articleId];
+                    if (!data) return;
+
+                    const triggerRect = trigger.getBoundingClientRect();
+                    const headerRect = header?.getBoundingClientRect();
+                    const footerRect = footer?.getBoundingClientRect();
+
+                    const intersectsHeader = headerRect && triggerRect.top >= headerRect.top && triggerRect
+                        .bottom <= headerRect.bottom;
+                    const intersectsFooter = footerRect && triggerRect.top >= footerRect.top && triggerRect
+                        .bottom <= footerRect.bottom;
+                    if (intersectsHeader || intersectsFooter) {
+                        currentActiveArticleId = articleId;
+                        updateMetadata(data.meta);
+                        history.pushState(null, '', data.url);
+                        fireGTM(articleId);
+                    }
+                }
+            });
+        }, {
+            threshold: 0.5
+        });
+
+        const topParagraphObserver = new IntersectionObserver(entries => {
+            // console.log(topParagraphObserver + 'topPara');
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const article = entry.target.closest('.articlecontent');
+                    // console.log(article);
+                    const articleId = article?.dataset.articleId;
+
+                    if (articleId && articleId !== currentActiveArticleId) {
+                        currentActiveArticleId = articleId;
+
+                        const data = articleMetaMap[articleId];
+                        console.log('changing data here:', articleMetaMap[articleId]);
+                        if (data) {
+                            updateMetadata(data.meta);
+                            history.pushState(null, '', data.url);
+                            fireGTM(articleId);
+                        }
+                    }
+                }
+            });
+        }, {
+            threshold: 1
+        });
+
+        function observeArticles() {
+            const articles = document.querySelectorAll('.articlecontent');
+            articleObserver.disconnect();
+            bottomObserver.disconnect();
+            topParagraphObserver.disconnect();
+            nextTriggerObserver.disconnect();
+
+            articles.forEach((article, index) => {
+                const ps = article.querySelectorAll('p');
+                if (ps.length) {
+                    const firstP = ps[0];
+                    const lastP = ps[ps.length - 1];
+                    articleObserver.observe(lastP);
+
+                    const nextDiv = article.querySelector('.article-next');
+                    // console.log(nextDiv + 'nextDiv');
+                    if (nextDiv) nextTriggerObserver.observe(nextDiv);
+
+                    topParagraphObserver.observe(firstP);
+
+                    if (index === articles.length - 1) {
+                        bottomObserver.observe(lastP);
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            observeArticles();
+        });
     </script>
+
 
 
 @endsection

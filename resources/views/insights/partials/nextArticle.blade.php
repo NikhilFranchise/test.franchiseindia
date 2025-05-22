@@ -25,23 +25,37 @@
     $height = $imageDetails[1] ? $imageDetails[1] : 0;
     $locale = App::getLocale();
     $baseUrl = Config('constants.MainDomain') . "/insights/$locale/";
-    $newsUrl = $baseUrl . strtolower($nextArticle->insight_type) . '/' . $nextArticle->slug . '.' . $nextArticle->news_id;
+    $newsUrl =
+        $baseUrl . strtolower($nextArticle->insight_type) . '/' . $nextArticle->slug . '.' . $nextArticle->news_id;
     $author_details = $nextArticle->author->first();
-    // dd($author_details);
     $authorSlug = $author_details->slug ?? strtolower(str_replace(' ', '-', $author_details->title));
     $authorUrl = Config('constants.MainDomain') . '/insights/author/' . $authorSlug . '-' . $author_details->author_id;
     $authorImage = !empty($author_details->image)
         ? \App\Http\Controllers\InsightsController::authorImageurl($author_details->image)
         : url('images/defaultuser.png');
 @endphp
-{{-- <div class="contentwrapper"> --}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <hr class="similar-article-line">
+            <div class="article-next">Next Story</div>
+            {{-- <div class="maininnver homeh">
+                <div class="inner-top-head">
+                    <div class="container">
+                        <h1>{{ $nextArticle->title }}</h1>
+                    </div>
+                </div>
+            </div> --}}
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <hr class="similar-article-line">
-            <div class="article-next">Next Story</div>
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('/insights') }}" class="tip-bottom">Home</a></li>
+
+            <ul class="breadcrumb" data-article-id="{{ $nextArticle->news_id }}">
+                <li class="breadcrumb-item"><a href="{{ url('/insights') }}" class="tip-bottom">Home</a>
+                </li>
                 @php
                     $insightTypeMap = [
                         'News' => "{$lang}/topstories",
@@ -93,7 +107,8 @@
                                 <img src="{{ url('/insight-new/images/vicon.webp') }}" height="10" width="17"
                                     alt="Franchise Insights" class="img-fluid">
                                 {{ $nextArticle->views }}
-                                / {{ app\Http\Controllers\InsightsController::calculateReadTime($nextArticle) }}
+                                /
+                                {{ app\Http\Controllers\InsightsController::calculateReadTime($nextArticle) }}
                                 Min Read
                             </span>
                         </div>
@@ -293,4 +308,4 @@
         </div>
     </div>
 </div>
-{{-- </div> --}}
+</div>
