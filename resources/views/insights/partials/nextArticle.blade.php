@@ -27,10 +27,10 @@
     <!-- DESKTOP TOP AD PLACEMENT  -->
     @desktop
         <div class="inner-article-detail-desktop-top-ad">
-            <div id='adslot728x90_BTF'>
+            <div id='adslot728x90_ATF'>
                 <script>
                     googletag.cmd.push(function() {
-                        googletag.display('adslot728x90_BTF');
+                        googletag.display('adslot728x90_ATF');
                     });
                 </script>
             </div>

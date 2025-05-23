@@ -409,9 +409,18 @@
                 success: function(data) {
                     if (data.success && data.html && !loadedIds.has(data.articleId)) {
                         const $container = $('#next-article-container');
-                        $container.append(data.html);
-                        nextUrl = data.nextUrl;
 
+                        // Wrap the new article HTML in a temporary container
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = data.html;
+
+                        // Append the new content to the container
+                        $container.append(tempDiv);
+
+                        // ✅ Refresh ads ONLY in the new content
+                        refreshNewAdSlots(tempDiv);
+
+                        nextUrl = data.nextUrl;
                         loadedIds.add(data.articleId);
 
                         if (data.articleId && data.meta && data.newUrl) {
@@ -537,5 +546,18 @@
         document.addEventListener('DOMContentLoaded', () => {
             observeArticles();
         });
+
+        // Call this after injecting the next article HTML
+        function refreshNewAdSlots(container) {
+            const newAdSlots = container.querySelectorAll("div[id^='adslot']");
+
+            newAdSlots.forEach((adDiv) => {
+                const slotId = adDiv.id;
+
+                googletag.cmd.push(function() {
+                    googletag.display(slotId);
+                });
+            });
+        }
     </script>
 @endsection
