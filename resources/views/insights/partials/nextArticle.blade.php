@@ -1,21 +1,3 @@
-<style>
-    .article-next {
-        display: block;
-        background-color: #000;
-        color: #fff;
-        padding: 2px 17px 5px 17px;
-        width: 111px;
-        margin-top: -16px;
-        font-size: 16px;
-        border-radius: 0px 0px 23px 0px;
-    }
-
-    .similar-article-line {
-        height: 2px;
-        background-color: #333;
-        margin-top: 41px;
-    }
-</style>
 @php
     $ogimage = !empty($nextArticle->image)
         ? \App\Http\Controllers\InsightsController::createimgurl($nextArticle->image)
@@ -34,13 +16,27 @@
         ? \App\Http\Controllers\InsightsController::authorImageurl($author_details->image)
         : url('images/defaultuser.png');
 @endphp
+
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8">
             <hr class="similar-article-line">
             <div class="article-next" data-article-id="{{ $nextArticle->news_id }}">Next Story</div>
         </div>
     </div>
+    <!-- DESKTOP TOP AD PLACEMENT  -->
+    @desktop
+        <div class="inner-article-detail-desktop-top-ad">
+            <div id='adslot728x90_ATF'>
+                <script>
+                    googletag.cmd.push(function() {
+                        googletag.display('adslot728x90_ATF');
+                    });
+                </script>
+            </div>
+        </div>
+    @enddesktop
+    <!-- DESKTOP TOP AD PLACEMENT  -->
 </div>
 <div class="container">
     <div class="row">

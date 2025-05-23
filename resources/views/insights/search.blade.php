@@ -3,20 +3,20 @@
     <div class="maininnver homeh">
         <div class="inner-top-head">
             <div class="container">
-                <h1>Search for {{ Illuminate\Support\Str::limit($search, 30, '...') }}</h1>
+                <h1>Search</h1>
             </div>
         </div>
         <div class="authblk">
             <div class="container">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('/insights') }}">Home</a></li>
-                    <li class="breadcrumb-item">Search for {{ Illuminate\Support\Str::limit($search, 30, '...') }}</li>
+                    <li class="breadcrumb-item">Search</li>
                 </ul>
             </div>
         </div>
         <div class="stories">
             <div class="container">
-                <h3>Search for {{ Illuminate\Support\Str::limit($search, 30, '...') }}</h3>
+                <h3>Search results for {{ Illuminate\Support\Str::limit($search, 30, '...') }}</h3>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="tab-content">

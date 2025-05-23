@@ -326,47 +326,9 @@
         <!-- New article will be loaded here -->
         <div id="next-article-container" class="next-article-container"></div>
     </div>
-    <style>
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            /* Black background with opacity */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            /* Ensure it appears above other content */
-        }
-
-        /* Spinner styles */
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            border-top: 5px solid white;
-            /* Color of the spinning bar */
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        /* Spinner animation */
-        @keyframes spin {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-
     <div id="loader" style="display: none;">
-        <div class="spinner"></div>
+        {{-- <div class="spinner"></div> --}}
+        <img src="{{ url('insight-new/assets/img/25.gif') }}" alt="loader" width="35">
     </div>
 
     @include('layout.insights.magblock')
@@ -421,6 +383,9 @@
             if (isLoading || !nextUrl) return;
             isLoading = true;
             $('#loader').show();
+            $('html, body').css("overflow", "hidden");
+           
+
 
             $.ajax({
                 url: nextUrl,
@@ -450,6 +415,8 @@
                 complete: () => {
                     isLoading = false;
                     $('#loader').hide();
+                    $('html, body').css("overflow", "auto");
+                   
                 }
             });
         }
