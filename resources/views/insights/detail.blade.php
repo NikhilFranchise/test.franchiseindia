@@ -322,6 +322,18 @@
                     </div>
                 </div>
             </div>
+            {{-- footer ads slot --}}
+            @desktop
+                <div class="inner-article-detail-desktop-top-ad">
+                    <div id='adslot728x90_BTF'>
+                        <script>
+                            googletag.cmd.push(function() {
+                                googletag.display('adslot728x90_BTF');
+                            });
+                        </script>
+                    </div>
+                </div>
+            @enddesktop
         </div>
         <!-- New article will be loaded here -->
         <div id="next-article-container" class="next-article-container"></div>
@@ -384,7 +396,7 @@
             isLoading = true;
             $('#loader').show();
             $('html, body').css("overflow", "hidden");
-           
+
 
 
             $.ajax({
@@ -416,7 +428,7 @@
                     isLoading = false;
                     $('#loader').hide();
                     $('html, body').css("overflow", "auto");
-                   
+
                 }
             });
         }
