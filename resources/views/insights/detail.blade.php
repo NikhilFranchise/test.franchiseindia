@@ -382,403 +382,6 @@
         ]);
 
     @endphp
-    {{-- latest code running state --}}
-    {{-- <script>
-        let isLoading = false;
-        let hasScrolledDown = false;
-
-        let nextUrl = @json($nextUrl);
-        let loadedIds = new Set([@json($newsDetails->news_id)]);
-        let currentActiveArticleId = null;
-
-        let articleMetaMap = {
-            [@json($newsDetails->news_id)]: {
-                meta: {
-                    title: @json($newsDetails->meta_title),
-                    description: @json($newsDetails->meta_description),
-                    keywords: @json($newsDetails->meta_keywords)
-                },
-                url: window.location.href
-            }
-        };
-
-        function updateMetadata(meta) {
-            if (meta?.title) document.title = meta.title;
-            if (meta?.description) document.querySelector('meta[name="description"]')?.setAttribute('content', meta
-                .description);
-            if (meta?.keywords) document.querySelector('meta[name="keywords"]')?.setAttribute('content', meta.keywords);
-        }
-
-        function fireGTM(articleId) {
-            if (typeof dataLayer !== 'undefined') {
-                dataLayer.push({
-                    event: 'articleScroll',
-                    articleId: articleId
-                });
-            }
-        }
-
-        function toggleLoader(show) {
-            const loader = document.getElementById('loading');
-            if (loader) loader.style.display = show ? 'block' : 'none';
-        }
-
-        function loadArticle(currentId) {
-            if (isLoading || !nextUrl) return;
-            isLoading = true;
-            toggleLoader(true);
-
-            $.ajax({
-                url: nextUrl,
-                method: 'GET',
-                data: {
-                    loadedIds: Array.from(loadedIds),
-                },
-                dataType: 'json',
-                success: function(data) {
-                    if (data.success && data.html && !loadedIds.has(data.articleId)) {
-                        const $container = $('#next-article-container');
-                        $container.append(data.html);
-                        nextUrl = data.nextUrl;
-
-                        loadedIds.add(data.articleId);
-
-                        if (data.articleId && data.meta && data.newUrl) {
-                            articleMetaMap[data.articleId] = {
-                                meta: data.meta,
-                                url: data.newUrl
-                            };
-                        }
-
-                        updateMetadata(data.meta);
-                        history.pushState(null, '', data.newUrl);
-                        fireGTM(data.articleId);
-                        observeArticles();
-                    }
-                },
-                complete: () => {
-                    isLoading = false;
-                    toggleLoader(false);
-                }
-            });
-        }
-
-        const articleObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const article = entry.target.closest('.articlecontent');
-                    const articleId = article?.dataset.articleId;
-                    if (articleId) {
-                        const isNew = articleId !== currentActiveArticleId;
-                        currentActiveArticleId = articleId;
-
-                        const data = articleMetaMap[articleId];
-                        if (data) {
-                            updateMetadata(data.meta);
-                            if (isNew || articleId == @json($newsDetails->news_id)) {
-                                history.pushState(null, '', data.url);
-                                fireGTM(articleId);
-                            }
-                        }
-                    }
-                }
-            });
-        }, {
-            threshold: 0.75
-        });
-
-        const bottomObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const article = entry.target.closest('.articlecontent');
-                    const id = article?.dataset.articleId;
-                    if (id) {
-                        hasScrolledDown = true;
-                        loadArticle(id);
-                    }
-                }
-            });
-        }, {
-            threshold: 1
-        });
-        const nextTriggerObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const article = entry.target.closest('.articlecontent');
-                    const articleId = article?.dataset.articleId;
-
-                    if (articleId && articleId !== currentActiveArticleId) {
-                        currentActiveArticleId = articleId;
-
-                        const data = articleMetaMap[articleId];
-                        if (data) {
-                            updateMetadata(data.meta);
-                            history.pushState(null, '', data.url);
-                            fireGTM(articleId);
-                        }
-                    }
-                }
-            });
-        }, {
-            threshold: 0.9
-        });
-
-        // Scroll-up observer for first paragraph of each article
-        const topParagraphObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const article = entry.target.closest('.articlecontent');
-                    const articleId = article?.dataset.articleId;
-
-                    if (articleId && articleId !== currentActiveArticleId) {
-                        currentActiveArticleId = articleId;
-
-                        const data = articleMetaMap[articleId];
-                        if (data) {
-                            updateMetadata(data.meta);
-                            history.pushState(null, '', data.url);
-                            fireGTM(articleId);
-                        }
-                    }
-                }
-            });
-        }, {
-            threshold: 1
-        });
-
-
-        function observeArticles() {
-            const articles = document.querySelectorAll('.articlecontent');
-            articleObserver.disconnect();
-            bottomObserver.disconnect();
-            topParagraphObserver.disconnect();
-            nextTriggerObserver.disconnect();
-
-            articles.forEach((article, index) => {
-                const ps = article.querySelectorAll('p');
-                if (ps.length) {
-                    const firstP = ps[0];
-                    const lastP = ps[ps.length - 1];
-
-                    // For regular active article observation
-                    articleObserver.observe(lastP);
-
-                    // Scroll down: observe .article-next inside this article
-                    const nextDiv = article.querySelector('.article-next');
-                    if (nextDiv) nextTriggerObserver.observe(nextDiv);
-
-                    // Scroll up: observe first paragraph
-                    topParagraphObserver.observe(firstP);
-
-                    // Last article triggers loading next article
-                    if (index === articles.length - 1) {
-                        bottomObserver.observe(lastP);
-                    }
-                }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            observeArticles();
-        });
-    </script> --}}
-
-    {{-- 21-5-25 --}}
-    {{-- <script>
-        let isLoading = false;
-        let hasScrolledDown = false;
-
-        let nextUrl = @json($nextUrl);
-        let loadedIds = new Set([@json($newsDetails->news_id)]);
-        let currentActiveArticleId = null;
-
-        let articleMetaMap = {
-            [@json($newsDetails->news_id)]: {
-                meta: {
-                    title: @json($newsDetails->title),
-                    description: @json($newsDetails->shortDesc),
-                    keywords: @json($newsDetails->shortDesc)
-                },
-                url: window.location.href
-            }
-        };
-
-        function updateMetadata(meta) {
-            if (meta?.title) document.title = meta.title;
-            if (meta?.description) document.querySelector('meta[name="description"]')?.setAttribute('content', meta
-                .description);
-            if (meta?.keywords) document.querySelector('meta[name="keywords"]')?.setAttribute('content', meta.keywords);
-        }
-
-        function fireGTM(articleId) {
-            if (typeof dataLayer !== 'undefined') {
-                dataLayer.push({
-                    event: 'articleScroll',
-                    articleId: articleId
-                });
-            }
-        }
-
-        function loadArticle(currentId) {
-            if (isLoading || !nextUrl) return;
-            isLoading = true;
-            $('#loader').show();
-
-            $.ajax({
-                url: nextUrl,
-                method: 'GET',
-                data: {
-                    loadedIds: Array.from(loadedIds),
-                },
-                dataType: 'json',
-                success: function(data) {
-                    if (data.success && data.html && !loadedIds.has(data.articleId)) {
-                        const $container = $('#next-article-container');
-                        $container.append(data.html);
-                        nextUrl = data.nextUrl;
-
-                        loadedIds.add(data.articleId);
-
-                        if (data.articleId && data.meta && data.newUrl) {
-                            articleMetaMap[data.articleId] = {
-                                meta: data.meta,
-                                url: data.newUrl
-                            };
-                        }
-
-                        // updateMetadata(data.meta);
-                        // history.pushState(null, '', data.newUrl);
-                        // fireGTM(data.articleId);
-                        observeArticles();
-                    }
-                },
-                complete: () => {
-                    isLoading = false;
-                    $('#loader').hide();
-                }
-            });
-        }
-
-        const articleObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const article = entry.target.closest('.articlecontent');
-                    const articleId = article?.dataset.articleId;
-                    if (articleId) {
-                        const isNew = articleId !== currentActiveArticleId;
-                        currentActiveArticleId = articleId;
-
-                        const data = articleMetaMap[articleId];
-                        if (data) {
-                            updateMetadata(data.meta);
-                            if (isNew || articleId == @json($newsDetails->news_id)) {
-                                history.pushState(null, '', data.url);
-                                fireGTM(articleId);
-                            }
-                        }
-                    }
-                }
-            });
-        }, {
-            threshold: 0.75
-        });
-
-        const bottomObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const article = entry.target.closest('.articlecontent');
-                    const id = article?.dataset.articleId;
-                    if (id) {
-                        hasScrolledDown = true;
-                        loadArticle(id);
-                    }
-                }
-            });
-        }, {
-            threshold: 1
-        });
-        const nextTriggerObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const article = entry.target.closest('.articlecontent');
-                    const articleId = article?.dataset.articleId;
-
-                    if (articleId && articleId !== currentActiveArticleId) {
-                        currentActiveArticleId = articleId;
-
-                        const data = articleMetaMap[articleId];
-                        if (data) {
-                            updateMetadata(data.meta);
-                            history.pushState(null, '', data.url);
-                            fireGTM(articleId);
-                        }
-                    }
-                }
-            });
-        }, {
-            threshold: 0.9
-        });
-
-        // Scroll-up observer for first paragraph of each article
-        const topParagraphObserver = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const article = entry.target.closest('.articlecontent');
-                    const articleId = article?.dataset.articleId;
-
-                    if (articleId && articleId !== currentActiveArticleId) {
-                        currentActiveArticleId = articleId;
-
-                        const data = articleMetaMap[articleId];
-                        if (data) {
-                            updateMetadata(data.meta);
-                            history.pushState(null, '', data.url);
-                            fireGTM(articleId);
-                        }
-                    }
-                }
-            });
-        }, {
-            threshold: 1
-        });
-
-
-        function observeArticles() {
-            const articles = document.querySelectorAll('.articlecontent');
-            articleObserver.disconnect();
-            bottomObserver.disconnect();
-            topParagraphObserver.disconnect();
-            nextTriggerObserver.disconnect();
-
-            articles.forEach((article, index) => {
-                const ps = article.querySelectorAll('p');
-                if (ps.length) {
-                    const firstP = ps[0];
-                    const lastP = ps[ps.length - 1];
-
-                    // For regular active article observation
-                    articleObserver.observe(lastP);
-
-                    // Scroll down: observe .article-next inside this article
-                    const nextDiv = article.querySelector('.article-next');
-                    if (nextDiv) nextTriggerObserver.observe(nextDiv);
-
-                    // Scroll up: observe first paragraph
-                    topParagraphObserver.observe(firstP);
-
-                    // Last article triggers loading next article
-                    if (index === articles.length - 1) {
-                        bottomObserver.observe(lastP);
-                    }
-                }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            observeArticles();
-        });
-    </script> --}}
-
     <script>
         let isLoading = false;
         let hasScrolledDown = false;
@@ -881,10 +484,6 @@
                 if (entry.isIntersecting) {
                     const article = entry.target.closest('.articlecontent');
                     const id = article?.dataset.articleId;
-                    // if (id) {
-                    //     hasScrolledDown = true;
-                    //     loadArticle(id);
-                    // }
                     if (id) {
                         hasScrolledDown = true;
                         loadArticle(id); // still trigger next article load
@@ -907,59 +506,20 @@
             threshold: 0.5
         });
 
-        const header = document.querySelector('header');
-        const footer = document.querySelector('footer');
-
-        const nextTriggerObserver = new IntersectionObserver(entries => {
-            // console.log(nextTriggerObserver + 'nextTrigger');
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const trigger = entry.target;
-                    const article = trigger.closest('.articlecontent');
-                    const articleId = article?.dataset.articleId;
-
-                    if (!articleId || articleId === currentActiveArticleId) return;
-
-                    const data = articleMetaMap[articleId];
-                    if (!data) return;
-
-                    const triggerRect = trigger.getBoundingClientRect();
-                    const headerRect = header?.getBoundingClientRect();
-                    const footerRect = footer?.getBoundingClientRect();
-
-                    const intersectsHeader = headerRect && triggerRect.top >= headerRect.top && triggerRect
-                        .bottom <= headerRect.bottom;
-                    const intersectsFooter = footerRect && triggerRect.top >= footerRect.top && triggerRect
-                        .bottom <= footerRect.bottom;
-                    if (intersectsHeader || intersectsFooter) {
-                        currentActiveArticleId = articleId;
-                        updateMetadata(data.meta);
-                        history.pushState(null, '', data.url);
-                        fireGTM(articleId);
-                    }
-                }
-            });
-        }, {
-            threshold: 0.5
-        });
-
         const topParagraphObserver = new IntersectionObserver(entries => {
-            // console.log(topParagraphObserver + 'topPara');
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const article = entry.target.closest('.articlecontent');
-                    // console.log(article);
-                    const articleId = article?.dataset.articleId;
+                    // `entry.target` is `.article-next`
+                    const nextID = entry.target.dataset.articleId;
 
-                    if (articleId && articleId !== currentActiveArticleId) {
-                        currentActiveArticleId = articleId;
+                    if (nextID && nextID !== currentActiveArticleId) {
+                        currentActiveArticleId = nextID;
 
-                        const data = articleMetaMap[articleId];
-                        console.log('changing data here:', articleMetaMap[articleId]);
+                        const data = articleMetaMap[nextID];
                         if (data) {
                             updateMetadata(data.meta);
                             history.pushState(null, '', data.url);
-                            fireGTM(articleId);
+                            fireGTM(nextID);
                         }
                     }
                 }
@@ -968,38 +528,35 @@
             threshold: 1
         });
 
+
         function observeArticles() {
             const articles = document.querySelectorAll('.articlecontent');
             articleObserver.disconnect();
             bottomObserver.disconnect();
             topParagraphObserver.disconnect();
-            nextTriggerObserver.disconnect();
 
             articles.forEach((article, index) => {
                 const ps = article.querySelectorAll('p');
                 if (ps.length) {
-                    const firstP = ps[0];
                     const lastP = ps[ps.length - 1];
                     articleObserver.observe(lastP);
-
-                    const nextDiv = article.querySelector('.article-next');
-                    // console.log(nextDiv + 'nextDiv');
-                    if (nextDiv) nextTriggerObserver.observe(nextDiv);
-
-                    topParagraphObserver.observe(firstP);
 
                     if (index === articles.length - 1) {
                         bottomObserver.observe(lastP);
                     }
                 }
             });
+
+            // Now observe all .article-next elements globally:
+            const nextDivs = document.querySelectorAll('.article-next');
+            nextDivs.forEach(div => {
+                topParagraphObserver.observe(div);
+            });
         }
+
 
         document.addEventListener('DOMContentLoaded', () => {
             observeArticles();
         });
     </script>
-
-
-
 @endsection

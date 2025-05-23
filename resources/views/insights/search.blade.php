@@ -76,7 +76,7 @@
                                             </div>
                                         </li>
                                     @empty
-                                        <p>No Records.</p>
+                                        <p>Search item not found.</p>
                                     @endforelse
                                 </ul>
                                 <div class="video-pagination">
@@ -105,6 +105,8 @@
                             <ul class="popular-list">
                                 @forelse ($popArticles as $popular)
                                     @php
+                                        $locale = App::getLocale();
+                                        $mainDomain = Config('constants.MainDomain');
                                         $image = \App\Http\Controllers\InsightsController::createimgurl(
                                             $popular->image,
                                         );

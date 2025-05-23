@@ -38,17 +38,7 @@
     <div class="row">
         <div class="col-md-12">
             <hr class="similar-article-line">
-            <div class="article-next">Next Story</div>
-            <div class="articlecontent">
-                <p></p>
-            </div>
-            {{-- <div class="maininnver homeh">
-                <div class="inner-top-head">
-                    <div class="container">
-                        <h1>{{ $nextArticle->title }}</h1>
-                    </div>
-                </div>
-            </div> --}}
+            <div class="article-next" data-article-id="{{ $nextArticle->news_id }}">Next Story</div>
         </div>
     </div>
 </div>
@@ -56,7 +46,7 @@
     <div class="row">
         <div class="col-md-8">
 
-            <ul class="breadcrumb" data-article-id="{{ $nextArticle->news_id }}">
+            <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/insights') }}" class="tip-bottom">Home</a>
                 </li>
                 @php

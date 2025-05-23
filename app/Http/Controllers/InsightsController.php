@@ -727,23 +727,16 @@ class InsightsController extends Controller
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('image')
             ->whereNotNull('cat_id');
-        $articlesList = $query->orderByEffectiveDate('desc')->paginate(10);
+        $articlesList = $query->orderByEffectiveDate('desc')->paginate(10)->appends(['search' => $search]);
         $ids = $query->pluck('news_id');
-        // Count matching articles
-
-        if ($articlesList->count() < 1) {
-            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
-        }
 
         $popArticles = $insightModel::with('category')
             ->select('news_id', 'cat_id', 'title', 'slug', 'insight_type')
             ->withEffectiveDate()
             ->where('status', 1)
-            ->whereRaw("title REGEXP ?", ['(^|[[:space:]])' . preg_quote($search) . '([[:space:]]|$)'])
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull('cat_id')
             ->whereNotIn('news_id', $ids)
-            // ->orderByDesc('created_at')
             ->orderByEffectiveDate('desc')
             ->limit(6)->get();
         // Return the view
