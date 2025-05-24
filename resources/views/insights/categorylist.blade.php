@@ -101,7 +101,7 @@
 
                                 </ul>
                                 <div class="video-pagination">
-                                    {{ $insightcategories->links('pagination::bootstrap-4') }}
+                                    {{ $insightcategories->links('pagination::bootstrap-5') }}
                                 </div>
                             </div>
                         </div>

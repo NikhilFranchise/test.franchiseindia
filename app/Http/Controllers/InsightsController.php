@@ -651,33 +651,35 @@ class InsightsController extends Controller
             ->distinct()
             ->get();
 
-        // Find brand matches
-        $titleWords = preg_split('/\s+/', strtolower($newsDetails->title));
-        $brandMatches = FranchisorBusinessDetail::where('profile_status', 1)
-            ->select('fran_detail_id', 'company_name', 'profile_name')
-            ->get()
-            ->filter(function ($item) use ($titleWords) {
-                $companyWords = array_map('strtolower', explode(' ', $item->company_name));
-                $pattern = '/\b' . implode('\b.*?\b', array_map(fn($word) => preg_quote($word, '/'), $companyWords)) . '\b/';
-                return preg_match($pattern, implode(' ', $titleWords));
-            })
-            ->take(10)
-            ->map(function ($item) {
-                return [
-                    'fran_detail_id' => $item->fran_detail_id,
-                    'company_name' => $item->company_name,
-                    'profile_name' => $item->profile_name,
-                ];
-            })
-            ->values();
+        // // Find brand matches
+        // $titleWords = preg_split('/\s+/', strtolower($newsDetails->title));
+        // $brandMatches = FranchisorBusinessDetail::where('profile_status', 1)
+        //     ->select('fran_detail_id', 'company_name', 'profile_name')
+        //     ->get()
+        //     ->filter(function ($item) use ($titleWords) {
+        //         $companyWords = array_map('strtolower', explode(' ', $item->company_name));
+        //         $pattern = '/\b' . implode('\b.*?\b', array_map(fn($word) => preg_quote($word, '/'), $companyWords)) . '\b/';
+        //         return preg_match($pattern, implode(' ', $titleWords));
+        //     })
+        //     ->take(10)
+        //     ->map(function ($item) {
+        //         return [
+        //             'fran_detail_id' => $item->fran_detail_id,
+        //             'company_name' => $item->company_name,
+        //             'profile_name' => $item->profile_name,
+        //         ];
+        //     })
+        //     ->values();
 
-        // Prepare franchise data
-        $franchiseData = $brandMatches->map(fn($match) => [
-            'fran_detail_id' => $match['fran_detail_id'],
-            'company_name' => $match['company_name'],
-            'profile_name' => $match['profile_name'],
-            'title' => $newsDetails->title,
-        ])->toArray();
+        // // Prepare franchise data
+        // $franchiseData = $brandMatches->map(fn($match) => [
+        //     'fran_detail_id' => $match['fran_detail_id'],
+        //     'company_name' => $match['company_name'],
+        //     'profile_name' => $match['profile_name'],
+        //     'title' => $newsDetails->title,
+        // ])->toArray();
+        // ✅ Match franchises by article title using helper
+        $franchiseData = FranchiseHelper::matchFranchisesByTitle($newsDetails->title);
         $category = $newsDetails->category->first();
         if ($category) {
             $trendingArticles = $newsModel::with(['category', 'Subcategory'])
@@ -1309,6 +1311,8 @@ class InsightsController extends Controller
         // Calculate effective date for current article (in PHP)
         if (is_null($currentArticle->published_date)) {
             $currentEffectiveDate = $currentArticle->created_at;
+        } elseif ($currentArticle->published_date < $currentArticle->created_at) {
+            $currentEffectiveDate = $currentArticle->created_at;
         } elseif ($currentArticle->published_date == $currentArticle->created_at) {
             $currentEffectiveDate = $currentArticle->created_at;
         } elseif ($currentArticle->published_date > $currentArticle->created_at) {
@@ -1320,6 +1324,7 @@ class InsightsController extends Controller
         // CASE expression for effective date (same as trait)
         $caseExpr = "CASE 
         WHEN published_date IS NULL THEN created_at
+        WHEN published_date < created_at THEN created_at
         WHEN published_date = created_at THEN created_at
         WHEN published_date > created_at THEN published_date
         ELSE created_at  END";
@@ -1343,9 +1348,6 @@ class InsightsController extends Controller
                 ->orderByRaw("$caseExpr asc")
                 ->first();
         }
-        // Get the next or previous article
-        $article = $baseQuery->first();
-
         // Increment views for the selected article
         if ($article) {
             $newsModel::where('news_id', $article->news_id)->increment('views');
@@ -1362,7 +1364,7 @@ class InsightsController extends Controller
             ->where('content_type', 2)
             ->pluck('tag_id');
 
-        $seoTagModel::whereIn('tag_id', $associatedTags)
+        $assocTags = $seoTagModel::whereIn('tag_id', $associatedTags)
             ->select('tag_id', 'name')
             ->distinct()
             ->get();
@@ -1397,6 +1399,7 @@ class InsightsController extends Controller
         $html = view('insights.partials.nextArticle', [
             'nextArticle' => $article,
             'franchiseData' => $franchiseData,
+            'assocTags' => $assocTags,
             'trendingArticles' => $trendingArticles,
             'latestArticles' => $latestArticles,
             'lang' => $lang,
