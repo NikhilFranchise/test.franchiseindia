@@ -56,14 +56,14 @@
                 </div> --}}
                 <div class="inner-article-detail-desktop-top-ad">
                     @php
-                        $uniqueId = 'adslot728x90_ATF-' . $newsDetails->news_id;
+                        $topAd = 'adslot728x90_ATF-' . $newsDetails->news_id;
                     @endphp
-                    <div id="{{ $uniqueId }}"></div>
+                    <div id="{{ $topAd }}"></div>
                     <script>
                         googletag.cmd.push(function() {
-                            googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], '{{ $uniqueId }}')
+                            googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], '{{ $topAd }}')
                                 .addService(googletag.pubads());
-                            googletag.display('{{ $uniqueId }}');
+                            googletag.display('{{ $topAd }}');
                         });
                     </script>
                 </div>
@@ -181,18 +181,18 @@
                         </div> --}}
                         <div class="inner-article-detail-desktop-ad fad">
                             @php
-                                $uniqueId1 = 'adslotInline_3_300x250-' . $newsDetails->news_id;
+                                $imgBottomAd = 'adslotInline_3_300x250-' . $newsDetails->news_id;
                             @endphp
-                            <div id="{{ $uniqueId1 }}"></div>
+                            <div id="{{ $imgBottomAd }}"></div>
                             <script>
                                 googletag.cmd.push(function() {
                                     googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250', [
                                         [300, 250],
                                         [336, 280],
                                         [250, 250]
-                                    ], '{{ $uniqueId1 }}').addService(googletag.pubads());
+                                    ], '{{ $imgBottomAd }}').addService(googletag.pubads());
 
-                                    googletag.display('{{ $uniqueId1 }}');
+                                    googletag.display('{{ $imgBottomAd }}');
                                 });
                             </script>
                         </div>
@@ -204,14 +204,23 @@
                                 // Split the article content into paragraphs
                                 $paragraphs = preg_split('/\r\n|\r|\n/', $newsDetails->content);
                                 $totalParagraphs = count($paragraphs);
+                                // $adSlots = [
+                                //     'adslotInline_1_300x250',
+                                //     'adslotInline_2_300x250',
+                                //     'adslotInline_3_300x250',
+                                //     'adslotInline_4_300x250',
+                                //     'adslotInline_5_300x250',
+                                // ];
                                 $adSlots = [
-                                    'adslotInline_1_300x250',
-                                    'adslotInline_2_300x250',
-                                    'adslotInline_3_300x250',
-                                    'adslotInline_4_300x250',
-                                    'adslotInline_5_300x250',
+                                    'adslotInline_1_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250',
+                                    'adslotInline_2_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250',
+                                    'adslotInline_3_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250',
+                                    'adslotInline_4_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250',
+                                    'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
                                 ];
+
                                 $adsInserted = 0;
+                                $adKeys = array_keys($adSlots);
                                 // Determine ad insertion interval based on total paragraphs
                                 $adInterval = $totalParagraphs >= 80 ? 8 : ($totalParagraphs >= 50 ? 5 : 3);
                                 $contentBlocks = [];
@@ -223,15 +232,25 @@
                                         ($index + 1) % $adInterval === 0 &&
                                         $adsInserted < count($adSlots)
                                     ) {
-                                        $slotId = $adSlots[$adsInserted];
+                                        $slotId = $adKeys[$adsInserted]; // e.g., adslotInline_1_300x250
+                                        $slotPath = $adSlots[$slotId]; // e.g., /1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250
+                                        $uniqueSlotId = $slotId . '-' . $newsDetails->news_id;
+
+                                        // $slotId = $adSlots[$adsInserted];
                                         $contentBlocks[] =
                                             '<div class="inner-article-detail-desktop-ad">
                                     <div id="' .
-                                            $slotId .
+                                            $uniqueSlotId .
                                             '">
                                         <script>
                                             googletag.cmd.push(function() {
-                                                googletag.display("' . $slotId . '");
+                                                googletag.defineSlot("{$slotPath}", [
+                                                        [300, 250],
+                                                        [336, 280],
+                                                        [250, 250]
+                                                    ], "'.$uniqueSlotId.'")
+                                                    .addService(googletag.pubads());
+                                                googletag.display("' . $uniqueSlotId . '");
                                             });
                                         </script>
                                     </div>
@@ -279,10 +298,15 @@
                     <div class="right-wrap">
                         {{-- ads top right sidebar --}}
                         <div class="ad-right">
-                            <div id='adslot300x250_ATF'>
+                            @php
+                                $topRightAd = 'adslot300x250_ATF-' . $newsDetails->news_id;
+                            @endphp
+                            <div id='{{ $topRightAd }}'>
                                 <script>
                                     googletag.cmd.push(function() {
-                                        googletag.display('adslot300x250_ATF');
+                                        googletag.defineSlot('/1057625/FIHL/Desktop_ROS_300x250_ATF', [300, 250], '{{ $topRightAd }}')
+                                            .addService(googletag.pubads());
+                                        googletag.display('{{ $topRightAd }}');
                                     });
                                 </script>
                             </div>
@@ -342,10 +366,18 @@
                             </ul>
                         </div>
                         <div class="ad-right-sticky">
-                            <div id="adslot300x250_1">
+                            @php
+                                $rightBottomAd = 'adslot300x250_1-' . $newsDetails->news_id;
+                            @endphp
+                            <div id="{{ $rightBottomAd }}">
                                 <script>
                                     googletag.cmd.push(function() {
-                                        googletag.display('adslot300x250_1');
+                                        googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [
+                                                [300, 250],
+                                                [300, 600]
+                                            ], '{{ $rightBottomAd }}')
+                                            .addService(googletag.pubads());
+                                        googletag.display('{{ $rightBottomAd }}');
                                     });
                                 </script>
                             </div>
@@ -356,10 +388,19 @@
             {{-- footer ads slot --}}
             @desktop
                 <div class="inner-article-detail-desktop-top-ad">
-                    <div id='adslot728x90_BTF'>
+                    @php
+                        $bottomAd = 'adslot728x90_BTF-' . $newsDetails->news_id;
+                    @endphp
+                    <div id='{{ $bottomAd }}'>
                         <script>
                             googletag.cmd.push(function() {
-                                googletag.display('adslot728x90_BTF');
+                                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_BTF', [
+                                        [728, 90],
+                                        [970, 90],
+                                        [970, 250]
+                                    ], '{{ $bottomAd }}')
+                                    .addService(googletag.pubads());
+                                googletag.display('{{ $bottomAd }}');
                             });
                         </script>
                     </div>
