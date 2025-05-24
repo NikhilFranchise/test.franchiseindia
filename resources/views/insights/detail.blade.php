@@ -629,23 +629,27 @@
         });
 
         // Call this after injecting the next article HTML
-        function refreshNewAdSlots(container) {
-            const newAdDivs = container.querySelectorAll("div.ad-slot");
+        function refreshNewAdSlots(context = document) {
+            const newSlots = context.querySelectorAll('.gpt-inline-slot:not([data-gpt-loaded])');
 
-            newAdDivs.forEach(adDiv => {
-                const slotId = adDiv.id;
-                const slotPath = adDiv.dataset.slotBase;
+            newSlots.forEach(slot => {
+                const id = slot.dataset.slotId;
+                const path = slot.dataset.slotPath;
+
+                if (!id || !path) return;
 
                 googletag.cmd.push(function() {
-                    googletag.defineSlot(slotPath, [300, 250], slotId)
-                        .addService(googletag.pubads());
-                    googletag.display(slotId);
-                });
-            });
+                    googletag.defineSlot(path, [
+                        [300, 250],
+                        [336, 280],
+                        [250, 250]
+                    ], id).addService(googletag.pubads());
 
-            // Optional: Refresh ads if needed
-            googletag.cmd.push(function() {
-                googletag.pubads().refresh();
+                    googletag.display(id);
+                });
+
+                // Mark slot as initialized
+                slot.setAttribute('data-gpt-loaded', 'true');
             });
         }
     </script>
