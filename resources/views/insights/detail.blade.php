@@ -42,21 +42,34 @@
                 <h1>{{ $newsDetails->title }}</h1>
             </div>
         </div>
-        <!-- DESKTOP TOP AD PLACEMENT  -->
+        <!-- DESKTOP TOP AD PLACEMENT START HERE  -->
         <div class="container">
             @desktop
-                <div class="inner-article-detail-desktop-top-ad">
-                    <div id='adslot728x90_ATF'>
+                {{-- <div class="inner-article-detail-desktop-top-ad">
+                    <div id='adslot728x90_ATF-{{ $newsDetails->news_id }}'>
                         <script>
                             googletag.cmd.push(function() {
                                 googletag.display('adslot728x90_ATF');
                             });
                         </script>
                     </div>
+                </div> --}}
+                <div class="inner-article-detail-desktop-top-ad">
+                    @php
+                        $uniqueId = 'adslot728x90_ATF-' . $newsDetails->news_id;
+                    @endphp
+                    <div id="{{ $uniqueId }}"></div>
+                    <script>
+                        googletag.cmd.push(function() {
+                            googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], '{{ $uniqueId }}')
+                                .addService(googletag.pubads());
+                            googletag.display('{{ $uniqueId }}');
+                        });
+                    </script>
                 </div>
             @enddesktop
         </div>
-        <!-- DESKTOP TOP AD PLACEMENT  -->
+        <!-- DESKTOP TOP AD PLACEMENT END HERE -->
     </div>
     <div class="contentwrapper">
         <div class="container">
@@ -157,7 +170,7 @@
                     <div class="content-main">
                         <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}">
                         {{-- ads for mobile & desktop --}}
-                        <div class="inner-article-detail-desktop-ad fad">
+                        {{-- <div class="inner-article-detail-desktop-ad fad">
                             <div id="adslotInline_3_300x250">
                                 <script>
                                     googletag.cmd.push(function() {
@@ -165,7 +178,25 @@
                                     });
                                 </script>
                             </div>
+                        </div> --}}
+                        <div class="inner-article-detail-desktop-ad fad">
+                            @php
+                                $uniqueId1 = 'adslotInline_3_300x250-' . $newsDetails->news_id;
+                            @endphp
+                            <div id="{{ $uniqueId1 }}"></div>
+                            <script>
+                                googletag.cmd.push(function() {
+                                    googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250', [
+                                        [300, 250],
+                                        [336, 280],
+                                        [250, 250]
+                                    ], '{{ $uniqueId1 }}').addService(googletag.pubads());
+
+                                    googletag.display('{{ $uniqueId1 }}');
+                                });
+                            </script>
                         </div>
+
                         {{-- ads for mobile & desktop --}}
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
                         <div class="articlecontent" data-article-id="{{ $newsDetails->news_id }}">
@@ -412,6 +443,7 @@
 
                         // Wrap the new article HTML in a temporary container
                         const tempDiv = document.createElement('div');
+                        // console.log('tempDiv', tempDiv);
                         tempDiv.innerHTML = data.html;
 
                         // Append the new content to the container
@@ -549,14 +581,22 @@
 
         // Call this after injecting the next article HTML
         function refreshNewAdSlots(container) {
-            const newAdSlots = container.querySelectorAll("div[id^='adslot']");
+            const newAdDivs = container.querySelectorAll("div.ad-slot");
 
-            newAdSlots.forEach((adDiv) => {
+            newAdDivs.forEach(adDiv => {
                 const slotId = adDiv.id;
+                const slotPath = adDiv.dataset.slotBase;
 
                 googletag.cmd.push(function() {
+                    googletag.defineSlot(slotPath, [300, 250], slotId)
+                        .addService(googletag.pubads());
                     googletag.display(slotId);
                 });
+            });
+
+            // Optional: Refresh ads if needed
+            googletag.cmd.push(function() {
+                googletag.pubads().refresh();
             });
         }
     </script>
