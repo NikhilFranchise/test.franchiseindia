@@ -211,6 +211,7 @@
                                     'adslotInline_4_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250',
                                     'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
                                 ];
+
                                 $adsInserted = 0;
                                 $adKeys = array_keys($adSlots);
                                 $adInterval = $totalParagraphs >= 80 ? 8 : ($totalParagraphs >= 50 ? 5 : 3);
@@ -229,21 +230,12 @@
 
                                         // Store slot info for JS
                                         $contentBlocks[] = "<div class='inner-article-detail-desktop-ad'>
-                                                                <div id='{{ $uniqueSlotId }}'>
-                                                                    <script>
-                                                                        googletag.cmd.push(function() {
-                                                                            googletag.defineSlot('{{ $slotPath }}', [
-                                                                                    [300, 250],
-                                                                                    [336, 280],
-                                                                                    [250, 250]
-                                                                                ], '{{ $uniqueSlotId }}')
-                                                                                .addService(googletag.pubads());
-                                                                            googletag.display('{{ $uniqueSlotId }}');
-                                                                        });
-                                                                    </script>
-                                                                    </div>
+                                                                <div id='{$uniqueSlotId}' class='gpt-inline-slot'
+                                                                    data-slot-id='{$uniqueSlotId}'
+                                                                    data-slot-path='{$slotPath}'>
+                                                                </div>
+                                                            </div>";
 
-                                            </div>";
                                         $adsInserted++;
                                     }
                                 }
@@ -421,6 +413,33 @@
         ]);
 
     @endphp
+    <script>
+        window.googletag = window.googletag || {
+            cmd: []
+        };
+
+        googletag.cmd.push(function() {
+            const slots = document.querySelectorAll('.gpt-inline-slot');
+            slots.forEach(slot => {
+                const id = slot.dataset.slotId;
+                const path = slot.dataset.slotPath;
+
+                googletag.defineSlot(path, [
+                        [300, 250],
+                        [336, 280],
+                        [250, 250]
+                    ], id)
+                    .addService(googletag.pubads());
+            });
+
+            googletag.enableServices(); // Must only be called once
+
+            slots.forEach(slot => {
+                googletag.display(slot.dataset.slotId);
+            });
+        });
+    </script>
+
     <script>
         let isLoading = false;
         let hasScrolledDown = false;
