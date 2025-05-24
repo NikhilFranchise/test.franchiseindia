@@ -242,12 +242,8 @@
 
                                 $renderedContent = implode("\r\n", $contentBlocks);
                             @endphp
-
-                            {{-- {!! $renderedContent !!} --}}
-
                             {!! $renderedContent !!}
                         </div>
-                        {{-- </div> --}}
                         <div class="franBrands">
                             @if (!empty($franchiseData))
                                 <h4>Interested in Franchise:</h4>

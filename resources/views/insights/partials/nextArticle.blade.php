@@ -27,10 +27,15 @@
     <!-- DESKTOP TOP AD PLACEMENT  -->
     @desktop
         <div class="inner-article-detail-desktop-top-ad">
-            <div id='adslot728x90_ATF'>
+            @php
+                $nextTopAd = 'adslot728x90_ATF-' . $nextArticle->news_id;
+            @endphp
+            <div id='{{ $nextTopAd }}'>
                 <script>
                     googletag.cmd.push(function() {
-                        googletag.display('adslot728x90_ATF');
+                        googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], '{{ $nextTopAd }}')
+                            .addService(googletag.pubads());
+                        googletag.display('{{ $nextTopAd }}');
                     });
                 </script>
             </div>
@@ -139,10 +144,18 @@
                 <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $nextArticle->title }}">
                 {{-- ads for mobile & desktop --}}
                 <div class="inner-article-detail-desktop-ad fad">
-                    <div id="adslotInline_3_300x250">
+                    @php
+                        $nextImgBottomAd = 'adslot300x250_ATF-' . $nextArticle->news_id . '-' . $nextArticle->cat_id;
+                    @endphp
+                    <div id="{{ $nextImgBottomAd }}">
                         <script>
                             googletag.cmd.push(function() {
-                                googletag.display("adslotInline_3_300x250");
+                                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250', [
+                                    [300, 250],
+                                    [336, 280],
+                                    [250, 250]
+                                ], '{{ $nextImgBottomAd }}').addService(googletag.pubads());
+                                googletag.display("{{ $nextImgBottomAd }}");
                             });
                         </script>
                     </div>
@@ -151,40 +164,40 @@
                 <div class="shortdes">{{ $nextArticle->shortDesc }}</div>
                 <div class="articlecontent" data-article-id="{{ $nextArticle->news_id }}">
                     @php
-                        // Split the article content into paragraphs
                         $paragraphs = preg_split('/\r\n|\r|\n/', $nextArticle->content);
                         $totalParagraphs = count($paragraphs);
                         $adSlots = [
-                            'adslotInline_1_300x250',
-                            'adslotInline_2_300x250',
-                            'adslotInline_3_300x250',
-                            'adslotInline_4_300x250',
-                            'adslotInline_5_300x250',
+                            'adslotInline_1_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250',
+                            'adslotInline_2_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250',
+                            'adslotInline_3_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250',
+                            'adslotInline_4_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250',
+                            'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
                         ];
+
                         $adsInserted = 0;
-                        // Determine ad insertion interval based on total paragraphs
+                        $adKeys = array_keys($adSlots);
                         $adInterval = $totalParagraphs >= 80 ? 8 : ($totalParagraphs >= 50 ? 5 : 3);
                         $contentBlocks = [];
+
                         foreach ($paragraphs as $index => $para) {
-                            // $contentBlocks[] = $para;
                             $contentBlocks[] = '<p>' . $para . '</p>';
                             if ($adInterval > 0 && ($index + 1) % $adInterval === 0 && $adsInserted < count($adSlots)) {
-                                $slotId = $adSlots[$adsInserted];
-                                $contentBlocks[] =
-                                    '<div class="inner-article-detail-desktop-ad">
-                                    <div id="' .
-                                    $slotId .
-                                    '">
-                                        <script>
-                                            googletag.cmd.push(function() {
-                                                googletag.display("' . $slotId . '");
-                                            });
-                                        </script>
-                                    </div>
-                                </div>';
+                                $slotId = $adKeys[$adsInserted];
+                                $slotPath = $adSlots[$slotId];
+                                $uniqueSlotId = $slotId . '-' . $nextArticle->news_id;
+
+                                // Store slot info for JS
+                                $contentBlocks[] = "<div class='inner-article-detail-desktop-ad'>
+                                                                <div id='{$uniqueSlotId}' class='gpt-inline-slot'
+                                                                    data-slot-id='{$uniqueSlotId}'
+                                                                    data-slot-path='{$slotPath}'>
+                                                                </div>
+                                                            </div>";
+
                                 $adsInserted++;
                             }
                         }
+
                         $renderedContent = implode("\r\n", $contentBlocks);
                     @endphp
                     {!! $renderedContent !!}
@@ -224,10 +237,15 @@
             <div class="right-wrap">
                 {{-- ads top right sidebar --}}
                 <div class="ad-right">
-                    <div id='adslot300x250_ATF'>
+                    @php
+                        $nextTopRightAd = 'adslot300x250_ATF-' . $nextArticle->news_id;
+                    @endphp
+                    <div id='{{ $nextTopRightAd }}'>
                         <script>
                             googletag.cmd.push(function() {
-                                googletag.display('adslot300x250_ATF');
+                                googletag.defineSlot('/1057625/FIHL/Desktop_ROS_300x250_ATF', [300, 250], '{{ $nextTopRightAd }}')
+                                    .addService(googletag.pubads());
+                                googletag.display('{{ $nextTopRightAd }}');
                             });
                         </script>
                     </div>
@@ -285,10 +303,18 @@
                     </ul>
                 </div>
                 <div class="ad-right-sticky">
-                    <div id="adslot300x250_1">
+                    @php
+                        $nextRightBottomAd = 'adslot300x250_1-' . $nextArticle->news_id;
+                    @endphp
+                    <div id="{{ $nextRightBottomAd }}">
                         <script>
                             googletag.cmd.push(function() {
-                                googletag.display('adslot300x250_1');
+                                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [
+                                        [300, 250],
+                                        [300, 600]
+                                    ], '{{ $nextRightBottomAd }}')
+                                    .addService(googletag.pubads());
+                                googletag.display('{{ $nextRightBottomAd }}');
                             });
                         </script>
                     </div>
@@ -296,5 +322,25 @@
             </div>
         </div>
     </div>
-</div>
+    {{-- footer ads slot --}}
+    @desktop
+        <div class="inner-article-detail-desktop-top-ad">
+            @php
+                $nextBottomAd = 'adslot728x90_BTF-' . $nextArticle->news_id;
+            @endphp
+            <div id='{{ $nextBottomAd }}'>
+                <script>
+                    googletag.cmd.push(function() {
+                        googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_BTF', [
+                                [728, 90],
+                                [970, 90],
+                                [970, 250]
+                            ], '{{ $nextBottomAd }}')
+                            .addService(googletag.pubads());
+                        googletag.display('{{ $nextBottomAd }}');
+                    });
+                </script>
+            </div>
+        </div>
+    @enddesktop
 </div>

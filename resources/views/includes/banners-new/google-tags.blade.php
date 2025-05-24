@@ -107,9 +107,9 @@
             @elseif (request()->segment(1) == 'insights')
                 googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], 'adslot728x90_ATF')
                     .addService(googletag.pubads());
-                googletag.defineSlot('/1057625/FIHL//1057625/FIHL/FI_Desktop_ROS_RHS_300x250_ATF', [300, 250],
+                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_ATF', [300, 250],
                     'adslot300x250_ATF').addService(googletag.pubads());
-                googletag.defineSlot('/1057625/FIHL//1057625/FIHL//1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [
+                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [
                         [300, 250],
                         [300, 600]
                     ],
@@ -320,9 +320,9 @@
             @elseif (request()->segment(1) == 'insights')
                 googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], 'adslot728x90_ATF')
                     .addService(googletag.pubads());
-                googletag.defineSlot('/1057625/FIHL//1057625/FIHL/FI_Desktop_ROS_RHS_300x250_ATF', [300, 250],
+                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_ATF', [300, 250],
                     'adslot300x250_ATF').addService(googletag.pubads());
-                googletag.defineSlot('/1057625/FIHL//1057625/FIHL//1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [
+                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [
                         [300, 250],
                         [300, 600]
                     ],
