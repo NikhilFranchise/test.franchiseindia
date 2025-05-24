@@ -201,6 +201,8 @@
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
                         <div class="articlecontent" data-article-id="{{ $newsDetails->news_id }}">
                             @php
+                                $paragraphs = preg_split('/\r\n|\r|\n/', $newsDetails->content);
+                                $totalParagraphs = count($paragraphs);
                                 $adSlots = [
                                     'adslotInline_1_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250',
                                     'adslotInline_2_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250',
