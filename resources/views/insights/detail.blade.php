@@ -181,7 +181,8 @@
                         </div> --}}
                         <div class="inner-article-detail-desktop-ad fad">
                             @php
-                                $imgBottomAd = 'adslot300x250_ATF-' . $newsDetails->news_id . '-' . $newsDetails->cat_id;
+                                $imgBottomAd =
+                                    'adslot300x250_ATF-' . $newsDetails->news_id . '-' . $newsDetails->cat_id;
                             @endphp
                             <div id="{{ $imgBottomAd }}"></div>
                             <script>
@@ -227,18 +228,22 @@
                                         $uniqueSlotId = $slotId . '-' . $newsDetails->news_id;
 
                                         // Store slot info for JS
-                                        $contentBlocks[] =
-                                            '<div class="inner-article-detail-desktop-ad">
-                                                                <div id="' .
-                                            $uniqueSlotId .
-                                            '" class="gpt-inline-slot" 
-                                                                    data-slot-id="' .
-                                            $uniqueSlotId .
-                                            '" data-slot-path="' .
-                                            $slotPath .
-                                            '">
-                                                                </div>
-                                                            </div>';
+                                        $contentBlocks[] = "<div class='inner-article-detail-desktop-ad'>
+                                                                <div id='{{ $uniqueSlotId }}'>
+                                                                    <script>
+                                                                        googletag.cmd.push(function() {
+                                                                            googletag.defineSlot('{{ $slotPath }}', [
+                                                                                    [300, 250],
+                                                                                    [336, 280],
+                                                                                    [250, 250]
+                                                                                ], '{{ $uniqueSlotId }}')
+                                                                                .addService(googletag.pubads());
+                                                                            googletag.display('{{ $uniqueSlotId }}');
+                                                                        });
+                                                                    </script>
+                                                                    </div>
+
+                                            </div>";
                                         $adsInserted++;
                                     }
                                 }
