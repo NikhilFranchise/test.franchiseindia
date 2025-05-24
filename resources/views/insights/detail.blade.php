@@ -210,7 +210,6 @@
                                     'adslotInline_4_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250',
                                     'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
                                 ];
-
                                 $adsInserted = 0;
                                 $adKeys = array_keys($adSlots);
                                 $adInterval = $totalParagraphs >= 80 ? 8 : ($totalParagraphs >= 50 ? 5 : 3);
