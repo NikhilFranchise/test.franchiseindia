@@ -181,7 +181,7 @@
                         </div> --}}
                         <div class="inner-article-detail-desktop-ad fad">
                             @php
-                                $imgBottomAd = 'adslotInline_3_300x250-' . $newsDetails->news_id;
+                                $imgBottomAd = 'adslot300x250_ATF-' . $newsDetails->news_id . '-' . $newsDetails->cat_id;
                             @endphp
                             <div id="{{ $imgBottomAd }}"></div>
                             <script>
@@ -201,16 +201,6 @@
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
                         <div class="articlecontent" data-article-id="{{ $newsDetails->news_id }}">
                             @php
-                                // Split the article content into paragraphs
-                                $paragraphs = preg_split('/\r\n|\r|\n/', $newsDetails->content);
-                                $totalParagraphs = count($paragraphs);
-                                // $adSlots = [
-                                //     'adslotInline_1_300x250',
-                                //     'adslotInline_2_300x250',
-                                //     'adslotInline_3_300x250',
-                                //     'adslotInline_4_300x250',
-                                //     'adslotInline_5_300x250',
-                                // ];
                                 $adSlots = [
                                     'adslotInline_1_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250',
                                     'adslotInline_2_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250',
@@ -221,45 +211,42 @@
 
                                 $adsInserted = 0;
                                 $adKeys = array_keys($adSlots);
-                                // Determine ad insertion interval based on total paragraphs
                                 $adInterval = $totalParagraphs >= 80 ? 8 : ($totalParagraphs >= 50 ? 5 : 3);
                                 $contentBlocks = [];
+
                                 foreach ($paragraphs as $index => $para) {
-                                    // $contentBlocks[] = $para;
                                     $contentBlocks[] = '<p>' . $para . '</p>';
                                     if (
                                         $adInterval > 0 &&
                                         ($index + 1) % $adInterval === 0 &&
                                         $adsInserted < count($adSlots)
                                     ) {
-                                        $slotId = $adKeys[$adsInserted]; // e.g., adslotInline_1_300x250
-                                        $slotPath = $adSlots[$slotId]; // e.g., /1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250
+                                        $slotId = $adKeys[$adsInserted];
+                                        $slotPath = $adSlots[$slotId];
                                         $uniqueSlotId = $slotId . '-' . $newsDetails->news_id;
 
-                                        // $slotId = $adSlots[$adsInserted];
+                                        // Store slot info for JS
                                         $contentBlocks[] =
                                             '<div class="inner-article-detail-desktop-ad">
-                                    <div id="' .
+                                                                <div id="' .
                                             $uniqueSlotId .
+                                            '" class="gpt-inline-slot" 
+                                                                    data-slot-id="' .
+                                            $uniqueSlotId .
+                                            '" data-slot-path="' .
+                                            $slotPath .
                                             '">
-                                        <script>
-                                            googletag.cmd.push(function() {
-                                                googletag.defineSlot("{$slotPath}", [
-                                                        [300, 250],
-                                                        [336, 280],
-                                                        [250, 250]
-                                                    ], "'.$uniqueSlotId.'")
-                                                    .addService(googletag.pubads());
-                                                googletag.display("' . $uniqueSlotId . '");
-                                            });
-                                        </script>
-                                    </div>
-                                </div>';
+                                                                </div>
+                                                            </div>';
                                         $adsInserted++;
                                     }
                                 }
+
                                 $renderedContent = implode("\r\n", $contentBlocks);
                             @endphp
+
+                            {{-- {!! $renderedContent !!} --}}
+
                             {!! $renderedContent !!}
                         </div>
                         {{-- </div> --}}
