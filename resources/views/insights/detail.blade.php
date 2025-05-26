@@ -200,7 +200,7 @@
 
                         {{-- ads for mobile & desktop --}}
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
-                        <div class="articlecontent" data-article-id="{{ $newsDetails->news_id }}">
+                        {{-- <div class="articlecontent" data-article-id="{{ $newsDetails->news_id }}">
                             @php
                                 $paragraphs = preg_split('/\r\n|\r|\n/', $newsDetails->content);
                                 $totalParagraphs = count($paragraphs);
@@ -243,7 +243,57 @@
                                 $renderedContent = implode("\r\n", $contentBlocks);
                             @endphp
                             {!! $renderedContent !!}
+                        </div> --}}
+                        @php
+                            // Match <p>, <table>, <ul>, <ol>, <blockquote>, etc.
+                            $blocks = preg_split(
+                                '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
+                                $newsDetails->content,
+                                -1,
+                                PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
+                            );
+
+                            $totalBlocks = count($blocks);
+                            $adSlots = [
+                                'adslotInline_1_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250',
+                                'adslotInline_2_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250',
+                                'adslotInline_3_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250',
+                                'adslotInline_4_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250',
+                                'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
+                            ];
+
+                            $adsInserted = 0;
+                            $adKeys = array_keys($adSlots);
+                            $adInterval = $totalBlocks >= 80 ? 8 : ($totalBlocks >= 50 ? 5 : 3);
+                            $renderedContent = '';
+
+                            foreach ($blocks as $index => $block) {
+                                $renderedContent .= $block;
+
+                                if (
+                                    $adInterval > 0 &&
+                                    ($index + 1) % $adInterval === 0 &&
+                                    $adsInserted < count($adSlots)
+                                ) {
+                                    $slotId = $adKeys[$adsInserted];
+                                    $slotPath = $adSlots[$slotId];
+                                    $uniqueSlotId = $slotId . '-' . $newsDetails->news_id;
+
+                                    $renderedContent .= "<div class='inner-article-detail-desktop-ad'>
+                                    <div id='{$uniqueSlotId}' class='gpt-inline-slot'
+                                        data-slot-id='{$uniqueSlotId}'
+                                        data-slot-path='{$slotPath}'>
+                                    </div>
+                                </div>";
+                                    $adsInserted++;
+                                }
+                            }
+                        @endphp
+
+                        <div class="articlecontent" data-article-id="{{ $newsDetails->news_id }}">
+                            {!! $renderedContent !!}
                         </div>
+
                         <div class="franBrands">
                             @if (!empty($franchiseData))
                                 <h4>Interested in Franchise:</h4>
