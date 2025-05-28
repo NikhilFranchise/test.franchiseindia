@@ -679,69 +679,27 @@
         });
 
         // Call this after injecting the next article HTML
-        // function refreshNewAdSlots(context = document) {
-        //     const newSlots = context.querySelectorAll('.gpt-inline-slot:not([data-gpt-loaded])');
-
-        //     newSlots.forEach(slot => {
-        //         const id = slot.dataset.slotId;
-        //         const path = slot.dataset.slotPath;
-
-        //         if (!id || !path) return;
-
-        //         googletag.cmd.push(function() {
-        //             googletag.defineSlot(path, [
-        //                 [300, 250],
-        //                 [336, 280],
-        //                 [250, 250]
-        //             ], id).addService(googletag.pubads());
-
-        //             googletag.display(id);
-        //         });
-
-        //         // Mark slot as initialized
-        //         slot.setAttribute('data-gpt-loaded', 'true');
-        //     });
-        // }
         function refreshNewAdSlots(context = document) {
-            const newSlots = context.querySelectorAll('.gpt-inline-slot:not([data-gpt-observed])');
-
-            if (!('IntersectionObserver' in window)) {
-                // Fallback for older browsers: load immediately
-                newSlots.forEach(slot => loadAdSlot(slot));
-                return;
-            }
-
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    const slot = entry.target;
-                    const id = slot.dataset.slotId;
-                    const path = slot.dataset.slotPath;
-
-                    if (!id || !path) return;
-
-                    if (entry.isIntersecting && !slot.hasAttribute('data-gpt-loaded')) {
-                        googletag.cmd.push(() => {
-                            googletag.defineSlot(path, [
-                                [300, 250],
-                                [336, 280],
-                                [250, 250]
-                            ], id).addService(googletag.pubads());
-
-                            googletag.display(id);
-                        });
-
-                        slot.setAttribute('data-gpt-loaded', 'true');
-                        obs.unobserve(slot); // Stop observing once loaded
-                    }
-                });
-            }, {
-                root: null,
-                threshold: 0.5 // Load when 50% in viewport
-            });
+            const newSlots = context.querySelectorAll('.gpt-inline-slot:not([data-gpt-loaded])');
 
             newSlots.forEach(slot => {
-                observer.observe(slot);
-                slot.setAttribute('data-gpt-observed', 'true');
+                const id = slot.dataset.slotId;
+                const path = slot.dataset.slotPath;
+
+                if (!id || !path) return;
+
+                googletag.cmd.push(function() {
+                    googletag.defineSlot(path, [
+                        [300, 250],
+                        [336, 280],
+                        [250, 250]
+                    ], id).addService(googletag.pubads());
+
+                    googletag.display(id);
+                });
+
+                // Mark slot as initialized
+                slot.setAttribute('data-gpt-loaded', 'true');
             });
         }
     </script>
