@@ -264,27 +264,32 @@
 
                             $adsInserted = 0;
                             $adKeys = array_keys($adSlots);
-                            $adInterval = $totalBlocks >= 80 ? 8 : ($totalBlocks >= 50 ? 5 : 3);
+                            // $adInterval = $totalBlocks >= 80 ? 10 : ($totalBlocks >= 50 ? 5 : 5);
+                            if ($totalBlocks >= 80 && $totalBlocks <= 100) {
+                                $adInterval = (int) ceil($totalBlocks / 8);
+                            } elseif ($totalBlocks >= 50 && $totalBlocks < 80) {
+                                $adInterval = (int) ceil($totalBlocks / 6);
+                            } else {
+                                $adInterval =
+                                    $totalBlocks >= 20 ? (int) ceil($totalBlocks / 5) : (int) ceil($totalBlocks / 4);
+                            }
+                            // dd($adInterval);
                             $renderedContent = '';
-
+                            
                             foreach ($blocks as $index => $block) {
                                 $renderedContent .= $block;
 
-                                if (
-                                    $adInterval > 0 &&
-                                    ($index + 1) % $adInterval === 0 &&
-                                    $adsInserted < count($adSlots)
-                                ) {
+                                if ($adInterval > 0 && ($index + 1) % $adInterval === 0 && $adsInserted < count($adSlots)) {
                                     $slotId = $adKeys[$adsInserted];
                                     $slotPath = $adSlots[$slotId];
                                     $uniqueSlotId = $slotId . '-' . $newsDetails->news_id;
 
                                     $renderedContent .= "<div class='inner-article-detail-desktop-ad'>
-                                    <div id='{$uniqueSlotId}' class='gpt-inline-slot'
-                                        data-slot-id='{$uniqueSlotId}'
-                                        data-slot-path='{$slotPath}'>
-                                    </div>
-                                </div>";
+                                        <div id='{$uniqueSlotId}' class='gpt-inline-slot'
+                                            data-slot-id='{$uniqueSlotId}'
+                                            data-slot-path='{$slotPath}'>
+                                        </div>
+                                    </div>";
                                     $adsInserted++;
                                 }
                             }
@@ -527,8 +532,6 @@
             $('#loader').show();
             $('html, body').css("overflow", "hidden");
 
-
-
             $.ajax({
                 url: nextUrl,
                 method: 'GET',
@@ -682,24 +685,37 @@
         function refreshNewAdSlots(context = document) {
             const newSlots = context.querySelectorAll('.gpt-inline-slot:not([data-gpt-loaded])');
 
-            newSlots.forEach(slot => {
-                const id = slot.dataset.slotId;
-                const path = slot.dataset.slotPath;
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const slot = entry.target;
+                        const id = slot.dataset.slotId;
+                        const path = slot.dataset.slotPath;
 
-                if (!id || !path) return;
+                        if (!id || !path || slot.dataset.gptLoaded === 'true') return;
 
-                googletag.cmd.push(function() {
-                    googletag.defineSlot(path, [
-                        [300, 250],
-                        [336, 280],
-                        [250, 250]
-                    ], id).addService(googletag.pubads());
+                        // Load ad when it becomes visible
+                        googletag.cmd.push(function() {
+                            googletag.defineSlot(path, [
+                                [300, 250],
+                                [336, 280],
+                                [250, 250]
+                            ], id).addService(googletag.pubads());
 
-                    googletag.display(id);
+                            googletag.display(id);
+                        });
+
+                        slot.setAttribute('data-gpt-loaded', 'true');
+                        obs.unobserve(slot); // Stop observing once loaded
+                    }
                 });
+            }, {
+                rootMargin: '200px 0px', // Trigger loading slightly before it's in view
+                threshold: 0
+            });
 
-                // Mark slot as initialized
-                slot.setAttribute('data-gpt-loaded', 'true');
+            newSlots.forEach(slot => {
+                observer.observe(slot);
             });
         }
     </script>
