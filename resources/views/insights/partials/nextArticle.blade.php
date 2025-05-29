@@ -222,14 +222,7 @@
 
                     $adsInserted = 0;
                     $adKeys = array_keys($adSlots);
-                    // $adInterval = $totalBlocks >= 80 ? 8 : ($totalBlocks >= 50 ? 5 : 3);
-                    if ($totalBlocks >= 80 && $totalBlocks <= 100) {
-                        $adInterval = (int) ceil($totalBlocks / 8);
-                    } elseif ($totalBlocks >= 50 && $totalBlocks < 80) {
-                        $adInterval = (int) ceil($totalBlocks / 6);
-                    } else {
-                        $adInterval = $totalBlocks >= 20 ? (int) ceil($totalBlocks / 5) : (int) ceil($totalBlocks / 4);
-                    }
+                    $adInterval = $totalBlocks >= 80 ? 8 : ($totalBlocks >= 50 ? 5 : 3);
                     $renderedContent = '';
 
                     foreach ($blocks as $index => $block) {
