@@ -162,7 +162,7 @@
                 </div>
                 {{-- ads for mobile & desktop --}}
                 <div class="shortdes">{{ $nextArticle->shortDesc }}</div>
-                {{-- @php
+                @php
                     // Match <p>, <table>, <ul>, <ol>, <blockquote>, etc. to split the content
                     $blocks = preg_split(
                         '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
@@ -239,9 +239,9 @@
                             $adsInserted++;
                         }
                     }
-                @endphp --}}
+                @endphp
                 {{-- pankaj code --}}
-                @php
+                {{-- @php
                     $blocks = preg_split(
                         '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
                         $nextArticle->content,
@@ -289,7 +289,7 @@
                             $adsInserted++;
                         }
                     }
-                @endphp
+                @endphp --}}
 
                 {{-- pankaj code --}}
                 <div class="articlecontent" data-article-id="{{ $nextArticle->news_id }}">
