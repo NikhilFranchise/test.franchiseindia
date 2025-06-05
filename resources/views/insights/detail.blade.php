@@ -200,7 +200,7 @@
 
                         {{-- ads for mobile & desktop --}}
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
-                        @php
+                        {{-- @php
                             // Match <p>, <table>, <ul>, <ol>, <blockquote>, etc. to split the content
                             $blocks = preg_split(
                                 '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
@@ -277,9 +277,9 @@
                                     $adsInserted++;
                                 }
                             }
-                        @endphp
+                        @endphp --}}
                         {{-- pankaj code --}}
-                        {{-- @php
+                        @php
                             $blocks = preg_split(
                                 '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
                                 $newsDetails->content,
@@ -327,7 +327,7 @@
                                     $adsInserted++;
                                 }
                             }
-                        @endphp --}}
+                        @endphp
 
                         {{-- pankaj code --}}
                         <div class="articlecontent" data-article-id="{{ $newsDetails->news_id }}">
