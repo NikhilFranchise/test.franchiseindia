@@ -298,7 +298,7 @@
                             ];
 
                             $adKeys = array_keys($adSlots);
-                            $maxAds = min(count($adSlots), floor($totalBlocks / 5)); // max 5, minimum every 4 blocks
+                            $maxAds = min(count($adSlots), floor($totalBlocks / 4)); // max 5, minimum every 4 blocks
                             $adsInserted = 0;
 
                             // Dynamically calculate where to place ads
