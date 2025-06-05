@@ -200,7 +200,7 @@
 
                         {{-- ads for mobile & desktop --}}
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
-                        {{-- @php
+                        @php
                             // Match <p>, <table>, <ul>, <ol>, <blockquote>, etc. to split the content
                             $blocks = preg_split(
                                 '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
@@ -217,13 +217,13 @@
 
                             // Decide number of ads based on paragraph count
                             if ($totalParagraphs >= 100) {
-                                $adsToShow = 10;
+                                $adsToShow = 9;
                             } elseif ($totalParagraphs >= 80) {
-                                $adsToShow = 8;
+                                $adsToShow = 7;
                             } elseif ($totalParagraphs >= 40) {
-                                $adsToShow = 5;
+                                $adsToShow = 4;
                             } else {
-                                $adsToShow = 3;
+                                $adsToShow = 2;
                             }
 
                             // Base ad slots (Google Ad Manager paths)
@@ -277,9 +277,9 @@
                                     $adsInserted++;
                                 }
                             }
-                        @endphp --}}
+                        @endphp
                         {{-- pankaj code --}}
-                        @php
+                        {{-- @php
                             $blocks = preg_split(
                                 '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
                                 $newsDetails->content,
@@ -327,7 +327,7 @@
                                     $adsInserted++;
                                 }
                             }
-                        @endphp
+                        @endphp --}}
 
                         {{-- pankaj code --}}
                         <div class="articlecontent" data-article-id="{{ $newsDetails->news_id }}">
