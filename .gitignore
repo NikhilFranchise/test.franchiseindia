@@ -1,8 +1,8 @@
 /.phpunit.cache
 /node_modules
+/public
 /public/build
-public/tinymce
-/public-15-5-25
+/public/tinymce
 /public/storage
 /storage/*.key
 /vendor
