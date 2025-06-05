@@ -244,7 +244,7 @@
                 @php
                     $blocks = preg_split(
                         '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
-                        $newsDetails->content,
+                        $nextArticle->content,
                         -1,
                         PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
                     );
@@ -277,7 +277,7 @@
                         if (in_array($index, $insertPositions) && $adsInserted < $maxAds) {
                             $slotId = $adKeys[$adsInserted];
                             $slotPath = $adSlots[$slotId];
-                            $uniqueSlotId = $slotId . '-' . $newsDetails->news_id;
+                            $uniqueSlotId = $slotId . '-' . $nextArticle->news_id;
 
                             $renderedContent .= "<div class='inner-article-detail-desktop-ad'>
                                             <div id='{$uniqueSlotId}' class='gpt-inline-slot'
