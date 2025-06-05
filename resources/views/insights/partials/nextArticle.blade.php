@@ -162,48 +162,8 @@
                 </div>
                 {{-- ads for mobile & desktop --}}
                 <div class="shortdes">{{ $nextArticle->shortDesc }}</div>
-                {{-- <div class="articlecontent" data-article-id="{{ $nextArticle->news_id }}">
-                    @php
-                        $paragraphs = preg_split('/\r\n|\r|\n/', $nextArticle->content);
-                        $totalParagraphs = count($paragraphs);
-                        $adSlots = [
-                            'adslotInline_1_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250',
-                            'adslotInline_2_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250',
-                            'adslotInline_3_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250',
-                            'adslotInline_4_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250',
-                            'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
-                        ];
-
-                        $adsInserted = 0;
-                        $adKeys = array_keys($adSlots);
-                        $adInterval = $totalParagraphs >= 80 ? 8 : ($totalParagraphs >= 50 ? 5 : 3);
-                        $contentBlocks = [];
-
-                        foreach ($paragraphs as $index => $para) {
-                            $contentBlocks[] = '<p>' . $para . '</p>';
-                            if ($adInterval > 0 && ($index + 1) % $adInterval === 0 && $adsInserted < count($adSlots)) {
-                                $slotId = $adKeys[$adsInserted];
-                                $slotPath = $adSlots[$slotId];
-                                $uniqueSlotId = $slotId . '-' . $nextArticle->news_id;
-
-                                // Store slot info for JS
-                                $contentBlocks[] = "<div class='inner-article-detail-desktop-ad'>
-                                                                <div id='{$uniqueSlotId}' class='gpt-inline-slot'
-                                                                    data-slot-id='{$uniqueSlotId}'
-                                                                    data-slot-path='{$slotPath}'>
-                                                                </div>
-                                                            </div>";
-
-                                $adsInserted++;
-                            }
-                        }
-
-                        $renderedContent = implode("\r\n", $contentBlocks);
-                    @endphp
-                    {!! $renderedContent !!}
-                </div> --}}
-                @php
-                    // Match <p>, <table>, <ul>, <ol>, <blockquote>, etc.
+                {{-- @php
+                    // Match <p>, <table>, <ul>, <ol>, <blockquote>, etc. to split the content
                     $blocks = preg_split(
                         '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
                         $nextArticle->content,
@@ -212,6 +172,85 @@
                     );
 
                     $totalBlocks = count($blocks);
+
+                    // Count only <p> tags to determine ad logic
+                    preg_match_all('/<p.*?<\/p>/is', $nextArticle->content, $matches);
+                    $totalParagraphs = count($matches[0]);
+
+                    // Decide number of ads based on paragraph count
+                    if ($totalParagraphs >= 100) {
+                        $adsToShow = 10;
+                    } elseif ($totalParagraphs >= 80) {
+                        $adsToShow = 8;
+                    } elseif ($totalParagraphs >= 40) {
+                        $adsToShow = 5;
+                    } else {
+                        $adsToShow = 3;
+                    }
+
+                    // Base ad slots (Google Ad Manager paths)
+                    $baseAdSlots = [
+                        'adslotInline_1_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250',
+                        'adslotInline_2_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250',
+                        'adslotInline_3_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250',
+                        'adslotInline_4_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250',
+                        'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
+                    ];
+
+                    // Prepare final dynamic ad slots
+                    $adSlots = [];
+                    $baseKeys = array_keys($baseAdSlots);
+                    for ($i = 0; $i < $adsToShow; $i++) {
+                        $baseKey = $baseKeys[$i % count($baseKeys)];
+                        $slotKey = "{$baseKey}_{$nextArticle->news_id}_{$i}";
+                        $slotPath = $baseAdSlots[$baseKey];
+                        $adSlots[$slotKey] = $slotPath;
+                    }
+
+                    $adKeys = array_keys($adSlots);
+
+                    // Calculate positions to insert ads evenly across blocks
+                    $adPositions = [];
+                    if ($adsToShow > 0 && $totalBlocks > $adsToShow) {
+                        $interval = floor($totalBlocks / ($adsToShow + 1));
+                        for ($i = 1; $i <= $adsToShow; $i++) {
+                            $adPositions[] = $i * $interval;
+                        }
+                    }
+
+                    // Render final HTML content with ads inserted
+                    $renderedContent = '';
+                    $adsInserted = 0;
+
+                    foreach ($blocks as $index => $block) {
+                        $renderedContent .= $block;
+
+                        if (in_array($index + 1, $adPositions) && isset($adKeys[$adsInserted])) {
+                            $slotId = $adKeys[$adsInserted];
+                            $slotPath = $adSlots[$slotId];
+
+                            $renderedContent .= "
+                                    <div class='inner-article-detail-desktop-ad'>
+                                        <div id='{$slotId}' class='gpt-inline-slot'
+                                            data-slot-id='{$slotId}'
+                                            data-slot-path='{$slotPath}'>
+                                        </div>
+                                    </div>";
+                            $adsInserted++;
+                        }
+                    }
+                @endphp --}}
+                {{-- pankaj code --}}
+                @php
+                    $blocks = preg_split(
+                        '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
+                        $newsDetails->content,
+                        -1,
+                        PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
+                    );
+
+                    $totalBlocks = count($blocks);
+
                     $adSlots = [
                         'adslotInline_1_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250',
                         'adslotInline_2_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250',
@@ -220,30 +259,39 @@
                         'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
                     ];
 
-                    $adsInserted = 0;
                     $adKeys = array_keys($adSlots);
-                    $adInterval = $totalBlocks >= 80 ? 8 : ($totalBlocks >= 50 ? 5 : 3);
+                    $maxAds = min(count($adSlots), floor($totalBlocks / 5)); // max 5, minimum every 4 blocks
+                    $adsInserted = 0;
+
+                    // Dynamically calculate where to place ads
+                    $insertPositions = [];
+                    for ($i = 1; $i <= $maxAds; $i++) {
+                        $insertPositions[] = floor(($totalBlocks * $i) / ($maxAds + 1));
+                    }
+
                     $renderedContent = '';
 
                     foreach ($blocks as $index => $block) {
                         $renderedContent .= $block;
 
-                        if ($adInterval > 0 && ($index + 1) % $adInterval === 0 && $adsInserted < count($adSlots)) {
+                        if (in_array($index, $insertPositions) && $adsInserted < $maxAds) {
                             $slotId = $adKeys[$adsInserted];
                             $slotPath = $adSlots[$slotId];
-                            $uniqueSlotId = $slotId . '-' . $nextArticle->news_id;
+                            $uniqueSlotId = $slotId . '-' . $newsDetails->news_id;
 
                             $renderedContent .= "<div class='inner-article-detail-desktop-ad'>
-                                    <div id='{$uniqueSlotId}' class='gpt-inline-slot'
-                                        data-slot-id='{$uniqueSlotId}'
-                                        data-slot-path='{$slotPath}'>
-                                    </div>
-                                </div>";
+                                            <div id='{$uniqueSlotId}' class='gpt-inline-slot'
+                                                data-slot-id='{$uniqueSlotId}'
+                                                data-slot-path='{$slotPath}'>
+                                            </div>
+                                        </div>";
+
                             $adsInserted++;
                         }
                     }
                 @endphp
 
+                {{-- pankaj code --}}
                 <div class="articlecontent" data-article-id="{{ $nextArticle->news_id }}">
                     {!! $renderedContent !!}
                 </div>
@@ -274,9 +322,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="contentarea">
+            {{-- <div class="contentarea">
                 @include('layout.insights.subscribenewsletter')
-            </div>
+            </div> --}}
         </div>
         <div class="col-md-4">
             <div class="right-wrap">
