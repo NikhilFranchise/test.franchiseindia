@@ -609,7 +609,7 @@
                 complete: () => {
                     isLoading = false;
                     $('#loader').hide();
-                    $('html, body').css("overflow", "auto");
+                    $('html, body').css("overflow", "visible");
 
                 }
             });
