@@ -148,10 +148,4 @@
         </div>
         @include('layout.insights.brandlist')
         @include('layout.insights.magblock')
-        <div class="listblk">
-            <div class="container">
-                <ul class="artilsit">
-                </ul>
-            </div>
-        </div>
     @endsection
