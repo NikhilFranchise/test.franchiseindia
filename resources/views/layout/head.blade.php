@@ -212,7 +212,7 @@
 </script>
 
 
-    
+
 <!-- End Google Tag Manager -->
 
 <script>
@@ -222,7 +222,9 @@
             $passIp = ['127.0.0.1', '182.76.132.82'];
         @endphp
         @if (request()->segment(1) == 'brands' && !in_array(request()->ip(), $passIp))
-            @if (!$auth::check() && $franDetails->membership_type == 0)
+            @if (
+                (!$auth::check() && $regionalFranchisor->first()->membership_type != 1) ||
+                    (!$auth::check() && $franDetails->membership_type == 0))
                 $('#login-pnl').modal({
                     backdrop: 'static',
                     keyboard: false
@@ -256,11 +258,14 @@
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16776470774"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'AW-16776470774');
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'AW-16776470774');
 </script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->

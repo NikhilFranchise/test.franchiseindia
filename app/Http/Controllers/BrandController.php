@@ -17,6 +17,8 @@ use App\Models\InvestorDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use App\Models\InsightList;
+use App\Models\Regional\DealerRegional;
+use App\Models\Regional\FranchiseRegional;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
@@ -34,13 +36,13 @@ class BrandController extends Controller
         $brandParamsArr = explode('.', $brandUrlParam);  // Explode it by separator & fetch details from DB
         $images = [];
         $view = "brandlanding";
-        if ($brandUrlParam =="fpf.96936"){
+        if ($brandUrlParam == "fpf.96936") {
             $brandUrlParam = "fiery-pot-foods.103010";
-            return redirect(Config('constants.MainDomain') .'/brands/' . $brandUrlParam, 301);
+            return redirect(Config('constants.MainDomain') . '/brands/' . $brandUrlParam, 301);
         }
-        if ($brandUrlParam =="berger-paints-india-limited.59427"){
+        if ($brandUrlParam == "berger-paints-india-limited.59427") {
             $brandUrlParam = "berger-paints.93087";
-            return redirect(Config('constants.MainDomain') .'/brands/' . $brandUrlParam, 301);
+            return redirect(Config('constants.MainDomain') . '/brands/' . $brandUrlParam, 301);
         }
         // dd($brandParamsArr);
         if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
@@ -49,23 +51,14 @@ class BrandController extends Controller
         //cache start
 
         $cacheDuration = 604800;
-        //  // Cache key for franchisor details
-        //  $franDetailsCacheKey = "fran_details_{$brandParamsArr[1]}";
-        //  $franDetails = Cache::remember($franDetailsCacheKey, $cacheDuration, function () use ($brandParamsArr) {
-        //      return FranchisorBusinessDetail::find($brandParamsArr[1]);
-        //  });
         $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
 
         //  dd($franDetails);
         $main_cat = Config('constants.CategoryArr');
-        // dd($franDetails->ind_main_cat);
         $a = $franDetails->ind_main_cat;
-        //  dd($main_cat[$a]);
         $index_value = $main_cat[$a];
-        //  dd($index_value);
         $u_slug = Config('category.SeoCategoryArr');
         $url_slug = $u_slug[$a];
-        // dd($url_slug);
         $fran_new_data = FranchisorBusinessDetail::query()
             ->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'unit_inv_min', 'unit_inv_max', 'company_logo', 'ind_main_cat')
             ->where('profile_status', 1)
@@ -73,7 +66,6 @@ class BrandController extends Controller
             ->where('ind_main_cat', $franDetails->ind_main_cat)
             ->take(9)
             ->get();
-        //  dd($fran_new_data);
         // Cache key for insight matches
         $insightMatchesCacheKey = "insight_matches_{$franDetails->company_name}";
         $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
@@ -81,16 +73,12 @@ class BrandController extends Controller
             $cleanCompanyName = preg_replace('/[^a-zA-Z0-9\s]/', '', $franDetails->company_name);
             $cleanCompanyName = preg_replace('/\s+/', ' ', trim($cleanCompanyName));
             $companyNameRegex = preg_quote($cleanCompanyName, '/');
-            // $companyNameRegex = preg_quote($franDetails->company_name, '/'); // Escape special regex characters
-            // Add boundaries to the company name, allowing spaces or punctuation around it
-            // $pattern = '(?i)(^|[[:space:][:punct:]])' . $companyNameRegex . '([[:space:][:punct:]]|$)';
             $pattern = '(?i)(^|[[:space:]])' . $companyNameRegex . '([[:space:]]|$)';
 
 
             return InsightList::query()
                 ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
                 ->where('status', 1)
-                // ->whereIn('insight_type', ['News', 'Article', 'Interview']) // Uncomment if needed
                 ->whereRaw("LOWER(title) REGEXP LOWER(?)", [$pattern])
                 ->orderByDesc('created_at')
                 ->limit(3)
@@ -101,46 +89,8 @@ class BrandController extends Controller
                 });
         });
 
-        // dd($insightMatches);
-
-
-        // Cache key for API response
-        // $apiDataCacheKey = "api_data_{$franDetails->company_name}";
-        // $dataFromB = Cache::remember($apiDataCacheKey, $cacheDuration, function () use ($franDetails) {
-        //     $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
-        //     $response = Http::get($apiUrl, ['company_name' => $franDetails->company_name]);
-
-        //     return $response->json();
-        // });
-
-        // $insightMatchesArray = $insightMatches->toArray();
-        // $dataFromBArray = $dataFromB;
-
-        // // Combine both arrays into one
-        // $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
         $combinedDataCollection = $insightMatches->toArray();
         $combinedDataCollection = collect($combinedDataCollection);
-
-
-
-        //cache end
-        // dd($combinedDataCollection);
-
-
-        //OI Redirection Start
-        // if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
-        //     $oiBrandsCacheKey = "oi_brands_{$franDetails->franchisor_id}";
-        //      // Retrieve OI Brands data from cache or database
-        //         $iobrands = Cache::remember($oiBrandsCacheKey, $cacheDuration, function () use ($franDetails) {
-        //             return OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
-        //         });
-        //     // $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
-        //     //dd($iobrands);
-        //     if (!empty($iobrands)) {
-        //         $ioRedirect = Config('constants.OIDomain') . '/manufacturer/' . $iobrands->profile_name . '-' . $iobrands->brand_id;
-        //         return redirect($ioRedirect, 301);
-        //     }
-        // }
         //OI Redirection Code End
 
         if (!empty($franDetails) && request()->segment(1) == 'hi' && $franDetails->is_hindi == 0)
@@ -192,6 +142,22 @@ class BrandController extends Controller
                 'ip' => $request->ip(),
                 'date' => date('Y-m-d')
             ]);
+        }
+
+        // First, try to find a matching record in FranchiseRegional
+        $regionalFranchisor = FranchiseRegional::query()
+            ->select('fihl_id', 'membership_type', 'membership_plan')
+            ->where('fihl_id', $franDetails->franchisor_id)
+            ->where('status', 1)
+            ->first();
+
+        // If not found in FranchiseRegional, check DealerRegional
+        if (!$regionalFranchisor) {
+            $regionalFranchisor = DealerRegional::query()
+            ->select('fihl_id', 'membership_type', 'membership_plan')
+            ->where('fihl_id', $franDetails->franchisor_id)
+            ->where('status', 1)
+            ->first();
         }
 
         // Check for the userclicks table count
@@ -275,10 +241,10 @@ class BrandController extends Controller
                 ->first();
 
             // return the investor data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection'));
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection', 'regionalFranchisor'));
         } else {
             // return the data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection', 'fran_new_data', 'index_value', 'main_cat', 'url_slug'));
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection', 'fran_new_data', 'index_value', 'main_cat', 'url_slug', 'regionalFranchisor'));
         }
     }
 
