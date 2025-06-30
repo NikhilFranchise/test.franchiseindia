@@ -220,7 +220,9 @@
         @php
             $auth = new \Illuminate\Support\Facades\Auth();
             $passIp = ['127.0.0.1', '182.76.132.82'];
+            $regionalMembership = $regionalFranchisor->first()->membership_type ?? 0;
         @endphp
+        @dd($regionalMembership);
         @if (request()->segment(1) == 'brands' && !in_array(request()->ip(), $passIp))
             @if (
                 (!$auth::check() && $regionalFranchisor->first()->membership_type != 1) ||
