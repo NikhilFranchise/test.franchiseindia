@@ -220,13 +220,11 @@
         @php
             $auth = new \Illuminate\Support\Facades\Auth();
             $passIp = ['127.0.0.1', '182.76.132.82'];
-            $regionalMembership = $regionalFranchisor->first()->membership_type ?? 0;
+            $firstRegionalFranchisor = $regionalFranchisor ? $regionalFranchisor->first() : null;
+            $regionalMembershipType = $firstRegionalFranchisor ? (int) $firstRegionalFranchisor->membership_type : null;
         @endphp
-        @dd($regionalMembership);
         @if (request()->segment(1) == 'brands' && !in_array(request()->ip(), $passIp))
-            @if (
-                (!$auth::check() && $regionalFranchisor->first()->membership_type != 1) ||
-                    (!$auth::check() && $franDetails->membership_type == 0))
+            @if ((!$auth::check() && $regionalMembershipType !== 1) || (!$auth::check() && $franDetails->membership_type == 0))
                 $('#login-pnl').modal({
                     backdrop: 'static',
                     keyboard: false
