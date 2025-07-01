@@ -232,21 +232,32 @@
                 $firstRegionalFranchisor = $regionalFranchisor ? $regionalFranchisor->first() : null;
                 $regionalMembershipType = $firstRegionalFranchisor ? (int) $firstRegionalFranchisor->membership_type : null;
                 $mainMembershipType = (int) $franDetails->membership_type;
+                $isAuthenticated = $auth::check();
             @endphp
-            @if (!$auth::check() && $mainMembershipType == 0)
-                @if ($regionalMembershipType != 1)
-                    $('#login-pnl').modal({
-                        backdrop: 'static',
-                        keyboard: false
-                    });
-                    $('#login-pnl').modal('show');
-                    $("#loginactive").trigger("click");
-                    $('#login-pnl').modal({
-                        backdrop: 'static',
-                        keyboard: false
-                    });
-                    $('#login-pnl .close').css('display', 'none');
-                @endif
+            // @if (!$auth::check() && $mainMembershipType == 0)
+            //     @if ($regionalMembershipType != 1)
+            //         $('#login-pnl').modal({
+            //             backdrop: 'static',
+            //             keyboard: false
+            //         });
+            //         $('#login-pnl').modal('show');
+            //         $("#loginactive").trigger("click");
+            //         $('#login-pnl').modal({
+            //             backdrop: 'static',
+            //             keyboard: false
+            //         });
+            //         $('#login-pnl .close').css('display', 'none');
+            //     @endif
+            // @endif
+            @if ( !$isAuthenticated &&  $mainMembershipType === 0 &&  (!isset($regionalMembershipType) || $regionalMembershipType === 0 ))
+                // Show popup
+                $('#login-pnl').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                $('#login-pnl').modal('show');
+                $("#loginactive").trigger("click");
+                $('#login-pnl .close').css('display', 'none');
             @endif
         @endif
     });
