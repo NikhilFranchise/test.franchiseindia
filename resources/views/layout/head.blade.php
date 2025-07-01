@@ -214,28 +214,39 @@
 
 
 <!-- End Google Tag Manager -->
-
+@if (request()->segment(1) == 'brands')
+    @php
+        $firstRegionalFranchisor = $regionalFranchisor ? $regionalFranchisor->first() : null;
+        $regionalMembershipType = $firstRegionalFranchisor ? (int) $firstRegionalFranchisor->membership_type : null;
+        $mainMembershipType = (int) $franDetails->membership_type;
+    @endphp
+@endif
+@php
+    $auth = new \Illuminate\Support\Facades\Auth();
+    $passIp = ['127.0.0.1', '182.76.132.82'];
+@endphp
 <script>
     $(document).ready(function() {
-        @php
-            $auth = new \Illuminate\Support\Facades\Auth();
-            $passIp = ['127.0.0.1', '182.76.132.82'];
-            $firstRegionalFranchisor = $regionalFranchisor ? $regionalFranchisor->first() : null;
-            $regionalMembershipType = $firstRegionalFranchisor ? (int) $firstRegionalFranchisor->membership_type : null;
-        @endphp
         @if (request()->segment(1) == 'brands' && !in_array(request()->ip(), $passIp))
-            @if ((!$auth::check() && $regionalMembershipType !== 1) || (!$auth::check() && $franDetails->membership_type == 0))
-                $('#login-pnl').modal({
-                    backdrop: 'static',
-                    keyboard: false
-                });
-                $('#login-pnl').modal('show');
-                $("#loginactive").trigger("click");
-                $('#login-pnl').modal({
-                    backdrop: 'static',
-                    keyboard: false
-                });
-                $('#login-pnl .close').css('display', 'none');
+            @php
+                $firstRegionalFranchisor = $regionalFranchisor ? $regionalFranchisor->first() : null;
+                $regionalMembershipType = $firstRegionalFranchisor ? (int) $firstRegionalFranchisor->membership_type : null;
+                $mainMembershipType = (int) $franDetails->membership_type;
+            @endphp
+            @if (!$auth::check() && $mainMembershipType == 0)
+                @if ($regionalMembershipType != 1)
+                    $('#login-pnl').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    $('#login-pnl').modal('show');
+                    $("#loginactive").trigger("click");
+                    $('#login-pnl').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                    $('#login-pnl .close').css('display', 'none');
+                @endif
             @endif
         @endif
     });
