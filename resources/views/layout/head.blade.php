@@ -249,7 +249,8 @@
             //         $('#login-pnl .close').css('display', 'none');
             //     @endif
             // @endif
-            @if ( !$isAuthenticated &&  $mainMembershipType === 0 &&  (!isset($regionalMembershipType) || $regionalMembershipType === 0 ))
+            @if (  (!$isAuthenticated && $mainMembershipType === 0 && $regionalMembershipType === 0) ||
+            ($isAuthenticated && $mainMembershipType === 1 && $regionalMembershipType === 1))
                 // Show popup
                 $('#login-pnl').modal({
                     backdrop: 'static',
