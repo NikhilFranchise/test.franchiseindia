@@ -144,20 +144,16 @@ class BrandController extends Controller
             ]);
         }
 
-        // First, try to find a matching record in FranchiseRegional
-        $regionalFranchisor = FranchiseRegional::query()
-            ->select('fihl_id', 'membership_type', 'membership_plan')
+        $regionalFranchisorMembership = FranchiseRegional::query()
             ->where('fihl_id', $franDetails->franchisor_id)
             ->where('status', 1)
-            ->first();
+            ->value('membership_type'); // returns the first column value directly
 
-        // If not found in FranchiseRegional, check DealerRegional
-        if (!$regionalFranchisor) {
-            $regionalFranchisor = DealerRegional::query()
-            ->select('fihl_id', 'membership_type', 'membership_plan')
-            ->where('fihl_id', $franDetails->franchisor_id)
-            ->where('status', 1)
-            ->first();
+        if ($regionalFranchisorMembership == 0) {
+            $regionalFranchisorMembership = DealerRegional::query()
+                ->where('fihl_id', $franDetails->franchisor_id)
+                ->where('status', 1)
+                ->value('membership_type');
         }
 
         // Check for the userclicks table count
@@ -241,10 +237,10 @@ class BrandController extends Controller
                 ->first();
 
             // return the investor data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection', 'regionalFranchisor'));
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection', 'regionalFranchisorMembership'));
         } else {
             // return the data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection', 'fran_new_data', 'index_value', 'main_cat', 'url_slug', 'regionalFranchisor'));
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection', 'fran_new_data', 'index_value', 'main_cat', 'url_slug', 'regionalFranchisorMembership'));
         }
     }
 
