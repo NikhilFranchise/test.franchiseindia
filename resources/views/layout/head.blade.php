@@ -205,6 +205,8 @@
     })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
 </script>
 <!-- End Google Tag Manager -->
+        {{-- @dd($isAuthenticated, $mainMembershipType, $regionalMembershipType, request()->ip(), $passIp); --}}
+
 <script>
     $(document).ready(function() {
         @php
@@ -214,7 +216,6 @@
             $regionalMembershipType = $regionalFranchisorMembership ?? 0;
             $mainMembershipType = isset($franDetails->membership_type) ? (int) $franDetails->membership_type : 0;
         @endphp
-        @dd($isAuthenticated, $mainMembershipType, $regionalMembershipType, request()->ip(), $passIp);
         @if (request()->segment(1) == 'brands' && !in_array(request()->ip(), $passIp))
             @if (!$isAuthenticated && $mainMembershipType === 0 && $regionalMembershipType === 0)
                 $('#login-pnl').modal({
