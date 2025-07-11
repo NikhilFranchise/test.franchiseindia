@@ -27,6 +27,11 @@ class BrandController extends Controller
     //pankaj redis implementation start
     public function brandDetails(Request $request)
     {
+        $referrer = $request->headers->get('referer', 'No referrer found');
+
+        // \Log::info('User came from: ' . $referrer);
+        dd('Previous url' .$referrer);
+
         // Initialize the variables
         // dd($request->all());
         // dd('yes');
