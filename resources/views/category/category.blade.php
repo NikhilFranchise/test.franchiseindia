@@ -822,6 +822,22 @@
                                         <textarea class="form-control height80 blur" name="detailsfreeadvice1" id="detailsfreeadvice1"
                                             placeholder="Enter Details"></textarea>
                                     </div>
+                                    <div class="form-group mt-4 mb-4">
+                                        <div class="captcha">
+                                            <span>{!! captcha_img() !!}</span>
+                                            <button type="button" class="btn btn-danger" class="reload" id="reload">
+                                                &#x21bb;
+                                            </button>
+                                        </div>
+                                    </div>
+    
+                                    <div class="form-group mb-4">
+                                        <input id="captcha" type="text" class="form-control"
+                                            placeholder="Enter Captcha" name="captcha">
+                                      <span class="text-danger" id="captcha-error"></span>
+                                        {{-- <br> --}}
+                                        {{-- <span class="text-danger">hello</span> --}}
+                                    </div>
                                     <div class="checkbox rm-prop">
                                         <label>
                                             <input type="checkbox" name="is_newsletterfreeadvice1"
@@ -852,7 +868,79 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-2.4.min.js"></script>
 
+    <!-- above jquery version is affecting jquery 3.1 and causing error on price range slider -->
+   <script type="text/javascript">
+       $('#reload').click(function() {
+           // console.log('called');
+           var endpoint = '/reload-captcha';
+           var baseUrl = '{{ Config('constants.MainDomain') }}';
+           // console.log(baseUrl);
+           // Construct the full URL
+           var fullUrl = baseUrl + endpoint;
+           $.ajax({
+               type: 'GET',
+               url: fullUrl,
+               success: function(data) {
+                   // console.log('yes');
+                   $(".captcha span").html(data.captcha);
+               }
+           });
+       });
+   </script>
+   
+   <script>
+       $(document).ready(function() {
+           $('#catpagepopup').on('submit', function(e) {
+               e.preventDefault(); // Prevent default form submit
+               $('#sub input[type="submit"]').val('Please wait...');
+               var formData = $(this).serialize(); // Collect all form inputs
+          
+               $.ajax({
+                   type: 'POST',
+                   url: '{{ route('form.submithome2') }}',
+                   data: formData,
+                   success: function(response) {
+                       // alert("Form submitted successfully!");
+                       $('#catpagepopup')[0].reset();
+                       $('#reload').click(); // reload captcha
+                       $('.error-message').text(''); // clear all errors
+                        window.location = "/thanks-advice-form";
+                   },
+                   error: function(xhr) {
+                       if (xhr.status === 422) {
+                           let errors = xhr.responseJSON.errors;
+                           $('.error-message').text(''); // clear old errors
+   
+                           $.each(errors, function(key, value) {
+                               $('#' + key + '-error').text(value[
+                                   0]); // show error below each field
+                           });
+                           $('#sub input[type="submit"]').val('Ask Expert');
+                         
+                       } else {
+                           alert("An unexpected error occurred.");
+                           $('#sub input[type="submit"]').val('Ask Expert');
+                           
+                       }
+                   }
+               });
+   
+           });
+   
+           // Reload CAPTCHA image
+           $('#reload').click(function() {  
+               $.ajax({
+                   type: 'GET',
+                   url: '/reload-captcha',
+                   success: function(data) {
+                       $(".captcha span").html(data.captcha);
+                   }
+               });
+           });
+       });
+   </script>
     <!--  Start Rating modal code  -->
     <div id="myRating" class="modal fade" role="dialog" style = "">
         <div class="modal-dialog">

@@ -14,6 +14,7 @@ class SearchMonitor extends Model
         'keyword',
         'source',
         'date',
+        'count',
     ];
 
 }
