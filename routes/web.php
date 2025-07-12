@@ -1260,3 +1260,4 @@ Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('pass
 Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
 Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
 Route::get('/sendmail', [CommonController::class, 'send_email']);
+Route::post('/submit-form2', [AdviceController::class, 'freeadviceHome_popup2'])->name('form.submithome2');
