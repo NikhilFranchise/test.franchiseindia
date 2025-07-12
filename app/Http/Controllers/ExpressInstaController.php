@@ -647,6 +647,7 @@ class ExpressInstaController extends Controller
                     if ($franchisorDetail->membership_type != 0) {
                         //sms sending
                         $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name, strlen($phone) > 40 ? substr($phone, 0, 15) . ".." : $phone);
+                        CommonController::send_sms_freeinfo($userDetail->mobile, $franSmsMsg);
 
                         //Sending Paid Franchisor Notifications
                         $this->sendFranNotifications($userDetail->email, $details, $userDetail->mobile, $franSmsMsg, 'paid');

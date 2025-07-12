@@ -1325,6 +1325,71 @@ public function thankYou(Request $request){
     // dd($message);
     return view('thanks.thanks' , compact('message'));
 }
+
+public static function send_sms_freeinfo($mobileNo, $message)
+    {
+        // dd('yes');
+        $mobileNo = (string) ((int) $mobileNo);
+        $message = htmlentities($message);
+
+        /**
+         *  Check For Mobile Verification Code
+         */
+
+        // $contains = Str::contains($message, 'verification code is');
+        // if ($contains == false) {
+        //     return response()->json(['message' => 'SMS Sending Block', 'status' => 'success']);
+        // }
+
+        if (strlen($mobileNo) == 12 && substr($mobileNo, 0, 2) == "91")
+            $mobileNo = substr($mobileNo, 2, 10);
+
+        if (strlen($mobileNo) > 10)
+            return response()->json(['message' => 'SMS Sending Failed(Not a valid indian number)', 'status' => 'failed']);
+
+        if (!is_numeric($mobileNo))
+            return response()->json(['message' => 'SMS Sending Failed(Not a valid numeric number)', 'status' => 'failed']);
+
+        if (!in_array(substr($mobileNo, 0, 1), [9, 8, 7, 6]))
+            return response()->json(['message' => 'SMS Sending Failed(Not a valid number)', 'status' => 'failed']);
+
+        $mobile_regex = "/^[6-9][0-9]{9}$/";
+        if (strlen($mobileNo) != 10 || !(preg_match($mobile_regex, $mobileNo) === 1))
+            return response()->json(['message' => 'SMS Sending Failed(Not a valid number)', 'status' => 'failed']);
+
+        $mobileNo = CommonController::cleanSpecialChar($mobileNo);
+
+        // Account details
+        $userName = urlencode(config('txtlocal.username')); // Username
+        $apiKey = urlencode(config('txtlocal.apiKey')); // Hash
+
+        // Message details
+        $sender = urlencode(config('txtlocal.sender'));
+        $message = rawurlencode($message);
+
+        // Prepare data for POST request
+        $data = "username=" . $userName . "&hash=" . $apiKey . "&message=" . $message . "&sender=" . $sender . "&numbers=" . $mobileNo;
+
+        // Send the POST request with cURL
+        $ch = curl_init(config('txtlocal.apiUrl'));
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        // Process your response here
+        $jsonData = json_decode($response, true);
+
+        // If sms sending failed, log the data
+        if ($jsonData['status'] == 'failure') {
+            echo $jsonData['errors'][0]['message'];
+            Log::getFacadeRoot()->alert('SMS sending Failed - CommonController : ' . $jsonData['errors'][0]['message'] . ' -- ' . $message . ' -- ' . $jsonData['errors'][0]['code'] . ' -- ' . $mobileNo);
+            return response()->json(['message' => 'SMS Sending Failed', 'status' => 'failure']);
+        }
+        // If sms sending successful, return true
+        return response()->json(['message' => 'SMS Sending successfull', 'status' => 'success']);
+    }
 }
 
  
