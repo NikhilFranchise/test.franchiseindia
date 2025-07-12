@@ -88,6 +88,6 @@ class FranchisorBusinessDetail extends Model
 
     public function topFranchisorLeaders()
     {
-        return $this->hasOne(TopFranchisorLeaders::class, 'franchisor_id', 'franchisor_id');
+        return $this->belongsTo(TopFranchisorLeaders::class, 'franchisor_id', 'franchisor_id');
     }
 }

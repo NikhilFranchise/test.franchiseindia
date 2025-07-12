@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TopFranchisorLeaders extends Model
 {
     use HasFactory;
-    
+
     protected $table      = 'top_franchisor_brands';
     protected $primaryKey = 'id';
 

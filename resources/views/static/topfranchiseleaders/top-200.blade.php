@@ -1060,9 +1060,9 @@
 
                 <div class="col-md-9">
                     @include('category.free-info')
-
+                    {{-- @dd($totalCount); --}}
                     <div class="buttons">
-                        <span id="recordCount">{{ $count }} RESULTS</span>
+                        <span id="recordCount">{{ $count }} RESULTS OF {{ $totalCount +  count(config('staticBrands.staticBrands')) }}</span>
                         <div class="list"><i class="fa fa-list"></i></div>
                         <div class="grid"><i class="fa fa-th-large"></i></div>
                     </div>
@@ -1369,7 +1369,7 @@
         $(document).ready(function() {
             let isLoading = false;
             let getfreecount = 0; // Initialize the counter
-
+            let staticCount = '{{ count(config('staticBrands.staticBrands')) }}';
             function fetchData() {
                 if (isLoading) return;
                 isLoading = true;
@@ -1398,7 +1398,7 @@
                         // console.log(response); // ✅ Should now show full JSON
                         // alert(response.html);
                         $("#wrapper").html(response.html); // Replace with filtered content
-                        $("#recordCount").text(response.count + " RESULTS"); // Update count
+                        $("#recordCount").text(response.count + " RESULTS OF " + (response.totalCount + parseInt(staticCount))); // Update count
                         if (response.franchisor_type) {
                             $("#ftypeSelect").html(
                                 `<option value="${response.franchisor_type}">
