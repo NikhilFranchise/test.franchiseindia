@@ -1044,7 +1044,10 @@ class InsightsController extends Controller
         // Determine the language based on the URL segment
         $isEnglish = $request->segment(2) == 'en' ? 'en' : 'hi';
         $redirectPath = $isEnglish == 'en' ? '/insights' : '/insights/hindi';
-
+        app()->setLocale($isEnglish);
+        session()->put('locale', $isEnglish);
+        // Determine models based on the language (English or Hindi)
+        $insightListModel = $isEnglish ? InsightList::class : InsightListHindi::class;
         // Set application locale and session locale
         app()->setLocale($isEnglish);
         session()->put('locale', $isEnglish);
@@ -1058,7 +1061,7 @@ class InsightsController extends Controller
             ->where('pod_lang', $isEnglish)
             ->where('status', 'A')
             ->orderBy('created_at', 'DESC')
-            ->paginate(8);
+            ->paginate(10);
 
         $listVideo = $videos->map(function ($video) use ($YOUTUBE_IMAGE_PATH, $YOUTUBE_URL) {
             // Access the category name safely using optional() and first()
@@ -1076,7 +1079,6 @@ class InsightsController extends Controller
                 'category' => $categoryName, // Safely access category name
             ];
         });
-        // dd($listVideo);
 
         // Fetch the latest podcasts (audio type)
         $podcast = FihlPodcastVideo::query()
@@ -1088,8 +1090,16 @@ class InsightsController extends Controller
             ->limit(4)
             ->get();
 
+        $popArticles = $insightListModel::query()->select('news_id', 'title', 'cat_id', 'subcat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at', 'published_date')
+            ->with('category')
+            ->withEffectiveDate()
+            ->where('insight_type', 'Article')
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByEffectiveDate('desc')
+            ->take(6)->get();
         // Return the view with the mapped videos and podcasts
-        return view('insights.video', compact('listVideo', 'videos', 'podcast'));
+        return view('insights.video', compact('listVideo', 'videos', 'podcast', 'popArticles'));
     }
 
 
@@ -1098,6 +1108,8 @@ class InsightsController extends Controller
     {
         $isEnglish = request()->segment(2) == 'en' ? 'en' : 'hi';
         $redirectPath = $isEnglish == 'en' ? '/insights' : '/insights/hindi';
+        $insightListModel = $isEnglish == 'en' ? InsightList::class : InsightListHindi::class;
+
         app()->setLocale($isEnglish);
         session()->put('locale', $isEnglish);
         if ($isEnglish == 'en') {
@@ -1107,7 +1119,17 @@ class InsightsController extends Controller
             $podcasts = FihlPodcastVideo::query()->where('podcast_type', 'A')->where('pod_lang', 'hi')->where('status', 'A')->where('podcast_id', '!=', '')->orderByDesc('created_at')->paginate(6);
             $podcastcount = FihlPodcastVideo::query()->where('podcast_type', 'A')->where('pod_lang', 'hi')->where('status', 'A')->where('podcast_id', '!=', '')->count();
         }
-        return view('insights.podcast', compact('podcasts', 'podcastcount'));
+
+        $popArticles = $insightListModel::query()->select('news_id', 'title', 'cat_id', 'subcat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at', 'published_date')
+            ->with('category')
+            ->withEffectiveDate()
+            ->where('insight_type', 'Article')
+            ->where('status', 1)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByEffectiveDate('desc')
+            ->take(6)->get();
+
+        return view('insights.podcast', compact('podcasts', 'podcastcount', 'popArticles'));
     }
 
     public static function createTagSlugUrl($slug)

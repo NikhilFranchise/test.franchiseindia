@@ -12,6 +12,7 @@ use App\Models\FranchisorSliderImage;
 use App\Models\FranchisorSliderTenure;
 use App\Models\FranchisorBusinessDetail;
 use App\Models\EventLocPopup;
+use App\Models\SearchMonitor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -218,6 +219,38 @@ class BusinessListingController extends Controller
      */
     public function searchBusinessListing(Request $request)
     {
+
+            // ✅ Block bots based on User-Agent
+            $userAgent = $request->header('User-Agent');
+            if (!$userAgent || preg_match('/bot|crawl|spider|curl|wget/i', $userAgent)) {
+                return response()->json([
+                    'message' => 'Bot detected. Request blocked.',
+                ], 403);
+            }
+    
+        // ✅ Parse previous page path (from referer or fallback)
+        $referer = $request->headers->get('referer') ?? url()->previous();
+        $parsedPath = parse_url($referer, PHP_URL_PATH);
+        $previousPath = $parsedPath ?? '/';
+    
+        // ✅ Sanitize and trim keyword input
+        $cleanKeyword = trim(strip_tags($request->input('text')));
+    
+        // ✅ Only store if keyword is longer than 4 characters
+        if (strlen($cleanKeyword) > 1) {
+            SearchMonitor::upsert(
+                [
+                    [
+                        'keyword' => $cleanKeyword,
+                        'date' => today(),
+                        'count' => 1,
+                    ]
+                ],
+                ['keyword', 'date'], // match condition
+                ['count' => DB::raw('count + 1')] // update logic
+            );
+            
+        }
         
         // dd('searchBusinessListing');
         $searchTerm = $request->route('searchTerm');

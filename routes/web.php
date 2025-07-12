@@ -536,7 +536,7 @@ Route::group(['prefix' => 'business-opportunities'], function () {
 // /Category Page Routes
 Route::group(['prefix' => 'category'], function () {
     Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('search', [BusinessListingController::class, 'searchBusinessListing']);
+    Route::get('search', [BusinessListingController::class, 'searchBusinessListing'])->middleware('throttle:search-limit');
     Route::get('searchby', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('index', function () {
         return redirect('business-opportunities/all/all', 301);
@@ -1260,3 +1260,4 @@ Route::get('/password-reset', [CommonController::class, 'thankYou'])->name('pass
 Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
 Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
 Route::get('/sendmail', [CommonController::class, 'send_email']);
+Route::post('/submit-form2', [AdviceController::class, 'freeadviceHome_popup2'])->name('form.submithome2');

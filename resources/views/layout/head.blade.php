@@ -1,11 +1,5 @@
 <meta charset="UTF-8">
 <meta content="{{ request()->segment(1) == 'hi' ? 'hi-in' : 'en-in' }}" name="language" />
-{{-- <title>@if (strpos(collect(request()->segments())->last(), 'range-') !== false)@php
-            $mainTitle = $seoTitle ? $seoTitle : '';$lastSegment = str_replace('range-', 'Under Range ', collect(request()->segments())->last());$title1 = $lastSegment . ' - Franchise India';$title = str_replace('- Franchise India', $title1, $seoTitle);
-            if (preg_match('/ - Franchise India/', $title)) { $mainTitle = $title; } elseif (preg_match('/at Franchise India/', $title)) { $mainTitle = str_replace('at Franchise India', $title1, $seoTitle);}
-        @endphp {{ $mainTitle }}
-    @else @yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities') @endif
-</title> --}}
 <title> @yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities')</title>
 <meta name="description" content="@yield('seoDesc', 'Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.')" />
 @if (request()->segment(1) == 'top-franchise-leaders')
@@ -210,19 +204,20 @@
         f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
 </script>
-
-
-    
 <!-- End Google Tag Manager -->
+        {{-- @dd($isAuthenticated, $mainMembershipType, $regionalMembershipType, request()->ip(), $passIp); --}}
 
 <script>
     $(document).ready(function() {
         @php
-            $auth = new \Illuminate\Support\Facades\Auth();
+            use Illuminate\Support\Facades\Auth;
+            $isAuthenticated = Auth::check();
             $passIp = ['127.0.0.1', '182.76.132.82'];
+            $regionalMembershipType = $regionalFranchisorMembership ?? 0;
+            $mainMembershipType = isset($franDetails->membership_type) ? (int) $franDetails->membership_type : 0;
         @endphp
         @if (request()->segment(1) == 'brands' && !in_array(request()->ip(), $passIp))
-            @if (!$auth::check() && $franDetails->membership_type == 0)
+            @if (!$isAuthenticated && $mainMembershipType === 0 && $regionalMembershipType === 0)
                 $('#login-pnl').modal({
                     backdrop: 'static',
                     keyboard: false
@@ -245,22 +240,16 @@
         cmd: []
     };
 </script>
-
-<!-- Global site tag (gtag.js) - Google Ads: 767541249 -->
-{{-- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-767541249"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16776470774"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'AW-767541249');
-</script> --}}
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16776470774"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-16776470774');
+    gtag('config', 'AW-16776470774');
 </script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
