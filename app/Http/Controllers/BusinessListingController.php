@@ -220,13 +220,13 @@ class BusinessListingController extends Controller
     public function searchBusinessListing(Request $request)
     {
 
-            // ✅ Block bots based on User-Agent
-            $userAgent = $request->header('User-Agent');
-            if (!$userAgent || preg_match('/bot|crawl|spider|curl|wget/i', $userAgent)) {
-                return response()->json([
-                    'message' => 'Bot detected. Request blocked.',
-                ], 403);
-            }
+            // // ✅ Block bots based on User-Agent
+            // $userAgent = $request->header('User-Agent');
+            // if (!$userAgent || preg_match('/bot|crawl|spider|curl|wget/i', $userAgent)) {
+            //     return response()->json([
+            //         'message' => 'Bot detected. Request blocked.',
+            //     ], 403);
+            // }
     
         // ✅ Parse previous page path (from referer or fallback)
         $referer = $request->headers->get('referer') ?? url()->previous();

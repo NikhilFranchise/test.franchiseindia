@@ -30,7 +30,7 @@ class BrandController extends Controller
         $referrer = $request->headers->get('referer', 'No referrer found');
 
         // \Log::info('User came from: ' . $referrer);
-        dd('Previous url' .$referrer);
+        // dd('Previous url' .$referrer);
 
         // Initialize the variables
         // dd($request->all());

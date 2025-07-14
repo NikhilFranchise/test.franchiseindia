@@ -2,6 +2,7 @@
 <html>
 <head>
     @include('layout.head')
+    @stack('styles')
 </head>
 <body onLoad=checkCookie()>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript>
