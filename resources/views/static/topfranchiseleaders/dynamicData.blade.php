@@ -78,27 +78,35 @@
          </div>
      @endforeach
      {{-- @dd(count(config('staticBrands.staticBrands'))); --}}
-     @foreach (config('staticBrands.staticBrands') as $brand)
-         <div class="col">
-             <div class="filter-list-brand">
-                 <div class="catimg">
-                     <img src="{{ url($brand['logo']) }}" alt="{{ $brand['brand'] }}">
-                 </div>
-                 <div class="finfo">
-                     <div class="catlist">
-                         <a href="{{ url('/business-opportunities/all/all') }}" id="brandnamecategory" target="_blank">
-                             {{ $brand['brand'] }}
-                         </a>
+     @if ($year == 2025)
+         @foreach (config('staticBrands.staticBrands') as $brand)
+             <div class="col">
+                 <div class="filter-list-brand">
+                     <div class="catimg">
+                         <img src="{{ url($brand['logo']) }}" alt="{{ $brand['brand'] }}">
                      </div>
-                     <span style="display: none;" id="brandinvestment">
-                         {{ $brand['investment'] }}
-                     </span>
-                     <div class="catlisthead">
-                         {{ $brand['sector'] }}
+                     <div class="finfo">
+                         <div class="catlist">
+                             <a href="{{ url('/business-opportunities/all/all') }}" id="brandnamecategory"
+                                 target="_blank">
+                                 {{ $brand['brand'] }}
+                             </a>
+                         </div>
+                         <span style="display: none;" id="brandinvestment">
+                             {{ $brand['investment'] }}
+                         </span>
+                         <div class="catlisthead">
+                             {{ $brand['sector'] }}
+                         </div>
+                     </div>
+                     <div class="catbtn bview">
+                         <input type="checkbox" name="getFreeInfo">
+                         <label for=""><span onclick="window.open('{{ url('/business-opportunities/all/all') }}', '_blank')"></span></label>
                      </div>
                  </div>
              </div>
-         </div>
-     @endforeach
+         @endforeach
+     @endif
+
 
  </div>

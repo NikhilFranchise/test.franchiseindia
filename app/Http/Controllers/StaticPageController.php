@@ -361,7 +361,9 @@ class StaticPageController extends Controller
         $filterLimit = $request->filterLimit ?? 25;
         $industry = $request->industry ?? null;
         $investment = $request->investmentRange ?? null;
-
+        // if ($request->ajax()) {
+        //     dd($year, $filterType, $filterLimit, $industry, $investment);
+        // }
         // Get available years for dropdown
         $years = TopFranchisorLeaders::select('franchisor_year')->distinct()->orderByDesc('franchisor_year')->get();
 
@@ -369,7 +371,7 @@ class StaticPageController extends Controller
         if (!$year) {
             $year = TopFranchisorLeaders::select('franchisor_year')->distinct()->orderByDesc('franchisor_year')->pluck('franchisor_year')->first();
         }
-
+         
         // Get franchise type for selected year
         $franchiseType = TopFranchisorLeaders::where('franchisor_year', $year)->value('franchisor_type');
         $totalCount = TopFranchisorLeaders::where('franchisor_year', $year)->count();
@@ -429,17 +431,21 @@ class StaticPageController extends Controller
         if (!empty($filterLimit) && is_numeric($filterLimit)) {
             $data = $data->take((int) $filterLimit);
         }
-
         $count = $data->count();
 
+        // if ($request->ajax()) {
+        //     dd($count, $year, $years, $totalCount, $franchiseType, $data);
+        // }
         if ($request->ajax()) {
-            $html = view('static.topfranchiseleaders.dynamicData', compact('data', 'count'))->render();
+            $html = view('static.topfranchiseleaders.dynamicData', compact('data', 'count', 'year', 'years', 'totalCount', 'franchiseType'))->render();
             Log::info('Rendered HTML:', ['html' => $html]);
             return response()->json([
                 'count' => $count,
                 'totalCount' => $totalCount,
                 'franchisor_type' => $franchiseType,
                 'html' => $html,
+                'year' => $year,
+                'years' => $years,
             ]);
         }
 
