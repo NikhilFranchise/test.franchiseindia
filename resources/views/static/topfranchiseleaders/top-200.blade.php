@@ -189,7 +189,7 @@
                 </div>
             </div>
         </div>
-        @include('static.topfranchiseleaders.BusinessHotspots')
+        @include('static.topfranchiseleaders.businessHotspot')
         <script type="text/javascript">
             var wrapper = document.getElementById("wrapper");
 
