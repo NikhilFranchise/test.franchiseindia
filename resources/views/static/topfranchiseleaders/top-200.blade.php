@@ -244,15 +244,15 @@
                             $("#wrapper").html(response.html);
                             console.log(response.count, response.totalCount, response.year, response.franchisor_type);
                             if (response.year == 2025) {
-                                alert('if');
+                                // alert('if');
                                 $("#recordCount").text(response.count + " RESULTS OF " + (response
                                     .totalCount + parseInt(staticCount)));
                             } else if (response.count == response.totalCount && response.year == 2025) {
-                                alert('else if');
+                                // alert('else if');
                                 $("#recordCount").text((response.count + parseInt(staticCount)) +
                                     " RESULTS OF " + (response.totalCount + parseInt(staticCount)));
                             } else {
-                                alert('else');
+                                // alert('else');
                                 $("#recordCount").text(response.count + " RESULTS OF " + response
                                     .totalCount);
                             }
