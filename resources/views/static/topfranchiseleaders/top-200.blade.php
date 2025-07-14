@@ -242,8 +242,9 @@
                         },
                         success: function(response) {
                             $("#wrapper").html(response.html);
-                            console.log(response.count, response.totalCount, response.year, response.franchisor_type);
-                            if (response.year == 2025) {
+                            console.log(response.count, response.totalCount, response.year, response
+                                .franchisor_type);
+                            if (response.year == 2025 && response.count != response.totalCount) {
                                 // alert('if');
                                 $("#recordCount").text(response.count + " RESULTS OF " + (response
                                     .totalCount + parseInt(staticCount)));
