@@ -32,4 +32,5 @@
             </ul>
         </div>
     </div>
+    @include('admin.insights.insights_stats')
 @endsection
