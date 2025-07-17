@@ -32,25 +32,49 @@
             background-color: #f4f4f4;
         }
         .pagination {
-            list-style: none;
-            display: flex;
-            gap: 6px;
-            padding: 0;
-        }
-        .pagination li {
-            display: inline;
-        }
-        .pagination a,
-        .pagination span {
-            padding: 6px 10px;
-            border: 1px solid #aaa;
-            color: #333;
-            text-decoration: none;
-        }
-        .pagination .active span {
-            background-color: #eee;
-            font-weight: bold;
-        }
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        list-style: none;
+        padding: 0;
+        gap: 6px;
+    }
+
+    .pagination li {
+        display: inline-block;
+    }
+
+    .pagination a,
+    .pagination span {
+        display: block;
+        padding: 8px 14px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .pagination a:hover {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+
+    .pagination .active span {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+        font-weight: bold;
+    }
+
+    .pagination .disabled span {
+        color: #999;
+        background-color: #eee;
+        cursor: not-allowed;
+    }
     </style>
 </head>
 <body>
@@ -98,10 +122,9 @@
             @endforeach
         </tbody>
     </table>
+    {{ $results->links('pagination::bootstrap-4') }}  {{-- For Bootstrap --}}
 
-    <div style="margin-top: 20px;">
-        {{ $results->links() }}
-    </div>
+
 @elseif($from && $to)
     <p>No records found in this date range.</p>
 @endif
