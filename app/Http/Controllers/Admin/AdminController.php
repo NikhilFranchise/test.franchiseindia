@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -52,10 +53,78 @@ class AdminController extends Controller
     /**
      *View the dashboard Page
      */
-    public function viewDashboard()
+    public function viewDashboard(Request $request)
     {
-        return view('admin/admin-dashboard');
+        if ($request->filled(['from_date', 'to_date'])) {
+            $startDate = Carbon::parse($request->from_date)->startOfDay();
+            $endDate = Carbon::parse($request->to_date)->endOfDay();
+
+            // 1. English Insights Count
+            $englishQuery = InsightList::select(
+                'insight_type',
+                DB::raw("
+                CASE 
+                    WHEN published_date IS NULL THEN created_at
+                    WHEN published_date = created_at THEN created_at
+                    WHEN published_date > created_at THEN published_date
+                    ELSE created_at
+                END AS effective_date
+            ")
+            )->where('status', 1);
+
+            $englishBase = $englishQuery->toBase();
+
+            $englishCounts = DB::table(DB::raw("({$englishBase->toSql()}) as subquery"))
+                ->mergeBindings($englishBase)
+                ->whereBetween('effective_date', [$startDate, $endDate])
+                ->selectRaw("
+                COUNT(CASE WHEN insight_type = 'Article' THEN 0 END) AS article_count,
+                COUNT(CASE WHEN insight_type = 'News' THEN 0 END) AS news_count,
+                COUNT(CASE WHEN insight_type = 'Interview' THEN 0 END) AS interview_count,
+                COUNT(CASE WHEN insight_type = 'Report' THEN 0 END) AS report_count,
+                COUNT(CASE WHEN insight_type NOT IN ('Article', 'News', 'Interview', 'Report') THEN 0 END) AS others_count
+            ")
+                ->first();
+
+            // 2. Hindi Insights Count
+            $hindiQuery = InsightListHindi::select(
+                'insight_type',
+                DB::raw("
+                CASE 
+                    WHEN published_date IS NULL THEN created_at
+                    WHEN published_date = created_at THEN created_at
+                    WHEN published_date > created_at THEN published_date
+                    ELSE created_at
+                END AS effective_date
+            ")
+            )->where('status', 1);
+
+            $hindiBase = $hindiQuery->toBase();
+
+            $hindiCounts = DB::table(DB::raw("({$hindiBase->toSql()}) as subquery"))
+                ->mergeBindings($hindiBase)
+                ->whereBetween('effective_date', [$startDate, $endDate])
+                ->selectRaw("
+                COUNT(CASE WHEN insight_type = 'Article' THEN 0 END) AS article_count,
+                COUNT(CASE WHEN insight_type = 'News' THEN 0 END) AS news_count,
+                COUNT(CASE WHEN insight_type = 'Interview' THEN 0 END) AS interview_count,
+                COUNT(CASE WHEN insight_type = 'Report' THEN 0 END) AS report_count,
+                COUNT(CASE WHEN insight_type NOT IN ('Article', 'News', 'Interview', 'Report') THEN 0 END) AS others_count
+            ")
+                ->first();
+
+            return view('admin.admin-dashboard', [
+                'from_date' => $startDate,
+                'to_date' => $endDate,
+                'englishCounts' => $englishCounts,
+                'hindiCounts' => $hindiCounts,
+            ]);
+        }
+
+        return view('admin.admin-dashboard');
     }
+
+
 
     /**
      *View the login Page
