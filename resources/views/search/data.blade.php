@@ -116,7 +116,7 @@
                 <tr>
                     <td>{{ $results->firstItem() + $index }}</td>
                     <td>{{ $row->keyword }}</td>
-                    <td>{{ $row->date }}</td>
+                    <td>{{ \Carbon\Carbon::parse($row->date)->format('Y-m-d') }}</td>
                     <td>{{ $row->count }}</td>
                 </tr>
             @endforeach

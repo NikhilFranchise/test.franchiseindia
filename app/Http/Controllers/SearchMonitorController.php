@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SearchMonitor;
+use Carbon\Carbon; // ← important!
 
 class SearchMonitorController extends Controller
 {
@@ -16,15 +17,28 @@ class SearchMonitorController extends Controller
         $results = collect();
 
         if ($from && $to) {
-            $results = SearchMonitor::whereBetween('date', [$from, $to])
-                ->orderBy('count', $sortOrder)
-                ->orderBy('date', 'desc')
-                ->paginate(25)
-                ->appends([
-                    'from' => $from,
-                    'to' => $to,
-                    'sort_order' => $sortOrder,
-                ]);
+            // $results = SearchMonitor::whereBetween('date', [$from, $to])
+            //     ->orderBy('count', $sortOrder)
+            //     ->orderBy('date', 'desc')
+            //     ->paginate(25)
+            //     ->appends([
+            //         'from' => $from,
+            //         'to' => $to,
+            //         'sort_order' => $sortOrder,
+            //     ]);
+             // Convert date strings to Carbon and strip time
+             $startDate = Carbon::parse($from)->startOfDay(); // 00:00:00
+             $endDate = Carbon::parse($to)->endOfDay();       // 23:59:59
+ 
+             $results = SearchMonitor::whereBetween('date', [$startDate, $endDate])
+                 ->orderBy('count', $sortOrder)
+                 ->orderBy('date', 'desc')
+                 ->paginate(25)
+                 ->appends([
+                     'from' => $from,
+                     'to' => $to,
+                     'sort_order' => $sortOrder,
+                 ]);
         }
 
         return view('search.data', [
