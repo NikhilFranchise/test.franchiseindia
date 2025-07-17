@@ -17,15 +17,6 @@ class SearchMonitorController extends Controller
         $results = collect();
 
         if ($from && $to) {
-            // $results = SearchMonitor::whereBetween('date', [$from, $to])
-            //     ->orderBy('count', $sortOrder)
-            //     ->orderBy('date', 'desc')
-            //     ->paginate(25)
-            //     ->appends([
-            //         'from' => $from,
-            //         'to' => $to,
-            //         'sort_order' => $sortOrder,
-            //     ]);
              // Convert date strings to Carbon and strip time
              $startDate = Carbon::parse($from)->startOfDay(); // 00:00:00
              $endDate = Carbon::parse($to)->endOfDay();       // 23:59:59
