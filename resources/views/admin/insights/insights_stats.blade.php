@@ -40,12 +40,13 @@
         margin: 15px 0px 10px 20px;
         display: flex;
     }
-    .col-md-6{
+
+    .col-md-6 {
         display: inline-block;
         width: 48%;
         vertical-align: top;
         margin-left: 1%;
-        
+
     }
 
     .insight-card {
@@ -87,18 +88,18 @@
         margin-left: 30px;
         border-radius: 2px;
     }
+
     .form-inline .btn-warning {
         width: 180px;
         margin-left: 30px;
     }
-
 </style>
 
-<div class="insights-container">
-    @if (
-        (session()->get('role') != 'ga' && session()->get('adminEmail') == 'techsupport@franchiseindia.net') ||
-            (session()->get('role') != 'ga' && session()->get('adminEmail') == 'pganesh@franchiseindia.net'))
+@if (
+    (session()->get('role') != 'ga' && session()->get('adminEmail') == 'techsupport@franchiseindia.net') ||
+        (session()->get('role') != 'ga' && session()->get('adminEmail') == 'pganesh@franchiseindia.net'))
 
+    <div class="insights-container">
         <h4 class="insights-title">Insights Monthly Stats Search</h4>
 
         <form method="get" class="form-group form-inline">
@@ -142,5 +143,5 @@
                 </div>
             </div>
         @endif
-    @endif
-</div>
+    </div>
+@endif
