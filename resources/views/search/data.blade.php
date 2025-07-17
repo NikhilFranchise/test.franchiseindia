@@ -128,6 +128,27 @@
 @elseif($from && $to)
     <p>No records found in this date range.</p>
 @endif
+<script>
+    const fromInput = document.querySelector('input[name="from_date"]');
+    const toInput = document.querySelector('input[name="to_date"]');
+
+    fromInput.addEventListener('change', () => {
+        const fromDate = fromInput.value;
+        toInput.min = fromDate;
+
+        if (toInput.value < fromDate) {
+            toInput.value = fromDate;
+        }
+    });
+
+    // Set min to_date on page load if from_date exists
+    window.addEventListener('DOMContentLoaded', () => {
+        const fromDate = fromInput.value;
+        if (fromDate) {
+            toInput.min = fromDate;
+        }
+    });
+</script>
 
 </body>
 </html>
