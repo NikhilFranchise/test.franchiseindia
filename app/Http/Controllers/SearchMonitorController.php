@@ -24,7 +24,7 @@ class SearchMonitorController extends Controller
              $results = SearchMonitor::whereBetween('date', [$startDate, $endDate])
                  ->orderBy('count', $sortOrder)
                  ->orderBy('date', 'desc')
-                 ->paginate(25)
+                 ->paginate(2)
                  ->appends([
                      'from' => $from,
                      'to' => $to,
@@ -32,7 +32,7 @@ class SearchMonitorController extends Controller
                  ]);
         }
 
-        return view('search.data', [
+        return view('admin.search.data', [
             'results' => $results,
             'from' => $from,
             'to' => $to,
