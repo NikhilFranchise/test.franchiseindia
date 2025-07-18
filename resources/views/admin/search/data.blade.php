@@ -165,10 +165,10 @@
                 <tbody>
                     @foreach ($results as $index => $row)
                         <tr>
-                            <td>{{ $results->firstItem() + $index }}</td>
-                            <td>{{ $row->keyword }}</td>
-                            <td>{{ \Carbon\Carbon::parse($row->date)->format('Y-m-d') }}</td>
-                            <td>{{ $row->count }}</td>
+                            <td style="text-align: center">{{ $results->firstItem() + $index }}</td>
+                            <td style="text-align: center">{{ $row->keyword }}</td>
+                            <td style="text-align: center">{{ \Carbon\Carbon::parse($row->date)->format('Y-m-d') }}</td>
+                            <td style="text-align: center">{{ $row->count }}</td>
                         </tr>
                     @endforeach
                 </tbody>
