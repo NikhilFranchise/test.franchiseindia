@@ -47,6 +47,7 @@
         padding: 5px;
         border-radius: 3px;
         border: 1px solid #161515;
+        height:33px;
     }
 
     .form-inline .form-label {
@@ -58,6 +59,7 @@
     .form-inline .btn-primary {
         width: 180px;
         border-radius: 2px;
+        height:34px;
     }
 
     .table-responsive {
