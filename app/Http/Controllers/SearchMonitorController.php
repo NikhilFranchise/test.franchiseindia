@@ -32,7 +32,7 @@ class SearchMonitorController extends Controller
                  ]);
         }
 
-        return view('search.data', [
+        return view('admin.search.data', [
             'results' => $results,
             'from' => $from,
             'to' => $to,

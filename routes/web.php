@@ -941,6 +941,8 @@ Route::post('deletevideo', [AdminController::class, 'deletevideo']);
 //admin panel routes
 Route::group(['prefix' => 'admin'], function () {
     //Get routes
+    Route::get('/data', [SearchMonitorController::class, 'showDataForm'])->name('search.data.form');
+Route::post('/data', [SearchMonitorController::class, 'fetchData'])->name('search.data.fetch');
     Route::get('login',                                [AdminController::class, 'loginView']);
     Route::get('list-news',                            [AdminController::class, 'listNews']);
     Route::get('edit-news-view/{id}',                  [AdminController::class, 'editNewsView']);
@@ -992,6 +994,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('create/kicker/{type}',                [AdminController::class, 'insertUpdateKicker']);
     Route::post('delete-kicker',                       [AdminController::class, 'deleteKicker']);
     Route::post('hindi/create',                        [AdminController::class, 'createUpdateHindiArticle']);
+
+    
+    // Route::get('/data', [SearchMonitorController::class, 'showDataForm'])->name('search.data.form');
+    // Route::post('/data', [SearchMonitorController::class, 'fetchData'])->name('search.data.fetch');
+
     // podcast & video get routes
     Route::get('/createpodcast', [AdminController::class, 'podcastcreate']);
     Route::get('/createvideo', [AdminController::class, 'videocreate']);
@@ -1064,8 +1071,6 @@ Route::group(['prefix' => 'admin'], function () {
     });
 
     
-    Route::get('/data', [SearchMonitorController::class, 'showDataForm'])->name('search.data.form');
-    Route::post('/data', [SearchMonitorController::class, 'fetchData'])->name('search.data.fetch');
 
 });
 Route::get('location/{city}',              [BusinessListingController::class, 'listingLocation']);
@@ -1271,5 +1276,4 @@ Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLea
 Route::get('/sendmail', [CommonController::class, 'send_email']);
 Route::post('/submit-form2', [AdviceController::class, 'freeadviceHome_popup2'])->name('form.submithome2');
 
-Route::get('/data', [SearchMonitorController::class, 'showDataForm'])->name('search.data.form');
-Route::post('/data', [SearchMonitorController::class, 'fetchData'])->name('search.data.fetch');
+
