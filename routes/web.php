@@ -48,6 +48,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\InsightSitemapController;
 use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\SearchMonitorController;
 
 
 /*
@@ -1061,6 +1062,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/podcastlist', [AdminController::class, 'podcastlist'])->name('hindipodcastlist');
         Route::get('/videolist', [AdminController::class, 'videolist'])->name('hindivideolist');
     });
+
+    
+    Route::get('/data', [SearchMonitorController::class, 'showDataForm'])->name('search.data.form');
+    Route::post('/data', [SearchMonitorController::class, 'fetchData'])->name('search.data.fetch');
+
 });
 Route::get('location/{city}',              [BusinessListingController::class, 'listingLocation']);
 
@@ -1264,3 +1270,6 @@ Route::get('/topleaders', [StaticPageController::class, 'topfranchiseleaders']);
 Route::get('/filter-franchisors', [StaticPageController::class, 'topFranchiseLeaders'])->name('filterFranchisorsByYear');
 Route::get('/sendmail', [CommonController::class, 'send_email']);
 Route::post('/submit-form2', [AdviceController::class, 'freeadviceHome_popup2'])->name('form.submithome2');
+
+Route::get('/data', [SearchMonitorController::class, 'showDataForm'])->name('search.data.form');
+Route::post('/data', [SearchMonitorController::class, 'fetchData'])->name('search.data.fetch');
