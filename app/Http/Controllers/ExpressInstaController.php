@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ExpressInstaController extends Controller
 {
@@ -713,6 +715,10 @@ class ExpressInstaController extends Controller
      */
     public function brandInfo(Request $request)
     {
+        
+        $referrer = $request->headers->get('referer');
+        // dd($referrer);
+// dd($request);
         $request->validate([
             'infoname' => 'required',
             'infoemail' => 'required|email',
@@ -776,15 +782,32 @@ class ExpressInstaController extends Controller
                 ->where('profile_status', 1)
                 ->where('profile_type', 1)
                 ->first();
-            // dd($userDetail);
+            dd($userDetail);
             $resource = "DOTCOM";
             if (!empty(request()->check_lead_popup))
                 $resource = "leadPopup";
+            else {
+            $referrer = request()->headers->get('referer');
+
+                if ($referrer) {
+                    // Parse the query string from the referrer
+                    $referrerParts = parse_url($referrer);
+                    parse_str($referrerParts['query'] ?? '', $queryParams);
+
+                        if (!empty($queryParams['utm_campaign'])) {
+                            $resource = $queryParams['utm_campaign'];
+                        }
+                }
+            }
+            // dd($resource);
 
             $source_ref = "";
-            if (!empty(Cookie::get('campaignSource')))
-                $source_ref = Cookie::get('campaignSource');
-
+// dd($source_ref);
+            // if (!empty(Cookie::get('campaignSource')))
+            //     $source_ref = Cookie::get('campaignSource');
+            
+           
+// dd($source_ref);
             $insertData = [
                 'name' => $name,
                 'email' => $email,
@@ -803,10 +826,19 @@ class ExpressInstaController extends Controller
                 'visibility_date' => ($userDetail?->membership_type === 1 ? date('Y-m-d H:i:s') : null)
 
             ];
+            // dd($insertData['visibility_date']);
+            // dd($resource);
             // dd($insertData);
             // If count is zero, Insert a new record
-            $insertId = ExpressInstaApply::query()->insertGetId($insertData);
-
+            try {
+                    $insertId = ExpressInstaApply::query()->insertGetId($insertData);
+                    dd($insertId);
+                } catch (\Exception $e) {
+                    dd('Insert Error: ' . $e->getMessage());
+                }
+            // $insertId = ExpressInstaApply::query()->insertGetId($insertData);
+            //  $insertId = ExpressInstaApply::query()->find($insertData);
+// dd($insertId);
             if ($needLoan == 1) {
                 PropertyLoan::query()->insert([
                     'name' => $name,

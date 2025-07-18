@@ -78,6 +78,9 @@ Route::get('https://www.franchiseindia.com/business-opportunities/robotics-and-t
     return redirect('https://www.franchiseindia.com/business-opportunities/robotics-technical-training-coding-ai.ssc91', 301);
 });
 
+Route::get('/business-opportunities/tamilnadu.loc29', function () {
+    return Redirect::to('/business-opportunities/tamil-nadu.LOC29', 301);
+});
 
 
 Route::get('content/{slug_and_id}', function ($slug_and_id) {
