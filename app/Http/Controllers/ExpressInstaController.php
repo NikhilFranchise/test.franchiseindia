@@ -830,13 +830,13 @@ class ExpressInstaController extends Controller
             // dd($resource);
             // dd($insertData);
             // If count is zero, Insert a new record
-            try {
-                    $insertId = ExpressInstaApply::query()->insertGetId($insertData);
-                    dd($insertId);
-                } catch (\Exception $e) {
-                    dd('Insert Error: ' . $e->getMessage());
-                }
-            // $insertId = ExpressInstaApply::query()->insertGetId($insertData);
+            // try {
+            //         $insertId = ExpressInstaApply::query()->insertGetId($insertData);
+            //         dd($insertId);
+            //     } catch (\Exception $e) {
+            //         dd('Insert Error: ' . $e->getMessage());
+            //     }
+            $insertId = ExpressInstaApply::query()->insertGetId($insertData);
             //  $insertId = ExpressInstaApply::query()->find($insertData);
 // dd($insertId);
             if ($needLoan == 1) {

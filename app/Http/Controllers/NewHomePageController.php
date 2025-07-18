@@ -172,95 +172,177 @@ class NewHomePageController extends Controller
             app()->setLocale('en');
             session()->put('locale', 'en');
         }
+        // $cacheKeys = [
+        //     'brandslft' => 'brandslft_cache',
+        //     'brandstbo' => 'brandstbo_cache',
+        //     'brandstfo' => 'brandstfo_cache',
+        //     'brandsffc' => 'brandsffc_cache',
+        //     'articles_data_cache_english' => 'articles_data_cache_english',
+        //     'fivideo' => 'fivideo',
+        // ];
+
+        // // Define cache expiration time in seconds
+        // $cacheExpiration = 3600; // You can adjust this as needed
+
+        // // Check if the 'brandslft' data exists in the cache
+        // $isBrandslftCached = Cache::has($cacheKeys['brandslft']);
+
+        // // Retrieve cached data or fetch and cache if not available
+        // $brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
+        //     return HomePremiumPageBrand::query()
+        //         ->where('status', 1)
+        //         ->where('brand_section', 2)
+        //         ->where('page_type', 1)
+        //         ->orderBy('inventory_backup', 'ASC')
+        //         ->take(4)
+        //         ->get()
+        //         ->shuffle();
+        // });
+
+        // $brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
+        //     return HomePremiumPageBrand::query()
+        //         ->where('status', 1)
+        //         ->where('brand_section', 3)
+        //         ->where('page_type', 1)
+        //         ->orderBy('inventory_backup', 'ASC')
+        //         ->take(12)
+        //         ->get()
+        //         ->shuffle();
+        // });
+
+        // $brandstfo = Cache::remember($cacheKeys['brandstfo'], $cacheExpiration, function () {
+        //     return    HomePremiumPageBrand::query()
+        //         ->where('status', 1)
+        //         ->where('brand_section', 4)
+        //         ->where('page_type', 1)
+        //         ->orderBy('inventory_backup', 'ASC')
+        //         ->take(25)
+        //         ->get()
+        //         ->shuffle();
+        // });
+
+
+        // $brandsffc = Cache::remember($cacheKeys['brandsffc'], $cacheExpiration, function () {
+        //     return HomePremiumPageBrand::query()
+        //         ->where('status', 1)
+        //         ->where('brand_section', 5)
+        //         ->orderBy('inventory_backup', 'ASC')
+        //         ->take(48)
+        //         ->get()
+        //         ->shuffle();
+        // });
+
+
         $cacheKeys = [
-            'brandslft' => 'brandslft_cache',
-            'brandstbo' => 'brandstbo_cache',
-            'brandstfo' => 'brandstfo_cache',
-            'brandsffc' => 'brandsffc_cache',
-            'articles_data_cache_english' => 'articles_data_cache_english',
-            'fivideo' => 'fivideo',
-        ];
+    'brandslft' => 'brandslft_cache',
+    'brandstbo' => 'brandstbo_cache',
+    'brandstfo' => 'brandstfo_cache',
+    'brandsffc' => 'brandsffc_cache',
+    'articles_data_cache_english' => 'articles_data_cache_english',
+    'fivideo' => 'fivideo',
+];
 
-        // Define cache expiration time in seconds
-        $cacheExpiration = 3600; // You can adjust this as needed
+$cacheExpiration = 3600; // 1 hour
 
-        // Check if the 'brandslft' data exists in the cache
-        $isBrandslftCached = Cache::has($cacheKeys['brandslft']);
+// Define limits per section
+$sections = [
+    2 => ['key' => $cacheKeys['brandslft'], 'limit' => 4],
+    3 => ['key' => $cacheKeys['brandstbo'], 'limit' => 12],
+    4 => ['key' => $cacheKeys['brandstfo'], 'limit' => 25],
+    5 => ['key' => $cacheKeys['brandsffc'], 'limit' => 48],
+];
 
-        // Retrieve cached data or fetch and cache if not available
-        $brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
-            return HomePremiumPageBrand::query()
-                ->where('status', 1)
-                ->where('brand_section', 2)
-                ->where('page_type', 1)
-                ->orderBy('inventory_backup', 'ASC')
-                ->take(4)
-                ->get()
-                ->shuffle();
-        });
+// Step 1: Load from cache
+$cachedBrands = [];
+$missingSections = [];
 
-        $brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
-            return HomePremiumPageBrand::query()
-                ->where('status', 1)
-                ->where('brand_section', 3)
-                ->where('page_type', 1)
-                ->orderBy('inventory_backup', 'ASC')
-                ->take(12)
-                ->get()
-                ->shuffle();
-        });
+foreach ($sections as $section => $info) {
+    $data = Cache::get($info['key']);
+    if ($data) {
+        $cachedBrands[$section] = $data;
+    } else {
+        $missingSections[$section] = $info['limit'];
+    }
+}
 
-        $brandstfo = Cache::remember($cacheKeys['brandstfo'], $cacheExpiration, function () {
-            return    HomePremiumPageBrand::query()
-                ->where('status', 1)
-                ->where('brand_section', 4)
-                ->where('page_type', 1)
-                ->orderBy('inventory_backup', 'ASC')
-                ->take(25)
-                ->get()
-                ->shuffle();
-        });
+// Step 2: If any cache missing, do a single query
+if (!empty($missingSections)) {
+    $fetched = HomePremiumPageBrand::query()
+        ->where('status', 1)
+        ->where('page_type', 1)
+        ->whereIn('brand_section', array_keys($missingSections))
+        ->orderBy('inventory_backup', 'ASC')
+        ->get()
+        ->groupBy('brand_section');
+
+    foreach ($missingSections as $section => $limit) {
+        $data = ($fetched[$section] ?? collect())->shuffle()->take($limit);
+        Cache::put($sections[$section]['key'], $data, $cacheExpiration);
+        $cachedBrands[$section] = $data;
+    }
+}
+
+// Step 3: Assign to existing variables
+$brandslft = $cachedBrands[2] ?? collect();
+$brandstbo = $cachedBrands[3] ?? collect();
+$brandstfo = $cachedBrands[4] ?? collect();
+$brandsffc = $cachedBrands[5] ?? collect();
+// dd($brandstbo);
 
 
-        $brandsffc = Cache::remember($cacheKeys['brandsffc'], $cacheExpiration, function () {
-            return HomePremiumPageBrand::query()
-                ->where('status', 1)
-                ->where('brand_section', 5)
-                ->orderBy('inventory_backup', 'ASC')
-                ->take(48)
-                ->get()
-                ->shuffle();
-        });
+// Optional debug log
+// logger()->info("Brands loaded: ", ['sections' => array_keys($cachedBrands)]);
 
-        $news = InsightList::query()->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
-            ->with('category')
-            ->withEffectiveDate()
-            ->where('status', 1)
-            ->where('insight_type', 'News')
-            ->whereNot('cat_id', '=', '')
-            ->orderByEffectiveDate('desc')
-            ->limit(16)
-            ->get();
 
-        $articles = InsightList::query()->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
-            ->with('category')
-            ->withEffectiveDate()
-            ->where('status', 1)
-            ->where('insight_type', 'Article')
-            ->whereNot('cat_id', '=', '')
-            ->orderByEffectiveDate('desc')
-            ->limit(16)
-            ->get();
-            // dd($articles);
-        $interviews = InsightList::with('category')
-            ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
-            ->withEffectiveDate()
-            ->where('status', 1)
-            ->where('insight_type', 'Interview')
-            ->whereNot('cat_id', '=', '')
-            ->orderByEffectiveDate('desc')
-            ->limit(16)
-            ->get();
+        // $news = InsightList::query()->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
+        //     ->with('category')
+        //     ->withEffectiveDate()
+        //     ->where('status', 1)
+        //     ->where('insight_type', 'News')
+        //     ->whereNot('cat_id', '=', '')
+        //     ->orderByEffectiveDate('desc')
+        //     ->limit(16)
+        //     ->get();
+
+        // $articles = InsightList::query()->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
+        //     ->with('category')
+        //     ->withEffectiveDate()
+        //     ->where('status', 1)
+        //     ->where('insight_type', 'Article')
+        //     ->whereNot('cat_id', '=', '')
+        //     ->orderByEffectiveDate('desc')
+        //     ->limit(16)
+        //     ->get();
+        //     // dd($articles);
+        // $interviews = InsightList::with('category')
+        //     ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
+        //     ->withEffectiveDate()
+        //     ->where('status', 1)
+        //     ->where('insight_type', 'Interview')
+        //     ->whereNot('cat_id', '=', '')
+        //     ->orderByEffectiveDate('desc')
+        //     ->limit(16)
+        //     ->get();
+
+       $insights = InsightList::query()
+    ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date', 'insight_type')
+    ->with('category')
+    ->where('status', 1)
+    ->whereIn('insight_type', ['News', 'Article', 'Interview'])
+    ->whereNotNull('cat_id')
+    ->where('cat_id', '!=', '')
+    ->orderBy('updated_at', 'desc')
+    ->limit(200) // fetch a reasonable subset first
+    ->get()
+    ->groupBy('insight_type');
+
+$news = $insights->get('News', collect())->take(16);
+$articles = $insights->get('Article', collect())->take(16);
+$interviews = $insights->get('Interview', collect())->take(16);
+
+
+
+
 
         $youtubeApiKey = 'AIzaSyCB2nVhCCrLyMmHhAdIuGVBOyV_ywUATUA';
         $videos = Cache::remember($cacheKeys['fivideo'], $cacheExpiration, function () use ($youtubeApiKey) {
