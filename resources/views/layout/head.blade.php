@@ -7,20 +7,35 @@
     <meta name="keywords" itemprop="keywords" content="@yield('seoKeywords', 'franchise in india, franchise opportunities,business opportunities, business ideas, buy franchise in india, small business ideas, franchise india')" />
 @endif
 @php
-    $canonicalUrl = url()->current();
-    $queryParams = request()->query();
-    $queryString = '';
+    $currentPath = request()->path();
 
-    if (!empty($queryParams)) {
-        $queryString = '?';
-        foreach ($queryParams as $key => $value) {
-            if (is_null($value)) {
-                $queryString .= $key . '&';
-            } else {
-                $queryString .= $key . '=' . urlencode($value) . '&';
+    if (Str::startsWith($currentPath, 'brands/')) {
+        // Remove query string
+        $canonicalUrl = request()->getSchemeAndHttpHost() . request()->getPathInfo();
+        $queryString = '';
+    } else {
+        // Build base URL without query
+        $canonicalUrl = request()->url();
+
+        // Manually build query string
+        $queryParams = request()->query();
+        $queryString = '';
+
+        if (!empty($queryParams)) {
+            $queryString = '?';
+            foreach ($queryParams as $key => $value) {
+                if (is_null($value) || $value === '') {
+                    $queryString .= $key . '&';
+                } elseif (is_array($value)) {
+                    foreach ($value as $subValue) {
+                        $queryString .= $key . '[]=' . urlencode($subValue) . '&';
+                    }
+                } else {
+                    $queryString .= $key . '=' . urlencode($value) . '&';
+                }
             }
+            $queryString = rtrim($queryString, '&');
         }
-        $queryString = rtrim($queryString, '&');
     }
 @endphp
 <link href="{{ $canonicalUrl . $queryString }}" rel="canonical">
