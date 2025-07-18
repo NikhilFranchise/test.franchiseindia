@@ -4,7 +4,7 @@
 <!--breadcrumbs-->
 <div id="content-header">
     <div id="breadcrumb"> <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
-                class="icon-home"></i> Home</a> <a href="list-insights" class="tip-bottom">User Top Search Data</a>
+                class="icon-home"></i> Home</a> <a href="data" class="tip-bottom">User Top Search Data</a>
         <a href="" class="current"> </a>
     </div>
     {{-- <h1> Insights Listing</h1> --}}
