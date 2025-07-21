@@ -162,6 +162,7 @@
                         <th>Keyword</th>
                         <th>Date</th>
                         <th>Count</th>
+                        <th>SOurce</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -169,6 +170,7 @@
                         <tr>
                             <td style="text-align: center">{{ $results->firstItem() + $index }}</td>
                             <td style="text-align: center">{{ $row->keyword }}</td>
+                            <td style="text-align: center">{{ $row->source }}</td>
                             <td style="text-align: center">{{ \Carbon\Carbon::parse($row->date)->format('Y-m-d') }}</td>
                             <td style="text-align: center">{{ $row->count }}</td>
                         </tr>
