@@ -162,7 +162,7 @@
                         <th>Keyword</th>
                         <th>Date</th>
                         <th>Count</th>
-                        <th>SOurce</th>
+                        <th>Source</th>
                     </tr>
                 </thead>
                 <tbody>
