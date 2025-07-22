@@ -4,7 +4,7 @@
 <!--breadcrumbs-->
 <div id="content-header">
     <div id="breadcrumb"> <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
-                class="icon-home"></i> Home</a> <a href="list-insights" class="tip-bottom">User Top Search Data</a>
+                class="icon-home"></i> Home</a> <a href="data" class="tip-bottom">User Top Search Data</a>
         <a href="" class="current"> </a>
     </div>
     {{-- <h1> Insights Listing</h1> --}}
@@ -47,6 +47,7 @@
         padding: 5px;
         border-radius: 3px;
         border: 1px solid #161515;
+        height:33px;
     }
 
     .form-inline .form-label {
@@ -58,6 +59,7 @@
     .form-inline .btn-primary {
         width: 180px;
         border-radius: 2px;
+        height:34px;
     }
 
     .table-responsive {
@@ -160,6 +162,7 @@
                         <th>Keyword</th>
                         <th>Date</th>
                         <th>Count</th>
+                        <th>Source</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -169,6 +172,7 @@
                             <td style="text-align: center">{{ $row->keyword }}</td>
                             <td style="text-align: center">{{ \Carbon\Carbon::parse($row->date)->format('Y-m-d') }}</td>
                             <td style="text-align: center">{{ $row->count }}</td>
+                            <td style="text-align: center">{{ $row->source }}</td>
                         </tr>
                     @endforeach
                 </tbody>

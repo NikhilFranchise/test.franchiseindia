@@ -229,29 +229,7 @@ class BusinessListingController extends Controller
             // }
     
         // ✅ Parse previous page path (from referer or fallback)
-        $referer = $request->headers->get('referer') ?? url()->previous();
-        $parsedPath = parse_url($referer, PHP_URL_PATH);
-        $previousPath = $parsedPath ?? '/';
-    
-        // ✅ Sanitize and trim keyword input
-        $cleanKeyword = trim(strip_tags($request->input('text')));
-    
-        // ✅ Only store if keyword is longer than 4 characters
-        if (strlen($cleanKeyword) > 1) {
-            SearchMonitor::upsert(
-                [
-                    [
-                        'keyword' => $cleanKeyword,
-                        'date' => today(),
-                        'count' => 1,
-                    ]
-                ],
-                ['keyword', 'date'], // match condition
-                ['count' => DB::raw('count + 1')] // update logic
-            );
-            
-        }
-        
+       
         // dd('searchBusinessListing');
         $searchTerm = $request->route('searchTerm');
         $categoryIds = $request->route('categoryIds');
@@ -921,6 +899,37 @@ class BusinessListingController extends Controller
         //  dd($loc,$seoKeywords,$orderby,$minRangeValue,$maxRangevalue,$text,$searchq);
         //  dd($catTabResult,$locTabResult,$invTabResult,$minCost,$maxCost,$franImageData,$city,$view);
         // dd(compact('brandResults', 'shuffledResults', 'seoTitle', 'seoDesc', 'popup')); 
+
+
+
+
+        // dd($brandResults->total());
+
+        $referer = $request->headers->get('referer') ?? url()->previous();
+        $parsedPath = parse_url($referer, PHP_URL_PATH);
+        $previousPath = $parsedPath ?? '/';
+        // dd($previousPath);
+        // ✅ Sanitize and trim keyword input
+        $cleanKeyword = trim(strip_tags($request->input('text')));
+    
+        // ✅ Only store if keyword is longer than 4 characters
+        if (strlen($cleanKeyword) > 1 && $brandResults->total() == 0) {
+            SearchMonitor::upsert(
+                [
+                    [
+                        'keyword' => $cleanKeyword,
+                        'date' => today(),
+                        'count' => 1,
+                        'source'=> $previousPath,
+                    ]
+                ],
+                ['keyword', 'date'], // match condition
+                ['count' => DB::raw('count + 1')] // update logic
+            );
+            
+        }
+        
+
 
         return view($view, compact(
             'brandResults',
