@@ -64,7 +64,7 @@
             </div>
 
         @endif
-        @if (count($franTradePartnerData))
+        @if ($franTradePartnerData->count() > 0)
             <div class="section">
                 <div class="ttl">Trade partners</div>
                 <table>
