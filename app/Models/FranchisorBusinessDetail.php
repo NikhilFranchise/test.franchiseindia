@@ -14,6 +14,7 @@ use App\Models\UniqueVisit;
 use App\Models\UserClick;
 use App\Models\UserAccount;
 use App\Models\TopFranchisorLeaders;
+use App\Models\FranchisorTradePartner;
 class FranchisorBusinessDetail extends Model
 {
     use HasFactory;
@@ -89,5 +90,9 @@ class FranchisorBusinessDetail extends Model
     public function topFranchisorLeaders()
     {
         return $this->belongsTo(TopFranchisorLeaders::class, 'franchisor_id', 'franchisor_id');
+    }
+    public function franchisorTradePartner()
+    {
+        return $this->hasOne(FranchisorTradePartner::class, 'franchisor_id', 'franchisor_id');
     }
 }

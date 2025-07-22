@@ -486,7 +486,7 @@
 
                     @if (!Auth::check() || Auth::user()->profile_type == Config('constants.ProfileType.Franchisor'))
                         <div class="insta-apply" id="show-m">
-                            <div class="ttl" id="instahead">Insta Apply 3</div>
+                            <div class="ttl" id="instahead">Insta Apply</div>
                             <div id="instaMsg" style="display:none;" class="green">
                                 <div class="bigth">Thank You!</div>
                                 <p>Thanks for showing your interest in {{ $franDetails->company_name }}.</p>

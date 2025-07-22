@@ -21,26 +21,254 @@ use App\Models\Regional\DealerRegional;
 use App\Models\Regional\FranchiseRegional;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use App\Services\BrandDetailService;
+use App\Services\RelatedBrandService;
 
 class BrandController extends Controller
 {
     //pankaj redis implementation start
-    public function brandDetails(Request $request)
+    // public function brandDetails(Request $request)
+    // {
+    //     $referrer = $request->headers->get('referer', 'No referrer found');
+
+    //     // \Log::info('User came from: ' . $referrer);
+    //     // dd('Previous url' .$referrer);
+
+    //     // Initialize the variables
+    //     // dd($request->all());
+    //     // dd('yes');
+    //     $ratings = 0;
+    //     $likesCnt = 0;
+    //     $brandUrlParam = $request->profileName;         // Fetch the request parameter
+    //     $brandParamsArr = explode('.', $brandUrlParam);  // Explode it by separator & fetch details from DB
+    //     $images = [];
+    //     $view = "brandlanding";
+    //     if ($brandUrlParam == "fpf.96936") {
+    //         $brandUrlParam = "fiery-pot-foods.103010";
+    //         return redirect(Config('constants.MainDomain') . '/brands/' . $brandUrlParam, 301);
+    //     }
+    //     if ($brandUrlParam == "berger-paints-india-limited.59427") {
+    //         $brandUrlParam = "berger-paints.93087";
+    //         return redirect(Config('constants.MainDomain') . '/brands/' . $brandUrlParam, 301);
+    //     }
+    //     // dd($brandParamsArr);
+    //     if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
+    //         return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
+    //     }
+    //     //cache start
+
+    //     $cacheDuration = 604800;
+    //     $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
+
+    //     //  dd($franDetails);
+    //     $main_cat = Config('constants.CategoryArr');
+    //     $a = $franDetails->ind_main_cat;
+    //     $index_value = $main_cat[$a];
+    //     $u_slug = Config('category.SeoCategoryArr');
+    //     $url_slug = $u_slug[$a];
+    //     $fran_new_data = FranchisorBusinessDetail::query()
+    //         ->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'unit_inv_min', 'unit_inv_max', 'company_logo', 'ind_main_cat')
+    //         ->where('profile_status', 1)
+    //         ->where('membership_type', 1)
+    //         ->where('ind_main_cat', $franDetails->ind_main_cat)
+    //         ->take(9)
+    //         ->get();
+    //     // Cache key for insight matches
+    //     $insightMatchesCacheKey = "insight_matches_{$franDetails->company_name}";
+    //     $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
+    //         // Prepare the regex pattern
+    //         $cleanCompanyName = preg_replace('/[^a-zA-Z0-9\s]/', '', $franDetails->company_name);
+    //         $cleanCompanyName = preg_replace('/\s+/', ' ', trim($cleanCompanyName));
+    //         $companyNameRegex = preg_quote($cleanCompanyName, '/');
+    //         $pattern = '(?i)(^|[[:space:]])' . $companyNameRegex . '([[:space:]]|$)';
+
+
+    //         return InsightList::query()
+    //             ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
+    //             ->where('status', 1)
+    //             ->whereRaw("LOWER(title) REGEXP LOWER(?)", [$pattern])
+    //             ->orderByDesc('created_at')
+    //             ->limit(3)
+    //             ->get()
+    //             ->map(function ($item) {
+    //                 $item->url = url('insights/en/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
+    //                 return $item;
+    //             });
+    //     });
+
+    //     $combinedDataCollection = $insightMatches->toArray();
+    //     $combinedDataCollection = collect($combinedDataCollection);
+    //     //OI Redirection Code End
+
+    //     if (!empty($franDetails) && request()->segment(1) == 'hi' && $franDetails->is_hindi == 0)
+    //         return redirect()->back();
+
+    //     if (!empty($franDetails) && $franDetails->franchisor_id == "FIHL978776")
+    //         return redirect(Config('constants.MainDomain') . '/brands/GodrejInterio-123.8762', 301);
+
+    //     if (empty($franDetails) || ($franDetails->profile_status != 1 && $franDetails->profile_status != 11))
+    //         return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
+
+    //     if ($franDetails->profile_name != $brandParamsArr[0] && $request->segment(1) == 'brands')
+    //         return redirect('brands/' . $franDetails->profile_name . '.' . $brandParamsArr[1], 301);
+
+    //     if ($franDetails->profile_name != $brandParamsArr[0] && $request->segment(1) != 'brands')
+    //         return redirect('hi/brands/' . $franDetails->profile_name . '.' . $brandParamsArr[1], 301);
+
+    //     $region = $franDetails->multiUnit;
+    //     $stateList = (!empty($franDetails->franchisorLocState) ? $franDetails->franchisorLocState->toArray() : "");
+    //     // dd($region, $stateList);
+    //     $likeTableData = $franDetails->franchisorLike;
+    //     $pageLayout = $franDetails->page_layout_type;
+
+    //     $franDetails->business_desc = CommonController::cleanContent($franDetails->business_desc);
+
+    //     // Update number of views in franchisor_business_details table
+    //     $update = $franDetails->increment('views');
+
+    //     // User Likes & Ratings
+    //     if ($likeTableData !== null && $likeTableData->count() > 0) {
+    //         $likesCnt = $likeTableData->blike; //like count
+
+    //         // User Ratings
+    //         if (!empty($likeTableData->brate))
+    //             $ratings = ($likeTableData->brate / $likeTableData->bclick);
+    //     }
+
+
+    //     // Insert into unique visits table if there is no entry
+    //     $uniqVisitsCheck = $franDetails->uniqueVisit;
+    //     // dd($uniqVisitsCheck);
+
+    //     if (!empty($uniqVisitsCheck))
+    //         $uniqVisitsCheck = $uniqVisitsCheck->where('ip', $request->ip())->where('date', date('Y-m-d'))->first();
+
+    //     if (empty($uniqVisitsCheck)) {
+    //         $insUniqVisit = UniqueVisit::query()->create([
+    //             'franchisor_id' => $franDetails->franchisor_id,
+    //             'ip' => $request->ip(),
+    //             'date' => date('Y-m-d')
+    //         ]);
+    //     }
+
+    //     $regionalFranchisorMembership = FranchiseRegional::query()
+    //         ->where('fihl_id', $franDetails->franchisor_id)
+    //         ->where('status', 1)
+    //         ->value('membership_type'); // returns the first column value directly
+
+    //     if ($regionalFranchisorMembership == 0) {
+    //         $regionalFranchisorMembership = DealerRegional::query()
+    //             ->where('fihl_id', $franDetails->franchisor_id)
+    //             ->where('status', 1)
+    //             ->value('membership_type');
+    //     }
+
+    //     // Check for the userclicks table count
+    //     $click = $franDetails->userClick;
+
+    //     if (!empty($click))
+    //         $click = $click->toArray();
+
+    //     // If there's no record, create a new one
+    //     if (empty($click)) {
+    //         $firstClick = UserClick::query()->create([
+    //             'franchisor_id' => $franDetails->franchisor_id,
+    //             'clicks' => 0
+    //         ]);
+    //     }
+
+    //     // If record exists, iterate the value by 1
+    //     if (!empty($click))
+    //         UserClick::query()->where('franchisor_id', $franDetails->franchisor_id)->increment('clicks');
+
+    //     //layout image selection conditions and selection
+    //     $layoutType = ($pageLayout == 3) ? "image_type_slider2" : "image_type_slider1";
+
+    //     $sliderCheck = FranchisorSliderTenure::query()->where('franchisor_id', $franDetails->franchisor_id)->first();
+
+    //     if (!empty($sliderCheck) && $sliderCheck->status == 1 && $sliderCheck->end_date >= date('Y-m-d H:i:s')) {
+
+    //         if ($pageLayout == 3 || $pageLayout == 2) {
+
+    //             //Fetching the slider images with frandetail object
+    //             $images = $franDetails->franchisorSliderImage;
+
+    //             if (!empty($images))
+    //                 $images = $images->select($layoutType)
+    //                     ->where($layoutType, '!=', '')
+    //                     ->where('franchisor_id', $franDetails->franchisor_id)
+    //                     ->where('status', 1)
+    //                     ->get();
+    //         }
+    //     }
+
+    //     $franTradePartnerData = FranchisorTradePartner::query()->where('franchisor_id', $franDetails->franchisor_id)->get();
+
+
+    //     if ($franDetails->franchisor_id == "FIHL231593") {
+    //         // SEO Meta Tags
+    //         $seoTitle = "3D Technology Dealership and Distributorship Opportunities in India";
+    //         $seoDesc = "Get 3D Technology distributorship opportunities for sale to drive commercial growth. You will find here distributors of 3D printer, 3D scanner, Steam Lab, Atal Lab, 3D consumables manufacturers in India.";
+    //         $seoKeywords = "3D printer dealers, 3D printer distributors 3D scanner distributors, Steam Lab distributors, Atal Lab distributors, 3D consumables manufacturer, 3D printer distributors";
+    //     } elseif ($franDetails->ind_main_cat == 5) {
+    //         $seoTitle = sprintf('%s  Dealership & Distributorship – Cost, How to Get, Contact, Fee, Apply', $franDetails->company_name);
+    //         $seoDesc = sprintf('Get %1$s Dealership & Distributorship. Get the %1$s dealership/distributorship information including start-up costs, dealership fees, requirements, growth history and more. Join %1$s dealership/distributorship and be on your way to owning and running a successful business.', $franDetails->company_name);
+    //         $seoKeywords = sprintf('%1$s Dealership, %1$s Distributorship, %1$s dealership cost, %1$s distributorship cost, %1$s contact number, how to get %1$s dealership/distributorship, %1$s dealership/distributorship profit, %1$s franchise enquiry, %1$s dealership/distributorship requirements, %1$s dealership/distributorship apply , %1$s fee, %1$s dealership/distributorship monthly income.', $franDetails->company_name);
+    //     } else {
+    //         // SEO Meta Tags
+    //         // SEO Meta Tags
+    //         $seoTitle = sprintf('%s Franchise Cost |How to Get | Contact| Fee | Apply', $franDetails->company_name);
+    //         $seoDesc = sprintf('Own your %1$s franchise. Get the %1$s franchising information including start-up costs, franchise fees, requirements, growth history and more. Join %1$s franchise and be on your way to owning and running a successful franchise business.', $franDetails->company_name);
+    //         $seoKeywords = sprintf('%1$s franchise in India, %1$s franchise cost, %1$s franchise contact number, how to get %1$s franchise, %1$s franchise profit, %1$s franchise enquiry, %1$s franchise requirements, %1$s franchise apply , %1$s franchise fee, %1$s franchise monthly income, %1$s franchise reviews', $franDetails->company_name);
+    //     }
+
+
+    //     //for related business Articles
+    //     $relatedBrands = $this->getRelatedBrands(6, $franDetails);
+
+    //     //Investor Auth check and fetch expressed interest data
+    //     $expIntVal = $this->investorDataSet($franDetails);
+
+    //     $isHindi = request()->segment(1) == 'hi' ? 1 : 0;
+
+    //     //for You may like
+    //     $likeArticles = $this->getContentForBrandLanding(10, $franDetails, $isHindi);
+
+    //     if (request()->segment(1) == 'hi') {
+    //         $view = "brandlanding-hindi";
+    //     }
+    //     if (Auth::check()) {
+    //         $inv_credits =  InvestorDetails::select('investor_details.credit_limit', 'user_accounts.reg_source')
+    //             ->join('user_accounts', 'investor_details.investor_id', '=', 'user_accounts.profile_str')
+    //             ->where('investor_details.investor_id', request()->user()->profile_str)->where('user_accounts.reg_source', 'DelhiExpoPaid')
+    //             ->first();
+
+    //         // return the investor data to blade view
+    //         return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection', 'regionalFranchisorMembership'));
+    //     } else {
+    //         // return the data to blade view
+    //         return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection', 'fran_new_data', 'index_value', 'main_cat', 'url_slug', 'regionalFranchisorMembership'));
+    //     }
+    // }
+
+    //pankaj redis implementation end
+
+    /**
+     * This method is used to fetch the brand details and related information.
+     * Ganesh Prajapati
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
+    // optimized version of brandDetails method start here
+    public function brandDetails(Request $request, $profileName, BrandDetailService $brandService, RelatedBrandService $relatedBrandService)
     {
         $referrer = $request->headers->get('referer', 'No referrer found');
-
-        // \Log::info('User came from: ' . $referrer);
-        // dd('Previous url' .$referrer);
-
-        // Initialize the variables
-        // dd($request->all());
-        // dd('yes');
-        $ratings = 0;
-        $likesCnt = 0;
-        $brandUrlParam = $request->profileName;         // Fetch the request parameter
-        $brandParamsArr = explode('.', $brandUrlParam);  // Explode it by separator & fetch details from DB
-        $images = [];
+        $ratings = $likesCnt = 0;
+        $brandUrlParam = trim($profileName);
+        $brandParamsArr = explode('.', $brandUrlParam);
         $view = "brandlanding";
+        $images = [];
+
         if ($brandUrlParam == "fpf.96936") {
             $brandUrlParam = "fiery-pot-foods.103010";
             return redirect(Config('constants.MainDomain') . '/brands/' . $brandUrlParam, 301);
@@ -49,208 +277,177 @@ class BrandController extends Controller
             $brandUrlParam = "berger-paints.93087";
             return redirect(Config('constants.MainDomain') . '/brands/' . $brandUrlParam, 301);
         }
-        // dd($brandParamsArr);
+
         if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
-        //cache start
 
-        $cacheDuration = 604800;
-        $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
-
-        //  dd($franDetails);
-        $main_cat = Config('constants.CategoryArr');
-        $a = $franDetails->ind_main_cat;
-        $index_value = $main_cat[$a];
-        $u_slug = Config('category.SeoCategoryArr');
-        $url_slug = $u_slug[$a];
-        $fran_new_data = FranchisorBusinessDetail::query()
-            ->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'unit_inv_min', 'unit_inv_max', 'company_logo', 'ind_main_cat')
-            ->where('profile_status', 1)
-            ->where('membership_type', 1)
-            ->where('ind_main_cat', $franDetails->ind_main_cat)
-            ->take(9)
-            ->get();
-        // Cache key for insight matches
-        $insightMatchesCacheKey = "insight_matches_{$franDetails->company_name}";
-        $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
-            // Prepare the regex pattern
-            $cleanCompanyName = preg_replace('/[^a-zA-Z0-9\s]/', '', $franDetails->company_name);
-            $cleanCompanyName = preg_replace('/\s+/', ' ', trim($cleanCompanyName));
-            $companyNameRegex = preg_quote($cleanCompanyName, '/');
-            $pattern = '(?i)(^|[[:space:]])' . $companyNameRegex . '([[:space:]]|$)';
-
-
-            return InsightList::query()
-                ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
-                ->where('status', 1)
-                ->whereRaw("LOWER(title) REGEXP LOWER(?)", [$pattern])
-                ->orderByDesc('created_at')
-                ->limit(3)
-                ->get()
-                ->map(function ($item) {
-                    $item->url = url('insights/en/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
-                    return $item;
-                });
-        });
-
-        $combinedDataCollection = $insightMatches->toArray();
-        $combinedDataCollection = collect($combinedDataCollection);
-        //OI Redirection Code End
-
-        if (!empty($franDetails) && request()->segment(1) == 'hi' && $franDetails->is_hindi == 0)
-            return redirect()->back();
-
-        if (!empty($franDetails) && $franDetails->franchisor_id == "FIHL978776")
-            return redirect(Config('constants.MainDomain') . '/brands/GodrejInterio-123.8762', 301);
-
-        if (empty($franDetails) || ($franDetails->profile_status != 1 && $franDetails->profile_status != 11))
+        // Fetch franchise details using the service
+        $franDetails = $brandService->getFranchiseDetails($brandParamsArr[1]);
+        $franTradePartnerData = $franDetails->franchisorTradePartner ?? collect();
+        // dd($franDetails, $franTradePartnerData);
+        if (!$franDetails || !in_array($franDetails->profile_status, [1, 11])) {
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
-
-        if ($franDetails->profile_name != $brandParamsArr[0] && $request->segment(1) == 'brands')
-            return redirect('brands/' . $franDetails->profile_name . '.' . $brandParamsArr[1], 301);
-
-        if ($franDetails->profile_name != $brandParamsArr[0] && $request->segment(1) != 'brands')
-            return redirect('hi/brands/' . $franDetails->profile_name . '.' . $brandParamsArr[1], 301);
-
-        $region = $franDetails->multiUnit;
-        $stateList = (!empty($franDetails->franchisorLocState) ? $franDetails->franchisorLocState->toArray() : "");
-        // dd($region, $stateList);
-        $likeTableData = $franDetails->franchisorLike;
-        $pageLayout = $franDetails->page_layout_type;
-
-        $franDetails->business_desc = CommonController::cleanContent($franDetails->business_desc);
-
-        // Update number of views in franchisor_business_details table
-        $update = $franDetails->increment('views');
-
-        // User Likes & Ratings
-        if ($likeTableData !== null && $likeTableData->count() > 0) {
-            $likesCnt = $likeTableData->blike; //like count
-
-            // User Ratings
-            if (!empty($likeTableData->brate))
-                $ratings = ($likeTableData->brate / $likeTableData->bclick);
+        }
+        if ($franDetails->profile_name !== $brandParamsArr[0]) {
+            $prefix = request()->segment(1) == 'hi' ? 'hi/brands/' : 'brands/';
+            return redirect($prefix . $franDetails->profile_name . '.' . $brandParamsArr[1], 301);
         }
 
+        if (request()->segment(1) === 'hi' && $franDetails->is_hindi == 0) {
+            return redirect()->back();
+        }
 
-        // Insert into unique visits table if there is no entry
-        $uniqVisitsCheck = $franDetails->uniqueVisit;
-        // dd($uniqVisitsCheck);
+        // Increment views
+        $franDetails->increment('views');
 
-        if (!empty($uniqVisitsCheck))
-            $uniqVisitsCheck = $uniqVisitsCheck->where('ip', $request->ip())->where('date', date('Y-m-d'))->first();
+        // Ratings
+        if ($franDetails->franchisorLike) {
+            $likesCnt = $franDetails->franchisorLike->blike;
+            $ratings = ($franDetails->franchisorLike->brate > 0)
+                ? ($franDetails->franchisorLike->brate / $franDetails->franchisorLike->bclick)
+                : 0;
+        }
+        // dd($request);
+        $this->recordUniqueVisit($franDetails, $request);
+        // User Clicks
+        $this->handleUserClick($franDetails);
 
-        if (empty($uniqVisitsCheck)) {
-            $insUniqVisit = UniqueVisit::query()->create([
+        // Slider images
+        $images = $this->getSliderImages($franDetails);
+
+        // SEO Tags
+        list($seoTitle, $seoDesc, $seoKeywords) = $this->generateSeoTags($franDetails);
+        // Insights (cached)
+        $insights = $brandService->getInsightMatches($franDetails->company_name);
+        $combinedDataCollection = collect($insights)->toArray();
+
+        $relatedBrands = $relatedBrandService->getRelatedBrands(6, $franDetails);
+
+        $expIntVal = $this->investorDataSet($franDetails);
+        $likeArticles = $this->getContentForBrandLanding(10, $franDetails, request()->segment(1) == 'hi');
+        $regionalFranchisorMembership = $this->getRegionalMembership($franDetails->franchisor_id);
+        $view = request()->segment(1) == 'hi' ? "brandlanding-hindi" : $view;
+        $compact = compact(
+            'seoTitle',
+            'seoDesc',
+            'seoKeywords',
+            'franDetails',
+            'likesCnt',
+            'ratings',
+            'expIntVal',
+            'images',
+            'relatedBrands',
+            'likeArticles',
+            'combinedDataCollection',
+            'regionalFranchisorMembership',
+            'franTradePartnerData',
+        );
+
+        if (Auth::check()) {
+            $inv_credits = InvestorDetails::select('investor_details.credit_limit', 'user_accounts.reg_source')
+                ->join('user_accounts', 'investor_details.investor_id', '=', 'user_accounts.profile_str')
+                ->where('investor_details.investor_id', request()->user()->profile_str)
+                ->where('user_accounts.reg_source', 'DelhiExpoPaid')
+                ->first();
+
+            $compact['inv_credits'] = $inv_credits;
+        } else {
+            $main_cat = Config('constants.CategoryArr');
+            $a = $franDetails->ind_main_cat;
+            $compact['fran_new_data'] = FranchisorBusinessDetail::select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'unit_inv_min', 'unit_inv_max', 'company_logo', 'ind_main_cat')
+                ->where('profile_status', 1)
+                ->where('membership_type', 1)
+                ->where('ind_main_cat', $a)
+                ->take(9)
+                ->get();
+            $compact['index_value'] = $main_cat[$a];
+            $compact['main_cat'] = $main_cat;
+            $compact['url_slug'] = Config('category.SeoCategoryArr')[$a];
+        }
+
+        $compact['region'] = $franDetails->multiUnit;
+        $compact['stateList'] = $franDetails->franchisorLocState ? $franDetails->franchisorLocState->toArray() : "";
+
+        return view("franchisor/landing/{$view}", $compact);
+    }
+
+    private function recordUniqueVisit($franDetails, $request)
+    {
+        $todayVisit = $franDetails->uniqueVisit
+            ->where('ip', $request->ip())
+            ->where('date', date('Y-m-d'))
+            ->first();
+
+        if (!$todayVisit) {
+            \App\Models\UniqueVisit::create([
                 'franchisor_id' => $franDetails->franchisor_id,
                 'ip' => $request->ip(),
                 'date' => date('Y-m-d')
             ]);
         }
+    }
 
-        $regionalFranchisorMembership = FranchiseRegional::query()
-            ->where('fihl_id', $franDetails->franchisor_id)
-            ->where('status', 1)
-            ->value('membership_type'); // returns the first column value directly
-
-        if ($regionalFranchisorMembership == 0) {
-            $regionalFranchisorMembership = DealerRegional::query()
-                ->where('fihl_id', $franDetails->franchisor_id)
-                ->where('status', 1)
-                ->value('membership_type');
-        }
-
-        // Check for the userclicks table count
+    private function handleUserClick($franDetails)
+    {
         $click = $franDetails->userClick;
 
-        if (!empty($click))
-            $click = $click->toArray();
-
-        // If there's no record, create a new one
         if (empty($click)) {
-            $firstClick = UserClick::query()->create([
+            UserClick::create([
                 'franchisor_id' => $franDetails->franchisor_id,
                 'clicks' => 0
             ]);
-        }
-
-        // If record exists, iterate the value by 1
-        if (!empty($click))
-            UserClick::query()->where('franchisor_id', $franDetails->franchisor_id)->increment('clicks');
-
-        //layout image selection conditions and selection
-        $layoutType = ($pageLayout == 3) ? "image_type_slider2" : "image_type_slider1";
-
-        $sliderCheck = FranchisorSliderTenure::query()->where('franchisor_id', $franDetails->franchisor_id)->first();
-
-        if (!empty($sliderCheck) && $sliderCheck->status == 1 && $sliderCheck->end_date >= date('Y-m-d H:i:s')) {
-
-            if ($pageLayout == 3 || $pageLayout == 2) {
-
-                //Fetching the slider images with frandetail object
-                $images = $franDetails->franchisorSliderImage;
-
-                if (!empty($images))
-                    $images = $images->select($layoutType)
-                        ->where($layoutType, '!=', '')
-                        ->where('franchisor_id', $franDetails->franchisor_id)
-                        ->where('status', 1)
-                        ->get();
-            }
-        }
-
-        $franTradePartnerData = FranchisorTradePartner::query()->where('franchisor_id', $franDetails->franchisor_id)->get();
-
-
-        if ($franDetails->franchisor_id == "FIHL231593") {
-            // SEO Meta Tags
-            $seoTitle = "3D Technology Dealership and Distributorship Opportunities in India";
-            $seoDesc = "Get 3D Technology distributorship opportunities for sale to drive commercial growth. You will find here distributors of 3D printer, 3D scanner, Steam Lab, Atal Lab, 3D consumables manufacturers in India.";
-            $seoKeywords = "3D printer dealers, 3D printer distributors 3D scanner distributors, Steam Lab distributors, Atal Lab distributors, 3D consumables manufacturer, 3D printer distributors";
-        } elseif ($franDetails->ind_main_cat == 5) {
-            $seoTitle = sprintf('%s  Dealership & Distributorship – Cost, How to Get, Contact, Fee, Apply', $franDetails->company_name);
-            $seoDesc = sprintf('Get %1$s Dealership & Distributorship. Get the %1$s dealership/distributorship information including start-up costs, dealership fees, requirements, growth history and more. Join %1$s dealership/distributorship and be on your way to owning and running a successful business.', $franDetails->company_name);
-            $seoKeywords = sprintf('%1$s Dealership, %1$s Distributorship, %1$s dealership cost, %1$s distributorship cost, %1$s contact number, how to get %1$s dealership/distributorship, %1$s dealership/distributorship profit, %1$s franchise enquiry, %1$s dealership/distributorship requirements, %1$s dealership/distributorship apply , %1$s fee, %1$s dealership/distributorship monthly income.', $franDetails->company_name);
         } else {
-            // SEO Meta Tags
-            // SEO Meta Tags
-            $seoTitle = sprintf('%s Franchise Cost |How to Get | Contact| Fee | Apply', $franDetails->company_name);
-            $seoDesc = sprintf('Own your %1$s franchise. Get the %1$s franchising information including start-up costs, franchise fees, requirements, growth history and more. Join %1$s franchise and be on your way to owning and running a successful franchise business.', $franDetails->company_name);
-            $seoKeywords = sprintf('%1$s franchise in India, %1$s franchise cost, %1$s franchise contact number, how to get %1$s franchise, %1$s franchise profit, %1$s franchise enquiry, %1$s franchise requirements, %1$s franchise apply , %1$s franchise fee, %1$s franchise monthly income, %1$s franchise reviews', $franDetails->company_name);
-        }
-
-
-        //for related business Articles
-        $relatedBrands = $this->getRelatedBrands(6, $franDetails);
-
-        //Investor Auth check and fetch expressed interest data
-        $expIntVal = $this->investorDataSet($franDetails);
-
-        $isHindi = request()->segment(1) == 'hi' ? 1 : 0;
-
-        //for You may like
-        $likeArticles = $this->getContentForBrandLanding(10, $franDetails, $isHindi);
-
-        if (request()->segment(1) == 'hi') {
-            $view = "brandlanding-hindi";
-        }
-        if (Auth::check()) {
-            $inv_credits =  InvestorDetails::select('investor_details.credit_limit', 'user_accounts.reg_source')
-                ->join('user_accounts', 'investor_details.investor_id', '=', 'user_accounts.profile_str')
-                ->where('investor_details.investor_id', request()->user()->profile_str)->where('user_accounts.reg_source', 'DelhiExpoPaid')
-                ->first();
-
-            // return the investor data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection', 'regionalFranchisorMembership'));
-        } else {
-            // return the data to blade view
-            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection', 'fran_new_data', 'index_value', 'main_cat', 'url_slug', 'regionalFranchisorMembership'));
+            UserClick::where('franchisor_id', $franDetails->franchisor_id)->increment('clicks');
         }
     }
 
-    //pankaj redis implementation end
+    private function getSliderImages($franDetails)
+    {
+        $layoutType = ($franDetails->page_layout_type == 3) ? "image_type_slider2" : "image_type_slider1";
+        $sliderCheck = \App\Models\FranchisorSliderTenure::where('franchisor_id', $franDetails->franchisor_id)->first();
 
+        if ($sliderCheck && $sliderCheck->status == 1 && $sliderCheck->end_date >= now()) {
+            return $franDetails->franchisorSliderImage()
+                ->where($layoutType, '!=', '')
+                ->where('status', 1)
+                ->get([$layoutType]);
+        }
+
+        return collect();
+    }
+
+    private function generateSeoTags($franDetails)
+    {
+        if ($franDetails->franchisor_id == "FIHL231593") {
+            return [
+                "3D Technology Dealership and Distributorship Opportunities in India",
+                "Get 3D Technology distributorship opportunities...",
+                "3D printer dealers, 3D printer distributors..."
+            ];
+        }
+
+        if ($franDetails->ind_main_cat == 5) {
+            return [
+                "{$franDetails->company_name} Dealership & Distributorship – Cost...",
+                "Get {$franDetails->company_name} Dealership & Distributorship...",
+                "{$franDetails->company_name} Dealership, Distributorship..."
+            ];
+        }
+
+        return [
+            "{$franDetails->company_name} Franchise Cost |How to Get | Contact| Fee | Apply",
+            "Own your {$franDetails->company_name} franchise...",
+            "{$franDetails->company_name} franchise in India..."
+        ];
+    }
+
+    private function getRegionalMembership($franchisor_id)
+    {
+        return \App\Models\Regional\FranchiseRegional::where('fihl_id', $franchisor_id)->where('status', 1)->value('membership_type')
+            ?? \App\Models\Regional\DealerRegional::where('fihl_id', $franchisor_id)->where('status', 1)->value('membership_type');
+    }
+    // optimized version of brandDetails method end here
 
     /**
      * @param Request $request
