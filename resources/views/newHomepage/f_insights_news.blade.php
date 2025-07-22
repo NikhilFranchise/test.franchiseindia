@@ -266,6 +266,7 @@
                             <ul class="what-new">
                                 @foreach ($articles as $art)
                                     @if ($loop->index < 8)
+                                    {{-- @dd($art); --}}
                                         @php
                                             $locale = request()->segment(1) == 'hi' ? 'hi' : 'en';
                                             $mainDomain = config('constants.MainDomain');
@@ -273,7 +274,7 @@
                                             $imgUrl = \App\Http\Controllers\InsightsController::createimgurl(
                                                 $art->image,
                                             );
-                                            $cat = $art->category->first();
+                                            $cat = $art->category->first() ?? '';
                                             $categoryName = $cat ? $cat->catname : '';
                                             $catslug = $cat->slug ?? Str::slug($categoryName); // Safely access the slug or create it from the category name
                                             $caturl = "{$mainDomain}/insights/{$locale}/{$catslug}";

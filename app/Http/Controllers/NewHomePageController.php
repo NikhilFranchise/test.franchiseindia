@@ -15,6 +15,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
+use Jenssegers\Agent\Agent;
+
 
 
 
@@ -234,13 +236,13 @@ class NewHomePageController extends Controller
 
 
         $cacheKeys = [
-    'brandslft' => 'brandslft_cache',
-    'brandstbo' => 'brandstbo_cache',
-    'brandstfo' => 'brandstfo_cache',
-    'brandsffc' => 'brandsffc_cache',
-    'articles_data_cache_english' => 'articles_data_cache_english',
-    'fivideo' => 'fivideo',
-];
+            'brandslft' => 'brandslft_cache',
+            'brandstbo' => 'brandstbo_cache',
+            'brandstfo' => 'brandstfo_cache',
+            'brandsffc' => 'brandsffc_cache',
+            'articles_data_cache_english' => 'articles_data_cache_english',
+            'fivideo' => 'fivideo',
+        ];
 
 $cacheExpiration = 3600; // 1 hour
 
@@ -268,6 +270,7 @@ foreach ($sections as $section => $info) {
 // Step 2: If any cache missing, do a single query
 if (!empty($missingSections)) {
     $fetched = HomePremiumPageBrand::query()
+        ->select('brand_id','brand_img','brand_link','brand_alt','brand_heading','investment_range','investment_range_new','area_required','brand_category','brand_category_id','page_type','weightage','status','brand_section')
         ->where('status', 1)
         ->where('page_type', 1)
         ->whereIn('brand_section', array_keys($missingSections))
@@ -324,21 +327,41 @@ $brandsffc = $cachedBrands[5] ?? collect();
         //     ->limit(16)
         //     ->get();
 
-       $insights = InsightList::query()
-    ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date', 'insight_type')
-    ->with('category')
-    ->where('status', 1)
-    ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    ->whereNotNull('cat_id')
-    ->where('cat_id', '!=', '')
-    ->orderBy('updated_at', 'desc')
-    ->limit(200) // fetch a reasonable subset first
-    ->get()
-    ->groupBy('insight_type');
+    // $insights = InsightList::query()
+    // ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date', 'insight_type')
+    // ->with('category')
+    // ->where('status', 1)
+    // ->whereIn('insight_type', ['News', 'Article', 'Interview'])
+    // ->whereNotNull('cat_id')
+    // ->where('cat_id', '!=', '')
+    // ->orderBy('updated_at', 'desc')
+    // ->limit(150) // fetch a reasonable subset first
+    // ->get()
+    // ->groupBy('insight_type');
+  
+  $agent = new Agent();
 
-$news = $insights->get('News', collect())->take(16);
-$articles = $insights->get('Article', collect())->take(16);
-$interviews = $insights->get('Interview', collect())->take(16);
+    if ($agent->isDesktop()) {
+        $all = InsightList::query()
+            ->with('category')
+            ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date', 'insight_type')
+            ->withEffectiveDate()
+            ->where('status', 1)
+            ->whereNot('cat_id', '')
+            ->whereIn('insight_type', ['News', 'Article', 'Interview'])
+            ->orderByEffectiveDate('desc')
+            ->get()
+            ->groupBy('insight_type');
+
+        $news = $all['News']->take(16);
+        $articles = $all['Article']->take(16);
+        $interviews = $all['Interview']->take(16);
+    }
+
+
+// $news = $grouped->get('News', collect())->take(16);
+// $articles = $grouped->get('Article', collect())->take(16);
+// $interviews = $grouped->get('Interview', collect())->take(16);
 
 
 
@@ -390,7 +413,15 @@ $interviews = $insights->get('Interview', collect())->take(16);
             return $videosData;
         });
 
+        if ($agent->isDesktop()){
         return view('newHomepage.newmasterhomepage')->with(compact('news', 'articles', 'interviews', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
+
+        }
+        else{
+        return view('newHomepage.newmasterhomepage')->with(compact('brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
+
+        }
+        // return view('newHomepage.newmasterhomepage')->with(compact('news', 'articles', 'interviews', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
     }
 
 

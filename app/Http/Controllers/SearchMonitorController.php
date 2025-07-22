@@ -24,7 +24,7 @@ class SearchMonitorController extends Controller
              $results = SearchMonitor::whereBetween('date', [$startDate, $endDate])
                  ->orderBy('count', $sortOrder)
                  ->orderBy('date', 'desc')
-                 ->paginate(25)
+                 ->paginate(100)
                  ->appends([
                      'from' => $from,
                      'to' => $to,

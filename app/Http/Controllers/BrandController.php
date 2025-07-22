@@ -266,6 +266,19 @@ class BrandController extends Controller
         $ratings = $likesCnt = 0;
         $brandUrlParam = trim($profileName);
         $brandParamsArr = explode('.', $brandUrlParam);
+        // $referrer = $request->headers->get('referer', 'No referrer found');
+
+        // \Log::info('User came from: ' . $referrer);
+        // dd('Previous url' .$referrer);
+
+        // Initialize the variables
+        // dd($request->all());
+        // dd('yes');
+        $ratings = 0;
+        $likesCnt = 0;
+        $brandUrlParam = $request->profileName;         // Fetch the request parameter
+        $brandParamsArr = explode('.', $brandUrlParam);  // Explode it by separator & fetch details from DB
+        $images = [];
         $view = "brandlanding";
         $images = [];
 
