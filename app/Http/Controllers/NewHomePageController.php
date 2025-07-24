@@ -15,7 +15,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
-use Jenssegers\Agent\Agent;
+// use Jenssegers\Agent\Agent;
+use Detection\MobileDetect;
 
 
 
@@ -168,7 +169,7 @@ class NewHomePageController extends Controller
         return view('newHomepage.newmasterhomepage')->with(compact('news', 'articles', 'interviews',  'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
     }
 
-    public function homeNew(Request $request)
+    public function homeNew(Request $request, MobileDetect $detect)
     {
         if (request()->segment(1) != 'hi') {
             app()->setLocale('en');
@@ -339,9 +340,9 @@ $brandsffc = $cachedBrands[5] ?? collect();
     // ->get()
     // ->groupBy('insight_type');
   
-  $agent = new Agent();
+//   $agent = new Agent();
 
-    if ($agent->isDesktop()) {
+     if (!$detect->isMobile() ) {
         $all = InsightList::query()
             ->with('category')
             ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date', 'insight_type')
@@ -413,7 +414,7 @@ $brandsffc = $cachedBrands[5] ?? collect();
             return $videosData;
         });
 
-        if ($agent->isDesktop()){
+        if (!$detect->isMobile()){
         return view('newHomepage.newmasterhomepage')->with(compact('news', 'articles', 'interviews', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
 
         }
