@@ -115,6 +115,7 @@ Route::get('campaign/franchisor/{id}', [CommonController::class, 'franAutoLogin'
 Route::get('campaign/deactivate/franchisor/{id}', [CommonController::class, 'franCampaignDeactivation']);
 Route::get('franchiseinternational', [InternationalController::class, 'getHomePage']); // International Page routes
 Route::get('/', [NewHomePageController::class, 'homeNew']);
+
 Route::get('/home', function () {
     return redirect('/', 301);
 });
