@@ -22,6 +22,7 @@ use Jenssegers\Agent\Agent;
 
 class NewHomePageController extends Controller
 {
+
     public function hindiHomePage()
     {
         if (request()->segment(1) == 'hi') {
