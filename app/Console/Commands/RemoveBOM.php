@@ -16,7 +16,7 @@ class RemoveBOM extends Command
     {
         $extensions = ['php', 'blade.php', 'js', 'css'];
         $baseDir = base_path();
-        $excludedDirs = ['vendor','public','app/Console/Commands','node_modules', 'storage/framework', 'bootstrap/cache']; // ← exclude more if needed
+        $excludedDirs = ['vendor','public','app/Console/Commands/RemoveBOM.php','node_modules', 'storage/framework', 'bootstrap/cache']; // ← exclude more if needed
 
         $iterator = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($baseDir, RecursiveDirectoryIterator::SKIP_DOTS)
@@ -109,13 +109,34 @@ class RemoveBOM extends Command
         return false;
     }
 
-    private function shouldSkip(string $path, array $excludedDirs): bool
-    {
-        foreach ($excludedDirs as $dir) {
-            if (str_contains($path, DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR)) {
-                return true;
-            }
+    // private function shouldSkip(string $path, array $excludedDirs): bool
+    // {
+    //     foreach ($excludedDirs as $dir) {
+    //         if (str_contains($path, DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR)) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
+    private function shouldSkip(string $path, array $excludedPaths): bool
+{
+    $normalizedPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $path);
+
+    foreach ($excludedPaths as $excluded) {
+        $normalizedExcluded = base_path(str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $excluded));
+
+        // Skip if it's a directory match
+        if (is_dir($normalizedExcluded) && str_starts_with($normalizedPath, $normalizedExcluded)) {
+            return true;
         }
-        return false;
+
+        // Skip if it's an exact file match
+        if (realpath($normalizedPath) === realpath($normalizedExcluded)) {
+            return true;
+        }
     }
+
+    return false;
+}
+
 }
