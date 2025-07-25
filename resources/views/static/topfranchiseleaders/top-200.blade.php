@@ -115,27 +115,16 @@
                                 Investment Range</div>
                             <select class="form-controls pricings" id="investment_range" name="investment_range">
                                 <option value="">Select Investment Range</option>
-                                l
                                 <option value="1">Rs. 10000 - 50000</option>
-                                l
                                 <option value="3">Rs. 50000 - 2 Lakh</option>
-                                l
                                 <option value="5">Rs. 2 Lakh - 5 Lakh</option>
-                                l
                                 <option value="7">Rs. 5 Lakh - 10 Lakh</option>
-                                l
                                 <option value="9">Rs. 10 Lakh - 20 Lakh</option>
-                                l
                                 <option value="11">Rs. 20 Lakh - 30 Lakh</option>
-                                l
                                 <option value="13">Rs. 30 Lakh - 50 Lakh</option>
-                                l
                                 <option value="15">Rs. 50 Lakh - 1 Cr</option>
-                                l
                                 <option value="17">Rs. 1 Cr - 2 Cr</option>
-                                l
                                 <option value="19">Rs. 2 Cr - 5 Cr</option>
-                                l
                                 <option value="21">Rs. 5 Cr above</option>
                             </select>
                             <button class="btn btn-primary" onclick="window.location.href='{{ url()->current() }}'">Reset
@@ -316,10 +305,7 @@
 
                             updateGetFreeCount();
 
-                            $("input[name='getFreeInfo']:checked").each(function() {
-                                let brandId = $(this).attr("id");
-                                let brandName = $("#brandnamecategory" + brandId).html();
-                                let brandInvestment = $("#brandinvestment" + brandId).html();
+                            $("input[name='getFreeInfo']:checked").each(function() {et brandId = $(this).attr("id");et brandName = $("#brandnamecategory" + brandId).html();et brandInvestment = $("#brandinvestment" + brandId).html();
 
                                 selectedHtml += `
                 <div class="col-xs-12 col-sm-4 col-md-4">
