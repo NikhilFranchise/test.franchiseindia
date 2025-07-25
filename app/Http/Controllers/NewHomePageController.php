@@ -23,6 +23,7 @@ use Detection\MobileDetect;
 
 class NewHomePageController extends Controller
 {
+
     public function hindiHomePage()
     {
         if (request()->segment(1) == 'hi') {
