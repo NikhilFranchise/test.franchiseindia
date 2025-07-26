@@ -112,7 +112,7 @@
                     </li>
                     <li><a href="https://www.franchiseindia.com/feedback/">परतिक्रिया</a></li>
                     <li><a href="https://news.franchiseindia.com/">समाचार्</a></li>
-                    <li><a href="https://www.franchiseindia.com/testimonials">प्रशंसापत्र</a></li>
+                    <li><a href="https://www.franchiseindia.com/testimonials-reviews">प्रशंसापत्र</a></li>
                     <li><a href="https://www.franchiseindia.com/terms">शर्तें</a></li>
                 </ul>
             </div>
@@ -148,7 +148,7 @@
                     <li><a href="https://www.franchiseindia.com/feedback" target="_blank">Feedback</a></li>
                     <li><a href="https://www.franchiseindia.com/sitemap/brands" target="_blank">Brands</a></li>
                     <li><a href="https://www.franchiseindia.com/insights" target="_blank">News</a></li>
-                    <li><a href="https://www.franchiseindia.com/testimonials" target="_blank">Testimonials</a></li>
+                    <li><a href="https://www.franchiseindia.com/testimonials-reviews" target="_blank">Testimonials</a></li>
                     <li><a href="https://www.franchiseindia.com/terms" target="_blank">Terms</a></li>
                     {{-- <li><a href="https://www.franchiseindia.com/sitemap" target="_blank">Sitemap</a></li> --}}
                 </ul>
