@@ -241,7 +241,7 @@ function veryfie() {
 
 // Function to edit mobile number in insta form
 function editmobileinsta() {
-    $("#otpblk1").hide();
+    $("#otpblk").hide();
     $('#verifybutton').show();
     $('#editmobile').hide();
     $('#txtPhone').prop('readonly', false);

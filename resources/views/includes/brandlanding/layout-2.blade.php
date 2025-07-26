@@ -350,7 +350,7 @@
                                                 class="form-control check-existing-registered-investor" id="newemail"
                                                 name="infoemail" placeholder="Enter email">
                                         </div>
-                                        <div class="form-group" style="position: relative;">
+                                        <div class="form-group pos-rel" style="position: relative;">
                                             <input type="text" name="mobile" id='txtPhone' class="form-control"
                                                 placeholder="Enter Mobile No" maxlength="10" autocomplete="off"
                                                 onkeyup="getMobileStatus(this.value);" onkeypress="return isNumberKey(event);" />
