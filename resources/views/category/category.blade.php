@@ -1392,10 +1392,20 @@
 
         // Edit the entered mobile field
         function editmobile() {
-            $('#mobile').prop('readonly', false);
+            const $mobile = $('#mobile');
+            const mobileVal = $mobile.val();
+
+            console.log(mobileVal);
+
+            $mobile.prop('readonly', false);
             $('#editmobile').hide();
-            $('#validatemobile').show();
             $('#otpblock').hide();
+
+            if (mobileVal.length === 10 && $.isNumeric(mobileVal)) {
+                $('#validatemobile').show();
+            } else {
+                $('#validatemobile').hide();
+            }
         }
 
         // Validate mobile from table
@@ -1602,7 +1612,7 @@
                         // Handle the response (this can be any content, e.g. update the page with the sorted data)
                         console.log("Response received:",
                             response
-                            ); // For debugging, you can check the response in the console
+                        ); // For debugging, you can check the response in the console
 
                         // Example: you could populate the response data into an HTML element
                         // $('#someElement').html(response);
