@@ -1405,6 +1405,8 @@
                 $('#validatemobile').show();
             } else {
                 $('#validatemobile').hide();
+                $('#editmobile').hide();
+
             }
         }
 
