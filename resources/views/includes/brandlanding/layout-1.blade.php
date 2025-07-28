@@ -27,8 +27,8 @@
                         }
                     @endphp
                     <div class="brand-logo"><img src="{{ $img }}" alt="{{ $franDetails->company_name }}" /></div>
-                    @if($franDetails->brand_verified == 1)
-                    <div class="brand-verify-detail-mobile"><i class="fa fa-check"></i> Verified</div>
+                    @if ($franDetails->brand_verified == 1)
+                        <div class="brand-verify-detail-mobile"><i class="fa fa-check"></i> Verified</div>
                     @endif
                 </div>
                 <div class="col-xs-12 col-sm-10 col-md-10 mdy-width">
@@ -38,15 +38,17 @@
                             <div class="sub-ttl">
                                 {{ Config('constants.subSubCategoryArr.' . $franDetails->ind_cat . '.' . $franDetails->ind_sub_cat) }}
                             </div>
-                            @if($franDetails->ind_main_cat == 5)
-                            <h1 class="ttl">{{ $franDetails->company_name }} Dealership & Distributorship Cost – How to get, Contact, Apply, Fee</h1>
+                            @if ($franDetails->ind_main_cat == 5)
+                                <h1 class="ttl">{{ $franDetails->company_name }} Dealership & Distributorship Cost –
+                                    How to get, Contact, Apply, Fee</h1>
                             @else
-                            <h1 class="ttl">{{ $franDetails->company_name }} Franchise Cost – How to get, Contact,
-                                Apply, Fee</h1>
+                                <h1 class="ttl">{{ $franDetails->company_name }} Franchise Cost – How to get,
+                                    Contact,
+                                    Apply, Fee</h1>
                             @endif
-                           
+
                         </div>
-                        {{-- @if($franDetails->brand_verified == 1)
+                        {{-- @if ($franDetails->brand_verified == 1)
                         <div style="text-align: right;">
                         <img src="https://thumbs.dreamstime.com/b/verified-vector-stamp-isolated-white-background-41827520.jpg" style="height: 50px;">
                         </div>
@@ -97,11 +99,10 @@
                                     @endif
                                 </div>
 
-                                @if($franDetails->brand_verified == 1)
-                                <div class="brand-verify-detail"><i class="fa fa-check"></i> Verified</div>
+                                @if ($franDetails->brand_verified == 1)
+                                    <div class="brand-verify-detail"><i class="fa fa-check"></i> Verified</div>
+                                @endif
 
-                                 @endif
-                                
                             </div>
                         </div>
                         <!-- Tab Panel End Here -->
@@ -335,19 +336,17 @@
                                                 class="form-control check-existing-registered-investor" id="newemail"
                                                 name="infoemail" placeholder="Enter email">
                                         </div>
-                                        <div class="form-group" style="position: relative;">
+                                        <div class="form-group pos-rel" style="position: relative;">
                                             <input type="text" name="mobile" id='txtPhone' class="form-control"
                                                 placeholder="Enter Mobile No" maxlength="10" autocomplete="off"
-                                                onkeyup="getMobileStatus(this.value);" />
+                                                onkeyup="getMobileStatus(this.value);" onkeypress="return isNumberKey(event);" />
                                             <input class="verif-submitbtn" id="verifybutton" value="Verify"
                                                 type="button" onclick="veryfie()">
                                             <input class="verif-submitbtn" id="editmobile" value="Edit"
                                                 type="button" onclick="editmobileinsta();" style="display: none">
-
-                                                {{-- <input type="text" name="mobile" id='txtPhone' class="form-control"
-                                            placeholder="Enter Mobile No" maxlength="10" autocomplete="off"
-                                            /> --}}
-                                       
+                                            <span id="sub1" class="showhideright"
+                                                style="display:none"><i class="fa fa-check fa-lg"
+                                                    aria-hidden="true"></i></span>
                                         </div>
                                         <div class="form-group" id="otpblk" style="display:none;">
                                             <input type="text" id="otp" class="form-control"
@@ -359,6 +358,7 @@
                                         <div class="form-group" id="otpblk1" style="display:none; color:red;">
                                             OTP mismatch..!
                                         </div>
+
                                         <div class="form-group">
                                             <select class="form-control" id="state" name="infostate"
                                                 onchange="getcityinfoinsta(this.value)">
@@ -433,7 +433,7 @@
                                         </div>
                                         <div class="submit-btn" id="sub" style="float: none;">
                                             <input type="submit" id="btninsta" class="btn btn-default btn-red"
-                                                value="Apply Now">
+                                                value="Apply Now" disabled />
                                         </div>
 
                                     </form>
@@ -509,109 +509,283 @@
         })
     })
 </script>
- 
+
 <!-- INACTIVE BRANDS POPUP -->
-@if($franDetails->profile_status == 11)
-<div id="inactive-brands" >
-    <style>
-    :not(#inactive-brands){overflow-y: hidden;}
-    .inb{overflow-y: scroll!important;}
-    .inb-inner{background: url({{asset('images/inactivebgnew.jpg')}});background-repeat: repeat;position: 
-    relative;width: 600px;height: 550px;margin: 0px auto;background-repeat: no-repeat;}
-    .inb-top{text-align: center;}
-    .inb{position: fixed;width: 100%;height: 100%;background: rgba(0,0,0,0.5);top: 0px;left: 0px;overflow: hidden;z-index: 9999;}
-    .inb-headline{display: inline-block;margin-top: 10px;background: #fff;padding: 4px 41px;border-radius: 0px 0px 15px 15px;color: #e83a21;font-weight: 800;font-size: 17px;}
-    .inb-cont{color: #fff;padding: 0px 0px;text-align: center;margin: 10px auto auto auto;font-weight: 300;font-size: 15px;width: 460px;max-width: 100%;line-height: 20px;}
-    .inb-view{position: absolute;bottom:12px;text-align: center;width: 100%;}
-    .inb-view a{background: #f00;padding: 6px 20px;color: #fff;font-weight: bold;display: inline-block;font-size: 13px;}
-    .inb-brands ul li{background: #e9e9e9;border-radius: 0px 0px 30px 30px;width: 32%;height: 98px;margin-bottom: 9px;}
-    .inb-brands ul li img{max-width: 100%;}
-    .inb-brands{padding: 0px 30px;margin-top: 0px;}
-    .inb-brands ul{display: flex;justify-content: space-between;margin-top: 40px;flex-wrap: wrap;padding: 0px 8px;}
-    .inb-brand-title{text-align: center;
-      font-weight: bold;color: #222222;font-size: 14px;line-height: 15px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;display: block;width: 125px;margin: auto;}
-    .inb-brand-inv{text-align: center;font-size: 11px;}
-    .inb-brand-pic{width: 95px;display: block;margin: 10px auto 4px auto;border: 1px solid #e3e3e3;border-radius: 5px;padding: 5px;background: #fff;}
-    
-    @media screen and (max-width:599px){
-    .inb-inner{background: url({{asset('images/inbback.jpg')}});background-repeat: no-repeat;background-repeat: no-repeat;border: 1px solid #f00;max-width: 95%;height: auto;background-size: cover;background-position: center;}
-    .inb-brands ul{background: url({{asset('images/inbmobilebg.png')}});background-size:100% 100%;display: block;background-position: center;background-repeat: no-repeat;text-align: center;padding: 20px 5px;margin-bottom: 60px;margin-top: 15px;}
-    .inb-brands ul li{display: inline-block;background: #E9E9E9;border-radius: 0px 0px 30px 30px;width: 44%;margin: 2px 0px;}
-    .inb-brand-title{font-size: 13px;width: 78px;}
-    .inb-brand-inv{font-size: 11px;width: 80px;margin: auto;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
-    .inb-cont {font-size: 14px;width: 100%;padding:3px 10px;line-height: 19px;margin: 6px auto auto auto;}
-    .inb-headline{font-size: 15px;}
-    .inb-view a{font-size: 11px;}
-    .inb-inner{margin-top:10px;}
-    }
-    </style>
-    
-    <div class="inb" id="inactive-brands">
-          <div class="inb-inner">
-            <div class="inb-top">
-            <div class="inb-headline">Top <span>{{$index_value}}</span> Brands</div>
+@if ($franDetails->profile_status == 11)
+    <div id="inactive-brands">
+        <style>
+            :not(#inactive-brands) {
+                overflow-y: hidden;
+            }
+
+            .inb {
+                overflow-y: scroll !important;
+            }
+
+            .inb-inner {
+                background: url({{ asset('images/inactivebgnew.jpg') }});
+                background-repeat: repeat;
+                position:
+                    relative;
+                width: 600px;
+                height: 550px;
+                margin: 0px auto;
+                background-repeat: no-repeat;
+            }
+
+            .inb-top {
+                text-align: center;
+            }
+
+            .inb {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                top: 0px;
+                left: 0px;
+                overflow: hidden;
+                z-index: 9999;
+            }
+
+            .inb-headline {
+                display: inline-block;
+                margin-top: 10px;
+                background: #fff;
+                padding: 4px 41px;
+                border-radius: 0px 0px 15px 15px;
+                color: #e83a21;
+                font-weight: 800;
+                font-size: 17px;
+            }
+
+            .inb-cont {
+                color: #fff;
+                padding: 0px 0px;
+                text-align: center;
+                margin: 10px auto auto auto;
+                font-weight: 300;
+                font-size: 15px;
+                width: 460px;
+                max-width: 100%;
+                line-height: 20px;
+            }
+
+            .inb-view {
+                position: absolute;
+                bottom: 12px;
+                text-align: center;
+                width: 100%;
+            }
+
+            .inb-view a {
+                background: #f00;
+                padding: 6px 20px;
+                color: #fff;
+                font-weight: bold;
+                display: inline-block;
+                font-size: 13px;
+            }
+
+            .inb-brands ul li {
+                background: #e9e9e9;
+                border-radius: 0px 0px 30px 30px;
+                width: 32%;
+                height: 98px;
+                margin-bottom: 9px;
+            }
+
+            .inb-brands ul li img {
+                max-width: 100%;
+            }
+
+            .inb-brands {
+                padding: 0px 30px;
+                margin-top: 0px;
+            }
+
+            .inb-brands ul {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 40px;
+                flex-wrap: wrap;
+                padding: 0px 8px;
+            }
+
+            .inb-brand-title {
+                text-align: center;
+                font-weight: bold;
+                color: #222222;
+                font-size: 14px;
+                line-height: 15px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                display: block;
+                width: 125px;
+                margin: auto;
+            }
+
+            .inb-brand-inv {
+                text-align: center;
+                font-size: 11px;
+            }
+
+            .inb-brand-pic {
+                width: 95px;
+                display: block;
+                margin: 10px auto 4px auto;
+                border: 1px solid #e3e3e3;
+                border-radius: 5px;
+                padding: 5px;
+                background: #fff;
+            }
+
+            @media screen and (max-width:599px) {
+                .inb-inner {
+                    background: url({{ asset('images/inbback.jpg') }});
+                    background-repeat: no-repeat;
+                    background-repeat: no-repeat;
+                    border: 1px solid #f00;
+                    max-width: 95%;
+                    height: auto;
+                    background-size: cover;
+                    background-position: center;
+                }
+
+                .inb-brands ul {
+                    background: url({{ asset('images/inbmobilebg.png') }});
+                    background-size: 100% 100%;
+                    display: block;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    text-align: center;
+                    padding: 20px 5px;
+                    margin-bottom: 60px;
+                    margin-top: 15px;
+                }
+
+                .inb-brands ul li {
+                    display: inline-block;
+                    background: #E9E9E9;
+                    border-radius: 0px 0px 30px 30px;
+                    width: 44%;
+                    margin: 2px 0px;
+                }
+
+                .inb-brand-title {
+                    font-size: 13px;
+                    width: 78px;
+                }
+
+                .inb-brand-inv {
+                    font-size: 11px;
+                    width: 80px;
+                    margin: auto;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+
+                .inb-cont {
+                    font-size: 14px;
+                    width: 100%;
+                    padding: 3px 10px;
+                    line-height: 19px;
+                    margin: 6px auto auto auto;
+                }
+
+                .inb-headline {
+                    font-size: 15px;
+                }
+
+                .inb-view a {
+                    font-size: 11px;
+                }
+
+                .inb-inner {
+                    margin-top: 10px;
+                }
+            }
+        </style>
+
+        <div class="inb" id="inactive-brands">
+            <div class="inb-inner">
+                <div class="inb-top">
+                    <div class="inb-headline">Top <span>{{ $index_value }}</span> Brands</div>
+                </div>
+                <div class="inb-cont">This brand is currently not accepting franchise applications. However, you can
+                    explore the brands with similar category that offer franchising opportunities.</div>
+                <div class="inb-brands">
+                    <ul>
+                        @php
+                            $cat_url =
+                                Config('constants.MainDomain') .
+                                '/business-opportunities/' .
+                                $url_slug .
+                                '.m' .
+                                $franDetails->ind_main_cat;
+                        @endphp
+
+                        @foreach ($fran_new_data as $brands)
+                            @php
+                                $brandImagepath = Config('constants.franAwsImgPath') . $brands->company_logo;
+                                $brandUrl = sprintf(
+                                    Config('constants.brandPagePattern'),
+                                    Config('constants.MainDomain'),
+                                    $brands->profile_name,
+                                    $brands->fran_detail_id,
+                                );
+                                $minValue = $brands->unit_inv_min;
+                                if (is_numeric($minValue)) {
+                                    if ($minValue < 100000 && $minValue > 10000) {
+                                        $minValue = substr($minValue / 1000, 0, 5) . ' K';
+                                    } elseif ($minValue <= 9999999 && $minValue > 100000) {
+                                        $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
+                                    } elseif ($minValue > 9999999) {
+                                        $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
+                                    }
+                                }
+
+                                $maxValue = $brands->unit_inv_max;
+                                if (is_numeric($maxValue)) {
+                                    if ($maxValue < 100000 && $maxValue > 10000) {
+                                        $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
+                                    } elseif ($maxValue <= 9999999 && $maxValue > 100000) {
+                                        $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
+                                    } elseif ($maxValue > 9999999) {
+                                        $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
+                                    }
+                                }
+                            @endphp
+                            <li>
+                                <div class="inb-brand-pic">
+                                    <a href="{{ $brandUrl }}" target="_blank"><img src="{{ $brandImagepath }}"
+                                            alt="Grow Inn Steps"></a>
+                                </div>
+                                <div class="inb-brand-title">
+                                    <a href="{{ $brandUrl }}" target="_blank">{{ $brands->company_name }} </a>
+                                </div>
+                                <div class="inb-brand-inv">
+                                    INR {{ $minValue }} - {{ $maxValue }}
+                                </div>
+                            </li>
+                        @endforeach
+
+                    </ul>
+                </div>
+                <div class="inb-view">
+                    <a href="{{ $cat_url }}" target="_blank">VIEW MORE</a>
+                    {{-- <a href="" target="_blank">VIEW MORE</a> --}}
+
+                </div>
             </div>
-            <div class="inb-cont">This brand is currently not accepting franchise applications. However, you can explore the brands with similar category that offer franchising opportunities.</div>
-          <div class="inb-brands">
-            <ul>
-                @php
-                $cat_url = Config('constants.MainDomain').'/business-opportunities/' .$url_slug .'.m' .$franDetails->ind_main_cat;;
-                @endphp
-                
-                @foreach($fran_new_data as $brands)
-                @php
-                 $brandImagepath = Config('constants.franAwsImgPath').$brands->company_logo;
-                 $brandUrl       = sprintf(Config('constants.brandPagePattern'), Config('constants.MainDomain'), $brands->profile_name, $brands->fran_detail_id);
-                 $minValue = $brands->unit_inv_min;
-                        if (is_numeric($minValue)) {
-                            if ($minValue < 100000 && $minValue > 10000) {
-                                $minValue = substr($minValue / 1000, 0, 5) . ' K';
-                            } elseif ($minValue <= 9999999 && $minValue > 100000) {
-                                $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
-                            } elseif ($minValue > 9999999) {
-                                $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
-                            }
-                        }
 
-                        $maxValue = $brands->unit_inv_max;
-                        if (is_numeric($maxValue)) {
-                            if ($maxValue < 100000 && $maxValue > 10000) {
-                                $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
-                            } elseif ($maxValue <= 9999999 && $maxValue > 100000) {
-                                $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
-                            } elseif ($maxValue > 9999999) {
-                                $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
-                            }
-                        }
-                @endphp
-                <li>
-                    <div class="inb-brand-pic">
-                        <a href="{{$brandUrl}}" target="_blank"><img src="{{$brandImagepath}}" alt="Grow Inn Steps"></a>
-                    </div>
-                    <div class="inb-brand-title">
-                        <a href="{{$brandUrl}}" target="_blank">{{$brands->company_name}} </a>
-                    </div>
-                    <div class="inb-brand-inv">
-                        INR {{ $minValue }} - {{ $maxValue }}
-                    </div>
-                </li>
-                @endforeach
-               
-            </ul>
-          </div>
-          <div class="inb-view">
-            <a href="{{$cat_url}}" target="_blank">VIEW MORE</a>
-            {{-- <a href="" target="_blank">VIEW MORE</a> --}}
-
-          </div>
+            <script>
+                setTimeout(function() {
+                    $('#inactive-brands').inb();
+                }, 100);
+            </script>
         </div>
-    
-    <script>
-      setTimeout(function() {
-        $('#inactive-brands').inb();
-    }, 100);
-    </script>
-    </div>
-    @endif
-    <!-- INACTIVE BRANDS POPUP -->
-    
+@endif
+<!-- INACTIVE BRANDS POPUP -->

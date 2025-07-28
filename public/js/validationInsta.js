@@ -1,9 +1,9 @@
 // Custom method to validate accepted characters
-jQuery.validator.addMethod("accept", function(value, element, param) {
+jQuery.validator.addMethod("accept", function (value, element, param) {
     return value.match(new RegExp("." + param + "$"));
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     // Initialize hints for input, textarea, and select elements with titles
     $('input[title!=""]').hint();
     $('textarea[title!=""]').hint();
@@ -42,10 +42,10 @@ $(document).ready(function() {
             pincodefreeadvice: "",
             detailsfreeadvice: ""
         },
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.appendTo(element.parent().parent());
         },
-        submitHandler: function() {
+        submitHandler: function () {
             var type = $("input[name='optionsRadios']:checked").val();
             var name = $('#namefreeadvice').val();
             var email = $('#emailfreeadvice').val();
@@ -66,7 +66,7 @@ $(document).ready(function() {
                     details: details,
                     is_newsletter: is_newsletter
                 },
-                success: function(data) {
+                success: function (data) {
                     const newText = data.split(/\s/).join('');
                     if (newText === 'true') {
                         window.location = "/thanks-advice-form";
@@ -121,9 +121,16 @@ $(document).ready(function() {
             address: "",
             investment_range: ""
         },
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.appendTo(element.parent().parent());
         }
+    });
+    function toggleSubmitButton() {
+        $('#btninsta').prop('disabled', !$("#insta").valid());
+    }
+
+    $('#insta input, #insta select, #insta textarea').on('keyup change blur', function () {
+        toggleSubmitButton();
     });
 
     // Additional validation for wider insta form
@@ -168,12 +175,33 @@ $(document).ready(function() {
             address: "",
             investment_range: ""
         },
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             error.appendTo(element.parent().parent());
         }
     });
+    function toggleSubmitButton1() {
+        const isValid = $("#wider-insta-form").valid();
+        $("#wider-submit-button").prop("disabled", !isValid);
+    }
+    $('#wider-insta-form input, #wider-insta-form select, #wider-insta-form textarea').on('keyup change blur', function () {
+        toggleSubmitButton1();
+    });
 });
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    // Allow: backspace (8), delete (46), arrow keys (37-40)
+    if ([8, 46, 37, 38, 39, 40].includes(charCode)) {
+        return true;
+    }
 
+    // Only allow number keys (0–9)
+    if (charCode < 48 || charCode > 57) {
+        evt.preventDefault();
+        return false;
+    }
+
+    return true;
+}
 // Function to check mobile status
 function getMobileStatus(value) {
     if (value.length === 10 && $.isNumeric(value)) {
@@ -181,7 +209,7 @@ function getMobileStatus(value) {
             type: 'GET',
             url: '/mobcheck',
             data: { mobile: value },
-            success: function(data) {
+            success: function (data) {
                 if (parseInt(data) === 1) {
                     $('#sub1').show();
                 } else {
@@ -192,6 +220,7 @@ function getMobileStatus(value) {
         });
     } else if (value.length !== 10 && $.isNumeric(value)) {
         // $('#verifybutton, #sub').hide();
+        $('#sub1').hide();
         $('#verifybutton').hide();
     }
 }
@@ -226,7 +255,7 @@ function checkinstaotp() {
         type: 'get',
         url: '/check',
         data: { otpNo: keyword, mobileNo: mobile },
-        success: function(data) {
+        success: function (data) {
             if (data == 'notexists') {
                 $('#otpblk1').show();
             } else {
@@ -247,44 +276,46 @@ function getCityWiderInsta(state) {
         type: 'GET',
         url: '/get-city-list-landing-page',
         data: { state: state, franId: franId },
-        success: function(data) {
+        success: function (data) {
             $("#city-wider").html(data);
         }
     });
 }
 
-function getMobileStatusWider(mobile) {
-    if ($("#success-mobile-wider").css("display") !== "block") {
-        if (mobile.length === 10 && $.isNumeric(mobile)) {
-            $.ajax({
-                type: 'GET',
-                url: '/mobcheck',
-                data: { mobile: mobile },
-                success: function(data) {
-                    if (parseInt(data) === 1) {
-                        $("#success-mobile-wider").show();
-                    }
-                    else if(parseInt(data) === 0){
-                        $("#validate-mobile-contact").show();
-                    } else {
-                        $("#wider-submit-button").prop("disabled", true);
-                        $("#validate-mobile-contact, #success-mobile-wider").hide();
-                    }
+function getMobileStatusWider(value) {
+    if (value.length === 10 && $.isNumeric(value)) {
+        $.ajax({
+            type: 'GET',
+            url: '/mobcheck',
+            data: { mobile: value },
+            success: function (data) {
+                if (parseInt(data) === 1) {
+                    $('#success-mobile-wider').show();
+                    $('#validate-mobile-contact').hide();
+                    $('#wider-submit-button').prop('disabled', false);
+                } else {
+                    $('#validate-mobile-contact').show();
+                    $('#success-mobile-wider').hide();
+                    $('#wider-submit-button').prop('disabled', true);
                 }
-            });
-        } else if (mobile.length !== 10 && $.isNumeric(mobile)) {
-            $("#success-mobile-wider").hide();
-            $("#wider-submit-button").prop("disabled", false);
-            $("#edit-mobile-wider, #validate-mobile-contact").hide();
-        }
+            }
+        });
+    } else if (value.length !== 10 && $.isNumeric(value)) {
+        $('#validate-mobile-contact').hide();
+        $('#success-mobile-wider').hide();
+        $('#edit-mobile-wider').hide();
+        $('#wider-submit-button').prop('disabled', false);
     }
 }
 
-function editMobileWider() {
+
+function editMobileWider1() {
+    // alert('hello');
     $("#mobile-wider").prop("readonly", false);
-    $("#edit-mobile-wider").hide();
+    $("#edit-mobile-wider1").hide(); // Fix: correct ID
     $("#validate-mobile-contact").show();
-    $("#otp-block-wider").hide();
+    $("#otp-block-wider1").hide();
+    $("#wider-submit-button").prop("disabled", true);
 }
 
 function validateMobileWider() {
@@ -295,26 +326,26 @@ function validateMobileWider() {
         data: { mobile: mobile }
     });
     $("#mobile-wider").prop("readonly", true);
-    $("#edit-mobile-wider").show();
+    $("#edit-mobile-wider1").show();
     $("#validate-mobile-contact").hide();
-    $("#otp-block-wider").show();
+    $("#otp-block-wider1").show();
     $("#wider-submit-button").prop("disabled", true);
 }
 
 function verifyWiderOTP() {
-    var otp = $('#otp-insta-wider').val();
+    var otp = $('#otp-insta-wider1').val();
     var mobile = $('#mobile-wider').val();
     $.ajax({
         type: 'get',
         url: '/investor/verify-otp',
         data: { otpNo: otp, mobileNo: mobile },
-        success: function(data) {
+        success: function (data) {
             if (data == 0) {
                 $("#mismatch-wider").show();
             } else {
                 $("#success-mobile-wider").show();
                 $("#wider-submit-button").prop("disabled", false);
-                $("#otp-block-wider, #edit-mobile-wider, #validate-mobile-contact").hide();
+                $("#otp-block-wider1, #edit-mobile-wider1, #validate-mobile-contact").hide();
             }
         }
     });

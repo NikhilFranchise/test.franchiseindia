@@ -37,11 +37,9 @@ class NewHomePageController extends Controller
             'brandsffc' => 'brandsffc_cache',
             'articles_data_cache' => 'articles_data_cache',
             'fivideohi' => 'fivideohi',
-
         ];
         // Define cache expiration time in seconds
         $cacheExpiration = 3600; // You can adjust this as needed
-
         // Check if the 'brandslft' data exists in the cache
         $isBrandslftCached = Cache::has($cacheKeys['brandslft']);
 
