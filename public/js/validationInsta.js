@@ -53,7 +53,7 @@ $(document).ready(function () {
             var details = $('#detailsfreeadvice').val();
             var pincode = $('#pincodefreeadvice').val();
             var is_newsletter = $('#is_newsletterfreeadvice').is(':checked') ? 1 : 0;
-
+           
             $.ajax({
                 type: 'post',
                 url: '/freeadvice',
