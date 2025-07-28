@@ -10,4 +10,14 @@ class PropertyLoan extends Model
     use HasFactory;
     public $table = 'property_loans';
 
+     protected $fillable = [
+        'name',
+        'email',
+        'mobile',
+        'address',
+        'pincode',
+        'income_range',
+        'source',
+    ];
+
 }
