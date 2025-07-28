@@ -230,14 +230,16 @@
                                     </span>
                                     <input type="text" name="emailfreeadvice1" id="emailfreeadvice1"
                                         class="form-control blur" placeholder="Enter Email" required="">
+                                    <span class="error-message text-danger" id="emailfreeadvice1-error"></span>
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <img src="https://www.franchiseindia.com/images/mobile.png" alt="mobile">
                                     </span>
                                     <input type="text" class="form-control blur" maxlength="10"
-                                        name="mobilefreeadvice1" id="mobilefreeadvice1" placeholder="Enter Mobile No"
-                                        {{-- required="" --}} required pattern="[6-9]{1}[0-9]{9}">
+                                        name="mobilefreeadvice1" id="mobilefreeadvice1" placeholder="Enter Mobile No" required pattern="[6-9]{1}[0-9]{9}">
+                                                    <span class="error-message text-danger" id="mobilefreeadvice1-error"></span>
+
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon">
@@ -245,6 +247,8 @@
                                             alt="pincode"></span>
                                     <input type="text" name="pincodefreeadvice1" id="pincodefreeadvice1"
                                         class="form-control blur" maxlength="6" placeholder="Enter Pincode">
+                                                    <span class="error-message text-danger" id="pincodefreeadvice1-error"></span>
+
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon height80">
@@ -252,6 +256,8 @@
                                     </span>
                                     <textarea class="form-control height80 blur" name="detailsfreeadvice1" id="detailsfreeadvice1"
                                         placeholder="Enter Details"></textarea>
+                                                    <span class="error-message text-danger" id="detailsfreeadvice1-error"></span>
+
                                 </div>
                                 <div class="form-group mt-4 mb-4">
                                     <div class="captcha">
@@ -265,9 +271,8 @@
                                 <div class="form-group mb-4">
                                     <input id="captcha" type="text" class="form-control"
                                         placeholder="Enter Captcha" name="captcha">
-                                  <span class="text-danger" id="captcha-error"></span>
-                                    {{-- <br> --}}
-                                    {{-- <span class="text-danger">hello</span> --}}
+                                                <span class="error-message text-danger" id="captcha-error"></span>
+
                                 </div>
 
 
@@ -290,21 +295,12 @@
                                     <div class="col-xs-12 col-sm-12 col-md-12 txt-center" id="sub">
                                         <input type="submit" class="btn btn-default btn-red"
                                             value="Ask Our Experts">
-                                    </div>
-
-                                     {{-- <div class="col-xs-12 col-sm-12 col-md-12 txt-center" id="wait" style="display: none">
-                                        <input type="submit" class="btn btn-default btn-red"
-                                            value="Please wait...">
-                                    </div> --}}
-                                    
+                                    </div>                                    
                                 </div>
                             </div>
                         </form>
                         </div>
-
                     </div>
-
-
                 </div>
             </div>
         </div>

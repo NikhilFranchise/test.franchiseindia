@@ -129,12 +129,17 @@
             </div>-->
             <div class="modified-col col-xs-6 col-sm-6 col-md-4 col-xl-2 col-lg-2">
                 <div class="footer-widget-link">
-                    <p><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5" target="_blank">Dealers &amp; Distributors</a></p>
+                    <p><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5"
+                            target="_blank">Dealers &amp; Distributors</a></p>
                     <ul class="footer-links">
-                        <li><a href="https://www.franchiseindia.com/business-opportunities/automobile.sc443" target="_blank">Automobile</a></li>
-                        <li><a href="https://www.franchiseindia.com/business-opportunities/education.sc950" target="_blank">Education</a></li>
-                        <li><a href="https://www.franchiseindia.com/business-opportunities/agriculture.sc787" target="_blank">Agriculture</a></li>
-                        <li><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5" target="_blank">View All &gt;</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/automobile.sc443"
+                                target="_blank">Automobile</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/education.sc950"
+                                target="_blank">Education</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/agriculture.sc787"
+                                target="_blank">Agriculture</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5"
+                                target="_blank">View All &gt;</a></li>
                     </ul>
                 </div>
             </div>
@@ -387,47 +392,91 @@
                 <p class="section-th">Browse By States</p>
                 <div class="brows-by-location">
                     <ul class="fihl-loaction-browse">
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/andhra-pradesh.LOC1">Andhra Pradesh</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/arunachal-pradesh.LOC2">Arunachal Pradesh</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/andhra-pradesh.LOC1">Andhra
+                                Pradesh</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/arunachal-pradesh.LOC2">Arunachal
+                                Pradesh</a></li>
                         <li> <a href="https://www.franchiseindia.com/business-opportunities/assam.LOC3">Assam</a></li>
                         <li> <a href="https://www.franchiseindia.com/business-opportunities/bihar.LOC4">Bihar</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/chandigarh.LOC5">Chandigarh</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/chhattisgarh.LOC6">Chhattisgarh</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/daman-and-diu.LOC7">Daman and Diu</a></li>
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/chandigarh.LOC5">Chandigarh</a>
+                        </li>
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/chhattisgarh.LOC6">Chhattisgarh</a>
+                        </li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/daman-and-diu.LOC7">Daman
+                                and Diu</a></li>
                         <li> <a href="https://www.franchiseindia.com/business-opportunities/goa.LOC8">Goa</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/gujarat.LOC9">Gujarat</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/haryana.LOC10">Haryana</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/himachal-pradesh.LOC11">Himachal Pradesh</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/jammu-and-kashmir.LOC12">Jammu and Kashmir</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/jharkhand.LOC13">Jharkhand</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/karnataka.LOC14">Karnataka</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/kerala.LOC15">Kerala</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/lakshadweep.LOC16">Lakshadweep</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/madhya-pradesh.LOC17">Madhya Pradesh</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/maharashtra.LOC18">Maharashtra</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/manipur.LOC19">Manipur</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/meghalaya.LOC20">Meghalaya</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/mizoram.LOC21">Mizoram</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/nagaland.LOC22">Nagaland</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/gujarat.LOC9">Gujarat</a>
+                        </li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/haryana.LOC10">Haryana</a>
+                        </li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/himachal-pradesh.LOC11">Himachal
+                                Pradesh</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/jammu-and-kashmir.LOC12">Jammu
+                                and Kashmir</a></li>
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/jharkhand.LOC13">Jharkhand</a>
+                        </li>
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/karnataka.LOC14">Karnataka</a>
+                        </li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/kerala.LOC15">Kerala</a>
+                        </li>
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/lakshadweep.LOC16">Lakshadweep</a>
+                        </li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/madhya-pradesh.LOC17">Madhya
+                                Pradesh</a></li>
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/maharashtra.LOC18">Maharashtra</a>
+                        </li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/manipur.LOC19">Manipur</a>
+                        </li>
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/meghalaya.LOC20">Meghalaya</a>
+                        </li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/mizoram.LOC21">Mizoram</a>
+                        </li>
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/nagaland.LOC22">Nagaland</a>
+                        </li>
                         <li> <a href="https://www.franchiseindia.com/business-opportunities/delhi.LOC23">Delhi</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/odisha.LOC24">Odisha</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/pondicherry.LOC25">Pondicherry</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/punjab.LOC26">Punjab</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/rajasthan.LOC27">Rajasthan</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/sikkim.LOC28">Sikkim</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/tamil-nadu.LOC29">Tamil Nadu</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/tripura.LOC30">Tripura</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/uttarakhand.LOC31">Uttarakhand</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/uttar-pradesh.LOC32">Uttar Pradesh</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/west-bengal.LOC33">West Bengal</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/telangana.LOC34">Telangana</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/andaman-and-nicobar.LOC35">Andaman and Nicobar</a></li>
-                        <li> <a href="https://www.franchiseindia.com/business-opportunities/ladakh.LOC36">Ladakh</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/odisha.LOC24">Odisha</a>
+                        </li>
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/pondicherry.LOC25">Pondicherry</a>
+                        </li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/punjab.LOC26">Punjab</a>
+                        </li>
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/rajasthan.LOC27">Rajasthan</a>
+                        </li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/sikkim.LOC28">Sikkim</a>
+                        </li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/tamil-nadu.LOC29">Tamil
+                                Nadu</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/tripura.LOC30">Tripura</a>
+                        </li>
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/uttarakhand.LOC31">Uttarakhand</a>
+                        </li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/uttar-pradesh.LOC32">Uttar
+                                Pradesh</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/west-bengal.LOC33">West
+                                Bengal</a></li>
+                        <li> <a
+                                href="https://www.franchiseindia.com/business-opportunities/telangana.LOC34">Telangana</a>
+                        </li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/andaman-and-nicobar.LOC35">Andaman
+                                and Nicobar</a></li>
+                        <li> <a href="https://www.franchiseindia.com/business-opportunities/ladakh.LOC36">Ladakh</a>
+                        </li>
 
-                  
 
-                        
-                        </ul>
+
+
+                    </ul>
                     </ul>
                 </div>
             </div>
@@ -516,7 +565,8 @@
                         <li> <a href="https://www.franchiseindia.com/location/shimla">Shimla</a></li>
                         <li> <a href="https://www.franchiseindia.com/location/srinagar">Srinagar</a></li>
                         <li> <a href="https://www.franchiseindia.com/location/surat">Surat</a></li>
-                        <li> <a href="https://www.franchiseindia.com/location/thiruvananthpuram ">Thiruvananthpuram </a></li>
+                        <li> <a href="https://www.franchiseindia.com/location/thiruvananthpuram ">Thiruvananthpuram
+                            </a></li>
                         <li> <a href="https://www.franchiseindia.com/location/thrissur">Thrissur</a></li>
                         <li> <a href="https://www.franchiseindia.com/location/udaipur">Udaipur</a></li>
                         <li> <a href="https://www.franchiseindia.com/location/ujjain">Ujjain</a></li>
@@ -527,7 +577,7 @@
                         <li> <a href="https://www.franchiseindia.com/location/visakhapatnam">Visakhapatnam</a></li>
                         <li> <a href="https://www.franchiseindia.com/location/warangal">Warangal</a></li>
 
-                        
+
                     </ul>
                 </div>
             </div>
@@ -657,6 +707,7 @@
 
 <script type="text/javascript" src="{{ url('js/jquery.bxslider.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/validationInsta.js?ver=' . date('d')) }}"></script>
+<script type="text/javascript" src="{{ url('js/common-captcha.js?ver=' . date('d')) }}"></script>
 <script type="text/javascript" src="{{ url('js/js.cookie.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/bootstrap-filestyle.min.js') }}"></script>
@@ -704,13 +755,42 @@
                 $query = strtolower($query);
             }
 
-			$southCodes = ['tamil nadu', 'telangana', 'kerala', 'pondicherry'];
-			$eastCodes = ['bihar', 'jharkhand', 'odisha', 'nepal', 'arunachal pradesh', 'assam', 'meghalaya', 'orissa', 'tripura'];
-			$westCodes  = ['goa', 'gujarat',  'rajasthan'];
-			$northCodes  = ['punjab', 'jammu and kashmir', 'jammu', 'kashmir', 'himachal pradesh', 'uttarakhand', 'uttar pradesh', 'delhi', 'haryana'];
-			$centerCodes = ['madhya pradesh', 'chhattisgarh', 'maharashtra'];
-			$indiaCodes  = ['andhra pradesh', 'kerala', 'lakshadweep', 'pondicherry', 'telangana', 'tamil nadu', 'tamilnadu', 'haryana'];
-			$ClientCodes  =  ['uttar pradesh', 'rajasthan', 'chandigarh'];
+            $southCodes = ['tamil nadu', 'telangana', 'kerala', 'pondicherry'];
+            $eastCodes = [
+                'bihar',
+                'jharkhand',
+                'odisha',
+                'nepal',
+                'arunachal pradesh',
+                'assam',
+                'meghalaya',
+                'orissa',
+                'tripura',
+            ];
+            $westCodes = ['goa', 'gujarat', 'rajasthan'];
+            $northCodes = [
+                'punjab',
+                'jammu and kashmir',
+                'jammu',
+                'kashmir',
+                'himachal pradesh',
+                'uttarakhand',
+                'uttar pradesh',
+                'delhi',
+                'haryana',
+            ];
+            $centerCodes = ['madhya pradesh', 'chhattisgarh', 'maharashtra'];
+            $indiaCodes = [
+                'andhra pradesh',
+                'kerala',
+                'lakshadweep',
+                'pondicherry',
+                'telangana',
+                'tamil nadu',
+                'tamilnadu',
+                'haryana',
+            ];
+            $ClientCodes = ['uttar pradesh', 'rajasthan', 'chandigarh'];
 
             App\Http\Controllers\CommonController::checkCampaignUrl();
         @endphp
@@ -723,68 +803,63 @@
                 request()->segment(1) != 'mailer' &&
                 empty(request()->openpopup) &&
                 empty(request()->popup_lead))
-		@if(in_array($query, $southCodes))
-            @if(request()->segment(1) == 'brands')
-                @if($franDetails->membership_type != 1)
+            @if (in_array($query, $southCodes))
+                @if (request()->segment(1) == 'brands')
+                    @if ($franDetails->membership_type != 1)
+                        @include('includes.banners.popupfroahmedabad')
+                    @endif
+                @else
+                    @include('includes.banners.popupfroahmedabad')
+                @endif
+            @elseif(in_array($query, $eastCodes))
+                @if (request()->segment(1) == 'brands')
+                    @if ($franDetails->membership_type != 1)
+                        @include('includes.banners.popupfroahmedabad')
+                    @endif
+                @else
+                    @include('includes.banners.popupfroahmedabad')
+                @endif
+            @elseif(in_array($query, $ClientCodes))
+                @if (request()->segment(1) == 'brands')
+                    @if ($franDetails->membership_type != 1)
+                        @include('includes.banners.popupfroahmedabad')
+                    @endif
+                @else
+                    @include('includes.banners.popupfroahmedabad')
+                @endif
+            @elseif(in_array($query, $westCodes))
+                @if (request()->segment(1) == 'brands')
+                    @if ($franDetails->membership_type != 1)
+                        @include('includes.banners.popupfroahmedabad')
+                    @endif
+                @else
+                    @include('includes.banners.popupfroahmedabad')
+                @endif
+            @elseif(in_array($query, $northCodes))
+                @if (request()->segment(1) == 'brands')
+                    @if ($franDetails->membership_type != 1)
+                        @include('includes.banners.popupfroahmedabad')
+                    @endif
+                @else
+                    @include('includes.banners.popupfroahmedabad')
+                @endif
+            @elseif(in_array($query, $centerCodes))
+                @if (request()->segment(1) == 'brands')
+                    @if ($franDetails->membership_type != 1)
+                        @include('includes.banners.popupfroahmedabad')
+                    @endif
+                @else
                     @include('includes.banners.popupfroahmedabad')
                 @endif
             @else
-                @include('includes.banners.popupfroahmedabad')
-            @endif
-		@elseif(in_array($query, $eastCodes))
-            @if(request()->segment(1) == 'brands')
-                @if($franDetails->membership_type != 1)
+                @if (request()->segment(1) == 'brands')
+                    @if ($franDetails->membership_type != 1)
+                        @include('includes.banners.popupfroahmedabad')
+                    @endif
+                @else
                     @include('includes.banners.popupfroahmedabad')
                 @endif
-            @else
-                @include('includes.banners.popupfroahmedabad')
             @endif
-
-		@elseif(in_array($query, $ClientCodes))
-            @if(request()->segment(1) == 'brands')
-                @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfroahmedabad')
-                @endif
-            @else
-                @include('includes.banners.popupfroahmedabad')
-            @endif
-
-		@elseif(in_array($query, $westCodes))
-            @if(request()->segment(1) == 'brands')
-                @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfroahmedabad')
-                @endif
-            @else
-                @include('includes.banners.popupfroahmedabad')
-            @endif
-
-		@elseif(in_array($query, $northCodes))
-            @if(request()->segment(1) == 'brands')
-                @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfroahmedabad')
-                @endif
-            @else
-                @include('includes.banners.popupfroahmedabad')
-            @endif
-
-		@elseif(in_array($query, $centerCodes))
-            @if(request()->segment(1) == 'brands')
-                @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfroahmedabad')
-                @endif
-            @else
-                @include('includes.banners.popupfroahmedabad')
-            @endif
-
-		@else
-            @if(request()->segment(1) == 'brands')
-                @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfroahmedabad')
-				@endif
-			@else
-		        @include('includes.banners.popupfroahmedabad')
-			@endif
-		@endif
         @endif
         <!-- popupmag Start of franchiseindia Zendesk Widget script  popupmag -->
     @endnotmobile
@@ -1032,33 +1107,48 @@
         }
     });
 </script>
-{{--  <script src="https://www.franchiseindia.com/expo/franchise-awards/js/select2.js"></script>
 <script>
+    function handleFormSubmit(formSelector, redirectUrl = '/thanks-advice-form') {
+        $(document).on('submit', formSelector, function(e) {
+            e.preventDefault();
+            $('.error-message').html('');
+
+            const $form = $(this);
+            const submitButton = $form.find('input[type="submit"]');
+            submitButton.val('Please wait...');
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('form.submithome2') }}',
+                data: $form.serialize(),
+                success: function() {
+                    $form[0].reset();
+                    reloadCaptcha();
+                    $('.error-message').text('');
+                    window.location = redirectUrl;
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        const errors = xhr.responseJSON.errors;
+                        $('.error-message').text('');
+                        $.each(errors, function(key, value) {
+                            $('#' + key + '-error').text(value[0]);
+                        });
+                    } else {
+                        alert("An unexpected error occurred.");
+                    }
+                    submitButton.val($form.attr('id') === 'homepagepopup' ? 'Ask Our Experts' :
+                        'Ask Expert');
+                }
+            });
+        });
+    }
+
     $(document).ready(function() {
-        var citySelect = $(".js-select2");
-
-        citySelect.select2({
-            closeOnSelect: false,
-            placeholder: "Select 5 Preferred Cities",
-            maximumSelectionLength: 5,
-            allowClear: true,
-            tags: true // создает новые опции на лету
-        });
-
-        citySelect.on('select2:select', function(e) {
-            var selectedOptions = citySelect.val();
-
-            if (selectedOptions && selectedOptions.length > 5) {
-                alert("You can select only 5 preferred cities.");
-                $(e.params.data.element).prop('selected', false); // Deselect the value
-                citySelect.trigger('change'); // Update the select2
-            }
-        });
-
-        citySelect.on('select2:unselect', function(e) {
-            // No need to add any specific logic here
-        });
-    });  --}}
+        handleFormSubmit('#catpagepopup');
+        handleFormSubmit('#homepagepopup');
+        handleFormSubmit('#homepage1');
+    });
 </script>
 <!-- End of franchiseindia Zendesk Widget script -->
 <script type="text/javascript" src="{{ url('wle_tracker.js') }}" async></script>

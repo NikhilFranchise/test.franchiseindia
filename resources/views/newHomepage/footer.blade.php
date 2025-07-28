@@ -598,78 +598,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!--  above jquery version is affecting jquery 3.1 and causing error on price range slider  -->
+<script src="{{ asset('js/common-captcha.js') }}"></script>
 
-<script type="text/javascript">
-    $('#reload').click(function() {
-        // console.log('called');
-        var endpoint = '/reload-captcha';
-        var baseUrl = '{{ Config('constants.MainDomain') }}';
-        // console.log(baseUrl);
-        // Construct the full URL
-        var fullUrl = baseUrl + endpoint;
-        $.ajax({
-            type: 'GET',
-            url: fullUrl,
-            success: function(data) {
-                // console.log('yes');
-                $(".captcha span").html(data.captcha);
-            }
-        });
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-        $('#homepagepopup').on('submit', function(e) {
-            e.preventDefault(); // Prevent default form submit
-            $('#sub input[type="submit"]').val('Please wait...');
-
-            var formData = $(this).serialize(); // Collect all form inputs
-
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('form.submithome2') }}',
-                data: formData,
-                success: function(response) {
-                    // alert("Form submitted successfully!");
-                    $('#homepagepopup')[0].reset();
-                    $('#reload').click(); // reload captcha
-                    $('.error-message').text(''); // clear all errors
-                    window.location = "/thanks-advice-form";
-                },
-                error: function(xhr) {
-                    if (xhr.status === 422) {
-                        let errors = xhr.responseJSON.errors;
-                        $('.error-message').text(''); // clear old errors
-
-                        $.each(errors, function(key, value) {
-                            $('#' + key + '-error').text(value[
-                                0]); // show error below each field
-                        });
-                        $('#sub input[type="submit"]').val('Ask Our Experts');
-
-                    } else {
-                        alert("An unexpected error occurred.");
-                        $('#sub input[type="submit"]').val('Ask Our Experts');
-
-                    }
-                }
-            });
-
-        });
-
-        // Reload CAPTCHA image
-        $('#reload').click(function() {
-            $.ajax({
-                type: 'GET',
-                url: '/reload-captcha',
-                success: function(data) {
-                    $(".captcha span").html(data.captcha);
-                }
-            });
-        });
-    });
-</script>
 <link rel="stylesheet" href="{{ url('cvw/footer.css') }}" rel="preload" as="style">
 <link rel="stylesheet" href="{{ url('cvw/search-main.css') }}" rel="preload" as="style">
 <link rel="stylesheet" href="{{ url('cvw/login-panel.css') }}" rel="preload" as="style">
@@ -703,104 +633,76 @@
 <script type="text/javascript" src="{{ url('newhomepage/assets/js/custom.js') }}"></script>
 <script src="{{ url('cvw/assets/js/homepagescript.js') }}"></script>
 <script>
-    function selectMax1(selectmaxheaderval) {
-        console.log('yes');
-        let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
-        let maxAmount = $('#maxAmount1');
-        let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
-        maxAmount.html("");
+    const amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
+    const getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
+
+    function populateMaxOptions(selectmaxheaderval, targetSelector) {
+        const target = $(targetSelector);
+        target.html("");
         selectmaxheaderval = parseInt(selectmaxheaderval);
+
         $.each(amountConfigArr, function(key, value) {
-            if (key > selectmaxheaderval)
-                $('#maxAmount1').append($("<option></option>").attr({
+            if (key > selectmaxheaderval) {
+                target.append($("<option></option>").attr({
                     "value": key,
                     "slug": getSlugAmount[key]['min']
                 }).text(value));
+            }
         });
-        console.log(selectmaxheaderval);
-        // console.log($('#maxAmount1'));
-        if (selectmaxheaderval === 21)
-            // maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
-            $('#maxAmount1').append($("<option></option>").attr({
+
+        if (selectmaxheaderval === 21) {
+            target.append($("<option></option>").attr({
                 "value": 21,
                 "slug": getSlugAmount[21]['max']
             }).text("Above"));
+        }
     }
 
-    function selectMax(selectmaxheaderval) {
-        // console.log('yes');
-        let amountConfigArr = {!! json_encode(Config('constants.investRangeInWordsSingle')) !!};
-        let maxAmount = $('#maxAmount');
-        let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
-        maxAmount.html("");
-        selectmaxheaderval = parseInt(selectmaxheaderval);
-        $.each(amountConfigArr, function(key, value) {
-            if (key > selectmaxheaderval)
-                $('#maxAmount').append($("<option></option>").attr({
-                    "value": key,
-                    "slug": getSlugAmount[key]['min']
-                }).text(value));
+    function selectMax1(value) {
+        populateMaxOptions(value, '#maxAmount1');
+    }
+
+    function selectMax(value) {
+        populateMaxOptions(value, '#maxAmount');
+    }
+
+    function handleFormSubmit(formSelector, redirectUrl = '/thanks-advice-form') {
+        $(document).on('submit', formSelector, function(e) {
+            e.preventDefault();
+
+            const $form = $(this);
+            const submitButton = $form.find('input[type="submit"]');
+            submitButton.val('Please wait...');
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('form.submithome2') }}',
+                data: $form.serialize(),
+                success: function() {
+                    $form[0].reset();
+                    reloadCaptcha();
+                    $('.error-message').text('');
+                    window.location = redirectUrl;
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) {
+                        const errors = xhr.responseJSON.errors;
+                        $('.error-message').text('');
+                        $.each(errors, function(key, value) {
+                            $('#' + key + '-error').text(value[0]);
+                        });
+                    } else {
+                        alert("An unexpected error occurred.");
+                    }
+                    submitButton.val($form.attr('id') === 'homepagepopup' ? 'Ask Our Experts' :
+                        'Ask Expert');
+                }
+            });
         });
-        if (selectmaxheaderval === 21)
-            // maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
-            $('#maxAmount').append($("<option></option>").attr({
-                "value": 21,
-                "slug": getSlugAmount[21]['max']
-            }).text("Above"));
     }
 
     $(document).ready(function() {
-        $('#reload').click(function() {
-            // console.log('called');
-            var endpoint = '/reload-captcha';
-            var baseUrl = '{{ Config('constants.MainDomain') }}';
-            // console.log(baseUrl);
-            // Construct the full URL
-            var fullUrl = baseUrl + endpoint;
-            $.ajax({
-                type: 'GET',
-                url: fullUrl,
-                success: function(data) {
-                    // console.log('yes');
-                    $(".captcha span").html(data.captcha);
-                }
-            });
-            $('#catpagepopup').on('submit', function(e) {
-                e.preventDefault(); // Prevent default form submit
-                $('#sub input[type="submit"]').val('Please wait...');
-                var formData = $(this).serialize(); // Collect all form inputs
-
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('form.submithome2') }}',
-                    data: formData,
-                    success: function(response) {
-                        // alert("Form submitted successfully!");
-                        $('#catpagepopup')[0].reset();
-                        $('#reload').click(); // reload captcha
-                        $('.error-message').text(''); // clear all errors
-                        window.location = "/thanks-advice-form";
-                    },
-                    error: function(xhr) {
-                        if (xhr.status === 422) {
-                            let errors = xhr.responseJSON.errors;
-                            $('.error-message').text(''); // clear old errors
-
-                            $.each(errors, function(key, value) {
-                                $('#' + key + '-error').text(value[
-                                    0]); // show error below each field
-                            });
-                            $('#sub input[type="submit"]').val('Ask Expert');
-
-                        } else {
-                            alert("An unexpected error occurred.");
-                            $('#sub input[type="submit"]').val('Ask Expert');
-
-                        }
-                    }
-                });
-
-            });
-        });
+        handleFormSubmit('#catpagepopup');
+        handleFormSubmit('#homepagepopup');
     });
 </script>

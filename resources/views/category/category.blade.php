@@ -792,13 +792,15 @@
                                         </span>
                                         <input type="text" class="form-control blur" name="namefreeadvice1"
                                             id="namefreeadvice1" placeholder="Enter Name" required>
+                                        <span class="error-message text-danger" id="namefreeadvice1-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <div class="emailsprite"></div>
                                         </span>
-                                        <input type="text" name="emailfreeadvice" id="emailfreeadvice1"
+                                        <input type="text" name="emailfreeadvice1" id="emailfreeadvice1"
                                             class="form-control blur" placeholder="Enter Email" required>
+                                        <span class="error-message text-danger" id="emailfreeadvice1-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -807,6 +809,7 @@
                                         <input type="text" class="form-control blur" maxlength="10"
                                             name="mobilefreeadvice1" id="mobilefreeadvice1" placeholder="Enter Mobile No"
                                             required>
+                                        <span class="error-message text-danger" id="emailfreeadvice1-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><img
@@ -814,6 +817,7 @@
                                                 alt="pincode"></span>
                                         <input type="text" name="pincodefreeadvice1" id="pincodefreeadvice1"
                                             class="form-control blur" maxlength="6" placeholder="Enter Pincode">
+                                        <span class="error-message text-danger" id="emailfreeadvice1-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon height80">
@@ -821,6 +825,7 @@
                                         </span>
                                         <textarea class="form-control height80 blur" name="detailsfreeadvice1" id="detailsfreeadvice1"
                                             placeholder="Enter Details"></textarea>
+                                        <span class="error-message text-danger" id="emailfreeadvice1-error"></span>
                                     </div>
                                     <div class="form-group mt-4 mb-4">
                                         <div class="captcha">
@@ -830,13 +835,11 @@
                                             </button>
                                         </div>
                                     </div>
-    
+
                                     <div class="form-group mb-4">
                                         <input id="captcha" type="text" class="form-control"
                                             placeholder="Enter Captcha" name="captcha">
-                                      <span class="text-danger" id="captcha-error"></span>
-                                        {{-- <br> --}}
-                                        {{-- <span class="text-danger">hello</span> --}}
+                                        <span class="error-message text-danger" id="captcha-error"></span>
                                     </div>
                                     <div class="checkbox rm-prop">
                                         <label>
@@ -868,79 +871,7 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-2.4.min.js"></script>
 
-    <!-- above jquery version is affecting jquery 3.1 and causing error on price range slider -->
-   <script type="text/javascript">
-       $('#reload').click(function() {
-           // console.log('called');
-           var endpoint = '/reload-captcha';
-           var baseUrl = '{{ Config('constants.MainDomain') }}';
-           // console.log(baseUrl);
-           // Construct the full URL
-           var fullUrl = baseUrl + endpoint;
-           $.ajax({
-               type: 'GET',
-               url: fullUrl,
-               success: function(data) {
-                   // console.log('yes');
-                   $(".captcha span").html(data.captcha);
-               }
-           });
-       });
-   </script>
-   
-   <script>
-       $(document).ready(function() {
-           $('#catpagepopup').on('submit', function(e) {
-               e.preventDefault(); // Prevent default form submit
-               $('#sub input[type="submit"]').val('Please wait...');
-               var formData = $(this).serialize(); // Collect all form inputs
-          
-               $.ajax({
-                   type: 'POST',
-                   url: '{{ route('form.submithome2') }}',
-                   data: formData,
-                   success: function(response) {
-                       // alert("Form submitted successfully!");
-                       $('#catpagepopup')[0].reset();
-                       $('#reload').click(); // reload captcha
-                       $('.error-message').text(''); // clear all errors
-                        window.location = "/thanks-advice-form";
-                   },
-                   error: function(xhr) {
-                       if (xhr.status === 422) {
-                           let errors = xhr.responseJSON.errors;
-                           $('.error-message').text(''); // clear old errors
-   
-                           $.each(errors, function(key, value) {
-                               $('#' + key + '-error').text(value[
-                                   0]); // show error below each field
-                           });
-                           $('#sub input[type="submit"]').val('Ask Expert');
-                         
-                       } else {
-                           alert("An unexpected error occurred.");
-                           $('#sub input[type="submit"]').val('Ask Expert');
-                           
-                       }
-                   }
-               });
-   
-           });
-   
-           // Reload CAPTCHA image
-           $('#reload').click(function() {  
-               $.ajax({
-                   type: 'GET',
-                   url: '/reload-captcha',
-                   success: function(data) {
-                       $(".captcha span").html(data.captcha);
-                   }
-               });
-           });
-       });
-   </script>
     <!--  Start Rating modal code  -->
     <div id="myRating" class="modal fade" role="dialog" style = "">
         <div class="modal-dialog">
@@ -989,7 +920,6 @@
         </div>
     </div>
     <!-- end of rating modal here -->
-
     <style>
         .cityEvent {
             position: fixed;
@@ -1072,7 +1002,6 @@
             }
         }
     </style>
-
     @php
         $popup = $popup ?? collect(); // Set $popup to an empty collection if it's not set
     @endphp
@@ -1099,572 +1028,324 @@
             </div>
         @endforeach
     @endif
-
-
+    <script type="text/javascript" src="{{ url('awesomplete/awesomplete.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Use a stable, modern version -->
+    <script src="{{ url('awesomplete/awesomplete.js') }}"></script>
     <script>
         $(document).ready(function() {
+            const baseUrl = '{{ Config('constants.MainDomain') }}';
+            const auth = {{ Auth::check() ? 1 : 0 }};
+            const csrf = '{{ csrf_token() }}';
 
-            setTimeout(function() {
-                $('.cityEvent').hide();
-            }, 10000);
+            /** ------------------ Common Functions ------------------ **/
+            const ajaxGet = (url, data = {}, success) => $.get(url, data, success);
+            const ajaxPost = (url, data, success, error) => $.post(url, data).done(success).fail(error);
+            const updateShareLinks = (url) => {
+                $('#facebook-share').attr('href', `http://www.facebook.com/sharer.php?u=${url}`);
+                $('#twitter-share').attr('href', `https://twitter.com/share?url=${url}`);
+                $('#linkedin-share').attr('href', `http://www.linkedin.com/shareArticle?mini=true&url=${url}`);
+                $('#whatsapp-share').attr('href', `whatsapp://send?text=${url}`);
+            };
 
-            $('.city-close').click(function() {
-                $('.cityEvent').hide();
-            });
 
-
-        });
-    </script>
-
-    <script type="text/javascript" src="{{ url('awesomplete/awesomplete.js') }}"></script>
-
-    <script language="javascript">
-        // like function create by GP //
-        $(document).ready(function() {
-            $('#mysocial').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                var postUrl = button.data('url'); // Extract the post URL from data-* attribute
-
-                // Update the share links
-                $('#facebook-share').attr('href', 'http://www.facebook.com/sharer.php?u=' +
-                    postUrl);
-                $('#twitter-share').attr('href', 'https://twitter.com/share?url=' +
-                    postUrl);
-                $('#linkedin-share').attr('href', 'http://www.linkedin.com/shareArticle?mini=true&url=' +
-                    postUrl);
-                $('#whatsapp-share').attr('href', 'whatsapp://send?text=' + postUrl);
-            });
-        });
-        @php
-            $a = Auth::check() ? 1 : 0;
-        @endphp
-
-        function likebtn(franId, id) {
-            var btnid = id.split('_');
-            var i = btnid[1];
-            var like_id = franId;
-
-            var auth = @json($a);
-            if (like_id != '' && auth == 1) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/brandlikes',
-                    data: {
-                        "fid": like_id,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success: function(data) {
-                        $("#likecount_" + i).html(data.newCount);
-                        $("#likeButton_" + i).attr('onclick', "#");
-                        $(".like-action_" + i).css('cursor', 'default');
-                    }
+            const handleFormSubmit = (selector, submitText) => {
+                $(selector).on('submit', function(e) {
+                    e.preventDefault();
+                    $('#sub input[type="submit"]').val('Please wait...');
+                    const formData = $(this).serialize();
+                    ajaxPost('{{ route('form.submithome2') }}', formData, function() {
+                        $(selector)[0].reset();
+                        $('.error-message').text('');
+                        window.location = "/thanks-advice-form";
+                    }, function(xhr) {
+                        $('#sub input[type="submit"]').val(submitText);
+                        if (xhr.status === 422) {
+                            $.each(xhr.responseJSON.errors, (key, val) => $('#' + key +
+                                '-error').text(val[0]));
+                        } else {
+                            alert("An unexpected error occurred.");
+                        }
+                    });
                 });
-            } else {
-                $('#login-pnl').modal('show');
-                $('#loginactive').tab('show');
-            }
-        }
+            };
 
-        function ratebtn(i, fid) {
-            //console.log('yes');
-            var phpVar = @json($a);
-            $('#rateModalInput').val(i);
-            $('#fi_id').val(fid);
-            // Reset the modal to its initial state
-            $('#ratemsg').hide();
-            $('#ratingmsg').show();
-            $('#ratingnew input[type="radio"]').prop('checked', false);
-            if (phpVar == 0) {
-                $('#login-pnl').modal('show');
-                $('#loginactive').tab('show');
+            /** ------------------ Events ------------------ **/
+            handleFormSubmit('#catpagepopup', 'Ask Expert');
+            handleFormSubmit('#homepagepopup', 'Ask Our Experts');
 
-            } else if (phpVar == 1) {
-                $('#myRating').modal('show');
-            }
+            // Hide city event after 10s or on close
+            setTimeout(() => $('.cityEvent').hide(), 10000);
+            $('.city-close').click(() => $('.cityEvent').hide());
 
-        }
+            // Modal Share Links
+            $('#mysocial').on('show.bs.modal', function(event) {
+                const url = $(event.relatedTarget).data('url');
+                updateShareLinks(url);
+            });
 
-        //updating and showing star rating function
-        function ratings() {
-            var rate_id = $('#fi_id').val();
-            var rate_value = 0;
-            var i = $('#rateModalInput').val(); // Get the specific div index
-            //  console.log(rate_id + '--' + i);
-            // Determine which star is selected
-            if (document.getElementById('star5').checked) {
-                rate_value = document.getElementById('star5').value;
-            } else if (document.getElementById('star4').checked) {
-                rate_value = document.getElementById('star4').value;
-            } else if (document.getElementById('star3').checked) {
-                rate_value = document.getElementById('star3').value;
-            } else if (document.getElementById('star2').checked) {
-                rate_value = document.getElementById('star2').value;
-            } else if (document.getElementById('star1').checked) {
-                rate_value = document.getElementById('star1').value;
-            }
+            // Like and Rate
+            window.likebtn = (franId, id) => {
+                const i = id.split('_')[1];
+                if (auth === 1) {
+                    ajaxPost('/brandlikes', {
+                        fid: franId,
+                        _token: csrf
+                    }, data => {
+                        $(`#likecount_${i}`).text(data.newCount);
+                        $(`#likeButton_${i}`).off('click').css('cursor', 'default');
+                        $(`.like-action_${i}`).css('cursor', 'default');
+                    });
+                } else {
+                    $('#login-pnl').modal('show');
+                    $('#loginactive').tab('show');
+                }
+            };
 
-            // Perform the AJAX request to save the rating
-            $.ajax({
-                type: 'POST',
-                url: '/brandratings',
-                data: {
-                    "fid": rate_id,
-                    "_token": "{{ csrf_token() }}",
-                    "rateValue": rate_value
-                },
-                success: function(data) {
-                    var a = data.ratings;
-                    $("#rating_" + i).html(a); // Update the specific rating div
-                    if (a == 5) {
-                        $("#rateButton_" + i).html(
-                            '<i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>');
-                    } else {
-                        $("#rateButton_" + i).html(
-                            '<i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>');
-                    }
+            window.ratebtn = (i, fid) => {
+                $('#rateModalInput').val(i);
+                $('#fi_id').val(fid);
+                $('#ratemsg').hide();
+                $('#ratingmsg').show();
+                $('#ratingnew input[type="radio"]').prop('checked', false);
 
-                    $("#rateButton_" + i).attr('onclick', "#");
-                    $(".rate-action_" + i).css('cursor', 'default');
+                auth === 0 ? $('#login-pnl').modal('show') : $('#myRating').modal('show');
+            };
+
+            window.ratings = () => {
+                const i = $('#rateModalInput').val();
+                const rate_id = $('#fi_id').val();
+                const rate_value = $('input[name="rating"]:checked').val();
+
+                ajaxPost('/brandratings', {
+                    fid: rate_id,
+                    rateValue: rate_value,
+                    _token: csrf
+                }, data => {
+                    const a = data.ratings;
+                    $(`#rating_${i}`).html(a);
+                    $(`#rateButton_${i}`).html(a == 5 ?
+                        '<i class="fa fa-star fa-lg" style="color: gold;"></i>' :
+                        '<i class="fa fa-star-half-o fa-lg"></i>').off('click');
+                    $(`.rate-action_${i}`).css('cursor', 'default');
                     $('#ratemsg').show();
                     $('#ratingmsg').hide();
+                    setTimeout(() => $('#myRating').modal('hide'), 1000);
+                });
+            };
 
-                    setTimeout(function() {
-                        $("#myRating").modal('hide');
-                    }, 1000);
-                }
-            });
-        }
+            // Investor Interest
+            $('#expbtn').click(() => {
+                const franId = $('#expIntFranId').val();
+                $('#expbtn').hide();
+                $('#expbtnloading').show();
 
-
-
-
-        //like share and rating function created by GP -30-Aug-2024
-
-        //action on submit your interest
-        $('#expbtn').on('click', function() {
-            var franId = document.getElementById('expIntFranId').value;
-            document.getElementById("expbtn").style.display = "none";
-            document.getElementById("expbtnloading").style.display = "block";
-            $.ajax({
-                type: 'post',
-                url: '{{ URL('/inv-lead?flag=expint') }}',
-                data: {
-                    franId: franId,
-                    "_token": "{{ csrf_token() }}"
-                },
-                success: function(data) {
-
+                ajaxPost('{{ URL('/inv-lead?flag=expint') }}', {
+                    franId,
+                    _token: csrf
+                }, data => {
                     if ($.isNumeric(data)) {
-                        $('#expintbutton').css('display', 'block');
-                        $('#creditRemaining').html('You have ' + data +
-                            ' credits remaining. Do you want to use the credit');
-                    } else if (data == "showMsg") {
-                        window.location.assign(
-                            '{{ Config('constants.MainDomain') }}/investor/myaccount/payment');
+                        $('#expintbutton').show();
+                        $('#creditRemaining').html(`You have ${data} credits remaining.`);
+                    } else if (data === "showMsg") {
+                        window.location.assign(`${baseUrl}/investor/myaccount/payment`);
                     } else {
-                        document.getElementById("expbtnloading").style.display = "none";
-                        document.getElementById("expmsg").style.display = "block";
-                        $('#companyContactinsta').html(data.user.company_name);
-                        $('#ceocontactinsta').html(data.user.ceo_name);
-                        $('#telephonecontactinsta').html(data.user.telephone);
-                        $('#addressocontactinsta').html(data.user.fran_address + "" + data.user.city +
-                            "" + data.user.state + "" + data.user.pincode);
-                        $('#emailcontactinsta').html("<a href='mailto:" + data.user.email +
-                            "' target='_blank'>" + data.user.email + "</a>");
-                        $('#mobilecontactinsta').html(data.user.mobile);
-                        $('#websitecontactinsta').html("<a href='http://" + data.user.website +
-                            "' target='_blank'>" + data.user.website + "</a>");
-
+                        $('#expbtnloading').hide();
+                        $('#expmsg').show();
+                        const u = data.user;
+                        $('#companyContactinsta').text(u.company_name);
+                        $('#ceocontactinsta').text(u.ceo_name);
+                        $('#telephonecontactinsta').text(u.telephone);
+                        $('#addressocontactinsta').text(
+                            `${u.fran_address} ${u.city} ${u.state} ${u.pincode}`);
+                        $('#emailcontactinsta').html(
+                            `<a href="mailto:${u.email}" target="_blank">${u.email}</a>`);
+                        $('#mobilecontactinsta').text(u.mobile);
+                        $('#websitecontactinsta').html(
+                            `<a href="http://${u.website}" target="_blank">${u.website}</a>`);
                     }
-                }
+                });
             });
-        });
 
+            $('#proceedInterest').click(() => {
+                $('#expintbutton').hide();
+                $('#creditRemaining').text('Please wait...');
+                const franId = $('#expIntFranId').val();
 
-        $('#proceedInterest').on('click', function() {
-
-            $('#expintbutton').css('display', 'none');
-            $('#creditRemaining').html('Please wait....');
-
-            var franId = document.getElementById('expIntFranId').value;
-
-            $.ajax({
-                type: 'post',
-                url: '{{ URL('/inv-lead') }}',
-                data: {
-                    franId: franId,
-                    "_token": "{{ csrf_token() }}",
-                },
-                success: function(data) {
+                ajaxPost('{{ URL('/inv-lead') }}', {
+                    franId,
+                    _token: csrf
+                }, data => {
                     $('#expbtnloading').hide();
                     $('#expmsg').show();
 
                     if (data.success) {
-                        alert('category blade');
-                        const user = data.user;
-
-                        $('#companyContactinsta').html(user.company_name || 'N/A');
-                        $('#ceocontactinsta').html(user.ceo_name || 'N/A');
-                        $('#telephonecontactinsta').html(user.telephone || 'N/A');
-                        $('#addressocontactinsta').html(
-                            (user.fran_address || '') + ' ' +
-                            (user.city || '') + ' ' +
-                            (user.state || '') + ' ' +
-                            (user.pincode || '')
-                        );
-                        $('#emailcontactinsta').html("<a href='mailto:" + user.email +
-                            "' target='_blank'>" + user.email + "</a>");
-                        $('#mobilecontactinsta').html(user.mobile || 'N/A');
-                        $('#websitecontactinsta').html("<a href='http://" + user.website +
-                            "' target='_blank'>" + user.website + "</a>");
+                        const u = data.user;
+                        $('#companyContactinsta').text(u.company_name || 'N/A');
+                        $('#ceocontactinsta').text(u.ceo_name || 'N/A');
+                        $('#telephonecontactinsta').text(u.telephone || 'N/A');
+                        $('#addressocontactinsta').text(
+                            `${u.fran_address} ${u.city} ${u.state} ${u.pincode}`);
+                        $('#emailcontactinsta').html(
+                            `<a href="mailto:${u.email}" target="_blank">${u.email}</a>`);
+                        $('#mobilecontactinsta').text(u.mobile || 'N/A');
+                        $('#websitecontactinsta').html(
+                            `<a href="http://${u.website}" target="_blank">${u.website}</a>`);
                     } else {
-                        $('#creditRemaining').html('Unexpected response received.');
+                        $('#creditRemaining').text('Unexpected response received.');
                     }
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error:', status, error);
+                }).fail(() => {
                     $('#expbtnloading').hide();
                     $('#expintbutton').show();
-                    $('#creditRemaining').html('Something went wrong. Please try again.');
+                    $('#creditRemaining').text('Something went wrong.');
+                });
+            });
+
+            $('#cancelinterest').click(() => {
+                $('#creditRemaining').text('Please wait...');
+                $('#expintbutton').hide();
+                ajaxPost('{{ URL('/inv-lead-normal') }}', {
+                    franId: $('#expIntFranId').val()
+                }, () => {
+                    $('#expbtnloading').hide();
+                    $('#cancelExpress').show();
+                });
+            });
+
+            // Sort dropdown
+            $('#sortby').change(function() {
+                const sortby = $(this).val();
+                if (sortby !== 'x') {
+                    ajaxGet('/fetch-data-ajax', {
+                        sortby
+                    }, res => console.log("Sorted Data", res));
                 }
             });
 
-        });
-
-
-        $('#cancelinterest').on('click', function() {
-            $('#creditRemaining').html('Please wait...');
-            $('#expintbutton').css('display', 'none');
-            var franId = document.getElementById('expIntFranId').value;
-            $.ajax({
-                type: 'post',
-                url: '{{ URL('/inv-lead-normal') }}',
-                data: {
-                    franId: franId,
-                },
-                success: function(data) {
-                    $('#expbtnloading').css('display', 'none');
-                    $('#cancelExpress').css('display', 'block');
+            /** ------------------ UI and Utility Actions ------------------ **/
+            // Mobile/OTP
+            window.getMobileStatuscontact = (val) => {
+                if (val.length === 10 && $.isNumeric(val)) {
+                    ajaxGet('/mobcheck', {
+                        mobile: val
+                    }, data => {
+                        if (data == 1) {
+                            $('#successmobile').show();
+                        } else {
+                            $('#contactsubmit').prop('disabled', true);
+                            $('#validatemobile').show();
+                            $('#successmobile').hide();
+                        }
+                    });
+                } else {
+                    $('#successmobile').hide();
+                    $('#contactsubmit').prop('disabled', false);
                 }
-            });
-        });
+            };
 
-        //get the selected states for the selected brands
-        $('#getfreewindowstate').on('click', function() {
-            var keyword = document.getElementById('freeinfovalue').value;
-            $.ajax({
-                type: 'get',
-                url: '/getfreestates',
-                data: {
-                    fid: keyword
-                },
-                success: function(data) {
-                    if (data != "<option>Select State</option>") {
-                        $("#statesforinfo").html(data);
+            window.verify = () => {
+                const otp = $('#otpcontact').val();
+                const mobile = $('#mobile').val();
+                ajaxGet('/investor/verify-otp', {
+                    otpNo: otp,
+                    mobileNo: mobile
+                }, data => {
+                    if (data == 0) {
+                        $('#mismatch').show();
+                    } else {
+                        $('#successmobile').show();
+                        $('#contactsubmit').prop('disabled', false);
+                        $('#otpblock, #editmobilecontact, #validatemobile').hide();
                     }
+                });
+            };
+
+            // Awesomplete
+            const awesomplete = new Awesomplete('#dealer-bar-search');
+            $('#dealer-bar-search').on('input', function() {
+                const keyword = this.value;
+                if (keyword.length >= 2) {
+                    ajaxGet(`/dealers-search/${keyword}`, {}, res => {
+                        const names = res.map(r => r.name);
+                        awesomplete.list = names;
+                    });
                 }
             });
-        });
 
-        //windows scrolling button
-        $(window).scroll(function() {
-            if ($(this).scrollTop() > 1)
-                $('.sortbtn').addClass("aedtt");
-            else
-                $('.sortbtn').removeClass("aedtt");
-        });
+            $('#dealer-bar-search, #textcompany').on('awesomplete-selectcomplete click', function() {
+                const val = $('#dealer-bar-search').val().split(' - ')[0];
+                window.location.href = `/dealers-india/search/${val}`;
+            });
 
-        // JavaScript Document
-        $(document).ready(function() {
-            $('#sortlbtn').click(function() {
+            // City from state
+            window.getcityinfo = (state) => ajaxGet('/getcitylist', {
+                state
+            }, data => $("#getinfocity").html(data));
+            window.getcityinfoinsta = (state) => ajaxGet('/getcitylist', {
+                state
+            }, data => $("#city").html(data));
+
+            // Gallery
+            window.getImages = (id) => {
+                const franId = id.replace("fran_", "");
+                ajaxGet("{{ url('/') }}/cat-brand-images", {
+                    franId
+                }, data => {
+                    $('#push-gallery').html(data[0]);
+                    $('#notApplied').toggle(data[1] == 0);
+                    $('#alreadyApplied').toggle(data[1] == 1);
+                    $('#expIntFranId, #franId').val(franId);
+                    $('.gallery').vitGallery({
+                        thumbnailMargin: 13,
+                        fullscreen: true
+                    });
+                });
+            };
+
+            // Side panel
+            $('#sortlbtn').click(() => {
                 $('.backdrop').show(200);
                 $('#sideslide').animate({
                     'left': '0px'
                 });
             });
-            $('#closecat').click(function() {
+
+            $('#closecat, #closecatnew').click(() => {
                 $('#sideslide').animate({
                     'left': '-300px'
                 });
                 $('.backdrop').hide(200);
             });
-            $('#closecatnew').click(function() {
-                $('#sideslide').animate({
-                    'left': '-300px'
-                });
-                $('.backdrop').hide(200);
-            });
-        });
 
-        //get city list according to the selected state
-        function getcityinfo(value) {
-            $.ajax({
-                type: 'GET',
-                url: '/getcitylist',
-                data: {
-                    state: value
-                },
-                success: function(data) {
-                    $("#getinfocity").html(data);
-                }
-            });
-        }
-
-        //mobile status if it is exists or not using jquery
-        function getMobileStatuscontact(value) {
-            if ($('#successmobile').css('display') != "block") {
-                if (value.length == 10) {
-                    if ($.isNumeric(value)) {
-                        $.ajax({
-                            type: 'GET',
-                            url: '/mobcheck',
-                            data: {
-                                mobile: value
-                            },
-                            success: function(data) {
-                                if (data == 1) {
-                                    $('#successmobile').css('display', 'block');
-                                }
-                                if (data == 0) {
-                                    $('#contactsubmit').prop('disabled', true);
-                                    $('#validatemobile').css('display', 'block');
-                                    $('#successmobile').css('display', 'none');
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-            if (value.length != 10) {
-                if ($.isNumeric(value)) {
-                    $('#successmobile').css('display', 'none');
-                    $('#contactsubmit').prop('disabled', false);
-                    $('#editmobile').css('display', 'none');
-                    $('#validatemobile').css('display', 'none');
-                }
-            }
-        }
-
-        //edit the entered mobile field
-        function editmobile() {
-            $('#mobile').attr('readonly', false);
-            $('#editmobile').css('display', 'none');
-            $('#validatemobile').css('display', 'block');
-            $('#otpblock').css('display', 'none');
-        }
-
-        //validate mobile from table
-        function validatemobile() {
-            var keyword = document.getElementById('mobile').value;
-            $.ajax({
-                type: 'get',
-                url: '/verify',
-                data: {
-                    mobile: keyword
-                }
-            });
-            $('#mobile').attr('readonly', true);
-            $('#editmobilecontact').css('display', 'block');
-            $('#validatemobile').css('display', 'none');
-            document.getElementById("otpblock").style.display = "block";
-            $('#contactsubmit').prop('disabled', true);
-        }
-
-        //verify the otp
-        function verify() {
-            var otp = document.getElementById('otpcontact').value;
-            var mobile = document.getElementById('mobile').value;
-            $.ajax({
-                type: 'get',
-                url: '/investor/verify-otp',
-                data: {
-                    otpNo: otp,
-                    mobileNo: mobile
-                },
-                success: function(data) {
-                    if (data == 0) {
-                        $('#mismatch').css('display', 'block');
-                    } else {
-                        $('#successmobile').css('display', 'block');
-                        $('#contactsubmit').prop('disabled', false);
-                        $('#otpblock').css('display', 'none');
-                        $('#editmobilecontact').css('display', 'none');
-                        $('#validatemobile').css('display', 'none');
-                    }
-                }
-
-            });
-        }
-
-        //Seo related state wise desc hide and show
-        $(document).ready(function() {
-            $("#buttonAreaHide").click(function() {
+            // SEO Description toggle
+            $('#buttonAreaHide').click(() => {
                 $("#show-full-txt").slideUp("slow");
                 $('#buttonAreaHide').hide();
                 $('#buttonAreaShow').show();
             });
-            $("#buttonAreaShow").click(function() {
+
+            $('#buttonAreaShow').click(() => {
                 $("#show-full-txt").slideDown("slow");
                 $('#buttonAreaHide').show();
                 $('#buttonAreaShow').hide();
             });
 
-            //Awesomplete
-            const input = document.getElementById('dealer-bar-search');
-            // Init awesomplete
-            const awesomplete = new Awesomplete(input);
-            const navBarSearch = $("#dealer-bar-search");
-            //navBarSearch.keypress(function () {
-            navBarSearch.on('keypress keyup keypress blur change', function() {
-                var search_keyword = $(this).val();
-                // Check if atleast 2 chars are typed
-                if (search_keyword.length >= 2) {
-                    $.ajax({
-                        url: '/dealers-search/' + search_keyword,
-                        type: 'GET',
-                        dataType: 'json',
-                        success: function(response) {
-                            prepareList(JSON.parse(JSON.stringify(response)));
-
-                        },
-                        error: function(err) {
-
-                        }
-                    });
-                }
+            // Scroll-based button behavior
+            $(window).scroll(() => {
+                $('.sortbtn').toggleClass("aedtt", $(this).scrollTop() > 1);
             });
 
-            function prepareList(list) {
-                var c_list = [];
-
-                list.forEach(item => {
-                    c_list.push(item.name);
-                });
-
-                // Assigned the c_list to the list property of Awesomplete instance
-                awesomplete.list = c_list;
-            }
-
-            navBarSearch.on('awesomplete-selectcomplete', function() {
-                if ($("#dealer-bar-search").val() != "") {
-                    var value = $("#dealer-bar-search").val();
-                    var items = value.split(' - <strong> in');
-                    if (items.length > 1)
-                        value = items[0];
-                    window.location.href = '/dealers-india/search/' + value;
-                }
-            });
-
-            $("#textcompany").on('click', function() {
-                if ($("#dealer-bar-search").val() != "") {
-                    var value = $("#dealer-bar-search").val();
-                    var items = value.split(' - <strong> in');
-                    if (items.length > 1)
-                        value = items[0];
-                    window.location.href = '/dealers-india/search/' + value;
-                }
-            });
-
-
-
-        });
-
-        //Popup Gallery
-        $(document).ready(function() {
-            var gallery = $('.gallery');
-            gallery.vitGallery({
-                debag: true,
-                thumbnailMargin: 13,
-
-                fullscreen: true
-            })
-
-        });
-
-        function getImages(id) {
-            id = id.replace("fran_", "");
-            var i = 0;
-            $.ajax({
-                type: "GET",
-                url: "{{ url('/') }}/cat-brand-images",
-                data: {
-                    franId: id
-                },
-                success: function(data) {
-
-                    $('#push-gallery').html(data[0]);
-                    if (data[1] == 0)
-                        $('#notApplied').css('display', 'block');
-
-                    if (data[1] == 1)
-                        $('#alreadyApplied').css('display', 'block');
-
-                    $('#expIntFranId').val(id);
-
-                    $('#franId').val(id);
-                    var gallery = $('.gallery');
-                    gallery.vitGallery({
-                        debag: true,
-                        thumbnailMargin: 13,
-                        fullscreen: true
-                    })
-                }
-            });
-        }
-
-        function getcityinfoinsta(value) {
-            $.ajax({
-                type: 'GET',
-                url: '/getcitylist',
-                data: {
-                    state: value
-                },
-                success: function(data) {
-                    $("#city").html(data);
-                }
-            });
-        }
-    </script>
-    <script>
-        $(document).ready(function() {
-            // Ensure the DOM is ready
-            console.log("Document is ready"); // Debugging statement to check if it's executing
-
-            // Trigger the AJAX request when the dropdown value changes
-            $('#sortby').change(function() {
-                alert('Dropdown value changed'); // This will show when the dropdown changes
-
-                // Get the selected value
-                var sortby = $(this).val();
-
-                // Check if 'Sort By' option is selected (value = 'x')
-                if (sortby === 'x') {
-                    console.log("Sort By selected, no action taken.");
-                    return; // Do nothing if "Sort By" is selected
-                }
-
-                // Send AJAX request
-                $.ajax({
-                    url: '/fetch-data-ajax', // The route URL where the request will be sent
-                    type: 'GET',
-                    data: {
-                        sortby: sortby
-                    }, // Send the selected sortby value
-                    success: function(response) {
-                        // Handle the response (this can be any content, e.g. update the page with the sorted data)
-                        console.log("Response received:",
-                            response
-                            ); // For debugging, you can check the response in the console
-
-                        // Example: you could populate the response data into an HTML element
-                        // $('#someElement').html(response);
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle any errors here
-                        console.error("Error:", error);
+            // Free window state
+            $('#getfreewindowstate').click(() => {
+                const keyword = $('#freeinfovalue').val();
+                ajaxGet('/getfreestates', {
+                    fid: keyword
+                }, data => {
+                    if (data !== "<option>Select State</option>") {
+                        $("#statesforinfo").html(data);
                     }
                 });
             });
         });
     </script>
+
 @endsection
