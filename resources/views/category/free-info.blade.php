@@ -1,7 +1,7 @@
 <div class="modal fade lg-panel" id="modalGetFree" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form method="post" action="{{ Config('constants.MainDomain') }}/getfreeinfo">
+            <form id="freeinfoform" method="post" action="{{ Config('constants.MainDomain') }}/getfreeinfo">
                 @csrf
                 <input type="hidden" name="frandetailsid" id="freeinfovalue" value="">
                 <div class="modal-header">
@@ -17,8 +17,9 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="infoname" class="form-control" placeholder="Enter Name" required>
+                                    <input type="text" name="infoname" id="infoname" class="form-control" placeholder="Enter Name" required>
                                     <input type="hidden" name="lasturl" value="{{ url()->current() }}">
+                                    <span class=""></span>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6">
@@ -45,18 +46,15 @@
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <div class="form-group pos-rel">
-                                    {{-- <input name="mobile" id="mobile" type="text" pattern="[0-9]{5,10}" minlength="10" maxlength="10" onkeyup="getMobileStatuscontact(this.value);" class="form-control" placeholder="Enter Mobile" required>
-                                    <span class="vrfy" onClick="editmobile();" id="editmobilecontact" style="display: none;">edit</span>
+                                    <input name="mobile" id="mobile" type="text" pattern="[0-9]{5,10}" minlength="10" maxlength="10" onkeyup="getMobileStatuscontact(this.value);" class="form-control" placeholder="Enter Mobile" required>
+                                    <span class="vrfy" onClick="editmobile();" id="editmobilecontact" style="display: none;">EDIT</span>
                                     <span class="vrfy" onClick="validatemobile();" id="validatemobile" style="display: none">VERIFY</span>
-                                    <span id="successmobile" class="showhideright" style="display: none"><i class="fa fa-check fa-lg" aria-hidden="true"></i></span> --}}
-                                    <input type="text" name="mobile" id='txtPhone' class="form-control"
-                                            placeholder="Enter Mobile No" maxlength="10" autocomplete="off"
-                                            />
+                                    <span id="successmobile" class="showhideright" style="display: none"><i class="fa fa-check fa-lg" aria-hidden="true"></i></span>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="address" placeholder="Enter Address" required>
+                                    <input type="text" class="form-control" name="address" id="address" placeholder="Enter Address" required>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6" style="display: none;" id="otpblock">
@@ -68,7 +66,7 @@
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="pincode" placeholder="Enter Pincode" required pattern="[0-9]{5,6}" minlength="6" maxlength="6">
+                                    <input type="text" class="form-control" name="pincode" id="pincode" placeholder="Enter Pincode" required pattern="[0-9]{5,6}" minlength="6" maxlength="6">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6">
@@ -90,10 +88,9 @@
                     </div>
                 </div>
                 <div class="modal-footer txt-center">
-                    <button type="submit" class="btn btn-default btn-red" id="contactsubmit">Submit Request</button>
+                    <button type="submit" class="btn btn-default btn-red" id="contactsubmit" disabled>Submit Request</button>
                 </div>
             </form>
-            
         </div>
     </div>
 </div>
