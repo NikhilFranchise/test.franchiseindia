@@ -2,293 +2,165 @@
 
 @php
     $brandCount = count($brandResults);
-
 @endphp
+
 {{-- @if ($brandCount < 2)
     @section('robot', 'noindex, nofollow')
 @endif --}}
+
+
+{{-- //Pankaj start --}}
+@if (URL::Current() == Config('constants.MainDomain') . '/business-opportunities/dealers-and-distributors.m5')
+    @section('seoTitle',
+        $brandResults->total() .
+        '+ ' .
+        ' Dealership and Distributorship Opportunities in India –
+        Dealer India')
+    @section('seoDesc',
+        'Access to ' .
+        $brandResults->total() .
+        '+ ' .
+        'best dealership/distributorship business
+        opportunities in India. Dealer and distributors a financially rewarding business in the growing industry.')
+    @section('seoKeywords',
+        'distributorship opportunities, looking for distributorship opportunities, dealership
+        opportunities, looking for dealership opportunities, distributorship business ideas, distributorship business in
+        india, distributorship business plan')
+    @endif
+
+    @if (!empty($loc) && $mc == 5)
+        @php
+            $stateId = $loc[0];
+            $stateName = Config::get("location.stateArr.$stateId");
+        @endphp
+        @section('seoTitle', $brandResults->total() . '+ ' . $catArr->catname . ' Dealers & Distributors in ' . $stateName)
+    @section('seoDesc',
+        'Find ' .
+        $catArr->catname .
+        ' Dealership & Distributors in ' .
+        $stateName .
+        ' to run a
+        successful ' .
+        $catArr->catname .
+        ' business in ' .
+        $stateName .
+        '. You can explore some of the established and
+        well-known ' .
+        $catArr->catname .
+        ' Dealers in ' .
+        $stateName .
+        ' here.')
+    @section('seoKeywords',
+        $catArr->catname .
+        ' dealership in ' .
+        $stateName .
+        ', ' .
+        $catArr->catname .
+        '
+        distributorship in ' .
+        $stateName .
+        ', ' .
+        $catArr->catname .
+        ' dealer in ' .
+        $stateName .
+        ', ' .
+        $catArr->catname .
+        ' dealership opportunities in ' .
+        $stateName .
+        ', Dealer India, ' .
+        $catArr->catname .
+        ' distributors in ' .
+        $stateName)
+    @elseif(empty($loc) && $mc == 5)
+    @section('seoTitle', $brandResults->total() . '+ ' . $catName . ' Dealers & Distributors in India')
+    @section('seoDesc',
+        'Dealer India offers a wide variety of ' .
+        $catName .
+        ' Dealership & Distributorship
+        opportunities to run a successful ' .
+        $catName .
+        ' business. You can explore some of the established and well-known
+        ' .
+        $catName .
+        ' Dealers here.')
+    @section('seoKeywords',
+        $catName .
+        ' dealership in India, ' .
+        $catName .
+        ' distributorship in India, ' .
+        $catName .
+        ' dealers in India, ' .
+        $catName .
+        ' dealership opportunities in India, Dealer India, ' .
+        $catName .
+        ' distributors
+        in India')
+    @else
+    @endif
+
+    {{-- //////////// --}}
+
+    {{-- //Pankaj end --}}
+
+    @if ($mc == 2)
+        @section('seoTitle',
+            $brandResults->total() .
+            '+ ' .
+            'Food and Beverage - Business Ideas and Franchise
+            Opportunities')
+        @elseif (URL::Current() == Config('constants.MainDomain') . '/category/search')
+            @php
+                $url = URL::full();
+                $parsedUrl = parse_url($url);
+                $path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '';
+                $segments = explode('/', trim($path, '/'));
+                $searchText = request()->query('text');
+            @endphp
+        @section('seoTitle', 'Business/Franchise Opportunities Results For ' . $searchText . ' - Franchise India')
+    @elseif(!empty($seoTitle))
+    @section('seoTitle', $brandResults->total() . '+ ' . $seoTitle)
+@endif
+
+@if (!empty($seoDesc))
+    @section('seoDesc', $seoDesc)
+@endif
+@if (!empty($seoKeywords))
+    @section('seoKeywords', $seoKeywords)
+@endif
+
 @php
-    function formatCurrencyForlisting($number)
-    {
-        if ($number >= 10000000) {
-            // Format to Crores (1 Cr = 10,000,000)
-            return number_format($number / 10000000, 3) . ' Cr';
-        } elseif ($number >= 100000) {
-            // Format to Lakhs (1 Lakh = 100,000)
-            return number_format($number / 100000, 3) . ' Lakh';
-        } elseif ($number >= 1000) {
-            // Format to Thousands (1 K = 1,000)
-            return number_format($number / 1000, 3) . ' K';
-        } else {
-            return $number;
+
+    $c_Url = url()->current();
+    $queryParams = request()->query();
+    $queryString = '';
+    // dd($queryParams);
+
+    if (!empty($queryParams)) {
+        $queryString = '?';
+        foreach ($queryParams as $key => $value) {
+            if (is_null($value)) {
+                $queryString .= $key . '&';
+            } else {
+                $queryString .= $key . '=' . urlencode($value) . '&';
+            }
         }
+        $queryString = rtrim($queryString, '&');
+        if ($queryString === '?') {
+            $queryString = '';
+        }
+
+        $queryString = rtrim($queryString, '&');
     }
+
+    $hindiUrl = str_replace(
+        '/category/',
+        '/hi/category/',
+        str_replace('/business-opportunities/', '/hi/business-opportunities/', $c_Url . $queryString),
+    );
+    $engUrl = $c_Url . $queryString;
 @endphp
 
-@php
-    // $formattedValue = formatCurrencyForlisting($maxRangevalue); // Example value: 33769507
-    $formattedValue = formatCurrencyForlisting($maxRangevalue); // Example value: 33769507
-
-@endphp
-
-{{-- @dd($formattedValue) --}}
-
-
-{{-- Pankaj start for cat+investment --}}
-@php
-    $catArr = $catArr ?? collect(); // Set $popup to an empty collection if it's not set
-    // dd($catArr);
-@endphp
-@if ($catArr !== '')
-    @if ($mc !== 5)
-        @if (!empty($maxRangevalue) && empty($loc) && $minRangeValue !== 0 && $maxRangevalue !== 100000000)
-            @section('seoTitle', $brandResults->total() . '+ Business opportunities in ' . $catArr->catname . ' under '
-                . $formattedValue . ' - Franchise India')
-            @section('seoDesc',
-                'Find ' .
-                $brandResults->total() .
-                ' Business Opportunities in ' .
-                $catArr->catname .
-                '
-                under ' .
-                $formattedValue .
-                ' as on ' .
-                date('F j, Y') .
-                ' Connect with Franchise India and start your ' .
-                $catArr->catname .
-                ' business today! Sign up Today.')
-            @elseif(!empty($maxRangevalue) && !empty($loc) && $minRangeValue !== 0 && $maxRangevalue !== 100000000)
-                @php
-                    $stateId = $loc[0];
-                    $stateName = Config::get("location.stateArr.$stateId");
-                @endphp
-                {{-- @dd($catArr->catname); --}}
-            @section('seoTitle', $brandResults->total() . '+ Business opportunities in ' . $catArr->catname . ' under '
-                . $formattedValue . ' in ' . $stateName . ' , India - Franchise India')
-            @section('seoDesc',
-                'Find ' .
-                $brandResults->total() .
-                ' Business Opportunities in ' .
-                $catArr->catname .
-                '
-                under ' .
-                $formattedValue .
-                ' in ' .
-                $stateName .
-                ', India.' .
-                ' Updated on ' .
-                date('F j, Y') .
-                '. Connect
-                with Franchise India and start your ' .
-                $catArr->catname .
-                ' business in ' .
-                $stateName .
-                ', India today!
-                Register Now.')
-            @endif
-        @endif
-        @if ($mc == 5)
-            @if (!empty($maxRangevalue) && empty($loc) && $minRangeValue !== 0 && $maxRangevalue !== 100000000)
-                @section('seoTitle', $brandResults->total() . '+ Dealership & Distributorship opportunities in ' .
-                    $catArr->catname . ' under ' . $formattedValue . ' - Dealer India')
-                @section('seoDesc',
-                    'Find ' .
-                    $brandResults->total() .
-                    ' Dealership & Distributorship opportunities in ' .
-                    $catArr->catname .
-                    ' under ' .
-                    $formattedValue .
-                    ' as on ' .
-                    date('F j, Y') .
-                    ' Connect with Dealer India
-                    and start your ' .
-                    $catArr->catname .
-                    ' business today! Sign up Today.')
-                @elseif(!empty($maxRangevalue) && !empty($loc) && $minRangeValue !== 0 && $maxRangevalue !== 100000000)
-                    @php
-                        $stateId = $loc[0];
-                        $stateName = Config::get("location.stateArr.$stateId");
-                    @endphp
-                    {{-- @dd($maxRangevalue) --}}
-                @section('seoTitle', $brandResults->total() . '+ Dealership & Distributorship opportunities in ' .
-                    $catArr->catname . ' under ' . $formattedValue . ' in ' . $stateName . ', India - Dealer India')
-                @section('seoDesc',
-                    'Find ' .
-                    $brandResults->total() .
-                    ' Dealership & Distributorship Opportunities in ' .
-                    $catArr->catname .
-                    ' under ' .
-                    $formattedValue .
-                    ' in ' .
-                    $stateName .
-                    ', India.' .
-                    ' Updated on ' .
-                    date('F
-                    j, Y') .
-                    '. Connect with Dealer India and start your ' .
-                    $catArr->catname .
-                    ' Dealership & Distributorship
-                    business in ' .
-                    $stateName .
-                    ', India today! Register Now.')
-                @endif
-            @endif
-
-        @endif
-        {{-- Pankaj end for cat+investment --}}
-
-
-        {{-- //Pankaj start --}}
-        @if (URL::Current() == Config('constants.MainDomain') . '/business-opportunities/dealers-and-distributors.m5')
-            @section('seoTitle',
-                $brandResults->total() .
-                '+ ' .
-                ' Dealership and Distributorship Opportunities in India –
-                Dealer India')
-            @section('seoDesc',
-                'Access to ' .
-                $brandResults->total() .
-                '+ ' .
-                'best dealership/distributorship business
-                opportunities in India. Dealer and distributors a financially rewarding business in the growing industry.')
-            @section('seoKeywords',
-                'distributorship opportunities, looking for distributorship opportunities, dealership
-                opportunities, looking for dealership opportunities, distributorship business ideas, distributorship business in
-                india, distributorship business plan')
-            @endif
-            {{-- @dd($mc==5); --}}
-            @if (!empty($loc) && $mc == 5)
-                @php
-                    $stateId = $loc[0];
-                    $stateName = Config::get("location.stateArr.$stateId");
-                @endphp
-                @section('seoTitle', $brandResults->total() . '+ ' . $catArr->catname . ' Dealers & Distributors in ' . $stateName)
-            @section('seoDesc',
-                'Find ' .
-                $catArr->catname .
-                ' Dealership & Distributors in ' .
-                $stateName .
-                ' to run a
-                successful ' .
-                $catArr->catname .
-                ' business in ' .
-                $stateName .
-                '. You can explore some of the established and
-                well-known ' .
-                $catArr->catname .
-                ' Dealers in ' .
-                $stateName .
-                ' here.')
-            @section('seoKeywords',
-                $catArr->catname .
-                ' dealership in ' .
-                $stateName .
-                ', ' .
-                $catArr->catname .
-                '
-                distributorship in ' .
-                $stateName .
-                ', ' .
-                $catArr->catname .
-                ' dealer in ' .
-                $stateName .
-                ', ' .
-                $catArr->catname .
-                ' dealership opportunities in ' .
-                $stateName .
-                ', Dealer India, ' .
-                $catArr->catname .
-                ' distributors in ' .
-                $stateName)
-            @elseif(empty($loc) && $mc == 5)
-            @section('seoTitle', $brandResults->total() . '+ ' . $catName . ' Dealers & Distributors in India')
-        @section('seoDesc',
-            'Dealer India offers a wide variety of ' .
-            $catName .
-            ' Dealership & Distributorship
-            opportunities to run a successful ' .
-            $catName .
-            ' business. You can explore some of the established and well-known
-            ' .
-            $catName .
-            ' Dealers here.')
-        @section('seoKeywords',
-            $catName .
-            ' dealership in India, ' .
-            $catName .
-            ' distributorship in India, ' .
-            $catName .
-            ' dealers in India, ' .
-            $catName .
-            ' dealership opportunities in India, Dealer India, ' .
-            $catName .
-            ' distributors
-            in India')
-        @else
-        @endif
-
-        {{-- //////////// --}}
-
-        {{-- //Pankaj end --}}
-        @if ($mc == 2)
-            @section('seoTitle',
-                $brandResults->total() .
-                '+ ' .
-                'Food and Beverage - Business Ideas and Franchise
-                Opportunities')
-            @elseif (URL::Current() == Config('constants.MainDomain') . '/category/search')
-                @php
-                    $url = URL::full();
-                    $parsedUrl = parse_url($url);
-                    $path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '';
-                    $segments = explode('/', trim($path, '/'));
-                    $searchText = request()->query('text');
-                @endphp
-            @section('seoTitle', 'Business/Franchise Opportunities Results For ' . $searchText . ' - Franchise India')
-        @elseif(!empty($seoTitle))
-        @section('seoTitle', $brandResults->total() . '+ ' . $seoTitle)
-    @endif
-
-    @if (!empty($seoDesc))
-        @section('seoDesc', $seoDesc)
-    @endif
-    @if (!empty($seoKeywords))
-        @section('seoKeywords', $seoKeywords)
-    @endif
-
-    @php
-
-        $c_Url = url()->current();
-        $queryParams = request()->query();
-        $queryString = '';
-        // dd($queryParams);
-
-        if (!empty($queryParams)) {
-            $queryString = '?';
-            foreach ($queryParams as $key => $value) {
-                if (is_null($value)) {
-                    $queryString .= $key . '&';
-                } else {
-                    $queryString .= $key . '=' . urlencode($value) . '&';
-                }
-            }
-            $queryString = rtrim($queryString, '&');
-            if ($queryString === '?') {
-                $queryString = '';
-            }
-
-            $queryString = rtrim($queryString, '&');
-        }
-
-        $hindiUrl = str_replace(
-            '/category/',
-            '/hi/category/',
-            str_replace('/business-opportunities/', '/hi/business-opportunities/', $c_Url . $queryString),
-        );
-        $engUrl = $c_Url . $queryString;
-    @endphp
-
-    @section('hindiUrl', $hindiUrl)
+@section('hindiUrl', $hindiUrl)
 @section('englishUrl', $engUrl)
 
 {{-- @section('hindibrandUrls')
@@ -769,7 +641,7 @@
                             </div>
                         </div>
                         <div class="frm-container" id="askForm">
-                            <form id="homepage1" name="homepage1" method="post">
+                            {{-- <form id="homepage1" name="homepage1" method="post">
                                 @csrf
                                 <h2 class="ttl">Free Advice - Ask Our Experts</h2>
                                 <div id="errMsg1" style="display:none;">
@@ -792,15 +664,13 @@
                                         </span>
                                         <input type="text" class="form-control blur" name="namefreeadvice1"
                                             id="namefreeadvice1" placeholder="Enter Name" required>
-                                        <span class="error-message text-danger" id="namefreeadvice1-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <div class="emailsprite"></div>
                                         </span>
-                                        <input type="text" name="emailfreeadvice1" id="emailfreeadvice1"
+                                        <input type="text" name="emailfreeadvice" id="emailfreeadvice1"
                                             class="form-control blur" placeholder="Enter Email" required>
-                                        <span class="error-message text-danger" id="emailfreeadvice1-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -809,7 +679,6 @@
                                         <input type="text" class="form-control blur" maxlength="10"
                                             name="mobilefreeadvice1" id="mobilefreeadvice1" placeholder="Enter Mobile No"
                                             required>
-                                        <span class="error-message text-danger" id="emailfreeadvice1-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon"><img
@@ -817,7 +686,6 @@
                                                 alt="pincode"></span>
                                         <input type="text" name="pincodefreeadvice1" id="pincodefreeadvice1"
                                             class="form-control blur" maxlength="6" placeholder="Enter Pincode">
-                                        <span class="error-message text-danger" id="emailfreeadvice1-error"></span>
                                     </div>
                                     <div class="input-group">
                                         <span class="input-group-addon height80">
@@ -825,21 +693,6 @@
                                         </span>
                                         <textarea class="form-control height80 blur" name="detailsfreeadvice1" id="detailsfreeadvice1"
                                             placeholder="Enter Details"></textarea>
-                                        <span class="error-message text-danger" id="emailfreeadvice1-error"></span>
-                                    </div>
-                                    <div class="form-group mt-4 mb-4">
-                                        <div class="captcha">
-                                            <span>{!! captcha_img() !!}</span>
-                                            <button type="button" class="btn btn-danger" class="reload" id="reload">
-                                                &#x21bb;
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group mb-4">
-                                        <input id="captcha" type="text" class="form-control"
-                                            placeholder="Enter Captcha" name="captcha">
-                                        <span class="error-message text-danger" id="captcha-error"></span>
                                     </div>
                                     <div class="checkbox rm-prop">
                                         <label>
@@ -864,6 +717,107 @@
                                         </div>
                                     </div>
                                 </div>
+                            </form> --}}
+                            <form id="catpagepopup" method="post">
+                                @csrf
+                                <h2 class="ttl">Free Advice - Ask Our Experts</h2>
+                                <div id="errMsg1" style="display:none;">
+                                    <font color="red"> Please Fill The form! </font>
+                                </div>
+                                <div class="frm-type">
+                                    <div class="radio">
+                                        <label><input type="radio" name="optionsRadios1" id="optionsRadios3"
+                                                checked="" value="franchisor"> Expand My Brand </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label><input type="radio" name="optionsRadios1" id="optionsRadios1"
+                                                value="investor">Buy a Franchise</label>
+                                    </div>
+                                </div>
+                                <div class="frm-input">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <div class="usersprite"></div>
+                                        </span>
+                                        <input type="text" class="form-control blur" name="namefreeadvice1"
+                                            id="namefreeadvice1" placeholder="Enter Name" required="required">
+                                        <span class="error-message text-danger" id="namefreeadvice1-error"></span>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <img src="https://www.franchiseindia.com/images/email.png" alt="email">
+                                        </span>
+                                        <input type="text" name="emailfreeadvice1" id="emailfreeadvice1"
+                                            class="form-control blur" placeholder="Enter Email" required="">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <img src="https://www.franchiseindia.com/images/mobile.png" alt="mobile">
+                                        </span>
+                                        <input type="text" class="form-control blur" maxlength="10"
+                                            name="mobilefreeadvice1" id="mobilefreeadvice1" placeholder="Enter Mobile No"
+                                            {{-- required="" --}} required pattern="[6-9]{1}[0-9]{9}">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <img src="https://www.franchiseindia.com/images/pincode.png"
+                                                alt="pincode"></span>
+                                        <input type="text" name="pincodefreeadvice1" id="pincodefreeadvice1"
+                                            class="form-control blur" maxlength="6" placeholder="Enter Pincode">
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon height80">
+                                            <img src="https://www.franchiseindia.com/images/addreess.png" alt="address">
+                                        </span>
+                                        <textarea class="form-control height80 blur" name="detailsfreeadvice1" id="detailsfreeadvice1"
+                                            placeholder="Enter Details"></textarea>
+                                    </div>
+                                    <div class="form-group mt-4 mb-4">
+                                        <div class="captcha">
+                                            <span>{!! captcha_img() !!}</span>
+                                            <button type="button" class="btn btn-danger" class="reload" id="reload">
+                                                &#x21bb;
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-4">
+                                        <input id="captcha" type="text" class="form-control"
+                                            placeholder="Enter Captcha" name="captcha">
+                                        <span class="text-danger" id="captcha-error"></span>
+                                        {{-- <br> --}}
+                                        {{-- <span class="text-danger">hello</span> --}}
+                                    </div>
+
+
+                                    <div class="checkbox rm-prop">
+                                        <label>
+                                            <input type="checkbox" name="is_newsletterfreeadvice1"
+                                                id="is_newsletterfreeadvice1" value="1" checked=""> Yes, i
+                                            want to subscribe for weekly Newsletter
+                                        </label>
+                                    </div>
+                                    <div class="checkbox rm-prop">
+                                        <label>
+                                            <input type="checkbox" name="is_termsagree1" id="is_termsagree1"
+                                                value="1" checked="">
+                                            I agree to the <a href="https://www.franchiseindia.com/terms"
+                                                target="_blank">Terms &amp; Conditions</a>
+                                        </label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 txt-center" id="sub">
+                                            <input type="submit" class="btn btn-default btn-red"
+                                                value="Ask Our Experts">
+                                        </div>
+
+                                        {{-- <div class="col-xs-12 col-sm-12 col-md-12 txt-center" id="wait" style="display: none">
+                                        <input type="submit" class="btn btn-default btn-red"
+                                            value="Please wait...">
+                                    </div> --}}
+
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -872,6 +826,81 @@
         </div>
     </div>
 
+
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+    <script src="https://code.jquery.com/jquery-2.4.min.js"></script>
+
+    <!-- above jquery version is affecting jquery 3.1 and causing error on price range slider -->
+    <script type="text/javascript">
+        $('#reload').click(function() {
+            // console.log('called');
+            var endpoint = '/reload-captcha';
+            var baseUrl = '{{ Config('constants.MainDomain') }}';
+            // console.log(baseUrl);
+            // Construct the full URL
+            var fullUrl = baseUrl + endpoint;
+            $.ajax({
+                type: 'GET',
+                url: fullUrl,
+                success: function(data) {
+                    // console.log('yes');
+                    $(".captcha span").html(data.captcha);
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#catpagepopup').on('submit', function(e) {
+                e.preventDefault(); // Prevent default form submit
+                $('#sub input[type="submit"]').val('Please wait...');
+                var formData = $(this).serialize(); // Collect all form inputs
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('form.submithome2') }}',
+                    data: formData,
+                    success: function(response) {
+                        // alert("Form submitted successfully!");
+                        $('#catpagepopup')[0].reset();
+                        $('#reload').click(); // reload captcha
+                        $('.error-message').text(''); // clear all errors
+                        window.location = "/thanks-advice-form";
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+                            $('.error-message').text(''); // clear old errors
+
+                            $.each(errors, function(key, value) {
+                                $('#' + key + '-error').text(value[
+                                    0]); // show error below each field
+                            });
+                            $('#sub input[type="submit"]').val('Ask Expert');
+
+                        } else {
+                            alert("An unexpected error occurred.");
+                            $('#sub input[type="submit"]').val('Ask Expert');
+
+                        }
+                    }
+                });
+
+            });
+
+            // Reload CAPTCHA image
+            $('#reload').click(function() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/reload-captcha',
+                    success: function(data) {
+                        $(".captcha span").html(data.captcha);
+                    }
+                });
+            });
+        });
+    </script>
     <!--  Start Rating modal code  -->
     <div id="myRating" class="modal fade" role="dialog" style = "">
         <div class="modal-dialog">
@@ -920,6 +949,8 @@
         </div>
     </div>
     <!-- end of rating modal here -->
+
+
     <style>
         .cityEvent {
             position: fixed;
@@ -1028,324 +1059,670 @@
             </div>
         @endforeach
     @endif
-    <script type="text/javascript" src="{{ url('awesomplete/awesomplete.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Use a stable, modern version -->
-    <script src="{{ url('awesomplete/awesomplete.js') }}"></script>
+
+
     <script>
         $(document).ready(function() {
-            const baseUrl = '{{ Config('constants.MainDomain') }}';
-            const auth = {{ Auth::check() ? 1 : 0 }};
-            const csrf = '{{ csrf_token() }}';
 
-            /** ------------------ Common Functions ------------------ **/
-            const ajaxGet = (url, data = {}, success) => $.get(url, data, success);
-            const ajaxPost = (url, data, success, error) => $.post(url, data).done(success).fail(error);
-            const updateShareLinks = (url) => {
-                $('#facebook-share').attr('href', `http://www.facebook.com/sharer.php?u=${url}`);
-                $('#twitter-share').attr('href', `https://twitter.com/share?url=${url}`);
-                $('#linkedin-share').attr('href', `http://www.linkedin.com/shareArticle?mini=true&url=${url}`);
-                $('#whatsapp-share').attr('href', `whatsapp://send?text=${url}`);
-            };
+            setTimeout(function() {
+                $('.cityEvent').hide();
+            }, 10000);
 
-
-            const handleFormSubmit = (selector, submitText) => {
-                $(selector).on('submit', function(e) {
-                    e.preventDefault();
-                    $('#sub input[type="submit"]').val('Please wait...');
-                    const formData = $(this).serialize();
-                    ajaxPost('{{ route('form.submithome2') }}', formData, function() {
-                        $(selector)[0].reset();
-                        $('.error-message').text('');
-                        window.location = "/thanks-advice-form";
-                    }, function(xhr) {
-                        $('#sub input[type="submit"]').val(submitText);
-                        if (xhr.status === 422) {
-                            $.each(xhr.responseJSON.errors, (key, val) => $('#' + key +
-                                '-error').text(val[0]));
-                        } else {
-                            alert("An unexpected error occurred.");
-                        }
-                    });
-                });
-            };
-
-            /** ------------------ Events ------------------ **/
-            handleFormSubmit('#catpagepopup', 'Ask Expert');
-            handleFormSubmit('#homepagepopup', 'Ask Our Experts');
-
-            // Hide city event after 10s or on close
-            setTimeout(() => $('.cityEvent').hide(), 10000);
-            $('.city-close').click(() => $('.cityEvent').hide());
-
-            // Modal Share Links
-            $('#mysocial').on('show.bs.modal', function(event) {
-                const url = $(event.relatedTarget).data('url');
-                updateShareLinks(url);
+            $('.city-close').click(function() {
+                $('.cityEvent').hide();
             });
 
-            // Like and Rate
-            window.likebtn = (franId, id) => {
-                const i = id.split('_')[1];
-                if (auth === 1) {
-                    ajaxPost('/brandlikes', {
-                        fid: franId,
-                        _token: csrf
-                    }, data => {
-                        $(`#likecount_${i}`).text(data.newCount);
-                        $(`#likeButton_${i}`).off('click').css('cursor', 'default');
-                        $(`.like-action_${i}`).css('cursor', 'default');
-                    });
-                } else {
-                    $('#login-pnl').modal('show');
-                    $('#loginactive').tab('show');
-                }
-            };
 
-            window.ratebtn = (i, fid) => {
-                $('#rateModalInput').val(i);
-                $('#fi_id').val(fid);
-                $('#ratemsg').hide();
-                $('#ratingmsg').show();
-                $('#ratingnew input[type="radio"]').prop('checked', false);
+        });
+    </script>
 
-                auth === 0 ? $('#login-pnl').modal('show') : $('#myRating').modal('show');
-            };
+    <script type="text/javascript" src="{{ url('awesomplete/awesomplete.js') }}"></script>
 
-            window.ratings = () => {
-                const i = $('#rateModalInput').val();
-                const rate_id = $('#fi_id').val();
-                const rate_value = $('input[name="rating"]:checked').val();
+    <script language="javascript">
+        // like function create by GP //
+        $(document).ready(function() {
+            $('#mysocial').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var postUrl = button.data('url'); // Extract the post URL from data-* attribute
 
-                ajaxPost('/brandratings', {
-                    fid: rate_id,
-                    rateValue: rate_value,
-                    _token: csrf
-                }, data => {
-                    const a = data.ratings;
-                    $(`#rating_${i}`).html(a);
-                    $(`#rateButton_${i}`).html(a == 5 ?
-                        '<i class="fa fa-star fa-lg" style="color: gold;"></i>' :
-                        '<i class="fa fa-star-half-o fa-lg"></i>').off('click');
-                    $(`.rate-action_${i}`).css('cursor', 'default');
+                // Update the share links
+                $('#facebook-share').attr('href', 'http://www.facebook.com/sharer.php?u=' +
+                    postUrl);
+                $('#twitter-share').attr('href', 'https://twitter.com/share?url=' +
+                    postUrl);
+                $('#linkedin-share').attr('href', 'http://www.linkedin.com/shareArticle?mini=true&url=' +
+                    postUrl);
+                $('#whatsapp-share').attr('href', 'whatsapp://send?text=' + postUrl);
+            });
+        });
+        @php
+            $a = Auth::check() ? 1 : 0;
+        @endphp
+
+        function likebtn(franId, id) {
+            var btnid = id.split('_');
+            var i = btnid[1];
+            var like_id = franId;
+
+            var auth = @json($a);
+            if (like_id != '' && auth == 1) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/brandlikes',
+                    data: {
+                        "fid": like_id,
+                        "_token": "{{ csrf_token() }}"
+                    },
+                    success: function(data) {
+                        $("#likecount_" + i).html(data.newCount);
+                        $("#likeButton_" + i).attr('onclick', "#");
+                        $(".like-action_" + i).css('cursor', 'default');
+                    }
+                });
+            } else {
+                $('#login-pnl').modal('show');
+                $('#loginactive').tab('show');
+            }
+        }
+
+        function ratebtn(i, fid) {
+            //console.log('yes');
+            var phpVar = @json($a);
+            $('#rateModalInput').val(i);
+            $('#fi_id').val(fid);
+            // Reset the modal to its initial state
+            $('#ratemsg').hide();
+            $('#ratingmsg').show();
+            $('#ratingnew input[type="radio"]').prop('checked', false);
+            if (phpVar == 0) {
+                $('#login-pnl').modal('show');
+                $('#loginactive').tab('show');
+
+            } else if (phpVar == 1) {
+                $('#myRating').modal('show');
+            }
+
+        }
+
+        //updating and showing star rating function
+        function ratings() {
+            var rate_id = $('#fi_id').val();
+            var rate_value = 0;
+            var i = $('#rateModalInput').val(); // Get the specific div index
+            //  console.log(rate_id + '--' + i);
+            // Determine which star is selected
+            if (document.getElementById('star5').checked) {
+                rate_value = document.getElementById('star5').value;
+            } else if (document.getElementById('star4').checked) {
+                rate_value = document.getElementById('star4').value;
+            } else if (document.getElementById('star3').checked) {
+                rate_value = document.getElementById('star3').value;
+            } else if (document.getElementById('star2').checked) {
+                rate_value = document.getElementById('star2').value;
+            } else if (document.getElementById('star1').checked) {
+                rate_value = document.getElementById('star1').value;
+            }
+
+            // Perform the AJAX request to save the rating
+            $.ajax({
+                type: 'POST',
+                url: '/brandratings',
+                data: {
+                    "fid": rate_id,
+                    "_token": "{{ csrf_token() }}",
+                    "rateValue": rate_value
+                },
+                success: function(data) {
+                    var a = data.ratings;
+                    $("#rating_" + i).html(a); // Update the specific rating div
+                    if (a == 5) {
+                        $("#rateButton_" + i).html(
+                            '<i class="fa fa-star fa-lg" aria-hidden="true" style="color: gold;"></i>');
+                    } else {
+                        $("#rateButton_" + i).html(
+                            '<i class="fa fa-star-half-o fa-lg" aria-hidden="true"></i>');
+                    }
+
+                    $("#rateButton_" + i).attr('onclick', "#");
+                    $(".rate-action_" + i).css('cursor', 'default');
                     $('#ratemsg').show();
                     $('#ratingmsg').hide();
-                    setTimeout(() => $('#myRating').modal('hide'), 1000);
-                });
-            };
 
-            // Investor Interest
-            $('#expbtn').click(() => {
-                const franId = $('#expIntFranId').val();
-                $('#expbtn').hide();
-                $('#expbtnloading').show();
+                    setTimeout(function() {
+                        $("#myRating").modal('hide');
+                    }, 1000);
+                }
+            });
+        }
 
-                ajaxPost('{{ URL('/inv-lead?flag=expint') }}', {
-                    franId,
-                    _token: csrf
-                }, data => {
+
+
+
+        //like share and rating function created by GP -30-Aug-2024
+
+        //action on submit your interest
+        $('#expbtn').on('click', function() {
+            var franId = document.getElementById('expIntFranId').value;
+            document.getElementById("expbtn").style.display = "none";
+            document.getElementById("expbtnloading").style.display = "block";
+            $.ajax({
+                type: 'post',
+                url: '{{ URL('/inv-lead?flag=expint') }}',
+                data: {
+                    franId: franId,
+                },
+                success: function(data) {
+
                     if ($.isNumeric(data)) {
-                        $('#expintbutton').show();
-                        $('#creditRemaining').html(`You have ${data} credits remaining.`);
-                    } else if (data === "showMsg") {
-                        window.location.assign(`${baseUrl}/investor/myaccount/payment`);
+
+                        $('#expintbutton').css('display', 'block');
+                        $('#creditRemaining').html('You have ' + data +
+                            ' credits remaining. Do you want to use the credit');
+
+                    } else if (data == "showMsg") {
+
+                        window.location.assign(
+                            '{{ Config('constants.MainDomain') }}/investor/myaccount/payment');
+
                     } else {
-                        $('#expbtnloading').hide();
-                        $('#expmsg').show();
-                        const u = data.user;
-                        $('#companyContactinsta').text(u.company_name);
-                        $('#ceocontactinsta').text(u.ceo_name);
-                        $('#telephonecontactinsta').text(u.telephone);
-                        $('#addressocontactinsta').text(
-                            `${u.fran_address} ${u.city} ${u.state} ${u.pincode}`);
-                        $('#emailcontactinsta').html(
-                            `<a href="mailto:${u.email}" target="_blank">${u.email}</a>`);
-                        $('#mobilecontactinsta').text(u.mobile);
-                        $('#websitecontactinsta').html(
-                            `<a href="http://${u.website}" target="_blank">${u.website}</a>`);
+
+                        document.getElementById("expbtnloading").style.display = "none";
+                        document.getElementById("expmsg").style.display = "block";
+                        $('#companyContactinsta').html(data.user.company_name);
+                        $('#ceocontactinsta').html(data.user.ceo_name);
+                        $('#telephonecontactinsta').html(data.user.telephone);
+                        $('#addressocontactinsta').html(data.user.fran_address + "" + data.user.city +
+                            "" + data.user.state + "" + data.user.pincode);
+                        $('#emailcontactinsta').html("<a href='mailto:" + data.user.email +
+                            "' target='_blank'>" + data.user.email + "</a>");
+                        $('#mobilecontactinsta').html(data.user.mobile);
+                        $('#websitecontactinsta').html("<a href='http://" + data.user.website +
+                            "' target='_blank'>" + data.user.website + "</a>");
+
                     }
-                });
+                }
             });
+        });
 
-            $('#proceedInterest').click(() => {
-                $('#expintbutton').hide();
-                $('#creditRemaining').text('Please wait...');
-                const franId = $('#expIntFranId').val();
 
-                ajaxPost('{{ URL('/inv-lead') }}', {
-                    franId,
-                    _token: csrf
-                }, data => {
-                    $('#expbtnloading').hide();
-                    $('#expmsg').show();
+        $('#proceedInterest').on('click', function() {
 
-                    if (data.success) {
-                        const u = data.user;
-                        $('#companyContactinsta').text(u.company_name || 'N/A');
-                        $('#ceocontactinsta').text(u.ceo_name || 'N/A');
-                        $('#telephonecontactinsta').text(u.telephone || 'N/A');
-                        $('#addressocontactinsta').text(
-                            `${u.fran_address} ${u.city} ${u.state} ${u.pincode}`);
-                        $('#emailcontactinsta').html(
-                            `<a href="mailto:${u.email}" target="_blank">${u.email}</a>`);
-                        $('#mobilecontactinsta').text(u.mobile || 'N/A');
-                        $('#websitecontactinsta').html(
-                            `<a href="http://${u.website}" target="_blank">${u.website}</a>`);
-                    } else {
-                        $('#creditRemaining').text('Unexpected response received.');
-                    }
-                }).fail(() => {
-                    $('#expbtnloading').hide();
-                    $('#expintbutton').show();
-                    $('#creditRemaining').text('Something went wrong.');
-                });
-            });
+            $('#expintbutton').css('display', 'none');
+            $('#creditRemaining').html('Please wait....');
+            var franId = document.getElementById('expIntFranId').value;
+            $.ajax({
+                type: 'post',
+                url: '{{ URL('/inv-lead') }}',
+                data: {
+                    franId: franId,
+                },
+                success: function(data) {
 
-            $('#cancelinterest').click(() => {
-                $('#creditRemaining').text('Please wait...');
-                $('#expintbutton').hide();
-                ajaxPost('{{ URL('/inv-lead-normal') }}', {
-                    franId: $('#expIntFranId').val()
-                }, () => {
-                    $('#expbtnloading').hide();
-                    $('#cancelExpress').show();
-                });
-            });
+                    document.getElementById("expbtnloading").style.display = "none";
+                    document.getElementById("expmsg").style.display = "block";
+                    $('#companyContactinsta').html(data.user.company_name);
+                    $('#ceocontactinsta').html(data.user.ceo_name);
+                    $('#telephonecontactinsta').html(data.user.telephone);
+                    $('#addressocontactinsta').html(data.user.fran_address + "" + data.user.city + "" +
+                        data.user.state + "" + data.user.pincode);
+                    $('#emailcontactinsta').html("<a href='mailto:" + data.user.email +
+                        "' target='_blank'>" + data.user.email + "</a>");
+                    $('#mobilecontactinsta').html(data.user.mobile);
+                    $('#websitecontactinsta').html("<a href='http://" + data.user.website +
+                        "' target='_blank'>" + data.user.website + "</a>");
 
-            // Sort dropdown
-            $('#sortby').change(function() {
-                const sortby = $(this).val();
-                if (sortby !== 'x') {
-                    ajaxGet('/fetch-data-ajax', {
-                        sortby
-                    }, res => console.log("Sorted Data", res));
                 }
             });
 
-            /** ------------------ UI and Utility Actions ------------------ **/
-            // Mobile/OTP
-            window.getMobileStatuscontact = (val) => {
-                if (val.length === 10 && $.isNumeric(val)) {
-                    ajaxGet('/mobcheck', {
-                        mobile: val
-                    }, data => {
-                        if (data == 1) {
-                            $('#successmobile').show();
-                        } else {
-                            $('#contactsubmit').prop('disabled', true);
-                            $('#validatemobile').show();
-                            $('#successmobile').hide();
-                        }
-                    });
-                } else {
-                    $('#successmobile').hide();
-                    $('#contactsubmit').prop('disabled', false);
-                }
-            };
+        });
 
-            window.verify = () => {
-                const otp = $('#otpcontact').val();
-                const mobile = $('#mobile').val();
-                ajaxGet('/investor/verify-otp', {
-                    otpNo: otp,
-                    mobileNo: mobile
-                }, data => {
-                    if (data == 0) {
-                        $('#mismatch').show();
-                    } else {
-                        $('#successmobile').show();
-                        $('#contactsubmit').prop('disabled', false);
-                        $('#otpblock, #editmobilecontact, #validatemobile').hide();
+        $('#cancelinterest').on('click', function() {
+            $('#creditRemaining').html('Please wait...');
+            $('#expintbutton').css('display', 'none');
+            var franId = document.getElementById('expIntFranId').value;
+            $.ajax({
+                type: 'post',
+                url: '{{ URL('/inv-lead-normal') }}',
+                data: {
+                    franId: franId,
+                },
+                success: function(data) {
+                    $('#expbtnloading').css('display', 'none');
+                    $('#cancelExpress').css('display', 'block');
+                }
+            });
+        });
+
+        //get the selected states for the selected brands
+        $('#getfreewindowstate').on('click', function() {
+            var keyword = document.getElementById('freeinfovalue').value;
+            $.ajax({
+                type: 'get',
+                url: '/getfreestates',
+                data: {
+                    fid: keyword
+                },
+                success: function(data) {
+                    if (data != "<option>Select State</option>") {
+                        $("#statesforinfo").html(data);
                     }
-                });
-            };
-
-            // Awesomplete
-            const awesomplete = new Awesomplete('#dealer-bar-search');
-            $('#dealer-bar-search').on('input', function() {
-                const keyword = this.value;
-                if (keyword.length >= 2) {
-                    ajaxGet(`/dealers-search/${keyword}`, {}, res => {
-                        const names = res.map(r => r.name);
-                        awesomplete.list = names;
-                    });
                 }
             });
+        });
 
-            $('#dealer-bar-search, #textcompany').on('awesomplete-selectcomplete click', function() {
-                const val = $('#dealer-bar-search').val().split(' - ')[0];
-                window.location.href = `/dealers-india/search/${val}`;
-            });
+        //windows scrolling button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 1)
+                $('.sortbtn').addClass("aedtt");
+            else
+                $('.sortbtn').removeClass("aedtt");
+        });
 
-            // City from state
-            window.getcityinfo = (state) => ajaxGet('/getcitylist', {
-                state
-            }, data => $("#getinfocity").html(data));
-            window.getcityinfoinsta = (state) => ajaxGet('/getcitylist', {
-                state
-            }, data => $("#city").html(data));
-
-            // Gallery
-            window.getImages = (id) => {
-                const franId = id.replace("fran_", "");
-                ajaxGet("{{ url('/') }}/cat-brand-images", {
-                    franId
-                }, data => {
-                    $('#push-gallery').html(data[0]);
-                    $('#notApplied').toggle(data[1] == 0);
-                    $('#alreadyApplied').toggle(data[1] == 1);
-                    $('#expIntFranId, #franId').val(franId);
-                    $('.gallery').vitGallery({
-                        thumbnailMargin: 13,
-                        fullscreen: true
-                    });
-                });
-            };
-
-            // Side panel
-            $('#sortlbtn').click(() => {
+        // JavaScript Document
+        $(document).ready(function() {
+            $('#sortlbtn').click(function() {
                 $('.backdrop').show(200);
                 $('#sideslide').animate({
                     'left': '0px'
                 });
             });
-
-            $('#closecat, #closecatnew').click(() => {
+            $('#closecat').click(function() {
                 $('#sideslide').animate({
                     'left': '-300px'
                 });
                 $('.backdrop').hide(200);
             });
+            $('#closecatnew').click(function() {
+                $('#sideslide').animate({
+                    'left': '-300px'
+                });
+                $('.backdrop').hide(200);
+            });
+        });
 
-            // SEO Description toggle
-            $('#buttonAreaHide').click(() => {
+        //get city list according to the selected state
+        function getcityinfo(value) {
+            $.ajax({
+                type: 'GET',
+                url: '/getcitylist',
+                data: {
+                    state: value
+                },
+                success: function(data) {
+                    $("#getinfocity").html(data);
+                }
+            });
+        }
+
+        //mobile status if it is exists or not using jquery
+        function getMobileStatuscontact(value) {
+            const $successMobile = $('#successmobile');
+            const $contactSubmit = $('#contactsubmit');
+            const $validateMobile = $('#validatemobile');
+            const $editMobile = $('#editmobile');
+
+            if (value.length === 10 && $.isNumeric(value)) {
+                if ($successMobile.is(':hidden')) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/mobcheck',
+                        data: {
+                            mobile: value
+                        },
+                        success: function(data) {
+                            if (data == 1) {
+                                $successMobile.show();
+                                $validateMobile.hide();
+                                $contactSubmit.prop('disabled', false);
+                            } else {
+                                $successMobile.hide();
+                                $validateMobile.show();
+                                $contactSubmit.prop('disabled', true);
+                            }
+                        }
+                    });
+                }
+            } else {
+                $successMobile.hide();
+                $validateMobile.hide();
+                $editMobile.hide();
+                $contactSubmit.prop('disabled', false);
+            }
+        }
+
+        // Edit the entered mobile field
+        function editmobile() {
+            const $mobile = $('#mobile');
+            const mobileVal = $mobile.val();
+
+            console.log(mobileVal);
+
+            $mobile.prop('readonly', false);
+            $('#editmobile').hide();
+            $('#otpblock').hide();
+
+            if (mobileVal.length === 10 && $.isNumeric(mobileVal)) {
+                $('#validatemobile').show();
+            } else {
+                $('#validatemobile').hide();
+                $('#editmobile').hide();
+
+            }
+        }
+
+        // Validate mobile from table
+        function validatemobile() {
+            const mobile = $('#mobile').val();
+
+            $.ajax({
+                type: 'GET',
+                url: '/verify',
+                data: {
+                    mobile: mobile
+                }
+            });
+
+            $('#mobile').prop('readonly', true);
+            $('#editmobilecontact').show();
+            $('#validatemobile').hide();
+            $('#otpblock').show();
+            $('#contactsubmit').prop('disabled', true);
+        }
+
+        // Verify the OTP
+        function verify() {
+            const otp = $('#otpcontact').val();
+            const mobile = $('#mobile').val();
+
+            $.ajax({
+                type: 'GET',
+                url: '/investor/verify-otp',
+                data: {
+                    otpNo: otp,
+                    mobileNo: mobile
+                },
+                success: function(data) {
+                    if (data == 0) {
+                        $('#mismatch').show();
+                    } else {
+                        $('#successmobile').show();
+                        $('#contactsubmit').prop('disabled', false);
+                        $('#otpblock').hide();
+                        $('#editmobilecontact').hide();
+                        $('#validatemobile').hide();
+                        $('#mismatch').hide();
+                    }
+                }
+            });
+        }
+
+
+        //Seo related state wise desc hide and show
+        $(document).ready(function() {
+            $("#buttonAreaHide").click(function() {
                 $("#show-full-txt").slideUp("slow");
                 $('#buttonAreaHide').hide();
                 $('#buttonAreaShow').show();
             });
-
-            $('#buttonAreaShow').click(() => {
+            $("#buttonAreaShow").click(function() {
                 $("#show-full-txt").slideDown("slow");
                 $('#buttonAreaHide').show();
                 $('#buttonAreaShow').hide();
             });
 
-            // Scroll-based button behavior
-            $(window).scroll(() => {
-                $('.sortbtn').toggleClass("aedtt", $(this).scrollTop() > 1);
+            //Awesomplete
+            const input = document.getElementById('dealer-bar-search');
+            // Init awesomplete
+            const awesomplete = new Awesomplete(input);
+            const navBarSearch = $("#dealer-bar-search");
+            //navBarSearch.keypress(function () {
+            navBarSearch.on('keypress keyup keypress blur change', function() {
+                var search_keyword = $(this).val();
+                // Check if atleast 2 chars are typed
+                if (search_keyword.length >= 2) {
+                    $.ajax({
+                        url: '/dealers-search/' + search_keyword,
+                        type: 'GET',
+                        dataType: 'json',
+                        success: function(response) {
+                            prepareList(JSON.parse(JSON.stringify(response)));
+
+                        },
+                        error: function(err) {
+
+                        }
+                    });
+                }
             });
 
-            // Free window state
-            $('#getfreewindowstate').click(() => {
-                const keyword = $('#freeinfovalue').val();
-                ajaxGet('/getfreestates', {
-                    fid: keyword
-                }, data => {
-                    if (data !== "<option>Select State</option>") {
-                        $("#statesforinfo").html(data);
+            function prepareList(list) {
+                var c_list = [];
+
+                list.forEach(item => {
+                    c_list.push(item.name);
+                });
+
+                // Assigned the c_list to the list property of Awesomplete instance
+                awesomplete.list = c_list;
+            }
+
+            navBarSearch.on('awesomplete-selectcomplete', function() {
+                if ($("#dealer-bar-search").val() != "") {
+                    var value = $("#dealer-bar-search").val();
+                    var items = value.split(' - <strong> in');
+                    if (items.length > 1)
+                        value = items[0];
+                    window.location.href = '/dealers-india/search/' + value;
+                }
+            });
+
+            $("#textcompany").on('click', function() {
+                if ($("#dealer-bar-search").val() != "") {
+                    var value = $("#dealer-bar-search").val();
+                    var items = value.split(' - <strong> in');
+                    if (items.length > 1)
+                        value = items[0];
+                    window.location.href = '/dealers-india/search/' + value;
+                }
+            });
+
+
+
+        });
+
+        //Popup Gallery
+        $(document).ready(function() {
+            var gallery = $('.gallery');
+            gallery.vitGallery({
+                debag: true,
+                thumbnailMargin: 13,
+
+                fullscreen: true
+            })
+
+        });
+
+        function getImages(id) {
+            id = id.replace("fran_", "");
+            var i = 0;
+            $.ajax({
+                type: "GET",
+                url: "{{ url('/') }}/cat-brand-images",
+                data: {
+                    franId: id
+                },
+                success: function(data) {
+
+                    $('#push-gallery').html(data[0]);
+                    if (data[1] == 0)
+                        $('#notApplied').css('display', 'block');
+
+                    if (data[1] == 1)
+                        $('#alreadyApplied').css('display', 'block');
+
+                    $('#expIntFranId').val(id);
+
+                    $('#franId').val(id);
+                    var gallery = $('.gallery');
+                    gallery.vitGallery({
+                        debag: true,
+                        thumbnailMargin: 13,
+                        fullscreen: true
+                    })
+                }
+            });
+        }
+
+        function getcityinfoinsta(value) {
+            $.ajax({
+                type: 'GET',
+                url: '/getcitylist',
+                data: {
+                    state: value
+                },
+                success: function(data) {
+                    $("#city").html(data);
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            // Ensure the DOM is ready
+            console.log("Document is ready"); // Debugging statement to check if it's executing
+
+            // Trigger the AJAX request when the dropdown value changes
+            $('#sortby').change(function() {
+                alert('Dropdown value changed'); // This will show when the dropdown changes
+
+                // Get the selected value
+                var sortby = $(this).val();
+
+                // Check if 'Sort By' option is selected (value = 'x')
+                if (sortby === 'x') {
+                    console.log("Sort By selected, no action taken.");
+                    return; // Do nothing if "Sort By" is selected
+                }
+
+                // Send AJAX request
+                $.ajax({
+                    url: '/fetch-data-ajax', // The route URL where the request will be sent
+                    type: 'GET',
+                    data: {
+                        sortby: sortby
+                    }, // Send the selected sortby value
+                    success: function(response) {
+                        // Handle the response (this can be any content, e.g. update the page with the sorted data)
+                        console.log("Response received:",
+                            response
+                        ); // For debugging, you can check the response in the console
+
+                        // Example: you could populate the response data into an HTML element
+                        // $('#someElement').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle any errors here
+                        console.error("Error:", error);
                     }
                 });
             });
         });
-    </script>
+        $(document).ready(function() {
+            // Custom rule for mobile number
+            $.validator.addMethod("indianMobile", function(value, element) {
+                return this.optional(element) || /^[6-9]\d{9}$/.test(value);
+            }, "Please enter a valid 10-digit mobile number starting with 6-9");
 
+            // Custom rule for OTP (if needed)
+            $.validator.addMethod("otp", function(value, element) {
+                return this.optional(element) || /^\d{4}$/.test(value);
+            }, "Enter a valid 4-digit OTP");
+
+            $("#freeinfoform").validate({
+                rules: {
+                    infoname: {
+                        required: true,
+                        minlength: 2
+                    },
+                    infoemail: {
+                        required: true,
+                        email: true
+                    },
+                    mobile: {
+                        required: true,
+                        indianMobile: true
+                    },
+                    infostate: {
+                        required: true
+                    },
+                    infocity: {
+                        required: true
+                    },
+                    address: {
+                        required: true,
+                        minlength: 5
+                    },
+                    pincode: {
+                        required: true,
+                        digits: true,
+                        minlength: 6,
+                        maxlength: 6
+                    },
+                    otpcontact: {
+                        otp: true // optional field if you want to validate
+                    }
+                },
+                messages: {
+                    infoname: {
+                        required: "Please enter your name",
+                        minlength: "Name must be at least 2 characters"
+                    },
+                    infoemail: {
+                        required: "Please enter your email",
+                        email: "Enter a valid email address"
+                    },
+                    mobile: {
+                        required: "Please enter your mobile number"
+                    },
+                    infostate: {
+                        required: "Please select a state"
+                    },
+                    infocity: {
+                        required: "Please select a city"
+                    },
+                    address: {
+                        required: "Please enter your address",
+                        minlength: "Address must be at least 5 characters"
+                    },
+                    pincode: {
+                        required: "Please enter your pincode",
+                        digits: "Only numeric values allowed",
+                        minlength: "Pincode must be 6 digits",
+                        maxlength: "Pincode must be 6 digits"
+                    }
+                },
+                errorElement: "span",
+                errorClass: "text-danger",
+                highlight: function(element) {
+                    $(element).closest('.form-group').addClass('has-error');
+                },
+                unhighlight: function(element) {
+                    $(element).closest('.form-group').removeClass('has-error');
+                },
+                submitHandler: function(form) {
+                    // You can manually enable submit button if needed
+                    $('#contactsubmit').prop('disabled', false);
+                    form.submit();
+                }
+            });
+
+            // Optional: Enable submit button only when form is valid
+            $('#freeinfoform input, #freeinfoform select').on('change keyup', function() {
+                if ($('#freeinfoform').valid()) {
+                    $('#contactsubmit').prop('disabled', false);
+                } else {
+                    $('#contactsubmit').prop('disabled', true);
+                }
+            });
+        });
+    </script>
 @endsection
