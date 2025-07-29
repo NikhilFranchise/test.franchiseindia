@@ -568,6 +568,7 @@ class ExpressInstaController extends Controller
                 //check if user already exists
                 $countOld = ExpressInstaApply::query()->where('franchisor_id', '=', $franId)->where('email', '=', $email)->count();
 
+                // dd($countOld);
                 //insert data to insta apply
                 $franchisorDetail = FranchisorBusinessDetail::query()->where('franchisor_id', $franId)->first();
                 $userDetail = UserAccount::query()->where('profile_str', $franId)->first();
@@ -782,7 +783,7 @@ class ExpressInstaController extends Controller
                 ->where('profile_status', 1)
                 ->where('profile_type', 1)
                 ->first();
-            dd($userDetail);
+            // dd($userDetail);
             $resource = "DOTCOM";
             if (!empty(request()->check_lead_popup))
                 $resource = "leadPopup";
