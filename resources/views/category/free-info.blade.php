@@ -61,8 +61,8 @@
                                 <div class="form-group pos-rel">
                                     <input id="otpcontact" type="text" class="form-control" maxlength="4" placeholder="Enter OTP">
                                     <span class="vrfy" id="verify_button" onclick="verify()">VERIFY</span>
+                                    <span style="display: none; color:red; font-size:12px;" id="mismatch">OTP Mismatch</span>
                                 </div>
-                                <div style="display: none; color:red;" id="mismatch">OTP Mismatch</div>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6">
                                 <div class="form-group">
