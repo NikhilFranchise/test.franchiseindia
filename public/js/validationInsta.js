@@ -53,7 +53,7 @@ $(document).ready(function () {
             var details = $('#detailsfreeadvice').val();
             var pincode = $('#pincodefreeadvice').val();
             var is_newsletter = $('#is_newsletterfreeadvice').is(':checked') ? 1 : 0;
-           
+
             $.ajax({
                 type: 'post',
                 url: '/freeadvice',
@@ -202,62 +202,163 @@ function isNumberKey(evt) {
 
     return true;
 }
-// Function to check mobile status
+// // Function to check mobile status
+// function getMobileStatus(value) {
+//     if (value.length === 10 && $.isNumeric(value)) {
+//         $.ajax({
+//             type: 'GET',
+//             url: '/mobcheck',
+//             data: { mobile: value },
+//             success: function (data) {
+//                 if (parseInt(data) === 1) {
+//                     $('#sub1').show();
+//                 } else {
+//                     $('#verifybutton').show();
+//                     $('#sub1').hide();
+//                 }
+//             }
+//         });
+//     } else if (value.length !== 10 && $.isNumeric(value)) {
+//         // $('#verifybutton, #sub').hide();
+//         $('#sub1').hide();
+//         $('#verifybutton').hide();
+//     }
+// }
+
+// // Function to verify mobile
+// function veryfie() {
+//     var keyword = $('#txtPhone').val();
+//     $.ajax({
+//         type: 'get',
+//         url: '/verify',
+//         data: { mobile: keyword }
+//     });
+//     $("#otpblk").show();
+//     $('#verifybutton').hide();
+//     $('#editmobile').show();
+//     $('#txtPhone').prop('readonly', true);
+// }
+
+// // Function to edit mobile number in insta form
+// function editmobileinsta() {
+//     $("#otpblk").hide();
+//     $('#verifybutton').show();
+//     $('#editmobile').hide();
+//     $('#txtPhone').prop('readonly', false);
+// }
+
+// // Function to check OTP
+// function checkinstaotp() {
+//     const otp =  $('#otp').val().trim();
+//     const mobile = $('#txtPhone').val().trim();
+//     // Validate if OTP is empty
+//     if (otp === '' || otp.length !== 4) {
+//         $('#otpblk1').text('Please enter a valid 4-digit OTP').css('color', 'red').show();
+//         return;
+//     }
+
+//     // Proceed with AJAX if OTP is not empty
+//     $.ajax({
+//         type: 'get',
+//         url: '/check',
+//         data: { otpNo: keyword, mobileNo: mobile },
+//         success: function (data) {
+//             if (data === 'notexists') {
+//                 $('#otpblk1').text('Invalid OTP. Please try again.').css('color', 'red').show();
+//             } else {
+//                 $('#otpblk1').hide();
+//                 $('#otpblk').hide();
+//                 $('#txtPhone').prop('readonly', true);
+//                 $('#sub1').show();
+//                 $('#editmobile').hide();
+//             }
+//         },
+//         error: function () {
+//             $('#otpblk1').text('Something went wrong. Please try again.').css('color', 'red').show();
+//         }
+//     });
+// }
+
+// Check mobile status on keyup
 function getMobileStatus(value) {
-    if (value.length === 10 && $.isNumeric(value)) {
+    const mobile = value.trim();
+    if (mobile.length === 10 && $.isNumeric(mobile)) {
         $.ajax({
             type: 'GET',
             url: '/mobcheck',
-            data: { mobile: value },
-            success: function (data) {
-                if (parseInt(data) === 1) {
+            data: { mobile },
+            success: function (response) {
+                if (parseInt(response) === 1) {
                     $('#sub1').show();
+                    $('#verifybutton').hide();
                 } else {
-                    $('#verifybutton').show();
                     $('#sub1').hide();
+                    $('#verifybutton').show();
                 }
+            },
+            error: function () {
+                console.error('Mobile check failed');
             }
         });
-    } else if (value.length !== 10 && $.isNumeric(value)) {
-        // $('#verifybutton, #sub').hide();
+    } else {
         $('#sub1').hide();
         $('#verifybutton').hide();
     }
 }
 
-// Function to verify mobile
-function veryfie() {
-    var keyword = $('#txtPhone').val();
+// Start OTP verification after clicking "Verify"
+function verifyMobile() {
+    const mobile = $('#txtPhone').val().trim();
+
+    if (mobile === '' || mobile.length !== 10 || !$.isNumeric(mobile)) {
+        alert('Please enter a valid 10-digit mobile number.');
+        return;
+    }
+
     $.ajax({
-        type: 'get',
+        type: 'GET',
         url: '/verify',
-        data: { mobile: keyword }
+        data: { mobile },
+        success: function () {
+            $('#otpblk').show();
+            $('#verifybutton').hide();
+            $('#editmobile').show();
+            $('#txtPhone').prop('readonly', true);
+        },
+        error: function () {
+            alert('Something went wrong during mobile verification.');
+        }
     });
-    $("#otpblk").show();
-    $('#verifybutton').hide();
-    $('#editmobile').show();
-    $('#txtPhone').prop('readonly', true);
 }
 
-// Function to edit mobile number in insta form
-function editmobileinsta() {
-    $("#otpblk").hide();
+// Allow editing of mobile number
+function editMobile() {
+    $('#otpblk').hide();
     $('#verifybutton').show();
     $('#editmobile').hide();
+    $('#sub1').hide();
     $('#txtPhone').prop('readonly', false);
+    $('#otpblk1').hide();
+    $('#otp').val('');
 }
 
-// Function to check OTP
+// Check the OTP
 function checkinstaotp() {
-    var keyword = $('#otp').val();
-    var mobile = $('#txtPhone').val();
+    const otp = $('#otp').val().trim();
+    const mobile = $('#txtPhone').val().trim();
+
+    if (otp === '' || otp.length !== 4 || !$.isNumeric(otp)) {
+        $('#otpblk1').text('Please enter a valid 4-digit OTP').css('color', 'red').show();
+        return;
+    }
+
     $.ajax({
-        type: 'get',
+        type: 'GET',
         url: '/check',
-        data: { otpNo: keyword, mobileNo: mobile },
-        success: function (data) {
-            if (data == 'notexists') {
-                $('#otpblk1').show();
+        data: { otpNo: otp, mobileNo: mobile },
+        success: function (response) {
+            if (response === 'notexists') {
+                $('#otpblk1').text('Invalid OTP. Please try again.').css('color', 'red').show();
             } else {
                 $('#otpblk1').hide();
                 $('#otpblk').hide();
@@ -265,9 +366,14 @@ function checkinstaotp() {
                 $('#sub1').show();
                 $('#editmobile').hide();
             }
+        },
+        error: function () {
+            $('#otpblk1').text('Something went wrong. Please try again.').css('color', 'red').show();
         }
     });
 }
+
+
 
 // Additional functions for wider insta form
 function getCityWiderInsta(state) {
@@ -282,71 +388,134 @@ function getCityWiderInsta(state) {
     });
 }
 
-function getMobileStatusWider(value) {
-    if (value.length === 10 && $.isNumeric(value)) {
-        $.ajax({
-            type: 'GET',
-            url: '/mobcheck',
-            data: { mobile: value },
-            success: function (data) {
-                if (parseInt(data) === 1) {
-                    $('#success-mobile-wider').show();
-                    $('#validate-mobile-contact').hide();
-                    $('#wider-submit-button').prop('disabled', false);
-                } else {
-                    $('#validate-mobile-contact').show();
-                    $('#success-mobile-wider').hide();
-                    $('#wider-submit-button').prop('disabled', true);
-                }
-            }
+// function getMobileStatusWider(value) {
+//     if (value.length === 10 && $.isNumeric(value)) {
+//         $.ajax({
+//             type: 'GET',
+//             url: '/mobcheck',
+//             data: { mobile: value },
+//             success: function (data) {
+//                 if (parseInt(data) === 1) {
+//                     $('#success-mobile-wider').show();
+//                     $('#validate-mobile-contact').hide();
+//                     $('#wider-submit-button').prop('disabled', false);
+//                 } else {
+//                     $('#validate-mobile-contact').show();
+//                     $('#success-mobile-wider').hide();
+//                     $('#wider-submit-button').prop('disabled', true);
+//                 }
+//             }
+//         });
+//     } else if (value.length !== 10 && $.isNumeric(value)) {
+//         $('#validate-mobile-contact').hide();
+//         $('#success-mobile-wider').hide();
+//         $('#edit-mobile-wider').hide();
+//         $('#wider-submit-button').prop('disabled', false);
+//     }
+// }
+
+
+// function editMobileWider1() {
+//     // alert('hello');
+//     $("#mobile-wider").prop("readonly", false);
+//     $("#edit-mobile-wider1").hide(); // Fix: correct ID
+//     $("#validate-mobile-contact").show();
+//     $("#otp-block-wider1").hide();
+//     $("#wider-submit-button").prop("disabled", true);
+// }
+
+// function validateMobileWider() {
+//     var mobile = $('#mobile-wider').val();
+//     $.ajax({
+//         type: 'get',
+//         url: '/verify',
+//         data: { mobile: mobile }
+//     });
+//     $("#mobile-wider").prop("readonly", true);
+//     $("#edit-mobile-wider1").show();
+//     $("#validate-mobile-contact").hide();
+//     $("#otp-block-wider1").show();
+//     $("#wider-submit-button").prop("disabled", true);
+// }
+
+// function verifyWiderOTP() {
+//     var otp = $('#otp-insta-wider1').val();
+//     var mobile = $('#mobile-wider').val();
+//     $.ajax({
+//         type: 'get',
+//         url: '/investor/verify-otp',
+//         data: { otpNo: otp, mobileNo: mobile },
+//         success: function (data) {
+//             if (data == 0) {
+//                 $("#mismatch-wider").show();
+//             } else {
+//                 $("#success-mobile-wider").show();
+//                 $("#wider-submit-button").prop("disabled", false);
+//                 $("#otp-block-wider1, #edit-mobile-wider1, #validate-mobile-contact").hide();
+//             }
+//         }
+//     });
+// }
+
+function handleMobileInput(value) {
+    const mobile = value.trim();
+    const isValid = mobile.length === 10 && $.isNumeric(mobile);
+
+    if (isValid) {
+        $.get('/mobcheck', { mobile }, function (response) {
+            const exists = parseInt(response) === 1;
+
+            $('#mobile-verified-icon').toggle(exists);
+            $('#verify-mobile').toggle(!exists);
+            $('#edit-mobile').hide();
+            $('#wider-submit-button').prop('disabled', !exists);
         });
-    } else if (value.length !== 10 && $.isNumeric(value)) {
-        $('#validate-mobile-contact').hide();
-        $('#success-mobile-wider').hide();
-        $('#edit-mobile-wider').hide();
+    } else {
+        $('#verify-mobile, #mobile-verified-icon, #edit-mobile').hide();
         $('#wider-submit-button').prop('disabled', false);
     }
 }
 
-
-function editMobileWider1() {
-    // alert('hello');
-    $("#mobile-wider").prop("readonly", false);
-    $("#edit-mobile-wider1").hide(); // Fix: correct ID
-    $("#validate-mobile-contact").show();
-    $("#otp-block-wider1").hide();
-    $("#wider-submit-button").prop("disabled", true);
+function enableMobileEdit() {
+    $('#mobile-wider').prop('readonly', false);
+    $('#edit-mobile').hide();
+    $('#verify-mobile').show();
+    $('#otp-block').hide();
+    $('#wider-submit-button').prop('disabled', true);
 }
 
-function validateMobileWider() {
-    var mobile = $('#mobile-wider').val();
-    $.ajax({
-        type: 'get',
-        url: '/verify',
-        data: { mobile: mobile }
-    });
-    $("#mobile-wider").prop("readonly", true);
-    $("#edit-mobile-wider1").show();
-    $("#validate-mobile-contact").hide();
-    $("#otp-block-wider1").show();
-    $("#wider-submit-button").prop("disabled", true);
+function sendOTP() {
+    const mobile = $('#mobile-wider').val().trim();
+
+    if (mobile.length === 10 && $.isNumeric(mobile)) {
+        $.get('/verify', { mobile });
+
+        $('#mobile-wider').prop('readonly', true);
+        $('#edit-mobile').show();
+        $('#verify-mobile').hide();
+        $('#otp-block').show();
+        $('#wider-submit-button').prop('disabled', true);
+    }
 }
 
-function verifyWiderOTP() {
-    var otp = $('#otp-insta-wider1').val();
-    var mobile = $('#mobile-wider').val();
-    $.ajax({
-        type: 'get',
-        url: '/investor/verify-otp',
-        data: { otpNo: otp, mobileNo: mobile },
-        success: function (data) {
-            if (data == 0) {
-                $("#mismatch-wider").show();
-            } else {
-                $("#success-mobile-wider").show();
-                $("#wider-submit-button").prop("disabled", false);
-                $("#otp-block-wider1, #edit-mobile-wider1, #validate-mobile-contact").hide();
-            }
+function verifyOTP() {
+    const otp = $('#otp-input').val().trim();
+    const mobile = $('#mobile-wider').val().trim();
+
+    if (otp.length !== 4 || !$.isNumeric(otp)) {
+        $('#otp-error').text('Please enter a valid 4-digit OTP').show();
+        return;
+    }
+
+    $.get('/investor/verify-otp', { otpNo: otp, mobileNo: mobile }, function (response) {
+        if (parseInt(response) === 1) {
+            $('#mobile-verified-icon').show();
+            $('#wider-submit-button').prop('disabled', false);
+            $('#otp-block, #edit-mobile, #verify-mobile').hide();
+            $('#otp-error').hide();
+        } else {
+            $('#otp-error').text('OTP Mismatch').show();
         }
     });
 }
+

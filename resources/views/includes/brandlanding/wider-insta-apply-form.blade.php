@@ -50,7 +50,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6">
+                    {{-- <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group pos-rel">
                             <input name="mobile" id="mobile-wider" type="text" maxlength="10"
                                 onkeypress="return isNumberKey(event);" onkeyup="getMobileStatusWider(this.value);"
@@ -62,20 +62,42 @@
                             <span id="success-mobile-wider" class="showhideright" style="display:none"><i
                                     class="fa fa-check fa-lg" aria-hidden="true"></i></span>
                         </div>
+                    </div> --}}
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <div class="form-group pos-rel">
+                            <input name="mobile" id="mobile-wider" type="text" maxlength="10"
+                                class="form-control blur" placeholder="Enter Mobile"
+                                onkeypress="return isNumberKey(event);" onkeyup="handleMobileInput(this.value)">
+                            <span class="vrfy" id="edit-mobile" style="display:none"
+                                onclick="enableMobileEdit()">Edit</span>
+                            <span class="vrfy" id="verify-mobile" style="display:none"
+                                onclick="sendOTP()">VERIFY</span>
+                            <span id="mobile-verified-icon" class="showhideright" style="display:none">
+                                <i class="fa fa-check fa-lg" aria-hidden="true"></i>
+                            </span>
+                        </div>
                     </div>
+
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group">
                             <input type="text" class="form-control blur" name="address" placeholder="Enter Address">
                         </div>
                     </div>
-                    <div class="col-xs-12 col-sm-6 col-md-6" style="display:none" id="otp-block-wider1">
+                    {{-- <div class="col-xs-12 col-sm-6 col-md-6" style="display:none" id="otp-block-wider1">
                         <div class="form-group pos-rel">
                             <input id="otp-insta-wider1" type="text" class="form-control" maxlength="4"
                                 placeholder="Enter OTP">
                             <span class="vrfy" id="verify_button_wider" style="display:block"
                                 onclick="verifyWiderOTP()">VERIFY</span>
+                            <span style="display:none; color:red;" style="display:none" id="mismatch-wider">OTP Mismatch</span>
                         </div>
-                        <div style="display:none; color:red;" style="display:none" id="mismatch-wider">OTP Mismatch
+                    </div> --}}
+                    <div class="col-xs-12 col-sm-6 col-md-6" id="otp-block" style="display:none">
+                        <div class="form-group pos-rel">
+                            <input id="otp-input" type="text" maxlength="4" class="form-control"
+                                placeholder="Enter OTP">
+                            <span class="vrfy" id="submit-otp" onclick="verifyOTP()">VERIFY</span>
+                            <span id="otp-error" style="display:none; color:red;">OTP Mismatch</span>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6">
@@ -154,8 +176,7 @@
 
             if ($('#is_termsagree2').is(':checked')) {
                 $('#success-mobile-wider').attr('disabled', false);
-            }
-            else {
+            } else {
                 $('#success-mobile-wider').attr('disabled', true);
             }
         })
