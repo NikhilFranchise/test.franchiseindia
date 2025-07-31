@@ -85,14 +85,12 @@
                                     <label for="100">Display 100 Results</label>
                                     <input type="radio" name="limit" id="100" value="100">
                                 </div>
-                                {{-- <div class="sort-row">
-                                    <label for="150">Display 150 Results</label>
-                                    <input type="radio" name="limit" id="150" value="150">
-                                </div> --}}
-                                <div class="sort-row">
-                                    <label for="200">Display 200 Results</label>
-                                    <input type="radio" name="limit" id="200" value="200">
-                                </div>
+                                @if ($franchiseType == 'top-200')
+                                    <div class="sort-row">
+                                        <label for="200">Display 200 Results</label>
+                                        <input type="radio" name="limit" id="200" value="200">
+                                    </div>
+                                @endif
                             </div>
                             <div class="flabel"><img src="{{ url('/images/topfranchiseleaders/industry.png') }}"
                                     class="industry">
@@ -165,7 +163,7 @@
                     @include('category.free-info')
                     <div class="buttons">
                         <span id="recordCount">{{ $count }} RESULTS OF
-                            {{ $totalCount + count(config('staticBrands.staticBrands')) }}</span>
+                            {{ $totalCount + count(config('staticBrands.staticBrands.2025')) }}</span>
                         <div class="list"><i class="fa fa-list"></i></div>
                         <div class="grid"><i class="fa fa-th-large"></i></div>
                     </div>
@@ -202,7 +200,8 @@
             $(document).ready(function() {
                 let isLoading = false;
                 let getfreecount = 0; // Initialize the counter
-                let staticCount = '{{ count(config('staticBrands.staticBrands')) }}';
+                let sCount2025 = '{{ count(config('staticBrands.staticBrands.2025')) }}';
+                let sCount2024 = '{{ count(config('staticBrands.staticBrands.2024')) }}';
 
                 function fetchData() {
                     if (isLoading) return;
@@ -231,18 +230,23 @@
                         },
                         success: function(response) {
                             $("#wrapper").html(response.html);
-                            console.log(response.count, response.totalCount, response.year, response
-                                .franchisor_type);
+                            // console.log(response.count, response.totalCount, response.year, response
+                            //     .franchisor_type);
                             if (response.year == 2025 && response.count != response.totalCount) {
-                                // alert('if');
                                 $("#recordCount").text(response.count + " RESULTS OF " + (response
-                                    .totalCount + parseInt(staticCount)));
+                                    .totalCount + parseInt(sCount2025)));
                             } else if (response.count == response.totalCount && response.year == 2025) {
-                                // alert('else if');
-                                $("#recordCount").text((response.count + parseInt(staticCount)) +
-                                    " RESULTS OF " + (response.totalCount + parseInt(staticCount)));
+                                $("#recordCount").text((response.count + parseInt(sCount2025)) +
+                                    " RESULTS OF " + (response.totalCount + parseInt(sCount2025)));
+
+                            } else if (response.year == 2024 && response.count != response.totalCount) {
+                                $("#recordCount").text(response.count + " RESULTS OF " + (response
+                                    .totalCount + parseInt(sCount2024)));
+
+                            } else if (response.count == response.totalCount && response.year == 2024) {
+                                $("#recordCount").text((response.count + parseInt(sCount2024)) +
+                                    " RESULTS OF " + (response.totalCount + parseInt(sCount2024)));
                             } else {
-                                // alert('else');
                                 $("#recordCount").text(response.count + " RESULTS OF " + response
                                     .totalCount);
                             }
@@ -305,7 +309,10 @@
 
                             updateGetFreeCount();
 
-                            $("input[name='getFreeInfo']:checked").each(function() {et brandId = $(this).attr("id");et brandName = $("#brandnamecategory" + brandId).html();et brandInvestment = $("#brandinvestment" + brandId).html();
+                            $("input[name='getFreeInfo']:checked").each(function() {
+                                let brandId = $(this).attr("id");
+                                let brandName = $("#brandnamecategory" + brandId).html();
+                                let brandInvestment = $("#brandinvestment" + brandId).html();
 
                                 selectedHtml += `
                 <div class="col-xs-12 col-sm-4 col-md-4">

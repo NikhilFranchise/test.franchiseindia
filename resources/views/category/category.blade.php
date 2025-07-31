@@ -1353,128 +1353,21 @@
                 }
             });
         }
-
-        $(document).ready(function() {
-            const $mobile = $('#mobile');
-            const $validateMobile = $('#validatemobile');
-            const $editMobile = $('#editmobilecontact');
-            const $successMobile = $('#successmobile');
-            const $contactSubmit = $('#contactsubmit');
-            const $otpBlock = $('#otpblock');
-            const $otpInput = $('#otpcontact');
-            const $verifyButton = $('#verify_button');
-            const $mismatch = $('#mismatch')
-
-            // Mobile input change
-            window.getMobileStatuscontact = function(value) {
-                if (value.length === 10 && $.isNumeric(value)) {
-                    $.ajax({
-                        type: 'GET',
-                        url: '/mobcheck',
-                        data: {
-                            mobile: value
-                        },
-                        success: function(data) {
-                            if (data == 1) {
-                                // Mobile exists
-                                $successMobile.show();
-                                $validateMobile.hide();
-                                $editMobile.hide();
-                                $contactSubmit.prop('disabled', false);
-                                $otpBlock.hide();
-                            } else {
-                                // Mobile does not exist
-                                $successMobile.hide();
-                                $validateMobile.show();
-                                $editMobile.hide();
-                                $contactSubmit.prop('disabled', true);
-                                $otpBlock.hide();
-                            }
-                        }
-                    });
-                } else {
-                    $successMobile.hide();
-                    $validateMobile.hide();
-                    $editMobile.hide();
-                    $otpBlock.hide();
-                    $contactSubmit.prop('disabled', true);
-                }
-            };
-
-            // When clicking on Edit
-            window.editmobile = function() {
-                $mobile.prop('readonly', false).focus();
-                $editMobile.hide();
-                $validateMobile.hide();
-                $successMobile.hide();
-                $otpBlock.hide();
-                $contactSubmit.prop('disabled', true);
-            };
-
-            // When clicking on VERIFY
-            window.validatemobile = function() {
-                const mobileVal = $mobile.val();
-                if (mobileVal.length !== 10 || !$.isNumeric(mobileVal)) return;
-
-                $.ajax({
-                    type: 'GET',
-                    url: '/verify',
-                    data: {
-                        mobile: mobileVal
-                    },
-                    success: function() {
-                        $mobile.prop('readonly', true);
-                        $validateMobile.hide();
-                        $editMobile.show();
-                        $otpBlock.show();
-                        $contactSubmit.prop('disabled', true);
-                    }
-                });
-            };
-
-            // OTP verification
-            window.verify = function() {
-                const otp = $otpInput.val();
-                const mobile = $mobile.val();
-
-                if (otp.length !== 4) {
-                    $mismatch.text('Please enter a valid 4-digit OTP').show();
-                    return;
-                }
-
-                $.ajax({
-                    type: 'GET',
-                    url: '/investor/verify-otp',
-                    data: {
-                        otpNo: otp,
-                        mobileNo: mobile
-                    },
-                    success: function(data) {
-                        if (data == 0) {
-                            $mismatch.text('OTP Mismatch').show();
-                        } else {
-                            $successMobile.show();
-                            $contactSubmit.prop('disabled', false);
-                            $otpBlock.hide();
-                            $editMobile.hide();
-                            $validateMobile.hide();
-                            $mismatch.hide();
-                        }
-                    }
-                });
-            };
-        });
-
-
-        // //mobile status if it is exists or not using jquery
-        // function getMobileStatuscontact(value) {
+        // comment for temp by gp
+        // $(document).ready(function() {
+        //     const $mobile = $('#mobile');
+        //     const $validateMobile = $('#validatemobile');
+        //     const $editMobile = $('#editmobilecontact');
         //     const $successMobile = $('#successmobile');
         //     const $contactSubmit = $('#contactsubmit');
-        //     const $validateMobile = $('#validatemobile');
-        //     const $editMobile = $('#editmobile');
+        //     const $otpBlock = $('#otpblock');
+        //     const $otpInput = $('#otpcontact');
+        //     const $verifyButton = $('#verify_button');
+        //     const $mismatch = $('#mismatch')
 
-        //     if (value.length === 10 && $.isNumeric(value)) {
-        //         if ($successMobile.is(':hidden')) {
+        //     // Mobile input change
+        //     window.getMobileStatuscontact = function(value) {
+        //         if (value.length === 10 && $.isNumeric(value)) {
         //             $.ajax({
         //                 type: 'GET',
         //                 url: '/mobcheck',
@@ -1483,90 +1376,95 @@
         //                 },
         //                 success: function(data) {
         //                     if (data == 1) {
+        //                         // Mobile exists
         //                         $successMobile.show();
         //                         $validateMobile.hide();
+        //                         $editMobile.hide();
         //                         $contactSubmit.prop('disabled', false);
+        //                         $otpBlock.hide();
         //                     } else {
+        //                         // Mobile does not exist
         //                         $successMobile.hide();
         //                         $validateMobile.show();
-        //                         $contactSubmit.prop('disabled', true);
         //                         $editMobile.hide();
+        //                         $contactSubmit.prop('disabled', true);
+        //                         $otpBlock.hide();
         //                     }
         //                 }
         //             });
+        //         } else {
+        //             $successMobile.hide();
+        //             $validateMobile.hide();
+        //             $editMobile.hide();
+        //             $otpBlock.hide();
+        //             $contactSubmit.prop('disabled', true);
         //         }
-        //     } else {
-        //         $successMobile.hide();
-        //         $validateMobile.hide();
+        //     };
+
+        //     // When clicking on Edit
+        //     window.editmobile = function() {
+        //         $mobile.prop('readonly', false).focus();
         //         $editMobile.hide();
-        //         $contactSubmit.prop('disabled', false);
-        //     }
-        // }
+        //         $validateMobile.hide();
+        //         $successMobile.hide();
+        //         $otpBlock.hide();
+        //         $contactSubmit.prop('disabled', true);
+        //     };
 
-        // // Edit the entered mobile field
-        // function editmobile() {
-        //     const $mobile = $('#mobile');
-        //     const mobileVal = $mobile.val();
-        //     $mobile.prop('readonly', false);
-        //     $('#editmobile').hide();
-        //     $('#otpblock').hide();
-        //     $('#validatemobile').hide();
+        //     // When clicking on VERIFY
+        //     window.validatemobile = function() {
+        //         const mobileVal = $mobile.val();
+        //         if (mobileVal.length !== 10 || !$.isNumeric(mobileVal)) return;
 
-        //     if (mobileVal.length === 10 && $.isNumeric(mobileVal)) {
-        //         $('#validatemobile').show();
-        //     } else {
-        //         $('#validatemobile').hide();
-        //         $('#editmobile').hide();
-
-        //     }
-        // }
-
-        // // Validate mobile from table
-        // function validatemobile() {
-        //     const mobile = $('#mobile').val();
-
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: '/verify',
-        //         data: {
-        //             mobile: mobile
-        //         }
-        //     });
-
-        //     $('#mobile').prop('readonly', true);
-        //     $('#editmobilecontact').show();
-        //     $('#validatemobile').hide();
-        //     $('#otpblock').show();
-        //     $('#contactsubmit').prop('disabled', true);
-        // }
-
-        // // Verify the OTP
-        // function verify() {
-        //     const otp = $('#otpcontact').val();
-        //     const mobile = $('#mobile').val();
-
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: '/investor/verify-otp',
-        //         data: {
-        //             otpNo: otp,
-        //             mobileNo: mobile
-        //         },
-        //         success: function(data) {
-        //             if (data == 0) {
-        //                 $('#mismatch').show();
-        //             } else {
-        //                 $('#successmobile').show();
-        //                 $('#contactsubmit').prop('disabled', false);
-        //                 $('#otpblock').hide();
-        //                 $('#editmobilecontact').hide();
-        //                 $('#validatemobile').hide();
-        //                 $('#mismatch').hide();
+        //         $.ajax({
+        //             type: 'GET',
+        //             url: '/verify',
+        //             data: {
+        //                 mobile: mobileVal
+        //             },
+        //             success: function() {
+        //                 $mobile.prop('readonly', true);
+        //                 $validateMobile.hide();
+        //                 $editMobile.show();
+        //                 $otpBlock.show();
+        //                 $contactSubmit.prop('disabled', true);
         //             }
-        //         }
-        //     });
-        // }
+        //         });
+        //     };
 
+        //     // OTP verification
+        //     window.verify = function() {
+        //         const otp = $otpInput.val();
+        //         const mobile = $mobile.val();
+
+        //         if (otp.length !== 4) {
+        //             $mismatch.text('Please enter a valid 4-digit OTP').show();
+        //             return;
+        //         }
+
+        //         $.ajax({
+        //             type: 'GET',
+        //             url: '/investor/verify-otp',
+        //             data: {
+        //                 otpNo: otp,
+        //                 mobileNo: mobile
+        //             },
+        //             success: function(data) {
+        //                 if (data == 0) {
+        //                     $mismatch.text('OTP Mismatch').show();
+        //                 } else {
+        //                     $successMobile.show();
+        //                     $contactSubmit.prop('disabled', false);
+        //                     $otpBlock.hide();
+        //                     $editMobile.hide();
+        //                     $validateMobile.hide();
+        //                     $mismatch.hide();
+        //                 }
+        //             }
+        //         });
+        //     };
+        // });
+        // comment for temp by gp
 
         //Seo related state wise desc hide and show
         $(document).ready(function() {
@@ -1737,129 +1635,129 @@
                 });
             });
         });
-        $(document).ready(function() {
-            // Custom rule for mobile number
-            $.validator.addMethod("indianMobile", function(value, element) {
-                return this.optional(element) || /^[6-9]\d{9}$/.test(value);
-            }, "Please enter a valid 10-digit mobile number starting with 6-9");
+        // $(document).ready(function() {
+        //     // Custom rule for mobile number
+        //     $.validator.addMethod("indianMobile", function(value, element) {
+        //         return this.optional(element) || /^[6-9]\d{9}$/.test(value);
+        //     }, "Please enter a valid 10-digit mobile number starting with 6-9");
 
-            // Custom rule for OTP (if needed)
-            $.validator.addMethod("otp", function(value, element) {
-                return this.optional(element) || /^\d{4}$/.test(value);
-            }, "Enter a valid 4-digit OTP");
+        //     // Custom rule for OTP (if needed)
+        //     $.validator.addMethod("otp", function(value, element) {
+        //         return this.optional(element) || /^\d{4}$/.test(value);
+        //     }, "Enter a valid 4-digit OTP");
 
-            $("#freeinfoform").validate({
-                rules: {
-                    infoname: {
-                        required: true,
-                        minlength: 2
-                    },
-                    infoemail: {
-                        required: true,
-                        email: true
-                    },
-                    mobile: {
-                        required: true,
-                        indianMobile: true
-                    },
-                    infostate: {
-                        required: true
-                    },
-                    infocity: {
-                        required: true
-                    },
-                    address: {
-                        required: true,
-                        minlength: 5
-                    },
-                    pincode: {
-                        required: true,
-                        digits: true,
-                        minlength: 6,
-                        maxlength: 6
-                    },
-                    otpcontact: {
-                        otp: true // optional field if you want to validate
-                    }
-                },
-                messages: {
-                    infoname: {
-                        required: "Please enter your name",
-                        minlength: "Name must be at least 2 characters"
-                    },
-                    infoemail: {
-                        required: "Please enter your email",
-                        email: "Enter a valid email address"
-                    },
-                    mobile: {
-                        required: "Please enter your mobile number"
-                    },
-                    infostate: {
-                        required: "Please select a state"
-                    },
-                    infocity: {
-                        required: "Please select a city"
-                    },
-                    address: {
-                        required: "Please enter your address",
-                        minlength: "Address must be at least 5 characters"
-                    },
-                    pincode: {
-                        required: "Please enter your pincode",
-                        digits: "Only numeric values allowed",
-                        minlength: "Pincode must be 6 digits",
-                        maxlength: "Pincode must be 6 digits"
-                    }
-                },
-                errorElement: "span",
-                errorClass: "text-danger",
-                highlight: function(element) {
-                    $(element).closest('.form-group').addClass('has-error');
-                },
-                unhighlight: function(element) {
-                    $(element).closest('.form-group').removeClass('has-error');
-                },
-                submitHandler: function(form) {
-                    // You can manually enable submit button if needed
-                    $('#contactsubmit').prop('disabled', false);
-                    form.submit();
-                }
-            });
+        //     $("#freeinfoform").validate({
+        //         rules: {
+        //             infoname: {
+        //                 required: true,
+        //                 minlength: 2
+        //             },
+        //             infoemail: {
+        //                 required: true,
+        //                 email: true
+        //             },
+        //             mobile: {
+        //                 required: true,
+        //                 indianMobile: true
+        //             },
+        //             infostate: {
+        //                 required: true
+        //             },
+        //             infocity: {
+        //                 required: true
+        //             },
+        //             address: {
+        //                 required: true,
+        //                 minlength: 5
+        //             },
+        //             pincode: {
+        //                 required: true,
+        //                 digits: true,
+        //                 minlength: 6,
+        //                 maxlength: 6
+        //             },
+        //             otpcontact: {
+        //                 otp: true // optional field if you want to validate
+        //             }
+        //         },
+        //         messages: {
+        //             infoname: {
+        //                 required: "Please enter your name",
+        //                 minlength: "Name must be at least 2 characters"
+        //             },
+        //             infoemail: {
+        //                 required: "Please enter your email",
+        //                 email: "Enter a valid email address"
+        //             },
+        //             mobile: {
+        //                 required: "Please enter your mobile number"
+        //             },
+        //             infostate: {
+        //                 required: "Please select a state"
+        //             },
+        //             infocity: {
+        //                 required: "Please select a city"
+        //             },
+        //             address: {
+        //                 required: "Please enter your address",
+        //                 minlength: "Address must be at least 5 characters"
+        //             },
+        //             pincode: {
+        //                 required: "Please enter your pincode",
+        //                 digits: "Only numeric values allowed",
+        //                 minlength: "Pincode must be 6 digits",
+        //                 maxlength: "Pincode must be 6 digits"
+        //             }
+        //         },
+        //         errorElement: "span",
+        //         errorClass: "text-danger",
+        //         highlight: function(element) {
+        //             $(element).closest('.form-group').addClass('has-error');
+        //         },
+        //         unhighlight: function(element) {
+        //             $(element).closest('.form-group').removeClass('has-error');
+        //         },
+        //         submitHandler: function(form) {
+        //             // You can manually enable submit button if needed
+        //             $('#contactsubmit').prop('disabled', false);
+        //             form.submit();
+        //         }
+        //     });
 
-            // Optional: Enable submit button only when form is valid
-            $('#freeinfoform input, #freeinfoform select').on('change keyup', function() {
-                if ($('#freeinfoform').valid()) {
-                    $('#contactsubmit').prop('disabled', false);
-                } else {
-                    $('#contactsubmit').prop('disabled', true);
-                }
-            });
-        });
+        //     // Optional: Enable submit button only when form is valid
+        //     $('#freeinfoform input, #freeinfoform select').on('change keyup', function() {
+        //         if ($('#freeinfoform').valid()) {
+        //             $('#contactsubmit').prop('disabled', false);
+        //         } else {
+        //             $('#contactsubmit').prop('disabled', true);
+        //         }
+        //     });
+        // });
     </script>
-    <style>
-        /* Error message styling */
-        .text-danger {
-            color: red;
-            font-size: 12px;
-            margin-top: 5px;
-            display: block;
-        }
+        <style>
+            /* Error message styling */
+            .text-danger {
+                color: red;
+                font-size: 12px;
+                margin-top: 5px;
+                display: block;
+            }
 
-        /* Red border for invalid input */
-        .has-error input,
-        .has-error select,
-        .has-error textarea,
-         {
-            border: 1px solid red !important;
-        }
+            /* Red border for invalid input */
+            .has-error input,
+            .has-error select,
+            .has-error textarea,
+            {
+                border: 1px solid red !important;
+            }
 
-        /* Red border on focus for invalid input */
-        .has-error input:focus,
-        .has-error select:focus,
-        .has-error textarea:focus {
-            border-color: red !important;
-            box-shadow: none;
-        }
-    </style>
+            /* Red border on focus for invalid input */
+            .has-error input:focus,
+            .has-error select:focus,
+            .has-error textarea:focus {
+                border-color: red !important;
+                box-shadow: none;
+            }
+        </style>
 
 @endsection
