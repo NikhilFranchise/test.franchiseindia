@@ -40,7 +40,7 @@ class BusinessListingController extends Controller
             ->select("company_name")
             ->where('company_name', 'LIKE', "%$search%")
             ->orderby('membership_type', 'DESC')
-            ->whereIn('profile_status', [1,11])
+            ->whereIn('profile_status', [1, 11])
             ->take(100)
             ->get()->pluck('company_name');
         return response()->json($data);
@@ -84,9 +84,9 @@ class BusinessListingController extends Controller
         }
 
         // Fetch Brand Data
-        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified', 'views','activated_at');
+        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility', 'brand_verified', 'views', 'activated_at');
 
-        $franData->whereIn('profile_status',[1,11]);
+        $franData->whereIn('profile_status', [1, 11]);
 
         $city = "";
         if (!empty(request()->city)) {
@@ -96,13 +96,13 @@ class BusinessListingController extends Controller
             // dd($stateNames);
             $loc_id = array_search($stateNames, config('location.stateArr'));
             // dd($loc_id);
-            $today = Carbon::today()->toDateString();  
-        // dd($today);   
+            $today = Carbon::today()->toDateString();
+            // dd($today);   
             $popup = EventLocPopup::where('location', $loc_id)
-            ->where('start_date', '<=', $today)  // start_date <= today
-            ->where('end_date', '>=', $today)    // end_date <= today
-            ->where('status',1)
-            ->get();
+                ->where('start_date', '<=', $today)  // start_date <= today
+                ->where('end_date', '>=', $today)    // end_date <= today
+                ->where('status', 1)
+                ->get();
             // dd($popup);
             $cityArr = FranchisorLocState::query()->distinct('franchisor_id')
                 ->where('city', $city)
@@ -137,7 +137,7 @@ class BusinessListingController extends Controller
         $brandResults    = $franData->paginate($count);
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
-    
+
         // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
         if ($currentPage > $lastPage) {
             // Get the current URL without query parameters
@@ -220,21 +220,12 @@ class BusinessListingController extends Controller
     public function searchBusinessListing(Request $request)
     {
 
-            // // ✅ Block bots based on User-Agent
-            // $userAgent = $request->header('User-Agent');
-            // if (!$userAgent || preg_match('/bot|crawl|spider|curl|wget/i', $userAgent)) {
-            //     return response()->json([
-            //         'message' => 'Bot detected. Request blocked.',
-            //     ], 403);
-            // }
-    
-        // ✅ Parse previous page path (from referer or fallback)
-       
+
         // dd('searchBusinessListing');
         $searchTerm = $request->route('searchTerm');
         $categoryIds = $request->route('categoryIds');
         $locationIds = $request->route('locationIds');
-        
+
         // Use dd() to inspect the parameters
         // dd($searchTerm, $categoryIds, $locationIds);
         // dd($request->getRequestUri());
@@ -243,7 +234,7 @@ class BusinessListingController extends Controller
         // dd($segments[2]);
         // Check if the segments array has at least 4 elements
         $segment = isset($segments[3]) ? $segments[3] : null;
-      
+
         $aa = preg_match('/\.LOC(\d+)/', $segments[2], $matches);
 
         if ($aa && isset($matches[1])) {
@@ -256,13 +247,13 @@ class BusinessListingController extends Controller
         }
 
 
-        $today = Carbon::today()->toDateString();  
+        $today = Carbon::today()->toDateString();
         // dd($today);   
         $popup = EventLocPopup::where('location', $loc_id)
-        ->where('start_date', '<=', $today)  // start_date <= today
-        ->where('end_date', '>=', $today)    // end_date <= today
-        ->where('status',1)
-        ->get();
+            ->where('start_date', '<=', $today)  // start_date <= today
+            ->where('end_date', '>=', $today)    // end_date <= today
+            ->where('status', 1)
+            ->get();
         // dd($popup);
 
         // dd('yes');
@@ -688,7 +679,6 @@ class BusinessListingController extends Controller
             }
             $locArrKey = explode(',', $locArrKey);
             $loc = $locArrKey;
-
         }
 
         if (!empty(request()->ftype))
@@ -716,24 +706,53 @@ class BusinessListingController extends Controller
 
         // dd('yes');
 
-            // DB::enableQueryLog();
+        // DB::enableQueryLog();
 
         // Fetch Brand Data
         // $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','views','activated_at')->whereIn('profile_status', [1,11])->take(50);
 
         $franData = FranchisorBusinessDetail::query()
-            ->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 
-                    'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 
-                    'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 
-                    'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 
-                    'profile_status', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 
-                    'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility',
-                    'brand_verified', 'views', 'activated_at')
+            ->select(
+                'fran_detail_id',
+                'franchisor_id',
+                'profile_name',
+                'company_name',
+                'state',
+                'ind_sub_cat',
+                'operations_start_year',
+                'looking_tradepartner',
+                'looking_franchise',
+                'membership_weightage',
+                'franchise_start_year',
+                'no_fran_outlets',
+                'franchise_partner_type',
+                'city',
+                'unit_investment',
+                'expansion_loc_type',
+                'business_desc',
+                'membership_plan',
+                'prop_area_min',
+                'prop_area_max',
+                'profile_status',
+                'ind_main_cat',
+                'ind_cat',
+                'ind_sub_cat',
+                'membership_type',
+                'company_logo',
+                'unit_inv_min',
+                'unit_inv_max',
+                'is_hindi',
+                'business_desc_hindi',
+                'free_logo_visibility',
+                'brand_verified',
+                'views',
+                'activated_at'
+            )
             ->where('profile_status', 1);
-            // ->take(5)->get();
-            // ->get();
+        // ->take(5)->get();
+        // ->get();
 
-        
+
         if (isset(request()->text)) {
             $text = str_replace('-or-', '/', request()->text);
             $type = 'm';
@@ -848,7 +867,7 @@ class BusinessListingController extends Controller
         $brandResults    = $franData->paginate($count);
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
-    
+
         // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
         if ($currentPage > $lastPage) {
             // Get the current URL without query parameters
@@ -885,13 +904,13 @@ class BusinessListingController extends Controller
                 ->havingRaw('count > 3')
                 ->get();
         }
-            $parentValue = null;
+        $parentValue = null;
 
 
         $view = 'category.category';
         if (request()->segment(1) == 'amp')
             $view = 'category.hindi-category.amp-category';
- 
+
         if (request()->segment(1) == 'hi')
             $view = 'category.hindi-category.hindi-category';
         // dd($brandResults,$shuffledResults,$breadCrumb,$catName);
@@ -905,30 +924,48 @@ class BusinessListingController extends Controller
 
         // dd($brandResults->total());
 
+        // // ✅ Block bots based on User-Agent
+        // $userAgent = $request->header('User-Agent');
+        // if (!$userAgent || preg_match('/bot|crawl|spider|curl|wget/i', $userAgent)) {
+        //     return response()->json([
+        //         'message' => 'Bot detected. Request blocked.',
+        //     ], 403);
+        // }
+
+        // ✅ Parse previous page path (from referer or fallback)
+
+
         $referer = $request->headers->get('referer') ?? url()->previous();
         $parsedPath = parse_url($referer, PHP_URL_PATH);
         $previousPath = $parsedPath ?? '/';
         // dd($previousPath);
         // ✅ Sanitize and trim keyword input
         $cleanKeyword = trim(strip_tags($request->input('text')));
-    
+        $ipAddress = $request->ip();
+
         // ✅ Only store if keyword is longer than 4 characters
         if (strlen($cleanKeyword) > 1 && $brandResults->total() == 0) {
-            SearchMonitor::upsert(
-                [
+            // ✅ Check how many records already stored from this IP today
+            $ipRequestCount = SearchMonitor::where('ip_address', $ipAddress)
+                ->where('date', today())
+                ->count();
+            if ($ipRequestCount < 10) {
+
+                SearchMonitor::upsert(
                     [
-                        'keyword' => $cleanKeyword,
-                        'date' => today(),
-                        'count' => 1,
-                        'source'=> $previousPath,
-                    ]
-                ],
-                ['keyword', 'date'], // match condition
-                ['count' => DB::raw('count + 1')] // update logic
-            );
-            
+                        [
+                            'keyword' => $cleanKeyword,
+                            'date' => today(),
+                            'count' => 1,
+                            'source' => $previousPath,
+                            'ip_address' => $ipAddress,
+                        ]
+                    ],
+                    ['keyword', 'date', 'ip_address'], // match
+                    ['count' => DB::raw('count + 1')] // update logic
+                );
+            }
         }
-        
 
 
         return view($view, compact(
@@ -1000,21 +1037,112 @@ class BusinessListingController extends Controller
         $catArr   = $seoClass->select('catname', 'parent_id', 'seoTitle', 'description', 'keywords')
             ->where('catid', $cid[1])
             ->first();
-              //These are the dealer categories where brands are not present so its redirected to all, and commented from constant file and category file
+        //These are the dealer categories where brands are not present so its redirected to all, and commented from constant file and category file
         $redirectCatids = [
-            1024, 1025, 1026, 1029, 1032, 1035, 1037, 1039, 1043, 1044, 1046, 1080, 967, 
-            1087, 1094, 899, 906, 1096, 1097, 1098, 1104, 1105, 1114, 856, 1125, 1126, 
-            1127, 892, 1132, 1133, 1134, 946, 949, 743, 747, 1144, 1145, 1147, 1149, 
-            1154, 1170, 1172, 1174, 1175, 1210, 1213, 1214, 1215, 1217, 1220, 1223, 
-            1225, 1226, 1227, 1047, 1053, 1057, 1061, 1066, 1067, 1070, 1072, 1116, 
-            1119, 1123, 1135, 1137, 1139, 1140, 1141, 1142, 1156, 1177, 1181, 1182, 
-            1184, 1185, 1188, 1191, 1194, 1195, 1196, 1197, 1198, 1199, 1208, 1209, 
-            1231, 1232, 1235, 1238, 1240, 1241, 1242, 1243, 1244, 1159, 1160, 1162, 
+            1024,
+            1025,
+            1026,
+            1029,
+            1032,
+            1035,
+            1037,
+            1039,
+            1043,
+            1044,
+            1046,
+            1080,
+            967,
+            1087,
+            1094,
+            899,
+            906,
+            1096,
+            1097,
+            1098,
+            1104,
+            1105,
+            1114,
+            856,
+            1125,
+            1126,
+            1127,
+            892,
+            1132,
+            1133,
+            1134,
+            946,
+            949,
+            743,
+            747,
+            1144,
+            1145,
+            1147,
+            1149,
+            1154,
+            1170,
+            1172,
+            1174,
+            1175,
+            1210,
+            1213,
+            1214,
+            1215,
+            1217,
+            1220,
+            1223,
+            1225,
+            1226,
+            1227,
+            1047,
+            1053,
+            1057,
+            1061,
+            1066,
+            1067,
+            1070,
+            1072,
+            1116,
+            1119,
+            1123,
+            1135,
+            1137,
+            1139,
+            1140,
+            1141,
+            1142,
+            1156,
+            1177,
+            1181,
+            1182,
+            1184,
+            1185,
+            1188,
+            1191,
+            1194,
+            1195,
+            1196,
+            1197,
+            1198,
+            1199,
+            1208,
+            1209,
+            1231,
+            1232,
+            1235,
+            1238,
+            1240,
+            1241,
+            1242,
+            1243,
+            1244,
+            1159,
+            1160,
+            1162,
             1163
         ];
-        
+
         if ($catArr == null || in_array($cid[1], $redirectCatids))
-        // if ($catArr == null)
+            // if ($catArr == null)
             return redirect('/business-opportunities/all/all', 301);
 
         $catName = $catArr->catname;
@@ -1066,7 +1194,7 @@ class BusinessListingController extends Controller
             'business_desc_hindi',
             'free_logo_visibility'
         )
-            ->whereIn('profile_status',  [1,11]);
+            ->whereIn('profile_status',  [1, 11]);
 
 
         if ($cid[0] == 'ssc') {
@@ -1102,7 +1230,7 @@ class BusinessListingController extends Controller
         $brandResults = $franData->orderby('membership_weightage', 'desc')->paginate($count);
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
-    
+
         // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
         if ($currentPage > $lastPage) {
             // Get the current URL without query parameters
@@ -1420,25 +1548,25 @@ class BusinessListingController extends Controller
             $catArr = $seoClass->select('catname', 'parent_id', 'seoTitle', 'description', 'keywords')
                 ->where('catid', $catId)
                 ->first();
-                // dd($catArr);
-                if ($catArr) {
-                    $parentId = $catArr->parent_id; // For catId 789, this will be 787
-                    // dd($parentId);
-                    // Now check if parentId (787) exists as catid with parent_id = 5
-                    $mcid = (request()->segment(1) == 'hi') ? CategoryFinalHindi::query() : CategoryFinal::query();
-                    // $parentValue = $mcid->where('catid', (int)$parentId)
-                    // ->where('parent_id', 5)
-                    // ->value('parent_id'); // Fetch the parent_id
-                    // dd($parentValue);
+            // dd($catArr);
+            if ($catArr) {
+                $parentId = $catArr->parent_id; // For catId 789, this will be 787
+                // dd($parentId);
+                // Now check if parentId (787) exists as catid with parent_id = 5
+                $mcid = (request()->segment(1) == 'hi') ? CategoryFinalHindi::query() : CategoryFinal::query();
+                // $parentValue = $mcid->where('catid', (int)$parentId)
+                // ->where('parent_id', 5)
+                // ->value('parent_id'); // Fetch the parent_id
+                // dd($parentValue);
                 // dd($parentValue);
                 //     $exists = $mcid->where('catid', (int)$parentId)
                 //     ->where('parent_id', 5)
                 //     ->exists();
                 //     dd($exists);
 
-                }      
+            }
 
-                
+
             if (!empty(request()->loc) && count(request()->loc) == 1 && !empty($fTypeName) && !empty($catArr)) {
                 $seoTitle = "$catArr->catname $businessOpp $fTypeName $in $locName - Franchise India";
                 $seoDesc = "Franchise India provides $catArr->catname franchise opportunities '. $fTypeName .', business opportunities, business ideas. Buy $catArr->catname Franchise in $locName with affordable range.";
@@ -1701,9 +1829,9 @@ class BusinessListingController extends Controller
             $catName = (request()->segment(1) == 'hi') ? 'बिज़नेस  ओप्पोर्तुनिटीज़' : 'Business Opportunities';
 
         // Fetch Brand Data
-        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility','brand_verified','views','activated_at');
+        $franData = FranchisorBusinessDetail::query()->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name', 'state', 'ind_sub_cat', 'operations_start_year', 'looking_tradepartner', 'looking_franchise', 'membership_weightage', 'franchise_start_year', 'no_fran_outlets', 'franchise_partner_type', 'city', 'unit_investment', 'expansion_loc_type', 'business_desc', 'membership_plan', 'prop_area_min', 'prop_area_max', 'profile_status', 'business_desc', 'ind_main_cat', 'ind_cat', 'ind_sub_cat', 'membership_type', 'company_logo', 'unit_inv_min', 'unit_inv_max', 'is_hindi', 'business_desc_hindi', 'free_logo_visibility', 'brand_verified', 'views', 'activated_at');
 
-        $franData->whereIn('profile_status', [1,11]);
+        $franData->whereIn('profile_status', [1, 11]);
 
 
         if (isset(request()->text)) {
@@ -1817,7 +1945,7 @@ class BusinessListingController extends Controller
         $brandResults    = $franData->paginate($count);
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
-    
+
         // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
         if ($currentPage > $lastPage) {
             // Get the current URL without query parameters
@@ -1831,16 +1959,15 @@ class BusinessListingController extends Controller
         $ssc   = request()->ssc;
         $ftype = request()->ftype;
         if (!empty(request()->state_code))
-        //    $catArr='';
-       
-        if(!$catArr = ''){
-            $catName     = (request()->segment(1) == 'hi') ?  Config('location.hindiStatesArr.' . Config('location.stateArr.' . $locArrKey[0])) : Config('location.stateArr.' . $locArrKey[0]);
-        }
-        else{
-            $catArr = '';
-        }
+            //    $catArr='';
+
+            if (!$catArr = '') {
+                $catName     = (request()->segment(1) == 'hi') ?  Config('location.hindiStatesArr.' . Config('location.stateArr.' . $locArrKey[0])) : Config('location.stateArr.' . $locArrKey[0]);
+            } else {
+                $catArr = '';
+            }
         // dd($catArr);
-            // $catName     = (request()->segment(1) == 'hi') ?  Config('location.hindiStatesArr.' . Config('location.stateArr.' . $locArrKey[0])) : Config('location.stateArr.' . $locArrKey[0]);
+        // $catName     = (request()->segment(1) == 'hi') ?  Config('location.hindiStatesArr.' . Config('location.stateArr.' . $locArrKey[0])) : Config('location.stateArr.' . $locArrKey[0]);
 
         $franImageData   = [];
         if (!empty($brandResults)) {
@@ -1864,7 +1991,7 @@ class BusinessListingController extends Controller
         // dd($catArr);
         // $catArr='';
         // dd($mc);
-        if(!$mc){
+        if (!$mc) {
             $catArr = '';
         }
 
@@ -1875,7 +2002,7 @@ class BusinessListingController extends Controller
         if (request()->segment(1) == 'hi')
             $view = 'category.hindi-category.hindi-category';
 
-       
+
 
         return view($view, compact(
             'brandResults',
@@ -1924,7 +2051,7 @@ class BusinessListingController extends Controller
 
         // Check if $allIntegers exists in $seoCategoriesm configuration array
         if (array_key_exists($allIntegers, $seoCategoriesm)) {
-       
+
             // If $allIntegers exists in $seoCategoriesm, add "m" to $allIntegers
             $allIntegers = 'm' . $allIntegers;
             if (strpos($allIntegers, "m") !== false) {
@@ -1947,7 +2074,7 @@ class BusinessListingController extends Controller
                 }
             }
         }
-       
+
         //http://localhost:8000/business-opportunities/telecommunications.sc1011
         if (array_key_exists($allIntegers, $seoCategoriessc)) {
             // If $allIntegers exists in $seoCategoriesm, add "m" to $allIntegers
@@ -1956,7 +2083,7 @@ class BusinessListingController extends Controller
 
             if (strpos($allIntegers, "sc") !== false) {
                 // dd($allIntegers);        $newCatUrl = '/business-opportunities/' . $configCatUrl . '.' . $allIntegers;
-        
+
                 $category = substr($allIntegers, 2, 4);
                 // dd($allIntegers,$category);
                 $configCatUrl = Config('category.SeoSubCategoryArr.' . $category);
@@ -1983,7 +2110,7 @@ class BusinessListingController extends Controller
 
             }
         } else if (array_key_exists($allIntegers, $seoCategoriesssc)) {
-        
+
 
             // If $allIntegers exists in $seoCategoriesm, add "m" to $allIntegers
             $allIntegers = 'ssc' . $allIntegers;
@@ -2048,17 +2175,108 @@ class BusinessListingController extends Controller
 
         //These are the dealer categories where brands are not present so its redirected to all, and commented from constant file and category file
         $redirectCatids = [
-            1024, 1025, 1026, 1029, 1032, 1035, 1037, 1039, 1043, 1044, 1046, 1080, 967, 
-            1087, 1094, 899, 906, 1096, 1097, 1098, 1104, 1105, 1114, 856, 1125, 1126, 
-            1127, 892, 1132, 1133, 1134, 946, 949, 743, 747, 1144, 1145, 1147, 1149, 
-            1154, 1170, 1172, 1174, 1175, 1210, 1213, 1214, 1215, 1217, 1220, 1223, 
-            1225, 1226, 1227, 1047, 1053, 1057, 1061, 1066, 1067, 1070, 1072, 1116, 
-            1119, 1123, 1135, 1137, 1139, 1140, 1141, 1142, 1156, 1177, 1181, 1182, 
-            1184, 1185, 1188, 1191, 1194, 1195, 1196, 1197, 1198, 1199, 1208, 1209, 
-            1231, 1232, 1235, 1238, 1240, 1241, 1242, 1243, 1244, 1159, 1160, 1162, 
+            1024,
+            1025,
+            1026,
+            1029,
+            1032,
+            1035,
+            1037,
+            1039,
+            1043,
+            1044,
+            1046,
+            1080,
+            967,
+            1087,
+            1094,
+            899,
+            906,
+            1096,
+            1097,
+            1098,
+            1104,
+            1105,
+            1114,
+            856,
+            1125,
+            1126,
+            1127,
+            892,
+            1132,
+            1133,
+            1134,
+            946,
+            949,
+            743,
+            747,
+            1144,
+            1145,
+            1147,
+            1149,
+            1154,
+            1170,
+            1172,
+            1174,
+            1175,
+            1210,
+            1213,
+            1214,
+            1215,
+            1217,
+            1220,
+            1223,
+            1225,
+            1226,
+            1227,
+            1047,
+            1053,
+            1057,
+            1061,
+            1066,
+            1067,
+            1070,
+            1072,
+            1116,
+            1119,
+            1123,
+            1135,
+            1137,
+            1139,
+            1140,
+            1141,
+            1142,
+            1156,
+            1177,
+            1181,
+            1182,
+            1184,
+            1185,
+            1188,
+            1191,
+            1194,
+            1195,
+            1196,
+            1197,
+            1198,
+            1199,
+            1208,
+            1209,
+            1231,
+            1232,
+            1235,
+            1238,
+            1240,
+            1241,
+            1242,
+            1243,
+            1244,
+            1159,
+            1160,
+            1162,
             1163
         ];
-        
+
         if ($catArr == null || in_array($cid[1], $redirectCatids))
             return redirect('/business-opportunities/all/all', 301);
 
@@ -2111,14 +2329,14 @@ class BusinessListingController extends Controller
             'business_desc_hindi',
             'free_logo_visibility',
             'brand_verified',
-             'views',
-             'activated_at',
-             'is_fixed_brand'
+            'views',
+            'activated_at',
+            'is_fixed_brand'
         )
-            ->whereIn('profile_status', [1,11]);
-           
+            ->whereIn('profile_status', [1, 11]);
 
-         if($cid[0] == 'ssc') {
+
+        if ($cid[0] == 'ssc') {
             //$franData->where('ind_sub_cat', $cid[1])->orderby('membership_type', 'desc');
             $franData->where('ind_sub_cat', $cid[1]);
             $thirdCatId = $cid[1];
@@ -2146,15 +2364,15 @@ class BusinessListingController extends Controller
             $mainCatId = $cid[1];
             // dd($mainCatId);
         }
-        $franData= $franData->distinct();
+        $franData = $franData->distinct();
 
         $count = request()->segment(1) == 'amp' ? 20 : 21;
-        $brandResults = $franData->orderby('membership_weightage','desc') ->orderby('fran_detail_id', 'asc') ->paginate($count);
+        $brandResults = $franData->orderby('membership_weightage', 'desc')->orderby('fran_detail_id', 'asc')->paginate($count);
         // dd($brandResults->pluck('fran_detail_id'));
-           // Get the current page and last page
+        // Get the current page and last page
         $currentPage = $brandResults->currentPage();
         $lastPage = $brandResults->lastPage();
-    
+
         // If the current page is greater than the last page, redirect to the Category/Subcategory/Subsubcategory page
         if ($currentPage > $lastPage) {
             // Get the current URL without query parameters
@@ -2201,7 +2419,7 @@ class BusinessListingController extends Controller
             $seoTitle = $catArr->catname . ' - Franchise India';
             if (request()->segment(1) == 'hi')
                 $seoTitle = $catArr->catname . ' - फ्रेंचाइज इंडिया';
-        } 
+        }
         if (!empty($catArr->description))
             $seoDesc     = $catArr->description;
 
@@ -2341,7 +2559,7 @@ class BusinessListingController extends Controller
     {
         $minrange = $request->input('minvaluerange');
         $maxrange = $request->input('maxvaluerange');
-    
+
         $shuffledResults = FranchisorBusinessDetail::query()->select(
             'fran_detail_id',
             'franchisor_id',
@@ -2379,11 +2597,11 @@ class BusinessListingController extends Controller
             'views',
             'activated_at'
         )
-        ->whereIn('profile_status', [1, 11])
-        ->where('membership_type', 1)
-        // ->sortByDesc('membership_weightage')
-        // ->get();
-        ->paginate(10); // Fetch the results as a collection
+            ->whereIn('profile_status', [1, 11])
+            ->where('membership_type', 1)
+            // ->sortByDesc('membership_weightage')
+            // ->get();
+            ->paginate(10); // Fetch the results as a collection
 
         // $shuffledResults = $franData->shuffle()->sortByDesc('membership_weightage');
 
@@ -2397,22 +2615,22 @@ class BusinessListingController extends Controller
         return view('ssr.category', compact('shuffledResults'));
     }
 
-    public function getajax(){
+    public function getajax()
+    {
         return view('category.ssr');
-    }   
+    }
     public function fetchtest(Request $request)
     {
         $items = FranchisorBusinessDetail::paginate(5);  // Adjust the pagination number as needed
 
-            if ($request->ajax()) {
-                // Return the paginated view with data
-                dd('test');
-                return response()->json(view('ssr.data', compact('items'))->render());
-            }
+        if ($request->ajax()) {
+            // Return the paginated view with data
+            dd('test');
+            return response()->json(view('ssr.data', compact('items'))->render());
+        }
 
-            // Regular page load
-            return view('ssr.index', compact('items'));
-        
+        // Regular page load
+        return view('ssr.index', compact('items'));
     }
     public function index(Request $request)
     {
@@ -2454,11 +2672,11 @@ class BusinessListingController extends Controller
             'views',
             'activated_at'
         )
-        ->whereIn('profile_status', [1, 11])
-        ->where('membership_type', 1)
-        // ->sortByDesc('membership_weightage')
-        // ->get();
-        ->paginate(10); 
+            ->whereIn('profile_status', [1, 11])
+            ->where('membership_type', 1)
+            // ->sortByDesc('membership_weightage')
+            // ->get();
+            ->paginate(10);
 
         // If the request is an AJAX request
         if ($request->ajax()) {
@@ -2471,4 +2689,3 @@ class BusinessListingController extends Controller
         return view('ssr.index', compact('items'));
     }
 }
-

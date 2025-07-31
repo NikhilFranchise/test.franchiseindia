@@ -541,7 +541,7 @@ Route::group(['prefix' => 'business-opportunities'], function () {
 // /Category Page Routes
 Route::group(['prefix' => 'category'], function () {
     Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('search', [BusinessListingController::class, 'searchBusinessListing'])->middleware('throttle:search-limit');
+    Route::get('search', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('searchby', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('index', function () {
         return redirect('business-opportunities/all/all', 301);
