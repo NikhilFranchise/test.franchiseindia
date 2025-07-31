@@ -1,112 +1,148 @@
- <div class="finner" id="finner">
-     @php
-         if (!function_exists('formatInvestment')) {
-             function formatInvestment($value)
-             {
-                 if (!is_numeric($value)) {
-                     return '-N/A-';
-                 }
-                 if ($value < 100000 && $value > 10000) {
-                     return substr($value / 1000, 0, 5) . ' K';
-                 } elseif ($value <= 9999999 && $value > 100000) {
-                     return substr($value / 100000, 0, 5) . ' Lakh';
-                 } elseif ($value > 9999999) {
-                     return substr($value / 10000000, 0, 5) . ' Cr';
-                 }
-                 return '-N/A-';
-             }
-         }
-     @endphp
-     @foreach ($data as $leaders)
-         @php
-             $profile_name = $leaders->franchisorLeaders->profile_name ?? '';
-             $franDetailId = $leaders->franchisorLeaders->fran_detail_id ?? '';
+<div class="finner" id="finner">
+    @php
+        if (!function_exists('formatInvestment')) {
+            function formatInvestment($value)
+            {
+                if (!is_numeric($value)) {
+                    return '-N/A-';
+                }
+                if ($value < 100000 && $value > 10000) {
+                    return substr($value / 1000, 0, 5) . ' K';
+                } elseif ($value <= 9999999 && $value > 100000) {
+                    return substr($value / 100000, 0, 5) . ' Lakh';
+                } elseif ($value > 9999999) {
+                    return substr($value / 10000000, 0, 5) . ' Cr';
+                }
+                return '-N/A-';
+            }
+        }
 
-             $brandUrl = sprintf(
-                 Config('constants.brandPagePattern'),
-                 Config('constants.MainDomain'),
-                 $profile_name,
-                 $franDetailId,
-             );
-             $unitInvestment = $leaders->franchisorLeaders->unit_investment ?? null;
-             $priceRange = Config('constants.investRangeInWords')[$unitInvestment] ?? null;
+        $constants = config('constants');
+        $subSubCategoryArr = $constants['subSubCategoryArr'];
+        $brandPagePattern = $constants['brandPagePattern'];
+        $mainDomain = $constants['MainDomain'];
+        $imgPath = $constants['franAwsImgPath'];
+        $investmentWords = $constants['investRangeInWords'];
+    @endphp
 
-             if (empty($priceRange)) {
-                 $minValue = $leaders->franchisorLeaders->unit_inv_min ?? '';
-                 $maxValue = $leaders->franchisorLeaders->unit_inv_max ?? '';
+    {{-- Dynamic Brands --}}
+    @foreach ($data as $leaders)
+        @php
+            $leader = $leaders->franchisorLeaders;
+            if (!$leader) {
+                continue;
+            }
 
-                 $formattedMin = formatInvestment($minValue);
-                 $formattedMax = formatInvestment($maxValue);
-                 $priceRange = "INR $formattedMin - $formattedMax";
-             }
-             $companyLogo = $leaders->franchisorLeaders->company_logo ?? '';
-             $companyName = $leaders->franchisorLeaders->company_name ?? '';
-             $franId = $leaders->franchisorLeaders->franchisor_id ?? '';
-             $indSubCat = $leaders->franchisorLeaders->ind_sub_cat ?? '';
+            $profileName = $leader->profile_name ?? '';
+            $franDetailId = $leader->fran_detail_id ?? '';
+            $brandUrl = sprintf($brandPagePattern, $mainDomain, $profileName, $franDetailId);
 
-         @endphp
-         <div class="col">
-             <div class="filter-list-brand">
-                 <div class="catimg"><img src="{{ Config('constants.franAwsImgPath') . $companyLogo }}"
-                         alt="{{ $companyName }}"></div>
-                 <div class="finfo">
-                     <div class="catlist">
-                         <a href="{{ $brandUrl }}" id="brandnamecategory{{ $franId }}" target="_blank">
-                             {{ $companyName }}
-                         </a>
-                     </div>
-                     <span style="display: none;" id="brandinvestment{{ $franId }}">
-                         {{ $priceRange }}
-                     </span>
-                     @foreach (Config('constants.subSubCategoryArr') as $key => $abc)
-                         @if (array_key_exists($indSubCat, $abc))
-                             @php
-                                 $SubCatName = $abc[$indSubCat] ?? '';
-                             @endphp
-                             <div class="catlisthead">
-                                 {{ $SubCatName }}
-                             </div>
-                         @endif
-                     @endforeach
-                 </div>
-                 <div class="catbtn bview">
-                     <input type="checkbox" id="{{ $franId }}" name="getFreeInfo" onclick="getfree()">
-                     <label for="{{ $franId }}"><span></span></label>
-                 </div>
+            $unitInvestment = $leader->unit_investment ?? null;
+            $priceRange = $investmentWords[$unitInvestment] ?? null;
 
-             </div>
-         </div>
-     @endforeach
-     {{-- @dd(count(config('staticBrands.staticBrands'))); --}}
-     @if ($year == 2025)
-         @foreach (config('staticBrands.staticBrands') as $brand)
-             <div class="col">
-                 <div class="filter-list-brand">
-                     <div class="catimg">
-                         <img src="{{ url($brand['logo']) }}" alt="{{ $brand['brand'] }}">
-                     </div>
-                     <div class="finfo">
-                         <div class="catlist">
-                             <a href="{{ url('/business-opportunities/all/all') }}" id="brandnamecategory"
-                                 target="_blank">
-                                 {{ $brand['brand'] }}
-                             </a>
-                         </div>
-                         <span style="display: none;" id="brandinvestment">
-                             {{ $brand['investment'] }}
-                         </span>
-                         <div class="catlisthead">
-                             {{ $brand['sector'] }}
-                         </div>
-                     </div>
-                     <div class="catbtn bview">
-                         <input type="checkbox" name="getFreeInfo">
-                         <label for=""><span onclick="window.open('{{ url('/business-opportunities/all/all') }}', '_blank')"></span></label>
-                     </div>
-                 </div>
-             </div>
-         @endforeach
-     @endif
+            if (empty($priceRange)) {
+                $formattedMin = formatInvestment($leader->unit_inv_min ?? '');
+                $formattedMax = formatInvestment($leader->unit_inv_max ?? '');
+                $priceRange = "INR $formattedMin - $formattedMax";
+            }
 
+            $franId = $leader->franchisor_id ?? '';
+            $companyLogo = $leader->company_logo ?? '';
+            $companyName = $leader->company_name ?? '';
+            $indSubCat = $leader->ind_sub_cat ?? '';
+        @endphp
 
- </div>
+        <div class="col">
+            <div class="filter-list-brand">
+                <div class="catimg">
+                    <img src="{{ $imgPath . $companyLogo }}" alt="{{ $companyName }}" loading="lazy">
+                </div>
+                <div class="finfo">
+                    <div class="catlist">
+                        <a href="{{ $brandUrl }}" id="brandnamecategory{{ $franId }}" target="_blank">
+                            {{ $companyName }}
+                        </a>
+                    </div>
+                    <span style="display: none;" id="brandinvestment{{ $franId }}">
+                        {{ $priceRange }}
+                    </span>
+
+                    @foreach ($subSubCategoryArr as $abc)
+                        @if (array_key_exists($indSubCat, $abc))
+                            <div class="catlisthead">
+                                {{ $abc[$indSubCat] }}
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+                <div class="catbtn bview">
+                    <input type="checkbox" id="{{ $franId }}" name="getFreeInfo" onclick="getfree()">
+                    <label for="{{ $franId }}"><span></span></label>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    {{-- Static Brands for 2025 --}}
+    @if ($year == 2025)
+        @foreach (config('staticBrands.staticBrands.2025') as $brand)
+            <div class="col">
+                <div class="filter-list-brand">
+                    <div class="catimg">
+                        <img src="{{ url($brand['logo']) }}" alt="{{ $brand['brand'] }}" loading="lazy">
+                    </div>
+                    <div class="finfo">
+                        <div class="catlist">
+                            <a href="{{ url('/business-opportunities/all/all') }}" target="_blank">
+                                {{ $brand['brand'] }}
+                            </a>
+                        </div>
+                        <span style="display: none;">
+                            {{ $brand['investment'] }}
+                        </span>
+                        <div class="catlisthead">
+                            {{ $brand['sector'] }}
+                        </div>
+                    </div>
+                    <div class="catbtn bview">
+                        <input type="checkbox" name="getFreeInfo">
+                        <label>
+                            <span
+                                onclick="window.open('{{ url('/business-opportunities/all/all') }}', '_blank')"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @elseif($year == 2024)
+        @foreach (config('staticBrands.staticBrands.2024') as $brand)
+            <div class="col">
+                <div class="filter-list-brand">
+                    <div class="catimg">
+                        <img src="{{ url($brand['logo']) }}" alt="{{ $brand['brand'] }}">
+                    </div>
+                    <div class="finfo">
+                        <div class="catlist">
+                            <a href="{{ url('/business-opportunities/all/all') }}" target="_blank">
+                                {{ $brand['brand'] }}
+                            </a>
+                        </div>
+                        <span style="display: none;">
+                            {{ $brand['investment'] }}
+                        </span>
+                        <div class="catlisthead">
+                            {{ $brand['sector'] }}
+                        </div>
+                    </div>
+                    <div class="catbtn bview">
+                        <input type="checkbox" name="getFreeInfo">
+                        <label>
+                            <span
+                                onclick="window.open('{{ url('/business-opportunities/all/all') }}', '_blank')"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @endif
+</div>
