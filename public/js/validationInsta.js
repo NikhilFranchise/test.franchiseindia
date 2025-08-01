@@ -364,7 +364,7 @@ function editMobile() {
 }
 
 // Check the OTP
-function checkinstaotp() {
+function verifySmsOTP() {
     const otp = $('#otp').val().trim();
     const mobile = $('#txtPhone').val().trim();
 

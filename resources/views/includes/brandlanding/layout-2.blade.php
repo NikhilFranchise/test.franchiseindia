@@ -369,9 +369,9 @@
 
                                         <div class="form-group" id="otpblk" style="display:none;">
                                             <input type="text" id="otp" class="form-control"
-                                                placeholder="One Time Password" />
+                                                placeholder="One Time Password" maxlength="4" onkeypress="return isNumberKey(event);" />
                                             <input class="verif-submitbtn" id="submit" value="Verify"
-                                                type="button" onclick="checkinstaotp()">
+                                                type="button" onclick="verifySmsOTP()">
                                             <span class="form-group" id="otpblk1"
                                                 style="display:none; color:red;"></span>
                                         </div>
