@@ -1,4 +1,7 @@
 @extends('layout.insights.master')
+@section('author-schema')
+    @include('insights.author_schema', ['author' => $author])
+@endsection
 @section('content')
     <div class="maininnver homeh">
         <div class="inner-top-head">
@@ -20,8 +23,9 @@
             <div class="container">
                 @php
                     $author_image = url('images/defaultuser.png');
-                    $author_image = $author->image ? \App\Http\Controllers\InsightsController::authorImageurl(
-                                                        $author->image) : $author_image;
+                    $author_image = $author->image
+                        ? \App\Http\Controllers\InsightsController::authorImageurl($author->image)
+                        : $author_image;
                 @endphp
                 <div class="row">
                     <div class="col-md-12">
@@ -37,29 +41,34 @@
                                 </div>
                                 <div class="follows">Follow:</div>
                                 <div class="author-left-soc">
+                                    {{-- @dd($author); --}}
                                     <ul>
                                         @if (!empty($author->facebook_profile))
                                             <li>
                                                 <a href="{{ $author->facebook_profile }}" target="_blank"><img
                                                         src="{{ url('/insight-new/images/social/facebook.jpg') }}" /></a>
                                             </li>
-                                        @elseif(!empty($author->linkedin_profile))
+                                        @endif
+                                        @if(!empty($author->linkedin_profile))
                                             <li>
                                                 <a href="{{ $author->linkedin_profile }}" target="_blank"><img
                                                         src="{{ url('/insight-new/images/social/linkedin.jpg') }}" /></a>
                                             </li>
-                                        @elseif(!empty($author->twitter_profile))
+                                        @endif
+                                        @if(!empty($author->twitter_profile))
                                             <li>
                                                 <a href="{{ $author->twitter_profile }}" target="_blank"><img
                                                         src="{{ url('/insight-new/images/social/twitter.jpg') }}" /></a>
                                             </li>
-                                        @elseif(!empty($author->emailid))
+                                        @endif
+                                        @if(!empty($author->emailid))
                                             <li>
                                                 <a href="mailto:{{ $author->emailid }}" target="_blank">
                                                     <img src="{{ url('/insight-new/images/social/mail.jpg') }}" />
                                                 </a>
                                             </li>
-                                        @elseif(!@empty($author->insta_profile))
+                                        @endif
+                                        @if(!empty($author->insta_profile))
                                             <li>
                                                 <a href="{{ $author->insta_profile }}" target="_blank"><img
                                                         src="{{ url('/insight-new/images/social/instagram.jpg') }}" /></a>
@@ -120,8 +129,11 @@
                                     @forelse ($latestArticles as $latest)
                                         @php
                                             $image = \App\Http\Controllers\InsightsController::createimgurl1(
-                                                $latest->image, $latest->lang);
-                                            $latestArticleURL = Config('constants.MainDomain') .
+                                                $latest->image,
+                                                $latest->lang,
+                                            );
+                                            $latestArticleURL =
+                                                Config('constants.MainDomain') .
                                                 "/insights/{$latest->lang}/" .
                                                 strtolower($latest->insight_type) .
                                                 "/{$latest->slug}.{$latest->news_id}";
@@ -157,8 +169,11 @@
                                     @forelse ($mostViewedArticles as $viewed)
                                         @php
                                             $image = \App\Http\Controllers\InsightsController::createimgurl1(
-                                                $viewed->image, $viewed->lang);
-                                            $mostArticleURL = Config('constants.MainDomain') .
+                                                $viewed->image,
+                                                $viewed->lang,
+                                            );
+                                            $mostArticleURL =
+                                                Config('constants.MainDomain') .
                                                 "/insights/{$viewed->lang}/" .
                                                 strtolower($viewed->insight_type) .
                                                 "/{$viewed->slug}.{$viewed->news_id}";
@@ -219,7 +234,8 @@
                                                     <ul class="popular-list">
                                                         @forelse($popularArticles as $popular)
                                                             @php
-                                                                $popArticleURL = Config('constants.MainDomain') .
+                                                                $popArticleURL =
+                                                                    Config('constants.MainDomain') .
                                                                     "/insights/{$popular->lang}/" .
                                                                     strtolower($popular->insight_type) .
                                                                     "/{$popular->slug}.{$popular->news_id}";
@@ -227,7 +243,8 @@
                                                             <li>
                                                                 @foreach ($popular->category as $cat)
                                                                     @php
-                                                                        $catURL = Config('constants.MainDomain') .
+                                                                        $catURL =
+                                                                            Config('constants.MainDomain') .
                                                                             "/insights/{$popular->lang}/{$cat->slug}";
                                                                     @endphp
                                                                     <div class="popular-sub">
