@@ -15,6 +15,6 @@ class SearchMonitor extends Model
         'source',
         'date',
         'count',
+        'ip_address'
     ];
-
 }

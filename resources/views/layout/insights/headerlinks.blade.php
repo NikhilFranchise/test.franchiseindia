@@ -11,6 +11,6 @@
  <link href="{{url('insight-new/assets/vendor/owl.carousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
  <link href="{{url('insight-new/assets/vendor/aos/aos.css')}}" rel="stylesheet">
 <link href="{{url('insight-new/assets/css/swiper.min.css')}}" rel="stylesheet">
- <link href="{{url('insight-new/assets/css/insightstyle.css?ver=12.9')}}" rel="stylesheet">
- <link href="{{url('insight-new/assets/css/insight_new.css?ver=12.9')}}" rel="stylesheet">
+ <link href="{{url('insight-new/assets/css/insightstyle.css?ver='.date('d'))}}" rel="stylesheet">
+ <link href="{{url('insight-new/assets/css/insight_new.css?ver='.date('d'))}}" rel="stylesheet">
    <!-- Java Script -->

@@ -93,9 +93,9 @@
                     <li><a href="/admin/en/videolist">Video List</a></li>
                 </ul>
             </li>
-            <li><a href="{{route('search.data.form')}}"><i class="icon icon-th-list"></i><span>Search Moniter</span></a>
+            <li><a href="{{route('search.data.form')}}"><i class="icon icon-th-list"></i><span>Search Moniter</span></a></li>
+
         
-    </li>
             
         @endif
 

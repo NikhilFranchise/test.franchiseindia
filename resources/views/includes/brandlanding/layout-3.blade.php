@@ -583,27 +583,31 @@
                                             id="newemail" name="infoemail" placeholder="Enter email">
                                     </div>
                                     <div class="form-group pos-rel" style="position: relative;">
-                                        <input type="tel" name="mobile" id='txtPhone' class="form-control"
-                                            placeholder="Enter Mobile No" maxlength="10" autocomplete="off"                                            
-                                            onkeypress="return isNumberKey(event);" onkeyup="getMobileStatus(this.value);" />
+                                        <input type="tel" name="mobile" id="txtPhone" class="form-control"
+                                            placeholder="Enter Mobile No" maxlength="10" autocomplete="off"
+                                            onkeypress="return isNumberKey(event);"
+                                            onkeyup="getMobileStatus(this.value);" />
+
                                         <input class="verif-submitbtn" id="verifybutton" value="Verify"
-                                            type="button" onclick="veryfie()">
+                                            type="button" onclick="verifyMobile()">
+
                                         <input class="verif-submitbtn" id="editmobile" value="Edit" type="button"
-                                            onclick="editmobileinsta();" style="display: none">
-                                            <span id="sub1" class="showhideright"
-                                                style="display:none"><i class="fa fa-check fa-lg"
-                                                    aria-hidden="true"></i></span>
+                                            onclick="editMobile();" style="display: none">
+
+                                        <span id="sub1" class="showhideright" style="display:none">
+                                            <i class="fa fa-check fa-lg" aria-hidden="true"></i>
+                                        </span>
                                     </div>
+
                                     <div class="form-group" id="otpblk" style="display:none;">
                                         <input type="text" id="otp" class="form-control"
-                                            placeholder="one time password" />
-                                        <input class="verif-submitbtn" id="submit" value="verify" type="button"
-                                            onclick="checkinstaotp()">
-                                        <span id="mobcat"></span>
+                                            placeholder="One Time Password" maxlength="4"  onkeypress="return isNumberKey(event);" />
+                                        <input class="verif-submitbtn" id="submit" value="Verify" type="button"
+                                            onclick="verifySmsOTP()">
+                                        <span class="form-group" id="otpblk1"
+                                            style="display:none; color:red;"></span>
                                     </div>
-                                    <div class="form-group" id="otpblk1" style="display:none; color:red;">
-                                        OTP mismatch..!
-                                    </div>
+
                                     <div class="form-group">
                                         <select class="form-control" id="state" name="infostate"
                                             onchange="getcityinfoinsta(this.value)">

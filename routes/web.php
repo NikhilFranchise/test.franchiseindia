@@ -541,7 +541,7 @@ Route::group(['prefix' => 'business-opportunities'], function () {
 // /Category Page Routes
 Route::group(['prefix' => 'category'], function () {
     Route::get('atoz', [BusinessListingController::class, 'searchBusinessListing']);
-    Route::get('search', [BusinessListingController::class, 'searchBusinessListing'])->middleware('throttle:search-limit');
+    Route::get('search', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('searchby', [BusinessListingController::class, 'searchBusinessListing']);
     Route::get('index', function () {
         return redirect('business-opportunities/all/all', 301);
@@ -942,8 +942,10 @@ Route::post('deletevideo', [AdminController::class, 'deletevideo']);
 //admin panel routes
 Route::group(['prefix' => 'admin'], function () {
     //Get routes
+    // top search data start  
     Route::get('/data', [SearchMonitorController::class, 'showDataForm'])->name('search.data.form');
-Route::post('/data', [SearchMonitorController::class, 'fetchData'])->name('search.data.fetch');
+    Route::post('/data', [SearchMonitorController::class, 'fetchData'])->name('search.data.fetch');
+    // top seacrh data end 
     Route::get('login',                                [AdminController::class, 'loginView']);
     Route::get('list-news',                            [AdminController::class, 'listNews']);
     Route::get('edit-news-view/{id}',                  [AdminController::class, 'editNewsView']);

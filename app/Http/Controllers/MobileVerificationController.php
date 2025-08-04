@@ -128,7 +128,7 @@ class MobileVerificationController extends Controller
             ->where('otp_code', $otpNo)
             ->where('mobile_no', $mobileNo)
             ->first();
-
+        
         if (empty($chkMobVerify))
             return 'notexists';
 

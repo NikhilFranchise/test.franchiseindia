@@ -74,6 +74,7 @@
     @include('layout.insights.headerlinks')
     @include('includes.banners-new.google-tags')
     @yield('header-schema')
+    @yield('author-schema')
     @include('layout.insights.menu')
 </head>
 
