@@ -254,45 +254,8 @@
 
         <div class="row">
             <div class="infobrand col-xs-12 col-sm-12 col-md-12">
-                <ul>
-                    {{-- @php
-                        $area = $franDetails->prop_area_min . ' - ' . $franDetails->prop_area_max . ' Sq.ft';
-                        if (empty($franDetails->prop_area_max)) {
-                            $area = $franDetails->prop_area_min;
-                        }
-                        if (is_numeric($franDetails->prop_area_min) && empty($franDetails->prop_area_max)) {
-                            $area = $franDetails->prop_area_min . ' Sq.ft';
-                        }
-                        if (empty($franDetails->prop_area_min)) {
-                            $area = '-N/A-';
-                        }
-
-                        $minValue = $franDetails->unit_inv_min;
-                        if ($minValue < 100000 && $minValue > 10000) {
-                            $minValue = substr($minValue / 1000, 0, 5) . ' K';
-                        }
-
-                        if ($minValue <= 9999999 && $minValue > 100000) {
-                            $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
-                        }
-
-                        if ($minValue > 9999999) {
-                            $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
-                        }
-
-                        $maxValue = $franDetails->unit_inv_max;
-                        if ($maxValue < 100000 && $maxValue > 10000) {
-                            $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
-                        }
-
-                        if ($maxValue <= 9999999 && $maxValue > 100000) {
-                            $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
-                        }
-
-                        if ($maxValue > 9999999) {
-                            $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
-                        }
-                    @endphp --}}
+                {{-- <ul>
+                   
                     @php
                         $area = $franDetails->prop_area_min . ' - ' . $franDetails->prop_area_max . ' Sq.ft';
                         if (empty($franDetails->prop_area_max)) {
@@ -329,7 +292,7 @@
                     @endphp
 
                     <li>
-                        <div>{{ $area }}</div>Area Req
+                        <div>{{ $area }}</div>Area Req 
                     </li>
                     <li>
                         <div>
@@ -343,11 +306,116 @@
                     <li>
                         <div>{{ $franDetails->operations_start_year }}</div> Establishment Year
                     </li>
-                </ul>
+                </ul> --}}
+                 @php
+                        $area = $franDetails->prop_area_min . ' - ' . $franDetails->prop_area_max . ' Sq.ft';
+                        if (empty($franDetails->prop_area_max)) {
+                            $area = $franDetails->prop_area_min;
+                        }
+                        if (is_numeric($franDetails->prop_area_min) && empty($franDetails->prop_area_max)) {
+                            $area = $franDetails->prop_area_min . ' Sq.ft';
+                        }
+                        if (empty($franDetails->prop_area_min)) {
+                            $area = '-N/A-';
+                        }
+
+                        $minValue = $franDetails->unit_inv_min;
+                        if (is_numeric($minValue)) {
+                            if ($minValue < 100000 && $minValue > 10000) {
+                                $minValue = substr($minValue / 1000, 0, 5) . ' K';
+                            } elseif ($minValue <= 9999999 && $minValue > 100000) {
+                                $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
+                            } elseif ($minValue > 9999999) {
+                                $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
+                            }
+                        }
+
+                        $maxValue = $franDetails->unit_inv_max;
+                        if (is_numeric($maxValue)) {
+                            if ($maxValue < 100000 && $maxValue > 10000) {
+                                $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
+                            } elseif ($maxValue <= 9999999 && $maxValue > 100000) {
+                                $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
+                            } elseif ($maxValue > 9999999) {
+                                $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
+                            }
+                        }
+                    @endphp
+                <div class="brand-brief-wrap">
+<table width="100%">
+    <thead>
+        <tr>
+            <th>
+                 @if ($franDetails->ind_main_cat == 5)
+                <h2>{{ $franDetails->company_name }} Dealership & Distributorship Cost – How to get, Contact, Apply, Fee</h2>
+                @else
+                    <h2>{{ $franDetails->company_name }} Franchise Cost – How to get, Contact, Apply, Fee</h2>
+                @endif
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <table class="halfs">
+                    <thead>
+                        <tr>
+                            <th class="detail-name">Area Req</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="detail-description">{{ $area }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="halfs">
+                    <thead>
+                        <tr>
+                            <th class="detail-name">Investment Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="detail-description">INR {{ $minValue }} - {{ $maxValue }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="halfs">
+                    <thead>
+                        <tr>
+                            <th class="detail-name">{{ $franDetails->looking_tradepartner == 1 || $franDetails->ind_main_cat == 5 ? 'No. Of Dealer/Distributor' : 'No. Of Franchise Outlets' }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="detail-description">{{ $franDetails->no_fran_outlets ?: '- NA -' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="halfs">
+                    <thead>
+                        <tr>
+                            <th class="detail-name">Establishment Year</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="detail-description">{{ $franDetails->operations_start_year }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 
 
@@ -487,7 +555,7 @@
 
                     @if (!Auth::check() || Auth::user()->profile_type == Config('constants.ProfileType.Franchisor'))
                         <div class="insta-apply" id="show-m">
-                            <div class="ttl" id="instahead">Insta Apply</div>
+                            <div class="ttl" id="instahead">Insta Apply 3</div>
                             <div id="instaMsg" style="display:none;" class="green">
                                 <div class="bigth">Thank You!</div>
                                 <p>Thanks for showing your interest in {{ $franDetails->company_name }}.</p>
