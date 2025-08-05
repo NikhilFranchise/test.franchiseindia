@@ -774,7 +774,7 @@ class ExpressInstaController extends Controller
                 ->where('profile_status', 1)
                 ->where('profile_type', 1)
                 ->first();
-            dd($userDetail);
+            // dd($userDetail);
             $resource = "DOTCOM";
             if (!empty(request()->check_lead_popup))
                 $resource = "leadPopup";

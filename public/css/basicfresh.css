@@ -1,5 +1,20 @@
 .company-profile h3{font-family: 'Open Sans Light',serif;font-size: 17px;}
 
+
+.brand-brief-wrap-two h2{display: none;}
+.brand-brief-wrap-two td.detail-description{font-family: 'Open Sans Bold',serif;font-size: 20px;text-align: center;width: 100%;}
+.brand-brief-wrap-two .detail-name{font-family: 'Open Sans Regular';font-size: 16px;color:#333333;text-align: center;width: 100%;font-weight: normal;}
+.halfs-two:last-child{border-right: none;}
+.halfs-two{float: left;width: 33.3%;border-right: 1px solid #dfdfdf;}
+
+.brand-brief-wrap h2{display: none;}
+.brand-brief-wrap td.detail-description{font-family: 'Open Sans Regular';font-size: 25px;color: #333333;text-align: center;width: 100%;}
+.brand-brief-wrap .detail-name{font-family: 'Open Sans Regular';font-size: 14px;color: #999999;line-height: 30px;text-align: center;width: 100%;}
+.halfs:last-child{border-right: none;}
+.halfs{float: left;width: 25%;border-right: 1px solid #dfdfdf;}
+
+
+
 /* IPO Policies Corporate CSS 23 Aug 2024 */
 .corporates h2{font-size: 22px;font-weight: normal;color: #333;margin: 25px 0px 15px 0px;line-height: 31px;}
 .corporates h3{font-size: 17px;font-weight: normal;color: #333;margin:32px 0px 10px 0px;line-height: 28px;}
@@ -57,6 +72,17 @@ li.top-investors{height: 20px;}
 }
 
 @media screen and (max-width:767px){
+.halfs{float: left;width: 100%;border-right: none;border-bottom: 1px solid #dfdfdf;margin-bottom: 10px;}
+.brand-brief-wrap td.detail-description{padding-bottom:10px;}
+.brand-brief-wrap td.detail-description:first-child{padding-top: 5px;}
+.brand-brief-wrap .detail-name:first-child{padding-top: 5px;}
+.halfs:last-child{border-bottom: none;}
+
+.halfs-two{width: 100%;border-right: none;border-bottom: none;display: flex;align-items: center;justify-content: center;}
+.halfs-two:last-child{border-bottom: none;}
+.halfs-two  tbody{display: flex;align-items: center;justify-content: center;}
+.halfs-two tr:last-child{padding-left: 10px;}
+.brand-brief-wrap-two td.detail-description{font-size: 18px;}
 .brand-verify-detail-mobile{display: block; width: 90px; margin: 5px auto 0px auto;padding: 5px 10px 4px 10px;}
 .brand-verify-detail{display: none;}
 li.top-investors{height: auto;}

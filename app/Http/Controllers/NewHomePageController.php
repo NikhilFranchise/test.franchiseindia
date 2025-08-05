@@ -270,7 +270,7 @@ foreach ($sections as $section => $info) {
 // Step 2: If any cache missing, do a single query
 if (!empty($missingSections)) {
     $fetched = HomePremiumPageBrand::query()
-        ->select('brand_id','brand_img','brand_link','brand_alt','brand_heading','investment_range','investment_range_new','area_required','brand_category','brand_category_id','page_type','weightage','status','brand_section')
+        ->select('brand_id','brand_img','brand_link','brand_alt','brand_heading','investment_range','investment_range_new','area_required','brand_category','brand_category_id','page_type','weightage','status','brand_section','franchise_outlets')
         ->where('status', 1)
         ->where('page_type', 1)
         ->whereIn('brand_section', array_keys($missingSections))

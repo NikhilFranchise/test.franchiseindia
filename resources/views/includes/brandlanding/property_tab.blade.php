@@ -14,14 +14,14 @@
                 </p>
             @endif
 
-            @if($area != '-N/A-')
+            {{-- @if($area != '-N/A-')
             <p>
                 Floor area requirement
                 <span class='pull-right fnone'>
                     {{ $area }}
                 </span>
             </p>
-            @endif
+            @endif --}}
             @if(!empty( $franDetails->pref_prop_location ))
                 <p>
                     Preferred location of unit {{ $franDetails->looking_tradepartner == 1 || $franDetails->ind_main_cat == 5 ? "dealership" : "franchise" }} outlet
