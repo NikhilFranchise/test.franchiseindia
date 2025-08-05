@@ -1,8 +1,12 @@
 @extends('layout.master')
-@push('styles')
-    <link rel="stylesheet" href="{{ url('/css/top200.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-@endpush
+@section('seoTitle', 'Top 100 | Top 200 Franchise Opportunities in India for ' . date('Y') . ': Franchise India')
+@section('seoDesc', 'Top 100 | Top 200 Franchise Businesses in India ' . date('Y') . ': Dive into the most successful franchisor and
+    franchisee opportunities. Gain insights into the best sectors to launch and grow your franchise this year.')
+@section('seoKeywords', 'Franchise India Top 100 Franchisees, Top 100 Franchisees, Top 200 Franchise, Top 200 Franchisees, Top Business opportunities.')
+    @push('styles')
+        <link rel="stylesheet" href="{{ url('/css/top200.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    @endpush
 @section('content')
     <div class="loadman" id="loading" style="display:none">
         <div class="thanku">
