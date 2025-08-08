@@ -118,6 +118,7 @@ class MobileVerificationController extends Controller
      */
     public function verifySmsOTP()
     {
+        // return 'test';
         $mobileNo = request()->mobileNo;
         $otpNo = request()->otpNo;
 

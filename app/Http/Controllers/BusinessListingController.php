@@ -934,17 +934,37 @@ class BusinessListingController extends Controller
 
         // ✅ Parse previous page path (from referer or fallback)
 
-
         $referer = $request->headers->get('referer') ?? url()->previous();
         $parsedPath = parse_url($referer, PHP_URL_PATH);
         $previousPath = $parsedPath ?? '/';
         // dd($previousPath);
-        // ✅ Sanitize and trim keyword input
-        $cleanKeyword = trim(strip_tags($request->input('text')));
+        // ✅ Step 1: Sanitize input
+        $rawKeyword = trim(strip_tags($request->input('text')));
         $ipAddress = $request->ip();
 
+        // ✅ Step 2: Initial validation
+        $isValidKeyword = true;
+
+        // ❌ Block if special characters exist (allow letters, numbers, spaces)
+        if (preg_match('/[^a-zA-Z0-9\s]/', $rawKeyword)) {
+            $isValidKeyword = false;
+        }
+
+        // ❌ Block if any alphabet repeats 3 or more times (e.g., 'aaa', 'rrrr')
+        if (preg_match('/([a-zA-Z])\1{2,}/', $rawKeyword)) {
+            $isValidKeyword = false;
+        }
+
+        // ✅ Optional: Convert multiple spaces to single space
+        $cleanKeyword = preg_replace('/\s+/', ' ', $rawKeyword);
+        $cleanKeyword = trim($cleanKeyword);
+
+        // ✅ Prevent SQL injection: Use Eloquent + never trust raw DB inputs
+        // You are already using `SearchMonitor::upsert()` → Eloquent ORM handles this safely
+
         // ✅ Only store if keyword is longer than 4 characters
-        if (strlen($cleanKeyword) > 1 && $brandResults->total() == 0) {
+        // if (strlen($cleanKeyword) > 1 && $brandResults->total() == 0) {
+        if ($isValidKeyword && strlen($cleanKeyword) > 1 && $brandResults->total() == 0) {
             // ✅ Check how many records already stored from this IP today
             $ipRequestCount = SearchMonitor::where('ip_address', $ipAddress)
                 ->where('date', today())

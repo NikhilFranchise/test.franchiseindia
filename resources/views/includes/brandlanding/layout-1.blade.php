@@ -214,10 +214,9 @@
         <tr>
             <th>
                  @if($franDetails->ind_main_cat == 5)
-                            <h2>{{ $franDetails->company_name }} Dealership & Distributorship Cost – How to get, Contact, Apply, Fee</h2>
+                <h2>{{ $franDetails->company_name }} Dealership & Distributorship Cost – How to get, Contact, Apply, Fee</h2>
                  @else
-                            <h2>{{ $franDetails->company_name }} Franchise Cost – How to get, Contact,
-                                Apply, Fee</h2>
+                <h2>{{ $franDetails->company_name }} Franchise Cost – How to get, Contact, Apply, Fee</h2>
                  @endif
             </th>
         </tr>
@@ -450,12 +449,12 @@
                                             </span>
                                         </div>
 
-                                        <div class="form-group" id="otpblk" style="display:none;">
+                                        <div class="form-group" id="otpblk22" style="display:none;">
                                             <input type="text" id="otp" class="form-control"
                                                 placeholder="One Time Password" maxlength="4"  onkeypress="return isNumberKey(event);" />
                                             <input class="verif-submitbtn" id="submit" value="Verify"
-                                                type="button" onclick="verifySmsOTP()">
-                                            <span class="form-group" id="otpblk1"
+                                                type="button" onclick="verify_insta_apply_otp()">
+                                            <span class="form-group" id="otpblk11"
                                                 style="display:none; color:red;"></span>
                                         </div>
 
