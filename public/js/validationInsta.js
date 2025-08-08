@@ -230,6 +230,9 @@ $(document).ready(function () {
             },
             otpcontact: {
                 otp: true // optional field if you want to validate
+            },
+            mobileStatus:{
+                required:true
             }
         },
         messages: {
@@ -393,6 +396,75 @@ function verifySmsOTP() {
         }
     });
 }
+
+
+// Start OTP verification after clicking "Verify"
+function verify_insta_Mobile() {
+    const mobile = $('#txtPhone').val().trim();
+
+    if (mobile === '' || mobile.length !== 10 || !$.isNumeric(mobile)) {
+        alert('Please enter a valid 10-digit mobile number.');
+        return;
+    }
+
+    $.ajax({
+        type: 'GET',
+        url: '/verify',
+        data: { mobile },
+        success: function () {
+            $('#otpblk22').show();
+            $('#verifybutton').hide();
+            $('#editmobile').show();
+            $('#txtPhone').prop('readonly', true);
+        },
+        error: function () {
+            alert('Something went wrong during mobile verification.');
+        }
+    });
+}
+
+// Allow editing of mobile number
+function edit_insta_Mobile() {
+    $('#otpblk22').hide();
+    $('#verifybutton').show();
+    $('#editmobile').hide();
+    $('#sub1').hide();
+    $('#txtPhone').prop('readonly', false);
+    $('#otpblk11').hide();
+    $('#otp').val('');
+}
+
+// Check the OTP Insta apply detail page
+function verify_insta_apply_otp() {
+    // console.log('yes i am called');
+    const otp = $('#otp').val().trim();
+    const mobile = $('#txtPhone').val().trim();
+
+    if (otp === '' || otp.length !== 4 || !$.isNumeric(otp)) {
+        $('#otpblk11').text('Please enter a valid 4-digit OTP').css('color', 'red').show();
+        return;
+    }   
+    $.ajax({
+        type: 'GET',
+        url: '/check',
+        data: { otpNo: otp, mobileNo: mobile },
+        success: function (response) {
+            console.log(response);
+            if (response === 'notexists') {
+                $('#otpblk1').text('Invalid OTP. Please try again.').css('color', 'red').show();
+            } else {
+                $('#otpblk11').hide();
+                $('#otpblk22').hide();
+                $('#txtPhone').prop('readonly', true);
+                $('#sub1').show();
+                $('#editmobile').hide();
+            }
+        },
+        error: function () {
+            $('#otpblk11').text('Something went wrong. Please try again.').css('color', 'red').show();
+        }
+    });
+}
 // Additional functions for wider insta form
 function getCityWiderInsta(state) {
     var franId = $('#freeinfovalue').val();
@@ -494,6 +566,7 @@ $(document).ready(function () {
                         $editMobile.hide();
                         $contactSubmit.prop('disabled', false);
                         $otpBlock.hide();
+                         document.getElementById('mobileStatus').value = "1";
                     } else {
                         // Mobile does not exist
                         $successMobile.hide();
@@ -501,6 +574,7 @@ $(document).ready(function () {
                         $editMobile.hide();
                         $contactSubmit.prop('disabled', true);
                         $otpBlock.hide();
+                        // alert('no');
                     }
                 }
             });
