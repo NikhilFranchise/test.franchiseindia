@@ -65,6 +65,7 @@
                     </div> --}}
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group pos-rel">
+                            <input type="hidden" id="isWiderMobileVerified" value="0">
                             <input name="mobile" id="mobile-wider" type="text" maxlength="10"
                                 class="form-control blur" placeholder="Enter Mobile"
                                 onkeypress="return isNumberKey(event);" onkeyup="handleMobileInput(this.value)">
@@ -97,7 +98,7 @@
                             <input id="otp-input" type="text" maxlength="4" class="form-control"
                                 placeholder="Enter OTP">
                             <span class="vrfy" id="submit-otp" onclick="verifyOTP()">VERIFY</span>
-                            <span id="otp-error" style="display:none; color:red;">OTP Mismatch</span>
+                            <span id="otp-error" style="display:none; color:red; float: left;">OTP Mismatch</span>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-6">

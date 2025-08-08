@@ -188,13 +188,21 @@ $(document).ready(function () {
         }
     });
     function toggleSubmitButton1() {
-        const isValid = $("#wider-insta-form").valid();
-        $("#wider-submit-button").prop("disabled", !isValid);
+        var isMobileVerified = $('#isWiderMobileVerified').val() === '1';
+        var isFormValid = $("#wider-insta-form").valid();
+
+        if (isFormValid && isMobileVerified) {
+            $('#wider-submit-button').prop('disabled', false);
+        } else {
+            $('#wider-submit-button').prop('disabled', true);
+        }
     }
+
     $('#wider-insta-form input, #wider-insta-form select, #wider-insta-form textarea').on('keyup change blur', function () {
         toggleSubmitButton1();
     });
 });
+
 $(document).ready(function () {
     // Custom rule for mobile number
     $.validator.addMethod("indianMobile", function (value, element) {
@@ -239,8 +247,8 @@ $(document).ready(function () {
             otpcontact: {
                 otp: true // optional field if you want to validate
             },
-            mobileStatus:{
-                required:true
+            mobileStatus: {
+                required: true
             }
         },
         messages: {
@@ -373,37 +381,6 @@ function editMobile() {
     $('#otpblk1').hide();
     $('#otp').val('');
 }
-
-// Check the OTP
-// function verifySmsOTP() {
-//     const otp = $('#otp').val().trim();
-//     const mobile = $('#txtPhone').val().trim();
-
-//     if (otp === '' || otp.length !== 4 || !$.isNumeric(otp)) {
-//         $('#otpblk1').text('Please enter a valid 4-digit OTP').css('color', 'red').show();
-//         return;
-//     }
-
-//     $.ajax({
-//         type: 'GET',
-//         url: '/check',
-//         data: { otpNo: otp, mobileNo: mobile },
-//         success: function (response) {
-//             if (response === 'notexists') {
-//                 $('#otpblk1').text('Invalid OTP. Please try again.').css('color', 'red').show();
-//             } else {
-//                 $('#otpblk1').hide();
-//                 $('#otpblk').hide();
-//                 $('#txtPhone').prop('readonly', true);
-//                 $('#sub1').show();
-//                 $('#editmobile').hide();
-//             }
-//         },
-//         error: function () {
-//             $('#otpblk1').text('Something went wrong. Please try again.').css('color', 'red').show();
-//         }
-//     });
-// }
 
 function verifySmsOTP() {
     const otp = $('#otp').val().trim();
@@ -545,8 +522,10 @@ function verifyOTP() {
             $('#wider-submit-button').prop('disabled', false);
             $('#otp-block, #edit-mobile, #verify-mobile').hide();
             $('#otp-error').hide();
+            $('#isWiderMobileVerified').val('1');
+            toggleSubmitButton1();
         } else {
-            $('#otp-error').text('OTP Mismatch').show();
+            $('#otp-error').text('Invalid OTP. Please try again').show();
         }
     });
 }
@@ -578,7 +557,7 @@ $(document).ready(function () {
                         $editMobile.hide();
                         $contactSubmit.prop('disabled', false);
                         $otpBlock.hide();
-                         document.getElementById('mobileStatus').value = "1";
+                        document.getElementById('mobileStatus').value = "1";
                     } else {
                         // Mobile does not exist
                         $successMobile.hide();
