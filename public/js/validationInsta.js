@@ -476,37 +476,6 @@ function edit_insta_Mobile() {
     $('#otp').val('');
 }
 
-// Check the OTP Insta apply detail page
-function verify_insta_apply_otp() {
-    // console.log('yes i am called');
-    const otp = $('#otp').val().trim();
-    const mobile = $('#txtPhone').val().trim();
-
-    if (otp === '' || otp.length !== 4 || !$.isNumeric(otp)) {
-        $('#otpblk11').text('Please enter a valid 4-digit OTP').css('color', 'red').show();
-        return;
-    }   
-    $.ajax({
-        type: 'GET',
-        url: '/check',
-        data: { otpNo: otp, mobileNo: mobile },
-        success: function (response) {
-            console.log(response);
-            if (response === 'notexists') {
-                $('#otpblk1').text('Invalid OTP. Please try again.').css('color', 'red').show();
-            } else {
-                $('#otpblk11').hide();
-                $('#otpblk22').hide();
-                $('#txtPhone').prop('readonly', true);
-                $('#sub1').show();
-                $('#editmobile').hide();
-            }
-        },
-        error: function () {
-            $('#otpblk11').text('Something went wrong. Please try again.').css('color', 'red').show();
-        }
-    });
-}
 // Additional functions for wider insta form
 function getCityWiderInsta(state) {
     var franId = $('#freeinfovalue').val();
