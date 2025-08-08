@@ -124,7 +124,7 @@ class MobileVerificationController extends Controller
 
         // Validate input
         if (empty($mobileNo) || empty($otpNo)) {
-            return response('Invalid request.', 400);
+            return response('Invalid request.');
         }
 
         // First check if record exists (count)
@@ -134,7 +134,7 @@ class MobileVerificationController extends Controller
             ->count();
 
         if ($count < 1) {
-            return response('notexists', 404);
+            return response('Notexists');
         }
 
         // Then get the record and update
@@ -148,7 +148,7 @@ class MobileVerificationController extends Controller
             'verified_at' => now()
         ]);
 
-        return response('Mobile number verified successfully', 200);
+        return response('Mobile number verified successfully');
     }
 
     /**
