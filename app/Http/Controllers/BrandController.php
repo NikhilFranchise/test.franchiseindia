@@ -239,7 +239,7 @@ class BrandController extends Controller
             return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection', 'regionalFranchisorMembership'));
         } else {
             // return the data to blade view
-            return view('franchisor/cvw_landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection', 'fran_new_data', 'index_value', 'main_cat', 'url_slug', 'regionalFranchisorMembership'));
+            return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection', 'fran_new_data', 'index_value', 'main_cat', 'url_slug', 'regionalFranchisorMembership'));
         }
     }
 

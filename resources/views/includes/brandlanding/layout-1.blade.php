@@ -404,7 +404,7 @@
 
                         @if (!Auth::check() || Auth::user()->profile_type == Config('constants.ProfileType.Franchisor'))
                             <div class="insta-apply" id="show-m">
-                                <div class="ttl" id="instahead">Insta Apply 1</div>
+                                <div class="ttl" id="instahead">Insta Apply</div>
                                 <div id="instaMsg" style="display:none;" class="green">
                                     <div class="bigth">Thank You!</div>
                                     <p>Thanks for showing your interest in {{ $franDetails->company_name }}.</p>
@@ -432,6 +432,7 @@
                                                 name="infoemail" placeholder="Enter email">
                                         </div>
                                         <div class="form-group pos-rel" style="position: relative;">
+                                            <input type="hidden" id="isMobileVerified" value="0">
                                             <input type="tel" name="mobile" id="txtPhone" class="form-control"
                                                 placeholder="Enter Mobile No" maxlength="10" autocomplete="off"
                                                 onkeypress="return isNumberKey(event);"
@@ -448,12 +449,12 @@
                                             </span>
                                         </div>
 
-                                        <div class="form-group" id="otpblk22" style="display:none;">
+                                        <div class="form-group" id="otpblk" style="display:none;">
                                             <input type="text" id="otp" class="form-control"
                                                 placeholder="One Time Password" maxlength="4"  onkeypress="return isNumberKey(event);" />
                                             <input class="verif-submitbtn" id="submit" value="Verify"
-                                                type="button" onclick="verify_insta_apply_otp()">
-                                            <span class="form-group" id="otpblk11"
+                                                type="button" onclick="verifySmsOTP()">
+                                            <span class="form-group" id="otpblk1"
                                                 style="display:none; color:red;"></span>
                                         </div>
 

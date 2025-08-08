@@ -583,6 +583,7 @@
                                             id="newemail" name="infoemail" placeholder="Enter email">
                                     </div>
                                     <div class="form-group pos-rel" style="position: relative;">
+                                        <input type="hidden" id="isMobileVerified" value="0">
                                         <input type="tel" name="mobile" id="txtPhone" class="form-control"
                                             placeholder="Enter Mobile No" maxlength="10" autocomplete="off"
                                             onkeypress="return isNumberKey(event);"
