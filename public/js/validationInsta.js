@@ -125,8 +125,16 @@ $(document).ready(function () {
             error.appendTo(element.parent().parent());
         }
     });
+
     function toggleSubmitButton() {
-        $('#btninsta').prop('disabled', !$("#insta").valid());
+        var isMobileVerified = $('#isMobileVerified').val() === '1';
+        var isFormValid = $("#insta").valid();
+
+        if (isFormValid && isMobileVerified) {
+            $('#btninsta').prop('disabled', false);
+        } else {
+            $('#btninsta').prop('disabled', true);
+        }
     }
 
     $('#insta input, #insta select, #insta textarea').on('keyup change blur', function () {
@@ -364,6 +372,36 @@ function editMobile() {
 }
 
 // Check the OTP
+// function verifySmsOTP() {
+//     const otp = $('#otp').val().trim();
+//     const mobile = $('#txtPhone').val().trim();
+
+//     if (otp === '' || otp.length !== 4 || !$.isNumeric(otp)) {
+//         $('#otpblk1').text('Please enter a valid 4-digit OTP').css('color', 'red').show();
+//         return;
+//     }
+
+//     $.ajax({
+//         type: 'GET',
+//         url: '/check',
+//         data: { otpNo: otp, mobileNo: mobile },
+//         success: function (response) {
+//             if (response === 'notexists') {
+//                 $('#otpblk1').text('Invalid OTP. Please try again.').css('color', 'red').show();
+//             } else {
+//                 $('#otpblk1').hide();
+//                 $('#otpblk').hide();
+//                 $('#txtPhone').prop('readonly', true);
+//                 $('#sub1').show();
+//                 $('#editmobile').hide();
+//             }
+//         },
+//         error: function () {
+//             $('#otpblk1').text('Something went wrong. Please try again.').css('color', 'red').show();
+//         }
+//     });
+// }
+
 function verifySmsOTP() {
     const otp = $('#otp').val().trim();
     const mobile = $('#txtPhone').val().trim();
@@ -386,6 +424,10 @@ function verifySmsOTP() {
                 $('#txtPhone').prop('readonly', true);
                 $('#sub1').show();
                 $('#editmobile').hide();
+
+                // ✅ Mark as verified
+                $('#isMobileVerified').val('1');
+                toggleSubmitButton(); // recheck the button state
             }
         },
         error: function () {
@@ -393,6 +435,7 @@ function verifySmsOTP() {
         }
     });
 }
+
 // Additional functions for wider insta form
 function getCityWiderInsta(state) {
     var franId = $('#freeinfovalue').val();

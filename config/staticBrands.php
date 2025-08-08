@@ -268,13 +268,13 @@ return [
                 "sector" => "Others Clothing",
                 "investment" => "Rs. 10 Lakh - 20 Lakh",
             ],
-            [
-                "brand" => "Clovia",
-                "logo" => "/topfranchiseleaders/staticLogo/2025/clovia.jpg",
-                "industry" => "Fashion",
-                "sector" => "Lingerie & Innerwear",
-                "investment" => "Rs. 20 Lakh - 30 Lakh",
-            ],
+            // [
+            //     "brand" => "Clovia",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2025/clovia.jpg",
+            //     "industry" => "Fashion",
+            //     "sector" => "Lingerie & Innerwear",
+            //     "investment" => "Rs. 20 Lakh - 30 Lakh",
+            // ],
             [
                 "brand" => "Dhaba",
                 "logo" => "/topfranchiseleaders/staticLogo/2025/dhaba.jpg",

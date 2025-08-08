@@ -1125,13 +1125,13 @@ Route::group(['prefix' => 'insights'], function () {
         });
         Route::get('news.xml',                      [InsightSitemapController::class, 'newssitemap']);
         Route::get('googlenews.xml',                [InsightSitemapController::class, 'googleNewsSitemap']);
-        Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap'])->name('article.xml');
-        Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap'])->name('interview.xml');
-        Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap'])->name('event.xml');
-        Route::get('report.xml',                    [InsightSitemapController::class, 'reportsitemap'])->name('report.xml');
-        Route::get('categories.xml',                [InsightSitemapController::class, 'categorysitemap'])->name('categories.xml');
-        Route::get('subcategories.xml',             [InsightSitemapController::class, 'subcategorysitemap'])->name('subcategories.xml');
-        Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap'])->name('tags.xml');
+        Route::get('article.xml',                   [InsightSitemapController::class, 'articlesitemap']);
+        Route::get('interview.xml',                 [InsightSitemapController::class, 'interviewsitemap']);
+        Route::get('event.xml',                     [InsightSitemapController::class, 'eventsitemap']);
+        Route::get('report.xml',                    [InsightSitemapController::class, 'reportsitemap']);
+        Route::get('categories.xml',                [InsightSitemapController::class, 'categorysitemap']);
+        Route::get('subcategories.xml',             [InsightSitemapController::class, 'subcategorysitemap']);
+        Route::get('tags.xml',                      [InsightSitemapController::class, 'tagsitemap']);
 
         // Rss feed Routes
         Route::get('/tag/{tagslug}/rss',             [InsightSitemapController::class, 'generateTagRssFeed']);
@@ -1197,7 +1197,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('/search',               [InsightsController::class, 'insightSearch']);
             Route::get('thanks', function () {
                 return view('insights.thanks');
-            })->name('insights.thanks');
+            });
             Route::get('pagenotfound', function () {
                 return view('static.404');
             }); //404 ERROR PAGE
