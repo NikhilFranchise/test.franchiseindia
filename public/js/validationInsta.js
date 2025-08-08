@@ -126,17 +126,6 @@ $(document).ready(function () {
         }
     });
 
-    function toggleSubmitButton() {
-        var isMobileVerified = $('#isMobileVerified').val() === '1';
-        var isFormValid = $("#insta").valid();
-
-        if (isFormValid && isMobileVerified) {
-            $('#btninsta').prop('disabled', false);
-        } else {
-            $('#btninsta').prop('disabled', true);
-        }
-    }
-
     $('#insta input, #insta select, #insta textarea').on('keyup change blur', function () {
         toggleSubmitButton();
     });
@@ -187,16 +176,6 @@ $(document).ready(function () {
             error.appendTo(element.parent().parent());
         }
     });
-    function toggleSubmitButton1() {
-        var isMobileVerified = $('#isWiderMobileVerified').val() === '1';
-        var isFormValid = $("#wider-insta-form").valid();
-
-        if (isFormValid && isMobileVerified) {
-            $('#wider-submit-button').prop('disabled', false);
-        } else {
-            $('#wider-submit-button').prop('disabled', true);
-        }
-    }
 
     $('#wider-insta-form input, #wider-insta-form select, #wider-insta-form textarea').on('keyup change blur', function () {
         toggleSubmitButton1();
@@ -295,19 +274,10 @@ $(document).ready(function () {
         }
     });
 
-    function toggleSubmitButtonfreeInfo() {
-        var isMobileVerified = $('#mobileStatus').val() === '1'; // Assumes '1' means verified
-        var isFormValid = $("#freeinfoform").valid();
 
-        if (isFormValid && isMobileVerified) {
-            $('#contactsubmit').prop('disabled', false);
-        } else {
-            $('#contactsubmit').prop('disabled', true);
-        }
-    }
 
     // Optional: Enable submit button only when form is valid
-     $('#freeinfoform input, #freeinfoform select').on('change keyup', function () {
+    $('#freeinfoform input, #freeinfoform select').on('change keyup', function () {
         toggleSubmitButtonfreeInfo();
     });
 });
@@ -326,6 +296,40 @@ function isNumberKey(evt) {
 
     return true;
 }
+
+function toggleSubmitButton() {
+    var isMobileVerified = $('#isMobileVerified').val() === '1';
+    var isFormValid = $("#insta").valid();
+
+    if (isFormValid && isMobileVerified) {
+        $('#btninsta').prop('disabled', false);
+    } else {
+        $('#btninsta').prop('disabled', true);
+    }
+}
+
+function toggleSubmitButton1() {
+    var isMobileVerified = $('#isWiderMobileVerified').val() === '1';
+    var isFormValid = $("#wider-insta-form").valid();
+
+    if (isFormValid && isMobileVerified) {
+        $('#wider-submit-button').prop('disabled', false);
+    } else {
+        $('#wider-submit-button').prop('disabled', true);
+    }
+}
+
+function toggleSubmitButtonfreeInfo() {
+    var isMobileVerified = $('#mobileStatus').val() === '1'; // Assumes '1' means verified
+    var isFormValid = $("#freeinfoform").valid();
+
+    if (isFormValid && isMobileVerified) {
+        $('#contactsubmit').prop('disabled', false);
+    } else {
+        $('#contactsubmit').prop('disabled', true);
+    }
+}
+
 // Check mobile status on keyup
 function getMobileStatus(value) {
     const mobile = value.trim();
@@ -338,6 +342,8 @@ function getMobileStatus(value) {
                 if (parseInt(response) === 1) {
                     $('#sub1').show();
                     $('#verifybutton').hide();
+                    $('#isMobileVerified').val('1');
+                    toggleSubmitButton();
                 } else {
                     $('#sub1').hide();
                     $('#verifybutton').show();
@@ -516,6 +522,8 @@ function handleMobileInput(value) {
             $('#verify-mobile').toggle(!exists);
             $('#edit-mobile').hide();
             $('#wider-submit-button').prop('disabled', !exists);
+            $('#isWiderMobileVerified').val('1');
+            toggleSubmitButton1();
         });
     } else {
         $('#verify-mobile, #mobile-verified-icon, #edit-mobile').hide();
