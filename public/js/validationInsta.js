@@ -347,6 +347,8 @@ function getMobileStatus(value) {
                 } else {
                     $('#sub1').hide();
                     $('#verifybutton').show();
+                    $('#isMobileVerified').val('0');
+                    toggleSubmitButton();
                 }
             },
             error: function () {
@@ -510,26 +512,48 @@ function getCityWiderInsta(state) {
         }
     });
 }
-function handleMobileInput(value) {
-    const mobile = value.trim();
-    const isValid = mobile.length === 10 && $.isNumeric(mobile);
 
-    if (isValid) {
-        $.get('/mobcheck', { mobile }, function (response) {
+function handleMobileInput() {
+    const mobile = $('#mobile-wider').val().trim();
+
+    if (mobile === '' || mobile.length !== 10 || !$.isNumeric(mobile)) {
+        $('#verify-mobile, #mobile-verified-icon, #edit-mobile').hide();
+        $('#wider-submit-button').prop('disabled', true);
+        return;
+    }
+
+    $.ajax({
+        type: 'GET',
+        url: '/mobcheck',
+        data: { mobile: mobile },
+        success: function (response) {
             const exists = parseInt(response) === 1;
 
-            $('#mobile-verified-icon').toggle(exists);
-            $('#verify-mobile').toggle(!exists);
+            if (exists) {
+                $('#mobile-verified-icon').show();
+                $('#verify-mobile').hide();
+                $('#isWiderMobileVerified').val('1');
+                // Re-check submit button state
+                toggleSubmitButton1();
+            } else {
+                $('#mobile-verified-icon').hide();
+                $('#verify-mobile').show();
+                $('#isWiderMobileVerified').val('0');
+                toggleSubmitButton1();
+            }
+
             $('#edit-mobile').hide();
-            $('#wider-submit-button').prop('disabled', !exists);
-            $('#isWiderMobileVerified').val('1');
-            toggleSubmitButton1();
-        });
-    } else {
-        $('#verify-mobile, #mobile-verified-icon, #edit-mobile').hide();
-        $('#wider-submit-button').prop('disabled', false);
-    }
+
+
+        },
+        error: function () {
+            console.error('Mobile verification request failed.');
+            $('#verify-mobile, #mobile-verified-icon, #edit-mobile').hide();
+            $('#wider-submit-button').prop('disabled', true);
+        }
+    });
 }
+
 
 function enableMobileEdit() {
     $('#mobile-wider').prop('readonly', false);
@@ -603,7 +627,8 @@ $(document).ready(function () {
                         $editMobile.hide();
                         $contactSubmit.prop('disabled', false);
                         $otpBlock.hide();
-                        document.getElementById('mobileStatus').value = "1";
+                        $('#mobileStatus').val('1');
+                        toggleSubmitButtonfreeInfo();
                     } else {
                         // Mobile does not exist
                         $successMobile.hide();
@@ -611,7 +636,8 @@ $(document).ready(function () {
                         $editMobile.hide();
                         $contactSubmit.prop('disabled', true);
                         $otpBlock.hide();
-                        // alert('no');
+                        $('#mobileStatus').val('0');
+                        toggleSubmitButtonfreeInfo();
                     }
                 }
             });
