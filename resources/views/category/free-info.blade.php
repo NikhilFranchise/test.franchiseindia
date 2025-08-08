@@ -50,7 +50,7 @@
                                     <span class="vrfy" onClick="editmobile();" id="editmobilecontact" style="display: none;">EDIT</span>
                                     <span class="vrfy" onClick="validatemobile();" id="validatemobile" style="display: none">VERIFY</span>
                                     <span id="successmobile" class="showhideright" style="display: none"><i class="fa fa-check fa-lg" aria-hidden="true"></i></span>
-                                    <input type="hidden" id="mobileStatus" name="mobileStatus" value="">
+                                    <input type="hidden" id="mobileStatus" name="mobileStatus" value="0">
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-6 col-md-6">

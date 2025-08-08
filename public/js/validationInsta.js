@@ -231,8 +231,8 @@ $(document).ready(function () {
             otpcontact: {
                 otp: true // optional field if you want to validate
             },
-            mobileStatus:{
-                required:true
+            mobileStatus: {
+                required: true
             }
         },
         messages: {
@@ -279,13 +279,20 @@ $(document).ready(function () {
         }
     });
 
-    // Optional: Enable submit button only when form is valid
-    $('#freeinfoform input, #freeinfoform select').on('change keyup', function () {
-        if ($('#freeinfoform').valid()) {
+    function toggleSubmitButtonfreeInfo() {
+        var isMobileVerified = $('#mobileStatus').val() === '1'; // Assumes '1' means verified
+        var isFormValid = $("#freeinfoform").valid();
+
+        if (isFormValid && isMobileVerified) {
             $('#contactsubmit').prop('disabled', false);
         } else {
             $('#contactsubmit').prop('disabled', true);
         }
+    }
+
+    // Optional: Enable submit button only when form is valid
+     $('#freeinfoform input, #freeinfoform select').on('change keyup', function () {
+        toggleSubmitButtonfreeInfo();
     });
 });
 function isNumberKey(evt) {
@@ -443,7 +450,7 @@ function verify_insta_apply_otp() {
     if (otp === '' || otp.length !== 4 || !$.isNumeric(otp)) {
         $('#otpblk11').text('Please enter a valid 4-digit OTP').css('color', 'red').show();
         return;
-    }   
+    }
     $.ajax({
         type: 'GET',
         url: '/check',
@@ -566,7 +573,7 @@ $(document).ready(function () {
                         $editMobile.hide();
                         $contactSubmit.prop('disabled', false);
                         $otpBlock.hide();
-                         document.getElementById('mobileStatus').value = "1";
+                        document.getElementById('mobileStatus').value = "1";
                     } else {
                         // Mobile does not exist
                         $successMobile.hide();
@@ -638,6 +645,8 @@ $(document).ready(function () {
             success: function (data) {
                 if (data == 0) {
                     $mismatch.text('OTP Mismatch').show();
+
+
                 } else {
                     $successMobile.show();
                     $contactSubmit.prop('disabled', false);
@@ -645,6 +654,8 @@ $(document).ready(function () {
                     $editMobile.hide();
                     $validateMobile.hide();
                     $mismatch.hide();
+                    $('#mobileStatus').val('1');
+                    toggleSubmitButtonfreeInfo();
                 }
             }
         });
