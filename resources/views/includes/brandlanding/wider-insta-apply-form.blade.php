@@ -50,19 +50,7 @@
                             </select>
                         </div>
                     </div>
-                    {{-- <div class="col-xs-12 col-sm-6 col-md-6">
-                        <div class="form-group pos-rel">
-                            <input name="mobile" id="mobile-wider" type="text" maxlength="10"
-                                onkeypress="return isNumberKey(event);" onkeyup="getMobileStatusWider(this.value);"
-                                class="form-control blur" placeholder="Enter Mobile">
-                            <span class="vrfy" onclick="editMobileWider1()" id="edit-mobile-wider1"
-                                style="display:none">Edit</span>
-                            <span class="vrfy" onclick="validateMobileWider()" id="validate-mobile-contact"
-                                style="display:none">VERIFY</span>
-                            <span id="success-mobile-wider" class="showhideright" style="display:none"><i
-                                    class="fa fa-check fa-lg" aria-hidden="true"></i></span>
-                        </div>
-                    </div> --}}
+                    
                     <div class="col-xs-12 col-sm-6 col-md-6">
                         <div class="form-group pos-rel">
                             <input type="hidden" id="isWiderMobileVerified" value="0">
@@ -84,15 +72,7 @@
                             <input type="text" class="form-control blur" name="address" placeholder="Enter Address">
                         </div>
                     </div>
-                    {{-- <div class="col-xs-12 col-sm-6 col-md-6" style="display:none" id="otp-block-wider1">
-                        <div class="form-group pos-rel">
-                            <input id="otp-insta-wider1" type="text" class="form-control" maxlength="4"
-                                placeholder="Enter OTP">
-                            <span class="vrfy" id="verify_button_wider" style="display:block"
-                                onclick="verifyWiderOTP()">VERIFY</span>
-                            <span style="display:none; color:red;" style="display:none" id="mismatch-wider">OTP Mismatch</span>
-                        </div>
-                    </div> --}}
+                    
                     <div class="col-xs-12 col-sm-6 col-md-6" id="otp-block" style="display:none">
                         <div class="form-group pos-rel">
                             <input id="otp-input" type="text" maxlength="4" class="form-control"
