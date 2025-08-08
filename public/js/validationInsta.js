@@ -419,7 +419,8 @@ function verifySmsOTP() {
         url: '/check',
         data: { otpNo: otp, mobileNo: mobile },
         success: function (response) {
-            if (response === 'notexists') {
+            console.log(response);
+            if (response === 'Notexists') {
                 $('#otpblk1').text('Invalid OTP. Please try again.').css('color', 'red').show();
             } else {
                 $('#otpblk1').hide();
