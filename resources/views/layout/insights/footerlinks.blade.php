@@ -91,8 +91,7 @@
           }
       });
 
-<!-- for  end   list  page   -->
-<!-- for  start here home  -->
+
 
     var swiper = new Swiper('.slidercomman .swiper-container', {
           slidesPerView: 1,

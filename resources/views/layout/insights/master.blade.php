@@ -73,6 +73,7 @@
     <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
     @include('layout.insights.headerlinks')
     @include('includes.banners-new.google-tags')
+    <link rel="preload" as="image" href="@yield('image')" fetchpriority="high">
     @yield('header-schema')
     @yield('author-schema')
     @include('layout.insights.menu')
