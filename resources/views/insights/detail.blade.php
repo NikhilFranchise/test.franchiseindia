@@ -27,9 +27,9 @@
     <link rel="preload" as="image" href="{{ $ogimage }}" imagesrcset="{{ $ogimage }}" fetchpriority="high">
 
     <style>
-      /* Reserve ad space to avoid CLS */
       .inner-article-detail-desktop-top-ad { min-height: 90px; display:flex; align-items:center; justify-content:center; }
       .inner-article-detail-desktop-ad { min-height: 250px; display:flex; align-items:center; justify-content:center; }
+      .ad-right, .ad-right-sticky { min-height: 250px; display:flex; align-items:center; justify-content:center; }
       @media (max-width: 767px) {
         .inner-article-detail-desktop-top-ad { min-height: 60px; }
         .inner-article-detail-desktop-ad { min-height: 250px; }
