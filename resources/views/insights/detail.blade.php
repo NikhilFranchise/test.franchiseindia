@@ -260,6 +260,16 @@
                                 }
                             }
                         @endphp
+                        @php
+                        // Add lazy loading to inline images and iframes (skip hero image as it's outside this HTML)
+                        $renderedContent = preg_replace_callback('/<img\b(?![^>]*\bloading=)[^>]*?>/i', function($m) {
+                            return preg_replace('/<img\b/i', '<img loading="lazy" decoding="async" sizes="(max-width: 768px) 100vw, 800px"', $m[0], 1);
+                        }, $renderedContent);
+
+                        // Lazy load iframes (e.g., YouTube embeds)
+                        $renderedContent = preg_replace('/<iframe(?![^>]*\bloading=)/i', '<iframe loading="lazy"', $renderedContent);
+                        @endphp
+
 
                         {{-- pankaj code --}}
                         <div class="articlecontent" data-article-id="{{ $newsDetails->news_id }}">
