@@ -174,16 +174,16 @@ $(document).ready(function () {
     //==============================
     // 3. Newsletter Signup Form #2
     //==============================
-    // handleFormSubmit({
-    //     formSelector: "#newsletterSignUp",
-    //     submitBtnSelector: "#button-addon",
-    //     ajaxUrl: "/insights/newslettersignup",
-    //     fields: [{ id: "emailID", name: "email", type: "email" }],
-    //     successPopupId: "#successPopup1",
-    //     errorMap: {
-    //         emailID: "#error-email",
-    //     },
-    // });
+    handleFormSubmit({
+        formSelector: "#newsletterSignUp",
+        submitBtnSelector: "#button-addon",
+        ajaxUrl: "/insights/newslettersignup",
+        fields: [{ id: "emailID", name: "email", type: "email" }],
+        successPopupId: "#successPopup1",
+        errorMap: {
+            emailID: "#error-email",
+        },
+    });
 
     //==============================
     // Close Success Popups
