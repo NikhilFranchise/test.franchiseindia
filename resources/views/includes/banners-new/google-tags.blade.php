@@ -194,8 +194,6 @@
                     .addService(googletag.pubads());
             @endif
             googletag.pubads().enableSingleRequest();
-            googletag.pubads().enableLazyLoad({fetchMarginPercent: 500, renderMarginPercent: 200});
-            googletag.pubads().collapseEmptyDivs(true);
             googletag.enableServices();
         });
     @endmobile
@@ -424,8 +422,6 @@
                 ], 'adslot728x90_BTF').addService(googletag.pubads());
             @endif
             googletag.pubads().enableSingleRequest();
-            googletag.pubads().enableLazyLoad({fetchMarginPercent: 500, renderMarginPercent: 200});
-            googletag.pubads().collapseEmptyDivs(true);
             googletag.enableServices();
         });
     @enddesktop
@@ -497,8 +493,6 @@
                     .addService(googletag.pubads());
             @endif
             googletag.pubads().enableSingleRequest();
-            googletag.pubads().enableLazyLoad({fetchMarginPercent: 500, renderMarginPercent: 200});
-            googletag.pubads().collapseEmptyDivs(true);
             googletag.enableServices();
         });
     @endtablet
