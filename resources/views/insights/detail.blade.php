@@ -54,7 +54,7 @@
                         </script>
                     </div>
                 </div> --}}
-                <div class="inner-article-detail-desktop-top-ad">
+                <div class="inner-article-detail-desktop-top-ad" style="min-height:90px; display:block;">
                     @php
                         $topAd = 'adslot728x90_ATF-' . $newsDetails->news_id;
                     @endphp
@@ -168,7 +168,17 @@
                         </div>
                     </div>
                     <div class="content-main">
-                        <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}">
+                        <img
+                            src="{{ $ogimage }}"
+                            width="{{ $width }}"
+                            height="{{ $height }}"
+                            alt="{{ $newsDetails->title }}"
+                            class="img-fluid"
+                            decoding="async"
+                            fetchpriority="high"
+                            loading="eager"
+                            style="aspect-ratio: {{ max(1,$width) }} / {{ max(1,$height) }};"
+                        >
                         {{-- ads for mobile & desktop --}}
                         {{-- <div class="inner-article-detail-desktop-ad fad">
                             <div id="adslotInline_3_300x250">
@@ -179,7 +189,7 @@
                                 </script>
                             </div>
                         </div> --}}
-                        <div class="inner-article-detail-desktop-ad fad">
+                        <div class="inner-article-detail-desktop-ad fad" style="min-height:250px;">
                             @php
                                 $imgBottomAd =
                                     'adslot300x250_ATF-' . $newsDetails->news_id . '-' . $newsDetails->cat_id;
@@ -365,10 +375,11 @@
                         @include('layout.insights.subscribenewsletter')
                     </div>
                 </div>
+                @desktop
                 <div class="col-md-4">
                     <div class="right-wrap">
                         {{-- ads top right sidebar --}}
-                        <div class="ad-right">
+                        <div class="ad-right" style="min-height:250px;">
                             @php
                                 $topRightAd = 'adslot300x250_ATF-' . $newsDetails->news_id;
                             @endphp
@@ -436,7 +447,7 @@
                                 @endforelse
                             </ul>
                         </div>
-                        <div class="ad-right-sticky">
+                        <div class="ad-right-sticky" style="min-height:250px;">
                             @php
                                 $rightBottomAd = 'adslot300x250_1-' . $newsDetails->news_id;
                             @endphp
@@ -455,10 +466,11 @@
                         </div>
                     </div>
                 </div>
+                @enddesktop
             </div>
             {{-- footer ads slot --}}
             @desktop
-                <div class="inner-article-detail-desktop-top-ad">
+                <div class="inner-article-detail-desktop-top-ad" style="min-height:90px; display:block;">
                     @php
                         $bottomAd = 'adslot728x90_BTF-' . $newsDetails->news_id;
                     @endphp

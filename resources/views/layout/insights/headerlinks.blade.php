@@ -2,9 +2,9 @@
  <link href="{{url('insight-new/assets/img/favicon.ico')}}" rel="icon">
  <link href="{{url('insight-new/assets/img/favicon-new.png')}}" rel="apple-touch-icon">
  <!-- Google Fonts -->
- <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;600;700;900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
  <!-- Vendor CSS Files -->
  <link href="{{url('insight-new/assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
  <link href="{{url('insight-new/assets/vendor/icofont/icofont.min.css')}}" rel="stylesheet">
