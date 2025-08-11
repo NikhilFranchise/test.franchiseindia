@@ -1,4 +1,23 @@
 @extends('layout.insights.master')
+@php
+    $ogimage = !empty($newsDetails->image)
+        ? \App\Http\Controllers\InsightsController::createimgurl($newsDetails->image)
+        : 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/content/fi/int/5ff40e6aaa3da.jpeg';
+    $imageDetails = @getimagesize($ogimage);
+    $width = $imageDetails[0] ? $imageDetails[0] : 0;
+    $height = $imageDetails[1] ? $imageDetails[1] : 0;
+    $locale = App::getLocale();
+    $baseUrl = Config('constants.MainDomain') . "/insights/$locale/";
+    $newsUrl =
+        $baseUrl . strtolower($newsDetails->insight_type) . '/' . $newsDetails->slug . '.' . $newsDetails->news_id;
+    //$author_details
+    $authorSlug = $author_details->slug ?? strtolower(str_replace(' ', '-', $author_details->title));
+    //dd($authorSlug);
+    $authorUrl = Config('constants.MainDomain') . '/insights/author/' . $authorSlug . '-' . $author_details->author_id;
+    $authorImage = !empty($author_details->image)
+        ? \App\Http\Controllers\InsightsController::authorImageurl($author_details->image)
+        : url('images/defaultuser.png');
+@endphp
 @section('seoTitle', $newsDetails->title)
 {{-- @section('header-schema')
     @include('insights.schema', ['newsDetails' => $newsDetails])
@@ -22,25 +41,7 @@
 @section('canonicalUrl', url()->current())
 @section('datePublished', $newsDetails->created_at)
 @section('dateModified', $newsDetails->published_date)
-@php
-    $ogimage = !empty($newsDetails->image)
-        ? \App\Http\Controllers\InsightsController::createimgurl($newsDetails->image)
-        : 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/content/fi/int/5ff40e6aaa3da.jpeg';
-    $imageDetails = @getimagesize($ogimage);
-    $width = $imageDetails[0] ? $imageDetails[0] : 0;
-    $height = $imageDetails[1] ? $imageDetails[1] : 0;
-    $locale = App::getLocale();
-    $baseUrl = Config('constants.MainDomain') . "/insights/$locale/";
-    $newsUrl =
-        $baseUrl . strtolower($newsDetails->insight_type) . '/' . $newsDetails->slug . '.' . $newsDetails->news_id;
-    //$author_details
-    $authorSlug = $author_details->slug ?? strtolower(str_replace(' ', '-', $author_details->title));
-    //dd($authorSlug);
-    $authorUrl = Config('constants.MainDomain') . '/insights/author/' . $authorSlug . '-' . $author_details->author_id;
-    $authorImage = !empty($author_details->image)
-        ? \App\Http\Controllers\InsightsController::authorImageurl($author_details->image)
-        : url('images/defaultuser.png');
-@endphp
+
 @section('image', $ogimage)
 @section('shortDesc', $newsDetails->shortDesc)
 @section('imagesrc', $ogimage)
