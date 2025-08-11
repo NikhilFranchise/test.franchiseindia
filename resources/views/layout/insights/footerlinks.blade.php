@@ -1,11 +1,11 @@
 <!-- Vendor JS Files -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="{{ url('insight-new/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- Template Main JS File -->
 <script src="{{url('insight-new/assets/js/main.js')}}"></script>
 <script src="{{ url('insight-new/assets/js/swiper.min.js') }}"></script>
 <script src="https://dimsemenov.com/plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
-<!-- for  start article detail page   -->
+@stack('scripts')
 <script>
     var swiper = new Swiper('.maycontentblk .swiper-container', {
           slidesPerView: 1,
@@ -47,10 +47,9 @@
               },
           }
       });
-</script>
 <!-- for  end  article detail page   -->
 <!-- for  start  list  page   -->
-<script>
+
     var swiper = new Swiper('.maincateblk .swiper-container', {
           slidesPerView: 1,
           spaceBetween: 10,
@@ -91,10 +90,10 @@
               },
           }
       });
-</script>
+
 <!-- for  end   list  page   -->
 <!-- for  start here home  -->
-<script>
+
     var swiper = new Swiper('.slidercomman .swiper-container', {
           slidesPerView: 1,
           spaceBetween: 10,
@@ -169,23 +168,20 @@
               $(".ftrblk8").toggle(400);
           });
       });
-</script>
-<script type="text/javascript">
+
     $(document).ready(function() {
       if(screen.width<600) { $("#sidefeedbackfrm").click(function() { let sideBlock=$(".sidefeedback"); if
           (sideBlock.css('right') === '-303px') { sideBlock.animate({ "right" : "+=303px" }, 1000); } else {
           sideBlock.animate({"right": "-=303px" }, 1000); } }); } else { $("#sidefeedbackfrm").click(function() { let
           sideBlock=$(".sidefeedback"); if (sideBlock.css('right') === '-375px') { sideBlock.animate({ "right"
           : "+=375px" }, 1000); } else { sideBlock.animate({"right": "-=375px" }, 1000); } }); } });
-</script>
-<script>
+
     $(document).ready(function() {
                   $('.popup-youtube').magnificPopup({
                       type: 'iframe'
                   });
               });
-</script>
-<script>
+
     var swiper = new Swiper('.sliderauthor .swiper-container', {
         slidesPerView: 1,
         spaceBetween: 10,
@@ -228,8 +224,7 @@
             },
         }
     });
-</script>
-<script>
+
     var swiper = new Swiper('.slidereport .swiper-container', {
         slidesPerView: 1,
         spaceBetween: 10,

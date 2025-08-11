@@ -11,36 +11,39 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 row-no-padding padleft10">
                         <h2 class="mysubhead fleft marhaedtop">Expressed Interest</h2>
                         @php
-                            $href = "href=# disabled";
-                            if(!empty(request()->user()) && request()->user()->membership_type == 1)
-                            $href = "href=/all-interests-csv";
+                            $href = 'href=# disabled';
+                            if (!empty(request()->user()) && request()->user()->membership_type == 1) {
+                                $href = 'href=/all-interests-csv';
+                            }
                         @endphp
-                        <a {{$href}} class="btn btn-default dwlbtn" id="export">Download Response</a>
+                        <a {{ $href }} class="btn btn-default dwlbtn" id="export">Download Response</a>
                         <div class="clearfix"></div>
                         <div class="bor-radius backwhite ovfl exyab">
-                            @if(request()->user()->membership_type != 1)
+                            @if (request()->user()->membership_type != 1)
                                 <div class="freeoverh">
                                     <p>Please upgrade your Account to utilise further benifits.</p>
-                                    <a href="{{url('franchisor/myaccount/payment-plan')}}" class="btn btn-default">Upgrade Account</a>
+                                    <a href="{{ url('franchisor/myaccount/payment-plan') }}" class="btn btn-default">Upgrade
+                                        Account</a>
                                 </div>
                             @endif
                             <table class="table table-responsive">
                                 <thead class="thead-inverse">
-                                <tr class="tabg">
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Investment</th>
-                                    <th>Address</th>
-                                    <th>Phone</th>
-                                </tr>
+                                    <tr class="tabg">
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Investment</th>
+                                        <th>Address</th>
+                                        <th>Phone</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($expressedInterests as $expData)
+                                    @foreach ($expressedInterests as $expData)
                                     @php
                                         $address = "Not Visible";
                                         // $invAmt  = Config('constants.investRangeInWords.'.$expData->investor->inv_amt);
                                         $invAmt = $expData->investor ? Config('constants.investRangeInWords.' . $expData->investor->inv_amt) : null;
-                                        $name    = $expData->investor ? ($expData->investor->userDetail->name) : null;
+                                        // $name    = $expData->investor ? ($expData->investor->userDetail->name) : null;
+                                        $name    = ($expData->investor && $expData->investor->userDetail) ? $expData->investor->userDetail->name : null;
                                         $email   = "xxxxx@gmail.com";
                                         $mobile  = "99xxxxxxxx";
                                         $address = "xxxxxxxx,Pin-code:-xxxxxx";
@@ -58,8 +61,10 @@
                                             if(!empty($expData->investor->inv_country))
                                                 $address .= $expData->investor->inv_country.", ";
 
-                                            $email  =$expData->investor ? ($expData->investor->userDetail->email) : null;
-                                            $mobile = $expData->investor ? ($expData->investor->userDetail->mobile) : null;
+                                            $email    = ($expData->investor && $expData->investor->userDetail) ? $expData->investor->userDetail->email : null;
+                                            $mobile    = ($expData->investor && $expData->investor->userDetail) ? $expData->investor->userDetail->mobile : null;
+                                            // $email  = $expData->investor ? ($expData->investor->userDetail->email) : null;
+                                            // $mobile = $expData->investor ? ($expData->investor->userDetail->mobile) : null;
                                         }
                                     @endphp
                                     <tr class="extrl">
@@ -93,7 +98,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="pull-right"> {{ $expressedInterests->links() }}</div>
+                        <div class="pull-right"> {{ $expressedInterests->links('pagination::bootstrap-4') }}</div>
                     </div>
                 </div>
             </div>
