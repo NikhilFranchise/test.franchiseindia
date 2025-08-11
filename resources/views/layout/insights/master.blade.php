@@ -77,6 +77,10 @@
     @yield('header-schema')
     @yield('author-schema')
     @include('layout.insights.menu')
+    <link rel="preconnect" href="https://securepubads.g.doubleclick.net" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://franchiseindia.s3.ap-south-1.amazonaws.com" crossorigin>
 </head>
 
 <body>
@@ -86,12 +90,12 @@
     <div class="fixsocial">
         <ul class="sociallist">
             <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img
-                        src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook"></a></li>
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook" width="24" height="24"></a></li>
             <li><a href="https://www.instagram.com/franchiseindia_/" target="_blank"><img
                         src="https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg"
-                        alt=""></a></li>
+                        alt="" width="24" height="24"></a></li>
             <li><a href="https://twitter.com/FranchiseIndia" target="_blank"><img
-                        src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg" alt="twitter"></a>
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg" alt="twitter" width="24" height="24"></a>
             </li>
             <li><a href="https://www.youtube.com/user/FranchiseIndia" target="_blank"><img
                         src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg"
