@@ -1,7 +1,21 @@
 @extends('layout.insights.master')
 @section('seoTitle', $newsDetails->title)
+{{-- @section('header-schema')
+    @include('insights.schema', ['newsDetails' => $newsDetails])
+@endsection --}}
 @section('header-schema')
     @include('insights.schema', ['newsDetails' => $newsDetails])
+    <link rel="preload" as="image" href="{{ $ogimage }}" imagesrcset="{{ $ogimage }}" fetchpriority="high">
+
+    <style>
+      /* Reserve ad space to avoid CLS */
+      .inner-article-detail-desktop-top-ad { min-height: 90px; display:flex; align-items:center; justify-content:center; }
+      .inner-article-detail-desktop-ad { min-height: 250px; display:flex; align-items:center; justify-content:center; }
+      @media (max-width: 767px) {
+        .inner-article-detail-desktop-top-ad { min-height: 60px; }
+        .inner-article-detail-desktop-ad { min-height: 250px; }
+      }
+    </style>
 @endsection
 @section('seoDesc', $newsDetails->shortDesc)
 @section('seoKeywords', $newsDetails->kicker)
@@ -45,15 +59,7 @@
         <!-- DESKTOP TOP AD PLACEMENT START HERE  -->
         <div class="container">
             @desktop
-                {{-- <div class="inner-article-detail-desktop-top-ad">
-                    <div id='adslot728x90_ATF-{{ $newsDetails->news_id }}'>
-                        <script>
-                            googletag.cmd.push(function() {
-                                googletag.display('adslot728x90_ATF');
-                            });
-                        </script>
-                    </div>
-                </div> --}}
+              
                 <div class="inner-article-detail-desktop-top-ad">
                     @php
                         $topAd = 'adslot728x90_ATF-' . $newsDetails->news_id;
@@ -167,18 +173,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="content-main">
-                        <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}">
-                        {{-- ads for mobile & desktop --}}
-                        {{-- <div class="inner-article-detail-desktop-ad fad">
-                            <div id="adslotInline_3_300x250">
-                                <script>
-                                    googletag.cmd.push(function() {
-                                        googletag.display("adslotInline_3_300x250");
-                                    });
-                                </script>
-                            </div>
-                        </div> --}}
+                    {{-- <div class="content-main">
+                        <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}"> --}}
+                        <div class="content-main">
+                            <img
+                              src="{{ $ogimage }}"
+                              alt="{{ $newsDetails->title }}"
+                              class="img-fluid"
+                              width="{{ $width ?: 1200 }}"
+                              height="{{ $height ?: 675 }}"
+                              sizes="(max-width: 768px) 100vw, 800px"
+                              decoding="async"
+                              fetchpriority="high"
+                              style="@if($width && $height)aspect-ratio: {{ $width }}/{{ $height }};@endif object-fit: cover; width: 100%; height: auto;"
+                            >
+                      
                         <div class="inner-article-detail-desktop-ad fad">
                             @php
                                 $imgBottomAd =
@@ -200,85 +209,7 @@
 
                         {{-- ads for mobile & desktop --}}
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
-                        {{-- @php
-                            // Match <p>, <table>, <ul>, <ol>, <blockquote>, etc. to split the content
-                            $blocks = preg_split(
-                                '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
-                                $newsDetails->content,
-                                -1,
-                                PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
-                            );
-
-                            $totalBlocks = count($blocks);
-                                // dd($totalBlocks, $blocks);
-                            // Count only <p> tags to determine ad logic
-                            preg_match_all('/<p.*?<\/p>/is', $newsDetails->content, $matches);
-                            $totalParagraphs = count($matches[0]);
-
-                            // Decide number of ads based on paragraph count
-                            if ($totalParagraphs >= 100) {
-                                $adsToShow = 9;
-                            } elseif ($totalParagraphs >= 80) {
-                                $adsToShow = 7;
-                            } elseif ($totalParagraphs >= 40) {
-                                $adsToShow = 4;
-                            } else {
-                                $adsToShow = 2;
-                            }
-
-                            // Base ad slots (Google Ad Manager paths)
-                            $baseAdSlots = [
-                                'adslotInline_1_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250',
-                                'adslotInline_2_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250',
-                                'adslotInline_3_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250',
-                                'adslotInline_4_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250',
-                                'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
-                            ];
-
-                            // Prepare final dynamic ad slots
-                            $adSlots = [];
-                            $baseKeys = array_keys($baseAdSlots);
-                            for ($i = 0; $i < $adsToShow; $i++) {
-                                $baseKey = $baseKeys[$i % count($baseKeys)];
-                                $slotKey = "{$baseKey}_{$newsDetails->news_id}_{$i}";
-                                $slotPath = $baseAdSlots[$baseKey];
-                                $adSlots[$slotKey] = $slotPath;
-                            }
-
-                            $adKeys = array_keys($adSlots);
-
-                            // Calculate positions to insert ads evenly across blocks
-                            $adPositions = [];
-                            if ($adsToShow > 0 && $totalBlocks > $adsToShow) {
-                                $interval = floor($totalBlocks / ($adsToShow + 1));
-                                for ($i = 1; $i <= $adsToShow; $i++) {
-                                    $adPositions[] = $i * $interval;
-                                }
-                            }
-
-                            // Render final HTML content with ads inserted
-                            $renderedContent = '';
-                            $adsInserted = 0;
-
-                            foreach ($blocks as $index => $block) {
-                                $renderedContent .= $block;
-
-                                if (in_array($index + 1, $adPositions) && isset($adKeys[$adsInserted])) {
-                                    $slotId = $adKeys[$adsInserted];
-                                    $slotPath = $adSlots[$slotId];
-
-                                    $renderedContent .= "
-                                    <div class='inner-article-detail-desktop-ad'>
-                                        <div id='{$slotId}' class='gpt-inline-slot'
-                                            data-slot-id='{$slotId}'
-                                            data-slot-path='{$slotPath}'>
-                                        </div>
-                                    </div>";
-                                    $adsInserted++;
-                                }
-                            }
-                        @endphp --}}
-                        {{-- pankaj code --}}
+                       
                         @php
                             $blocks = preg_split(
                                 '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
