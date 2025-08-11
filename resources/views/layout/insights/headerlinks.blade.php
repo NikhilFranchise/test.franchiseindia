@@ -15,8 +15,7 @@
  <link href="{{url('insight-new/assets/css/insight_new.css?ver='.date('d'))}}" rel="stylesheet">
    <!-- Java Script --> --}}
 
-
-    <!-- Favicons -->
+ <!-- Favicons -->
  <link href="{{url('insight-new/assets/img/favicon.ico')}}" rel="icon">
  <link href="{{url('insight-new/assets/img/favicon-new.png')}}" rel="apple-touch-icon">
  <!-- Google Fonts -->

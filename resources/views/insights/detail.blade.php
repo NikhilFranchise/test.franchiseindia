@@ -72,12 +72,15 @@
         <!-- DESKTOP TOP AD PLACEMENT END HERE -->
     </div>
     <style>
-        /* Avoid CLS by reserving ad space and stabilizing hero */
+        /* Avoid CLS and render only when needed */
         .ad-slot-728x90 { display:block; min-height:90px; }
         .ad-slot-300x250 { display:block; min-height:250px; }
         .ad-slot-300x600 { display:block; min-height:600px; }
         .gpt-inline-slot { display:block; min-height:250px; }
         .content-main > img { width:100%; height:auto; aspect-ratio: {{ $width ?: 1200 }} / {{ $height ?: 675 }}; }
+        .right-wrap, .popular-articles, .ad-right-sticky, #next-article-container, .newcontentblk {
+            content-visibility: auto; contain-intrinsic-size: 1px 1000px;
+        }
     </style>
 
     <div class="contentwrapper">
@@ -392,13 +395,33 @@
                                 $topRightAd = 'adslot300x250_ATF-' . $newsDetails->news_id;
                             @endphp
                             <div id='{{ $topRightAd }}'>
-                                <script>
+                                {{-- <script>
                                     googletag.cmd.push(function() {
                                         googletag.defineSlot('/1057625/FIHL/Desktop_ROS_300x250_ATF', [300, 250], '{{ $topRightAd }}')
                                             .addService(googletag.pubads());
                                         googletag.display('{{ $topRightAd }}');
                                     });
+                                </script> --}}
+                                <script>
+                                    (function(){
+                                        const id = '{{ $topRightAd }}';
+                                        const el = document.getElementById(id);
+                                        const io = new IntersectionObserver(entries=>{
+                                            entries.forEach(e=>{
+                                                if(e.isIntersecting){
+                                                    googletag.cmd.push(function() {
+                                                        googletag.defineSlot('/1057625/FIHL/Desktop_ROS_300x250_ATF', [300, 250], id)
+                                                            .addService(googletag.pubads());
+                                                        googletag.display(id);
+                                                    });
+                                                    io.unobserve(el);
+                                                }
+                                            });
+                                        }, { rootMargin: '300px 0px' });
+                                        io.observe(el);
+                                    })();
                                 </script>
+    
                             </div>
                         </div>
                         {{-- ads top right sidebar --}}
@@ -460,7 +483,7 @@
                                 $rightBottomAd = 'adslot300x250_1-' . $newsDetails->news_id;
                             @endphp
                             <div id="{{ $rightBottomAd }}">
-                                <script>
+                                {{-- <script>
                                     googletag.cmd.push(function() {
                                         googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [
                                                 [300, 250],
@@ -469,7 +492,27 @@
                                             .addService(googletag.pubads());
                                         googletag.display('{{ $rightBottomAd }}');
                                     });
+                                </script> --}}
+                                <script>
+                                    (function(){
+                                        const id = '{{ $rightBottomAd }}';
+                                        const el = document.getElementById(id);
+                                        const io = new IntersectionObserver(entries=>{
+                                            entries.forEach(e=>{
+                                                if(e.isIntersecting){
+                                                    googletag.cmd.push(function() {
+                                                        googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [[300,250],[300,600]], id)
+                                                            .addService(googletag.pubads());
+                                                        googletag.display(id);
+                                                    });
+                                                    io.unobserve(el);
+                                                }
+                                            });
+                                        }, { rootMargin: '300px 0px' });
+                                        io.observe(el);
+                                    })();
                                 </script>
+    
                             </div>
                         </div>
                     </div>
@@ -482,7 +525,7 @@
                         $bottomAd = 'adslot728x90_BTF-' . $newsDetails->news_id;
                     @endphp
                     <div id='{{ $bottomAd }}'>
-                        <script>
+                        {{-- <script>
                             googletag.cmd.push(function() {
                                 googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_BTF', [
                                         [728, 90],
@@ -492,7 +535,26 @@
                                     .addService(googletag.pubads());
                                 googletag.display('{{ $bottomAd }}');
                             });
-                        </script>
+                        </script> --}}
+                        <script>
+                            (function(){
+                                const id = '{{ $bottomAd }}';
+                                const el = document.getElementById(id);
+                                const io = new IntersectionObserver(entries=>{
+                                    entries.forEach(e=>{
+                                        if(e.isIntersecting){
+                                            googletag.cmd.push(function() {
+                                                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_BTF', [[728,90],[970,90],[970,250]], id)
+                                                    .addService(googletag.pubads());
+                                                googletag.display(id);
+                                            });
+                                            io.unobserve(el);
+                                        }
+                                    });
+                                }, { rootMargin: '300px 0px' });
+                                io.observe(el);
+                            })();
+    
                     </div>
                 </div>
             @enddesktop
@@ -775,6 +837,30 @@
             });
         });
     </script>
-@endsection
-    </script>
+        <script>
+            (function(){
+                const rootMargin = '300px 0px';
+                function loadSlot(el){
+                    if (el.dataset.gptLoaded) return;
+                    const id = el.dataset.slotId;
+                    const path = el.dataset.slotPath;
+                    if (!id || !path) return;
+                    googletag.cmd.push(function(){
+                        googletag.defineSlot(path, [[300,250],[336,280],[250,250]], id)
+                            .addService(googletag.pubads());
+                        googletag.display(id);
+                    });
+                    el.dataset.gptLoaded = 'true';
+                }
+                const io = new IntersectionObserver(entries=>{
+                    entries.forEach(e=>{
+                        if(e.isIntersecting){
+                            loadSlot(e.target);
+                            io.unobserve(e.target);
+                        }
+                    });
+                }, { rootMargin });
+                document.querySelectorAll('.gpt-inline-slot').forEach(el=>io.observe(el));
+            })();
+        </script>
 @endsection
