@@ -54,7 +54,7 @@
                         </script>
                     </div>
                 </div> --}}
-                <div class="inner-article-detail-desktop-top-ad">
+                <div class="inner-article-detail-desktop-top-ad ad-slot-728x90">
                     @php
                         $topAd = 'adslot728x90_ATF-' . $newsDetails->news_id;
                     @endphp
@@ -71,6 +71,15 @@
         </div>
         <!-- DESKTOP TOP AD PLACEMENT END HERE -->
     </div>
+    <style>
+        /* Avoid CLS by reserving ad space and stabilizing hero */
+        .ad-slot-728x90 { display:block; min-height:90px; }
+        .ad-slot-300x250 { display:block; min-height:250px; }
+        .ad-slot-300x600 { display:block; min-height:600px; }
+        .gpt-inline-slot { display:block; min-height:250px; }
+        .content-main > img { width:100%; height:auto; aspect-ratio: {{ $width ?: 1200 }} / {{ $height ?: 675 }}; }
+    </style>
+
     <div class="contentwrapper">
         <div class="container">
             <div class="row">
@@ -168,7 +177,17 @@
                         </div>
                     </div>
                     <div class="content-main">
-                        <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}">
+                        <img
+                        src="{{ $ogimage }}"
+                        class="img-fluid"
+                        alt="{{ $newsDetails->title }}"
+                        width="{{ $width ?: 1200 }}"
+                        height="{{ $height ?: 675 }}"
+                        decoding="async"
+                        fetchpriority="high"
+                    >
+
+                        {{-- <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}"> --}}
                         {{-- ads for mobile & desktop --}}
                         {{-- <div class="inner-article-detail-desktop-ad fad">
                             <div id="adslotInline_3_300x250">
@@ -179,7 +198,7 @@
                                 </script>
                             </div>
                         </div> --}}
-                        <div class="inner-article-detail-desktop-ad fad">
+                        <div class="inner-article-detail-desktop-ad fad ad-slot-300x250">
                             @php
                                 $imgBottomAd =
                                     'adslot300x250_ATF-' . $newsDetails->news_id . '-' . $newsDetails->cat_id;
@@ -368,7 +387,7 @@
                 <div class="col-md-4">
                     <div class="right-wrap">
                         {{-- ads top right sidebar --}}
-                        <div class="ad-right">
+                        <div class="ad-right ad-slot-300x250">
                             @php
                                 $topRightAd = 'adslot300x250_ATF-' . $newsDetails->news_id;
                             @endphp
@@ -436,7 +455,7 @@
                                 @endforelse
                             </ul>
                         </div>
-                        <div class="ad-right-sticky">
+                        <div class="ad-right-sticky ad-slot-300x600">
                             @php
                                 $rightBottomAd = 'adslot300x250_1-' . $newsDetails->news_id;
                             @endphp
@@ -458,7 +477,7 @@
             </div>
             {{-- footer ads slot --}}
             @desktop
-                <div class="inner-article-detail-desktop-top-ad">
+                <div class="inner-article-detail-desktop-top-ad ad-slot-728x90">
                     @php
                         $bottomAd = 'adslot728x90_BTF-' . $newsDetails->news_id;
                     @endphp
@@ -744,5 +763,18 @@
                 slot.setAttribute('data-gpt-loaded', 'true');
             });
         }
+                // Progressive image hints: lazy-load and async-decode non-hero images
+                document.addEventListener('DOMContentLoaded', function(){
+            const imgs = document.querySelectorAll('.articlecontent img');
+            imgs.forEach((img, idx) => {
+                if (idx > 0) {
+                    img.loading = 'lazy';
+                    img.decoding = 'async';
+                    img.fetchPriority = 'low';
+                }
+            });
+        });
+    </script>
+@endsection
     </script>
 @endsection
