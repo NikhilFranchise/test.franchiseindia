@@ -42,3 +42,10 @@
 <link href="{{url('insight-new/assets/css/insightstyle.css?ver='.date('d'))}}" rel="stylesheet">
 <link href="{{url('insight-new/assets/css/insight_new.css?ver='.date('d'))}}" rel="stylesheet">
 <!-- Java Script -->
+
+@mobile
+  <script src="{{ mix('insight-mobile.js') }}" defer></script>
+@endmobile
+@desktop
+  <script src="{{ mix('insight-desktop.js') }}" defer></script>
+@enddesktop
