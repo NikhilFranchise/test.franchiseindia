@@ -1,5 +1,4 @@
 @extends('layout.insights.master')
-@section('insights_detail', true)
 @section('seoTitle', $newsDetails->title)
 @section('header-schema')
     @include('insights.schema', ['newsDetails' => $newsDetails])
@@ -46,7 +45,7 @@
         <!-- DESKTOP TOP AD PLACEMENT START HERE  -->
         <div class="container">
             @desktop
-                <div class="inner-article-detail-desktop-top-ad">
+                {{-- <div class="inner-article-detail-desktop-top-ad">
                     <div id='adslot728x90_ATF-{{ $newsDetails->news_id }}'>
                         <script>
                             googletag.cmd.push(function() {
@@ -54,8 +53,8 @@
                             });
                         </script>
                     </div>
-                </div>
-                {{-- <div class="inner-article-detail-desktop-top-ad" style="min-height:90px; display:block;">
+                </div> --}}
+                <div class="inner-article-detail-desktop-top-ad">
                     @php
                         $topAd = 'adslot728x90_ATF-' . $newsDetails->news_id;
                     @endphp
@@ -67,7 +66,7 @@
                             googletag.display('{{ $topAd }}');
                         });
                     </script>
-                </div> --}}
+                </div>
             @enddesktop
         </div>
         <!-- DESKTOP TOP AD PLACEMENT END HERE -->
@@ -169,24 +168,7 @@
                         </div>
                     </div>
                     <div class="content-main">
-                        <style>
-                            .articlecontent, .right-wrap, #next-article-container {
-                              content-visibility: auto;
-                              contain-intrinsic-size: 1200px;
-                            }
-                            </style>
-                            <img
-                              src="{{ $ogimage }}"
-                              width="{{ $width }}"
-                              height="{{ $height }}"
-                              alt="{{ $newsDetails->title }}"
-                              class="img-fluid"
-                              decoding="async"
-                              fetchpriority="high"
-                              loading="eager"
-                              sizes="(max-width: 768px) 100vw, 720px"
-                              style="aspect-ratio: {{ max(1,$width) }} / {{ max(1,$height) }};"
-                            >
+                        <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}">
                         {{-- ads for mobile & desktop --}}
                         {{-- <div class="inner-article-detail-desktop-ad fad">
                             <div id="adslotInline_3_300x250">
@@ -197,13 +179,13 @@
                                 </script>
                             </div>
                         </div> --}}
-                        <div class="inner-article-detail-desktop-ad fad" style="min-height:250px;">
+                        <div class="inner-article-detail-desktop-ad fad">
                             @php
                                 $imgBottomAd =
                                     'adslot300x250_ATF-' . $newsDetails->news_id . '-' . $newsDetails->cat_id;
                             @endphp
                             <div id="{{ $imgBottomAd }}"></div>
-                            {{-- <script>
+                            <script>
                                 googletag.cmd.push(function() {
                                     googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250', [
                                         [300, 250],
@@ -213,15 +195,7 @@
 
                                     googletag.display('{{ $imgBottomAd }}');
                                 });
-                            </script> --}}
-                             <script>
-    googletag.cmd.push(function() {
-      googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250', [[300,250],[336,280],[250,250]], '{{ $imgBottomAd }}')
-        .addService(googletag.pubads());
-      googletag.display('{{ $imgBottomAd }}');
-    });
-  </script>
-
+                            </script>
                         </div>
 
                         {{-- ads for mobile & desktop --}}
@@ -322,18 +296,10 @@
                                 'adslotInline_4_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250',
                                 'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
                             ];
+
                             $adKeys = array_keys($adSlots);
                             $maxAds = min(count($adSlots), floor($totalBlocks / 4)); // max 5, minimum every 4 blocks
                             $adsInserted = 0;
-
-                            // $adKeys = array_keys($adSlots);
-                            // $isMobile = false;
-                            // @endphp @mobile @php $isMobile = true; @endphp @endmobile @php
-
-                            // $maxAds = $isMobile
-                            //     ? min(2, floor($totalBlocks / 8))
-                            //     : min(count($adSlots), floor($totalBlocks / 4));
-                            // $adsInserted = 0;
 
                             // Dynamically calculate where to place ads
                             $insertPositions = [];
@@ -399,11 +365,10 @@
                         @include('layout.insights.subscribenewsletter')
                     </div>
                 </div>
-                @desktop
                 <div class="col-md-4">
                     <div class="right-wrap">
                         {{-- ads top right sidebar --}}
-                        <div class="ad-right" style="min-height:250px;">
+                        <div class="ad-right">
                             @php
                                 $topRightAd = 'adslot300x250_ATF-' . $newsDetails->news_id;
                             @endphp
@@ -471,7 +436,7 @@
                                 @endforelse
                             </ul>
                         </div>
-                        <div class="ad-right-sticky" style="min-height:250px;">
+                        <div class="ad-right-sticky">
                             @php
                                 $rightBottomAd = 'adslot300x250_1-' . $newsDetails->news_id;
                             @endphp
@@ -490,11 +455,10 @@
                         </div>
                     </div>
                 </div>
-                @enddesktop
             </div>
             {{-- footer ads slot --}}
             @desktop
-                <div class="inner-article-detail-desktop-top-ad" style="min-height:90px; display:block;">
+                <div class="inner-article-detail-desktop-top-ad">
                     @php
                         $bottomAd = 'adslot728x90_BTF-' . $newsDetails->news_id;
                     @endphp
