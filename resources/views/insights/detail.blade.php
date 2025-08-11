@@ -184,6 +184,7 @@
                               decoding="async"
                               fetchpriority="high"
                               loading="eager"
+                              sizes="(max-width: 768px) 100vw, 720px"
                               style="aspect-ratio: {{ max(1,$width) }} / {{ max(1,$height) }};"
                             >
                         {{-- ads for mobile & desktop --}}
@@ -202,7 +203,7 @@
                                     'adslot300x250_ATF-' . $newsDetails->news_id . '-' . $newsDetails->cat_id;
                             @endphp
                             <div id="{{ $imgBottomAd }}"></div>
-                            <script>
+                            {{-- <script>
                                 googletag.cmd.push(function() {
                                     googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250', [
                                         [300, 250],
@@ -212,7 +213,15 @@
 
                                     googletag.display('{{ $imgBottomAd }}');
                                 });
-                            </script>
+                            </script> --}}
+                            <script>
+                                googletag.cmd.push(function() {
+                                  googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250', [[300,250],[336,280],[250,250]], '{{ $imgBottomAd }}')
+                                    .addService(googletag.pubads());
+                                  googletag.display('{{ $imgBottomAd }}');
+                                });
+                              </script>
+                            
                         </div>
 
                         {{-- ads for mobile & desktop --}}
@@ -525,7 +534,7 @@
         ]);
 
     @endphp
-    <script>
+    {{-- <script>
         window.googletag = window.googletag || {
             cmd: []
         };
@@ -553,7 +562,67 @@
                 googletag.display(slot.dataset.slotId);
             });
         });
-    </script>
+    </script> --}}
+    {{-- <script>
+        (function(cb){ (window.requestIdleCallback||function(f){setTimeout(f,1)})(cb); })(function(){
+          window.googletag = window.googletag || { cmd: [] };
+        
+          googletag.cmd.push(function() {
+            const slots = document.querySelectorAll('.gpt-inline-slot');
+            slots.forEach(slot => {
+              const id = slot.dataset.slotId;
+              const path = slot.dataset.slotPath;
+              if (id && path) {
+                googletag.defineSlot(path, [[300,250],[336,280],[250,250]], id)
+                  .addService(googletag.pubads());
+              }
+            });
+            googletag.enableServices();
+            slots.forEach(slot => { googletag.display(slot.dataset.slotId); });
+          });
+        });
+        </script> --}}
+        <script>
+            (function(cb){ (window.requestIdleCallback||function(f){setTimeout(f,200)})(cb); })(function(){
+              let isLoading = false;
+              let hasScrolledDown = false;
+              let nextUrl = @json($nextUrl);
+              let loadedIds = new Set([@json($newsDetails->news_id)]);
+              let currentActiveArticleId = null;
+            
+              let articleMetaMap = {
+                [@json($newsDetails->news_id)]: {
+                  meta: {
+                    title: @json($newsDetails->title),
+                    description: @json($newsDetails->shortDesc),
+                    keywords: @json($newsDetails->shortDesc)
+                  },
+                  url: window.location.href
+                }
+              };
+            
+              function updateMetadata(meta) {
+                if (meta?.title) document.title = meta.title;
+                if (meta?.description) document.querySelector('meta[name="description"]')?.setAttribute('content', meta.description);
+                if (meta?.keywords) document.querySelector('meta[name="keywords"]')?.setAttribute('content', meta.keywords);
+              }
+              function fireGTM(articleId) {
+                if (typeof dataLayer !== 'undefined') {
+                  dataLayer.push({ event: 'articleScroll', articleId });
+                }
+              }
+              function loadArticle(currentId) { /* keep existing body unchanged */ }
+              const articleObserver = new IntersectionObserver(/* keep existing callback */, { threshold: 0.75 });
+              const bottomObserver = new IntersectionObserver(/* keep existing callback */, { threshold: 0.5 });
+              const topParagraphObserver = new IntersectionObserver(/* keep existing callback */, { threshold: 1 });
+            
+              function observeArticles(){ /* keep existing body */ }
+            
+              document.addEventListener('DOMContentLoaded', () => { observeArticles(); });
+            
+              function refreshNewAdSlots(context = document) { /* keep existing body */ }
+            });
+            </script>
     <script>
         let isLoading = false;
         let hasScrolledDown = false;

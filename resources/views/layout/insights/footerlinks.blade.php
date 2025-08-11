@@ -2,7 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script defer src="{{ url('insight-new/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- Template Main JS File -->
-<scrip defer src="{{url('insight-new/assets/js/main.js')}}"></scrip>
+<script defer src="{{ url('insight-new/assets/js/main.js') }}"></script>
 <script defer src="{{ url('insight-new/assets/js/swiper.min.js') }}"></script>
 {{-- <script src="https://dimsemenov.com/plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script> --}}
 @stack('scripts')

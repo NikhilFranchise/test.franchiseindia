@@ -1,7 +1,7 @@
 <script async src="{{ url('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js') }}"></script>
 {{-- <script async src="https://rtbcdn.andbeyond.media/prod-global-550463.js"></script> --}}
 <!-- Affinity HVR Invocation Code //-->
-<script type="text/javascript">F
+<script type="text/javascript">
     (function() {
         var o = 'script',
             s = top.document,
@@ -47,7 +47,22 @@
     </script>
 @endif
 <!-- new code start -->
-<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+{{-- <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script> --}}
+<!-- new code start -->
+<script>
+    window.googletag = window.googletag || {cmd:[]};
+    (function loadGPTWhenIdle(){
+      function start(){
+        if (document.getElementById('gpt-lib')) return;
+        var s=document.createElement('script');
+        s.src='https://securepubads.g.doubleclick.net/tag/js/gpt.js';
+        s.async=true; s.id='gpt-lib';
+        document.head.appendChild(s);
+      }
+      if ('requestIdleCallback' in window) requestIdleCallback(start, {timeout: 1000});
+      else setTimeout(start, 800);
+    })();
+  </script>
 <script>
     window.googletag = window.googletag || {
         cmd: []
@@ -194,6 +209,8 @@
                     .addService(googletag.pubads());
             @endif
             googletag.pubads().enableSingleRequest();
+            googletag.pubads().enableLazyLoad({fetchMarginPercent: 0, renderMarginPercent: 25, mobileScaling: 1.0});
+            googletag.pubads().collapseEmptyDivs(); 
             googletag.enableServices();
         });
     @endmobile
@@ -422,6 +439,8 @@
                 ], 'adslot728x90_BTF').addService(googletag.pubads());
             @endif
             googletag.pubads().enableSingleRequest();
+            googletag.pubads().enableLazyLoad({fetchMarginPercent: 0, renderMarginPercent: 25, mobileScaling: 1.0});
+            googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
         });
     @enddesktop
@@ -493,6 +512,8 @@
                     .addService(googletag.pubads());
             @endif
             googletag.pubads().enableSingleRequest();
+            googletag.pubads().enableLazyLoad({fetchMarginPercent: 0, renderMarginPercent: 25, mobileScaling: 1.0});
+            googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
         });
     @endtablet

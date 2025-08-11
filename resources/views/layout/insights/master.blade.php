@@ -72,7 +72,6 @@
     <meta name="y_key" content="0f4f718975ac23ed" />
     <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
     @include('layout.insights.headerlinks')
-    @include('includes.banners-new.google-tags')
     <link rel="preload" as="image" href="@yield('image')" fetchpriority="high">
     <link rel="preconnect" href="https://securepubads.g.doubleclick.net" crossorigin>
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
@@ -120,6 +119,7 @@
     </div>
     @include('layout.insights.newsletter')
     @include('layout.insights.footer')
+    @include('includes.banners-new.google-tags')
     @include('layout.insights.footerlinks')
 </body>
 
