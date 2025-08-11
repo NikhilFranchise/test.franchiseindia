@@ -46,7 +46,7 @@
         <!-- DESKTOP TOP AD PLACEMENT START HERE  -->
         <div class="container">
             @desktop
-                {{-- <div class="inner-article-detail-desktop-top-ad">
+                <div class="inner-article-detail-desktop-top-ad">
                     <div id='adslot728x90_ATF-{{ $newsDetails->news_id }}'>
                         <script>
                             googletag.cmd.push(function() {
@@ -54,8 +54,8 @@
                             });
                         </script>
                     </div>
-                </div> --}}
-                <div class="inner-article-detail-desktop-top-ad" style="min-height:90px; display:block;">
+                </div>
+                {{-- <div class="inner-article-detail-desktop-top-ad" style="min-height:90px; display:block;">
                     @php
                         $topAd = 'adslot728x90_ATF-' . $newsDetails->news_id;
                     @endphp
@@ -67,7 +67,7 @@
                             googletag.display('{{ $topAd }}');
                         });
                     </script>
-                </div>
+                </div> --}}
             @enddesktop
         </div>
         <!-- DESKTOP TOP AD PLACEMENT END HERE -->
