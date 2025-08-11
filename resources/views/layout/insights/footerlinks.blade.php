@@ -1,10 +1,10 @@
 <!-- Vendor JS Files -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="{{ url('insight-new/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script defer src="{{ url('insight-new/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- Template Main JS File -->
-<script src="{{url('insight-new/assets/js/main.js')}}"></script>
-<script src="{{ url('insight-new/assets/js/swiper.min.js') }}"></script>
-<script src="https://dimsemenov.com/plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+<scrip defer src="{{url('insight-new/assets/js/main.js')}}"></scrip>
+<script defer src="{{ url('insight-new/assets/js/swiper.min.js') }}"></script>
+{{-- <script src="https://dimsemenov.com/plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script> --}}
 @stack('scripts')
 <script>
 (function initWhenIdle(cb){
@@ -64,7 +64,7 @@
 </script>
 <!-- for  end  article detail page   -->
 <!-- for  start  list  page   -->
-<script>
+{{-- <script>
     var swiper = new Swiper('.maincateblk .swiper-container', {
           slidesPerView: 1,
           spaceBetween: 10,
@@ -153,7 +153,7 @@
           $('img', this).toggle();
           $('#searchbar').toggle();
       });
-</script>
+</script> --}}
 <!-- for  end  here home  -->
 <script type="text/javascript">
     $(document).ready(function() {
@@ -196,89 +196,102 @@
                   });
               });
 
-    var swiper = new Swiper('.sliderauthor .swiper-container', {
-        slidesPerView: 1,
-        spaceBetween: 10,
-        loop: false,
-        // AutoPlay
-        autoplay: {
-            delay: 2700,
-            speed: 1000,
-            disableOnInteraction: true,
-            watchSlidesProgress: true,
-            watchVisibility: true,
-        },
-        // init: false,
-        pagination: {
-            el: '.sliderauthor  .swiper-pagination',
-            clickable: true,
-        },
-        navigation: {
-            nextEl: '.sliderauthor .swiper-button-next',
-            prevEl: '.sliderauthor .swiper-button-prev',
-        },
-        keyboard: {
-            enabled: true,
-            onlyInViewport: true,
-        },
-        breakpoints: {
-            320: {
-                slidesPerView: 1.5,
-                spaceBetween: 10,
-                loop: true,
-            },
-            768: {
-                slidesPerView: 4,
-                spaceBetween: 10,
-                loop: true,
-            },
-            1024: {
-                slidesPerView: 5,
-                spaceBetween: 10,
-            },
-        }
-    });
+    // var swiper = new Swiper('.sliderauthor .swiper-container', {
+    //     slidesPerView: 1,
+    //     spaceBetween: 10,
+    //     loop: false,
+    //     // AutoPlay
+    //     autoplay: {
+    //         delay: 2700,
+    //         speed: 1000,
+    //         disableOnInteraction: true,
+    //         watchSlidesProgress: true,
+    //         watchVisibility: true,
+    //     },
+    //     // init: false,
+    //     pagination: {
+    //         el: '.sliderauthor  .swiper-pagination',
+    //         clickable: true,
+    //     },
+    //     navigation: {
+    //         nextEl: '.sliderauthor .swiper-button-next',
+    //         prevEl: '.sliderauthor .swiper-button-prev',
+    //     },
+    //     keyboard: {
+    //         enabled: true,
+    //         onlyInViewport: true,
+    //     },
+    //     breakpoints: {
+    //         320: {
+    //             slidesPerView: 1.5,
+    //             spaceBetween: 10,
+    //             loop: true,
+    //         },
+    //         768: {
+    //             slidesPerView: 4,
+    //             spaceBetween: 10,
+    //             loop: true,
+    //         },
+    //         1024: {
+    //             slidesPerView: 5,
+    //             spaceBetween: 10,
+    //         },
+    //     }
+    // });
 
-    var swiper = new Swiper('.slidereport .swiper-container', {
-        slidesPerView: 1,
-        spaceBetween: 10,
-        loop: false,
-        // AutoPlay
-        autoplay: {
-            delay: 2700,
-            speed: 1000,
-            disableOnInteraction: true,
-            watchSlidesProgress: true,
-            watchVisibility: true,
-        },
-        // init: false,
-        pagination: {
-            el: '.slidereport  .swiper-pagination',
-            clickable: true,
-        },
-        navigation: {
-            nextEl: '.slidereport .swiper-button-next',
-            prevEl: '.slidereport .swiper-button-prev',
-        },
-        keyboard: {
-            enabled: true,
-            onlyInViewport: true,
-        },
-        breakpoints: {
-            320: {
-                slidesPerView: 1.5,
-                spaceBetween: 10,
-                loop: true,
-            },
-            768: {
-                slidesPerView: 4,
-                spaceBetween: 10,
-                loop: true,
-            },
-            1024: {
-                slidesPerView: 5,
-                spaceBetween: 10,
-            },
-        }
-    });
+    // var swiper = new Swiper('.slidereport .swiper-container', {
+    //     slidesPerView: 1,
+    //     spaceBetween: 10,
+    //     loop: false,
+    //     // AutoPlay
+    //     autoplay: {
+    //         delay: 2700,
+    //         speed: 1000,
+    //         disableOnInteraction: true,
+    //         watchSlidesProgress: true,
+    //         watchVisibility: true,
+    //     },
+    //     // init: false,
+    //     pagination: {
+    //         el: '.slidereport  .swiper-pagination',
+    //         clickable: true,
+    //     },
+    //     navigation: {
+    //         nextEl: '.slidereport .swiper-button-next',
+    //         prevEl: '.slidereport .swiper-button-prev',
+    //     },
+    //     keyboard: {
+    //         enabled: true,
+    //         onlyInViewport: true,
+    //     },
+    //     breakpoints: {
+    //         320: {
+    //             slidesPerView: 1.5,
+    //             spaceBetween: 10,
+    //             loop: true,
+    //         },
+    //         768: {
+    //             slidesPerView: 4,
+    //             spaceBetween: 10,
+    //             loop: true,
+    //         },
+    //         1024: {
+    //             slidesPerView: 5,
+    //             spaceBetween: 10,
+    //         },
+    //     }
+    // });
+
+</script>
+<!-- Add conditional, idle-loaded Magnific -->
+<script>
+(function initWhenIdle(cb){(window.requestIdleCallback||function(f){setTimeout(f,200)})(cb);})(function(){
+  if (document.querySelector('.popup-youtube')) {
+    var s=document.createElement('script');
+    s.src='https://dimsemenov.com/plugins/magnific-popup/dist/jquery.magnific-popup.min.js';
+    s.async=true;
+    s.onload=function(){ $('.popup-youtube').magnificPopup({type:'iframe'}); };
+    document.body.appendChild(s);
+  }
+});
 </script>

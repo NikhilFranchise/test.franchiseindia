@@ -1,4 +1,6 @@
 @extends('layout.insights.master')
+@section('insights_detail', true)
+@endsection
 @section('seoTitle', $newsDetails->title)
 @section('header-schema')
     @include('insights.schema', ['newsDetails' => $newsDetails])
@@ -168,17 +170,23 @@
                         </div>
                     </div>
                     <div class="content-main">
-                        <img
-                            src="{{ $ogimage }}"
-                            width="{{ $width }}"
-                            height="{{ $height }}"
-                            alt="{{ $newsDetails->title }}"
-                            class="img-fluid"
-                            decoding="async"
-                            fetchpriority="high"
-                            loading="eager"
-                            style="aspect-ratio: {{ max(1,$width) }} / {{ max(1,$height) }};"
-                        >
+                        <style>
+                            .articlecontent, .right-wrap, #next-article-container {
+                              content-visibility: auto;
+                              contain-intrinsic-size: 1200px;
+                            }
+                            </style>
+                            <img
+                              src="{{ $ogimage }}"
+                              width="{{ $width }}"
+                              height="{{ $height }}"
+                              alt="{{ $newsDetails->title }}"
+                              class="img-fluid"
+                              decoding="async"
+                              fetchpriority="high"
+                              loading="eager"
+                              style="aspect-ratio: {{ max(1,$width) }} / {{ max(1,$height) }};"
+                            >
                         {{-- ads for mobile & desktop --}}
                         {{-- <div class="inner-article-detail-desktop-ad fad">
                             <div id="adslotInline_3_300x250">
@@ -308,7 +316,14 @@
                             ];
 
                             $adKeys = array_keys($adSlots);
-                            $maxAds = min(count($adSlots), floor($totalBlocks / 4)); // max 5, minimum every 4 blocks
+                            $isMobile = false;
+                            @endphp @mobile @php $isMobile = true; @endphp @endmobile @php
+
+                            $maxAds = $isMobile
+                                ? min(2, floor($totalBlocks / 8))
+                                : min(count($adSlots), floor($totalBlocks / 4));
+                            $adsInserted = 0;
+                            // $maxAds = min(count($adSlots), floor($totalBlocks / 4)); // max 5, minimum every 4 blocks
                             $adsInserted = 0;
 
                             // Dynamically calculate where to place ads

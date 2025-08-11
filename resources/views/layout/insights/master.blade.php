@@ -74,19 +74,35 @@
     @include('layout.insights.headerlinks')
     @include('includes.banners-new.google-tags')
     <link rel="preload" as="image" href="@yield('image')" fetchpriority="high">
-    @yield('header-schema')
-    @yield('author-schema')
-    @include('layout.insights.menu')
     <link rel="preconnect" href="https://securepubads.g.doubleclick.net" crossorigin>
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://franchiseindia.s3.ap-south-1.amazonaws.com" crossorigin>
+
+    @yield('header-schema')
+    @yield('author-schema')
+    @include('layout.insights.menu')
 </head>
 
 <body>
     <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
     @yield('content')
+    {{-- <div class="fixsocial">
+        <ul class="sociallist">
+            <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook" width="24" height="24"></a></li>
+            <li><a href="https://www.instagram.com/franchiseindia_/" target="_blank"><img
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg"
+                        alt="" width="24" height="24"></a></li>
+            <li><a href="https://twitter.com/FranchiseIndia" target="_blank"><img
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg" alt="twitter" width="24" height="24"></a>
+            </li>
+            <li><a href="https://www.youtube.com/user/FranchiseIndia" target="_blank"><img
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg"
+                        alt="youtube" width="24" height="24" loading="lazy"></a></li>
+        </ul>
+    </div> --}}
     <div class="fixsocial">
         <ul class="sociallist">
             <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img

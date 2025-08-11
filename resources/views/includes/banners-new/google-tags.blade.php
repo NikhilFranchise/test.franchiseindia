@@ -1,7 +1,7 @@
 <script async src="{{ url('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js') }}"></script>
 {{-- <script async src="https://rtbcdn.andbeyond.media/prod-global-550463.js"></script> --}}
 <!-- Affinity HVR Invocation Code //-->
-<script type="text/javascript">
+<script type="text/javascript">F
     (function() {
         var o = 'script',
             s = top.document,
