@@ -322,17 +322,18 @@
                                 'adslotInline_4_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250',
                                 'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
                             ];
-
                             $adKeys = array_keys($adSlots);
-                            $isMobile = false;
-                            @endphp @mobile @php $isMobile = true; @endphp @endmobile @php
+                            $maxAds = min(count($adSlots), floor($totalBlocks / 4)); // max 5, minimum every 4 blocks
+                            $adsInserted = 0;
 
-                            $maxAds = $isMobile
-                                ? min(2, floor($totalBlocks / 8))
-                                : min(count($adSlots), floor($totalBlocks / 4));
-                            $adsInserted = 0;
-                            // $maxAds = min(count($adSlots), floor($totalBlocks / 4)); // max 5, minimum every 4 blocks
-                            $adsInserted = 0;
+                            // $adKeys = array_keys($adSlots);
+                            // $isMobile = false;
+                            // @endphp @mobile @php $isMobile = true; @endphp @endmobile @php
+
+                            // $maxAds = $isMobile
+                            //     ? min(2, floor($totalBlocks / 8))
+                            //     : min(count($adSlots), floor($totalBlocks / 4));
+                            // $adsInserted = 0;
 
                             // Dynamically calculate where to place ads
                             $insertPositions = [];
