@@ -168,7 +168,18 @@
                         </div>
                     </div>
                     <div class="content-main">
-                        <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}">
+                        <img
+                        src="{{ $ogimage }}"
+                        alt="{{ $newsDetails->title }}"
+                        class="img-fluid"
+                        width="{{ $width ?? 0 }}"
+                        height="{{ $height ?? 0 }}"
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
+                         >
+
+                        {{-- <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}"> --}}
                         {{-- ads for mobile & desktop --}}
                         {{-- <div class="inner-article-detail-desktop-ad fad">
                             <div id="adslotInline_3_300x250">
@@ -718,6 +729,15 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             observeArticles();
+            const imgs = document.querySelectorAll('.articlecontent img');
+            imgs.forEach((img) => {
+                const isHero = img.closest('.content-main') !== null;
+                if (!isHero) {
+                    img.setAttribute('loading', 'lazy');
+                    img.setAttribute('decoding', 'async');
+                    img.setAttribute('fetchpriority', 'low');
+                }
+            });
         });
 
         // Call this after injecting the next article HTML
