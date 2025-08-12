@@ -12,7 +12,10 @@
     <meta name="original-source" content="@yield('url')" />
     <meta name='robots' content='noindex, nofollow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'  />
     <link href="@yield('canonicalUrl', request()->get('page') ? url()->full() : url()->current())" rel="canonical">
-    {{-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -37,7 +40,7 @@
             j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
-    </script> --}}
+    </script>
 
     <meta property="fb:pages" content="118224094883095" />
     <meta itemprop="headline" content="@yield('seoTitle')" />
@@ -119,17 +122,7 @@
     @include('layout.insights.footer')
     @include('layout.insights.footerlinks')
     @include('includes.banners-new.google-tags')
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
-    <script>
-      (function initWhenIdle(cb){ (window.requestIdleCallback||function(f){setTimeout(f,400)})(cb); })(function(){
-        function gtag(){ dataLayer.push(arguments); }
-        gtag('js', new Date()); gtag('config', 'G-8MKFEZLR18');
-        (function(w, d, s, l, i) {
-            var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l !== 'dataLayer' ? '&l=' + l : '';
-            j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
-      });
-    </script>
+
 
 </body>
 
