@@ -72,7 +72,7 @@
     <meta name="y_key" content="0f4f718975ac23ed" />
     <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
     @include('layout.insights.headerlinks')
-    @include('includes.banners-new.google-tags')
+    <script>window.googletag = window.googletag || {cmd: []};</script>
     <link rel="preload" as="image" href="@yield('image')" fetchpriority="high">
     @yield('header-schema')
     @yield('author-schema')
@@ -83,7 +83,7 @@
     <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
     @yield('content')
-    <div class="fixsocial">
+    {{-- <div class="fixsocial">
         <ul class="sociallist">
             <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img
                         src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook"></a></li>
@@ -97,10 +97,26 @@
                         src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg"
                         alt="youtube" width="24" height="24" loading="lazy"></a></li>
         </ul>
+    </div> --}}
+    <div class="fixsocial">
+        <ul class="sociallist">
+            <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook" width="24" height="24" loading="lazy" decoding="async"></a></li>
+            <li><a href="https://www.instagram.com/franchiseindia_/" target="_blank"><img
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg"
+                        alt="instagram" width="24" height="24" loading="lazy" decoding="async"></a></li>
+            <li><a href="https://twitter.com/FranchiseIndia" target="_blank"><img
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg" alt="twitter" width="24" height="24" loading="lazy" decoding="async"></a>
+            </li>
+            <li><a href="https://www.youtube.com/user/FranchiseIndia" target="_blank"><img
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg"
+                        alt="youtube" width="24" height="24" loading="lazy" decoding="async"></a></li>
+        </ul>
     </div>
     @include('layout.insights.newsletter')
     @include('layout.insights.footer')
     @include('layout.insights.footerlinks')
+    @include('includes.banners-new.google-tags')
 </body>
 
 </html>

@@ -35,6 +35,17 @@
 @section('width', $width)
 @section('height', $height)
 @section('content')
+<style>
+    .inner-article-detail-desktop-top-ad{min-height:90px}
+    .inner-article-detail-desktop-ad{min-height:250px}
+    .ad-right{min-height:250px}
+    .ad-right-sticky{min-height:250px}
+    /* Reduce render cost for large below-the-fold areas */
+    #next-article-container{content-visibility:auto; contain-intrinsic-size: 1000px}
+    .right-wrap,.popular-articles{content-visibility:auto; contain-intrinsic-size: 700px}
+  </style>
+  {{-- <link rel="stylesheet" href="..."> --}}
+  <div class="maininnver homeh">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"> --}}
     <div class="maininnver homeh">
         <div class="inner-top-head">
@@ -494,7 +505,7 @@
     </div>
     <div id="loader" style="display: none;">
         {{-- <div class="spinner"></div> --}}
-        <img src="{{ url('insight-new/assets/img/25.gif') }}" alt="loader" width="35">
+        <img src="{{ url('insight-new/assets/img/25.gif') }}" alt="loader" width="35"  loading="lazy" decoding="async">
     </div>
 
     @include('layout.insights.magblock')
