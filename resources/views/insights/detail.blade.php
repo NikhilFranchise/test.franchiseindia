@@ -36,9 +36,6 @@
 @section('height', $height)
 @section('content')
 <style>
-    footer .backftr, footer .ftrbtm { content-visibility: auto; contain-intrinsic-size: 1200px }
-  </style>
-<style>
     .inner-article-detail-desktop-top-ad{min-height:90px}
     .inner-article-detail-desktop-ad{min-height:250px}
     .ad-right{min-height:250px}
@@ -46,6 +43,7 @@
     /* Reduce render cost for large below-the-fold areas */
     #next-article-container{content-visibility:auto; contain-intrinsic-size: 1000px}
     .right-wrap,.popular-articles{content-visibility:auto; contain-intrinsic-size: 700px}
+    footer .backftr, footer .ftrbtm { content-visibility: auto; contain-intrinsic-size: 1200px }
   </style>
     
   {{-- <link rel="stylesheet" href="..."> --}}
@@ -525,7 +523,7 @@
         ]);
 
     @endphp
-    <script>
+    {{-- <script>
         window.googletag = window.googletag || {
             cmd: []
         };
@@ -551,6 +549,24 @@
 
             slots.forEach(slot => {
                 googletag.display(slot.dataset.slotId);
+            });
+        });
+    </script> --}}
+    <script>
+        window.googletag = window.googletag || { cmd: [] };
+        (window.requestIdleCallback || function(cb){ setTimeout(cb, 200); })(function() {
+            googletag.cmd.push(function() {
+                const slots = document.querySelectorAll('.gpt-inline-slot');
+                slots.forEach(slot => {
+                    const id = slot.dataset.slotId;
+                    const path = slot.dataset.slotPath;
+                    if (id && path) {
+                        googletag.defineSlot(path, [[300,250],[336,280],[250,250]], id)
+                                 .addService(googletag.pubads());
+                    }
+                });
+                googletag.enableServices();
+                slots.forEach(slot => googletag.display(slot.dataset.slotId));
             });
         });
     </script>
@@ -742,17 +758,31 @@
         }
 
 
-        document.addEventListener('DOMContentLoaded', () => {
-            observeArticles();
-            const imgs = document.querySelectorAll('.articlecontent img');
-            imgs.forEach((img) => {
-                const isHero = img.closest('.content-main') !== null;
-                if (!isHero) {
-                    img.setAttribute('loading', 'lazy');
-                    img.setAttribute('decoding', 'async');
-                    img.setAttribute('fetchpriority', 'low');
-                }
-            });
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     observeArticles();
+        //     const imgs = document.querySelectorAll('.articlecontent img');
+        //     imgs.forEach((img) => {
+        //         const isHero = img.closest('.content-main') !== null;
+        //         if (!isHero) {
+        //             img.setAttribute('loading', 'lazy');
+        //             img.setAttribute('decoding', 'async');
+        //             img.setAttribute('fetchpriority', 'low');
+        //         }
+        //     });
+        // });
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                observeArticles();
+                const imgs = document.querySelectorAll('.articlecontent img');
+                imgs.forEach((img) => {
+                    const isHero = img.closest('.content-main') !== null;
+                    if (!isHero) {
+                        img.setAttribute('loading', 'lazy');
+                        img.setAttribute('decoding', 'async');
+                        img.setAttribute('fetchpriority', 'low');
+                    }
+                });
+            }, 300);
         });
 
         // Call this after injecting the next article HTML
