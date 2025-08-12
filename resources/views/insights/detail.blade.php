@@ -36,6 +36,9 @@
 @section('height', $height)
 @section('content')
 <style>
+    footer .backftr, footer .ftrbtm { content-visibility: auto; contain-intrinsic-size: 1200px }
+  </style>
+<style>
     .inner-article-detail-desktop-top-ad{min-height:90px}
     .inner-article-detail-desktop-ad{min-height:250px}
     .ad-right{min-height:250px}
@@ -44,6 +47,7 @@
     #next-article-container{content-visibility:auto; contain-intrinsic-size: 1000px}
     .right-wrap,.popular-articles{content-visibility:auto; contain-intrinsic-size: 700px}
   </style>
+    
   {{-- <link rel="stylesheet" href="..."> --}}
   <div class="maininnver homeh">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"> --}}
