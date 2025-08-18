@@ -36,5 +36,5 @@
         </div>
     </div>
 @push('scripts')
-    <script src="{{ asset('insight-new/js/insight-newsletter.js') }}" defer></script>
+    <script src="{{ asset('insight-new/js/insight-newsletter.js') }}" defer ></script>
 @endpush
