@@ -1,4 +1,4 @@
-@extends('layout.insights.master')
+@extends('layout.insights.masterdetailpage')
 @section('seoTitle', $newsDetails->title)
 @section('header-schema')
     @include('insights.schema', ['newsDetails' => $newsDetails])
