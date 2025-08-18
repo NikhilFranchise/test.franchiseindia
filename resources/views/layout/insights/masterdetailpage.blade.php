@@ -118,8 +118,8 @@
                         alt="youtube" width="24" height="24" loading="lazy" decoding="async"></a></li>
         </ul>
     </div>
-    @include('layout.insights.newsletter')
-    @include('layout.insights.footer')
+    {{-- @include('layout.insights.newsletter')
+    @include('layout.insights.footer') --}}
     @include('layout.insights.footerlinks')
     @include('includes.banners-new.google-tags')
 
