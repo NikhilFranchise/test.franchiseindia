@@ -386,7 +386,7 @@
                         </div>
                     </div>
                     <div class="contentarea">
-                        @include('layout.insights.subscribenewsletter')
+                        {{-- @include('layout.insights.subscribenewsletter') --}}
                     </div>
                 </div>
                 <div class="col-md-4">
