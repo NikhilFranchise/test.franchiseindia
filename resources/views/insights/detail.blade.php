@@ -186,7 +186,7 @@
                         </div>
                     </div>
                     <div class="content-main">
-                        <link rel="preload" as="image" href="{{ asset('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/'.$newsDetails['image']) }}">
+                        <link rel="preload" as="image" href="{{ asset('https://franchiseindia.s3.ap-south-1.amazonaws.com'.$newsDetails['image']) }}">
                         <img
                         src="{{ $ogimage }}"
                         alt="{{ $newsDetails->title }}"
