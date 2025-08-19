@@ -186,7 +186,7 @@
                         </div>
                     </div>
                     <div class="content-main">
-                        <link rel="preload" as="image" href="{{ asset('uploads/'.$newsDetails['image']) }}">
+                        <link rel="preload" as="image" href="{{ asset($newsDetails['image']) }}">
                         <img
                         src="{{ $ogimage }}"
                         alt="{{ $newsDetails->title }}"
