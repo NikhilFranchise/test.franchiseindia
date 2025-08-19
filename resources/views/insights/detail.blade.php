@@ -35,7 +35,7 @@
 @section('width', $width)
 @section('height', $height)
 @section('content')
-{{-- <style>
+<style>
     .inner-article-detail-desktop-top-ad{min-height:90px}
     .inner-article-detail-desktop-ad{min-height:250px}
     .ad-right{min-height:250px}
@@ -44,7 +44,7 @@
     #next-article-container{content-visibility:auto; contain-intrinsic-size: 1000px}
     .right-wrap,.popular-articles{content-visibility:auto; contain-intrinsic-size: 700px}
     footer .backftr, footer .ftrbtm { content-visibility: auto; contain-intrinsic-size: 1200px }
-  </style> --}}
+  </style>
     
   {{-- <link rel="stylesheet" href="..."> --}}
   <div class="maininnver homeh">
