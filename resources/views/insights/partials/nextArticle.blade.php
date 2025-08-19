@@ -322,9 +322,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="contentarea">
+            {{-- <div class="contentarea">
                 @include('layout.insights.subscribenewsletter')
-            </div>
+            </div> --}}
         </div>
         <div class="col-md-4">
             <div class="right-wrap">
