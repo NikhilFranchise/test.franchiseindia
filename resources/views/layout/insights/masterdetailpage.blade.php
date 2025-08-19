@@ -42,6 +42,13 @@
         })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
     </script>
 
+{{-- //Pankaj for add testing start --}}
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+
+{{-- // Pankaj for add testing end --}}
+
+
+
     <meta property="fb:pages" content="118224094883095" />
     <meta itemprop="headline" content="@yield('seoTitle')" />
     <meta itemprop="description" content="@yield('shortDesc')">
@@ -88,21 +95,6 @@
     <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
     @yield('content')
-    {{-- <div class="fixsocial">
-        <ul class="sociallist">
-            <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img
-                        src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook"></a></li>
-            <li><a href="https://www.instagram.com/franchiseindia_/" target="_blank"><img
-                        src="https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg"
-                        alt=""></a></li>
-            <li><a href="https://twitter.com/FranchiseIndia" target="_blank"><img
-                        src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg" alt="twitter"></a>
-            </li>
-            <li><a href="https://www.youtube.com/user/FranchiseIndia" target="_blank"><img
-                        src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg"
-                        alt="youtube" width="24" height="24" loading="lazy"></a></li>
-        </ul>
-    </div> --}}
     <div class="fixsocial">
         <ul class="sociallist">
             <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img

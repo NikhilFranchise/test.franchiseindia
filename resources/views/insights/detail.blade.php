@@ -510,7 +510,7 @@
         <img src="{{ url('insight-new/assets/img/25.gif') }}" alt="loader" width="35"  loading="lazy" decoding="async">
     </div>
 
-    @include('layout.insights.magblock')
+    {{-- @include('layout.insights.magblock') --}}
     @php
         $currentId = $newsDetails->news_id;
         $categoryId = $newsDetails->cat_id ?? $newsDetails->category[0]->id;
