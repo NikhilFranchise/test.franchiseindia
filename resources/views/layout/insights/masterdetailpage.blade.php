@@ -112,9 +112,8 @@
     </div>
     {{-- @include('layout.insights.newsletter')
     @include('layout.insights.footer') --}}
-    @include('layout.insights.footerlinks')
+    @include('layout.insights.insightsdetailfooterlinks')
     {{-- @include('includes.banners-new.google-tags') --}}
-
 
 </body>
 
