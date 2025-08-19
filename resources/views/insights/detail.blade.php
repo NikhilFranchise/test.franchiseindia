@@ -316,12 +316,11 @@
                     <div class="right-wrap">
                         {{-- ads top right sidebar --}}
                         @php $topRightAd = 'adslot300x250_ATF-' . $newsDetails->news_id; @endphp
-                        <div class="ad-right "  
-                        <div class="gpt-ad" data-slot="/1057625/FIHL/Desktop_ROS_300x250_ATF"
-                            data-sizes="[[300,250]]"  aria-label="advertisement"></div>
-                       
-                            </div>
-                        </div>
+                        <div class="ad-right">
+                            <div id="{{ $topRightAd }}" class="gpt-ad"
+                                 data-slot="/1057625/FIHL/Desktop_ROS_300x250_ATF"
+                                 data-sizes="[[300,250]]"></div>
+                          </div>
                         {{-- ads top right sidebar --}}
                         <div class="popular-articles">
                             <h3>Related Content</h3>
