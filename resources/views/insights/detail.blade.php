@@ -722,28 +722,28 @@
         });
 
         // Call this after injecting the next article HTML
-        // function refreshNewAdSlots(context = document) {
-        //     const newSlots = context.querySelectorAll('.gpt-inline-slot:not([data-gpt-loaded])');
+        function refreshNewAdSlots(context = document) {
+            const newSlots = context.querySelectorAll('.gpt-inline-slot:not([data-gpt-loaded])');
 
-        //     newSlots.forEach(slot => {
-        //         const id = slot.dataset.slotId;
-        //         const path = slot.dataset.slotPath;
+            newSlots.forEach(slot => {
+                const id = slot.dataset.slotId;
+                const path = slot.dataset.slotPath;
 
-        //         if (!id || !path) return;
+                if (!id || !path) return;
 
-        //         googletag.cmd.push(function() {
-        //             googletag.defineSlot(path, [
-        //                 [300, 250],
-        //                 [336, 280],
-        //                 [250, 250]
-        //             ], id).addService(googletag.pubads());
+                googletag.cmd.push(function() {
+                    googletag.defineSlot(path, [
+                        [300, 250],
+                        [336, 280],
+                        [250, 250]
+                    ], id).addService(googletag.pubads());
 
-        //             googletag.display(id);
-        //         });
+                    googletag.display(id);
+                });
 
-        //         // Mark slot as initialized
-        //         slot.setAttribute('data-gpt-loaded', 'true');
-        //     });
-        // }
+                // Mark slot as initialized
+                slot.setAttribute('data-gpt-loaded', 'true');
+            });
+        }
     </script>
 @endsection
