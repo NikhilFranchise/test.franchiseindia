@@ -209,7 +209,7 @@
                         {{-- ads for mobile & desktop --}}
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
                        
-                        @php
+                        {{-- @php
                             $blocks = preg_split(
                                 '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
                                 $newsDetails->content,
@@ -255,7 +255,57 @@
                                     $adsInserted++;
                                 }
                             }
+                        @endphp --}}
+                        @php
+                            $blocks = preg_split(
+                                '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
+                                $newsDetails->content,
+                                -1,
+                                PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
+                            );
+
+                            $totalBlocks = count($blocks);
+
+                            $adSlots = [
+                                'adslotInline_1_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250',
+                                'adslotInline_2_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250',
+                                'adslotInline_3_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250',
+                                'adslotInline_4_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250',
+                                'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
+                            ];
+
+                            $adKeys = array_keys($adSlots);
+                            $maxAds = min(count($adSlots), floor($totalBlocks / 4)); // max 5, minimum every 4 blocks
+                            $adsInserted = 0;
+
+                            // Dynamically calculate where to place ads
+                            $insertPositions = [];
+                            for ($i = 1; $i <= $maxAds; $i++) {
+                                $insertPositions[] = floor(($totalBlocks * $i) / ($maxAds + 1));
+                            }
+
+                            $renderedContent = '';
+
+                            foreach ($blocks as $index => $block) {
+                                $renderedContent .= $block;
+
+                                if (in_array($index, $insertPositions) && $adsInserted < $maxAds) {
+                                    $slotId = $adKeys[$adsInserted];
+                                    $slotPath = $adSlots[$slotId];
+                                    $uniqueSlotId = $slotId . '-' . $newsDetails->news_id;
+
+                                    $renderedContent .= "<div class='inner-article-detail-desktop-ad'>
+                                            <div id='{$uniqueSlotId}' class='gpt-add'
+                                                data-slot-id='{$uniqueSlotId}'
+                                                data-slot-path='{$slotPath}'>
+                                            </div>
+                                        </div>";
+
+                                    $adsInserted++;
+                                }
+                            }
                         @endphp
+
 
                         <div class="articlecontent" data-article-id="{{ $newsDetails->news_id }}">
                             {!! $renderedContent !!}
