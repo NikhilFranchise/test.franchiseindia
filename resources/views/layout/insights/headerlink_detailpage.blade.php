@@ -25,7 +25,7 @@
    <link href="{{url('insight-new/assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
  
 
- <link href="{{url('insight-new/assets/vendor/icofont/icofont.min.css')}}" rel="stylesheet">
+ <link rel="preload" href="{{url('insight-new/assets/vendor/icofont/icofont.min.css')}}" rel="stylesheet">
  <link href="{{url('insight-new/assets/vendor/owl.carousel/assets/owl.carousel.min.css')}}" rel="stylesheet" media="print" onload="this.media='all'">
  <link href="{{url('insight-new/assets/vendor/aos/aos.css')}}" rel="stylesheet" media="print" onload="this.media='all'">
 <link href="{{url('insight-new/assets/css/swiper.min.css')}}" rel="stylesheet" media="print" onload="this.media='all'">
