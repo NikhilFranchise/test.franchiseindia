@@ -186,7 +186,7 @@
                         </div>
                     </div>
                     <div class="content-main">
-                        <link rel="preload" as="image" href="{{ asset('uploads/'.$newsDetails['image']) }}">
+                        {{-- <link rel="preload" as="image" href="{{ asset('uploads/'.$newsDetails['image']) }}">
                         <img
                         src="{{ $ogimage }}"
                         alt="{{ $newsDetails->title }}"
@@ -195,7 +195,7 @@
                         height="{{ $height ?? 0 }}"
                         loading="eager"
                         decoding="async"
-                        fetchpriority="high">
+                        fetchpriority="high"> --}}
                          <!-- ✅ Inline ad under hero image -->
                         @php
                             $imgBottomAd = 'adslot300x250_ATF-' . $newsDetails->news_id . '-' . $newsDetails->cat_id;
