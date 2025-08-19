@@ -295,7 +295,7 @@
                                     $uniqueSlotId = $slotId . '-' . $newsDetails->news_id;
 
                                     $renderedContent .= "<div class='inner-article-detail-desktop-ad'>
-                                            <div id='{$uniqueSlotId}' class='gpt-add'
+                                            <div id='{$uniqueSlotId}' class='gpt-ad'
                                                 data-slot-id='{$uniqueSlotId}'
                                                 data-slot-path='{$slotPath}'>
                                             </div>
