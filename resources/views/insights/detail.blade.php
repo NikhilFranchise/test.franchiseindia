@@ -280,33 +280,21 @@
                             foreach ($blocks as $index => $block) {
                                 $renderedContent .= $block;
 
-                                // if (in_array($index, $insertPositions) && $adsInserted < $maxAds) {
-                                //     $slotId = $adKeys[$adsInserted];
-                                //     $slotPath = $adSlots[$slotId];
-                                //     $uniqueSlotId = $slotId . '-' . $newsDetails->news_id;
-
-                                //     $renderedContent .= "<div class='inner-article-detail-desktop-ad'>
-                                //             <div id='{$uniqueSlotId}' class='gpt-inline-slot'
-                                //                 data-slot-id='{$uniqueSlotId}'
-                                //                 data-slot-path='{$slotPath}'>
-                                //             </div>
-                                //         </div>";
-
-                                //     $adsInserted++;
-                                // }
                                 if (in_array($index, $insertPositions) && $adsInserted < $maxAds) {
-                                    $slotKey = $adKeys[$adsInserted];
-                                    $slotPath = $adSlots[$slotKey];
-                                    $uniqueSlotId = $slotKey . '-' . $newsDetails->news_id;
+                                    $slotId = $adKeys[$adsInserted];
+                                    $slotPath = $adSlots[$slotId];
+                                    $uniqueSlotId = $slotId . '-' . $newsDetails->news_id;
 
                                     $renderedContent .= "<div class='inner-article-detail-desktop-ad'>
-                                        <div id='{$uniqueSlotId}' class='gpt-ad'
-                                            data-slot='{$slotPath}'
-                                            data-sizes='[[300,250],[336,280],[250,250]]'></div>
-                                    </div>";
+                                            <div id='{$uniqueSlotId}' class='gpt-inline-slot'
+                                                data-slot-id='{$uniqueSlotId}'
+                                                data-slot-path='{$slotPath}'>
+                                            </div>
+                                        </div>";
 
                                     $adsInserted++;
                                 }
+                              
                             }
                         @endphp
 
