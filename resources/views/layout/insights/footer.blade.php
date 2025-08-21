@@ -150,51 +150,51 @@
             <ul class="weblist">
                 <li class="blacks"><a href="https://www.entrepreneur.com/" target="_blank">
                         <img src="{{ url('insight-new/images/partners/entrepreneure-india.jpg') }}"
-                            class="img-b lazyloaded" alt="entrepreneure">
+                            class="img-b lazyloaded" alt="entrepreneure" loading="lazy" decoding="async">
                     </a></li>
                 <li><a href="https://www.indianretailer.com/" target="_blank"><img
                             src="{{ url('insight-new/images/partners/indianretailer.jpg') }}" class="img-b lazyloaded"
-                            alt="indianretailer"></a>
+                            alt="indianretailer" loading="lazy" decoding="async"></a>
                 </li>
                 <li><a href="https://www.restaurantindia.in/" target="_blank">
                         <img src="{{ url('insight-new/images/partners/restaurantindia.jpg') }}"
-                            class="img-b lazyloaded" alt="">
+                            class="img-b lazyloaded" alt="restaurantindia" loading="lazy" decoding="async">
                     </a></li>
                 <li><a href="https://www.franchisenepal.com/" target="_blank">
                         <img src="{{ url('insight-new/images/partners/franchiseindia-nepal.jpg') }}"
-                            class="img-b lazyloaded" alt="">
+                            class="img-b lazyloaded" alt="franchisenepal" loading="lazy" decoding="async">
                     </a></li>
                 <li><a href="http://www.franchisebangladesh.com/" target="_blank">
                         <img src="{{ url('insight-new/images/partners/frachiseindia-bangladesh.jpg') }}"
-                            class="img-b lazyloaded" alt="">
+                            class="img-b lazyloaded" alt="franchisebangladesh" loading="lazy" decoding="async">
                     </a></li>
                 <li class="blacks"><a href="https://www.businessex.com/" target="_blank">
                         <img src="{{ url('insight-new/images/partners/businessex.jpg') }}" class="img-b lazyloaded"
-                            alt="">
+                            alt="Businessex" loading="lazy" decoding="async">
                     </a></li>
                 <li><a href="https://www.licenseindia.com/" target="_blank">
                         <img src="{{ url('insight-new/images/partners/license-india.jpg') }}"
-                            class="img-b lazyloaded" alt="">
+                            class="img-b lazyloaded" alt="licenseindia" loading="lazy" decoding="async">
                     </a></li>
                 <li class="blacks"><a href="https://www.bradfordlicenseindia.com/" target="_blank">
                         <img src="{{ url('insight-new/images/partners/brandford.jpg') }}" class="img-b lazyloaded"
-                            alt="brandford">
+                            alt="brandford" loading="lazy" decoding="async">
                     </a></li>
                 <li><a href="https://www.francorp.in/" target="_blank">
                         <img src="{{ url('insight-new/images/partners/fancorp.jpg') }}" class="img-b lazyloaded"
-                            alt="fancorp">
+                            alt="fancorp" loading="lazy" decoding="async">
                     </a></li>
                 <li><a href="https://www.franglobal.com/" target="_blank">
                         <img src="{{ url('insight-new/images/partners/fanglobal.jpg') }}" class="img-b lazyloaded"
-                            alt="fanglobal">
+                            alt="fanglobal" loading="lazy" decoding="async">
                     </a></li>
                 <li><a href="https://www.gauravmarya.com/" target="_blank">
                         <img src="{{ url('insight-new/images/partners/gauravmarya.jpg') }}" class="img-b lazyloaded"
-                            alt="gauravmarya">
+                            alt="gauravmarya" loading="lazy" decoding="async">
                     </a></li>
                 <li><a href="https://www.msme.in/" target="_blank">
                         <img src="{{ url('insight-new/images/partners/isfa.jpg') }}" class="img-b lazyloaded"
-                            alt="ISFA">
+                            alt="ISFA" loading="lazy" decoding="async">
                     </a></li>
             </ul>
             <div class="row etu">

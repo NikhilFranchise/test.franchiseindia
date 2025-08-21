@@ -1,4 +1,4 @@
-@extends('layout.insights.master')
+@extends('layout.insights.masterdetailpage')
 @section('seoTitle', $newsDetails->title)
 @section('header-schema')
     @include('insights.schema', ['newsDetails' => $newsDetails])
@@ -35,6 +35,41 @@
 @section('width', $width)
 @section('height', $height)
 @section('content')
+<style>
+    .inner-article-detail-desktop-top-ad{min-height:90px}
+    .inner-article-detail-desktop-ad{min-height:250px}
+    .ad-right{min-height:250px}
+    .ad-right-sticky{min-height:250px}
+    /* Reduce render cost for large below-the-fold areas */
+    #next-article-container{content-visibility:auto; contain-intrinsic-size: 1000px}
+    .right-wrap,.popular-articles{content-visibility:auto; contain-intrinsic-size: 700px}
+    footer .backftr, footer .ftrbtm { content-visibility: auto; contain-intrinsic-size: 1200px }
+  </style>
+  <!-- ✅ Load GPT once (async) -->
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+    <script>
+        window.googletag = window.googletag || { cmd: [] };
+
+        // Guard so GPT services aren't enabled multiple times if next-article HTML contains scripts
+        (function() {
+            function setupGPTOnlyOnce() {
+                if (window.__gptServicesEnabled) return;
+                googletag.pubads().collapseEmptyDivs();
+                googletag.pubads().enableLazyLoad({
+                    fetchMarginPercent: 200,
+                    renderMarginPercent: 100,
+                    mobileScaling: 2.0
+                });
+                googletag.enableServices();
+                window.__gptServicesEnabled = true;
+            }
+            googletag.cmd.push(setupGPTOnlyOnce);
+            window.__setupGPTOnlyOnce = function(){ googletag.cmd.push(setupGPTOnlyOnce); };
+        })();
+    </script>
+    
+  {{-- <link rel="stylesheet" href="..."> --}}
+  <div class="maininnver homeh">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"> --}}
     <div class="maininnver homeh">
         <div class="inner-top-head">
@@ -45,27 +80,21 @@
         <!-- DESKTOP TOP AD PLACEMENT START HERE  -->
         <div class="container">
             @desktop
-                {{-- <div class="inner-article-detail-desktop-top-ad">
-                    <div id='adslot728x90_ATF-{{ $newsDetails->news_id }}'>
-                        <script>
-                            googletag.cmd.push(function() {
-                                googletag.display('adslot728x90_ATF');
-                            });
-                        </script>
-                    </div>
-                </div> --}}
+               
                 <div class="inner-article-detail-desktop-top-ad">
                     @php
                         $topAd = 'adslot728x90_ATF-' . $newsDetails->news_id;
                     @endphp
-                    <div id="{{ $topAd }}"></div>
-                    <script>
+                    <div id="{{ $topAd }}" class="gpt-ad"
+                    data-slot="/1057625/FIHL/FI_Desktop_ROS_728x90_ATF"
+                    data-sizes="[[728,90]]"></div>
+                    {{-- <script>
                         googletag.cmd.push(function() {
                             googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], '{{ $topAd }}')
                                 .addService(googletag.pubads());
                             googletag.display('{{ $topAd }}');
                         });
-                    </script>
+                    </script> --}}
                 </div>
             @enddesktop
         </div>
@@ -168,7 +197,18 @@
                         </div>
                     </div>
                     <div class="content-main">
-                        <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}">
+                        <img
+                        src="{{ $ogimage }}"
+                        alt="{{ $newsDetails->title }}"
+                        class="img-fluid"
+                        width="{{ $width ?? 0 }}"
+                        height="{{ $height ?? 0 }}"
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high">
+                         
+
+                        {{-- <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}"> --}}
                         {{-- ads for mobile & desktop --}}
                         {{-- <div class="inner-article-detail-desktop-ad fad">
                             <div id="adslotInline_3_300x250">
@@ -179,13 +219,19 @@
                                 </script>
                             </div>
                         </div> --}}
+                         <!-- ✅ Inline ad under hero image -->
+                        @php
+                            $imgBottomAd = 'adslot300x250_ATF-' . $newsDetails->news_id . '-' . $newsDetails->cat_id;
+                        @endphp
                         <div class="inner-article-detail-desktop-ad fad">
-                            @php
+                            {{-- @php
                                 $imgBottomAd =
                                     'adslot300x250_ATF-' . $newsDetails->news_id . '-' . $newsDetails->cat_id;
-                            @endphp
-                            <div id="{{ $imgBottomAd }}"></div>
-                            <script>
+                            @endphp --}}
+                            <div id="{{ $imgBottomAd }}"  class="gpt-ad"
+                            data-slot="/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250"
+                            data-sizes="[[300,250],[336,280],[250,250]]"></div>
+                            {{-- <script>
                                 googletag.cmd.push(function() {
                                     googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250', [
                                         [300, 250],
@@ -195,90 +241,12 @@
 
                                     googletag.display('{{ $imgBottomAd }}');
                                 });
-                            </script>
+                            </script> --}}
                         </div>
 
                         {{-- ads for mobile & desktop --}}
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
-                        {{-- @php
-                            // Match <p>, <table>, <ul>, <ol>, <blockquote>, etc. to split the content
-                            $blocks = preg_split(
-                                '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
-                                $newsDetails->content,
-                                -1,
-                                PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
-                            );
-
-                            $totalBlocks = count($blocks);
-                                // dd($totalBlocks, $blocks);
-                            // Count only <p> tags to determine ad logic
-                            preg_match_all('/<p.*?<\/p>/is', $newsDetails->content, $matches);
-                            $totalParagraphs = count($matches[0]);
-
-                            // Decide number of ads based on paragraph count
-                            if ($totalParagraphs >= 100) {
-                                $adsToShow = 9;
-                            } elseif ($totalParagraphs >= 80) {
-                                $adsToShow = 7;
-                            } elseif ($totalParagraphs >= 40) {
-                                $adsToShow = 4;
-                            } else {
-                                $adsToShow = 2;
-                            }
-
-                            // Base ad slots (Google Ad Manager paths)
-                            $baseAdSlots = [
-                                'adslotInline_1_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250',
-                                'adslotInline_2_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250',
-                                'adslotInline_3_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250',
-                                'adslotInline_4_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250',
-                                'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
-                            ];
-
-                            // Prepare final dynamic ad slots
-                            $adSlots = [];
-                            $baseKeys = array_keys($baseAdSlots);
-                            for ($i = 0; $i < $adsToShow; $i++) {
-                                $baseKey = $baseKeys[$i % count($baseKeys)];
-                                $slotKey = "{$baseKey}_{$newsDetails->news_id}_{$i}";
-                                $slotPath = $baseAdSlots[$baseKey];
-                                $adSlots[$slotKey] = $slotPath;
-                            }
-
-                            $adKeys = array_keys($adSlots);
-
-                            // Calculate positions to insert ads evenly across blocks
-                            $adPositions = [];
-                            if ($adsToShow > 0 && $totalBlocks > $adsToShow) {
-                                $interval = floor($totalBlocks / ($adsToShow + 1));
-                                for ($i = 1; $i <= $adsToShow; $i++) {
-                                    $adPositions[] = $i * $interval;
-                                }
-                            }
-
-                            // Render final HTML content with ads inserted
-                            $renderedContent = '';
-                            $adsInserted = 0;
-
-                            foreach ($blocks as $index => $block) {
-                                $renderedContent .= $block;
-
-                                if (in_array($index + 1, $adPositions) && isset($adKeys[$adsInserted])) {
-                                    $slotId = $adKeys[$adsInserted];
-                                    $slotPath = $adSlots[$slotId];
-
-                                    $renderedContent .= "
-                                    <div class='inner-article-detail-desktop-ad'>
-                                        <div id='{$slotId}' class='gpt-inline-slot'
-                                            data-slot-id='{$slotId}'
-                                            data-slot-path='{$slotPath}'>
-                                        </div>
-                                    </div>";
-                                    $adsInserted++;
-                                }
-                            }
-                        @endphp --}}
-                        {{-- pankaj code --}}
+                       
                         @php
                             $blocks = preg_split(
                                 '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
@@ -326,6 +294,7 @@
 
                                     $adsInserted++;
                                 }
+                              
                             }
                         @endphp
 
@@ -368,18 +337,22 @@
                 <div class="col-md-4">
                     <div class="right-wrap">
                         {{-- ads top right sidebar --}}
-                        <div class="ad-right">
-                            @php
+                          {{-- RHS top ad --}}
+                        @php $topRightAd = 'adslot300x250_ATF-' . $newsDetails->news_id; @endphp
+                        <div class="ad-right"  class="gpt-ad"
+                        data-slot="/1057625/FIHL/Desktop_ROS_300x250_ATF"
+                        data-sizes="[[300,250]]">
+                            {{-- @php
                                 $topRightAd = 'adslot300x250_ATF-' . $newsDetails->news_id;
-                            @endphp
-                            <div id='{{ $topRightAd }}'>
+                            @endphp --}}
+                            {{-- <div id='{{ $topRightAd }}'>
                                 <script>
                                     googletag.cmd.push(function() {
                                         googletag.defineSlot('/1057625/FIHL/Desktop_ROS_300x250_ATF', [300, 250], '{{ $topRightAd }}')
                                             .addService(googletag.pubads());
                                         googletag.display('{{ $topRightAd }}');
                                     });
-                                </script>
+                                </script> --}}
                             </div>
                         </div>
                         {{-- ads top right sidebar --}}
@@ -436,12 +409,16 @@
                                 @endforelse
                             </ul>
                         </div>
+                          {{-- RHS sticky ad --}}
+                        @php $rightBottomAd = 'adslot300x250_1-' . $newsDetails->news_id; @endphp
                         <div class="ad-right-sticky">
-                            @php
+                            {{-- @php
                                 $rightBottomAd = 'adslot300x250_1-' . $newsDetails->news_id;
-                            @endphp
-                            <div id="{{ $rightBottomAd }}">
-                                <script>
+                            @endphp --}}
+                            <div id="{{ $rightBottomAd }}" class="gpt-ad"
+                            data-slot="/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1"
+                            data-sizes="[[300,250],[300,600]]">
+                                {{-- <script>
                                     googletag.cmd.push(function() {
                                         googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [
                                                 [300, 250],
@@ -450,7 +427,7 @@
                                             .addService(googletag.pubads());
                                         googletag.display('{{ $rightBottomAd }}');
                                     });
-                                </script>
+                                </script> --}}
                             </div>
                         </div>
                     </div>
@@ -458,12 +435,15 @@
             </div>
             {{-- footer ads slot --}}
             @desktop
+                @php $bottomAd = 'adslot728x90_BTF-' . $newsDetails->news_id; @endphp
                 <div class="inner-article-detail-desktop-top-ad">
-                    @php
+                    {{-- @php
                         $bottomAd = 'adslot728x90_BTF-' . $newsDetails->news_id;
-                    @endphp
-                    <div id='{{ $bottomAd }}'>
-                        <script>
+                    @endphp --}}
+                    <div id="{{ $bottomAd }}"  class="gpt-ad"
+                    data-slot="/1057625/FIHL/FI_Desktop_ROS_728x90_BTF"
+                    data-sizes="[[728,90],[970,90],[970,250]]">
+                        {{-- <script>
                             googletag.cmd.push(function() {
                                 googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_BTF', [
                                         [728, 90],
@@ -473,7 +453,7 @@
                                     .addService(googletag.pubads());
                                 googletag.display('{{ $bottomAd }}');
                             });
-                        </script>
+                        </script> --}}
                     </div>
                 </div>
             @enddesktop
@@ -483,10 +463,10 @@
     </div>
     <div id="loader" style="display: none;">
         {{-- <div class="spinner"></div> --}}
-        <img src="{{ url('insight-new/assets/img/25.gif') }}" alt="loader" width="35">
+        <img src="{{ url('insight-new/assets/img/25.gif') }}" alt="loader" width="35"  loading="lazy" decoding="async">
     </div>
 
-    @include('layout.insights.magblock')
+    {{-- @include('layout.insights.magblock') --}}
     @php
         $currentId = $newsDetails->news_id;
         $categoryId = $newsDetails->cat_id ?? $newsDetails->category[0]->id;
@@ -499,35 +479,42 @@
         ]);
 
     @endphp
-    <script>
-        window.googletag = window.googletag || {
-            cmd: []
-        };
+ <!-- ✅ Centralized GPT Ad Initializer for first load + next articles -->
+ <script>
+    (function(){
+      function initAd(div) {
+        if (!div || div.dataset.gptLoaded) return;
+
+        const slotId = div.id;
+        const slotPath = div.dataset.slot;
+        let sizes;
+        try { sizes = JSON.parse(div.dataset.sizes || '[]'); } catch(e) { sizes = []; }
+
+        if (!slotId || !slotPath || !sizes.length) return;
 
         googletag.cmd.push(function() {
-            const slots = document.querySelectorAll('.gpt-inline-slot');
-
-            slots.forEach(slot => {
-                const id = slot.dataset.slotId;
-                const path = slot.dataset.slotPath;
-
-                if (id && path) {
-                    googletag.defineSlot(path, [
-                            [300, 250],
-                            [336, 280],
-                            [250, 250]
-                        ], id)
-                        .addService(googletag.pubads());
-                }
-            });
-
-            googletag.enableServices();
-
-            slots.forEach(slot => {
-                googletag.display(slot.dataset.slotId);
-            });
+          googletag.defineSlot(slotPath, sizes, slotId).addService(googletag.pubads());
+          googletag.display(slotId);
         });
-    </script>
+
+        div.dataset.gptLoaded = "true";
+      }
+
+      function initAllAds(context=document) {
+        // Ensure GPT services are enabled once
+        if (window.__setupGPTOnlyOnce) window.__setupGPTOnlyOnce();
+        context.querySelectorAll('.gpt-ad').forEach(initAd);
+      }
+
+      // Initialize on first paint
+      window.addEventListener("DOMContentLoaded", () => initAllAds());
+
+      // Expose for dynamic injections
+      window.refreshNewAdSlots = function(context=document){
+        initAllAds(context);
+      };
+    })();
+  </script>
     <script>
         let isLoading = false;
         let hasScrolledDown = false;
@@ -591,7 +578,11 @@
                         $container.append(tempDiv);
 
                         // ✅ Refresh ads ONLY in the new content
-                        refreshNewAdSlots(tempDiv);
+                        // refreshNewAdSlots(tempDiv);
+                        
+                        // ✅ Initialize GPT only in the newly injected DOM
+                        if (window.refreshNewAdSlots) window.refreshNewAdSlots(tempDiv);    
+
 
                         nextUrl = data.nextUrl;
                         loadedIds.add(data.articleId);
@@ -715,9 +706,19 @@
             });
         }
 
-
-        document.addEventListener('DOMContentLoaded', () => {
-            observeArticles();
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                observeArticles();
+                const imgs = document.querySelectorAll('.articlecontent img');
+                imgs.forEach((img) => {
+                    const isHero = img.closest('.content-main') !== null;
+                    if (!isHero) {
+                        img.setAttribute('loading', 'lazy');
+                        img.setAttribute('decoding', 'async');
+                        img.setAttribute('fetchpriority', 'low');
+                    }
+                });
+            }, 300);
         });
 
         // Call this after injecting the next article HTML
