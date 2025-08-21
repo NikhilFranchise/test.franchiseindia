@@ -144,5 +144,36 @@
                 </div>
             </div>
         @endforeach
+    
+     @elseif($year == 2023)
+        @foreach (config('staticBrands.staticBrands.2023') as $brand)
+            <div class="col">
+                <div class="filter-list-brand">
+                    <div class="catimg">
+                        <img src="{{ url($brand['logo']) }}" alt="{{ $brand['brand'] }}">
+                    </div>
+                    <div class="finfo">
+                        <div class="catlist">
+                            <a href="{{ url('/business-opportunities/all/all') }}" target="_blank">
+                                {{ $brand['brand'] }}
+                            </a>
+                        </div>
+                        <span style="display: none;">
+                            {{ $brand['investment'] }}
+                        </span>
+                        <div class="catlisthead">
+                            {{ $brand['sector'] }}
+                        </div>
+                    </div>
+                    <div class="catbtn bview">
+                        <input type="checkbox" name="getFreeInfo">
+                        <label>
+                            <span
+                                onclick="window.open('{{ url('/business-opportunities/all/all') }}', '_blank')"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     @endif
 </div>
