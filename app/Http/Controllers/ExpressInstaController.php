@@ -775,22 +775,28 @@ class ExpressInstaController extends Controller
                 ->where('profile_type', 1)
                 ->first();
             // dd($userDetail);
-            $resource = "DOTCOM";
-            if (!empty(request()->check_lead_popup))
+           $resource = "DOTCOM";
+
+            if (!empty(request()->check_lead_popup)) {
                 $resource = "leadPopup";
-            else {
-                $referrer = request()->headers->get('referer');
+            } else {
+                // Check if the utm_source cookie exists
+                if (request()->hasCookie('utm_source')) {
+                    $resource = request()->cookie('utm_source');
+                } else {
+                    $referrer = request()->headers->get('referer');
 
-                if ($referrer) {
-                    // Parse the query string from the referrer
-                    $referrerParts = parse_url($referrer);
-                    parse_str($referrerParts['query'] ?? '', $queryParams);
+                    if ($referrer) {
+                        $referrerParts = parse_url($referrer);
+                        parse_str($referrerParts['query'] ?? '', $queryParams);
 
-                    if (!empty($queryParams['utm_campaign'])) {
-                        $resource = $queryParams['utm_campaign'];
+                        if (!empty($queryParams['utm_campaign'])) {
+                            $resource = $queryParams['utm_campaign'];
+                        }
                     }
                 }
             }
+
             // dd($resource);
 
             $source_ref = "";

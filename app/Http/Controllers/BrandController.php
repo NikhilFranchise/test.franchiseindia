@@ -29,6 +29,13 @@ class BrandController extends Controller
     public function brandDetails(Request $request)
     {
         $referrer = $request->headers->get('referer', 'No referrer found');
+        // dd($referrer);
+            if ($referrer && str_contains(parse_url($referrer, PHP_URL_HOST), 'localhost')) {
+                Cookie::queue('utm_source', $referrer, 60 * 24); // 30 days
+            }
+            // dd(Cookie::get('utm_source'));
+
+    
         $ratings = 0;
         $likesCnt = 0;
         $brandUrlParam = $request->profileName;         // Fetch the request parameter
