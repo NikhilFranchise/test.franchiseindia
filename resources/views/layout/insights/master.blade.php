@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
-
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -10,15 +9,11 @@
         <meta name="keywords" content="@yield('seoKeywords', 'Business News, Franchise News, Entrepreneurship News, Business news India, Start a Business, latest business news, business India, Franchise India, Industry News')" />
     @endif
     <meta name="original-source" content="@yield('url')" />
-    <meta name='robots' content='noindex, nofollow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'  />
+    <meta name='robots' content='noindex, nofollow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
     <link href="@yield('canonicalUrl', request()->get('page') ? url()->full() : url()->current())" rel="canonical">
-    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
-
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-
         function gtag() {
             dataLayer.push(arguments);
         }
@@ -41,7 +36,6 @@
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
     </script>
-
     <meta property="fb:pages" content="118224094883095" />
     <meta itemprop="headline" content="@yield('seoTitle')" />
     <meta itemprop="description" content="@yield('shortDesc')">
@@ -75,20 +69,16 @@
     <meta name="y_key" content="0f4f718975ac23ed" />
     <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
     @include('layout.insights.headerlinks')
-    <script>window.googletag = window.googletag || {cmd: []}; window.dataLayer = window.dataLayer || [];</script>
-    <link rel="preload" as="image" href="@yield('image')" fetchpriority="high">
+    @include('includes.banners-new.google-tags')
     @yield('header-schema')
     @yield('author-schema')
-    {{-- @include('layout.insights.menu') --}}
-</head>
-
-<body>
     @include('layout.insights.menu')
-
+</head>
+<body>
     <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
+        style="display:none;visibility:hidden"></iframe></noscript>
     @yield('content')
-    {{-- <div class="fixsocial">
+    <div class="fixsocial">
         <ul class="sociallist">
             <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img
                         src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook"></a></li>
@@ -100,30 +90,11 @@
             </li>
             <li><a href="https://www.youtube.com/user/FranchiseIndia" target="_blank"><img
                         src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg"
-                        alt="youtube" width="24" height="24" loading="lazy"></a></li>
-        </ul>
-    </div> --}}
-    <div class="fixsocial">
-        <ul class="sociallist">
-            <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img
-                        src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook" width="24" height="24" loading="lazy" decoding="async"></a></li>
-            <li><a href="https://www.instagram.com/franchiseindia_/" target="_blank"><img
-                        src="https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg"
-                        alt="instagram" width="24" height="24" loading="lazy" decoding="async"></a></li>
-            <li><a href="https://twitter.com/FranchiseIndia" target="_blank"><img
-                        src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg" alt="twitter" width="24" height="24" loading="lazy" decoding="async"></a>
-            </li>
-            <li><a href="https://www.youtube.com/user/FranchiseIndia" target="_blank"><img
-                        src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg"
-                        alt="youtube" width="24" height="24" loading="lazy" decoding="async"></a></li>
+                        alt="youtube"></a></li>
         </ul>
     </div>
     @include('layout.insights.newsletter')
     @include('layout.insights.footer')
     @include('layout.insights.footerlinks')
-    @include('includes.banners-new.google-tags')
-
-
 </body>
-
 </html>

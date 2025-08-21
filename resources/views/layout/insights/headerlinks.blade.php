@@ -7,6 +7,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://franchiseindia.s3.ap-south-1.amazonaws.com" crossorigin>
 
+  <!-- Preload Critical Fonts -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/roboto/v30/roboto-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://fonts.gstatic.com/s/robotoslab/v17/robotoslab-400.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Google Fonts (swap ensures no render-blocking) -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
