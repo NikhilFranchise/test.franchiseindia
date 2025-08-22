@@ -317,13 +317,13 @@ return [
                 "sector" => "Beauty Salons/ Unisex Salons/ Spa",
                 "investment" => "Rs. 2 Cr - 5 Cr",
             ],
-            [
-                "brand" => "Non Stop",
-                "logo" => "/topfranchiseleaders/staticLogo/2025/nonstop.jpg",
-                "industry" => "Beauty & Health",
-                "sector" => "Healthcare Products",
-                "investment" => "Rs. 50 Lakh - 1 Cr",
-            ],
+            // [
+            //     "brand" => "Non Stop",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2025/nonstop.jpg",
+            //     "industry" => "Beauty & Health",
+            //     "sector" => "Healthcare Products",
+            //     "investment" => "Rs. 50 Lakh - 1 Cr",
+            // ],
             [
                 "brand" => "Oliva Skin and Hair Clinics",
                 "logo" => "/topfranchiseleaders/staticLogo/2025/olivaskinandhairclinics.jpg",

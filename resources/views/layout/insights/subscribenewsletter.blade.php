@@ -27,14 +27,13 @@
         </ul>
     </div>
 </form>
- <!-- Success Popup -->
-    <div id="subsuccessPopup" class="popup">
-        <div class="popup-content">
-            <span class="close-popup">&times;</span>
-            <h3>Subscription Successful!</h3>
-            <p id="successPopupMessage"></p>
-        </div>
+<!-- Success Popup -->
+
+<div id="successPopup" class="popup">
+    <div class="popup-content">
+        <span class="close-popup">&times;</span>
+        <h3 id="popupTitle">Subscription Successful!</h3>
+        <p id="popupMessage">Thank you for subscribing. Stay tuned for updates.</p>
     </div>
-@push('scripts')
-    <script src="{{ asset('insight-new/js/insight-newsletter.js') }}" defer ></script>
-@endpush
+</div>
+

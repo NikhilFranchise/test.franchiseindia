@@ -895,7 +895,7 @@ class InsightsController extends Controller
 
             return response()->json([
                 'error' => false,
-                'message' => 'Subscription successful! Please check your email for verification.',
+                'message' => 'Your Subscription successfully submitted! Please check your email for verification.',
                 'status' => 'success',
             ]);
         } elseif ($checkEmail->status == "P") {
@@ -947,8 +947,8 @@ class InsightsController extends Controller
             if ($emailExists || $mobileExists) {
                 return response()->json([
                     'error' => true,
-                    'message1' => $emailExists ? 'This email already exists.' : '',
-                    'message2' => $mobileExists ? 'This mobile number already exists.' : '',
+                    'message' => $emailExists ? 'This email already exist!' : '',
+                    'message1' => $mobileExists ? 'This mobile number already exist!' : '',
                     'fields' => [
                         'email' => $emailExists ? $email : null,
                         'tel' => $mobileExists ? $mobile : null,
@@ -965,7 +965,7 @@ class InsightsController extends Controller
 
             return response()->json([
                 'error' => false,
-                'message' => 'Subscription successful!',
+                'message' => 'Your Subscription successfully Submitted!',
             ]);
         } catch (\Exception $e) {
             Log::error($e);

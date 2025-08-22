@@ -63,7 +63,6 @@
     <meta name="twitter:creator" content="@franchiseindia">
     <meta name="twitter:site" content="@franchiseindia">
     <meta name="twitter:domain" content="franchiseindia.com">
-    {{-- <meta content="@yield('index', 'index,follow')" name="robots" /> --}}
     <meta property="fb:app_id" content="110294989480112" />
     <meta name="google-site-verification" content="8W9CXigRDmfNyf8vOfkZBefougI9sPXO4xvDBFLIjaw" />
     <meta name="y_key" content="0f4f718975ac23ed" />
