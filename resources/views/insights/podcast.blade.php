@@ -119,6 +119,8 @@
             </div>
         </div>
     </div>
+    @include('layout.insights.magblock')
+    @include('layout.insights.brandlist')
     <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
     <script>
         window.onSpotifyIframeApiReady = (IFrameAPI) => {
