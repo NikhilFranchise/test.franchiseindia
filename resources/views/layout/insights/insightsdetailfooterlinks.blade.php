@@ -9,7 +9,7 @@
 
 {{-- //Raman sir started  --}}
 {{-- //Footer raman sir --}}
-<link rel="stylesheet" href="{{url('detailpage/css/mobile-nav.css')}}" rel="preload" as="style"/>
+<link rel="stylesheet" href="{{url('detailpage/css/mobile-nav.css?ver='.date('d'))}}" rel="preload" as="style"/>
 <link rel="stylesheet" href="https://www.franchiseindia.com/insight-new/assets/vendor/icofont/icofont.min.css" rel="preload" as="style"/>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

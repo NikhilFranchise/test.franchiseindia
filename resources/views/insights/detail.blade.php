@@ -447,12 +447,14 @@
             @enddesktop
         </div>
         <!-- New article will be loaded here -->
-        <div id="next-article-container" class="next-article-container"></div>
+        <div id="next-article-container" class="next-article-container"> </div>
+        <div id="loader" style="display: none;">
+            <img src="{{ url('insight-new/assets/img/25.gif') }}" alt="loader" width="35">
+        </div>
     </div>
-    <div id="loader" style="display: none;">
-        {{-- <div class="spinner"></div> --}}
-        <img src="{{ url('insight-new/assets/img/25.gif') }}" alt="loader" width="35"  loading="lazy" decoding="async">
-    </div>
+    {{-- <div id="loader" style="display: none;">
+        <img src="{{ url('insight-new/assets/img/25.gif') }}" alt="loader" width="35">
+    </div> --}}
 
     {{-- @include('layout.insights.magblock') --}}
     @php
@@ -586,8 +588,8 @@
                     }
                 },
                 complete: () => {
-                    isLoading = false;
-                    $('#loader').hide();
+                    isLoading = true;
+                    $('#loader').show();
                     $('html, body').css("overflow", "visible");
 
                 }

@@ -33,6 +33,6 @@
 
 
 
-<link rel="stylesheet" href="{{url('detailpage/css/style.css')}}" rel="preload" as="style" />
+<link rel="stylesheet" href="{{url('detailpage/css/style.css?ver='.date('d'))}}" rel="preload" as="style" />
 
 <link  rel="stylesheet" href="{{url('detailpage/css/bootstrap.min.css')}}"  rel="preload"  as="style" />
