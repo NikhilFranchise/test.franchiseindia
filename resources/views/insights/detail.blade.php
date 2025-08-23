@@ -588,8 +588,8 @@
                     }
                 },
                 complete: () => {
-                    isLoading = true;
-                    $('#loader').show();
+                    isLoading = false;
+                    $('#loader').hide();
                     $('html, body').css("overflow", "visible");
 
                 }
