@@ -212,7 +212,7 @@
         <!--<li><a target="_blank" href="/content">Franchise Insights</a></li>
         <li><a target="_blank" href="https://news.franchiseindia.com/">News</a></li>-->
 		<li><a target="_blank" href="https://www.franchiseindia.com/insights">Franchise Insights</a></li>
-        <li><a target="_blank" href="https://www.opportunityindia.com/">News</a></li>
+        <li><a target="_blank" href="https://www.franchiseindia.com/insights">News</a></li>
         <li>
             <a target="_blank" href="https://video.franchiseindia.com/">Video</a>
         </li>
@@ -293,8 +293,8 @@
         <li><a target="_blank" href="https://www.franchiseindia.com/wellness/">wellnessindia.org</a></li>
         <li><a target="_blank" href="https://www.franchiseindia.com/education/">educationbiz.com</a></li>-->
 		<li><a target="_blank" href="https://www.restaurantindia.in">restaurantindia.in</a></li>
-        <li><a target="_blank" href="https://www.opportunityindia.com/english/tag/health-and-wellness">wellnessindia.org</a></li>
-        <li><a target="_blank" href="https://www.opportunityindia.com/english/tag/education">educationbiz.com</a></li>
+        <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/beauty-wellness">wellnessindia.org</a></li>
+        <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/education">educationbiz.com</a></li>
         <!--<li><a target="_blank" href="https://www.franchise.ae/" rel="nofollow">franchise.ae</a></li>-->
         <li><a target="_blank" href="https://www.franchisebangladesh.com/"
                rel="nofollow">franchisebangladesh.com</a> </li>
