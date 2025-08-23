@@ -173,8 +173,8 @@
             <li><a href="https://www.franchiseindia.com/book" target="_blank">रिपोर्टों
                     &amp; पुस्तकें</a></li>
             <li><a href="https://www.franchiseindia.com/event/" target="_blank">प्रतिस्पर्धा</a></li>
-            <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a>
-            </li>
+            {{-- <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a>
+            </li> --}}
         </ul>
         <ul class="list-unstyled components">
             <li><a href="https://www.franchiseindia.com/investor/create" target="_blank">निवेशक साइनअप</a></li>
@@ -412,8 +412,8 @@
                     Magazine</a></li>
             <li><a href="https://www.franchiseindia.com/book" target="_blank">Reports &amp; Books</a></li>
             <li><a href="https://www.franchiseindia.com/event/" target="_blank">Event</a></li>
-            <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a>
-            </li>
+            {{-- <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a>
+            </li> --}}
         </ul>
         <ul class="list-unstyled components">
             <li><a href="https://www.franchiseindia.com/investor/create" target="_blank">Investor Signup</a></li>
