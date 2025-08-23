@@ -90,7 +90,7 @@
 </head>
 
 <body>
-    @include('layout.insights.menu')
+    @include('layout.insights.menudetailpage')
 
     <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
