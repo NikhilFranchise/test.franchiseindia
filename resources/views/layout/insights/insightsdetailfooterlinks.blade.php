@@ -1,11 +1,26 @@
 <!-- resources/views/layout/insights/footerlinks.blade.php -->
 <!-- Vendor JS Files -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
 <script src="{{ url('insight-new/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
 <!-- Template Main JS File -->
 <script src="{{url('insight-new/assets/js/main.js')}}" defer></script>
-<script src="{{ url('insight-new/assets/js/swiper.min.js') }}" defer></script>
-@stack('scripts')
+<script src="{{ url('insight-new/assets/js/swiper.min.js') }}" defer></script> --}}
+
+
+{{-- //Raman sir started  --}}
+{{-- //Footer raman sir --}}
+<link rel="stylesheet" href="{{url('detailpage/css/mobile-nav.css')}}" rel="preload" as="style"/>
+<link rel="stylesheet" href="https://www.franchiseindia.com/insight-new/assets/vendor/icofont/icofont.min.css" rel="preload" as="style"/>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet" />
+
+<script defer src="{{url('detailpage/js/jquery.min.js')}}"></script>
+<script defer src="{{url('detailpage/js/bootstrap.bundle.min.js')}}"></script>
+<script defer src="{{url('detailpage/js/main.js')}}" ></script>
+
+{{-- //Raman sir ended --}}
+{{-- @stack('scripts')
 <script>
 (function initWhenIdle(cb){
   (window.requestIdleCallback||function(f){setTimeout(f,200)})(cb);
@@ -92,4 +107,4 @@
     }
     $('.popup-youtube').length && $.fn.magnificPopup && $('.popup-youtube').magnificPopup({ type: 'iframe' });
   });
-</script>
+</script> --}}

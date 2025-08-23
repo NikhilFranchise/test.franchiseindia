@@ -297,7 +297,7 @@
                 </div>
                 <div class="franBrands">
                     @if (!empty($franchiseData))
-                        <h4>Interested in Franchise:</h4>
+                        <h3>Interested in Franchise:</h3>
                         @foreach ($franchiseData as $franchise)
                             <div class="franInterest">
                                 <a href="https://www.franchiseindia.com/brands/{{ strtolower($franchise['profile_name']) }}.{{ $franchise['fran_detail_id'] }}"

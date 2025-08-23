@@ -35,7 +35,7 @@
 @section('width', $width)
 @section('height', $height)
 @section('content')
-<style>
+{{-- <style>
     .inner-article-detail-desktop-top-ad{min-height:90px}
     .inner-article-detail-desktop-ad{min-height:250px}
     .ad-right{min-height:250px}
@@ -44,7 +44,7 @@
     #next-article-container{content-visibility:auto; contain-intrinsic-size: 1000px}
     .right-wrap,.popular-articles{content-visibility:auto; contain-intrinsic-size: 700px}
     footer .backftr, footer .ftrbtm { content-visibility: auto; contain-intrinsic-size: 1200px }
-  </style>
+  </style> --}}
   <!-- ✅ Load GPT once (async) -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
     <script>
@@ -138,8 +138,7 @@
                         <div class="article-features">
                             <div class="article-date">
                                 <div class="article-logo">
-                                    <img src="{{ $authorImage }}" width="51" height="51" alt="Indian Retailer"
-                                        loading="lazy" class="">
+                                    <img src="{{ $authorImage }}" width="51" height="51" alt="Indian Retailer">
                                 </div>
                                 <div class="article-time">
                                     BY -
@@ -153,10 +152,10 @@
                                             {{ date('M d, Y', strtotime($newsDetails->created_at)) }} /
                                         @else
                                             {{ 'Last updated ' . date('M d, Y', strtotime($newsDetails->published_date)) }}
-                                            /
+                                            
                                         @endif
-                                        <img src="{{ url('/insight-new/images/vicon.webp') }}" height="10"
-                                            width="17" alt="Franchise Insights" class="img-fluid">
+                                        <img src="{{ url('/detailpage/images/eye.png') }}" height="10"
+                                            width="16" alt="Franchise Insights" class="img-fluid">
                                         {{ $newsDetails->views }}
                                         / {{ app\Http\Controllers\InsightsController::calculateReadTime($newsDetails) }}
                                         Min Read
@@ -168,32 +167,32 @@
                                     <li>
                                         <a target="_blank"
                                             href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($newsUrl) }}">
-                                            <img src="{{ url('insight-new/images/fshare.webp') }}" height="25"
+                                            <img src="{{ url('detailpage/images/facebook.png') }}" height="25"
                                                 width="25" loading="lazy" alt="IR">
                                         </a>
                                     </li>
                                     <li>
                                         <a target="_blank"
                                             href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ $newsUrl }}">
-                                            <img src="{{ url('insight-new/images/flink.webp') }}" height="25"
+                                            <img src="{{ url('detailpage/images/linkedin.png') }}" height="25"
                                                 width="25" loading="lazy" alt="Insights">
                                         </a>
                                     </li>
                                     <li>
                                         <a target="_blank" href="https://x.com/intent/post?url={{ $newsUrl }}">
-                                            <img src="{{ url('insight-new/images/ftwit.webp') }}" height="25"
+                                            <img src="{{ url('detailpage/images/twitter.png') }}" height="25"
                                                 width="25" loading="lazy" alt="Insights">
                                         </a>
                                     </li>
                                 </ul>
+                                <div class="follow-us">
+                                    <a href="" target="_blank">
+                                        Follow Us
+                                        <img src="{{ url('detailpage/images/follows.png') }}"  alt="Franchise India" width="11" height="11">
+                                    </a>
+                                </div>
                             </div>
-                            <div class="follow-us">
-                                <a href="" target="_blank">
-                                    Follow Us
-                                    <img src="{{ url('insight-new/images/follow.webp') }}" loading="lazy"
-                                        alt="Franchise India" width="11" height="10">
-                                </a>
-                            </div>
+                            
                         </div>
                     </div>
                     <div class="content-main">
@@ -305,7 +304,7 @@
 
                         <div class="franBrands">
                             @if (!empty($franchiseData))
-                                <h4>Interested in Franchise:</h4>
+                                <h3>Interested in Franchise:</h3>
                                 @foreach ($franchiseData as $franchise)
                                     <div class="franInterest">
                                         <a href="https://www.franchiseindia.com/brands/{{ strtolower($franchise['profile_name']) }}.{{ $franchise['fran_detail_id'] }}"
@@ -342,17 +341,6 @@
                         <div class="ad-right"  class="gpt-ad"
                         data-slot="/1057625/FIHL/Desktop_ROS_300x250_ATF"
                         data-sizes="[[300,250]]">
-                            {{-- @php
-                                $topRightAd = 'adslot300x250_ATF-' . $newsDetails->news_id;
-                            @endphp --}}
-                            {{-- <div id='{{ $topRightAd }}'>
-                                <script>
-                                    googletag.cmd.push(function() {
-                                        googletag.defineSlot('/1057625/FIHL/Desktop_ROS_300x250_ATF', [300, 250], '{{ $topRightAd }}')
-                                            .addService(googletag.pubads());
-                                        googletag.display('{{ $topRightAd }}');
-                                    });
-                                </script> --}}
                             </div>
                         </div>
                         {{-- ads top right sidebar --}}
