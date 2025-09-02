@@ -50,7 +50,7 @@
                         }
                     @endphp
                     <a href="{{ $murl }}" class="logo mr-auto"><img
-                            src="{{ url('insight-new/images/logo.png') }}" alt="Franchise india Insights" /></a>
+                            src="https://www.franchiseindia.com/newhomepage/assets/img/Logo.svg" alt="Franchise india Insights" /></a>
 
                     <nav class="nav-menu d-none d-lg-block">
                         <ul>
