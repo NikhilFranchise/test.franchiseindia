@@ -13,7 +13,8 @@
                         <li>EXPAND YOUR BUSINESS <span>|</span> </li>
                         <li><a href="https://www.franchiseindia.com/" target="_blank">GET FRANCHISE</a> <span>|</span>
                         </li>
-                        <li><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5" target="_blank">GET DISTRIBUTORSHIP</a></li>
+                        <li><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5"
+                                target="_blank">GET DISTRIBUTORSHIP</a></li>
                     </ul>
                 </div>
                 @mobile
@@ -49,8 +50,11 @@
                             $murl = '/insights/hindi';
                         }
                     @endphp
+                    {{-- <a href="{{ $murl }}" class="logo mr-auto"><img
+                            src="{{ url('detailpage/images/logo.png') }}" alt="Franchise india Insights" width="243" height="35" /></a> --}}
                     <a href="{{ $murl }}" class="logo mr-auto"><img
-                            src="{{ url('detailpage/images/logo.png') }}" alt="Franchise india Insights" width="243" height="35" /></a>
+                            src="https://www.franchiseindia.com/newhomepage/assets/img/Logo.svg" alt="Franchise india Insights" width="243"
+                            height="35" /></a>
 
                     <nav class="nav-menu d-none d-lg-block">
                         <ul>
@@ -80,7 +84,7 @@
                                                 $locale,
                                             );
                                         @endphp
-                                        
+
                                         @foreach ($categories as $cat)
                                             <a class="dropdown-item" data-id="{{ $cat['id'] }}"
                                                 href="{{ $categoryUrlPrefix . $cat['slug'] }}">{{ $cat['catname'] }}</a>
@@ -101,10 +105,14 @@
                                         {{ $insightsLabel }}
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="">
-                                        <a class="dropdown-item" href="{{ $categoryUrlPrefix }}industryfocus">{{ $ArticleLabel }}</a>
-                                        <a class="dropdown-item" href="{{ $categoryUrlPrefix }}interviews">{{ $interviewsLabel }}</a>
-                                        <a class="dropdown-item" href="{{ $categoryUrlPrefix }}events_reports">{{ $eventsReportsLabel }}</a>
-                                        <a class="dropdown-item" href="{{ $categoryUrlPrefix }}video_podcast">{{ $videoPodcastLabel }}</a>
+                                        <a class="dropdown-item"
+                                            href="{{ $categoryUrlPrefix }}industryfocus">{{ $ArticleLabel }}</a>
+                                        <a class="dropdown-item"
+                                            href="{{ $categoryUrlPrefix }}interviews">{{ $interviewsLabel }}</a>
+                                        <a class="dropdown-item"
+                                            href="{{ $categoryUrlPrefix }}events_reports">{{ $eventsReportsLabel }}</a>
+                                        <a class="dropdown-item"
+                                            href="{{ $categoryUrlPrefix }}video_podcast">{{ $videoPodcastLabel }}</a>
                                     </div>
                                 </div>
                             </li>
@@ -113,7 +121,8 @@
                     <div class="search-main mx-auto">
                         <div class="ev-spk-icon">
                             <span id="tog1">
-                                <img src="{{ url('insight-new/images/search.svg') }}" alt="Search" width="18" height="18" />
+                                <img src="{{ url('insight-new/images/search.svg') }}" alt="Search" width="18"
+                                    height="18" />
                                 <img src="{{ url('insight-new/images/cross.png') }}" alt="Close"
                                     style="display: none;" />
                             </span>
