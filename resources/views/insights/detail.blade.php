@@ -196,7 +196,7 @@
                         </div>
                     </div>
                     <div class="content-main">
-                        <img
+                        {{-- <img
                         src="{{ $ogimage }}"
                         alt="{{ $newsDetails->title }}"
                         class="img-fluid"
@@ -204,7 +204,23 @@
                         height="{{ $height ?? 0 }}"
                         loading="eager"
                         decoding="async"
-                        fetchpriority="high">
+                        fetchpriority="high"> --}}
+
+                         @php
+                            // dd($ogimage);
+                            $relativePath = str_replace('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/', '', $ogimage );
+
+                         @endphp
+                       <picture>
+                                <source srcset="{{ url('img/1600x940/' . $relativePath) }}" media="(max-width: 768px)">
+                                <source srcset="{{ url('img/1600x940/' . $relativePath) }}"  media="(min-width: 769px)">
+                                <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}" class="img-fluid"
+                                    loading="eager"
+                                    decoding="async"
+                                    fetchpriority="high"
+                                    style="aspect-ratio: 1600 / 940;"
+                                >
+                            </picture>
                          
 
                         {{-- <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}"> --}}
