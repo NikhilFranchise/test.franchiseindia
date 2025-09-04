@@ -213,14 +213,12 @@
                             $hexName = bin2hex($relativePath);
                          @endphp
                          {{-- <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}"> --}}
-                        <picture>
-                            {{-- WebP source (Node.js converted or Laravel cached) --}}
+                        {{-- <picture>
                             <source 
                                 srcset="{{ url('storage/cache/1600x940/' . $hexName . '.webp') }}" 
                                 type="image/webp" 
                                 media="(min-width: 0px)">
 
-                            {{-- Fallback to original JPEG --}}
                             <img 
                                 src="{{ $ogimage }}" 
                                 alt="{{ $newsDetails->title }}" 
@@ -229,16 +227,16 @@
                                 decoding="async"
                                 fetchpriority="high"
                                 style="aspect-ratio: 1600 / 940;">
-                        </picture>
+                        </picture> --}}
 
-                       {{-- <picture>
-                                <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}" class="img-fluid"
+                       <picture>
+                                <img src="{{ url('img/1600x940/' . $hexName . '.webp') }}" alt="{{ $newsDetails->title }}" class="img-fluid"
                                     loading="eager"
                                     decoding="async"
                                     fetchpriority="high"
                                     style="aspect-ratio: 1600 / 940;"
                                 >
-                            </picture> --}}
+                            </picture>
                          
 
                         {{-- <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}"> --}}
