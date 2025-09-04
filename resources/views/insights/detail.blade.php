@@ -209,20 +209,36 @@
                          @php
                             dd($ogimage);
                             $relativePath = str_replace('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/', '', $ogimage );
-
+                        // Convert to hex for cached WebP filename (matches Node.js caching logic)
+                            $hexName = bin2hex($relativePath);
                          @endphp
                          {{-- <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}"> --}}
+                        <picture>
+                            {{-- WebP source (Node.js converted or Laravel cached) --}}
+                            <source 
+                                srcset="{{ url('storage/cache/1600x940/' . $hexName . '.webp') }}" 
+                                type="image/webp" 
+                                media="(min-width: 0px)">
 
-                       <picture>
-                                {{-- <source srcset="{{ url('img/1600x940/' . $relativePath) }}" media="(max-width: 768px)">
-                                <source srcset="{{ url('img/1600x940/' . $relativePath) }}"  media="(min-width: 769px)"> --}}
+                            {{-- Fallback to original JPEG --}}
+                            <img 
+                                src="{{ $ogimage }}" 
+                                alt="{{ $newsDetails->title }}" 
+                                class="img-fluid"
+                                loading="eager"
+                                decoding="async"
+                                fetchpriority="high"
+                                style="aspect-ratio: 1600 / 940;">
+                        </picture>
+
+                       {{-- <picture>
                                 <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}" class="img-fluid"
                                     loading="eager"
                                     decoding="async"
                                     fetchpriority="high"
                                     style="aspect-ratio: 1600 / 940;"
                                 >
-                            </picture>
+                            </picture> --}}
                          
 
                         {{-- <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}"> --}}
