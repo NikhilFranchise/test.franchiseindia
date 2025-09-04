@@ -207,7 +207,7 @@
                         fetchpriority="high"> --}}
 
                          @php
-                            // dd($ogimage);
+                            dd($ogimage);
                             $relativePath = str_replace('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/', '', $ogimage );
 
                          @endphp
