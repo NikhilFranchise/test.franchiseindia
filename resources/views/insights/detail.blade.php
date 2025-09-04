@@ -211,7 +211,9 @@
                             $relativePath = str_replace('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/', '', $ogimage );
 
                          @endphp
-                       <picture>
+                         <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}">
+
+                       {{-- <picture>
                                 <source srcset="{{ url('img/1600x940/' . $relativePath) }}" media="(max-width: 768px)">
                                 <source srcset="{{ url('img/1600x940/' . $relativePath) }}"  media="(min-width: 769px)">
                                 <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}" class="img-fluid"
@@ -221,7 +223,7 @@
                                     style="aspect-ratio: 1600 / 940;"
                                 >
                             </picture>
-                         
+                          --}}
 
                         {{-- <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}"> --}}
                         {{-- ads for mobile & desktop --}}
