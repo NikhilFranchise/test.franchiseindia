@@ -1630,7 +1630,7 @@ class FranchisorController extends Controller
             ->count();
 
         $applyCount = (ExpressInstaApply::query()->where('franchisor_id', $franchisorId)->count()) + ($expressInterestCount);
-        dd($regionFranData);
+
         $this->franPercentage();
         return view('franchisor.myAccount.dashboard', compact('investorData', 'insta', 'franData', 'applyCount', 'expressedInterests', 'leadcount', 'regionFranData'));
     }
