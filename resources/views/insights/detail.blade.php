@@ -216,7 +216,7 @@
 
                        <picture>
                                 {{-- <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}" class="img-fluid" --}}
-                                <img src="{{ url('storage/cache/1600x940/' . $hexName . '.webp') }}" alt="{{ $newsDetails->title }}" class="img-fluid"
+                                <img src="{{ url('storage/cache/1600x940/' . $hexName) }}" alt="{{ $newsDetails->title }}" class="img-fluid"
                                     loading="eager"
                                     decoding="async"
                                     fetchpriority="high"
