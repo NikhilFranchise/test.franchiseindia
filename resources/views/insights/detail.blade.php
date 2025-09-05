@@ -207,30 +207,15 @@
                         fetchpriority="high"> --}}
 
                          @php
-                            // dd($ogimage);
+                            dd($ogimage);
                             $relativePath = str_replace('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/', '', $ogimage );
                         // Convert to hex for cached WebP filename (matches Node.js caching logic)
-                            // $hexName = bin2hex($relativePath);
+                            $hexName = bin2hex($relativePath);
                          @endphp
                          {{-- <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}"> --}}
-                        {{-- <picture>
-                            <source 
-                                srcset="{{ url('storage/cache/1600x940/' . $hexName . '.webp') }}" 
-                                type="image/webp" 
-                                media="(min-width: 0px)">
-
-                            <img 
-                                src="{{ $ogimage }}" 
-                                alt="{{ $newsDetails->title }}" 
-                                class="img-fluid"
-                                loading="eager"
-                                decoding="async"
-                                fetchpriority="high"
-                                style="aspect-ratio: 1600 / 940;">
-                        </picture> --}}
 
                        <picture>
-                                <img src="{{ url('storage/cache/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}" class="img-fluid"
+                                <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}" class="img-fluid"
                                     loading="eager"
                                     decoding="async"
                                     fetchpriority="high"
