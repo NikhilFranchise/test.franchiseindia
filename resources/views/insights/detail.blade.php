@@ -208,7 +208,7 @@
 
                          @php
                             // dd($ogimage);
-                            $relativePath = str_replace('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/', '', $ogimage );
+                            $relativePath = str_replace('https://franchiseindia.s3.ap-south-1.amazonaws.com/', '', $ogimage );
                         // Convert to hex for cached WebP filename (matches Node.js caching logic)
                             $hexName = bin2hex($relativePath);
                          @endphp
