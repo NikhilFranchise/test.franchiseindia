@@ -23,8 +23,9 @@
             @php
                 $srcLogo = URL::asset('images/no-img.gif');
                 if (
-                    $franData->membership_type == 1 ||
-                    (!empty($regionFranData) && $regionFranData->membership_type == 1)
+                    $franData->membership_type == 1 &&
+                    !empty($regionFranData) &&
+                    $regionFranData->membership_type == 1
                 ) {
                     $srcLogo = Config::get('constants.franAwsImgPath') . $franData->company_logo;
                     if (!$srcLogo) {
