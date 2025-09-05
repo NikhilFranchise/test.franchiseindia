@@ -210,7 +210,7 @@
                             // dd($ogimage);
                             $relativePath = str_replace('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/', '', $ogimage );
                         // Convert to hex for cached WebP filename (matches Node.js caching logic)
-                            $hexName = bin2hex($relativePath);
+                            // $hexName = bin2hex($relativePath);
                          @endphp
                          {{-- <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}"> --}}
                         {{-- <picture>
