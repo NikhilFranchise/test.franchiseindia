@@ -368,177 +368,7 @@ class ExpressInstaController extends Controller
      * Function to express interest by random visitor, multiple select on from listing page
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    // public function freeInfo(Request $request)
-    // {
 
-    //     $companyName = "";
-    //     $successCount = 1;
-    //     $failedCount = 1;
-    //     $success = "<span>Congratulations!</span> Your application was successful to ";
-    //     $failed = "<span>Sorry! </span> We are sorry to inform you that ";
-    //     $name = $request->input('infoname');
-    //     $email = $request->input('infoemail');
-    //     $phone = $request->input('mobile');
-    //     $state = $request->input('infostate');
-    //     $city = $request->input('infocity');
-    //     $add = $request->input('address');
-    //     $pincode = $request->input('pincode');
-    //     $investmentRange = $request->input('investment_range');
-
-    //     $needLoan = 0;
-    //     if (isset(request()->need_loan) && request()->need_loan == 'on')
-    //         $needLoan = 1;
-
-    //     if (isset(request()->newsletter_sub) && request()->newsletter_sub == 'on')
-    //         $this->newsletterSubscribe($email);
-
-    //     foreach (explode(',', $request->input('frandetailsid')) as $franId) {
-
-    //         $checkState = FranchisorLocState::query()->select('state')->where('franchisor_id', $franId)
-    //             ->where('state', Config('location.stateArr.' . $state))->count();
-    //         if ($checkState > 0) {
-    //             //check if user already exists
-    //             $countOld = ExpressInstaApply::query()->where('franchisor_id', '=', $franId)->where('email', '=', $email)->count();
-
-    //             //insert data to insta apply
-    //             $franchisorDetail = FranchisorBusinessDetail::query()->where('franchisor_id', $franId)->first();
-    //             $userDetail = UserAccount::query()->where('profile_str', $franId)->first();
-    //             $source_ref = "";
-    //             if (!empty(Cookie::get('campaignSource')))
-    //                 $source_ref = Cookie::get('campaignSource');
-
-    //             if ($countOld == 0) {
-    //                 ExpressInstaApply::query()->insert([
-    //                     'name' => $name,
-    //                     'email' => $email,
-    //                     'phone' => $phone,
-    //                     'mobile_status' => 'S',
-    //                     'state' => Config('location.stateArr.' . $state),
-    //                     'city' => $city,
-    //                     'address' => $add,
-    //                     'investment' => $investmentRange,
-    //                     'category' => Config('constants.CategoryArr.' . $franchisorDetail->ind_main_cat),
-    //                     'source' => 'DOTCOM',
-    //                     'source_ref' => $source_ref,
-    //                     'franchisor_id' => $franId,
-    //                     'pincode' => $pincode,
-    //                     'visibility' => ($franchisorDetail->membership_type == 1 ? 1 : 0),
-    //                     'visibility_date' => ($franchisorDetail->membership_type == 1 ? date('Y-m-d H:i:s') : null)
-    //                 ]);
-
-    //                 if ($needLoan == 1) {
-    //                     PropertyLoan::query()->insert([
-    //                         'name' => $name,
-    //                         'email' => $email,
-    //                         'mobile' => $phone,
-    //                         'address' => $add,
-    //                         'pincode' => $pincode,
-    //                         'income_range' => Config('constants.investRangeInWords.' . $investmentRange),
-    //                         'source' => 'INSTA APPLY(Multiple Apply)',
-    //                     ]);
-    //                     $needLoan = 0;
-    //                 }
-
-    //                 $investorController = new InvestorController();
-
-    //                 $insertData = [
-    //                     'name' => $name,
-    //                     'email' => $email,
-    //                     'mobile' => $phone,
-    //                     'address' => $add,
-    //                     'state' => Config('location.stateArr.' . $state),
-    //                     'city' => $city,
-    //                     'category_id' => $franchisorDetail->ind_main_cat,
-    //                     'pincode' => $pincode,
-    //                     'investment_range' => $investmentRange
-    //                 ];
-
-    //                 $leadSource = Config('constants.leadSource.FiInstantApply');
-
-    //                 $investorController->convertLeadsToInvestor($insertData, $leadSource);
-
-    //                 /* if ($userDetail->email == 'fiblbrands@franchiseindia.in') {
-    //                     try {
-    //                         CronController::saveAPI($name, $email, $phone, $franchisorDetail->ind_main_cat, $franchisorDetail->fibl_brands, $city, $state);
-    //                     } catch (\Exception $e) {
-    //                         echo $e->getMessage();
-    //                     }
-    //                 }*/
-    //             }
-
-    //             $details[0] = [
-    //                 'name' => $name,
-    //                 'email' => $email,
-    //                 'mobile' => $phone,
-    //                 'state' => Config('location.stateArr.' . $state),
-    //                 'city' => $city
-    //             ];
-
-    //             $details[1] = $franchisorDetail->ceo_name;
-
-    //             if ($countOld == 0) {
-
-    //                 if ($franchisorDetail->membership_type != 0) {
-    //                     //sms sending
-    //                     $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name, strlen($phone) > 40 ? substr($phone, 0, 15) . ".." : $phone);
-    //                     CommonController::send_sms_freeinfo($userDetail->mobile, $franSmsMsg);
-
-    //                     //Sending Paid Franchisor Notifications
-    //                     $this->sendFranNotifications($userDetail->email, $details, $userDetail->mobile, $franSmsMsg, 'paid');
-    //                 }
-
-    //                 if ($franchisorDetail->membership_type == 0) {
-    //                     //sms text to be send for free franchisor sending
-    //                     $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
-
-    //                     //Sending Free Franchisor Notifications
-    //                     $this->sendFranNotifications($userDetail->email, $details[1], $userDetail->mobile, $franSmsMsg, 'free');
-    //                 }
-    //             }
-    //             //msg to be displayed
-    //             $success .= $franchisorDetail->company_name . ", ";
-    //             $successCount = ++$successCount;
-    //         } else {
-    //             $franchisorDetail = FranchisorBusinessDetail::query()->where('franchisor_id', $franId)->select('company_name', 'membership_type')->first();
-
-    //             if (empty($franchisorDetail)) {
-    //                 $result = "Your request will be sent to the companies interested for franchising in your state. The business development representative will contact you soon through your contact number / email ID.";
-    //                 return view('thanks/brandcontact', compact('result'));
-    //             }
-
-    //             $failed .= $franchisorDetail->company_name . ", ";
-    //             $failedCount = ++$failedCount;
-    //         }
-    //     }
-
-    //     $success = substr($success, 0, -1);
-    //     $success .= ". Your request will be sent to the companies interested for franchising in your state. The business development representative will contact you soon through your contact number / email ID.";
-    //     $failed = substr($failed, 0, -1);
-    //     $failed .= " Is not looking for expansion in your state.";
-
-    //     $result = $success;
-
-    //     if ($failedCount != 1)
-    //         $result = $success . "<br>" . $failed;
-
-    //     if ($successCount == 1 && $failedCount != 1)
-    //         $result = $failed;
-
-    //     $temp = explode(',', $request->input('frandetailsid'));
-
-    //     foreach ($temp as $franIdForName) {
-    //         $companyName .= FranchisorBusinessDetail::query()->where('franchisor_id', $franIdForName)->select('company_name')->first()->company_name . ',';
-    //     }
-
-    //     $detailMail[0] = substr($companyName, 0, -1);
-    //     $detailMail[1] = $request->input('infoname');
-
-    //     //Sms text for a visitor
-    //     $franSmsMsg = sprintf(config('txtlocal.GuestInv'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
-    //     $this->sendInvNotifications($email, $detailMail, $phone, $franSmsMsg, 'visitor');
-
-    //     return view('thanks/brandcontact', compact('result'));
-    // }
     public function freeInfo(Request $request)
     {
         $name = $request->input('infoname');
@@ -572,7 +402,9 @@ class ExpressInstaController extends Controller
             $userDetail = UserAccount::query()
                 ->where('profile_str', $franId)
                 ->first();
-
+            $regionalFranData = FranchiseRegional::query()
+                ->where('fihl_id', $franId)->where('status', 1)
+                ->first();
             // Check if franchisor is active in the selected state
             $isStateAvailable = FranchisorLocState::query()
                 ->where('franchisor_id', $franId)
@@ -610,8 +442,8 @@ class ExpressInstaController extends Controller
                 'source_ref' => Cookie::get('campaignSource', ''),
                 'franchisor_id' => $franId,
                 'pincode' => $pincode,
-                'visibility' => $franchisorDetail->membership_type == 1 ? 1 : 0,
-                'visibility_date' => $franchisorDetail->membership_type == 1 ? now() : null
+                'visibility' => ($franchisorDetail?->membership_type === 1 ? 1 : (($regionalFranData?->membership_type === 1) ? 1 : 0)),
+                'visibility_date' => ($franchisorDetail?->membership_type === 1 ? date('Y-m-d H:i:s') : (($regionalFranData?->membership_type === 1) ? date('Y-m-d H:i:s') : null))
             ]);
 
             // Insert loan details if needed
@@ -656,7 +488,7 @@ class ExpressInstaController extends Controller
 
             $franSmsMsg = '';
             if ($userDetail) {
-                if ($franchisorDetail->membership_type == 1) {
+                if ($franchisorDetail->membership_type == 1 || ($regionalFranData && $regionalFranData->membership_type == 1)) {
                     $franSmsMsg = sprintf(config('txtlocal.FranPaid'), Str::limit($name, 40, '..'), Str::limit($phone, 15, '..'));
 
                     // Check mobile before sending SMS
@@ -843,14 +675,6 @@ class ExpressInstaController extends Controller
 
             $investorController->convertLeadsToInvestor($insertData, $leadSource);
 
-            /* if ($userDetail->email == 'fiblbrands@franchiseindia.in') {
-                try {
-                    CronController::saveAPI($name, $email, $phone, $franchisorDetail->ind_main_cat, $franchisorDetail->fibl_brands, $city, $state);
-                } catch (\Exception $e) {
-                    echo $e->getMessage();
-                }
-            }*/
-
             if (empty($phone) || empty($email)) {
                 $checkFlag = 0;
                 if (isset($request->flag))
@@ -872,7 +696,7 @@ class ExpressInstaController extends Controller
 
             $details[1] = $franchisorDetail->ceo_name;
 
-            if ($franchisorDetail->membership_type != 0) {
+            if ($franchisorDetail->membership_type != 0 || ($regionalFranData && $regionalFranData->membership_type == 1)) {
                 //Sms message
                 $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name, strlen($phone) > 15 ? substr($phone, 0, 15) . ".." : $phone);
 
@@ -880,7 +704,7 @@ class ExpressInstaController extends Controller
                 $this->sendFranNotifications($userDetail?->email, $details, $userDetail->mobile, $franSmsMsg, 'paid');
             }
 
-            if ($franchisorDetail->membership_type == 0) {
+            if ($franchisorDetail->membership_type == 0 && (empty($regionalFranData) || $regionalFranData->membership_type == 0)) {
                 //sms sending
                 $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
 

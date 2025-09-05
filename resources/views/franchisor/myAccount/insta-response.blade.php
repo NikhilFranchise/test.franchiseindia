@@ -14,9 +14,8 @@
                             $href = 'href=# disabled';
                         @endphp
                         @if (
-                                (!empty(request()->user()) && request()->user()->membership_type == 1) ||
-                                (!empty($regionFranData) && $regionFranData->membership_type == 1)
-                            )
+                            (!empty(request()->user()) && request()->user()->membership_type == 1) ||
+                                (!empty($regionFranData) && $regionFranData->membership_type == 1))
                             @php
 
                                 $href = 'href=/all-insta-responce-csv';
@@ -26,8 +25,10 @@
                         <div class="clearfix"></div>
                         <div class="bor-radius backwhite ovfl exyab">
                             @if (
-                                    !empty(request()->user()) && request()->user()->membership_type != 1 && !empty($regionFranData) && $regionFranData->membership_type != 1
-                                )
+                                !empty(request()->user()) &&
+                                    request()->user()->membership_type != 1 &&
+                                    !empty($regionFranData) &&
+                                    $regionFranData->membership_type != 1)
                                 <div class="freeoverh">
                                     <p>Please upgrade your Account to utilise further benefits.</p>
                                     <a href="{{ url('franchisor/myaccount/payment-plan') }}" class="btn btn-default">Upgrade
@@ -65,8 +66,7 @@
                                                 </td>
                                                 <td data-th="Email" class="widthper24">
                                                     <div class="fra-title" id="data">
-                                                        {{ $instaResult->visibility == 1 || $franData->fleads_status == 1 ?
-                                                        $instaResult->email : 'xxxxxxxx@gmail.com' }}
+                                                        {{ $instaResult->visibility == 1 || $franData->fleads_status == 1 ? $instaResult->email : 'xxxxxxxx@gmail.com' }}
                                                     </div>
                                                 </td>
                                                 <td data-th="Address" class="widthper30">
@@ -89,8 +89,7 @@
                                                 </td>
                                                 <td data-th="Email" class="widthper24">
                                                     <div class="fra-title" id="data">
-                                                        {{ $instaResult->visibility == 1 ? $instaResult->email :
-                                                        'xxxxxxxx@gmail.com' }}
+                                                        {{ $instaResult->visibility == 1 ? $instaResult->email : 'xxxxxxxx@gmail.com' }}
                                                     </div>
                                                 </td>
                                                 <td data-th="Address" class="widthper30">
