@@ -1282,3 +1282,18 @@ Route::get('/sendmail', [CommonController::class, 'send_email']);
 Route::post('/submit-form2', [AdviceController::class, 'freeadviceHome_popup2'])->name('form.submithome2');
 
 
+Route::get('img/{size}/{path}', function ($size, $path) {
+    $relativePath = str_replace(['../', './'], '', $path);
+
+    // Call Node.js image service
+    $nodeUrl = 'http://127.0.0.1:3000/img/' . $size . '/' . $relativePath;
+
+    $response = Http::get($nodeUrl);
+
+    if ($response->failed()) {
+        abort(404, 'Image not found or processing failed');
+    }
+
+    return response($response->body(), 200)
+        ->header('Content-Type', 'image/webp');
+})->where('path', '.*');
