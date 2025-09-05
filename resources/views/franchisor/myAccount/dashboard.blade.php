@@ -144,7 +144,7 @@ class="selected"
                                 if (
                                 (request()->user()->membership_type == 1 &&
                                 $expData->franchisor_visibility == 1) || (!empty($regionFranData) &&
-                                $regionFranData->membership_type == 1 && $expData->franchisor_visibility == 1)
+                                $regionFranData->membership_type == 1)
                                 ) {
                                 $email = $expData->investor->userDetail->email;
                                 $mobile = $expData->investor->userDetail->mobile;
