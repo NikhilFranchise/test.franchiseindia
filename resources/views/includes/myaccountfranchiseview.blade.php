@@ -20,7 +20,7 @@
 <div class="bor-radius backwhite marleft franchisemyprofilemain">
     <div class="row">
         <div class="col-xs-12 col-sm-3 col-md-3 borleft">
-            @dd($franData->membership_type, $regionFranData->membership_type);
+            @dd($franData->membership_type, $regionFranData);
             @php
                 $srcLogo = URL::asset('images/no-img.gif');
                 if (
