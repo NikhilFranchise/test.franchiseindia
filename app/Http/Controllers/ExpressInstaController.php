@@ -16,6 +16,7 @@ use App\Mail\NewsLetterSubscribe;
 use App\Mail\PaidFranchisor;
 use App\Mail\PaidInvestor;
 use App\Models\PropertyLoan;
+use App\Models\Regional\FranchiseRegional;
 use App\Models\UserAccount;
 use App\Models\UserActivity;
 use GuzzleHttp\Exception\ClientException;
@@ -774,6 +775,7 @@ class ExpressInstaController extends Controller
                 ->where('profile_status', 1)
                 ->where('profile_type', 1)
                 ->first();
+            $regionalFranData = FranchiseRegional::query()->where('fihl_id', $franId)->where('status', 1)->first();
             // dd($userDetail);
             $resource = "DOTCOM";
             if (!empty(request()->check_lead_popup))
@@ -791,15 +793,7 @@ class ExpressInstaController extends Controller
                     }
                 }
             }
-            // dd($resource);
-
             $source_ref = "";
-            // dd($source_ref);
-            // if (!empty(Cookie::get('campaignSource')))
-            //     $source_ref = Cookie::get('campaignSource');
-
-
-            // dd($source_ref);
             $insertData = [
                 'name' => $name,
                 'email' => $email,
@@ -814,23 +808,11 @@ class ExpressInstaController extends Controller
                 'investment' => $investmentRange,
                 'mobile_status' => 'S',
                 'franchisor_id' => $franId,
-                'visibility' => ($userDetail?->membership_type === 1 ? 1 : 0),
-                'visibility_date' => ($userDetail?->membership_type === 1 ? date('Y-m-d H:i:s') : null)
+                'visibility' => ($userDetail?->membership_type === 1 ? 1 : (($regionalFranData?->membership_type === 1) ? 1 : 0)),
+                'visibility_date' => ($userDetail?->membership_type === 1 ? date('Y-m-d H:i:s') : (($regionalFranData?->membership_type === 1) ? date('Y-m-d H:i:s') : null))
 
             ];
-            // dd($insertData['visibility_date']);
-            // dd($resource);
-            // dd($insertData);
-            // If count is zero, Insert a new record
-            // try {
-            //         $insertId = ExpressInstaApply::query()->insertGetId($insertData);
-            //         dd($insertId);
-            //     } catch (\Exception $e) {
-            //         dd('Insert Error: ' . $e->getMessage());
-            //     }
             $insertId = ExpressInstaApply::query()->insertGetId($insertData);
-            //  $insertId = ExpressInstaApply::query()->find($insertData);
-            // dd($insertId);
             if ($needLoan == 1) {
                 PropertyLoan::query()->insert([
                     'name' => $name,

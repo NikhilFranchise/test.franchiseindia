@@ -12,14 +12,21 @@
                         <h2 class="mysubhead fleft marhaedtop">Expressed Interest</h2>
                         @php
                             $href = 'href=# disabled';
-                            if (!empty(request()->user()) && request()->user()->membership_type == 1) {
-                                $href = 'href=/all-interests-csv';
-                            }
                         @endphp
+                        @if (
+                                (!empty(request()->user()) && request()->user()->membership_type == 1) ||
+                                (!empty($regionFranData) && $regionFranData->membership_type == 1)
+                            )
+                            @php
+
+                                $href = 'href=/all-interests-csv';
+                            @endphp
+
+                        @endif
                         <a {{ $href }} class="btn btn-default dwlbtn" id="export">Download Response</a>
                         <div class="clearfix"></div>
                         <div class="bor-radius backwhite ovfl exyab">
-                            @if (request()->user()->membership_type != 1)
+                            @if (request()->user()->membership_type != 1 && $regionFranData->membership_type != 1)
                                 <div class="freeoverh">
                                     <p>Please upgrade your Account to utilise further benifits.</p>
                                     <a href="{{ url('franchisor/myaccount/payment-plan') }}" class="btn btn-default">Upgrade
@@ -38,63 +45,68 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($expressedInterests as $expData)
-                                    @php
-                                        $address = "Not Visible";
-                                        // $invAmt  = Config('constants.investRangeInWords.'.$expData->investor->inv_amt);
-                                        $invAmt = $expData->investor ? Config('constants.investRangeInWords.' . $expData->investor->inv_amt) : null;
-                                        // $name    = $expData->investor ? ($expData->investor->userDetail->name) : null;
-                                        $name    = ($expData->investor && $expData->investor->userDetail) ? $expData->investor->userDetail->name : null;
-                                        $email   = "xxxxx@gmail.com";
-                                        $mobile  = "99xxxxxxxx";
-                                        $address = "xxxxxxxx,Pin-code:-xxxxxx";
+                                        @php
+                                            $address = "Not Visible";
+                                            // $invAmt = Config('constants.investRangeInWords.'.$expData->investor->inv_amt);
+                                            $invAmt = $expData->investor ? Config('constants.investRangeInWords.' .
+                                                $expData->investor->inv_amt) : null;
+                                            // $name = $expData->investor ? ($expData->investor->userDetail->name) : null;
+                                            $name = ($expData->investor && $expData->investor->userDetail) ?
+                                                $expData->investor->userDetail->name : null;
+                                            $email = "xxxxx@gmail.com";
+                                            $mobile = "99xxxxxxxx";
+                                            $address = "xxxxxxxx,Pin-code:-xxxxxx";
 
-                                        if(request()->user()->membership_type == 1 && $expData->franchisor_visibility == 1 ) {
-                                            $address = "";
-                                            if(!empty($expData->investor->inv_address))
-                                                $address .= $expData->investor->inv_address.", ";
-                                            if(!empty($expData->investor->inv_city))
-                                                $address .= $expData->investor->inv_city.", ";
-                                            if(!empty($expData->investor->inv_state))
-                                                $address .= $expData->investor->inv_state.", ";
-                                            if(!empty($expData->investor->inv_pincode))
-                                                $address .= "Pin-code:-".$expData->investor->inv_pincode.", ";
-                                            if(!empty($expData->investor->inv_country))
-                                                $address .= $expData->investor->inv_country.", ";
+                                            if (
+                                                (request()->user()->membership_type == 1 && $expData->franchisor_visibility == 1) ||
+                                                (!empty($regionFranData) && $regionFranData->membership_type == 1 && $expData->franchisor_visibility == 1)
+                                            ) {
+                                                $address = "";
+                                                if (!empty($expData->investor->inv_address))
+                                                    $address .= $expData->investor->inv_address . ", ";
+                                                if (!empty($expData->investor->inv_city))
+                                                    $address .= $expData->investor->inv_city . ", ";
+                                                if (!empty($expData->investor->inv_state))
+                                                    $address .= $expData->investor->inv_state . ", ";
+                                                if (!empty($expData->investor->inv_pincode))
+                                                    $address .= "Pin-code:-" . $expData->investor->inv_pincode . ", ";
+                                                if (!empty($expData->investor->inv_country))
+                                                    $address .= $expData->investor->inv_country . ", ";
 
-                                            $email    = ($expData->investor && $expData->investor->userDetail) ? $expData->investor->userDetail->email : null;
-                                            $mobile    = ($expData->investor && $expData->investor->userDetail) ? $expData->investor->userDetail->mobile : null;
-                                            // $email  = $expData->investor ? ($expData->investor->userDetail->email) : null;
-                                            // $mobile = $expData->investor ? ($expData->investor->userDetail->mobile) : null;
-                                        }
-                                    @endphp
-                                    <tr class="extrl">
-                                        <td data-th="Name" class="widthper16">
-                                            <div class="fra-title" id="data">
-                                                {{ $name }} <span>{{ $expData->visit_date }}</span>
-                                            </div>
-                                        </td>
-                                        <td data-th="Email" class="widthper24">
-                                            <div class="fra-title" id="data">
-                                                {{ $email }}
-                                            </div>
-                                        </td>
-                                        <td data-th="Available Capital" class="widthper16">
-                                            <div class="fra-title" id="data">
-                                                {{ $invAmt }}
-                                            </div>
-                                        </td>
-                                        <td data-th="Address" class="widthper30">
-                                            <div class="fra-title" id="data">
-                                                {{ $address }}
-                                            </div>
-                                        </td>
-                                        <td data-th="Mobile" class="widthper12">
-                                            <div class="fra-title" id="data">
-                                                {{ $mobile }}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                                $email = ($expData->investor && $expData->investor->userDetail) ?
+                                                    $expData->investor->userDetail->email : null;
+                                                $mobile = ($expData->investor && $expData->investor->userDetail) ?
+                                                    $expData->investor->userDetail->mobile : null;
+                                            }
+                                        @endphp
+                                        <tr class="extrl">
+                                            <td data-th="Name" class="widthper16">
+                                                <div class="fra-title" id="data">
+                                                    {{ $name }} <span>{{ $expData->visit_date }}</span>
+                                                </div>
+                                            </td>
+                                            <td data-th="Email" class="widthper24">
+                                                <div class="fra-title" id="data">
+                                                    {{ $email }}
+                                                </div>
+                                            </td>
+                                            <td data-th="Available Capital" class="widthper16">
+                                                <div class="fra-title" id="data">
+                                                    {{ $invAmt }}
+                                                </div>
+                                            </td>
+                                            <td data-th="Address" class="widthper30">
+                                                <div class="fra-title" id="data">
+                                                    {{ $address }}
+                                                </div>
+                                            </td>
+                                            <td data-th="Mobile" class="widthper12">
+                                                <div class="fra-title" id="data">
+                                                    {{ $mobile }}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

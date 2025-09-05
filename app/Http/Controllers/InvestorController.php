@@ -1022,7 +1022,7 @@ class InvestorController extends Controller
                 ->where('order_status', 1)
                 ->where('payment_status', 1)
                 ->first();
-            if ($paymentDetail->count() > 0) {
+            if ($paymentDetail && $paymentDetail->count() > 0) {
                 // Via the global helper...
                 session(['membership_expiry' => $paymentDetail->expiry_date]);
             }

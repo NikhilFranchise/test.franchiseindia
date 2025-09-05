@@ -17,7 +17,8 @@
                                         class="fa fa-angle-right" aria-hidden="true"></i> <span></span></a></div>
                         </div>
                         <div class="bor-radius backwhite ovfl exyab">
-                            @if (request()->user()->membership_type != 1)
+                            {{-- @if (request()->user()->membership_type != 1 || $regionFranData->membership_type != 1) --}}
+                            @if (request()->user()->membership_type != 1 && !empty($regionFranData) && $regionFranData->membership_type != 1)
                                 <div class="freeoverhdash">
                                     <p>Please upgrade your Account to utilise further benifits.</p>
                                     <a href="{{ url('franchisor/myaccount/payment-plan') }}" class="btn btn-default">Upgrade
@@ -118,11 +119,11 @@
                                     <i class="fa fa-angle-right" aria-hidden="true"></i> <span></span></a></div>
                         </div>
                         <div class="bor-radius backwhite ovfl exyab">
-                            @if (!empty(request()->user()) && request()->user()->membership_type != 1)
+                            @if (!empty(request()->user()) && request()->user()->membership_type != 1 && !empty($regionFranData) && $regionFranData->membership_type != 1)
                                 <div class="freeoverhdash">
                                     <p>Please upgrade your Account to utilise further benefits.</p>
-                                    <a href="{{ url('franchisor/myaccount/payment-plan') }}"
-                                        class="btn btn-default">Upgrade Account</a>
+                                    <a href="{{ url('franchisor/myaccount/payment-plan') }}" class="btn btn-default">Upgrade
+                                        Account</a>
                                 </div>
                             @endif
                             <table class="table table-responsive">
@@ -143,8 +144,8 @@
                                                     $email = 'Not visible';
                                                     $mobile = 'Not visible';
                                                     if (
-                                                        request()->user()->membership_type == 1 &&
-                                                        $expData->franchisor_visibility == 1
+                                                        (request()->user()->membership_type == 1 &&
+                                                            $expData->franchisor_visibility == 1) || (!empty($regionFranData) && $regionFranData->membership_type == 1 && $expData->franchisor_visibility == 1)
                                                     ) {
                                                         $email = $expData->investor->userDetail->email;
                                                         $mobile = $expData->investor->userDetail->mobile;

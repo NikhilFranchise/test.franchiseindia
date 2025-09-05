@@ -12,20 +12,28 @@
                         <h2 class="mysubhead fleft marhaedtop">Insta Responses</h2>
                         @php
                             $href = 'href=# disabled';
-                            if (!empty(request()->user()) && request()->user()->membership_type == 1) {
-                                $href = 'href=/all-insta-responce-csv';
-                            }
                         @endphp
+                        @if (
+                                (!empty(request()->user()) && request()->user()->membership_type == 1) ||
+                                (!empty($regionFranData) && $regionFranData->membership_type == 1)
+                            )
+                            @php
+
+                                $href = 'href=/all-insta-responce-csv';
+                            @endphp
+                        @endif
                         <a {{ $href }} class="btn btn-default dwlbtn" id="export">Download Response</a>
                         <div class="clearfix"></div>
                         <div class="bor-radius backwhite ovfl exyab">
-                            @if (!empty(request()->user()) && request()->user()->membership_type != 1)
-            <div class="freeoverh">
-              <p>Please upgrade your Account to utilise further benefits.</p>
-              <a href="{{ url('franchisor/myaccount/payment-plan') }}" class="btn btn-default">Upgrade
-              Account</a>
-            </div>
-            @endif
+                            @if (
+                                    !empty(request()->user()) && request()->user()->membership_type != 1 && !empty($regionFranData) && $regionFranData->membership_type != 1
+                                )
+                                <div class="freeoverh">
+                                    <p>Please upgrade your Account to utilise further benefits.</p>
+                                    <a href="{{ url('franchisor/myaccount/payment-plan') }}" class="btn btn-default">Upgrade
+                                        Account</a>
+                                </div>
+                            @endif
                             <table class="table table-responsive">
                                 <thead class="thead-inverse">
                                     <tr class="tabg">
@@ -57,7 +65,8 @@
                                                 </td>
                                                 <td data-th="Email" class="widthper24">
                                                     <div class="fra-title" id="data">
-                                                        {{ $instaResult->visibility == 1 || $franData->fleads_status == 1 ? $instaResult->email : 'xxxxxxxx@gmail.com' }}
+                                                        {{ $instaResult->visibility == 1 || $franData->fleads_status == 1 ?
+                                                        $instaResult->email : 'xxxxxxxx@gmail.com' }}
                                                     </div>
                                                 </td>
                                                 <td data-th="Address" class="widthper30">
@@ -80,7 +89,8 @@
                                                 </td>
                                                 <td data-th="Email" class="widthper24">
                                                     <div class="fra-title" id="data">
-                                                        {{ $instaResult->visibility == 1 ? $instaResult->email : 'xxxxxxxx@gmail.com' }}
+                                                        {{ $instaResult->visibility == 1 ? $instaResult->email :
+                                                        'xxxxxxxx@gmail.com' }}
                                                     </div>
                                                 </td>
                                                 <td data-th="Address" class="widthper30">
