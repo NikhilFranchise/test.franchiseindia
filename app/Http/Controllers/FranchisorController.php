@@ -2447,7 +2447,7 @@ class FranchisorController extends Controller
         fputcsv($handle, array('Name', 'Email', 'Phone', 'Address', 'City', 'State', 'Pincode', 'Investment', 'Date'));
         foreach ($table as $row) {
             $address = $row->address . ',' . $row->city . ',' . $row->state;
-            if (request()->user()->membership_type == 1 && $row->visibility == 1 || !empty($regionFranData) && $regionFranData->membership_type == 1 && $row->visibility == 1) {
+            if (request()->user()->membership_type == 1 && $row->visibility == 1 || !empty($regionFranData) && $regionFranData->membership_type == 1) {
 
                 $invAmt = is_numeric($row->investment) ? Config('constants.investRangeInWords.' . $row->investment) : 'Not Visible';
                 fputcsv($handle, array($row->name, $row->email, $row->phone, $address, $row->city, $row->state, $row->pincode, $invAmt, $row->create_date));

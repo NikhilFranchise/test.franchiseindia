@@ -473,7 +473,7 @@ class InsightsController extends Controller
             ->whereNotIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau', 'Guest Author'])
             ->where('status', 'A')
             ->orderByDesc('created_at')
-            ->limit(5)
+            ->limit(10)
             ->get()
             ->map(function ($author) use ($authorCounts) {
                 $author->count = $authorCounts[$author->author_id]['total'] ?? 0;
