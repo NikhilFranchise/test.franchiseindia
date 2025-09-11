@@ -488,7 +488,7 @@
 
     @endphp
  <!-- ✅ Centralized GPT Ad Initializer for first load + next articles -->
- <script>
+  {{-- <script>
     (function(){
       function initAd(div) {
         if (!div || div.dataset.gptLoaded) return;
@@ -522,7 +522,37 @@
         initAllAds(context);
       };
     })();
-  </script>
+  </script> --}}
+  
+  <script>
+        window.googletag = window.googletag || {
+            cmd: []
+        };
+
+        googletag.cmd.push(function() {
+            const slots = document.querySelectorAll('.gpt-inline-slot');
+
+            slots.forEach(slot => {
+                const id = slot.dataset.slotId;
+                const path = slot.dataset.slotPath;
+
+                if (id && path) {
+                    googletag.defineSlot(path, [
+                            [300, 250],
+                            [336, 280],
+                            [250, 250]
+                        ], id)
+                        .addService(googletag.pubads());
+                }
+            });
+
+            googletag.enableServices();
+
+            slots.forEach(slot => {
+                googletag.display(slot.dataset.slotId);
+            });
+        });
+    </script>
     <script>
         let isLoading = false;
         let hasScrolledDown = false;
