@@ -333,14 +333,16 @@
                     @php
                         $nextTopRightAd = 'adslot300x250_ATF-' . $nextArticle->news_id;
                     @endphp
-                    <div id='{{ $nextTopRightAd }}'>
-                        <script>
+                    <div id="{{ $nextTopRightAd }}" class="gpt-ad"
+                    data-slot="/1057625/FIHL/Desktop_ROS_300x250_ATF"
+                    data-sizes="[[300,250]]">
+                        {{-- <script>
                             googletag.cmd.push(function() {
                                 googletag.defineSlot('/1057625/FIHL/Desktop_ROS_300x250_ATF', [300, 250], '{{ $nextTopRightAd }}')
                                     .addService(googletag.pubads());
                                 googletag.display('{{ $nextTopRightAd }}');
                             });
-                        </script>
+                        </script> --}}
                     </div>
                 </div>
                 {{-- ads top right sidebar --}}
