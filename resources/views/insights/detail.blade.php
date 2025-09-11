@@ -47,7 +47,7 @@
   </style> --}}
   <!-- ✅ Load GPT once (async) -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
-    <script>
+    {{-- <script>
         window.googletag = window.googletag || { cmd: [] };
 
         // Guard so GPT services aren't enabled multiple times if next-article HTML contains scripts
@@ -66,7 +66,7 @@
             googletag.cmd.push(setupGPTOnlyOnce);
             window.__setupGPTOnlyOnce = function(){ googletag.cmd.push(setupGPTOnlyOnce); };
         })();
-    </script>
+    </script> --}}
     
   {{-- <link rel="stylesheet" href="..."> --}}
   <div class="maininnver homeh">
