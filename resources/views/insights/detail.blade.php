@@ -223,24 +223,7 @@
                                     style="aspect-ratio: 1600 / 940;"
                                 >
                             </picture>
-                          <div class="inner-article-detail-desktop-ad fad">
-                            @php
-                                $imgBottomAd =
-                                    'adslot300x250_ATF-' . $newsDetails->news_id . '-' . $newsDetails->cat_id;
-                            @endphp
-                            <div id="{{ $imgBottomAd }}"></div>
-                            <script>
-                                googletag.cmd.push(function() {
-                                    googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250', [
-                                        [300, 250],
-                                        [336, 280],
-                                        [250, 250]
-                                    ], '{{ $imgBottomAd }}').addService(googletag.pubads());
-
-                                    googletag.display('{{ $imgBottomAd }}');
-                                });
-                            </script>
-                        </div>
+                         
 
                         {{-- <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}"> --}}
                         {{-- ads for mobile & desktop --}}
