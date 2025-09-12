@@ -114,7 +114,7 @@
     {{-- @include('layout.insights.newsletter')
     @include('layout.insights.footer') --}}
     @include('layout.insights.insightsdetailfooterlinks')
-    {{-- @include('includes.banners-new.google-tags') --}}
+    @include('includes.banners-new.google-tags')
 
 </body>
 
