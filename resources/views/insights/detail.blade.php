@@ -743,20 +743,24 @@
                 topParagraphObserver.observe(div);
             });
         }
+        
 
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                observeArticles();
-                const imgs = document.querySelectorAll('.articlecontent img');
-                imgs.forEach((img) => {
-                    const isHero = img.closest('.content-main') !== null;
-                    if (!isHero) {
-                        img.setAttribute('loading', 'lazy');
-                        img.setAttribute('decoding', 'async');
-                        img.setAttribute('fetchpriority', 'low');
-                    }
-                });
-            }, 300);
+        // window.addEventListener('load', () => {
+        //     setTimeout(() => {
+        //         observeArticles();
+        //         const imgs = document.querySelectorAll('.articlecontent img');
+        //         imgs.forEach((img) => {
+        //             const isHero = img.closest('.content-main') !== null;
+        //             if (!isHero) {
+        //                 img.setAttribute('loading', 'lazy');
+        //                 img.setAttribute('decoding', 'async');
+        //                 img.setAttribute('fetchpriority', 'low');
+        //             }
+        //         });
+        //     }, 300);
+        // });
+          document.addEventListener('DOMContentLoaded', () => {
+            observeArticles();
         });
 
         // Call this after injecting the next article HTML
