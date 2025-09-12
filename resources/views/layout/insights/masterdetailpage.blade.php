@@ -81,6 +81,7 @@
     <meta name="google-site-verification" content="8W9CXigRDmfNyf8vOfkZBefougI9sPXO4xvDBFLIjaw" />
     <meta name="y_key" content="0f4f718975ac23ed" />
     <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
     @include('layout.insights.headerlink_detailpage')
     <script>window.googletag = window.googletag || {cmd: []}; window.dataLayer = window.dataLayer || [];</script>
     <link rel="preload" as="image" href="@yield('image')" fetchpriority="high">
