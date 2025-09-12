@@ -1,4 +1,4 @@
-@extends('layout.insights.masterdetailpage')
+@extends('layout.insights.master')
 @section('seoTitle', $newsDetails->title)
 @section('header-schema')
     @include('insights.schema', ['newsDetails' => $newsDetails])
@@ -35,13 +35,6 @@
 @section('width', $width)
 @section('height', $height)
 @section('content')
-
-  <!-- ✅ Load GPT once (async) -->
-    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
-
-    
-  {{-- <link rel="stylesheet" href="..."> --}}
-  <div class="maininnver homeh">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"> --}}
     <div class="maininnver homeh">
         <div class="inner-top-head">
@@ -52,12 +45,11 @@
         <!-- DESKTOP TOP AD PLACEMENT START HERE  -->
         <div class="container">
             @desktop
-               
                 <div class="inner-article-detail-desktop-top-ad">
                     @php
                         $topAd = 'adslot728x90_ATF-' . $newsDetails->news_id;
                     @endphp
-                      <div id="{{ $topAd }}"></div>
+                    <div id="{{ $topAd }}"></div>
                     <script>
                         googletag.cmd.push(function() {
                             googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], '{{ $topAd }}')
@@ -65,16 +57,6 @@
                             googletag.display('{{ $topAd }}');
                         });
                     </script>
-                    {{-- <div id="{{ $topAd }}" class="gpt-ad"
-                    data-slot="/1057625/FIHL/FI_Desktop_ROS_728x90_ATF"
-                    data-sizes="[[728,90]]"></div> --}}
-                    {{-- <script>
-                        googletag.cmd.push(function() {
-                            googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], '{{ $topAd }}')
-                                .addService(googletag.pubads());
-                            googletag.display('{{ $topAd }}');
-                        });
-                    </script> --}}
                 </div>
             @enddesktop
         </div>
@@ -118,7 +100,8 @@
                         <div class="article-features">
                             <div class="article-date">
                                 <div class="article-logo">
-                                    <img src="{{ $authorImage }}" width="51" height="51" alt="Indian Retailer">
+                                    <img src="{{ $authorImage }}" width="51" height="51" alt="Indian Retailer"
+                                        loading="lazy" class="">
                                 </div>
                                 <div class="article-time">
                                     BY -
@@ -132,10 +115,10 @@
                                             {{ date('M d, Y', strtotime($newsDetails->created_at)) }} /
                                         @else
                                             {{ 'Last updated ' . date('M d, Y', strtotime($newsDetails->published_date)) }}
-                                            
+                                            /
                                         @endif
-                                        <img src="{{ url('/detailpage/images/eye.png') }}" height="10"
-                                            width="16" alt="Franchise Insights" class="img-fluid">
+                                        <img src="{{ url('/insight-new/images/vicon.webp') }}" height="10"
+                                            width="17" alt="Franchise Insights" class="img-fluid">
                                         {{ $newsDetails->views }}
                                         / {{ app\Http\Controllers\InsightsController::calculateReadTime($newsDetails) }}
                                         Min Read
@@ -147,88 +130,43 @@
                                     <li>
                                         <a target="_blank"
                                             href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($newsUrl) }}">
-                                            <img src="{{ url('detailpage/images/facebook.png') }}" height="25"
+                                            <img src="{{ url('insight-new/images/fshare.webp') }}" height="25"
                                                 width="25" loading="lazy" alt="IR">
                                         </a>
                                     </li>
                                     <li>
                                         <a target="_blank"
                                             href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ $newsUrl }}">
-                                            <img src="{{ url('detailpage/images/linkedin.png') }}" height="25"
+                                            <img src="{{ url('insight-new/images/flink.webp') }}" height="25"
                                                 width="25" loading="lazy" alt="Insights">
                                         </a>
                                     </li>
                                     <li>
                                         <a target="_blank" href="https://x.com/intent/post?url={{ $newsUrl }}">
-                                            <img src="{{ url('detailpage/images/twitter.png') }}" height="25"
+                                            <img src="{{ url('insight-new/images/ftwit.webp') }}" height="25"
                                                 width="25" loading="lazy" alt="Insights">
                                         </a>
                                     </li>
                                 </ul>
-                                <div class="follow-us">
-                                    <a href="" target="_blank">
-                                        Follow Us
-                                        <img src="{{ url('detailpage/images/follows.png') }}"  alt="Franchise India" width="11" height="11">
-                                    </a>
-                                </div>
                             </div>
-                            
+                            <div class="follow-us">
+                                <a href="" target="_blank">
+                                    Follow Us
+                                    <img src="{{ url('insight-new/images/follow.webp') }}" loading="lazy"
+                                        alt="Franchise India" width="11" height="10">
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <div class="content-main">
-                        {{-- <img
-                        src="{{ $ogimage }}"
-                        alt="{{ $newsDetails->title }}"
-                        class="img-fluid"
-                        width="{{ $width ?? 0 }}"
-                        height="{{ $height ?? 0 }}"
-                        loading="eager"
-                        decoding="async"
-                        fetchpriority="high"> --}}
-
-                         @php
-                            // dd($ogimage);
-                            $relativePath = str_replace('https://franchiseindia.s3.ap-south-1.amazonaws.com/', '', $ogimage );
-                        // Convert to hex for cached WebP filename (matches Node.js caching logic)
-                            $hexName = bin2hex($relativePath);
-                         @endphp
-                         {{-- <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}"> --}}
-
-                       <picture>
-                                <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}" class="img-fluid"
-                                {{-- <img src="{{ url('storage/cache/1600x940/' . $hexName . '.webp') }}" alt="{{ $newsDetails->title }}" class="img-fluid" --}}
-                                    loading="eager"
-                                    decoding="async"
-                                    fetchpriority="high"
-                                    style="aspect-ratio: 1600 / 940;"
-                                >
-                            </picture>
-                         
-
-                        {{-- <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}"> --}}
-                        {{-- ads for mobile & desktop --}}
-                        {{-- <div class="inner-article-detail-desktop-ad fad">
-                            <div id="adslotInline_3_300x250">
-                                <script>
-                                    googletag.cmd.push(function() {
-                                        googletag.display("adslotInline_3_300x250");
-                                    });
-                                </script>
-                            </div>
-                        </div> --}}
-                         <!-- ✅ Inline ad under hero image -->
-                        @php
-                            $imgBottomAd = 'adslot300x250_ATF-' . $newsDetails->news_id . '-' . $newsDetails->cat_id;
-                        @endphp
+                        <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}">
                         <div class="inner-article-detail-desktop-ad fad">
-                            {{-- @php
+                            @php
                                 $imgBottomAd =
                                     'adslot300x250_ATF-' . $newsDetails->news_id . '-' . $newsDetails->cat_id;
-                            @endphp --}}
-                            <div id="{{ $imgBottomAd }}"  class="gpt-ad"
-                            data-slot="/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250"
-                            data-sizes="[[300,250],[336,280],[250,250]]"></div>
-                            {{-- <script>
+                            @endphp
+                            <div id="{{ $imgBottomAd }}"></div>
+                            <script>
                                 googletag.cmd.push(function() {
                                     googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250', [
                                         [300, 250],
@@ -238,12 +176,12 @@
 
                                     googletag.display('{{ $imgBottomAd }}');
                                 });
-                            </script> --}}
+                            </script>
                         </div>
 
                         {{-- ads for mobile & desktop --}}
                         <div class="shortdes">{{ $newsDetails->shortDesc }}</div>
-                       
+                        {{-- pankaj code --}}
                         @php
                             $blocks = preg_split(
                                 '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
@@ -291,10 +229,8 @@
 
                                     $adsInserted++;
                                 }
-                              
                             }
                         @endphp
-
                         {{-- pankaj code --}}
                         <div class="articlecontent" data-article-id="{{ $newsDetails->news_id }}">
                             {!! $renderedContent !!}
@@ -302,7 +238,7 @@
 
                         <div class="franBrands">
                             @if (!empty($franchiseData))
-                                <h3>Interested in Franchise:</h3>
+                                <h4>Interested in Franchise:</h4>
                                 @foreach ($franchiseData as $franchise)
                                     <div class="franInterest">
                                         <a href="https://www.franchiseindia.com/brands/{{ strtolower($franchise['profile_name']) }}.{{ $franchise['fran_detail_id'] }}"
@@ -334,11 +270,18 @@
                 <div class="col-md-4">
                     <div class="right-wrap">
                         {{-- ads top right sidebar --}}
-                          {{-- RHS top ad --}}
-                        @php $topRightAd = 'adslot300x250_ATF-' . $newsDetails->news_id; @endphp
-                        <div class="ad-right"  class="gpt-ad"
-                        data-slot="/1057625/FIHL/Desktop_ROS_300x250_ATF"
-                        data-sizes="[[300,250]]">
+                        <div class="ad-right">
+                            @php
+                                $topRightAd = 'adslot300x250_ATF-' . $newsDetails->news_id;
+                            @endphp
+                            <div id='{{ $topRightAd }}'>
+                                <script>
+                                    googletag.cmd.push(function() {
+                                        googletag.defineSlot('/1057625/FIHL/Desktop_ROS_300x250_ATF', [300, 250], '{{ $topRightAd }}')
+                                            .addService(googletag.pubads());
+                                        googletag.display('{{ $topRightAd }}');
+                                    });
+                                </script>
                             </div>
                         </div>
                         {{-- ads top right sidebar --}}
@@ -388,23 +331,19 @@
                                             @endphp
                                         @endforeach
                                         <div class="popular-head">
-                                            {{-- <a href="{{ $latestUrl }}">{{ $latest->title }}</a> --}}
+                                            <a href="{{ $latestUrl }}">{{ $latest->title }}</a>
                                         </div>
                                     </li>
                                 @empty
                                 @endforelse
                             </ul>
                         </div>
-                          {{-- RHS sticky ad --}}
-                        @php $rightBottomAd = 'adslot300x250_1-' . $newsDetails->news_id; @endphp
                         <div class="ad-right-sticky">
-                            {{-- @php
+                            @php
                                 $rightBottomAd = 'adslot300x250_1-' . $newsDetails->news_id;
-                            @endphp --}}
-                            <div id="{{ $rightBottomAd }}" class="gpt-ad"
-                            data-slot="/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1"
-                            data-sizes="[[300,250],[300,600]]">
-                                {{-- <script>
+                            @endphp
+                            <div id="{{ $rightBottomAd }}">
+                                <script>
                                     googletag.cmd.push(function() {
                                         googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [
                                                 [300, 250],
@@ -413,7 +352,7 @@
                                             .addService(googletag.pubads());
                                         googletag.display('{{ $rightBottomAd }}');
                                     });
-                                </script> --}}
+                                </script>
                             </div>
                         </div>
                     </div>
@@ -421,15 +360,12 @@
             </div>
             {{-- footer ads slot --}}
             @desktop
-                @php $bottomAd = 'adslot728x90_BTF-' . $newsDetails->news_id; @endphp
                 <div class="inner-article-detail-desktop-top-ad">
-                    {{-- @php
+                    @php
                         $bottomAd = 'adslot728x90_BTF-' . $newsDetails->news_id;
-                    @endphp --}}
-                    <div id="{{ $bottomAd }}"  class="gpt-ad"
-                    data-slot="/1057625/FIHL/FI_Desktop_ROS_728x90_BTF"
-                    data-sizes="[[728,90],[970,90],[970,250]]">
-                        {{-- <script>
+                    @endphp
+                    <div id='{{ $bottomAd }}'>
+                        <script>
                             googletag.cmd.push(function() {
                                 googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_BTF', [
                                         [728, 90],
@@ -439,22 +375,20 @@
                                     .addService(googletag.pubads());
                                 googletag.display('{{ $bottomAd }}');
                             });
-                        </script> --}}
+                        </script>
                     </div>
                 </div>
             @enddesktop
         </div>
         <!-- New article will be loaded here -->
-        <div id="next-article-container" class="next-article-container"> </div>
-        <div id="loader" style="display: none;">
-            <img src="{{ url('insight-new/assets/img/25.gif') }}" alt="loader" width="35">
-        </div>
+        <div id="next-article-container" class="next-article-container"></div>
     </div>
-    {{-- <div id="loader" style="display: none;">
+    <div id="loader" style="display: none;">
+        {{-- <div class="spinner"></div> --}}
         <img src="{{ url('insight-new/assets/img/25.gif') }}" alt="loader" width="35">
-    </div> --}}
+    </div>
 
-    {{-- @include('layout.insights.magblock') --}}
+    @include('layout.insights.magblock')
     @php
         $currentId = $newsDetails->news_id;
         $categoryId = $newsDetails->cat_id ?? $newsDetails->category[0]->id;
@@ -467,8 +401,7 @@
         ]);
 
     @endphp
-    
-      <script>
+    <script>
         window.googletag = window.googletag || {
             cmd: []
         };
