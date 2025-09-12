@@ -57,9 +57,17 @@
                     @php
                         $topAd = 'adslot728x90_ATF-' . $newsDetails->news_id;
                     @endphp
-                    <div id="{{ $topAd }}" class="gpt-ad"
+                      <div id="{{ $topAd }}"></div>
+                    <script>
+                        googletag.cmd.push(function() {
+                            googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], '{{ $topAd }}')
+                                .addService(googletag.pubads());
+                            googletag.display('{{ $topAd }}');
+                        });
+                    </script>
+                    {{-- <div id="{{ $topAd }}" class="gpt-ad"
                     data-slot="/1057625/FIHL/FI_Desktop_ROS_728x90_ATF"
-                    data-sizes="[[728,90]]"></div>
+                    data-sizes="[[728,90]]"></div> --}}
                     {{-- <script>
                         googletag.cmd.push(function() {
                             googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_728x90_ATF', [728, 90], '{{ $topAd }}')
