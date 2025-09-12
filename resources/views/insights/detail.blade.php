@@ -35,38 +35,10 @@
 @section('width', $width)
 @section('height', $height)
 @section('content')
-{{-- <style>
-    .inner-article-detail-desktop-top-ad{min-height:90px}
-    .inner-article-detail-desktop-ad{min-height:250px}
-    .ad-right{min-height:250px}
-    .ad-right-sticky{min-height:250px}
-    /* Reduce render cost for large below-the-fold areas */
-    #next-article-container{content-visibility:auto; contain-intrinsic-size: 1000px}
-    .right-wrap,.popular-articles{content-visibility:auto; contain-intrinsic-size: 700px}
-    footer .backftr, footer .ftrbtm { content-visibility: auto; contain-intrinsic-size: 1200px }
-  </style> --}}
+
   <!-- ✅ Load GPT once (async) -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
-    {{-- <script>
-        window.googletag = window.googletag || { cmd: [] };
 
-        // Guard so GPT services aren't enabled multiple times if next-article HTML contains scripts
-        (function() {
-            function setupGPTOnlyOnce() {
-                if (window.__gptServicesEnabled) return;
-                googletag.pubads().collapseEmptyDivs();
-                googletag.pubads().enableLazyLoad({
-                    fetchMarginPercent: 200,
-                    renderMarginPercent: 100,
-                    mobileScaling: 2.0
-                });
-                googletag.enableServices();
-                window.__gptServicesEnabled = true;
-            }
-            googletag.cmd.push(setupGPTOnlyOnce);
-            window.__setupGPTOnlyOnce = function(){ googletag.cmd.push(setupGPTOnlyOnce); };
-        })();
-    </script> --}}
     
   {{-- <link rel="stylesheet" href="..."> --}}
   <div class="maininnver homeh">
@@ -487,44 +459,8 @@
         ]);
 
     @endphp
- <!-- ✅ Centralized GPT Ad Initializer for first load + next articles -->
-  {{-- <script>
-    (function(){
-      function initAd(div) {
-        if (!div || div.dataset.gptLoaded) return;
-
-        const slotId = div.id;
-        const slotPath = div.dataset.slot;
-        let sizes;
-        try { sizes = JSON.parse(div.dataset.sizes || '[]'); } catch(e) { sizes = []; }
-
-        if (!slotId || !slotPath || !sizes.length) return;
-
-        googletag.cmd.push(function() {
-          googletag.defineSlot(slotPath, sizes, slotId).addService(googletag.pubads());
-          googletag.display(slotId);
-        });
-
-        div.dataset.gptLoaded = "true";
-      }
-
-      function initAllAds(context=document) {
-        // Ensure GPT services are enabled once
-        if (window.__setupGPTOnlyOnce) window.__setupGPTOnlyOnce();
-        context.querySelectorAll('.gpt-ad').forEach(initAd);
-      }
-
-      // Initialize on first paint
-      window.addEventListener("DOMContentLoaded", () => initAllAds());
-
-      // Expose for dynamic injections
-      window.refreshNewAdSlots = function(context=document){
-        initAllAds(context);
-      };
-    })();
-  </script> --}}
-  
-  <script>
+    
+      <script>
         window.googletag = window.googletag || {
             cmd: []
         };
@@ -553,6 +489,7 @@
             });
         });
     </script>
+
     <script>
         let isLoading = false;
         let hasScrolledDown = false;
@@ -617,10 +554,6 @@
 
                         // ✅ Refresh ads ONLY in the new content
                         refreshNewAdSlots(tempDiv);
-                        
-                        // ✅ Initialize GPT only in the newly injected DOM
-                        // if (window.refreshNewAdSlots) window.refreshNewAdSlots(tempDiv);    
-
 
                         nextUrl = data.nextUrl;
                         loadedIds.add(data.articleId);
@@ -743,23 +676,9 @@
                 topParagraphObserver.observe(div);
             });
         }
-        
 
-        // window.addEventListener('load', () => {
-        //     setTimeout(() => {
-        //         observeArticles();
-        //         const imgs = document.querySelectorAll('.articlecontent img');
-        //         imgs.forEach((img) => {
-        //             const isHero = img.closest('.content-main') !== null;
-        //             if (!isHero) {
-        //                 img.setAttribute('loading', 'lazy');
-        //                 img.setAttribute('decoding', 'async');
-        //                 img.setAttribute('fetchpriority', 'low');
-        //             }
-        //         });
-        //     }, 300);
-        // });
-          document.addEventListener('DOMContentLoaded', () => {
+
+        document.addEventListener('DOMContentLoaded', () => {
             observeArticles();
         });
 
