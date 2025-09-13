@@ -149,20 +149,37 @@ class ExpressInstaController extends Controller
             }
         }
 
+        // dd(request()->cookie('utm_source'));
+        $source = 'DOTCOM';  // Default value
+
+        if (request()->hasCookie('utm_source')) {
+        $source = request()->cookie('utm_source');
+        // dd("Cookie Found: " . $source);  // Debugging to see the cookie value
+        }
+
+// dd("Source: " . $source);  // Final source value
+
+
+            
+            
+//             dd($source);
+
         if ($invIsPaid) $visibility = 1;
 
         // Insert or Update UserActivity
         if ($update) {
             UserActivity::where('investor_id', $user->profile_str)
                 ->where('franchisor_id', $franId)
-                ->update(['visibility' => $visibility]);
+                ->update(['visibility' => $visibility,'source' => $source]);
         } elseif ($insert) {
             // dd($insert);
+            // dd($source);
             UserActivity::create([
                 'investor_id' => $user->profile_str,
                 'franchisor_id' => $franId,
                 'email' => $user->email,
                 'expressInt' => 'Y',
+                'source' => $source,
                 'visibility' => $visibility,
                 'visit_date' => now()->format('Y-m-d'),
                 'franchisor_visibility' => $franData->membership_type == 1 ? 1 : 0,
@@ -775,27 +792,28 @@ class ExpressInstaController extends Controller
                 ->where('profile_type', 1)
                 ->first();
             // dd($userDetail);
-           $resource = "DOTCOM";
+          
 
-            if (!empty(request()->check_lead_popup)) {
-                $resource = "leadPopup";
-            } else {
-                // Check if the utm_source cookie exists
-                if (request()->hasCookie('utm_source')) {
-                    $resource = request()->cookie('utm_source');
-                } else {
-                    $referrer = request()->headers->get('referer');
+            $resource = 'DOTCOM'; // Default
 
-                    if ($referrer) {
-                        $referrerParts = parse_url($referrer);
-                        parse_str($referrerParts['query'] ?? '', $queryParams);
+            // Priority 1: utm_source cookie
+            if (request()->hasCookie('utm_source')) {
+                $resource = request()->cookie('utm_source');
+            }
+            // Priority 2: utm_campaign from referrer URL
+            elseif ($referrer = request()->headers->get('referer')) {
+                $referrerParts = parse_url($referrer);
+                parse_str($referrerParts['query'] ?? '', $queryParams);
 
-                        if (!empty($queryParams['utm_campaign'])) {
-                            $resource = $queryParams['utm_campaign'];
-                        }
-                    }
+                if (!empty($queryParams['utm_campaign'])) {
+                    $resource = $queryParams['utm_campaign'];
                 }
             }
+            // Priority 3: check_lead_popup request param
+            elseif (!empty(request()->check_lead_popup)) {
+                $resource = 'leadPopup';
+            }
+
 
             // dd($resource);
 
@@ -901,7 +919,7 @@ class ExpressInstaController extends Controller
                 $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name, strlen($phone) > 15 ? substr($phone, 0, 15) . ".." : $phone);
 
                 //Sending Paid Franchisor Notifications
-                $this->sendFranNotifications($userDetail?->email, $details, $userDetail->mobile, $franSmsMsg, 'paid');
+                // $this->sendFranNotifications($userDetail?->email, $details, $userDetail->mobile, $franSmsMsg, 'paid');
             }
 
             if ($franchisorDetail->membership_type == 0) {
@@ -909,7 +927,7 @@ class ExpressInstaController extends Controller
                 $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
 
                 //Sending Free Franchisor Notifications
-                $this->sendFranNotifications($userDetail?->email, $details[1], $userDetail?->mobile, $franSmsMsg, 'free');
+                // $this->sendFranNotifications($userDetail?->email, $details[1], $userDetail?->mobile, $franSmsMsg, 'free');
             }
 
             $detailMail[0] = $franchisorDetail->company_name;

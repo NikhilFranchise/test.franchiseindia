@@ -513,6 +513,7 @@ class InsightsController extends Controller
 
     public function insightscategorydata(Request $request)
     {
+        // dd('yes');
         $slug = strtolower(str_replace(' ', '-', $request->slug));
         $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
@@ -530,6 +531,8 @@ class InsightsController extends Controller
             ->where('slug', $slug)
             ->where('status', 1)
             ->first();
+
+        // dd($category);
 
         if (!$category) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
@@ -594,7 +597,7 @@ class InsightsController extends Controller
     public function getInsightsDetails(Request $request)
     {
         $id = $request->id;
-        // dd($id);
+        dd($id);
         $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);

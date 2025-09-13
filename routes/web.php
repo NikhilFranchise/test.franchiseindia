@@ -51,6 +51,8 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\SearchMonitorController;
 use Illuminate\Support\Facades\Redirect;
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -1158,6 +1160,8 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
 
 
     Route::group(['prefix' => 'insights'], function () {
+        
+
         Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
         Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
         Route::get('author',                        [InsightsController::class, 'authorarchive']);
@@ -1172,6 +1176,38 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
         /*English Language setter*/
         Route::group(['prefix' => 'en'],            function () {
+            Route::get('/msme', function (Request $request) {
+            $baseUrl = 'http://127.0.0.1:8000/blog/en/msme';
+
+            // Get full query string (e.g. ?page=2&sort=asc)
+            $query = $request->getQueryString();
+
+            // Construct full redirect URL
+            $newUrl = $query ? $baseUrl . '?' . $query : $baseUrl;
+
+            return redirect($newUrl, 301);
+        }); 
+            Route::get('/electric-vehicles', function (Request $request) {
+                $baseUrl = 'http://127.0.0.1:8000/blog/en/electric-vehicles';
+
+                // Use $request (the instance), NOT Request (the Facade or class)
+                $query = $request->getQueryString();
+
+                $newUrl = $query ? $baseUrl . '?' . $query : $baseUrl;
+
+                return redirect($newUrl, 301);
+            });
+            Route::get('/education', function (Request $request) {
+                $baseUrl = 'http://127.0.0.1:8000/blog/en/education';
+
+                // Use $request (the instance), NOT Request (the Facade or class)
+                $query = $request->getQueryString();
+
+                $newUrl = $query ? $baseUrl . '?' . $query : $baseUrl;
+
+                return redirect($newUrl, 301);
+            });
+
             Route::get('/export',                        [InsightsController::class, 'exportInsights']);
             Route::get('thanks',                    function () {
                 return view('insights.thanks');

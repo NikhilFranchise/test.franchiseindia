@@ -19,6 +19,7 @@ class UserActivity extends Model
         'email',
         'expressInt',
         'visibility',
+        'source',
         'visit_date',
         'franchisor_visibility',
         'franchisor_visibility_date',

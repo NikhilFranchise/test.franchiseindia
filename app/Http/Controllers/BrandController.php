@@ -28,11 +28,53 @@ class BrandController extends Controller
     //pankaj redis implementation start
     public function brandDetails(Request $request)
     {
-        $referrer = $request->headers->get('referer', 'No referrer found');
+        // dd(Cookie::get('utm_source'));
+        // $referrer = $request->headers->get('referer', 'No referrer found');
         // dd($referrer);
-            if ($referrer && str_contains(parse_url($referrer, PHP_URL_HOST), 'localhost')) {
-                Cookie::queue('utm_source', $referrer, 60 * 24); // 30 days
+        // $referrer = 'https://www.franchiseindia.net/tamil-nadu/';
+        // $referrer = 'http://localhost/franchise.net_api/jammu-kashmir/';
+
+        //     if ($referrer && parse_url($referrer, PHP_URL_HOST) === 'localhost') {
+        //         $path = parse_url($referrer, PHP_URL_PATH);
+        //         $segments = explode('/', trim($path, '/'));
+        //         $state = end($segments);
+
+        //         $cookieValue = 'DOTNET ' . strtoupper(str_replace('-', ' ', $state));
+
+        //         Cookie::queue('utm_source', $cookieValue, 60 * 24); // minutes
+
+        //         // return response('Cookie queued'); // MUST return a response
+        //     }
+
+
+         $utmCampaign = $request->query('utm_campaign');
+
+            if ($utmCampaign) {
+                $cookieValue = strtoupper(str_replace('-', ' ', $utmCampaign)); // Optional: format nicely
+            } else {
+                // 2. Fallback to referrer logic
+                $referrer = $request->headers->get('referer');
+
+                if ($referrer && parse_url($referrer, PHP_URL_HOST) === 'localhost') {
+                    $path = parse_url($referrer, PHP_URL_PATH); // e.g. /franchise.net_api/jammu-kashmir/
+                    $segments = explode('/', trim($path, '/'));
+                    $state = end($segments);
+                    $cookieValue = 'DOTNET ' . strtoupper(str_replace('-', ' ', $state));
+                } else {
+                    // No UTM or valid referrer – do nothing or set default
+                    $cookieValue = null;
+                }
             }
+
+            // 3. Set the cookie if we have a value
+            if ($cookieValue) {
+                Cookie::queue('utm_source', $cookieValue, 60 * 24); // 24 hours
+            }
+
+            // Proceed with response
+            // return response('Cookie handled');
+        
+
             // dd(Cookie::get('utm_source'));
 
     
