@@ -35,16 +35,7 @@
 @section('width', $width)
 @section('height', $height)
 @section('content')
-{{-- <style>
-    .inner-article-detail-desktop-top-ad{min-height:90px}
-    .inner-article-detail-desktop-ad{min-height:250px}
-    .ad-right{min-height:250px}
-    .ad-right-sticky{min-height:250px}
-    /* Reduce render cost for large below-the-fold areas */
-    #next-article-container{content-visibility:auto; contain-intrinsic-size: 1000px}
-    .right-wrap,.popular-articles{content-visibility:auto; contain-intrinsic-size: 700px}
-    footer .backftr, footer .ftrbtm { content-visibility: auto; contain-intrinsic-size: 1200px }
-  </style> --}}
+
   <!-- ✅ Load GPT once (async) -->
     <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
     <script>
@@ -196,7 +187,7 @@
                         </div>
                     </div>
                     <div class="content-main">
-                        <img
+                        {{-- <img
                         src="{{ $ogimage }}"
                         alt="{{ $newsDetails->title }}"
                         class="img-fluid"
@@ -204,10 +195,21 @@
                         height="{{ $height ?? 0 }}"
                         loading="eager"
                         decoding="async"
-                        fetchpriority="high" />
-                       
+                        fetchpriority="high" /> --}}
+                        @php
+                            $relativePath = str_replace('https://franchiseindia.s3.ap-south-1.amazonaws.com/', '', $ogimage );
+                        // Convert to hex for cached WebP filename (matches Node.js caching logic)
+                            $hexName = bin2hex($relativePath);
+                         @endphp
 
-                         
+                          <picture>
+                                <img src="{{ url('img/1600x940/' . $relativePath) }}" alt="{{ $newsDetails->title }}" class="img-fluid"
+                                    loading="eager"
+                                    decoding="async"
+                                    fetchpriority="high"
+                                    style="aspect-ratio: 1600 / 940;"
+                                >
+                            </picture>
 
                         {{-- <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}"> --}}
                          <!-- ✅ Inline ad under hero image -->
@@ -280,7 +282,7 @@
                             {!! $renderedContent !!}
                         </div>
 
-                        {{-- <div class="franBrands">
+                        <div class="franBrands">
                             @if (!empty($franchiseData))
                                 <h3>Interested in Franchise:</h3>
                                 @foreach ($franchiseData as $franchise)
@@ -290,7 +292,7 @@
                                     </div>
                                 @endforeach
                             @endif
-                        </div> --}}
+                        </div>
                         <div class="tag-block">
                             <ul class="tag-list">
                                 @if (!empty($assocTags) && isset($assocTags))
