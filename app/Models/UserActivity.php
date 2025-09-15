@@ -37,6 +37,6 @@ class UserActivity extends Model
      */
     public function investor()
     {
-        return $this->hasOne(InvestorDetails::class, 'investor_id', 'investor_id');
+        return $this->belongsTo(InvestorDetails::class, 'investor_id', 'investor_id');
     }
 }
