@@ -196,7 +196,8 @@
                         loading="eager"
                         decoding="async"
                         fetchpriority="high" /> --}}
-                        @php
+                       
+                            @php
                             $relativePath = str_replace('https://franchiseindia.s3.ap-south-1.amazonaws.com/', '', $ogimage );
                         // Convert to hex for cached WebP filename (matches Node.js caching logic)
                             $hexName = bin2hex($relativePath);
@@ -210,6 +211,7 @@
                                     style="aspect-ratio: 1600 / 940;"
                                 >
                             </picture>
+                         
 
                         {{-- <img src="{{ $ogimage }}" class="img-fluid" alt="{{ $newsDetails->title }}"> --}}
                          <!-- ✅ Inline ad under hero image -->
@@ -381,13 +383,13 @@
                                     {{-- <li>
                                         @php
                                             $locale = App::getLocale();
-                                            $baseUrl1 = Config('constants.MainDomain') . "/insights/$locale/" . strtolower($latest->insight_type) . '/';
+                                            $baseUrl1 = Config('constants.MainDomain') . "/blog/$locale/" . strtolower($latest->insight_type) . '/';
                                             $latestUrl = $baseUrl1 . $latest->slug . '.' . $latest->news_id;
                                         @endphp
 
                                         @foreach ($latest->category as $cat)
                                             @php
-                                                $catURL = Config('constants.MainDomain') . "/insights/{$locale}/{$cat->slug}";
+                                                $catURL = Config('constants.MainDomain') . "/blog/{$locale}/{$cat->slug}";
                                             @endphp
                                         @endforeach
 
@@ -464,7 +466,7 @@
         $currentId = $newsDetails->news_id;
         $categoryId = $newsDetails->cat_id ?? $newsDetails->category[0]->id;
         $locale = app()->getLocale();
-        $nextUrl = route('insights.nextArticle', [
+        $nextUrl = route('blog.nextArticle', [
             'lang' => $locale,
             'currentId' => $currentId,
             'categoryId' => $categoryId,
