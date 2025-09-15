@@ -376,9 +376,9 @@
                                                 
                                             @endphp
                                         @endforeach
-                                        <div class="popular-head">
+                                        {{-- <div class="popular-head">
                                             <a href="{{ $latestUrl }}">{{ $latest->title }}</a>
-                                        </div>
+                                        </div> --}}
                                     </li>
                                     {{-- <li>
                                         @php
