@@ -43,6 +43,7 @@
     @enddesktop
     <!-- DESKTOP TOP AD PLACEMENT  -->
 </div>
+<div class="contentwrapper">
 <div class="container">
     <div class="row">
         <div class="col-md-8">
@@ -162,84 +163,7 @@
                 </div>
                 {{-- ads for mobile & desktop --}}
                 <div class="shortdes">{{ $nextArticle->shortDesc }}</div>
-                {{-- @php
-                    // Match <p>, <table>, <ul>, <ol>, <blockquote>, etc. to split the content
-                    $blocks = preg_split(
-                        '/(<p.*?<\/p>|<table.*?<\/table>|<ul.*?<\/ul>|<ol.*?<\/ol>|<blockquote.*?<\/blockquote>)/is',
-                        $nextArticle->content,
-                        -1,
-                        PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY,
-                    );
-
-                    $totalBlocks = count($blocks);
-
-                    // Count only <p> tags to determine ad logic
-                    preg_match_all('/<p.*?<\/p>/is', $nextArticle->content, $matches);
-                    $totalParagraphs = count($matches[0]);
-
-                    // Decide number of ads based on paragraph count
-                    if ($totalParagraphs >= 100) {
-                        $adsToShow = 10;
-                    } elseif ($totalParagraphs >= 80) {
-                        $adsToShow = 8;
-                    } elseif ($totalParagraphs >= 40) {
-                        $adsToShow = 5;
-                    } else {
-                        $adsToShow = 3;
-                    }
-
-                    // Base ad slots (Google Ad Manager paths)
-                    $baseAdSlots = [
-                        'adslotInline_1_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_1_300x250',
-                        'adslotInline_2_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_2_300x250',
-                        'adslotInline_3_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_3_300x250',
-                        'adslotInline_4_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_4_300x250',
-                        'adslotInline_5_300x250' => '/1057625/FIHL/FI_Desktop_ROS_Inline_5_300x250',
-                    ];
-
-                    // Prepare final dynamic ad slots
-                    $adSlots = [];
-                    $baseKeys = array_keys($baseAdSlots);
-                    for ($i = 0; $i < $adsToShow; $i++) {
-                        $baseKey = $baseKeys[$i % count($baseKeys)];
-                        $slotKey = "{$baseKey}_{$nextArticle->news_id}_{$i}";
-                        $slotPath = $baseAdSlots[$baseKey];
-                        $adSlots[$slotKey] = $slotPath;
-                    }
-
-                    $adKeys = array_keys($adSlots);
-
-                    // Calculate positions to insert ads evenly across blocks
-                    $adPositions = [];
-                    if ($adsToShow > 0 && $totalBlocks > $adsToShow) {
-                        $interval = floor($totalBlocks / ($adsToShow + 1));
-                        for ($i = 1; $i <= $adsToShow; $i++) {
-                            $adPositions[] = $i * $interval;
-                        }
-                    }
-
-                    // Render final HTML content with ads inserted
-                    $renderedContent = '';
-                    $adsInserted = 0;
-
-                    foreach ($blocks as $index => $block) {
-                        $renderedContent .= $block;
-
-                        if (in_array($index + 1, $adPositions) && isset($adKeys[$adsInserted])) {
-                            $slotId = $adKeys[$adsInserted];
-                            $slotPath = $adSlots[$slotId];
-
-                            $renderedContent .= "
-                                    <div class='inner-article-detail-desktop-ad'>
-                                        <div id='{$slotId}' class='gpt-inline-slot'
-                                            data-slot-id='{$slotId}'
-                                            data-slot-path='{$slotPath}'>
-                                        </div>
-                                    </div>";
-                            $adsInserted++;
-                        }
-                    }
-                @endphp --}}
+                
                 {{-- pankaj code --}}
                 @php
                     $blocks = preg_split(
@@ -361,9 +285,9 @@
                                         $trendUrl = $baseUrl1 . $trend->slug . '.' . $trend->news_id;
                                     @endphp
                                 @endforeach
-                                <div class="popular-head">
+                                {{-- <div class="popular-head">
                                     <a href="{{ $trendUrl }}">{{ $trend->title }}</a>
-                                </div>
+                                </div> --}}
                             </li>
                         @empty
                             <li>No Records.</li>
@@ -436,4 +360,6 @@
             </div>
         </div>
     @enddesktop
+</div>
+
 </div>

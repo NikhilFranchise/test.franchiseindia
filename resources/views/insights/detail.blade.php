@@ -176,7 +176,7 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <div class="follow-us">
+                                <div class="follow-us first">
                                     <a href="" target="_blank">
                                         Follow Us
                                         <img src="{{ url('detailpage/images/follows.png') }}"  alt="Franchise India" width="11" height="11">
@@ -344,9 +344,9 @@
                                                 $trendUrl = $baseUrl1 . $trend->slug . '.' . $trend->news_id;
                                             @endphp
                                         @endforeach
-                                        <div class="popular-head">
+                                        {{-- <div class="popular-head">
                                             <a href="{{ $trendUrl }}">{{ $trend->title }}</a>
-                                        </div>
+                                        </div> --}}
                                     </li>
                                 @empty
                                     <li>No Records.</li>
