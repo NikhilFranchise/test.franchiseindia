@@ -466,7 +466,7 @@
         $currentId = $newsDetails->news_id;
         $categoryId = $newsDetails->cat_id ?? $newsDetails->category[0]->id;
         $locale = app()->getLocale();
-        $nextUrl = route('blog.nextArticle', [
+        $nextUrl = route('insights.nextArticle', [
             'lang' => $locale,
             'currentId' => $currentId,
             'categoryId' => $categoryId,
