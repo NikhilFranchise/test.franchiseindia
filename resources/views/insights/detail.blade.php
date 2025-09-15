@@ -344,9 +344,9 @@
                                                 $trendUrl = $baseUrl1 . $trend->slug . '.' . $trend->news_id;
                                             @endphp
                                         @endforeach
-                                        {{-- <div class="popular-head">
+                                        <div class="popular-head">
                                             <a href="{{ $trendUrl }}">{{ $trend->title }}</a>
-                                        </div> --}}
+                                        </div>
                                     </li>
                                 @empty
                                     <li>No Records.</li>
@@ -376,9 +376,9 @@
                                                 
                                             @endphp
                                         @endforeach
-                                        {{-- <div class="popular-head">
+                                        <div class="popular-head">
                                             <a href="{{ $latestUrl }}">{{ $latest->title }}</a>
-                                        </div> --}}
+                                        </div>
                                     </li>
                                     {{-- <li>
                                         @php

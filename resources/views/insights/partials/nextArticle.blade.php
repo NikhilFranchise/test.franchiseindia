@@ -219,7 +219,7 @@
                 <div class="articlecontent" data-article-id="{{ $nextArticle->news_id }}">
                     {!! $renderedContent !!}
                 </div>
-                {{-- <div class="franBrands">
+                <div class="franBrands">
                     @if (!empty($franchiseData))
                         <h3>Interested in Franchise:</h3>
                         @foreach ($franchiseData as $franchise)
@@ -229,7 +229,7 @@
                             </div>
                         @endforeach
                     @endif
-                </div> --}}
+                </div>
                 <div class="tag-block">
                     <ul class="tag-list">
                         @if (!empty($assocTags) && isset($assocTags))
@@ -285,9 +285,9 @@
                                         $trendUrl = $baseUrl1 . $trend->slug . '.' . $trend->news_id;
                                     @endphp
                                 @endforeach
-                                {{-- <div class="popular-head">
+                                <div class="popular-head">
                                     <a href="{{ $trendUrl }}">{{ $trend->title }}</a>
-                                </div> --}}
+                                </div>
                             </li>
                         @empty
                             <li>No Records.</li>
@@ -311,9 +311,9 @@
                                         $latestUrl = $baseUrl1 . $latest->slug . '.' . $latest->news_id;
                                     @endphp
                                 @endforeach
-                                {{-- <div class="popular-head">
+                                <div class="popular-head">
                                     <a href="{{ $latestUrl }}">{{ $latest->title }}</a>
-                                </div> --}}
+                                </div>
                             </li>
                         @empty
                         @endforelse
