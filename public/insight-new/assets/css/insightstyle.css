@@ -108,7 +108,7 @@ ul.editlist li {
     margin-bottom: 20px;
 }
 .content-main table thead tr {
-    background-color: #EB293F;
+    background-color: #169743;
     color: #fff;
     border: 1px solid #cfcfcf;
     padding: 10px;
@@ -244,7 +244,7 @@ body {
     -webkit-box-shadow: 0 0 1px #bababa;
 }
 .inner-top-head {
-    background: linear-gradient(to right,#eb293f,#b09b9b);
+    background: linear-gradient(to right,#169743,#b09b9b);
     color: #fff;
     margin-top: -17px;
     font-weight: 400;
@@ -845,7 +845,7 @@ h1 {
 }
 .articlecontent a:hover,
 .breadcrumb-item a:hover {
-    color: #EB293F !important;
+    color: #169743 !important;
     text-decoration: underline;
 }
 .articlecontent a,
@@ -892,7 +892,7 @@ a:hover {
     font-size: 14px;
 }
 .breadcrumb a {
-    color: #EB293F;
+    color: #169743;
     font-size: 14px;
 }
 .breadcrumb li:nth-child(5) {
@@ -954,7 +954,7 @@ ul.newsletter li {
 }
 .btn-subscribe {
     color: #fff;
-    background: #EB293F !important;
+    background: #169743 !important;
     outline: 0;
     border-radius: 0 5px 5px 0;
     padding: 11px 30px !important;
@@ -1061,7 +1061,7 @@ a:hover {
     padding: 5px 30px;
     border-radius: 0 !important;
     color: #fff;
-    background: #EB293F !important;
+    background: #169743 !important;
     border: none;
 }
 .form-control1 {
@@ -1219,7 +1219,7 @@ ul.nabva li {
 .nav-menu .active > a,
 .nav-menu a:hover,
 .nav-menu li:hover > a {
-    color: #EB293F !important;
+    color: #169743 !important;
 }
 .nav-menu .drop-down ul {
     display: block;
@@ -1460,7 +1460,7 @@ span.top1 {
     max-width: 1260px;
 }
 .topmenu {
-    background: #EB293F;
+    background: #169743;
     padding: 4px 0;
     height: 35px;
 }
@@ -1541,7 +1541,7 @@ ul.top-ul li a {
 ul.togl {
     text-align: right;
     border-radius: 10px;
-    border: 1px solid #EB293F;
+    border: 1px solid #169743;
     padding: 0;
     margin: 0;
 }
@@ -1855,7 +1855,7 @@ ul.maglsi li input {
 }
 .logobar .dbtn:hover,
 a.moreless-button {
-    color: #EB293F;
+    color: #169743;
 }
 .dropdown-item {
     font-size: 16px;
@@ -1878,7 +1878,7 @@ a.moreless-button {
     border-bottom-left-radius: 0;
 }
 ul.maglsi li input.stb {
-    background: #EB293F;
+    background: #169743;
     color: #fff;
     text-align: center;
     width: 175px;
@@ -1959,7 +1959,7 @@ ul.submaglsi li input {
     width: 100%;
 }
 ul.submaglsi li input.stb {
-    background: #EB293F;
+    background: #169743;
     color: #fff;
     text-align: center;
     width: 175px;
@@ -2352,7 +2352,7 @@ a.addslink {
 a.contlink {
     width: 202px;
     border-radius: 8px;
-    background-color: #EB293F !important;
+    background-color: #169743 !important;
     font-size: 14px;
     padding: 12px 10px;
     text-align: center;
