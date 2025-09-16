@@ -159,20 +159,20 @@
                                         <a target="_blank"
                                             href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($newsUrl) }}">
                                             <img src="{{ url('detailpage/images/facebook.png') }}" height="25"
-                                                width="25" loading="lazy" alt="IR">
+                                                width="25"  alt="IR">
                                         </a>
                                     </li>
                                     <li>
                                         <a target="_blank"
                                             href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ $newsUrl }}">
                                             <img src="{{ url('detailpage/images/linkedin.png') }}" height="25"
-                                                width="25" loading="lazy" alt="Insights">
+                                                width="25"  alt="Insights">
                                         </a>
                                     </li>
                                     <li>
                                         <a target="_blank" href="https://x.com/intent/post?url={{ $newsUrl }}">
                                             <img src="{{ url('detailpage/images/twitter.png') }}" height="25"
-                                                width="25" loading="lazy" alt="Insights">
+                                                width="25"  alt="Insights">
                                         </a>
                                     </li>
                                 </ul>
