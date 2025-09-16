@@ -530,7 +530,14 @@ class InsightsController extends Controller
             ->where('slug', $slug)
             ->where('status', 1)
             ->first();
-
+         // IDs that should redirect to external blog
+            // $redirectIds = [9, 32, 33];
+            // if (in_array($category->id, $redirectIds)) {
+            //     $externalSlug = $category->slug;
+            //     $externalUrl = "https://www.entrepreneur.com/blog/{$locale}/{$externalSlug}";
+            //     dd($externalUrl);
+            //     return redirect()->away($externalUrl);
+            // }
         if (!$category) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
