@@ -99,16 +99,16 @@
     <div class="fixsocial">
         <ul class="sociallist">
             <li><a href="https://www.facebook.com/FranchiseIndiaMedia" target="_blank"><img
-                        src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook" width="24" height="24" loading="lazy" decoding="async"></a></li>
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/fb-icon.svg" alt="facebook" width="24" height="24"  decoding="async"></a></li>
             <li><a href="https://www.instagram.com/franchiseindia_/" target="_blank"><img
                         src="https://www.franchiseindia.com/newhomepage/assets/img/instagram-icon.svg"
-                        alt="instagram" width="24" height="24" loading="lazy" decoding="async"></a></li>
+                        alt="instagram" width="24" height="24"  decoding="async"></a></li>
             <li><a href="https://twitter.com/FranchiseIndia" target="_blank"><img
-                        src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg" alt="twitter" width="24" height="24" loading="lazy" decoding="async"></a>
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/twitter-icon.svg" alt="twitter" width="24" height="24"  decoding="async"></a>
             </li>
             <li><a href="https://www.youtube.com/user/FranchiseIndia" target="_blank"><img
                         src="https://www.franchiseindia.com/newhomepage/assets/img/you-tube-icon.svg"
-                        alt="youtube" width="24" height="24" loading="lazy" decoding="async"></a></li>
+                        alt="youtube" width="24" height="24"  decoding="async"></a></li>
         </ul>
     </div>
     {{-- @include('layout.insights.newsletter')
