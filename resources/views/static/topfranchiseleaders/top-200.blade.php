@@ -171,8 +171,19 @@
                 <div class="col-md-9">
                     @include('category.free-info')
                     <div class="buttons">
-                        <span id="recordCount">{{ $count }} RESULTS OF
-                            {{ $totalCount + count(config('staticBrands.staticBrands.2025')) }}</span>
+                        <span id="recordCount">
+                            {{ $count }} RESULTS OF
+                            {{ $totalCount +
+                                ($year == 2025
+                                    ? count(config('staticBrands.staticBrands.2025'))
+                                    : ($year == 2024
+                                        ? count(config('staticBrands.staticBrands.2024'))
+                                        : ($year == 2023
+                                            ? count(config('staticBrands.staticBrands.2023'))
+                                            : ($year == 2022
+                                                ? count(config('staticBrands.staticBrands.2022'))
+                                                : 0)))) }}
+                        </span>
                         <div class="list"><i class="fa fa-list"></i></div>
                         <div class="grid"><i class="fa fa-th-large"></i></div>
                     </div>
