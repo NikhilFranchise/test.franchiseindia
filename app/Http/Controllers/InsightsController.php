@@ -617,6 +617,16 @@ class InsightsController extends Controller
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
         }
+        // // ✅ Check for specific category IDs
+        if (in_array($newsDetails->cat_id, [9, 32, 33])) {
+            // Get the current slug (assuming it's in `slug` column)
+            $slug = $newsDetails->slug ?? $newsDetails->news_id;
+            $type = strtolower($newsDetails->insight_type);
+            // Build target domain (change this domain)
+            $targetDomain = "https://www.entrepreneurindia.com/blog/{$locale}/{$type}/{$newsDetails->slug}.{$id}";
+            dd($targetDomain);
+            return redirect()->away($targetDomain);
+        }
 
         $correctSlug = $newsDetails->slug;
         $type = strtolower($newsDetails->insight_type);
