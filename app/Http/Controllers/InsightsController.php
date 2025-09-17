@@ -613,7 +613,7 @@ class InsightsController extends Controller
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('news_id', $id)
             ->first();
-        // dd($newsDetails);
+        // dd($newsDetails); chedch
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
         }
