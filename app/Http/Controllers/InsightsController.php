@@ -473,7 +473,7 @@ class InsightsController extends Controller
             ->whereNotIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau', 'Guest Author'])
             ->where('status', 'A')
             ->orderByDesc('created_at')
-            ->limit(5)
+            ->limit(10)
             ->get()
             ->map(function ($author) use ($authorCounts) {
                 $author->count = $authorCounts[$author->author_id]['total'] ?? 0;
@@ -597,7 +597,7 @@ class InsightsController extends Controller
     public function getInsightsDetails(Request $request)
     {
         $id = $request->id;
-        dd($id);
+        // dd($id);
         $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
@@ -609,7 +609,24 @@ class InsightsController extends Controller
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('news_id', $id)
             ->first();
-        // dd($newsDetails);
+        // dd($newsDetails->cat_id);
+            if (in_array($newsDetails->cat_id, [5, 24, 33])) {
+                // Get path and query separately
+                $path = $request->getPathInfo(); // e.g., /insights/en/news/slug
+                $query = $request->getQueryString(); // e.g., page=2
+
+                // Replace only the /insights part of the path
+                $newPath = str_replace('/insights', '/blog', $path);
+
+                // Build final URL
+                $newUrl = 'http://127.0.0.1:8000' . $newPath;
+                if ($query) {
+                    $newUrl .= '?' . $query;
+                }
+
+                return redirect($newUrl, 301);
+            }
+            
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
         }
@@ -898,7 +915,7 @@ class InsightsController extends Controller
 
             return response()->json([
                 'error' => false,
-                'message' => 'Subscription successful! Please check your email for verification.',
+                'message' => 'Your Subscription successfully submitted! Please check your email for verification.',
                 'status' => 'success',
             ]);
         } elseif ($checkEmail->status == "P") {
@@ -950,8 +967,8 @@ class InsightsController extends Controller
             if ($emailExists || $mobileExists) {
                 return response()->json([
                     'error' => true,
-                    'message1' => $emailExists ? 'This email already exists.' : '',
-                    'message2' => $mobileExists ? 'This mobile number already exists.' : '',
+                    'message' => $emailExists ? 'This email already exist!' : '',
+                    'message1' => $mobileExists ? 'This mobile number already exist!' : '',
                     'fields' => [
                         'email' => $emailExists ? $email : null,
                         'tel' => $mobileExists ? $mobile : null,
@@ -968,7 +985,7 @@ class InsightsController extends Controller
 
             return response()->json([
                 'error' => false,
-                'message' => 'Subscription successful!',
+                'message' => 'Your Subscription successfully Submitted!',
             ]);
         } catch (\Exception $e) {
             Log::error($e);

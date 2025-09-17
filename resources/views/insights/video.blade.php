@@ -62,6 +62,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="contentarea">
+                        @include('layout.insights.subscribenewsletter')
+                    </div>
                 </div>
                 <div class="col-md-4">
                     {{-- ads section start here --}}
@@ -157,6 +160,8 @@
             <!-- below list start here  -->
         </div>
     </div>
+    @include('layout.insights.magblock')
+    @include('layout.insights.brandlist')
     <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
     <script>
         window.onSpotifyIframeApiReady = (IFrameAPI) => {

@@ -23,7 +23,8 @@
                             <select class="code">
                                 <option> + 91 </option>
                             </select>
-                            <input type="text" name="tel" id="tel" class="telcode" placeholder="Phone Number" onkeypress="return isNumberKey(event);" maxlength="10" />
+                            <input type="text" name="tel" id="tel" class="telcode"
+                                placeholder="Phone Number" onkeypress="return isNumberKey(event);" maxlength="10" />
                             <span class="text-danger" id="tel-error" style="font-size:12px;"></span>
                         </div>
                     </li>
@@ -41,10 +42,8 @@
 <div id="successPopup" class="popup">
     <div class="popup-content">
         <span class="close-popup">&times;</span>
-        <h3>Subscription Successful!</h3>
-        <p>Thank you for subscribing. Stay tuned for updates.</p>
+        <h3 id="popupTitle">Subscription Successful!</h3>
+        <p id="popupMessage">Thank you for subscribing. Stay tuned for updates.</p>
     </div>
 </div>
-@push('scripts')
-    <script src="{{ asset('insight-new/js/insight-newsletter.js')}}" defer  ></script>
-@endpush
+

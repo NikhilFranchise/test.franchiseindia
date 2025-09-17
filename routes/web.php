@@ -1177,18 +1177,18 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         /*English Language setter*/
         Route::group(['prefix' => 'en'],            function () {
             Route::get('/msme', function (Request $request) {
-            $baseUrl = 'http://127.0.0.1:8000/blog/en/msme';
+                $baseUrl = 'https://www.entrepreneurindia.com/blog/en/msme';
 
-            // Get full query string (e.g. ?page=2&sort=asc)
-            $query = $request->getQueryString();
+                // Get full query string (e.g. ?page=2&sort=asc)
+                $query = $request->getQueryString();
 
-            // Construct full redirect URL
-            $newUrl = $query ? $baseUrl . '?' . $query : $baseUrl;
+                // Construct full redirect URL
+                $newUrl = $query ? $baseUrl . '?' . $query : $baseUrl;
 
-            return redirect($newUrl, 301);
-        }); 
+                return redirect($newUrl, 301);
+            }); 
             Route::get('/electric-vehicles', function (Request $request) {
-                $baseUrl = 'http://127.0.0.1:8000/blog/en/electric-vehicles';
+                $baseUrl = 'https://www.entrepreneurindia.com/blog/en/electric-vehicles';
 
                 // Use $request (the instance), NOT Request (the Facade or class)
                 $query = $request->getQueryString();
@@ -1198,8 +1198,8 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
                 return redirect($newUrl, 301);
             });
             Route::get('/education', function (Request $request) {
-                $baseUrl = 'http://127.0.0.1:8000/blog/en/education';
-
+                $baseUrl = 'https://www.entrepreneurindia.com/blog/en/education';
+ 
                 // Use $request (the instance), NOT Request (the Facade or class)
                 $query = $request->getQueryString();
 

@@ -1,23 +1,7 @@
-
 $(document).ready(function () {
 
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        // Allow: backspace (8), delete (46), arrow keys (37-40)
-        if ([8, 46, 37, 38, 39, 40].includes(charCode)) {
-            return true;
-        }
-
-        // Only allow number keys (0–9)
-        if (charCode < 48 || charCode > 57) {
-            evt.preventDefault();
-            return false;
-        }
-
-        return true;
-    }
     //==============================
-    // Common Utility Functions
+    // Utility Functions
     //==============================
     const csrfToken = $("meta[name='csrf-token']").attr("content");
 
@@ -36,6 +20,7 @@ $(document).ready(function () {
     }
 
     function showError(selector, message) {
+        // console.log(selector, message);
         $(selector).text(message).show();
     }
 
@@ -47,13 +32,27 @@ $(document).ready(function () {
         $(`${formSelector} input[type='email'], ${formSelector} input[type='text'], ${formSelector} input[type='tel']`).val("");
     }
 
-    function showSuccessPopup(popupId, message = "") {
-        if (message && $(popupId + "Message").length) {
-            $(popupId + "Message").text(message);
+    function showPopup(popupId, title, message, type = "error") {
+        if ($(popupId + " #popupTitle").length) {
+            $(popupId + " #popupTitle").text(title);
+        }
+        if ($(popupId + " #popupMessage").length) {
+            // Apply color depending on type
+            const $msg = $(popupId + " #popupMessage");
+            $msg.text(message);
+
+            if (type === "error") {
+                $msg.css("color", "red");
+            } else if (type === "success") {
+                $msg.css("color", "green");
+            } else {
+                $msg.css("color", "black"); // default
+            }
         }
         $(popupId).fadeIn();
         setTimeout(() => $(popupId).fadeOut(), 5000);
     }
+
 
     async function doAjax(url, formData, fallbackSelector) {
         try {
@@ -73,25 +72,22 @@ $(document).ready(function () {
     }
 
     //==============================
-    // Generic Form Handler Function
+    // Generic Form Handler
     //==============================
     function handleFormSubmit({
         formSelector,
-        submitBtnSelector,
         fields,
         ajaxUrl,
         successPopupId,
         errorMap = {},
     }) {
-        $(submitBtnSelector).on("click", async function (event) {
-            console.log(formSelector, submitBtnSelector, fields, ajaxUrl, successPopupId, errorMap);
-
-            event.preventDefault();
+        $(formSelector).on("submit", async function (event) {
+            event.preventDefault(); // prevent normal submit
 
             const formData = $(formSelector).serialize();
             let hasError = false;
 
-            // Validate fields dynamically
+            // Validate fields
             for (const field of fields) {
                 const value = $(`#${field.id}`).val().trim();
                 const errorSelector = errorMap[field.id] || `#${field.id}-error`;
@@ -116,17 +112,36 @@ $(document).ready(function () {
 
                 if (!response.error) {
                     clearInputs(formSelector);
-                    showSuccessPopup(successPopupId, response.message || "");
+                    showPopup(successPopupId, "Subscription Successful!", response.message || "Thank you for subscribing!", "success");
                 } else {
-                    // Optional: if backend returns per-field error map
+                    // Show popup with error message
+                    let msg;
+
+                    if (response.message1 && response.message) {
+                        msg = "These records already exist!";
+                    } else {
+                        msg = response.message1 || response.message || "Something went wrong!";
+                    }
+                    showPopup(successPopupId, "Subscription Failed!", msg, "error");
+
+                    // Field-specific errors (if any)
                     for (const field of fields) {
                         const errorSelector = errorMap[field.id] || `#${field.id}-error`;
-                        const errorMsg = response.fields?.[field.name] ? response[`message${field.name}`] : response.message;
+                        let errorMsg = "";
+
+                        if (field.name === "email") {
+                            errorMsg = response.message || ""; // email → response.message
+                        } else if (field.name === "tel") {
+                            errorMsg = response.message1 || ""; // mobile → response.message1
+                        }
+
+                        // console.log(field.name, errorSelector, errorMsg);
                         if (errorMsg) showError(errorSelector, errorMsg);
                     }
+
                 }
             } catch (e) {
-                // Already handled
+                showPopup(successPopupId, "Error", "Something went wrong. Please try again.", "error");
             }
         });
 
@@ -140,58 +155,55 @@ $(document).ready(function () {
     }
 
     //==============================
-    // 1. Newsletter Signup Form #1
+    // Forms
     //==============================
     handleFormSubmit({
         formSelector: "#newslettersubscribe",
-        submitBtnSelector: "#subscribe",
         ajaxUrl: "/insights/newslettersignup",
         fields: [{ id: "newsletter_email", name: "email", type: "email" }],
-        successPopupId: "#subsuccessPopup",
-        errorMap: {
-            newsletter_email: "#newsletter_emailError",
-        },
+        successPopupId: "#successPopup",
+        errorMap: { newsletter_email: "#newsletter_emailError" },
     });
 
-    //==============================
-    // 2. Insta Subscribe Form
-    //==============================
     handleFormSubmit({
         formSelector: "#magsubscribe",
-        submitBtnSelector: "#submitMagFormBtn", // submit() will trigger on submit event
         ajaxUrl: "/insights/instasubsribe",
         fields: [
             { id: "emailId", name: "email", type: "email" },
             { id: "tel", name: "tel", type: "text" },
         ],
         successPopupId: "#successPopup",
-        errorMap: {
-            emailId: "#email-error",
-            tel: "#tel-error",
-        },
+        errorMap: { emailId: "#email-error", tel: "#tel-error" },
     });
 
-    //==============================
-    // 3. Newsletter Signup Form #2
-    //==============================
     handleFormSubmit({
         formSelector: "#newsletterSignUp",
-        submitBtnSelector: "#button-addon",
         ajaxUrl: "/insights/newslettersignup",
         fields: [{ id: "emailID", name: "email", type: "email" }],
-        successPopupId: "#successPopup1",
-        errorMap: {
-            emailID: "#error-email",
-        },
+        successPopupId: "#successPopup",
+        errorMap: { emailID: "#error-email" },
     });
 
     //==============================
-    // Close Success Popups
+    // Close Popup
     //==============================
     $(document).on("click", ".close-popup", function () {
         $(this).closest(".popup").fadeOut();
     });
-
 });
+function isNumberKey(evt) {
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    // Allow: backspace (8), delete (46), arrow keys (37-40)
+    if ([8, 46, 37, 38, 39, 40].includes(charCode)) {
+        return true;
+    }
 
+    // Only allow number keys (0–9)
+    if (charCode < 48 || charCode > 57) {
+        evt.preventDefault();
+        return false;
+    }
+
+    return true;
+}
 

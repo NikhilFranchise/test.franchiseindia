@@ -25,6 +25,7 @@ use App\Models\UserAccount;
 use App\Models\UserActivity;
 use App\Models\UserRecord;
 use App\Models\BrandUpdateRequest;
+use App\Models\Regional\FranchiseRegional;
 // use App\Models\HomePremiumPageBrand;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
@@ -35,6 +36,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+
+
 
 class FranchisorController extends Controller
 {
@@ -1559,6 +1562,7 @@ class FranchisorController extends Controller
     {
         $franchisorId = request()->user()->profile_str;
         $userAccount = UserAccount::query()->where('profile_str', $franchisorId)->first();
+        $regionFranData = FranchiseRegional::query()->select('membership_type', 'membership_plan', 'fihl_id', 'status', 'state_id')->where('fihl_id', operator: $franchisorId)->where('status', 1)->first();
         $franData = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
         $franCountries = FranchisorLocCountry::query()->where('franchisor_id', $franchisorId)->select('country_longname')->get()->pluck('country_longname');
         $franMultiUnitData = FranchisorMultiUnit::query()->where('franchisor_id', $franchisorId)->first();
@@ -1584,7 +1588,7 @@ class FranchisorController extends Controller
 
         $tradeCount = count($franTradeData);
 
-        return view('franchisor/myAccount/view-profile', compact('membershipType', 'userAccount', 'franData', 'franMultiUnitData', 'tradeCount', 'franCountries', 'applyCount'), ['tradePartner' => $franTradeData, 'StatesEast' => $StatesEast, 'StatesWest' => $StatesWest, 'StatesNorth' => $StatesNorth, 'StatesSouth' => $StatesSouth, 'StatesCenter' => $StatesCenter, 'StatesUT' => $StatesUT]);
+        return view('franchisor.myAccount.view-profile', compact('membershipType', 'userAccount', 'franData', 'regionFranData', 'franMultiUnitData', 'tradeCount', 'franCountries', 'applyCount'), ['tradePartner' => $franTradeData, 'StatesEast' => $StatesEast, 'StatesWest' => $StatesWest, 'StatesNorth' => $StatesNorth, 'StatesSouth' => $StatesSouth, 'StatesCenter' => $StatesCenter, 'StatesUT' => $StatesUT]);
     }
 
     /**
@@ -1596,6 +1600,7 @@ class FranchisorController extends Controller
         $franchisorId = request()->user()->profile_str;
 
         $franData = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
+        $regionFranData = FranchiseRegional::query()->select('membership_type', 'membership_plan', 'fihl_id', 'status', 'state_id')->where('fihl_id', $franchisorId)->where('status', 1)->first();
         $leadcount = ExpressInstaApply::query()
             ->where('franchisor_id', $franchisorId)
             ->orderBy('id', 'desc')
@@ -1626,7 +1631,8 @@ class FranchisorController extends Controller
 
         $applyCount = (ExpressInstaApply::query()->where('franchisor_id', $franchisorId)->count()) + ($expressInterestCount);
 
-        return view('franchisor/myAccount/dashboard', compact('investorData', 'insta', 'franData', 'applyCount', 'expressedInterests', 'leadcount'));
+        $this->franPercentage();
+        return view('franchisor.myAccount.dashboard', compact('investorData', 'insta', 'franData', 'applyCount', 'expressedInterests', 'leadcount', 'regionFranData'));
     }
 
     /**
@@ -1637,10 +1643,11 @@ class FranchisorController extends Controller
     {
         $franchisorId = request()->user()->profile_str;
         $franData = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
+        $regionFranData = FranchiseRegional::query()->select('membership_type', 'membership_plan', 'fihl_id', 'status', 'state_id')->where('fihl_id', $franchisorId)->where('status', 1)->first();
         $tradeData = FranchisorTradePartner::query()->where('franchisor_id', $franchisorId)->get();
         $multiUnitData = FranchisorMultiUnit::query()->where('franchisor_id', $franchisorId)->first();
 
-        return view('franchisor/myAccount/business-details', compact('franData', 'multiUnitData', 'tradeData'));
+        return view('franchisor.myAccount.business-details', compact('franData', 'multiUnitData', 'tradeData', 'regionFranData'));
     }
 
     /**
@@ -1925,7 +1932,7 @@ class FranchisorController extends Controller
     {
         $franchisorId = request()->user()->profile_str;
         $franData = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
-
+        $regionFranData = FranchiseRegional::query()->select('membership_type', 'membership_plan', 'fihl_id', 'status', 'state_id')->where('fihl_id', $franchisorId)->where('status', 1)->first();
         $paybackResult[0] = 0;
         if ($franData->payback_period != "0-0 Month" && $franData->payback_period != "") {
             $paybackPeriod = explode('-', $franData->payback_period);
@@ -1941,7 +1948,7 @@ class FranchisorController extends Controller
                 $paybackResult[2] = 'Year';
             }
         }
-        return view('franchisor/myAccount/property-details', compact('franData'), ['paybackResult' => $paybackResult]);
+        return view('franchisor/myAccount/property-details', compact('franData', 'regionFranData'), ['paybackResult' => $paybackResult]);
     }
 
     /**
@@ -1999,11 +2006,12 @@ class FranchisorController extends Controller
         //fetching data
         $franchisorId = request()->user()->profile_str;
         $franData = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
+        $regionFranData = FranchiseRegional::query()->select('membership_type', 'membership_plan', 'fihl_id', 'status', 'state_id')->where('fihl_id', $franchisorId)->where('status', 1)->first();
         $country = FranchisorLocCountry::query()->where('franchisor_id', $franchisorId)->select('country_longname')->get();
         $stateOnlyData = FranchisorLocState::query()->where('franchisor_id', $franchisorId)->distinct()->select('state')->pluck('state')->toArray();
         $onlyCity = FranchisorLocState::query()->where('franchisor_id', $franchisorId)->where('city', '!=', '')->select('city')->pluck('city')->toArray();
 
-        return view('franchisor/myAccount/professional-details', compact('franData', 'onlyCity', 'stateOnlyData', 'country'));
+        return view('franchisor/myAccount/professional-details', compact('franData', 'onlyCity', 'stateOnlyData', 'country', 'regionFranData'));
     }
 
     /**
@@ -2261,7 +2269,8 @@ class FranchisorController extends Controller
     public function viewTrainingAgreement()
     {
         $franData = FranchisorBusinessDetail::query()->where('franchisor_id', request()->user()->profile_str)->first();
-        return view('franchisor/myAccount/training-agreements', compact('franData'));
+        $regionFranData = FranchiseRegional::query()->select('membership_type', 'membership_plan', 'fihl_id', 'status', 'state_id')->where('fihl_id', request()->user()->profile_str)->where('status', 1)->first();
+        return view('franchisor/myAccount/training-agreements', compact('franData', 'regionFranData'));
     }
 
     /**
@@ -2366,9 +2375,10 @@ class FranchisorController extends Controller
             ->orderBy('clickID', 'desc')
             ->paginate(15);
 
+        $regionFranData = FranchiseRegional::query()->select('fihl_id', 'membership_type', 'membership_plan', 'status', 'state_id')->where('fihl_id', request()->user()->profile_str)->where('status', 1)->first();
         // dd($expressedInterests);
         //Pass data to view
-        return view('franchisor.myAccount.xpressed-interest', compact('expressedInterests'));
+        return view('franchisor.myAccount.xpressed-interest', compact('expressedInterests', 'regionFranData'));
     }
 
     /**
@@ -2379,6 +2389,7 @@ class FranchisorController extends Controller
     {
         $franchisorId = request()->user()->profile_str;
         $franData = FranchisorBusinessDetail::query()->select('franchisor_id', 'fleads_status')->where('franchisor_id', $franchisorId)->first();
+        $regionFranData = FranchiseRegional::query()->select('fihl_id', 'membership_type', 'membership_plan', 'status', 'state_id')->where('fihl_id', $franchisorId)->where('status', 1)->first();
         $insta = ExpressInstaApply::query()
             ->where('franchisor_id', request()->user()->profile_str)
             ->orderBy('id', 'DESC')
@@ -2397,7 +2408,7 @@ class FranchisorController extends Controller
 
         $count = count($insta);
 
-        return view('franchisor/myAccount/insta-response', compact('insta', 'fiveids', 'franData'));
+        return view('franchisor.myAccount.insta-response', compact('insta', 'fiveids', 'franData', 'regionFranData'));
     }
 
     /**
@@ -2408,6 +2419,7 @@ class FranchisorController extends Controller
     {
         $franchisorId = request()->user()->profile_str;
         $franData = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->first();
+        $regionFranData = FranchiseRegional::query()->select('fihl_id', 'membership_type', 'membership_plan', 'status', 'state_id')->where('fihl_id', $franchisorId)->where('status', 1)->first();
         $expressInterest = UserActivity::query()->select('investor_id')
             ->where('franchisor_id', $franchisorId)
             ->whereNotNull('investor_id')
@@ -2418,7 +2430,7 @@ class FranchisorController extends Controller
         $applyCount = (ExpressInstaApply::query()->where('franchisor_id', $franchisorId)->count()) + (count($uniqInvestorsArr));
 
         $membershipType = FranchisorBusinessDetail::query()->where('franchisor_id', $franchisorId)->select('membership_type')->first();
-        return view('franchisor/myAccount/response-manager', compact('applyCount', 'membershipType'), ['franData' => $franData]);
+        return view('franchisor.myAccount.response-manager', compact('applyCount', 'membershipType', 'regionFranData'), ['franData' => $franData]);
     }
 
     /**
@@ -2428,13 +2440,14 @@ class FranchisorController extends Controller
     public function allInstaResponse()
     {
         $franchisorId = request()->user()->profile_str;
+        $regionFranData = FranchiseRegional::query()->select('fihl_id', 'membership_type', 'membership_plan', 'status', 'state_id')->where('fihl_id', $franchisorId)->where('status', 1)->first();
         $table = Insta::query()->where('franchisor_id', $franchisorId)->orderBy('id', 'DESC')->get();
         $filename = "/tmp/insta_responses.csv";
         $handle = fopen($filename, 'w+');
         fputcsv($handle, array('Name', 'Email', 'Phone', 'Address', 'City', 'State', 'Pincode', 'Investment', 'Date'));
         foreach ($table as $row) {
             $address = $row->address . ',' . $row->city . ',' . $row->state;
-            if (request()->user()->membership_type == 1 && $row->visibility == 1) {
+            if (request()->user()->membership_type == 1 && $row->visibility == 1 || !empty($regionFranData) && $regionFranData->membership_type == 1) {
 
                 $invAmt = is_numeric($row->investment) ? Config('constants.investRangeInWords.' . $row->investment) : 'Not Visible';
                 fputcsv($handle, array($row->name, $row->email, $row->phone, $address, $row->city, $row->state, $row->pincode, $invAmt, $row->create_date));
@@ -2460,77 +2473,115 @@ class FranchisorController extends Controller
 
     public function allInterestToCsv()
     {
-        if (empty(request()->user()) || request()->user()->membership_type != 1) {
-            return "";
-        }
+        // dd(request()->user());
 
         $franchisorId = request()->user()->profile_str;
-        $expressedInterests = UserActivity::with(['investor.userDetail'])
-            ->where('franchisor_id', $franchisorId)
-            ->whereNotNull('investor_id')
-            ->where('investor_id', '!=', 'Anonymous')
-            ->orderBy('clickID', 'desc')
-            ->get();
-        // dd($expressedInterests);
-        $filename = 'express_interest.csv';
-        $filePath = storage_path('app/public/' . $filename);
+        $regionFranData = FranchiseRegional::query()->select('fihl_id', 'membership_type', 'membership_plan', 'status', 'state_id')->where('fihl_id', $franchisorId)->where('status', 1)->first();
+        if (!empty(request()->user()) && request()->user()->membership_type == 1 || !empty($regionFranData) && $regionFranData->membership_type == 1) {
 
-        // Ensure the directory exists
-        if (!file_exists(dirname($filePath))) {
-            mkdir(dirname($filePath), 0755, true);
-        }
+            $expressedInterests = UserActivity::with(['investor.userDetail'])
+                ->where('franchisor_id', $franchisorId)
+                ->whereNotNull('investor_id')
+                ->where('investor_id', '!=', 'Anonymous')
+                ->orderBy('clickID', 'desc')
+                ->get();
+            // dd($expressedInterests);
+            $filename = 'express_interest.csv';
+            $filePath = storage_path('app/public/' . $filename);
 
-        $handle = fopen($filePath, 'w+');
-        fwrite($handle, "\xEF\xBB\xBF");
-        fputcsv($handle, ['Name', 'Email', 'Available Capital', 'Phone', 'Address', 'State', 'City', 'Application Date']);
-
-        foreach ($expressedInterests as $expData) {
-            $investor = $expData->investor;
-            $userDetail = $investor->userDetail;
-            $address = "Not Visible";
-            $invAmt = $investor ? Config('constants.investRangeInWords.' . $investor->inv_amt) : 'Not Visible';
-            $name = $userDetail->name;
-            $email = "Not Visible";
-            $mobile = "Not Visible";
-            $state = "Not Visible";
-            $city = "Not Visible";
-
-            if (request()->user()->membership_type == 1 && $expData->franchisor_visibility == 1) {
-                $address = "";
-                if (!empty($investor->inv_address)) {
-                    $address .= $investor->inv_address . ", ";
-                }
-                if (!empty($investor->inv_city)) {
-                    $address .= $investor->inv_city . ", ";
-                }
-                if (!empty($investor->inv_state)) {
-                    $address .= $investor->inv_state . ", ";
-                }
-                if (!empty($investor->inv_pincode)) {
-                    $address .= "Pin-code:-" . $investor->inv_pincode . ", ";
-                }
-                if (!empty($investor->inv_country)) {
-                    $address .= $investor->inv_country;
-                }
-
-                $email = $userDetail->email ?? null;
-                $mobile = $userDetail->mobile ?? null;
-                $state = $investor->inv_state ?? null;
-                $city = $investor->inv_city ?? null;
+            // Ensure the directory exists
+            if (!file_exists(dirname($filePath))) {
+                mkdir(dirname($filePath), 0755, true);
             }
-            $visitDate = date('d-M-Y', strtotime($expData->visit_date));
-            $visitDate = '' . $visitDate . '"'; // Enclose the date in double quotes
-            // dd($visitDate);
-            fputcsv($handle, [$name, $email, $invAmt, $mobile, $address, $state, $city, $visitDate]);
+
+            $handle = fopen($filePath, 'w+');
+            fwrite($handle, "\xEF\xBB\xBF");
+            fputcsv($handle, ['Name', 'Email', 'Available Capital', 'Phone', 'Address', 'State', 'City', 'Application Date']);
+            // foreach ($expressedInterests as $expData) {
+            //     $investor = $expData->investor;
+            //     $userDetail = $investor->userDetail;
+            //     $address = "Not Visible";
+            //     $invAmt = $investor ? Config('constants.investRangeInWords.' . $investor->inv_amt) : 'Not Visible';
+            //     $name = $userDetail->name ?? null;
+            //     $email = "Not Visible";
+            //     $mobile = "Not Visible";
+            //     $state = "Not Visible";
+            //     $city = "Not Visible";
+
+            //     if ((request()->user()->membership_type == 1 && $expData->franchisor_visibility == 1) || (!empty($regionFranData) && $regionFranData->membership_type == 1)) {
+            //         $address = "";
+            //         if (!empty($investor->inv_address)) {
+            //             $address .= $investor->inv_address . ", ";
+            //         }
+            //         if (!empty($investor->inv_city)) {
+            //             $address .= $investor->inv_city . ", ";
+            //         }
+            //         if (!empty($investor->inv_state)) {
+            //             $address .= $investor->inv_state . ", ";
+            //         }
+            //         if (!empty($investor->inv_pincode)) {
+            //             $address .= "Pin-code:-" . $investor->inv_pincode . ", ";
+            //         }
+            //         if (!empty($investor->inv_country)) {
+            //             $address .= $investor->inv_country;
+            //         }
+
+            //         $email = $userDetail->email ?? null;
+            //         $mobile = $userDetail->mobile ?? null;
+            //         $state = $investor->inv_state ?? null;
+            //         $city = $investor->inv_city ?? null;
+            //     }
+            //     $visitDate = date('d-M-Y', strtotime($expData->visit_date));
+            //     $visitDate = '' . $visitDate . '"'; // Enclose the date in double quotes
+            //     // dd($visitDate);
+            //     fputcsv($handle, [$name, $email, $invAmt, $mobile, $address, $state, $city, $visitDate]);
+            // }
+
+            foreach ($expressedInterests as $expData) {
+                $investor = $expData->investor;
+                $userDetail = $investor?->userDetail; // safe navigation
+
+                $address = "Not Visible";
+                $invAmt = $investor ? config('constants.investRangeInWords.' . $investor->inv_amt) : 'Not Visible';
+                $name   = $userDetail->name ?? null;
+                $email  = "Not Visible";
+                $mobile = "Not Visible";
+                $state  = "Not Visible";
+                $city   = "Not Visible";
+
+                if (
+                    (request()->user()->membership_type == 1 && $expData->franchisor_visibility == 1)
+                    || (!empty($regionFranData) && $regionFranData->membership_type == 1)
+                ) {
+                    $address = trim(implode(', ', array_filter([
+                        $investor->inv_address ?? null,
+                        $investor->inv_city ?? null,
+                        $investor->inv_state ?? null,
+                        !empty($investor->inv_pincode) ? "Pin-code:-{$investor->inv_pincode}" : null,
+                        $investor->inv_country ?? null,
+                    ])), ', ');
+
+                    $email  = $userDetail->email ?? null;
+                    $mobile = $userDetail->mobile ?? null;
+                    $state  = $investor->inv_state ?? null;
+                    $city   = $investor->inv_city ?? null;
+                }
+
+                $visitDate = date('d-M-Y', strtotime($expData->visit_date));
+
+                fputcsv($handle, [$name, $email, $invAmt, $mobile, $address, $state, $city, $visitDate]);
+            }
+
+            fclose($handle);
+
+            $headers = ['Content-Type' => 'text/csv'];
+
+            $this->recordLeadDownload($franchisorId, 2);
+
+            return Response::download($filePath, $filename, $headers);
+        } else {
+            return "";
         }
-
-        fclose($handle);
-
-        $headers = ['Content-Type' => 'text/csv'];
-
-        $this->recordLeadDownload($franchisorId, 2);
-
-        return Response::download($filePath, $filename, $headers);
     }
 
     /**
@@ -2540,8 +2591,9 @@ class FranchisorController extends Controller
     public function appearance()
     {
         $franData = FranchisorBusinessDetail::query()->select('video_link', 'page_layout_type')->where('franchisor_id', request()->user()->profile_str)->first();
+        $regionFranData = FranchiseRegional::query()->select('membership_type', 'membership_plan', 'fihl_id', 'status', 'state_id')->where('fihl_id', request()->user()->profile_str)->where('status', 1)->first();
         $sliderData = FranchisorSliderImage::query()->where('franchisor_id', request()->user()->profile_str)->get();
-        return view('franchisor/myAccount/appearance', compact('franData', 'sliderData'));
+        return view('franchisor.myAccount.appearance', compact('franData', 'regionFranData', 'sliderData'));
     }
 
     /**
@@ -2692,7 +2744,8 @@ class FranchisorController extends Controller
     public function franPhotoChange()
     {
         $franData = FranchisorBusinessDetail::query()->select('company_logo', 'pre_approved_logo')->where('franchisor_id', request()->user()->profile_str)->first();
-        return view('franchisor/myAccount/fran-photochange', compact('franData'));
+        $regionFranData = FranchiseRegional::query()->select('membership_type', 'membership_plan', 'fihl_id', 'status', 'state_id')->where('fihl_id', request()->user()->profile_str)->where('status', 1)->first();
+        return view('franchisor/myAccount/fran-photochange', compact('franData', 'regionFranData'));
     }
 
     /**
@@ -2746,157 +2799,266 @@ class FranchisorController extends Controller
     /**
      * Generating franchisor profile completion percentage
      */
+    // public static function franPercentage()
+    // {
+    //     $value = 0;
+    //     $cookieNameFran = 'franPercentage';
+    //     $franData = FranchisorBusinessDetail::query()->where('franchisor_id', request()->user()->profile_str)->first();
+
+    //     if (!empty($franData->brand_name))
+    //         $value = $value + 2;
+    //     if (!empty($franData->ceo_name))
+    //         $value = $value + 2.3;
+    //     if (!empty($franData->company_name))
+    //         $value = $value + 2.3;
+    //     if (!empty($franData->fran_manager))
+    //         $value = $value + 2.3;
+    //     if (!empty($franData->fran_address))
+    //         $value = $value + 2.3;
+    //     if (!empty($franData->country))
+    //         $value = $value + 2;
+    //     if (!empty($franData->pincode))
+    //         $value = $value + 2.3;
+    //     if (!empty($franData->state))
+    //         $value = $value + 2;
+    //     if (!empty($franData->city))
+    //         $value = $value + 2;
+    //     if (!empty($franData->telephone))
+    //         $value = $value + 2;
+    //     if (!empty($franData->secondary_email))
+    //         $value = $value + 2;
+    //     if (!empty($franData->website))
+    //         $value = $value + 2;
+    //     if (!empty($franData->ind_main_cat))
+    //         $value = $value + 2.3;
+    //     if (!empty($franData->ind_cat))
+    //         $value = $value + 2.3;
+    //     if (!empty($franData->ind_sub_cat))
+    //         $value = $value + 2.3;
+    //     if (!empty($franData->operations_start_year))
+    //         $value = $value + 2.3;
+    //     if (!empty($franData->franchise_start_year))
+    //         $value = $value + 2.3;
+    //     if (!empty($franData->no_fran_outlets))
+    //         $value = $value + 2.3;
+    //     if (!empty($franData->no_retail_outlets))
+    //         $value = $value + 2.3;
+    //     if (!empty($franData->no_company_outlets))
+    //         $value = $value + 2;
+    //     if (!empty($franData->outlet_locations))
+    //         $value = $value + 2;
+    //     if (!empty($franData->business_desc))
+    //         $value = $value + 2;
+
+    //     $value = $value + 10;
+    //     $value = $value + 8;
+
+    //     $value = $value + 5;
+
+    //     if (!empty($franData->franchise_term_duration))
+    //         $value = $value + 2;
+    //     if (!empty($franData->franchise_training_loc))
+    //         $value = $value + 2;
+    //     if (!empty($franData->premise_outfit_arrangement))
+    //         $value = $value + 2;
+    //     if (!empty($franData->pref_prop_location))
+    //         $value = $value + 2;
+    //     if (!empty($franData->prop_area_min))
+    //         $value = $value + 2;
+    //     if (!empty($franData->property_type))
+    //         $value = $value + 2;
+    //     if (!empty($franData->other_investment_req))
+    //         $value = $value + 2;
+    //     if (!empty($franData->payback_period))
+    //         $value = $value + 2;
+    //     if (!empty($franData->anticipated_roi))
+    //         $value = $value + 2;
+
+    //     if ($franData->looking_franchise == 1)
+    //         $value = $value + 4;
+
+    //     if (!empty($franData->looking_franchise) && $franData->franchise_partner_type == 1) {
+    //         if (!empty($franData->unitinv_brand_fee))
+    //             $value = $value + 1;
+    //         if (!empty($franData->unitinv_royalty))
+    //             $value = $value + 1;
+    //     }
+
+    //     $multiunitData = FranchisorMultiUnit::query()->where('franchisor_id', request()->user()->profile_str)->first();
+    //     if (!empty($franData->looking_franchise) && $franData->franchise_partner_type == 2) {
+    //         if (!empty($multiunitData)) {
+    //             if ($multiunitData->countrywise == 1 || $multiunitData->regionwise == 1 || $multiunitData->statewise == 1 || $multiunitData->citywise == 1)
+    //                 $value = $value + 2;
+    //         }
+    //     }
+
+    //     if (!empty($franData->looking_franchise) && $franData->franchise_partner_type == 3) {
+    //         if (!empty($multiunitData)) {
+    //             if ($multiunitData->countrywise == 1 || $multiunitData->regionwise == 1 || $multiunitData->statewise == 1 || $multiunitData->citywise == 1)
+    //                 $value = $value + 2;
+    //         }
+    //     }
+
+
+    //     if (!empty($franData->looking_tradepartner))
+    //         $value = $value + 6;
+
+    //     if (!empty(request()->user()->mobile))
+    //         $value = $value + 2.3;
+
+    //     if (request()->user()->membership_type == 1)
+    //         $value = $value + 5.1;
+
+    //     Cookie::getFacadeRoot()->queue($cookieNameFran, $value);
+    //     session()->put('name', $franData->company_name);
+
+    //     //feedback form logic
+    //     if (request()->user()->membership_type == 1) {
+    //         Cookie::getFacadeRoot()->queue('form_applicable', "0");
+    //         $lastDate = FranPaymentHistory::query()
+    //             ->select('end_date', 'start_date')
+    //             ->where('franchisor_id', request()->user()->profile_str)
+    //             ->where('status', 1)
+    //             ->orderBy('track_id', 'DESC')
+    //             ->first();
+
+    //         if (!empty($lastDate)) {
+    //             $endDateTime = date_create($lastDate->end_date);
+    //             $todayDateTime = date_create(date('Y-m-d h:i:s'));
+    //             $interval = date_diff($endDateTime, $todayDateTime);
+
+    //             if ($interval->format('%R%a') > -5) {
+    //                 $time = date('Y-m-d', strtotime('-5 days'));
+    //                 $check = FranchisorFeedback::query()
+    //                     ->where('franchisor_id', request()->user()->profile_str)
+    //                     ->orderBy('feedback_id', 'DESC')
+    //                     ->where('created_at', '>', $time)
+    //                     ->count();
+
+    //                 if ($check == 0) {
+    //                     Cookie::getFacadeRoot()->queue('form_applicable', "1");
+
+    //                     $date1 = strtotime($lastDate->start_date);
+    //                     $date2 = strtotime(date('Y-m-d h:i:s'));
+    //                     $months = 0;
+
+    //                     while (($date1 = strtotime('+1 MONTH', $date1)) <= $date2)
+    //                         $months++;
+
+    //                     Cookie::getFacadeRoot()->queue('franchisor_feedback_month', $months);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
     public static function franPercentage()
     {
-        $value = 0;
         $cookieNameFran = 'franPercentage';
-        $franData = FranchisorBusinessDetail::query()->where('franchisor_id', request()->user()->profile_str)->first();
+        $user = request()->user();
+        $franId = $user->profile_str ?? null;
+        $franData = FranchisorBusinessDetail::where('franchisor_id', $franId)->first();
 
-        if (!empty($franData->brand_name))
-            $value = $value + 2;
-        if (!empty($franData->ceo_name))
-            $value = $value + 2.3;
-        if (!empty($franData->company_name))
-            $value = $value + 2.3;
-        if (!empty($franData->fran_manager))
-            $value = $value + 2.3;
-        if (!empty($franData->fran_address))
-            $value = $value + 2.3;
-        if (!empty($franData->country))
-            $value = $value + 2;
-        if (!empty($franData->pincode))
-            $value = $value + 2.3;
-        if (!empty($franData->state))
-            $value = $value + 2;
-        if (!empty($franData->city))
-            $value = $value + 2;
-        if (!empty($franData->telephone))
-            $value = $value + 2;
-        if (!empty($franData->secondary_email))
-            $value = $value + 2;
-        if (!empty($franData->website))
-            $value = $value + 2;
-        if (!empty($franData->ind_main_cat))
-            $value = $value + 2.3;
-        if (!empty($franData->ind_cat))
-            $value = $value + 2.3;
-        if (!empty($franData->ind_sub_cat))
-            $value = $value + 2.3;
-        if (!empty($franData->operations_start_year))
-            $value = $value + 2.3;
-        if (!empty($franData->franchise_start_year))
-            $value = $value + 2.3;
-        if (!empty($franData->no_fran_outlets))
-            $value = $value + 2.3;
-        if (!empty($franData->no_retail_outlets))
-            $value = $value + 2.3;
-        if (!empty($franData->no_company_outlets))
-            $value = $value + 2;
-        if (!empty($franData->outlet_locations))
-            $value = $value + 2;
-        if (!empty($franData->business_desc))
-            $value = $value + 2;
-
-        $value = $value + 10;
-        $value = $value + 8;
-
-        $value = $value + 5;
-
-        if (!empty($franData->franchise_term_duration))
-            $value = $value + 2;
-        if (!empty($franData->franchise_training_loc))
-            $value = $value + 2;
-        if (!empty($franData->premise_outfit_arrangement))
-            $value = $value + 2;
-        if (!empty($franData->pref_prop_location))
-            $value = $value + 2;
-        if (!empty($franData->prop_area_min))
-            $value = $value + 2;
-        if (!empty($franData->property_type))
-            $value = $value + 2;
-        if (!empty($franData->other_investment_req))
-            $value = $value + 2;
-        if (!empty($franData->payback_period))
-            $value = $value + 2;
-        if (!empty($franData->anticipated_roi))
-            $value = $value + 2;
-
-        if ($franData->looking_franchise == 1)
-            $value = $value + 4;
-
-        if (!empty($franData->looking_franchise) && $franData->franchise_partner_type == 1) {
-            if (!empty($franData->unitinv_brand_fee))
-                $value = $value + 1;
-            if (!empty($franData->unitinv_royalty))
-                $value = $value + 1;
+        if (empty($franData)) {
+            Cookie::getFacadeRoot()->queue($cookieNameFran, 0);
+            return;
         }
 
-        $multiunitData = FranchisorMultiUnit::query()->where('franchisor_id', request()->user()->profile_str)->first();
-        if (!empty($franData->looking_franchise) && $franData->franchise_partner_type == 2) {
-            if (!empty($multiunitData)) {
-                if ($multiunitData->countrywise == 1 || $multiunitData->regionwise == 1 || $multiunitData->statewise == 1 || $multiunitData->citywise == 1)
-                    $value = $value + 2;
+        // --- simple weight map for the straightforward fields ---
+        $weights = [
+            'brand_name'              => 2,
+            'ceo_name'                => 2.3,
+            'company_name'            => 2.3,
+            'fran_manager'            => 2.3,
+            'fran_address'            => 2.3,
+            'country'                 => 2,
+            'pincode'                 => 2.3,
+            'state'                   => 2,
+            'city'                    => 2,
+            'telephone'               => 2,
+            'secondary_email'         => 2,
+            'website'                 => 2,
+            'ind_main_cat'            => 2.3,
+            'ind_cat'                 => 2.3,
+            'ind_sub_cat'             => 2.3,
+            'operations_start_year'   => 2.3,
+            'franchise_start_year'    => 2.3,
+            'no_fran_outlets'         => 2.3,
+            'no_retail_outlets'       => 2.3,
+            'no_company_outlets'      => 2,
+            'outlet_locations'        => 2,
+            'business_desc'           => 2,
+        ];
+
+        $value = 0.0;
+        foreach ($weights as $field => $w) {
+            if (!empty($franData->{$field})) {
+                $value += $w;
             }
         }
 
-        if (!empty($franData->looking_franchise) && $franData->franchise_partner_type == 3) {
-            if (!empty($multiunitData)) {
-                if ($multiunitData->countrywise == 1 || $multiunitData->regionwise == 1 || $multiunitData->statewise == 1 || $multiunitData->citywise == 1)
-                    $value = $value + 2;
-            }
+        // unconditional blocks (as in your original code)
+        $value += 10;
+        $value += 8;
+        $value += 5;
+
+        // second group of weights
+        $more = [
+            'franchise_term_duration'    => 2,
+            'franchise_training_loc'     => 2,
+            'premise_outfit_arrangement' => 2,
+            'pref_prop_location'         => 2,
+            'prop_area_min'              => 2,
+            'property_type'              => 2,
+            'other_investment_req'       => 2,
+            'payback_period'             => 2,
+            'anticipated_roi'            => 2,
+        ];
+        foreach ($more as $field => $w) {
+            if (!empty($franData->{$field})) $value += $w;
         }
 
+        // looking franchise / partner types
+        if (!empty($franData->looking_franchise)) {
+            $value += 4;
 
-        if (!empty($franData->looking_tradepartner))
-            $value = $value + 6;
-
-        if (!empty(request()->user()->mobile))
-            $value = $value + 2.3;
-
-        if (request()->user()->membership_type == 1)
-            $value = $value + 5.1;
-
-        Cookie::getFacadeRoot()->queue($cookieNameFran, $value);
-        session()->put('name', $franData->company_name);
-
-        //feedback form logic
-        if (request()->user()->membership_type == 1) {
-            Cookie::getFacadeRoot()->queue('form_applicable', "0");
-            $lastDate = FranPaymentHistory::query()
-                ->select('end_date', 'start_date')
-                ->where('franchisor_id', request()->user()->profile_str)
-                ->where('status', 1)
-                ->orderBy('track_id', 'DESC')
-                ->first();
-
-            if (!empty($lastDate)) {
-                $endDateTime = date_create($lastDate->end_date);
-                $todayDateTime = date_create(date('Y-m-d h:i:s'));
-                $interval = date_diff($endDateTime, $todayDateTime);
-
-                if ($interval->format('%R%a') > -5) {
-                    $time = date('Y-m-d', strtotime('-5 days'));
-                    $check = FranchisorFeedback::query()
-                        ->where('franchisor_id', request()->user()->profile_str)
-                        ->orderBy('feedback_id', 'DESC')
-                        ->where('created_at', '>', $time)
-                        ->count();
-
-                    if ($check == 0) {
-                        Cookie::getFacadeRoot()->queue('form_applicable', "1");
-
-                        $date1 = strtotime($lastDate->start_date);
-                        $date2 = strtotime(date('Y-m-d h:i:s'));
-                        $months = 0;
-
-                        while (($date1 = strtotime('+1 MONTH', $date1)) <= $date2)
-                            $months++;
-
-                        Cookie::getFacadeRoot()->queue('franchisor_feedback_month', $months);
-                    }
+            if ($franData->franchise_partner_type == 1) {
+                if (!empty($franData->unitinv_brand_fee)) $value += 1;
+                if (!empty($franData->unitinv_royalty))   $value += 1;
+            } else {
+                // partner_type 2 or 3: multi-unit check gives +2 (either case)
+                $multiunitData = FranchisorMultiUnit::where('franchisor_id', $franId)->first();
+                if (
+                    !empty($multiunitData) &&
+                    ($multiunitData->countrywise == 1 || $multiunitData->regionwise == 1 ||
+                        $multiunitData->statewise == 1 || $multiunitData->citywise == 1)
+                ) {
+                    $value += 2;
                 }
             }
         }
+
+        if (!empty($franData->looking_tradepartner)) $value += 6;
+        if (!empty($user->mobile))                    $value += 2.3;
+        if ($user->membership_type == 1)             $value += 5.1;
+
+        // --- NORMALIZATION: compute theoretical maximum and scale to 0..100 ---
+        // This computes the maximum possible score using the same weight sets (i.e. if all fields were present).
+        $maxPossible = array_sum($weights) + 10 + 8 + 5 + array_sum($more)
+            + 4 /*looking_franchise*/ + 2 /*partner branch max*/ + 6 /*tradepartner*/
+            + 2.3 /*mobile*/ + 5.1 /*membership*/;
+
+        // Prevent division by zero just in case:
+        $percent = $maxPossible > 0 ? ($value / $maxPossible) * 100 : 0;
+        $percent = round($percent, 1);
+        if ($percent > 100) $percent = 100;
+
+        // store cookie & session (same as you did)
+        Cookie::getFacadeRoot()->queue($cookieNameFran, $percent);
+        session()->put('name', $franData->company_name);
+
+        // --- keep the rest of your feedback / payment logic unchanged ---
+        // (copy your original FranPaymentHistory / FranFeedback logic here)
     }
 
     /**

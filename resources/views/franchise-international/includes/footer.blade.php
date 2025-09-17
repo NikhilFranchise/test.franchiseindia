@@ -112,7 +112,7 @@
                         <li><a href="/about">About Us</a></li>
                         <li><a href="/contact">Contact Us</a></li>
                         <li><a href="/feedback">Feedback</a></li>
-                        <li><a href="https://www.opportunityindia.com">News</a></li>
+                        <li><a href="https://www.franchiseindia.com/insights">News</a></li>
                         <li><a href="/terms">Terms</a></li>
                         <li><a href="/sitemap">Sitemap</a></li>
                     </ul>

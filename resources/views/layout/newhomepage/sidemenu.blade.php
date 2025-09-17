@@ -850,7 +850,7 @@
                     &amp; Books</a>
             </li>
             <li><a href="https://www.franchiseindia.com/event/" target="_blank">Event</a></li>
-        <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a></li>
+        {{-- <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a></li> --}}
 
         </ul>
         <ul class="list-unstyled components">

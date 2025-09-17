@@ -27,15 +27,17 @@
         </div>
     </div>
     <!-- Success Popup -->
-    <div id="successPopup1" class="popup">
+    
+    <div id="successPopup" class="popup">
         <div class="popup-content">
             <span class="close-popup">&times;</span>
-            <h3>Subscription Successful!</h3>
-            <p id="successPopupMessage"></p>
+            <h3 id="popupTitle">Subscription Successful!</h3>
+            <p id="popupMessage">Thank you for subscribing. Stay tuned for updates.</p>
         </div>
     </div>
 
     <!-- Popup CSS -->
 </section>
+
 
 <!-- newsletter section ends  -->

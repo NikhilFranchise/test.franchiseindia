@@ -1,8 +1,12 @@
 @extends('layout.master')
 @section('seoTitle', 'Top 100 | Top 200 Franchise Opportunities in India for ' . date('Y') . ': Franchise India')
-@section('seoDesc', 'Top 100 | Top 200 Franchise Businesses in India ' . date('Y') . ': Dive into the most successful franchisor and
+@section('seoDesc',
+    'Top 100 | Top 200 Franchise Businesses in India ' .
+    date('Y') .
+    ': Dive into the most successful franchisor and
     franchisee opportunities. Gain insights into the best sectors to launch and grow your franchise this year.')
-@section('seoKeywords', 'Franchise India Top 100 Franchisees, Top 100 Franchisees, Top 200 Franchise, Top 200 Franchisees, Top Business opportunities.')
+@section('seoKeywords', 'Franchise India Top 100 Franchisees, Top 100 Franchisees, Top 200 Franchise, Top 200
+    Franchisees, Top Business opportunities.')
     @push('styles')
         <link rel="stylesheet" href="{{ url('/css/top200.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
@@ -206,6 +210,7 @@
                 let getfreecount = 0; // Initialize the counter
                 let sCount2025 = '{{ count(config('staticBrands.staticBrands.2025')) }}';
                 let sCount2024 = '{{ count(config('staticBrands.staticBrands.2024')) }}';
+                let sCount2023 = '{{ count(config('staticBrands.staticBrands.2023')) }}';
 
                 function fetchData() {
                     if (isLoading) return;
@@ -239,6 +244,7 @@
                             if (response.year == 2025 && response.count != response.totalCount) {
                                 $("#recordCount").text(response.count + " RESULTS OF " + (response
                                     .totalCount + parseInt(sCount2025)));
+
                             } else if (response.count == response.totalCount && response.year == 2025) {
                                 $("#recordCount").text((response.count + parseInt(sCount2025)) +
                                     " RESULTS OF " + (response.totalCount + parseInt(sCount2025)));
@@ -250,6 +256,15 @@
                             } else if (response.count == response.totalCount && response.year == 2024) {
                                 $("#recordCount").text((response.count + parseInt(sCount2024)) +
                                     " RESULTS OF " + (response.totalCount + parseInt(sCount2024)));
+
+                            } else if (response.year == 2023 && response.count != response.totalCount) {
+                                $("#recordCount").text(response.count + " RESULTS OF " + (response
+                                    .totalCount + parseInt(sCount2023)));
+
+                            } else if (response.count == response.totalCount && response.year == 2023) {
+                                $("#recordCount").text((response.count + parseInt(sCount2023)) +
+                                    " RESULTS OF " + (response.totalCount + parseInt(sCount2023)));
+                                    
                             } else {
                                 $("#recordCount").text(response.count + " RESULTS OF " + response
                                     .totalCount);

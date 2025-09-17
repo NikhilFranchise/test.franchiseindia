@@ -14,6 +14,7 @@ class FihlPodcastVideo extends Model
     protected $keyType = 'int';
 
     protected $fillable = [
+        'videoID',
         'podcast_id',
         'podcast_link',
         'title',

@@ -24,8 +24,8 @@
             <li><a target="_blank" href="/international">अंतरराष्ट्रीय ब्रांड</a></li>
         </ul>
         <ul class="list-unstyled components border-bottom-1">
-            <li><a target="_blank" href="https://www.franchiseindia.com/insights">फ्रेंचाइजी इनसाइट्स</a></li>
-            <li><a target="_blank" href="https://www.opportunityindia.com/hindi">समाचार</a></li>
+            <li><a target="_blank" href="https://www.franchiseindia.com/insights/hindi">फ्रेंचाइजी इनसाइट्स</a></li>
+            <li><a target="_blank" href="https://www.franchiseindia.com/insights/hindi">समाचार</a></li>
             <li><a target="_blank" href="https://video.franchiseindia.com/">वीडियो</a></li>
             <li><a target="_blank" href="https://master.franchiseindia.com/magazine-subscribe/">पत्रिका</a></li>
         </ul>
@@ -89,9 +89,8 @@
             <li><a target="_blank" href="https://www.indianretailer.com/" rel="nofollow">indianretailer.com</a>
             </li>
             <li><a target="_blank" href="https://www.restaurantindia.in">restaurantindia.in</a></li>
-            <li><a target="_blank"
-                    href="https://www.opportunityindia.com/english/tag/health-and-wellness">wellnessindia.org</a></li>
-            <li><a target="_blank" href="https://www.opportunityindia.com/english/tag/education">educationbiz.com</a>
+            <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/beauty-wellness">wellnessindia.org</a></li>
+            <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/education">educationbiz.com</a>
             </li>
             <li><a target="_blank" href="https://www.franchisebangladesh.com/"
                     rel="nofollow">franchisebangladesh.com</a></li>
@@ -122,8 +121,8 @@
             <li><a href="https://www.franchiseindia.com/book" target="_blank">रिपोर्टों
                     &amp; पुस्तकें</a></li>
             <li><a href="https://www.franchiseindia.com/event/" target="_blank">प्रतिस्पर्धा</a></li>
-            <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a>
-            </li>
+            {{-- <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a>
+            </li> --}}
         </ul>
         <ul class="list-unstyled components">
             <li><a href="https://www.franchiseindia.com/investor/create" target="_blank">निवेशक साइनअप</a></li>
@@ -207,7 +206,7 @@
         </ul>
         <ul class="list-unstyled components border-bottom-1">
             <li><a target="_blank" href="https://www.franchiseindia.com/insights">Franchise Insights</a></li>
-            <li><a target="_blank" href="https://www.opportunityindia.com/">News</a></li>
+            <li><a target="_blank" href="https://www.franchiseindia.com/insights">News</a></li>
             <li><a target="_blank" href="https://video.franchiseindia.com/">Video</a></li>
             <li><a target="_blank" href="https://master.franchiseindia.com/magazine-subscribe/">Magazine</a></li>
             <li><a href="https://www.franchiseindia.com/top-100-franchise" target="_blank">Top 100 Franchise</a>
@@ -287,9 +286,8 @@
             <li><a target="_blank" href="https://www.indianretailer.com/" rel="nofollow">indianretailer.com</a>
             </li>
             <li><a target="_blank" href="https://www.restaurantindia.in">restaurantindia.in</a></li>
-            <li><a target="_blank"
-                    href="https://www.opportunityindia.com/english/tag/health-and-wellness">wellnessindia.org</a></li>
-            <li><a target="_blank" href="https://www.opportunityindia.com/english/tag/education">educationbiz.com</a>
+            <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/beauty-wellness">wellnessindia.org</a></li>
+            <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/education">educationbiz.com</a>
             </li>
             <li><a target="_blank" href="https://www.franchisebangladesh.com/"
                     rel="nofollow">franchisebangladesh.com</a></li>
@@ -320,8 +318,8 @@
                     Magazine</a></li>
             <li><a href="https://www.franchiseindia.com/book" target="_blank">Reports &amp; Books</a></li>
             <li><a href="https://www.franchiseindia.com/event/" target="_blank">Event</a></li>
-            <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a>
-            </li>
+            {{-- <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a>
+            </li> --}}
         </ul>
         <ul class="list-unstyled components">
             <li><a href="https://www.franchiseindia.com/investor/create" target="_blank">Investor Signup</a></li>

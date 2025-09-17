@@ -2965,7 +2965,7 @@ class AdminController extends Controller
 
             // Update the podcast attributes
             $updateData = [
-                'podcast_id'   => $request->input('videoId'),
+                'videoID'   => $request->input('videoId'),
                 'category' => $request->input('category'),
                 'title'        => $request->input('title'),
                 // 'image_path'   => $fimage,
@@ -2982,7 +2982,7 @@ class AdminController extends Controller
 
 
             // Redirect based on language
-            $route = $request->video_lang === 'en' ? 'videolist' : 'hindivideolist';
+            $route = $request->pod_lang === 'en' ? 'videolist' : 'hindivideolist';
             return redirect()->route($route)->with('success', 'Video has been updated successfully.');
         } catch (\Exception $e) {
             // Log the error and return an error response

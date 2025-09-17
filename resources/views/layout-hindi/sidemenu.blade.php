@@ -459,8 +459,8 @@
         </li>
     </ul>
     <ul class="list-unstyled components border-bottom-1">
-        <li><a target="_blank" href="https://www.franchiseindia.com/insights">फ्रेंचाइजी इनसाइट्स</a></li>
-        <li><a target="_blank" href="https://opportunityindia.com/hindi">समाचार</a></li>
+        <li><a target="_blank" href="https://www.franchiseindia.com/insights/hindi">फ्रेंचाइजी इनसाइट्स</a></li>
+        <li><a target="_blank" href="https://www.franchiseindia.com/insights/hindi">समाचार</a></li>
         <li><a href="https://video.franchiseindia.com/" target="_blank">वीडियो</a></li>
         <li><a target="_blank" href="{{ Config('constants.MainDomain') }}/magazine">पत्रिका</a></li>
         <li><a href="{{ url('top-100-franchise') }}" target="_blank">Top 100 Franchise</a></li>
@@ -527,11 +527,9 @@
         <li><a target="_blank" href="https://www.entrepreneur.com/" rel="nofollow">entrepreneur.com</a></li>
         <li><a target="_blank" href="https://www.indianretailer.com/" rel="nofollow">indianretailer.com</a></li>
         <li><a target="_blank" href="https://restaurant.indianretailer.com/">restaurantindia.in</a></li>
-        <li><a target="_blank"
-                href="https://opportunityindia.franchiseindia.com/english/tag/health-and-wellness">wellnessindia.org</a>
+        <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/beauty-wellness">wellnessindia.org</a>
         </li>
-        <li><a target="_blank"
-                href="https://opportunityindia.franchiseindia.com/english/tag/education">educationbiz.com</a></li>
+        <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/education">educationbiz.com</a></li>
         <li><a target="_blank" href="https://www.franchise.ae/" rel="nofollow">franchise.ae</a></li>
         <li><a target="_blank" href="https://www.franchisebangladesh.com/" rel="nofollow">franchisebangladesh.com</a>
         </li>
