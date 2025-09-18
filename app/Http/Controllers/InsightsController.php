@@ -625,7 +625,7 @@ class InsightsController extends Controller
             // Build target domain (change this domain)
             $targetDomain = "https://www.entrepreneurindia.com/blog/{$locale}/{$type}/{$newsDetails->slug}.{$id}";
             // dd($targetDomain);
-            return redirect()->away($targetDomain);
+            return redirect()->away($targetDomain,301);
         }
 
         $correctSlug = $newsDetails->slug;
