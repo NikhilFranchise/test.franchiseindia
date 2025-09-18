@@ -380,25 +380,8 @@
                                             <a href="{{ $latestUrl }}">{{ $latest->title }}</a>
                                         </div>
                                     </li>
-                                    {{-- <li>
-                                        @php
-                                            $locale = App::getLocale();
-                                            $baseUrl1 = Config('constants.MainDomain') . "/blog/$locale/" . strtolower($latest->insight_type) . '/';
-                                            $latestUrl = $baseUrl1 . $latest->slug . '.' . $latest->news_id;
-                                        @endphp
-
-                                        @foreach ($latest->category as $cat)
-                                            @php
-                                                $catURL = Config('constants.MainDomain') . "/blog/{$locale}/{$cat->slug}";
-                                            @endphp
-                                        @endforeach
-
-                                        <div class="popular-head">
-                                            <a href="{{ $latestUrl }}">{{ $latest->title }}</a>
-                                        </div>
-                                    </li> --}}
-
                                 @empty
+                                 <p>No articles found.</p>
                                 @endforelse
                             </ul>
                         </div>
