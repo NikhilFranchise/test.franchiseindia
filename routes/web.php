@@ -50,7 +50,7 @@ use App\Http\Controllers\InsightSitemapController;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\SearchMonitorController;
 use Illuminate\Support\Facades\Redirect;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -1172,6 +1172,26 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
         /*English Language setter*/
         Route::group(['prefix' => 'en'],            function () {
+            //Category redirection for Education, MSME ,EV START
+              $categories = [
+                        'msme',
+                        'electric-vehicles',
+                        'education',
+                    ];
+               foreach ($categories as $slug) {
+                    Route::get($slug, function (Request $request) use ($slug) {
+                        // dd($slug);
+                        $baseUrl = "https://www.entrepreneurindia.com/blog/en/{$slug}";
+                        $query   = $request->getQueryString();
+                        // dd($query);
+                        $newUrl  = $query ? $baseUrl . '?' . $query : $baseUrl;
+
+                        return redirect()->away($newUrl, 301); // ✅ Forces external redirect
+                    });
+                }
+
+            //Category redirection for Education, MSME ,EV END
+
             Route::get('/export',                        [InsightsController::class, 'exportInsights']);
             Route::get('thanks',                    function () {
                 return view('insights.thanks');
@@ -1191,6 +1211,8 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('/{category}/{subcategory}',     [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
+
+            
         });
         /*Hindi Language setter*/
         Route::group(['prefix' => 'hi'], function () {
@@ -1297,3 +1319,5 @@ Route::get('img/{size}/{path}', function ($size, $path) {
     return response($response->body(), 200)
         ->header('Content-Type', 'image/webp');
 })->where('path', '.*');
+
+

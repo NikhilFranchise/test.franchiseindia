@@ -297,7 +297,7 @@
                 <div class="popular-articles">
                     <h3>Latest Articles</h3>
                     <ul>
-                        @forelse ($latestArticles as $latest)
+                        {{-- @forelse ($latestArticles as $latest)
                             <li>
                                 @foreach ($latest->category as $cat)
                                     @php
@@ -316,7 +316,39 @@
                                 </div>
                             </li>
                         @empty
-                        @endforelse
+                        @endforelse --}}
+                        @forelse ($latestArticles as $latest)
+    @php
+        $locale = App::getLocale();
+        // Define the base URL outside the loop, just in case we need to access it later
+        $baseUrl1 = Config('constants.MainDomain') . "/insights/$locale/" . strtolower($latest->insight_type) . '/';
+        // Initialize $latestUrl as null
+        $latestUrl = null;
+    @endphp
+
+    @foreach ($latest->category as $cat)
+        @php
+            // Construct the URL for each category inside the loop
+            $catURL = Config('constants.MainDomain') . "/insights/{$locale}/{$cat->slug}";
+            // Construct the article URL for the current category
+            $latestUrl = $baseUrl1 . $latest->slug . '.' . $latest->news_id;
+        @endphp
+    @endforeach
+
+    <!-- Make sure $latestUrl is set before using it -->
+    @if($latestUrl)
+        <li>
+            <div class="popular-head">
+                <a href="{{ $latestUrl }}">{{ $latest->title }}</a>
+            </div>
+        </li>
+    @endif
+
+@empty
+    <!-- Handle the case when $latestArticles is empty -->
+    <p>No articles found.</p>
+@endforelse
+
                     </ul>
                 </div>
                 <div class="ad-right-sticky">
