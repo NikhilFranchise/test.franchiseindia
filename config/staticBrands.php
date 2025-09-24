@@ -219,13 +219,13 @@ return [
                 "sector" => "Hospitals",
                 "investment" => "Rs. 5 Cr above",
             ],
-            [
-                "brand" => "Shree",
-                "logo" => "/topfranchiseleaders/staticLogo/2025/shree.jpg",
-                "industry" => "Retail",
-                "sector" => "Women's Clothing",
-                "investment" => "Rs. 30 Lakh - 50 Lakh",
-            ],
+            // [
+            //     "brand" => "Shree",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2025/shree.jpg",
+            //     "industry" => "Retail",
+            //     "sector" => "Women's Clothing",
+            //     "investment" => "Rs. 30 Lakh - 50 Lakh",
+            // ],
             [
                 "brand" => "Swiggy Instamart",
                 "logo" => "/topfranchiseleaders/staticLogo/2025/swiggyinstamart.jpg",
