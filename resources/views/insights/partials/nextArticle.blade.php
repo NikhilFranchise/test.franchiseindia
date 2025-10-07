@@ -43,6 +43,7 @@
     @enddesktop
     <!-- DESKTOP TOP AD PLACEMENT  -->
 </div>
+<div class="contentwrapper">
 <div class="container">
     <div class="row">
         <div class="col-md-8">
@@ -162,6 +163,7 @@
                 </div>
                 {{-- ads for mobile & desktop --}}
                 <div class="shortdes">{{ $nextArticle->shortDesc }}</div>
+                
                 {{-- pankaj code --}}
                 @php
                     $blocks = preg_split(
@@ -219,7 +221,7 @@
                 </div>
                 <div class="franBrands">
                     @if (!empty($franchiseData))
-                        <h4>Interested in Franchise:</h4>
+                        <h3>Interested in Franchise:</h3>
                         @foreach ($franchiseData as $franchise)
                             <div class="franInterest">
                                 <a href="https://www.franchiseindia.com/brands/{{ strtolower($franchise['profile_name']) }}.{{ $franchise['fran_detail_id'] }}"
@@ -244,9 +246,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="contentarea">
+            {{-- <div class="contentarea">
                 @include('layout.insights.subscribenewsletter')
-            </div>
+            </div> --}}
         </div>
         <div class="col-md-4">
             <div class="right-wrap">
@@ -358,4 +360,6 @@
             </div>
         </div>
     @enddesktop
+</div>
+
 </div>

@@ -531,9 +531,14 @@ class InsightsController extends Controller
             ->where('slug', $slug)
             ->where('status', 1)
             ->first();
-
-        // dd($category);
-
+         // IDs that should redirect to external blog
+            $redirectIds = [9, 32, 33];
+            if (in_array($category->id, $redirectIds)) {
+                $externalSlug = $category->slug;
+                $externalUrl = "https://www.entrepreneur.com/blog/{$locale}/{$externalSlug}";
+                dd($externalUrl);
+                return redirect()->away($externalUrl);
+            }
         if (!$category) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
@@ -610,25 +615,19 @@ class InsightsController extends Controller
             ->where('news_id', $id)
             ->first();
         // dd($newsDetails->cat_id);
-            if (in_array($newsDetails->cat_id, [5, 24, 33])) {
-                // Get path and query separately
-                $path = $request->getPathInfo(); // e.g., /insights/en/news/slug
-                $query = $request->getQueryString(); // e.g., page=2
-
-                // Replace only the /insights part of the path
-                $newPath = str_replace('/insights', '/blog', $path);
-
-                // Build final URL
-                $newUrl = 'http://127.0.0.1:8000' . $newPath;
-                if ($query) {
-                    $newUrl .= '?' . $query;
-                }
-
-                return redirect($newUrl, 301);
-            }
-            
+           
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
+        }
+        // // ✅ Check for specific category IDs
+        if (in_array($newsDetails->cat_id, [9, 32, 33])) {
+            // Get the current slug (assuming it's in `slug` column)
+            $slug = $newsDetails->slug ?? $newsDetails->news_id;
+            $type = strtolower($newsDetails->insight_type);
+            // Build target domain (change this domain)
+            $targetDomain = "https://www.entrepreneurindia.com/blog/{$locale}/{$type}/{$newsDetails->slug}.{$id}";
+            // dd($targetDomain);
+            return redirect()->away($targetDomain);
         }
 
         $correctSlug = $newsDetails->slug;
@@ -716,6 +715,7 @@ class InsightsController extends Controller
         } else {
             $trendingArticles = collect();
         }
+        
         $latestArticles = $newsModel::with(['category', 'Subcategory'])
             ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
             ->withEffectiveDate()

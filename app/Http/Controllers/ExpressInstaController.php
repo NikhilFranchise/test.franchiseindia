@@ -80,9 +80,12 @@ class ExpressInstaController extends Controller
         if ($insert == 1) {
             //Lead Notification to Free Franchisor
 
+            if($franData->membership_type != 1){
             $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 30) . ".." : $request->user()->name);
             $this->sendFranNotifications($franData->userDetail->email, $details[1], $franData->userDetail->mobile, $franSmsMsg, 'free');
 
+            }
+          
             //Lead Notification to Free Investor
             $invSmsMsg = sprintf(config('txtlocal.InvFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 30) . ".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40) . ".." : $franData->company_name);
             $this->sendInvNotifications($request->user()->email, $dataInvFree, $request->user()->mobile, $invSmsMsg, 'free');

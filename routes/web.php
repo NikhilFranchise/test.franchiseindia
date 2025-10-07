@@ -1097,6 +1097,7 @@ Route::group(['prefix' => 'insights'], function () {
     Route::get('author/{slug}/rss',             [InsightSitemapController::class, 'generateAuthorRssFeed']);
 
     Route::group(['prefix' => 'en'], function () {
+
         Route::get('sitemap.xml', function () {
             return response()->view('insights.sitemaps.sitemap')->header('Content-type', 'text/xml');
         });
@@ -1176,37 +1177,23 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
         /*English Language setter*/
         Route::group(['prefix' => 'en'],            function () {
-            Route::get('/msme', function (Request $request) {
-                $baseUrl = 'https://www.entrepreneurindia.com/blog/en/msme';
+                        $categories = [
+                        'msme',
+                        'electric-vehicles',
+                        'education',
+                    ];
+               foreach ($categories as $slug) {
+                    Route::get($slug, function (Request $request) use ($slug) {
+                        // dd($slug);
+                        $baseUrl = "https://www.entrepreneurindia.com/blog/en/{$slug}";
+                        $query   = $request->getQueryString();
+                        // dd($query);
+                        $newUrl  = $query ? $baseUrl . '?' . $query : $baseUrl;
 
-                // Get full query string (e.g. ?page=2&sort=asc)
-                $query = $request->getQueryString();
+                        return redirect()->away($newUrl, 301); // ✅ Forces external redirect
+                    });
+                }
 
-                // Construct full redirect URL
-                $newUrl = $query ? $baseUrl . '?' . $query : $baseUrl;
-
-                return redirect($newUrl, 301);
-            }); 
-            Route::get('/electric-vehicles', function (Request $request) {
-                $baseUrl = 'https://www.entrepreneurindia.com/blog/en/electric-vehicles';
-
-                // Use $request (the instance), NOT Request (the Facade or class)
-                $query = $request->getQueryString();
-
-                $newUrl = $query ? $baseUrl . '?' . $query : $baseUrl;
-
-                return redirect($newUrl, 301);
-            });
-            Route::get('/education', function (Request $request) {
-                $baseUrl = 'https://www.entrepreneurindia.com/blog/en/education';
- 
-                // Use $request (the instance), NOT Request (the Facade or class)
-                $query = $request->getQueryString();
-
-                $newUrl = $query ? $baseUrl . '?' . $query : $baseUrl;
-
-                return redirect($newUrl, 301);
-            });
 
             Route::get('/export',                        [InsightsController::class, 'exportInsights']);
             Route::get('thanks',                    function () {
@@ -1230,6 +1217,23 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         });
         /*Hindi Language setter*/
         Route::group(['prefix' => 'hi'], function () {
+                          $categories = [
+                        'msme',
+                        'electric-vehicles',
+                        'education',
+                    ];
+               foreach ($categories as $slug) {
+                    Route::get($slug, function (Request $request) use ($slug) {
+                        // dd($slug);
+                        $baseUrl = "https://www.entrepreneurindia.com/blog/hi/{$slug}";
+                        $query   = $request->getQueryString();
+                        // dd($query);
+                        $newUrl  = $query ? $baseUrl . '?' . $query : $baseUrl;
+
+                        return redirect()->away($newUrl, 301); // ✅ Forces external redirect
+                    });
+                }
+
             Route::get('/search',               [InsightsController::class, 'insightSearch']);
             Route::get('thanks', function () {
                 return view('insights.thanks');
