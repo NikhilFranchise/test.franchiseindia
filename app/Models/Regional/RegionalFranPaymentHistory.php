@@ -6,14 +6,14 @@ use App\Models\FranchisorBusinessDetail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FranchiseRegional extends Model
+class RegionalFranPaymentHistory extends Model
 {
     use HasFactory;
-    protected $table = 'regional_page_brands';
-    protected $id = 'brand_id';
+    protected $table = "regional_fran_payment_history";
+    protected $primaryKey = "id";
 
     public function franchisor()
     {
-        return $this->belongsTo(FranchisorBusinessDetail::class, 'franchisor_id', 'fihl_id');
+        return $this->belongsTo(FranchisorBusinessDetail::class, 'franchisor_id', 'franchisor_id');
     }
 }

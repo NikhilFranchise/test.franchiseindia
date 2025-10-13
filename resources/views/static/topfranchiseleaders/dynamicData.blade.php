@@ -84,125 +84,36 @@
     @endforeach
 
     {{-- Static Brands for 2025 --}}
-    @if ($year == 2025)
-        @foreach (config('staticBrands.staticBrands.2025') as $brand)
-            <div class="col">
-                <div class="filter-list-brand">
-                    <div class="catimg">
-                        <img src="{{ url($brand['logo']) }}" alt="{{ $brand['brand'] }}" loading="lazy">
+    @php
+        $brands = config("staticBrands.staticBrands.$year") ?? [];
+    @endphp
+
+    @foreach ($brands as $brand)
+        <div class="col">
+            <div class="filter-list-brand">
+                <div class="catimg">
+                    <img src="{{ url($brand['logo']) }}" alt="{{ $brand['brand'] }}" loading="lazy">
+                </div>
+                <div class="finfo">
+                    <div class="catlist">
+                        <a href="{{ url('/business-opportunities/all/all') }}" target="_blank">
+                            {{ $brand['brand'] }}
+                        </a>
                     </div>
-                    <div class="finfo">
-                        <div class="catlist">
-                            <a href="{{ url('/business-opportunities/all/all') }}" target="_blank">
-                                {{ $brand['brand'] }}
-                            </a>
-                        </div>
-                        <span style="display: none;">
-                            {{ $brand['investment'] }}
-                        </span>
-                        <div class="catlisthead">
-                            {{ $brand['sector'] }}
-                        </div>
-                    </div>
-                    <div class="catbtn bview">
-                        <input type="checkbox" name="getFreeInfo">
-                        <label>
-                            <span
-                                onclick="window.open('{{ url('/business-opportunities/all/all') }}', '_blank')"></span>
-                        </label>
+                    <span style="display: none;">
+                        {{ $brand['investment'] }}
+                    </span>
+                    <div class="catlisthead">
+                        {{ $brand['sector'] }}
                     </div>
                 </div>
-            </div>
-        @endforeach
-    @elseif($year == 2024)
-        @foreach (config('staticBrands.staticBrands.2024') as $brand)
-            <div class="col">
-                <div class="filter-list-brand">
-                    <div class="catimg">
-                        <img src="{{ url($brand['logo']) }}" alt="{{ $brand['brand'] }}">
-                    </div>
-                    <div class="finfo">
-                        <div class="catlist">
-                            <a href="{{ url('/business-opportunities/all/all') }}" target="_blank">
-                                {{ $brand['brand'] }}
-                            </a>
-                        </div>
-                        <span style="display: none;">
-                            {{ $brand['investment'] }}
-                        </span>
-                        <div class="catlisthead">
-                            {{ $brand['sector'] }}
-                        </div>
-                    </div>
-                    <div class="catbtn bview">
-                        <input type="checkbox" name="getFreeInfo">
-                        <label>
-                            <span
-                                onclick="window.open('{{ url('/business-opportunities/all/all') }}', '_blank')"></span>
-                        </label>
-                    </div>
+                <div class="catbtn bview">
+                    <input type="checkbox" name="getFreeInfo">
+                    <label>
+                        <span onclick="window.open('{{ url('/business-opportunities/all/all') }}', '_blank')"></span>
+                    </label>
                 </div>
             </div>
-        @endforeach
-    @elseif($year == 2023)
-        @foreach (config('staticBrands.staticBrands.2023') as $brand)
-            <div class="col">
-                <div class="filter-list-brand">
-                    <div class="catimg">
-                        <img src="{{ url($brand['logo']) }}" alt="{{ $brand['brand'] }}">
-                    </div>
-                    <div class="finfo">
-                        <div class="catlist">
-                            <a href="{{ url('/business-opportunities/all/all') }}" target="_blank">
-                                {{ $brand['brand'] }}
-                            </a>
-                        </div>
-                        <span style="display: none;">
-                            {{ $brand['investment'] }}
-                        </span>
-                        <div class="catlisthead">
-                            {{ $brand['sector'] }}
-                        </div>
-                    </div>
-                    <div class="catbtn bview">
-                        <input type="checkbox" name="getFreeInfo">
-                        <label>
-                            <span
-                                onclick="window.open('{{ url('/business-opportunities/all/all') }}', '_blank')"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    @elseif($year == 2022)
-        @foreach (config('staticBrands.staticBrands.2022') as $brand)
-            <div class="col">
-                <div class="filter-list-brand">
-                    <div class="catimg">
-                        <img src="{{ url($brand['logo']) }}" alt="{{ $brand['brand'] }}">
-                    </div>
-                    <div class="finfo">
-                        <div class="catlist">
-                            <a href="{{ url('/business-opportunities/all/all') }}" target="_blank">
-                                {{ $brand['brand'] }}
-                            </a>
-                        </div>
-                        <span style="display: none;">
-                            {{ $brand['investment'] }}
-                        </span>
-                        <div class="catlisthead">
-                            {{ $brand['sector'] }}
-                        </div>
-                    </div>
-                    <div class="catbtn bview">
-                        <input type="checkbox" name="getFreeInfo">
-                        <label>
-                            <span
-                                onclick="window.open('{{ url('/business-opportunities/all/all') }}', '_blank')"></span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    @endif
+        </div>
+    @endforeach
 </div>
