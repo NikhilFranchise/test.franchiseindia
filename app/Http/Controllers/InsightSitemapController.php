@@ -1353,24 +1353,24 @@ class InsightSitemapController extends Controller
         // Generate XML
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
         $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"' . "\n";
-        $xml .= '        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">' . "\n";
+        $xml .= 'xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">' . "\n";
 
         foreach ($articles as $article) {
             $tags = isset($groupedTags[$article->news_id]) ? implode(', ', $groupedTags[$article->news_id]) : '';
 
-            $xml .= "    <url>\n";
-            $xml .= "        <loc>" . URL::to("/insights/{$article->lang}/" . strtolower($article->insight_type) . "/{$article->slug}.{$article->news_id}") . "</loc>\n";
-            $xml .= "        <news:news>\n";
-            $xml .= "            <news:publication>\n";
-            $xml .= "                <news:name>" . Config('constants.MainDomain') . "/insights</news:name>\n";
-            $xml .= "                <news:language>{$locale}</news:language>\n";
-            $xml .= "            </news:publication>\n";
-            $xml .= "            <news:publication_date>" . date('Y-m-d', strtotime($article->effective_date)) . "</news:publication_date>\n";
-            $xml .= "            <news:title>" . htmlspecialchars($article->title) . "</news:title>\n";
-            $xml .= "            <news:keywords>" . htmlspecialchars($tags) . "</news:keywords>\n"; // Add keywords
+            $xml .= "<url>\n";
+            $xml .= "<loc>" . URL::to("/insights/{$article->lang}/" . strtolower($article->insight_type) . "/{$article->slug}.{$article->news_id}") . "</loc>\n";
+            $xml .= "<news:news>\n";
+            $xml .= "<news:publication>\n";
+            $xml .= "<news:name>" . Config('constants.MainDomain') . "/insights</news:name>\n";
+            $xml .= "<news:language>{$locale}</news:language>\n";
+            $xml .= "</news:publication>\n";
+            $xml .= "<news:publication_date>" . date('Y-m-d', strtotime($article->effective_date)) . "</news:publication_date>\n";
+            $xml .= "<news:title>" . htmlspecialchars($article->title) . "</news:title>\n";
+            $xml .= "<news:keywords>" . htmlspecialchars($tags) . "</news:keywords>\n"; // Add keywords
 
-            $xml .= "        </news:news>\n";
-            $xml .= "    </url>\n";
+            $xml .= "</news:news>\n";
+            $xml .= "</url>\n";
         }
 
         $xml .= '</urlset>';

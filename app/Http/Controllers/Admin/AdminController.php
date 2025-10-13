@@ -38,10 +38,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -50,264 +47,6 @@ class AdminController extends Controller
         $this->middleware('ContentAdmin')->except('loginView', 'loginCheck', 'relatedBrands');
     }
 
-    /**
-     *View the dashboard Page
-     */
-    public function viewDashboard(Request $request)
-    {
-        if ($request->filled(['from_date', 'to_date'])) {
-            $startDate = Carbon::parse($request->from_date)->startOfDay();
-            $endDate = Carbon::parse($request->to_date)->endOfDay();
-
-            // 1. English Insights Count
-            $englishQuery = InsightList::select(
-                'insight_type',
-                DB::raw("
-                CASE 
-                    WHEN published_date IS NULL THEN created_at
-                    WHEN published_date = created_at THEN created_at
-                    WHEN published_date > created_at THEN published_date
-                    ELSE created_at
-                END AS effective_date
-            ")
-            )->where('status', 1);
-
-            $englishBase = $englishQuery->toBase();
-
-            $englishCounts = DB::table(DB::raw("({$englishBase->toSql()}) as subquery"))
-                ->mergeBindings($englishBase)
-                ->whereBetween('effective_date', [$startDate, $endDate])
-                ->selectRaw("
-                COUNT(CASE WHEN insight_type = 'Article' THEN 0 END) AS article_count,
-                COUNT(CASE WHEN insight_type = 'News' THEN 0 END) AS news_count,
-                COUNT(CASE WHEN insight_type = 'Interview' THEN 0 END) AS interview_count,
-                COUNT(CASE WHEN insight_type = 'Report' THEN 0 END) AS report_count,
-                COUNT(CASE WHEN insight_type NOT IN ('Article', 'News', 'Interview', 'Report') THEN 0 END) AS others_count
-            ")
-                ->first();
-
-            // 2. Hindi Insights Count
-            $hindiQuery = InsightListHindi::select(
-                'insight_type',
-                DB::raw("
-                CASE 
-                    WHEN published_date IS NULL THEN created_at
-                    WHEN published_date = created_at THEN created_at
-                    WHEN published_date > created_at THEN published_date
-                    ELSE created_at
-                END AS effective_date
-            ")
-            )->where('status', 1);
-
-            $hindiBase = $hindiQuery->toBase();
-
-            $hindiCounts = DB::table(DB::raw("({$hindiBase->toSql()}) as subquery"))
-                ->mergeBindings($hindiBase)
-                ->whereBetween('effective_date', [$startDate, $endDate])
-                ->selectRaw("
-                COUNT(CASE WHEN insight_type = 'Article' THEN 0 END) AS article_count,
-                COUNT(CASE WHEN insight_type = 'News' THEN 0 END) AS news_count,
-                COUNT(CASE WHEN insight_type = 'Interview' THEN 0 END) AS interview_count,
-                COUNT(CASE WHEN insight_type = 'Report' THEN 0 END) AS report_count,
-                COUNT(CASE WHEN insight_type NOT IN ('Article', 'News', 'Interview', 'Report') THEN 0 END) AS others_count
-            ")
-                ->first();
-
-            return view('admin.admin-dashboard', [
-                'from_date' => $startDate,
-                'to_date' => $endDate,
-                'englishCounts' => $englishCounts,
-                'hindiCounts' => $hindiCounts,
-            ]);
-        }
-
-        return view('admin.admin-dashboard');
-    }
-
-
-
-    /**
-     *View the login Page
-     */
-    public function loginView()
-    {
-        return view('admin/admin-login');
-    }
-
-    /**
-     *logout
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function logout(Request $request)
-    {
-        $request->session()->forget('admin_name');
-        $request->session()->forget('adminEmail');
-        $request->session()->forget('role');
-        return redirect('admin/login');
-    }
-
-    /**
-     *  login view function
-     *  name & password are coming from form data
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-
-    public function loginCheck(Request $request)
-    {
-        $credentials = [
-            'admin_email' => $request->email,
-            'password' => $request->password
-        ];
-
-        // Find the admin user
-        $admUser = AdminUser::where('admin_email', $request->email)->first();
-
-        if (!$admUser) {
-            return redirect('admin/login')->with('error', 'Invalid email or password.');
-        }
-
-        // Check the password manually if necessary
-        if (!Hash::check($request->password, $admUser->admin_password)) {
-            return redirect('admin/login')->with('error', 'Invalid email or password.');
-        }
-
-        // Use Auth guard to login admin
-        Auth::guard('admin')->login($admUser);
-
-        // Store additional session data if needed
-        session()->put('admin_name', $admUser->admin_name);
-        session()->put('adminEmail', $admUser->admin_email);
-        session()->put('role', $admUser->admin_dept);
-        session()->put('author_creation_capability', $admUser->can_create_author);
-
-        return redirect('admin/dashboard');
-    }
-
-    /**
-     * Function to create author
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
-     */
-    public function createAuthor()
-    {
-        return view('admin/author/author-form');
-    }
-
-    /**
-     * Function to register new user
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function registerAuthor(Request $request)
-    {
-        $imageUrl       = "";
-        $name           = $request->name;
-        $email          = $request->email;
-        $company        = $request->company;
-        $desc           = $request->desc;
-        $slug           = Str::slug($request->name);
-        $designation    = $request->designation;
-
-        if ($request->hasFile('image')) {
-            $profilePic = $request->file('image');
-            $imageUrl = $this->uploadImage($profilePic, 'Author', 0, 's3', '');
-        }
-
-        AuthorList::query()->insert([
-            'title'                  => $name,
-            'company'                => $company,
-            'designation'            => $designation,
-            'text'                   => $this->cleanContent($desc),
-            'emailid'                => $email,
-            'slug'                   => $slug,
-            'image'                  => $imageUrl,
-            'news_upload_capability' => ((request()->news_upload_capability == 1) ? 1 : 0),
-            'phone_no'               => request()->phone_no,
-            'address'                => request()->address,
-            'linkedin_profile'       => request()->linkedin_profile,
-            'facebook_profile'       => request()->facebook_profile,
-            'twitter_profile'        => request()->twitter_profile,
-            'insta_profile'        => request()->insta_profile
-
-        ]);
-        return redirect("admin/list-author");
-    }
-
-    /**
-     * Function to listing authors
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
-     */
-    public function listAuthor()
-    {
-        $record = AuthorList::query()->select('author_id', 'title', 'status')->orderBy('author_id', 'DESC')->get();
-        return view('admin/author/list-author', ['author' => $record]);
-    }
-
-    /**
-     * Function to view author for edit
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
-     */
-    public function viewAuthor(Request $request)
-    {
-        $authorId = $request->id;
-        $author    = AuthorList::query()->where('author_id', $authorId)->first();
-        return view('admin/author/author-form', ['author' => $author]);
-    }
-
-    /**
-     * Function to update author
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function updateAuthor(Request $request)
-    {
-        $request->validate([
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:500', // 500 KB max
-        ]);
-        $imageUrl       = ($request->hasFile('image')) ? $this->uploadImage($request->file('image'), 'Author', 1, 's3', $request->old_image) : $request->old_image;
-
-        if ($request->hasFile('image'))
-            AuthorList::query()->where('author_id', $request->id)->update(['image' => $imageUrl]);
-
-        AuthorList::query()->where('author_id', $request->id)
-            ->update([
-                'title'                  => $request->name,
-                'company'                => $request->company,
-                'designation'            => $request->designation,
-                'text'                   => $this->cleanContent($request->desc),
-                'emailid'                => $request->email,
-                'slug'                   => Str::slug($request->name),
-                'news_upload_capability' => ((request()->news_upload_capability == 1) ? 1 : 0),
-                'phone_no'               => request()->phone_no,
-                'address'                => request()->address,
-                'linkedin_profile'       => request()->linkedin_profile,
-                'facebook_profile'       => request()->facebook_profile,
-                'twitter_profile'        => request()->twitter_profile,
-                'insta_profile'          => request()->insta_profile
-
-            ]);
-        return redirect("admin/list-author");
-    }
-
-    /**
-     * Function to update author status with ajax
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function updateAuthorStatus(Request $request)
-    {
-        $authorId = $request->authorId;
-        $status   = $request->authorstatus;
-        AuthorList::query()->where('author_id', $authorId)->update(['status' => $status]);
-        return response()->json(array('ratings' => $status), 200);
-    }
-
-    /**
-     * Function to show the create article view
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
-     */
     public function createArticleView()
     {
         $kickerData    = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
@@ -384,23 +123,6 @@ class AdminController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getKickersList()
-    {
-        //Url validation
-        if (request()->type != 'hindi' &&  request()->type != 'english')
-            return redirect()->back();
-
-        $class   = (request()->type == 'hindi') ? (SeoTagHindi::query()->orderByDesc('tag_id')) : (SeoTag::query()->orderByDesc('tag_id'));
-
-        //If it is caling as search
-        if (!empty(request()->search))
-            $class   = $class->where('name', 'LIKE', '%' . request()->search . '%');
-
-        $kickers = $class->paginate(20);
-        $type    = request()->type;
-
-        return view('admin.kickers.list-kickers', compact('kickers', 'type'));
-    }
 
     /**
      * @return mixed
@@ -409,43 +131,6 @@ class AdminController extends Controller
     {
         $class   = (request()->type == 'hindi') ? (SeoTagHindi::query()) : (SeoTag::query());
         return $class->where('tag_id', request()->tag_id)->delete();
-    }
-
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function getCreateKickerView()
-    {
-        if (request()->type == 'hindi')
-            $kickerData = SeoTagHindi::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
-        elseif (request()->type == 'english')
-            $kickerData = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
-        else
-            return redirect()->back();
-
-        $type    = request()->type;
-        $kickers = array_column($kickerData, 'name');
-        return view('admin.kickers.create-kicker', compact('kickers', 'type'));
-    }
-
-    /**
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function insertUpdateKicker()
-    {
-        $class = SeoTag::query();
-        if (request()->type == 'hindi')
-            $class = SeoTagHindi::query();
-        $kickerCount   = $class->where('name', request()->kicker)->select('name')->count();
-
-        if ($kickerCount == 0) {
-            $class->insert(['name' => request()->kicker]);
-        } else {
-            session()->flash('failed', 'Tag already Exists');
-            return redirect()->back();
-        }
-        session()->flash('success', 'Tag Inserted Successfully.');
-        return redirect('/admin/kickers/list/' . request()->type);
     }
 
     /**
@@ -747,51 +432,10 @@ class AdminController extends Controller
         return response()->json($data);
     }
 
-    /**
-     * Function to retrieve tags using ajax
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function associatedTags(Request $request)
-    {
-        $data = [];
-        $locale = $request->input('lang', 'en'); // Extract the locale
-        $search = $request->input('q'); // Extract the search query
-        // dd($search, $locale);
-
-        if ($search) {
-            // Determine the model based on the locale
-            $model = ($locale === 'en') ? SeoTag::class : SeoTagHindi::class;
-
-            // Fetch matching tags
-            $data = $model::query()
-                ->select("tag_id", "name")
-                ->where('name', 'LIKE', "%{$search}%")
-                ->get();
-        }
-        // Return JSON response
-        return response()->json($data);
-    }
 
 
-    /**
-     * Function to retrieve author list with ajax
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function publisher(Request $request)
-    {
-        $data = [];
-        if ($request->has('q')) {
-            $search = $request->q;
-            $data = AuthorList::query()
-                ->select("title", "author_id")
-                ->where('title', 'LIKE', "%{$search}%")
-                ->where('status', 'A')
-                ->get();
-        }
-        return response()->json($data);
-    }
+
+
 
     /**
      * Function to create news view
@@ -1640,71 +1284,159 @@ class AdminController extends Controller
      * @return mixed
      */
 
-    private function uploadImage($image, $type, $isDelete, $store_type, $oldImagePath)
+    // public function uploadImage($image, $type, $isDelete, $store_type, $oldImagePath)
+    // {
+    //     $uploadPath = "uploads/";
+
+    //     // Delete old image if needed
+    //     if ($isDelete == 1 && $store_type == 'public' && !empty($oldImagePath)) {
+    //         unlink(public_path($oldImagePath));
+    //     }
+
+    //     if ($isDelete == 1 && $store_type == 's3') {
+    //         Storage::getFacadeRoot()->disk('s3')->delete(parse_url($oldImagePath)['path']);
+    //     }
+
+    //     // Define the upload path based on the type
+    //     $extension = 'webp'; // Saving images in webp format
+    //     $picPath = config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
+
+    //     switch ($type) {
+    //         case 'Author':
+    //             $picPath = $uploadPath . sprintf(config('constants.AdminAuthor'), date('md')) . '/' . uniqid() . '.' . $extension;
+    //             break;
+    //         case 'Article':
+    //             $picPath = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
+    //             break;
+    //         case 'Interview':
+    //             $picPath = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/int/' . uniqid() . '.' . $extension;
+    //             break;
+    //         case 'Gallery':
+    //             $picPath = config('constants.AdminArticleInterview') . '/gallery/art/' . uniqid() . '.' . $extension;
+    //             break;
+    //         case 'Magazine':
+    //             $picPath = $uploadPath . config('constants.AdminMagazine') . '/' . '' . uniqid() . '.' . $extension;
+    //             break;
+    //         case 'News':
+    //             $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+    //             break;
+    //         case 'Report':
+    //             $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+    //             break;
+    //         case 'Event':
+    //             $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+    //             break;
+    //         case 'Terms':
+    //             $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
+    //             break;
+    //     }
+
+    //     if ($type != 'Author' && $type  != 'Gallery' && $type  != 'Magazine') {
+    //         $resizedImage = Image::make($image)->resize(1600, 940)->encode('webp', 90);
+    //     } else if ($type == 'Author') {
+    //         $resizedImage = Image::make($image)->resize(512, 512)->encode('webp', 90);
+    //     } else {
+    //         $resizedImage = Image::make($image)->encode('webp', 90);
+    //     }
+    //     // Store the image in the specified storage
+    //     Storage::getFacadeRoot()->disk($store_type)->put($picPath, (string) $resizedImage, 'public');
+    //     $imageUrl = Storage::getFacadeRoot()->disk($store_type)->url($picPath);
+
+    //     // Return the correct image URL
+    //     if ($store_type == 's3' && $type != 'Gallery') {
+    //         return str_replace('storage', 'uploads', parse_url($imageUrl, PHP_URL_PATH));
+    //     }
+
+    //     return str_replace('storage', 'uploads', $imageUrl);
+    // }
+    public function uploadImage($image, $type, $isDelete = 0, $storeType = 'public', $oldImagePath = null)
     {
-        $uploadPath = "uploads/";
+        try {
+            $uploadPath = "uploads/";
+            $extension  = 'webp'; // always convert to webp
+            $role       = session()->get('role', 'fi');
+            $fileName   = uniqid() . '.' . $extension;
 
-        // Delete old image if needed
-        if ($isDelete == 1 && $store_type == 'public' && !empty($oldImagePath)) {
-            unlink(public_path($oldImagePath));
+            // ---------------------------
+            // 1. Handle old image deletion
+            // ---------------------------
+            if ($isDelete && $oldImagePath) {
+                if ($storeType === 'public') {
+                    @unlink(public_path($oldImagePath));
+                } elseif ($storeType === 's3') {
+                    Storage::disk('s3')->delete(parse_url($oldImagePath, PHP_URL_PATH));
+                }
+            }
+
+            // ---------------------------
+            // 2. Build storage path
+            // ---------------------------
+            $typePaths = [
+                'Author'    => "{$uploadPath}" . config('constants.AdminAuthor') . '/' . date('md'),
+                'Article'   => "{$uploadPath}" . config('constants.AdminArticleInterview') . "/{$role}/art",
+                'Interview' => "{$uploadPath}" . config('constants.AdminArticleInterview') . "/{$role}/int",
+                'Gallery'   => config('constants.AdminArticleInterview') . "/gallery/art",
+                'Magazine'  => "{$uploadPath}" . config('constants.AdminMagazine'),
+                'News'      => "{$uploadPath}" . config('constants.AdminNews') . "/{$role}",
+                'Report'    => "{$uploadPath}" . config('constants.AdminNews') . "/{$role}",
+                'Event'     => "{$uploadPath}" . config('constants.AdminNews') . "/{$role}",
+                'Terms'     => "{$uploadPath}" . config('constants.AdminNews') . "/{$role}",
+            ];
+
+            if (!isset($typePaths[$type])) {
+                throw new \Exception("Invalid type provided: {$type}");
+            }
+
+            $picPath = $typePaths[$type] . '/' . $fileName;
+
+            // ---------------------------
+            // 3. Image resizing rules
+            // ---------------------------
+            switch ($type) {
+                case 'Author':
+                    $resizedImage = Image::make($image)
+                        ->resize(512, 512, function ($c) {
+                            $c->aspectRatio();
+                            $c->upsize();
+                        })
+                        ->encode($extension, 90);
+                    break;
+
+                case 'Gallery':
+                case 'Magazine':
+                    $resizedImage = Image::make($image)->encode($extension, 90);
+                    break;
+
+                default: // Article, Interview, News, Report, Event, Terms
+                    $resizedImage = Image::make($image)
+                        ->resize(1600, 940, function ($c) {
+                            $c->aspectRatio();
+                            $c->upsize();
+                        })
+                        ->encode($extension, 90);
+                    break;
+            }
+            // dd($resizedImage);
+            // ---------------------------
+            // 4. Store file
+            // ---------------------------
+            Storage::disk($storeType)->put($picPath, (string) $resizedImage, 'public');
+            $imageUrl = Storage::disk($storeType)->url($picPath);
+
+            // ---------------------------
+            // 5. Return normalized URL
+            // ---------------------------
+            if ($storeType === 's3' && $type !== 'Gallery') {
+                return str_replace('storage', 'uploads', parse_url($imageUrl, PHP_URL_PATH));
+            }
+
+            return str_replace('storage', 'uploads', $imageUrl);
+        } catch (\Exception $e) {
+            $this->setLog("Image upload error ({$type}): " . $e->getMessage());
+            return false;
         }
-
-        if ($isDelete == 1 && $store_type == 's3') {
-            Storage::getFacadeRoot()->disk('s3')->delete(parse_url($oldImagePath)['path']);
-        }
-
-        // Define the upload path based on the type
-        $extension = 'webp'; // Saving images in webp format
-        $picPath = config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
-
-        switch ($type) {
-            case 'Author':
-                $picPath = $uploadPath . sprintf(config('constants.AdminAuthor'), date('md')) . '/' . uniqid() . '.' . $extension;
-                break;
-            case 'Article':
-                $picPath = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
-                break;
-            case 'Interview':
-                $picPath = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/int/' . uniqid() . '.' . $extension;
-                break;
-            case 'Gallery':
-                $picPath = config('constants.AdminArticleInterview') . '/gallery/art/' . uniqid() . '.' . $extension;
-                break;
-            case 'Magazine':
-                $picPath = $uploadPath . config('constants.AdminMagazine') . '/' . '' . uniqid() . '.' . $extension;
-                break;
-            case 'News':
-                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
-                break;
-            case 'Report':
-                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
-                break;
-            case 'Event':
-                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
-                break;
-            case 'Terms':
-                $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
-                break;
-        }
-
-        if ($type != 'Author' && $type  != 'Gallery' && $type  != 'Magazine') {
-            $resizedImage = Image::make($image)->resize(1600, 940)->encode('webp', 90);
-        } else if ($type == 'Author') {
-            $resizedImage = Image::make($image)->resize(512, 512)->encode('webp', 90);
-        } else {
-            $resizedImage = Image::make($image)->encode('webp', 90);
-        }
-        // Store the image in the specified storage
-        Storage::getFacadeRoot()->disk($store_type)->put($picPath, (string) $resizedImage, 'public');
-        $imageUrl = Storage::getFacadeRoot()->disk($store_type)->url($picPath);
-
-        // Return the correct image URL
-        if ($store_type == 's3' && $type != 'Gallery') {
-            return str_replace('storage', 'uploads', parse_url($imageUrl, PHP_URL_PATH));
-        }
-
-        return str_replace('storage', 'uploads', $imageUrl);
     }
+
 
 
     /**
@@ -1713,66 +1445,148 @@ class AdminController extends Controller
      * @param $height
      * @param $width
      */
-    private function thumbnailCreation($imageUrl, $type, $width, $height)
+    // public function thumbnailCreation($imageUrl, $type, $width, $height)
+    // {
+    //     //thumbnail creation
+    //     // dd($imageUrl, $type, $width, $height);
+    //     $sourcePhoto     = public_path($imageUrl);
+    //     $locale = App::getLocale();
+    //     // dd($locale);
+    //     if ($type == 'Gallery') {
+    //         $sourcePhoto = $imageUrl;
+    //     } else if ($type == 'News' && $locale == 'en') {
+    //         $sourcePhoto = Config('constants.franAwsS3Url') . $imageUrl;
+    //     } else if ($type == 'News' && $locale == 'hi') {
+    //         $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
+    //     } else if ($type == 'Article' && $locale == 'en') {
+    //         $sourcePhoto = Config('constants.franAwsS3Url') . $imageUrl;
+    //     } else if ($type == 'Article' && $locale == 'hi') {
+    //         $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
+    //     }
+    //     if ($type != 'Gallery')
+    //         $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
+    //     $imageName       = pathinfo($sourcePhoto)['basename'];
+    //     // dd($sourcePhoto);
+
+    //     $destinationPath = "uploads";
+
+    //     switch ($type) {
+    //         case 'Article':
+    //             $destinationPath = public_path('uploads/thumbnails/article/' . session()->get('role') . '/art/');
+    //             break;
+
+    //         case 'Interview':
+    //             $destinationPath = public_path('uploads/thumbnails/interview/' . session()->get('role') . '/int/');
+    //             break;
+
+    //         case 'Gallery':
+    //             $destinationPath = public_path('uploads/thumbnails/ga');
+    //             break;
+
+    //         case 'News':
+    //             $destinationPath = public_path('uploads/thumbnails/news/' . session()->get('role') . '/');
+    //             // dd($destinationPath);
+    //     }
+
+    //     try {
+    //         // dd($destinationPath);
+    //         if (!file_exists($destinationPath)) {
+    //             mkdir($destinationPath, 0777, true);
+    //         }
+    //         $image = Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 90);
+    //         // dd($image);
+
+    //     } catch (\Exception $e) {
+    //         $this->setLog('Thumbnail creation error ' . $e->getMessage());
+    //         die;
+    //     }
+    // }
+
+    public function thumbnailCreation($imageUrl, $type, $width, $height)
     {
-        //thumbnail creation
-        // dd($imageUrl, $type, $width, $height);
-        $sourcePhoto     = public_path($imageUrl);
-        $locale = App::getLocale();
-        // dd($locale);
-        if ($type == 'Gallery') {
-            $sourcePhoto = $imageUrl;
-        } else if ($type == 'News' && $locale == 'en') {
-            $sourcePhoto = Config('constants.franAwsS3Url') . $imageUrl;
-            // dd($sourcePhoto);
-        } else if ($type == 'News' && $locale == 'hi') {
-            $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
-        }
-
-        if ($type != 'Gallery')
-            $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
-        $imageName       = pathinfo($sourcePhoto)['basename'];
-        // dd($imageName);
-
-        $destinationPath = "uploads";
-
-        switch ($type) {
-            case 'Article':
-                $destinationPath = public_path('uploads/thumbnails/' . session()->get('role') . '/art/');
-                break;
-
-            case 'Interview':
-                $destinationPath = public_path('uploads/thumbnails/' . session()->get('role') . '/int/');
-                break;
-
-            case 'Gallery':
-                $destinationPath = public_path('uploads/thumbnails/ga');
-                break;
-
-            case 'News':
-                $destinationPath = public_path('uploads/thumbnails/news/' . session()->get('role') . '/');
-                // dd($destinationPath);
-        }
-
         try {
+            $locale = App::getLocale();
+
+            // ---------------------------
+            // 1. Source photo resolution
+            // ---------------------------
+            $baseUrls = [
+                'en' => config('constants.franAwsS3Url'),
+                'hi' => config('constants.awsS3Url'),
+            ];
+            $imageUrl = ltrim($imageUrl, '/'); // Clean the image path
+
+
+            switch ($type) {
+                case 'Gallery':
+                    $sourcePhoto = public_path($imageUrl);
+                    break;
+
+                case 'News':
+                case 'Article':
+                case 'Report': // ✅ Added Report
+                    $sourcePhoto = $baseUrls[$locale] . $imageUrl;
+                    break;
+
+                case 'Interview':
+                    $sourcePhoto = public_path($imageUrl); // Assuming Interview is uploaded locally
+                    break;
+
+                default:
+                    throw new \Exception("Unknown type: {$type}");
+            }
+            // dd($sourcePhoto);
+            $imageName = pathinfo($imageUrl, PATHINFO_BASENAME);
+
+            // ---------------------------
+            // 2. Destination path mapping
+            // ---------------------------
+            $role = session()->get('role', 'fi'); // fallback if no role
+            $destinations = [
+                'Article'   => "uploads/thumbnails/article/{$role}/art",
+                'Interview' => "uploads/thumbnails/interview/{$role}/int",
+                'Gallery'   => "uploads/thumbnails/gallery",
+                'News'      => "uploads/thumbnails/news/{$role}",
+                'Report'    => "uploads/thumbnails/report/{$role}", // ✅ Added Report
+            ];
+
+            if (!isset($destinations[$type])) {
+                throw new \Exception("No destination defined for type: {$type}");
+            }
+
+            $destinationPath = public_path($destinations[$type]);
             // dd($destinationPath);
+            // ---------------------------
+            // 3. Ensure directory exists
+            // ---------------------------
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0777, true);
             }
-            $image = Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 90);
-            // dd($image);
+
+            // ---------------------------
+            // 4. Generate and save thumbnail
+            // ---------------------------
+            Image::make($sourcePhoto)
+                ->resize($width, $height, function ($constraint) {
+                    $constraint->aspectRatio(); // keep proportions
+                    $constraint->upsize();      // prevent stretching
+                })
+                ->save("{$destinationPath}/{$imageName}", 90);
+
+            return "{$destinations[$type]}/{$imageName}"; // relative path
 
         } catch (\Exception $e) {
-            $this->setLog('Thumbnail creation error ' . $e->getMessage());
-            die;
+            $this->setLog('Thumbnail creation error: ' . $e->getMessage());
+            return false;
         }
     }
+
 
     /**
      * @param $desc
      * @return null|string|string[]
      */
-    private function cleanContent($desc)
+    public function cleanContent($desc)
     {
         return preg_replace('/style=\\"[^\\"]*\\"/', '', $desc);
     }
@@ -1822,7 +1636,7 @@ class AdminController extends Controller
      * @param $type
      * @param $isDelete
      */
-    private function insertAssociatedTags($tags, $id, $type, $isDelete, $isHindi)
+    public function insertAssociatedTags($tags, $id, $type, $isDelete, $isHindi)
     {
         //deleting and reinserting tags
         // dd($isHindi);
@@ -1874,1142 +1688,776 @@ class AdminController extends Controller
         }
     }
 
-    public function createinsightsView(Request $request)
-    {
-        if ($request->segment(2) == 'en') {
-            $kickerData = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
-            $kicker     = array_column($kickerData, 'name');
-            $authors    = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
-
-            $InsightCategory    = InsightCategory::query()->select('id', 'catname')->where('status', 1)->get();
-            return view('admin/insights/create_insights', compact('kicker', 'authors', 'InsightCategory'));
-        } else {
-            $kickerData = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
-            $kicker     = array_column($kickerData, 'name');
-            $authors    = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
-
-            $InsightCategory    = InsightsHindiCategory::query()->select('id', 'catname')->where('status', 1)->get();
-            return view('admin/insights/create_hindi_insights', compact('kicker', 'authors', 'InsightCategory'));
-        }
-    }
-
-
-    public function createInsights(Request $request)
-    {
-        // dd($request->all());
-        // Validate the input
-        $this->validate($request, [
-            'insights_publisher' => 'required',
-            'insights_type' => 'required',
-            'insights_cat' => 'required',
-            'title' => 'required|max:255',
-            'sub_title' => 'required',
-            'content' => 'required',
-            'image' => 'required',
-        ]);
-
-        // Extract variables from the request
-        $role = $request->session()->get('role');
-        $brand = $request->brands ? $this->stringyfyText($request->brands) : "";
-        $title = $request->title;
-        $homeTitle = $request->home_title;
-        $titleslug = $request->slug;
-        $subTitle = $request->sub_title;
-        $desc = $request->input('content');
-        $insightsType = $request->insights_type;
-        $catId = $request->insights_cat;
-        $subcatId = $request->insights_subcat;
-        $isInternational = $request->is_intl == 1 ? 1 : 0;
-        $alt = $request->img_alt;
-
-        // dd($titleslug);
-        // Generate slug based on language
-        if ($request->segment(2) == 'en') {
-            // English slug
-            if (!empty($titleslug)) {
-                $slug = $titleslug;
-            } else {
-                $slug = Str::slug($title);
-            }
-        } else {
-            if (!empty($titleslug)) {
-                $slug = $titleslug;
-            } else {
-                // Hindi slug generation
-                $titleSlug = trim($title);
-                $titleSlug = mb_strtolower($titleSlug, "UTF-8");
-                // Retain valid Hindi characters, English letters, numbers, and spaces
-                $titleSlug = preg_replace("/[^a-z0-9\s\p{Devanagari}]/u", "", $titleSlug);
-                // Replace multiple spaces with a single space
-                $titleSlug = preg_replace("/\s+/", " ", $titleSlug);
-                // Replace spaces with dashes
-                $titleSlug = str_replace(" ", "-", $titleSlug);
-                // Replace dots with dashes
-                $slug = str_replace(".", "-", $titleSlug);
-            }
-        }
-        // Handle image upload
-        $imageUrl = "";
-        if ($request->hasFile('image')) {
-            $newsImage = $request->file('image');
-            $imageUrl = $this->uploadImage($newsImage, $insightsType, 0, 's3', '');
-            // dd($imageUrl);
-            $this->thumbnailCreation($imageUrl, 'News', 247, 139);
-        }
-
-        // Determine language and model
-        $isEnglish = $request->segment(2) == 'en';
-        $modelClass = $isEnglish ? InsightList::class : InsightListHindi::class;
-        $redirectUrl = $isEnglish ? 'admin/en/list-insights' : 'admin/hi/list-insights';
-        $newsData = new $modelClass;
-        $newsData->title = $title;
-        $newsData->news_type = $role;
-        $newsData->homeTitle = $homeTitle;
-        $newsData->shortDesc = $subTitle;
-        $newsData->content = $desc;
-        $newsData->insight_type = $insightsType;
-        $newsData->cat_id = $catId;
-        $newsData->subcat_id = $subcatId;
-        $newsData->related_brand = $brand;
-        $newsData->image = $imageUrl;
-        $newsData->img_alt = $alt;
-        $newsData->slug = $slug;
-        $newsData->is_intl = $isInternational;
-        $newsData->author_id = $request->insights_publisher;
-
-        // Save the data
-        if ($newsData->save()) {
-            $newsId = $newsData->news_id;
-
-            // Insert associated tags if present
-            if ($request->associated_tags) {
-                $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
-            }
-
-            return redirect($redirectUrl)->with('success', 'Insights Data Saved Successfully.');
-        } else {
-            return redirect($redirectUrl)->with('error', "Insights Data Couldn't Be Saved.");
-        }
-    }
-
-    public function listinsights(Request $request)
-    {
-        $locale = $request->segment(2);
-        $model = ($locale === 'en') ? InsightList::class : InsightListHindi::class;
-        $catModel = ($locale === 'en') ? InsightCategory::class : InsightsHindiCategory::class;
-
-        $search = $request->query('search');
-        $type = $request->query('type');
-        $ctgry = $request->query('category');
-
-        $query = $model::query()
-            ->whereNotIn('news_type', ['ri', 'ir'])
-            ->when($search, function ($query) use ($search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('title', 'LIKE', "%{$search}%")
-                        ->orWhere('news_id', $search);
-                });
-            })
-            ->when($type, function ($query) use ($type) {
-                $query->where('insight_type', $type);
-            })
-            ->when($ctgry, function ($query) use ($ctgry) {
-                $query->where('cat_id', $ctgry);
-            })
-            ->whereIn('status', [0, 1, 2]);
-
-        // 👉 Export to CSV if ?export=1 is present
-        if ($request->has('export')) {
-            $filename = "insights_export_" . now()->format('Y-m-d_H-i-s') . ".csv";
-            $data = $query->orderByDesc('news_id')->get();
-
-            $headers = [
-                "Content-Type" => "text/csv",
-                "Content-Disposition" => "attachment; filename=\"$filename\"",
-            ];
-
-            $columns = ['news_id', 'title', 'insight_type', 'cat_id', 'status', 'created_at'];
-
-            $callback = function () use ($data, $columns) {
-                $file = fopen('php://output', 'w');
-                fputcsv($file, $columns);
-
-                foreach ($data as $row) {
-                    fputcsv($file, [
-                        $row->news_id,
-                        $row->title,
-                        $row->insight_type,
-                        $row->cat_id,
-                        $row->status,
-                        $row->created_at,
-                    ]);
-                }
-
-                fclose($file);
-            };
-
-            return response()->stream($callback, 200, $headers);
-        }
-
-        // Normal listing view logic
-        $totalRecords = $query->count();
-        $insightTypes = $model::distinct()->pluck('insight_type');
-        $InsightsCategory = $catModel::select('id', 'catname')->get();
-
-        $data = $query->orderByDesc('news_id')
-            ->paginate(25)
-            ->appends(['search' => $search, 'type' => $type]);
-
-        return view('admin.insights.list-edit-insights', compact(
-            'data',
-            'totalRecords',
-            'insightTypes',
-            'type',
-            'InsightsCategory'
-        ));
-    }
-
-
-    public function multilistinsights(Request $request)
-    {
-        // Determine the model and category model based on the language segment
-        $locale = $request->segment(2);
-        $model = ($locale === 'en') ? InsightList::class : InsightListHindi::class;
-        $catModel = ($locale === 'en') ? InsightCategory::class : InsightsHindiCategory::class;
-
-        // Fetch query parameters
-        $search = $request->query('search');
-        $type = $request->query('type');
-        $ctgry = $request->query('category');
-
-        // Build the query with filters
-        $query = $model::with(['category', 'subcategory', 'author'])
-            ->whereNotIn('news_type', ['ri', 'ir']) // Exclude specific news types
-            ->when($search, function ($query) use ($search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('title', 'LIKE', "%{$search}%")
-                        ->orWhere('news_id', $search);
-                });
-            })
-            ->when($type, function ($query) use ($type) {
-                $query->where('insight_type', $type);
-            })
-            ->when($ctgry, function ($query) use ($ctgry) {
-                $query->where('cat_id', $ctgry);
-            })
-            ->whereIn('status', [0, 1, 2]); // Filter by active/inactive status
-
-        // Get total records count
-        $totalCount = $query->count();
-
-        // Fetch paginated data
-        $data = $query->orderByDesc('news_id')
-            ->paginate(30)
-            ->appends(['search' => $search, 'type' => $type, 'category' => $ctgry]);
-
-        // Get distinct insight types
-        $insightTypes = $model::distinct()->pluck('insight_type');
-
-        // Fetch dropdown data
-        $InsightCategory = $catModel::select('id', 'catname')
-            ->where('status', 1)
-            ->get();
-
-        $InsightAuthor = AuthorList::select('author_id', 'title', 'slug')
-            ->where('status', 'A')
-            ->get();
-
-        // Return the view with data
-        return view('admin.insights.multilist-edit', compact(
-            'data',
-            'InsightCategory',
-            'InsightAuthor',
-            'totalCount',
-            'insightTypes'
-        ));
-    }
-
-    public function saveMultipleInsights(Request $request)
-    {
-        // dd($request->all());
-        // Determine the model based on language segment
-        $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
-        $catmodel = ($request->segment(2) == 'en') ? InsightCategory::class : InsightsHindiCategory::class;
-        $subCatModel = ($request->segment(2) == 'en') ? InsightSubcategory::class : InsightsHindiSubCategory::class;
-
-        // Get selected articles
-        $articles = $request->input('articles', []);
-        // dd($articles);
-        foreach ($articles as $newsId => $articleDetails) {
-            $existingInsight = $model::find($newsId);
-            // dd($existingInsight);
-            if ($existingInsight) {
-                $associatedTags = isset($articleDetails['associated_tags'])
-                    ? explode(',', $articleDetails['associated_tags'])
-                    : [];
-                // Retrieve new category and sub-category
-                $newCatId = $articleDetails['main_category'] ?? $existingInsight->cat_id;
-                $newSubCatId = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
-
-                // Validate sub-category: If it doesn't belong to the selected category, set it to null
-                $isValidSubCategory = $subCatModel::query()
-                    ->where('mcat_id', $newCatId)
-                    ->where('id', $newSubCatId)
-                    ->exists();
-
-                if ($newCatId != $existingInsight->cat_id && !$isValidSubCategory) {
-                    $newSubCatId = null;
-                }
-
-                // Update fields dynamically
-                $fieldsToUpdate = [
-                    'insight_type' => $articleDetails['insight_type'] ?? $existingInsight->insight_type,
-                    'cat_id' => $newCatId,
-                    'subcat_id' => $newSubCatId,
-                    'status' => $articleDetails['status'] ?? $existingInsight->status,
-                    'author_id' => $articleDetails['author'] ?? $existingInsight->author_id,
-                ];
-                // dd($fieldsToUpdate);
-
-                // Apply updates
-                foreach ($fieldsToUpdate as $field => $value) {
-                    $existingInsight->{$field} = $value;
-                }
-
-                // Generate slug dynamically
-                $existingInsight->slug = Str::slug($existingInsight->title);
-
-                // Save the updated record
-                $existingInsight->save();
-                // Insert associated tags if provided
-                if (!empty($associatedTags)) {
-                    $this->insertAssociatedTags($associatedTags, $newsId, 2, 0, $request->segment(2));
-                }
-            }
-        }
-
-        return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
-    }
-
-    public function editInsightsView(Request $request)
-    {
-        if ($request->segment(2) == 'en') {
-
-            $newsId             = $request->id;
-            $kickerData         = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
-            $kicker             = array_column($kickerData, 'name');
-            $data               = InsightList::query()->with('author')->where('news_id', $newsId)->first();
-            // dd($data);
-            $InsightCategory    = InsightCategory::query()->where('status', '1')->get();
-            // dd($InsightCategory);
-            $InsightSubcategory    = InsightSubcategory::query()->where('mcat_id', $data->cat_id)->get();
-
-            $brands             = explode(",", $data->related_brand);
-
-            $authors            = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
-            $company = [];
-            //getting brand names to a array
-            foreach ($brands as $value) {
-                $company[]        = FranchisorBusinessDetail::query()->where('franchisor_id', $value)->select('franchisor_id', 'company_name')->first();
-            }
-            // dd($company);
-            $associatedTags     = ContentTagsAssigned::query()->where('content_id', $newsId)->where('content_type', 2)->select('tag_id')->get();
-            $assocTags = [];
-            //fetching associated tags to a array
-            // dd($data);
-            if ($associatedTags != null) {
-                foreach ($associatedTags as $tags) {
-                    $assocTags[]    = SeoTag::query()->where('tag_id', $tags->tag_id)->select('tag_id', 'name')->first();
-                }
-                return view('admin/insights/edit-insights', compact('kicker', 'data', 'assocTags', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
-            }
-        } elseif ($request->segment(2) == 'hi') {
-            $newsId             = $request->id;
-            $kickerData         = SeoTagHindi::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
-            $kicker             = array_column($kickerData, 'name');
-            $data               = InsightListHindi::query()->where('news_id', $newsId)->first();
-
-            $InsightCategory    = InsightsHindiCategory::query()->where('status', '1')->get();
-            $InsightSubcategory    = InsightsHindiSubCategory::query()->where('mcat_id', $data->cat_id)->get();
-
-            $brands             = explode(",", $data->related_brand);
-
-            $authors            = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
-
-            //getting brand names to a array
-            foreach ($brands as $value) {
-                $company[]        = FranchisorBusinessDetail::query()->where('franchisor_id', $value)->select('franchisor_id', 'company_name')->first();
-            }
-            // dd($company);
-            $associatedTags     = ContentTagsAssignedHindi::query()->where('content_id', $newsId)->where('content_type', 2)->select('tag_id')->get();
-            $assocTags = [];
-            //fetching associated tags to a array
-            if ($associatedTags != null) {
-                foreach ($associatedTags as $tags) {
-                    $assocTags[]    = SeoTagHindi::query()->where('tag_id', $tags->tag_id)->select('tag_id', 'name')->first();
-                }
-                return view('admin/insights/edit_hindi_insights', compact('kicker', 'data', 'assocTags', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
-            }
-        }
-    }
-
-
-    public function updateInsightStatus(Request $request)
-    {
-        $newsId    = $request->News;
-        $status    = $request->contentStatus;
-        if ($request->segment(2) == 'en') {
-            InsightList::query()->where('news_id', $newsId)->update(['status' => $status]);
-        } else {
-            InsightListHindi::query()->where('news_id', $newsId)->update(['status' => $status]);
-        }
-        return response()->json(array('status' => $status), 200);
-    }
-
-    public function updateInsights(Request $request)
-    {
-        // dd($request->all());
-        $this->validate($request, [
-
-            'insights_publisher' => 'required',
-            'insights_type' => 'required',
-            'insights_cat' => 'required',
-            'title' => 'required|max:255',
-            'sub_title' => 'required',
-            'content' => 'required',
-        ]);
-        $role              = $request->session()->get('role');
-        $brand             = !empty($request->brands) ? $this->stringyfyText($request->brands) : "";
-        $title             = $request->title;
-        if (!empty($request->slug) && request()->segment(2) == 'en') {
-            $slug              = Str::slug($request->slug);
-        } else if (!empty($request->slug) && request()->segment(2) == 'hi') {
-            $slug              = $request->slug;
-        } else {
-            $slug = Str::slug($title);
-        }
-        $homeTitle         = $request->home_title;
-        $subTitle          = $request->sub_title;
-        $desc              = $request->input('content');
-        $insight_type      = $request->insights_type;
-        $cat_id            = $request->insights_cat;
-        $subcat_id         = $request->insights_subcat;
-        $imageUrl          = $request->old_image;
-        $isInternational   = ($request->is_intl == 1) ? 1 : 0;
-        $alt               = $request->img_alt;
-        $published_date    = $request->published_date;
-
-        //inserting files
-        if ($request->hasFile('image')) {
-
-            //Uploading Image
-            $newsImage = $request->file('image');
-            $imageUrl  = $this->uploadImage($newsImage, $insight_type, 0, 's3', '');
-
-            //thumbnail creation
-            $this->thumbnailCreation($imageUrl, 'News', 247, 139);
-        }
-
-        if ($request->segment(2) == 'en') {
-            $update = [
-                'title'         => $title,
-                'news_type'     => $role,
-                'homeTitle'     => $homeTitle,
-                'shortDesc'     => $subTitle,
-                'content'       => $desc,
-                'insight_type'  => $insight_type,
-                'cat_id'       => $cat_id,
-                'subcat_id'   => $subcat_id,
-                'related_brand' => $brand,
-                'slug'          => $slug,
-                'is_intl'       => $isInternational,
-                'updated_by'    => $request->session()->get('adminEmail'),
-                'author_id'     => request()->insights_publisher,
-                'img_alt'       => $alt,
-                'published_date' => $published_date,
-            ];
-
-            if ($request->hasFile('image'))
-                $update['image'] = $imageUrl;
-
-            InsightList::query()->where('news_id', $request->news_id)->update($update);
-
-            //increasing frequency count of kickers
-            if (!empty($request->kicker))
-                $this->insertKickers($request->kicker, $request->news_id, 2);
-
-            //increasing frequency count of kickers & inserting associative tags
-            if (!empty($request->associated_tags))
-                $this->insertAssociatedTags($request->associated_tags, $request->news_id, 2, 1, $request->segment(2));
-
-            return redirect('admin/en/list-insights')->with('success', "Insights Data Updated Successfully.");
-        } else {
-            $update = [
-                'title'         => $title,
-                'news_type'     => $role,
-                'homeTitle'     => $homeTitle,
-                'shortDesc'     => $subTitle,
-                'content'       => $desc,
-                'insight_type'  => $insight_type,
-                'cat_id'       => $cat_id,
-                'subcat_id'   => $subcat_id,
-                'related_brand' => $brand,
-                'slug'          => $slug,
-                'is_intl'       => $isInternational,
-                'updated_by'    => $request->session()->get('adminEmail'),
-                'author_id'     => request()->insights_publisher,
-                'img_alt'       => $alt,
-                'published_date' => $published_date,
-            ];
-
-            if ($request->hasFile('image'))
-                $update['image'] = $imageUrl;
-
-            InsightListHindi::query()->where('news_id', $request->news_id)->update($update);
-
-            //increasing frequency count of kickers
-            if (!empty($request->kicker))
-                $this->insertKickers($request->kicker, $request->news_id, 2);
-
-            //increasing frequency count of kickers & inserting associative tags
-            if (!empty($request->associated_tags))
-                $this->insertAssociatedTags($request->associated_tags, $request->news_id, 2, 1, $request->segment(2));
-
-            return redirect('admin/hi/list-insights')->with('success', "Insights Data Updated Successfully.");
-        }
-    }
-
-
-    public function deleteInsights(Request $request)
-    {
-
-        $contentId    = $request->contentId;
-        $request->contentStatus;
-        if ($request->segment(2) == 'en') {
-            $Content      = InsightList::query()->where('news_id', $contentId)->delete();
-        } else {
-            $Content      = InsightListHindi::query()->where('news_id', $contentId)->delete();
-        }
-        return response()->json(array('Content' => $Content), 200);
-    }
-
-    // category functions here
-
-    public function categoryform()
-    {
-        if (request()->segment(2) != 'hindi') {
-            app()->setLocale('en');
-            session()->put('locale', 'en');
-        } else {
-            app()->setLocale('hi');
-            session()->put('locale', 'hi');
-        }
-        return view('admin.category.catform');
-    }
-
-    public function storecat(Request $request)
-    {
-        $lang = $request->segment(2);
-        // dd($lang);
-        $catclass =  $lang == 'en' ? InsightCategory::query() : InsightsHindiCategory::query();
-        $catCount   = $catclass->where('catname', $request->maincat)->select('catname')->count();
-        // dd($request->maincat);
-        if ($catCount == 0) {
-            $cslug = Str::slug($request->maincat);
-            // dd($cslug);
-            if ($lang == 'hi') {
-                $catclass->insert(['catname' => request()->maincat, 'slug' => request()->slug]);
-            } else {
-                $catclass->insert(['catname' => request()->maincat, 'slug' => $cslug]);
-            }
-        } else {
-            session()->flash('failed', 'This Main Category already Exists');
-            return redirect()->back();
-        }
-
-        return redirect('/admin/' . $lang . '/cat/list')->with('success', "Main Category Created Successfully.");
-    }
-    public function catlist(Request $request)
-    {
-        $locale = $request->segment(2); // Retrieve the locale
-        $search = $request->input('search'); // Retrieve the search input
-
-        // Determine the model based on the locale
-        $categoryModel = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
-
-        // Build the query
-        $catdata = $categoryModel::query()
-            ->when($search, function ($query, $search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('catname', 'LIKE', "%{$search}%")
-                        ->orWhere('id', $search);
-                });
-            })
-            ->orderByDesc('id')
-            ->paginate(10);
-
-        return view('admin.category.list', compact('catdata'));
-    }
-
-    public function catEdit(Request $request)
-    {
-        $locale = $request->segment(2);
-        $catClass = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
-
-        $editData = $catClass::find($request->id);
-
-        if (!$editData) {
-            return redirect()->back()->with('error', 'Category not found.');
-        }
-
-        return view('admin.category.edit', compact('editData'));
-    }
-
-    public function updateCat(Request $request)
-    {
-        $locale = $request->segment(2);
-        $catClass = $locale === 'en' ? InsightCategory::class : InsightsHindiCategory::class;
-
-        $category = $catClass::find($request->catid);
-
-        if (!$category) {
-            return redirect()->back()->with('error', 'Category not found.');
-        }
-        if ($locale == 'hi') {
-            $slug = $request->slug;
-        } else {
-            $slug = Str::slug($request->maincat);
-        }
-
-        $category->update([
-            'catname' => $request->maincat,
-            'slug' => $slug,
-        ]);
-
-        return redirect()->to('admin/' . $locale . '/cat/list')->with('success', 'Category updated successfully.');
-    }
-
-
-
-    public function deleteCat(Request $request)
-    {
-        try {
-            // Determine the model class based on the locale
-            $locale = $request->segment(2);
-            $catclass = $locale == 'en' ? InsightCategory::class : InsightsHindiCategory::class;
-
-            // Find and delete the category
-            $category = $catclass::findOrFail($request->id);
-            $category->delete();
-
-            // Set a success message in the session
-            return redirect()->back()->with('success', 'Main Category Deleted Successfully.');
-        } catch (\Exception $e) {
-            // Handle unexpected errors
-            return redirect()->back()->with('error', 'Failed to delete category: ' . $e->getMessage());
-        }
-    }
-
-
-    public function subcatform()
-    {
-        $locale = request()->segment(2);
-        $cat =  $locale == 'en' ? InsightCategory::all() : InsightsHindiCategory::all();
-        $subCat = $locale == 'en' ? InsightSubcategory::class : InsightsHindiSubCategory::class;
-        $subCategories = $subCat::query()
-            ->select('mcat_id', 'subcat_name', 'slug')
-            ->get()
-            ->map(function ($item) use ($locale) {
-                $item->lang = $locale;
-                return $item;
-            });
-        return view('admin.subcategory.create', compact('cat', 'subCategories'));
-    }
-
-    public function storesubcat(Request $request)
-    {
-
-        // dd($request->all());
-        $request->validate([
-            'maincat' => 'required|integer',
-            'sub_categories' => 'required',
-        ]);
-        // dd($request->all());
-        // Determine the locale and model class
-        $locale = request()->segment(2);
-        $subcatclass = $locale == 'en' ? InsightSubcategory::query() : InsightsHindiSubCategory::query();
-
-        // Main category ID and subcategories
-        $maincatid = $request->maincat;
-        $subcategories = $request->sub_categories;
-
-        // Handle slugs (string or array)
-        $slugs = [];
-        if ($locale == 'hi') {
-            if (is_array($request->sub_catslug)) {
-                foreach ($request->sub_catslug as $slugValue) {
-                    $slugs = array_merge($slugs, explode(',', $slugValue));
-                }
-            } else {
-                $slugs = explode(',', $request->sub_catslug);
-            }
-
-            // Trim and clean slugs
-            $slugs = array_map('trim', $slugs);
-        }
-
-        foreach ($subcategories as $key => $subcategoryName) {
-            // Check if the subcategory already exists
-            $exists = $subcatclass->where('mcat_id', $maincatid)
-                ->where('subcat_name', $subcategoryName)
-                ->exists();
-
-            if (!$exists) {
-                // Generate slug based on locale
-                if ($locale == 'en') {
-                    $finalSlug = Str::slug($subcategoryName);
-                } else {
-                    $finalSlug = isset($slugs[$key]) ? $slugs[$key] : Str::slug($subcategoryName);
-                }
-
-                // Insert the new subcategory
-                $subcatclass->create([
-                    'mcat_id' => $maincatid,
-                    'subcat_name' => $subcategoryName,
-                    'slug' => $finalSlug,
-                ]);
-            } else {
-                // Flash error message and return if a subcategory exists
-                session()->flash('failed', "Sub Category '{$subcategoryName}' already exists.");
-                return redirect()->back();
-            }
-        }
-
-        // Redirect with success message
-        return redirect('/admin/' . $locale . '/subcat/list')
-            ->with('success', 'Sub Category Created Successfully.');
-    }
-
-
-
-
-    public function subcatlist(Request $request)
-    {
-        $locale = $request->segment(2); // Use $request for consistency
-        $search = $request->input('search'); // Retrieve search input
-
-        // Determine the model based on locale
-        $subcatModel = $locale === 'en' ? InsightSubcategory::class : InsightsHindiSubcategory::class;
-
-        // Build the query
-        $subCat = $subcatModel::with('category')
-            ->when($search, function ($query, $search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('subcat_name', 'LIKE', "%{$search}%")
-                        ->orWhere('id', $search);
-                });
-            })
-            ->orderByDesc('id')
-            ->paginate(10);
-
-        return view('admin.subcategory.list', compact('subCat'));
-    }
-
-
-    public function deletesubCat(Request $request)
-    {
-        // Determine the appropriate subcategory model based on the locale
-        try {
-            $locale = $request->segment(2);
-            $subcatclass = $locale == 'en'
-                ? InsightSubcategory::class
-                : InsightsHindiSubCategory::class;
-
-            // Find and delete the subcategory
-            $subcategory = $subcatclass::findOrFail($request->id);
-            $subcategory->delete();
-
-            // Redirect back with success message
-            return redirect()->back()->with('success', 'Sub Category Deleted Successfully.');
-        } catch (\Exception $e) {
-            // Handle unexpected errors
-            return redirect()->back()->with('error', 'Failed to delete sub category: ' . $e->getMessage());
-        }
-    }
-
-    public function podcastcreate(Request $request)
-    {
-        // $locale = $request->segment(2);
-        return view('admin.podcast.create');
-    }
-
-
-    public function podcastore(Request $request)
-    {
-        //dd($request->all());
-        try {
-            $validator = validator($request->all(), [
-                'podcastId' => 'required',
-                'Podcast_url' => 'required|unique:fihl_podcstvideo,podcast_link',
-                'title' => 'required',
-                'image' => 'nullable|file', // Make image optional if not always provided
-                'podcast_dur' => 'required',
-                'podcast_lang' => 'required',
-                'content' => 'required',
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
-
-            $fihlvideo = new FihlPodcastVideo();
-
-            $fihlvideo->podcast_id = $request->input('podcastId');
-            $fihlvideo->podcast_link = $request->input('Podcast_url');
-            $fihlvideo->title = $request->input('title');
-            $fihlvideo->pod_lang = $request->input('podcast_lang');
-            $fihlvideo->duration = $request->input('podcast_dur');
-            $fihlvideo->podcast_type = 'A';
-            $fihlvideo->status = 'A';
-            $fihlvideo->category = 0;
-            $fihlvideo->description = $request->input('content');
-            $fihlvideo->create_date = Carbon::now();
-
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-
-                // Define the upload path based on language
-                $uploadPath =  config("constants.ARTICLE_UPLOAD_PATH");
-
-                // Resize the image using Image Intervention (optional)
-                $resizedImage = Image::make($image)->resize(478, 478)->encode('webp', 90);
-
-                // Generate a unique image name (e.g., timestamp-based)
-                $imageName = time() . '.webp';
-
-                // Save the resized image to S3
-                $path = Storage::disk('s3')->put($uploadPath . $imageName, $resizedImage->__toString(), 'public');
-
-                // Now that the image is uploaded, save the full URL to the database
-                if ($path) {
-                    $fihlvideo->image_path = $imageName; // Full S3 URL
-                    $fihlvideo->image = $imageName; // Full S3 URL
-                }
-            }
-
-
-            // Save the podcast record
-            $fihlvideo->save();
-            // Redirect after success
-            if ($request->podcast_lang == 'en') {
-                return redirect()->route('podcastlist')->with("success", 'Podcast Has Been Added');
-            } else {
-                return redirect()->route('hindipodcastlist')->with("success", 'Podcast Has Been Added');
-            }
-        } catch (\Exception $e) {
-            // Log the error and return a failure response
-            Log::error('Error in podcastore: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'An error occurred while saving the podcast.');
-        }
-    }
-
-
-    public function podcastlist(Request $request)
-    {
-        $locale = $request->segment(2); // Use $request for consistency
-        $search = $request->input('search'); // Retrieve search input
-
-        $podlist = FihlPodcastVideo::query()
-            ->where('podcast_type', 'A')
-            ->where('pod_lang', $locale)
-            ->whereIn('status', ['A', 'D'])
-            ->when($search, function ($query, $search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('title', 'LIKE', "%{$search}%")
-                        ->orWhere('podcast_id', $search);
-                });
-            })
-            ->orderByDesc('create_date')
-            ->paginate(10);
-
-        return view('admin.podcast.podlist', compact('podlist'));
-    }
-
-
-    public function updatepodcastatus(Request $request)
-    {
-        // dd($request->all());
-        $podcastId    = $request->podcast_id;
-        $status    = $request->status;
-        $locale = $request->segment(2);
-        $podstatus = FihlPodcastVideo::query()->where('sno', $podcastId)->update(['status' => $status]);
-        // dd($podstatus);
-        return response()->json(array('status' => $status), 200);
-    }
-
-    public function deletepodcast(Request $request)
-    {
-        // dd($request->all());
-        FihlPodcastVideo::query()->where('sno', $request->sno)->delete();
-        return response()->json(array('status' => 1), 200);
-    }
-
-    public function editpodcast(Request $request)
-    {
-        // dd($request->sno);
-        $locale = request()->segment(2);
-        $data = FihlPodcastVideo::query()->where('sno', $request->sno)->first();
-        // dd($data);
-        return view('admin.podcast.edit', compact('data'));
-    }
-
-    public function podcastUpdate(Request $request)
-    {
-        // Validate the incoming request data
-        $validator = Validator::make($request->all(), [
-            'podcastId'     => 'required',
-            'Podcast_url'   => 'required',
-            'title'         => 'required',
-            'podcast_dur'   => 'required',
-            'podcast_lang'  => 'required',
-            'content'       => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        try {
-            // Find the existing podcast record
-            $video = FihlPodcastVideo::where('sno', $request->p_id)->first();
-
-            if (!$video) {
-                return redirect()->back()->with('error', 'Podcast not found.');
-            }
-
-            // Handle image upload if provided
-            $fimage = $video->image_path; // Default to existing image path
-
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
-
-                // Define the upload path for S3
-                $uploadPath = config("constants.ARTICLE_UPLOAD_PATH");
-
-                // Resize the image using Image Intervention (optional)
-                $resizedImage = Image::make($image)->resize(478, 478)->encode('webp', 90);
-
-                // Generate a unique filename
-                $imageName = time() . '.webp'; // Unique file name based on the current time
-
-                // Save the image to S3
-                $path = Storage::getFacadeRoot()->disk('s3')->put($uploadPath . $imageName, $resizedImage->__toString(), 'public');
-
-                // Generate the full URL of the image on S3
-                if ($path) {
-                    $fimage = $imageName; // Full S3 URL
-                }
-            }
-
-
-            // Update the podcast attributes
-            $updateData = [
-                'podcast_id'   => $request->input('podcastId'),
-                'podcast_link' => $request->input('Podcast_url'),
-                'title'        => $request->input('title'),
-                'image_path'   => $fimage,
-                'image'   => $fimage,
-                'duration'     => $request->input('podcast_dur'),
-                'pod_lang'     => $request->input('podcast_lang'),
-                'status'       => $request->input('status', 'A'),
-                'podcast_type' => 'A', // Fixed type
-                'description'  => $request->input('content'),
-            ];
-
-            Log::info('Podcast Update Data', $updateData);
-            $video->update($updateData);
-
-
-            // Redirect based on language
-            $route = $request->podcast_lang === 'en' ? 'podcastlist' : 'hindipodcastlist';
-            return redirect()->route($route)->with('success', 'Podcast has been updated successfully.');
-        } catch (\Exception $e) {
-            // Log the error and return an error response
-            Log::error('Error in podcastUpdate: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'An error occurred while updating the podcast.');
-        }
-    }
-
-    public function videolist(Request $request)
-    {
-        $locale = $request->segment(2); // Use $request for consistency
-        $search = $request->input('search');
-
-        // Build the query
-        $videos = FihlPodcastVideo::query()
-            ->with('VideoCategory')
-            ->whereIn('status', ['A', 'D'])
-            ->where('podcast_type', 'v')
-            ->where('pod_lang', $locale)
-            ->when($search, function ($query, $search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('title', 'LIKE', "%{$search}%")
-                        ->orWhere('videoID', $search);
-                });
-            })
-            ->orderBy('create_date', 'desc')
-            ->paginate(20);
-
-        return view('admin.videos.videolist', compact('videos'));
-    }
-
-
-    public function videocreate()
-    {
-        $category = FihlVideoCategory::all();
-        return view('admin.videos.videocreate', compact('category'));
-    }
-
-    public function videostore(Request $request)
-    {
-
-        // dd($request->all());
-        try {
-            $validator = validator($request->all(), [
-                'videoId' => 'required',
-                'category' => 'required',
-                'title' => 'required',
-                'video_duration' => 'required',
-                'pod_lang' => 'required',
-                'content' => 'required',
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
-
-            $fihlvideo = new FihlPodcastVideo();
-
-            $fihlvideo->videoID = $request->input('videoId');
-            // $fihlvideo->podcast_link = $request->input('Podcast_url');
-            $fihlvideo->title = $request->input('title');
-            $fihlvideo->pod_lang = $request->input('pod_lang');
-            $fihlvideo->duration = $request->input('video_duration');
-            $fihlvideo->podcast_type = 'V';
-            $fihlvideo->status = 'A';
-            $fihlvideo->category = $request->input('category');
-            $fihlvideo->description = $request->input('content');
-            $fihlvideo->create_date = Carbon::now();
-
-            // Save the podcast record
-            $fihlvideo->save();
-            // Redirect after success
-            if ($request->pod_lang == 'en') {
-                return redirect()->route('videolist')->with("success", 'Video Has Been Added');
-            } else {
-                return redirect()->route('hindivideolist')->with("success", 'Video Has Been Added');
-            }
-        } catch (\Exception $e) {
-            // Log the error and return a failure response
-            Log::error('Error in podcastore: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'An error occurred while saving the video.');
-        }
-    }
-
-    public function updatevideostatus(Request $request)
-    {
-        // dd($request->all());
-        $podcastId    = $request->video_id;
-        $status    = $request->status;
-        // $locale = $request->segment(2);
-        $podstatus = FihlPodcastVideo::query()->where('sno', $podcastId)->update(['status' => $status]);
-        // dd($podstatus);
-        return response()->json(array('status' => $status), 200);
-    }
-
-    public function editvideo(Request $request)
-    {
-        // dd($request->sno);
-        $locale = request()->segment(2);
-        $category = FihlVideoCategory::all();
-        $data = FihlPodcastVideo::query()->where('sno', $request->sno)->first();
-        // dd($data);
-        return view('admin.videos.videoedit', compact('data', 'category'));
-    }
-
-    public function videoUpdate(Request $request)
-    {
-        // dd($request->all());fv
-        // Validate the incoming request data
-        $validator = Validator::make($request->all(), [
-            'videoId'     => 'required',
-            'category'   => 'required',
-            'title'         => 'required',
-            'video_duration'   => 'required',
-            'pod_lang'  => 'required',
-            'content'       => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        try {
-            // Find the existing podcast record
-            $video = FihlPodcastVideo::where('sno', $request->sno)->first();
-
-            if (!$video) {
-                return redirect()->back()->with('error', 'Video not found.');
-            }
-
-
-            // Update the podcast attributes
-            $updateData = [
-                'videoID'   => $request->input('videoId'),
-                'category' => $request->input('category'),
-                'title'        => $request->input('title'),
-                // 'image_path'   => $fimage,
-                // 'image'   => $fimage,
-                'duration'     => $request->input('video_duration'),
-                'pod_lang'     => $request->input('pod_lang'),
-                'status'       => $request->input('status', 'A'),
-                'podcast_type' => 'V', // Fixed type
-                'description'  => $request->input('content'),
-            ];
-
-            Log::info('Video Update Data', $updateData);
-            $video->update($updateData);
-
-
-            // Redirect based on language
-            $route = $request->pod_lang === 'en' ? 'videolist' : 'hindivideolist';
-            return redirect()->route($route)->with('success', 'Video has been updated successfully.');
-        } catch (\Exception $e) {
-            // Log the error and return an error response
-            Log::error('Error in VideoUpdate: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'An error occurred while updating the Video.');
-        }
-    }
-
-    public function deletevideo(Request $request)
-    {
-        // dd($request->all());
-        FihlPodcastVideo::query()->where('sno', $request->sno)->delete();
-        return response()->json(array('status' => 1), 200);
-    }
-
-    public function getSubcategories($catid)
-    {
-        // Determine the appropriate model based on the locale
-        $locale = request()->segment(2);
-        $model = $locale === 'en' ? InsightSubcategory::class : InsightsHindiSubCategory::class;
-
-        // Fetch subcategories
-        $subcategories = $model::select('id', 'subcat_name')->where('mcat_id', $catid)->get();
-
-        // Return JSON response
-        return response()->json($subcategories);
-    }
+    // public function createinsightsView(Request $request)
+    // {
+    //     if ($request->segment(2) == 'en') {
+    //         $kickerData = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
+    //         $kicker     = array_column($kickerData, 'name');
+    //         $authors    = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
+
+    //         $InsightCategory    = InsightCategory::query()->select('id', 'catname')->where('status', 1)->get();
+    //         return view('admin/insights/create_insights', compact('kicker', 'authors', 'InsightCategory'));
+    //     } else {
+    //         $kickerData = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
+    //         $kicker     = array_column($kickerData, 'name');
+    //         $authors    = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
+
+    //         $InsightCategory    = InsightsHindiCategory::query()->select('id', 'catname')->where('status', 1)->get();
+    //         return view('admin/insights/create_hindi_insights', compact('kicker', 'authors', 'InsightCategory'));
+    //     }
+    // }
+
+
+    // public function createInsights(Request $request)
+    // {
+    //     // dd($request->all());
+    //     // Validate the input
+    //     $this->validate($request, [
+    //         'insights_publisher' => 'required',
+    //         'insights_type' => 'required',
+    //         'insights_cat' => 'required',
+    //         'title' => 'required|max:255',
+    //         'sub_title' => 'required',
+    //         'content' => 'required',
+    //         'image' => 'required',
+    //     ]);
+
+    //     // Extract variables from the request
+    //     $role = $request->session()->get('role');
+    //     $brand = $request->brands ? $this->stringyfyText($request->brands) : "";
+    //     $title = $request->title;
+    //     $homeTitle = $request->home_title;
+    //     $titleslug = $request->slug;
+    //     $subTitle = $request->sub_title;
+    //     $desc = $request->input('content');
+    //     $insightsType = $request->insights_type;
+    //     $catId = $request->insights_cat;
+    //     $subcatId = $request->insights_subcat;
+    //     $isInternational = $request->is_intl == 1 ? 1 : 0;
+    //     $alt = $request->img_alt;
+
+    //     // dd($titleslug);
+    //     // Generate slug based on language
+    //     if ($request->segment(2) == 'en') {
+    //         // English slug
+    //         if (!empty($titleslug)) {
+    //             $slug = $titleslug;
+    //         } else {
+    //             $slug = Str::slug($title);
+    //         }
+    //     } else {
+    //         if (!empty($titleslug)) {
+    //             $slug = $titleslug;
+    //         } else {
+    //             // Hindi slug generation
+    //             $titleSlug = trim($title);
+    //             $titleSlug = mb_strtolower($titleSlug, "UTF-8");
+    //             // Retain valid Hindi characters, English letters, numbers, and spaces
+    //             $titleSlug = preg_replace("/[^a-z0-9\s\p{Devanagari}]/u", "", $titleSlug);
+    //             // Replace multiple spaces with a single space
+    //             $titleSlug = preg_replace("/\s+/", " ", $titleSlug);
+    //             // Replace spaces with dashes
+    //             $titleSlug = str_replace(" ", "-", $titleSlug);
+    //             // Replace dots with dashes
+    //             $slug = str_replace(".", "-", $titleSlug);
+    //         }
+    //     }
+    //     // Handle image upload
+    //     $imageUrl = "";
+    //     if ($request->hasFile('image')) {
+    //         $newsImage = $request->file('image');
+    //         $imageUrl = $this->uploadImage($newsImage, $insightsType, 0, 's3', '');
+    //         // dd($imageUrl);
+    //         $this->thumbnailCreation($imageUrl, 'News', 247, 139);
+    //     }
+
+    //     // Determine language and model
+    //     $isEnglish = $request->segment(2) == 'en';
+    //     $modelClass = $isEnglish ? InsightList::class : InsightListHindi::class;
+    //     $redirectUrl = $isEnglish ? 'admin/en/list-insights' : 'admin/hi/list-insights';
+    //     $newsData = new $modelClass;
+    //     $newsData->title = $title;
+    //     $newsData->news_type = $role;
+    //     $newsData->homeTitle = $homeTitle;
+    //     $newsData->shortDesc = $subTitle;
+    //     $newsData->content = $desc;
+    //     $newsData->insight_type = $insightsType;
+    //     $newsData->cat_id = $catId;
+    //     $newsData->subcat_id = $subcatId;
+    //     $newsData->related_brand = $brand;
+    //     $newsData->image = $imageUrl;
+    //     $newsData->img_alt = $alt;
+    //     $newsData->slug = $slug;
+    //     $newsData->is_intl = $isInternational;
+    //     $newsData->author_id = $request->insights_publisher;
+
+    //     // Save the data
+    //     if ($newsData->save()) {
+    //         $newsId = $newsData->news_id;
+
+    //         // Insert associated tags if present
+    //         if ($request->associated_tags) {
+    //             $this->insertAssociatedTags($request->associated_tags, $newsId, 2, 0, $request->segment(2));
+    //         }
+
+    //         return redirect($redirectUrl)->with('success', 'Insights Data Saved Successfully.');
+    //     } else {
+    //         return redirect($redirectUrl)->with('error', "Insights Data Couldn't Be Saved.");
+    //     }
+    // }
+
+    // public function listinsights(Request $request)
+    // {
+    //     $locale = $request->segment(2);
+    //     $model = ($locale === 'en') ? InsightList::class : InsightListHindi::class;
+    //     $catModel = ($locale === 'en') ? InsightCategory::class : InsightsHindiCategory::class;
+
+    //     $search = $request->query('search');
+    //     $type = $request->query('type');
+    //     $ctgry = $request->query('category');
+
+    //     $query = $model::query()
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->when($search, function ($query) use ($search) {
+    //             $query->where(function ($q) use ($search) {
+    //                 $q->where('title', 'LIKE', "%{$search}%")
+    //                     ->orWhere('news_id', $search);
+    //             });
+    //         })
+    //         ->when($type, function ($query) use ($type) {
+    //             $query->where('insight_type', $type);
+    //         })
+    //         ->when($ctgry, function ($query) use ($ctgry) {
+    //             $query->where('cat_id', $ctgry);
+    //         })
+    //         ->whereIn('status', [0, 1, 2]);
+
+    //     // 👉 Export to CSV if ?export=1 is present
+    //     if ($request->has('export')) {
+    //         $filename = "insights_export_" . now()->format('Y-m-d_H-i-s') . ".csv";
+    //         $data = $query->orderByDesc('news_id')->get();
+
+    //         $headers = [
+    //             "Content-Type" => "text/csv",
+    //             "Content-Disposition" => "attachment; filename=\"$filename\"",
+    //         ];
+
+    //         $columns = ['news_id', 'title', 'insight_type', 'cat_id', 'status', 'created_at'];
+
+    //         $callback = function () use ($data, $columns) {
+    //             $file = fopen('php://output', 'w');
+    //             fputcsv($file, $columns);
+
+    //             foreach ($data as $row) {
+    //                 fputcsv($file, [
+    //                     $row->news_id,
+    //                     $row->title,
+    //                     $row->insight_type,
+    //                     $row->cat_id,
+    //                     $row->status,
+    //                     $row->created_at,
+    //                 ]);
+    //             }
+
+    //             fclose($file);
+    //         };
+
+    //         return response()->stream($callback, 200, $headers);
+    //     }
+
+    //     // Normal listing view logic
+    //     $totalRecords = $query->count();
+    //     $insightTypes = $model::distinct()->pluck('insight_type');
+    //     $InsightsCategory = $catModel::select('id', 'catname')->get();
+
+    //     $data = $query->orderByDesc('news_id')
+    //         ->paginate(25)
+    //         ->appends(['search' => $search, 'type' => $type]);
+
+    //     return view('admin.insights.list-edit-insights', compact(
+    //         'data',
+    //         'totalRecords',
+    //         'insightTypes',
+    //         'type',
+    //         'InsightsCategory'
+    //     ));
+    // }
+
+
+    // public function multilistinsights(Request $request)
+    // {
+    //     // Determine the model and category model based on the language segment
+    //     $locale = $request->segment(2);
+    //     $model = ($locale === 'en') ? InsightList::class : InsightListHindi::class;
+    //     $catModel = ($locale === 'en') ? InsightCategory::class : InsightsHindiCategory::class;
+
+    //     // Fetch query parameters
+    //     $search = $request->query('search');
+    //     $type = $request->query('type');
+    //     $ctgry = $request->query('category');
+
+    //     // Build the query with filters
+    //     $query = $model::with(['category', 'subcategory', 'author'])
+    //         ->whereNotIn('news_type', ['ri', 'ir']) // Exclude specific news types
+    //         ->when($search, function ($query) use ($search) {
+    //             $query->where(function ($q) use ($search) {
+    //                 $q->where('title', 'LIKE', "%{$search}%")
+    //                     ->orWhere('news_id', $search);
+    //             });
+    //         })
+    //         ->when($type, function ($query) use ($type) {
+    //             $query->where('insight_type', $type);
+    //         })
+    //         ->when($ctgry, function ($query) use ($ctgry) {
+    //             $query->where('cat_id', $ctgry);
+    //         })
+    //         ->whereIn('status', [0, 1, 2]); // Filter by active/inactive status
+
+    //     // Get total records count
+    //     $totalCount = $query->count();
+
+    //     // Fetch paginated data
+    //     $data = $query->orderByDesc('news_id')
+    //         ->paginate(30)
+    //         ->appends(['search' => $search, 'type' => $type, 'category' => $ctgry]);
+
+    //     // Get distinct insight types
+    //     $insightTypes = $model::distinct()->pluck('insight_type');
+
+    //     // Fetch dropdown data
+    //     $InsightCategory = $catModel::select('id', 'catname')
+    //         ->where('status', 1)
+    //         ->get();
+
+    //     $InsightAuthor = AuthorList::select('author_id', 'title', 'slug')
+    //         ->where('status', 'A')
+    //         ->get();
+
+    //     // Return the view with data
+    //     return view('admin.insights.multilist-edit', compact(
+    //         'data',
+    //         'InsightCategory',
+    //         'InsightAuthor',
+    //         'totalCount',
+    //         'insightTypes'
+    //     ));
+    // }
+
+    // public function saveMultipleInsights(Request $request)
+    // {
+    //     // dd($request->all());
+    //     // Determine the model based on language segment
+    //     $model = ($request->segment(2) == 'en') ? InsightList::class : InsightListHindi::class;
+    //     $catmodel = ($request->segment(2) == 'en') ? InsightCategory::class : InsightsHindiCategory::class;
+    //     $subCatModel = ($request->segment(2) == 'en') ? InsightSubcategory::class : InsightsHindiSubCategory::class;
+
+    //     // Get selected articles
+    //     $articles = $request->input('articles', []);
+    //     // dd($articles);
+    //     foreach ($articles as $newsId => $articleDetails) {
+    //         $existingInsight = $model::find($newsId);
+    //         // dd($existingInsight);
+    //         if ($existingInsight) {
+    //             $associatedTags = isset($articleDetails['associated_tags'])
+    //                 ? explode(',', $articleDetails['associated_tags'])
+    //                 : [];
+    //             // Retrieve new category and sub-category
+    //             $newCatId = $articleDetails['main_category'] ?? $existingInsight->cat_id;
+    //             $newSubCatId = $articleDetails['sub_category'] ?? $existingInsight->subcat_id;
+
+    //             // Validate sub-category: If it doesn't belong to the selected category, set it to null
+    //             $isValidSubCategory = $subCatModel::query()
+    //                 ->where('mcat_id', $newCatId)
+    //                 ->where('id', $newSubCatId)
+    //                 ->exists();
+
+    //             if ($newCatId != $existingInsight->cat_id && !$isValidSubCategory) {
+    //                 $newSubCatId = null;
+    //             }
+
+    //             // Update fields dynamically
+    //             $fieldsToUpdate = [
+    //                 'insight_type' => $articleDetails['insight_type'] ?? $existingInsight->insight_type,
+    //                 'cat_id' => $newCatId,
+    //                 'subcat_id' => $newSubCatId,
+    //                 'status' => $articleDetails['status'] ?? $existingInsight->status,
+    //                 'author_id' => $articleDetails['author'] ?? $existingInsight->author_id,
+    //             ];
+    //             // dd($fieldsToUpdate);
+
+    //             // Apply updates
+    //             foreach ($fieldsToUpdate as $field => $value) {
+    //                 $existingInsight->{$field} = $value;
+    //             }
+
+    //             // Generate slug dynamically
+    //             $existingInsight->slug = Str::slug($existingInsight->title);
+
+    //             // Save the updated record
+    //             $existingInsight->save();
+    //             // Insert associated tags if provided
+    //             if (!empty($associatedTags)) {
+    //                 $this->insertAssociatedTags($associatedTags, $newsId, 2, 0, $request->segment(2));
+    //             }
+    //         }
+    //     }
+
+    //     return redirect()->back()->with('success', 'Selected articles have been updated successfully!');
+    // }
+
+    // public function editInsightsView(Request $request)
+    // {
+    //     if ($request->segment(2) == 'en') {
+
+    //         $newsId             = $request->id;
+    //         $kickerData         = SeoTag::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
+    //         $kicker             = array_column($kickerData, 'name');
+    //         $data               = InsightList::query()->with('author')->where('news_id', $newsId)->first();
+    //         // dd($data);
+    //         $InsightCategory    = InsightCategory::query()->where('status', '1')->get();
+    //         // dd($InsightCategory);
+    //         $InsightSubcategory    = InsightSubcategory::query()->where('mcat_id', $data->cat_id)->get();
+
+    //         $brands             = explode(",", $data->related_brand);
+
+    //         $authors            = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
+    //         $company = [];
+    //         //getting brand names to a array
+    //         foreach ($brands as $value) {
+    //             $company[]        = FranchisorBusinessDetail::query()->where('franchisor_id', $value)->select('franchisor_id', 'company_name')->first();
+    //         }
+    //         // dd($company);
+    //         $associatedTags     = ContentTagsAssigned::query()->where('content_id', $newsId)->where('content_type', 2)->select('tag_id')->get();
+    //         $assocTags = [];
+    //         //fetching associated tags to a array
+    //         // dd($data);
+    //         if ($associatedTags != null) {
+    //             foreach ($associatedTags as $tags) {
+    //                 $assocTags[]    = SeoTag::query()->where('tag_id', $tags->tag_id)->select('tag_id', 'name')->first();
+    //             }
+    //             return view('admin/insights/edit-insights', compact('kicker', 'data', 'assocTags', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
+    //         }
+    //     } elseif ($request->segment(2) == 'hi') {
+    //         $newsId             = $request->id;
+    //         $kickerData         = SeoTagHindi::query()->select('name')->orderBy('tag_id', 'ASC')->get()->toArray();
+    //         $kicker             = array_column($kickerData, 'name');
+    //         $data               = InsightListHindi::query()->where('news_id', $newsId)->first();
+
+    //         $InsightCategory    = InsightsHindiCategory::query()->where('status', '1')->get();
+    //         $InsightSubcategory    = InsightsHindiSubCategory::query()->where('mcat_id', $data->cat_id)->get();
+
+    //         $brands             = explode(",", $data->related_brand);
+
+    //         $authors            = AuthorList::query()->select('author_id', 'title')->where('status', "A")->get();
+
+    //         //getting brand names to a array
+    //         foreach ($brands as $value) {
+    //             $company[]        = FranchisorBusinessDetail::query()->where('franchisor_id', $value)->select('franchisor_id', 'company_name')->first();
+    //         }
+    //         // dd($company);
+    //         $associatedTags     = ContentTagsAssignedHindi::query()->where('content_id', $newsId)->where('content_type', 2)->select('tag_id')->get();
+    //         $assocTags = [];
+    //         //fetching associated tags to a array
+    //         if ($associatedTags != null) {
+    //             foreach ($associatedTags as $tags) {
+    //                 $assocTags[]    = SeoTagHindi::query()->where('tag_id', $tags->tag_id)->select('tag_id', 'name')->first();
+    //             }
+    //             return view('admin/insights/edit_hindi_insights', compact('kicker', 'data', 'assocTags', 'company', 'authors', 'InsightCategory', 'brands', 'InsightSubcategory'));
+    //         }
+    //     }
+    // }
+
+
+    // public function updateInsightStatus(Request $request)
+    // {
+    //     $newsId    = $request->News;
+    //     $status    = $request->contentStatus;
+    //     if ($request->segment(2) == 'en') {
+    //         InsightList::query()->where('news_id', $newsId)->update(['status' => $status]);
+    //     } else {
+    //         InsightListHindi::query()->where('news_id', $newsId)->update(['status' => $status]);
+    //     }
+    //     return response()->json(array('status' => $status), 200);
+    // }
+
+
+
+
+    // public function deleteInsights(Request $request)
+    // {
+
+    //     $contentId    = $request->contentId;
+    //     $request->contentStatus;
+    //     if ($request->segment(2) == 'en') {
+    //         $Content      = InsightList::query()->where('news_id', $contentId)->delete();
+    //     } else {
+    //         $Content      = InsightListHindi::query()->where('news_id', $contentId)->delete();
+    //     }
+    //     return response()->json(array('Content' => $Content), 200);
+    // }
+
+    // public function podcastcreate(Request $request)
+    // {
+    //     // $locale = $request->segment(2);
+    //     return view('admin.podcast.create');
+    // }
+
+
+    // public function podcastore(Request $request)
+    // {
+    //     //dd($request->all());
+    //     try {
+    //         $validator = validator($request->all(), [
+    //             'podcastId' => 'required',
+    //             'Podcast_url' => 'required|unique:fihl_podcstvideo,podcast_link',
+    //             'title' => 'required',
+    //             'image' => 'nullable|file', // Make image optional if not always provided
+    //             'podcast_dur' => 'required',
+    //             'podcast_lang' => 'required',
+    //             'content' => 'required',
+    //         ]);
+
+    //         if ($validator->fails()) {
+    //             return redirect()->back()->withErrors($validator)->withInput();
+    //         }
+
+    //         $fihlvideo = new FihlPodcastVideo();
+
+    //         $fihlvideo->podcast_id = $request->input('podcastId');
+    //         $fihlvideo->podcast_link = $request->input('Podcast_url');
+    //         $fihlvideo->title = $request->input('title');
+    //         $fihlvideo->pod_lang = $request->input('podcast_lang');
+    //         $fihlvideo->duration = $request->input('podcast_dur');
+    //         $fihlvideo->podcast_type = 'A';
+    //         $fihlvideo->status = 'A';
+    //         $fihlvideo->category = 0;
+    //         $fihlvideo->description = $request->input('content');
+    //         $fihlvideo->create_date = Carbon::now();
+
+    //         if ($request->hasFile('image')) {
+    //             $image = $request->file('image');
+
+    //             // Define the upload path based on language
+    //             $uploadPath =  config("constants.ARTICLE_UPLOAD_PATH");
+
+    //             // Resize the image using Image Intervention (optional)
+    //             $resizedImage = Image::make($image)->resize(478, 478)->encode('webp', 90);
+
+    //             // Generate a unique image name (e.g., timestamp-based)
+    //             $imageName = time() . '.webp';
+
+    //             // Save the resized image to S3
+    //             $path = Storage::disk('s3')->put($uploadPath . $imageName, $resizedImage->__toString(), 'public');
+
+    //             // Now that the image is uploaded, save the full URL to the database
+    //             if ($path) {
+    //                 $fihlvideo->image_path = $imageName; // Full S3 URL
+    //                 $fihlvideo->image = $imageName; // Full S3 URL
+    //             }
+    //         }
+
+
+    //         // Save the podcast record
+    //         $fihlvideo->save();
+    //         // Redirect after success
+    //         if ($request->podcast_lang == 'en') {
+    //             return redirect()->route('podcastlist')->with("success", 'Podcast Has Been Added');
+    //         } else {
+    //             return redirect()->route('hindipodcastlist')->with("success", 'Podcast Has Been Added');
+    //         }
+    //     } catch (\Exception $e) {
+    //         // Log the error and return a failure response
+    //         Log::error('Error in podcastore: ' . $e->getMessage());
+    //         return redirect()->back()->with('error', 'An error occurred while saving the podcast.');
+    //     }
+    // }
+
+
+    // public function podcastlist(Request $request)
+    // {
+    //     $locale = $request->segment(2); // Use $request for consistency
+    //     $search = $request->input('search'); // Retrieve search input
+
+    //     $podlist = FihlPodcastVideo::query()
+    //         ->where('podcast_type', 'A')
+    //         ->where('pod_lang', $locale)
+    //         ->whereIn('status', ['A', 'D'])
+    //         ->when($search, function ($query, $search) {
+    //             $query->where(function ($q) use ($search) {
+    //                 $q->where('title', 'LIKE', "%{$search}%")
+    //                     ->orWhere('podcast_id', $search);
+    //             });
+    //         })
+    //         ->orderByDesc('create_date')
+    //         ->paginate(10);
+
+    //     return view('admin.podcast.podlist', compact('podlist'));
+    // }
+
+
+    // public function updatepodcastatus(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $podcastId    = $request->podcast_id;
+    //     $status    = $request->status;
+    //     $locale = $request->segment(2);
+    //     $podstatus = FihlPodcastVideo::query()->where('sno', $podcastId)->update(['status' => $status]);
+    //     // dd($podstatus);
+    //     return response()->json(array('status' => $status), 200);
+    // }
+
+    // public function deletepodcast(Request $request)
+    // {
+    //     // dd($request->all());
+    //     FihlPodcastVideo::query()->where('sno', $request->sno)->delete();
+    //     return response()->json(array('status' => 1), 200);
+    // }
+
+    // public function editpodcast(Request $request)
+    // {
+    //     // dd($request->sno);
+    //     $locale = request()->segment(2);
+    //     $data = FihlPodcastVideo::query()->where('sno', $request->sno)->first();
+    //     // dd($data);
+    //     return view('admin.podcast.edit', compact('data'));
+    // }
+
+    // public function podcastUpdate(Request $request)
+    // {
+    //     // Validate the incoming request data
+    //     $validator = Validator::make($request->all(), [
+    //         'podcastId'     => 'required',
+    //         'Podcast_url'   => 'required',
+    //         'title'         => 'required',
+    //         'podcast_dur'   => 'required',
+    //         'podcast_lang'  => 'required',
+    //         'content'       => 'required',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return redirect()->back()->withErrors($validator)->withInput();
+    //     }
+
+    //     try {
+    //         // Find the existing podcast record
+    //         $video = FihlPodcastVideo::where('sno', $request->p_id)->first();
+
+    //         if (!$video) {
+    //             return redirect()->back()->with('error', 'Podcast not found.');
+    //         }
+
+    //         // Handle image upload if provided
+    //         $fimage = $video->image_path; // Default to existing image path
+
+    //         if ($request->hasFile('image')) {
+    //             $image = $request->file('image');
+
+    //             // Define the upload path for S3
+    //             $uploadPath = config("constants.ARTICLE_UPLOAD_PATH");
+
+    //             // Resize the image using Image Intervention (optional)
+    //             $resizedImage = Image::make($image)->resize(478, 478)->encode('webp', 90);
+
+    //             // Generate a unique filename
+    //             $imageName = time() . '.webp'; // Unique file name based on the current time
+
+    //             // Save the image to S3
+    //             $path = Storage::getFacadeRoot()->disk('s3')->put($uploadPath . $imageName, $resizedImage->__toString(), 'public');
+
+    //             // Generate the full URL of the image on S3
+    //             if ($path) {
+    //                 $fimage = $imageName; // Full S3 URL
+    //             }
+    //         }
+
+
+    //         // Update the podcast attributes
+    //         $updateData = [
+    //             'podcast_id'   => $request->input('podcastId'),
+    //             'podcast_link' => $request->input('Podcast_url'),
+    //             'title'        => $request->input('title'),
+    //             'image_path'   => $fimage,
+    //             'image'   => $fimage,
+    //             'duration'     => $request->input('podcast_dur'),
+    //             'pod_lang'     => $request->input('podcast_lang'),
+    //             'status'       => $request->input('status', 'A'),
+    //             'podcast_type' => 'A', // Fixed type
+    //             'description'  => $request->input('content'),
+    //         ];
+
+    //         Log::info('Podcast Update Data', $updateData);
+    //         $video->update($updateData);
+
+
+    //         // Redirect based on language
+    //         $route = $request->podcast_lang === 'en' ? 'podcastlist' : 'hindipodcastlist';
+    //         return redirect()->route($route)->with('success', 'Podcast has been updated successfully.');
+    //     } catch (\Exception $e) {
+    //         // Log the error and return an error response
+    //         Log::error('Error in podcastUpdate: ' . $e->getMessage());
+    //         return redirect()->back()->with('error', 'An error occurred while updating the podcast.');
+    //     }
+    // }
+
+    // public function videolist(Request $request)
+    // {
+    //     $locale = $request->segment(2); // Use $request for consistency
+    //     $search = $request->input('search');
+
+    //     // Build the query
+    //     $videos = FihlPodcastVideo::query()
+    //         ->with('VideoCategory')
+    //         ->whereIn('status', ['A', 'D'])
+    //         ->where('podcast_type', 'v')
+    //         ->where('pod_lang', $locale)
+    //         ->when($search, function ($query, $search) {
+    //             $query->where(function ($q) use ($search) {
+    //                 $q->where('title', 'LIKE', "%{$search}%")
+    //                     ->orWhere('videoID', $search);
+    //             });
+    //         })
+    //         ->orderBy('create_date', 'desc')
+    //         ->paginate(20);
+
+    //     return view('admin.videos.videolist', compact('videos'));
+    // }
+
+
+    // public function videocreate()
+    // {
+    //     $category = FihlVideoCategory::all();
+    //     return view('admin.videos.videocreate', compact('category'));
+    // }
+
+    // public function videostore(Request $request)
+    // {
+
+    //     // dd($request->all());
+    //     try {
+    //         $validator = validator($request->all(), [
+    //             'videoId' => 'required',
+    //             'category' => 'required',
+    //             'title' => 'required',
+    //             'video_duration' => 'required',
+    //             'pod_lang' => 'required',
+    //             'content' => 'required',
+    //         ]);
+
+    //         if ($validator->fails()) {
+    //             return redirect()->back()->withErrors($validator)->withInput();
+    //         }
+
+    //         $fihlvideo = new FihlPodcastVideo();
+
+    //         $fihlvideo->videoID = $request->input('videoId');
+    //         // $fihlvideo->podcast_link = $request->input('Podcast_url');
+    //         $fihlvideo->title = $request->input('title');
+    //         $fihlvideo->pod_lang = $request->input('pod_lang');
+    //         $fihlvideo->duration = $request->input('video_duration');
+    //         $fihlvideo->podcast_type = 'V';
+    //         $fihlvideo->status = 'A';
+    //         $fihlvideo->category = $request->input('category');
+    //         $fihlvideo->description = $request->input('content');
+    //         $fihlvideo->create_date = Carbon::now();
+
+    //         // Save the podcast record
+    //         $fihlvideo->save();
+    //         // Redirect after success
+    //         if ($request->pod_lang == 'en') {
+    //             return redirect()->route('videolist')->with("success", 'Video Has Been Added');
+    //         } else {
+    //             return redirect()->route('hindivideolist')->with("success", 'Video Has Been Added');
+    //         }
+    //     } catch (\Exception $e) {
+    //         // Log the error and return a failure response
+    //         Log::error('Error in podcastore: ' . $e->getMessage());
+    //         return redirect()->back()->with('error', 'An error occurred while saving the video.');
+    //     }
+    // }
+
+    // public function updatevideostatus(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $podcastId    = $request->video_id;
+    //     $status    = $request->status;
+    //     // $locale = $request->segment(2);
+    //     $podstatus = FihlPodcastVideo::query()->where('sno', $podcastId)->update(['status' => $status]);
+    //     // dd($podstatus);
+    //     return response()->json(array('status' => $status), 200);
+    // }
+
+    // public function editvideo(Request $request)
+    // {
+    //     // dd($request->sno);
+    //     $locale = request()->segment(2);
+    //     $category = FihlVideoCategory::all();
+    //     $data = FihlPodcastVideo::query()->where('sno', $request->sno)->first();
+    //     // dd($data);
+    //     return view('admin.videos.videoedit', compact('data', 'category'));
+    // }
+
+    // public function videoUpdate(Request $request)
+    // {
+    //     // dd($request->all());fv
+    //     // Validate the incoming request data
+    //     $validator = Validator::make($request->all(), [
+    //         'videoId'     => 'required',
+    //         'category'   => 'required',
+    //         'title'         => 'required',
+    //         'video_duration'   => 'required',
+    //         'pod_lang'  => 'required',
+    //         'content'       => 'required',
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return redirect()->back()->withErrors($validator)->withInput();
+    //     }
+
+    //     try {
+    //         // Find the existing podcast record
+    //         $video = FihlPodcastVideo::where('sno', $request->sno)->first();
+
+    //         if (!$video) {
+    //             return redirect()->back()->with('error', 'Video not found.');
+    //         }
+
+
+    //         // Update the podcast attributes
+    //         $updateData = [
+    //             'videoID'   => $request->input('videoId'),
+    //             'category' => $request->input('category'),
+    //             'title'        => $request->input('title'),
+    //             // 'image_path'   => $fimage,
+    //             // 'image'   => $fimage,
+    //             'duration'     => $request->input('video_duration'),
+    //             'pod_lang'     => $request->input('pod_lang'),
+    //             'status'       => $request->input('status', 'A'),
+    //             'podcast_type' => 'V', // Fixed type
+    //             'description'  => $request->input('content'),
+    //         ];
+
+    //         Log::info('Video Update Data', $updateData);
+    //         $video->update($updateData);
+
+
+    //         // Redirect based on language
+    //         $route = $request->pod_lang === 'en' ? 'videolist' : 'hindivideolist';
+    //         return redirect()->route($route)->with('success', 'Video has been updated successfully.');
+    //     } catch (\Exception $e) {
+    //         // Log the error and return an error response
+    //         Log::error('Error in VideoUpdate: ' . $e->getMessage());
+    //         return redirect()->back()->with('error', 'An error occurred while updating the Video.');
+    //     }
+    // }
+
+    // public function deletevideo(Request $request)
+    // {
+    //     // dd($request->all());
+    //     FihlPodcastVideo::query()->where('sno', $request->sno)->delete();
+    //     return response()->json(array('status' => 1), 200);
+    // }
+
+
 
 
     public static function createimgurl($image, $lang)

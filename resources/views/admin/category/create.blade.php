@@ -57,37 +57,49 @@
             .tt-suggestion p {
                 margin: 0;
             }
+
+            .btn-secondary {
+                background-color: #6c757d;
+                border-color: #5a6268;
+                color: #fff;
+                box-shadow: none;
+            }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                border-color: #545b62;
+                color: #fff;
+            }
         </style>
     @endpush
     <div id="content-header">
         @php
+            $lang = session()->get('lang');
             $language = $lang == 'en' ? 'English' : 'Hindi';
         @endphp
         <div id="breadcrumb">
             <a href="{{ route('admin.Dashboard') }}" title="Go to Home" class="tip-bottom"><i class="fa fa-home"></i> Home</a>
-            <a href="{{ route('cat.list', ['lang' => $lang]) }}" class="tip-bottom" title="Go to Manage Categories"><i
-                    class="fa fa-cube"></i> Manage
-                Categories</a>
-            <a class="current">Edit {{ $language }} Main Category</a>
+            <a href="{{ route('cat.list', ['lang' => $lang]) }}" title="Go to Manage Categories" class="tip-bottom"><i
+                    class="fa fa-cube"></i> Manage Categories</a>
+            <a class="current">Add {{ $language }} Main Category</a>
         </div>
+        {{-- <h1>Add {{ $language }} Main Category</h1> --}}
     </div>
     <div class="container-fluid">
-        <!-- <hr> -->
+        {{-- <hr> --}}
         <div class="row-fluid">
             <div class="widget-box">
                 <div class="widget-title"> <span class="icon"> <i class="fa fa-cube"></i> </span>
-                    <h5>Edit {{ $language }} Main Category</h5>
+                    <h5>Add {{ $language }} Main Category</h5>
                 </div>
                 <div class="widget-content nopadding">
-                    <form method="POST" class="form-horizontal" action="{{ route('cat.update', ['lang' => $lang]) }}">
+                    <form method="POST" class="form-horizontal" action="{{ route('cat.store', ['lang' => $lang]) }}">
                         @csrf
-                        <input type="hidden" name="catid" value="{{ $editData->id }}">
                         <div class="control-group">
                             <label class="control-label">Main Category :</label>
                             <div class="controls">
-                                <input type="text" maxlength="125" required class="typeahead tt-query" autocomplete="off"
-                                    spellcheck="false" name="maincat" id="maincat" placeholder="Enter Main Category"
-                                    value="{{ $editData->catname }}" oninput="chText('{{ $lang }}')" />
+                                <input type="text" maxlength="125" required class="span11" name="maincat" id="maincat"
+                                    placeholder="Enter Main Category" oninput="chText('{{ $lang }}')" />
                                 <span id="error-message" style="color:red;"></span>
 
                             </div>
@@ -97,12 +109,16 @@
                                 <label class="control-label">Slug :</label>
                                 <div class="controls">
                                     <input type="text" maxlength="125" required class="span11" name="slug"
-                                        id="slug" placeholder="Slug" value="{{ $editData->slug }}" />
+                                        id="slug" placeholder="Slug" />
                                 </div>
                             </div>
                         @endif
-                        <div class="form-actions" style="text-align: center;">
-                            <button type="submit" id="ariclesubmit" class="btn btn-success">Update</button>
+
+                        <div class="form-actions">
+                            <a href="{{ route('cat.list', ['lang' => $lang]) }}" class="btn btn-secondary"><i
+                                    class="fa fa-times"></i> Cancel</a>
+                            <button type="submit" class="btn btn-success" style="float: right;" id="newssubmit"><i
+                                    class="fa fa-save"></i> Save</button>
                         </div>
                     </form>
                 </div>
@@ -122,7 +138,6 @@
                 if (regex.test(str)) {
                     str = str.replace(regex, "");
                     $("#maincat").val(str);
-                    // SweetAlert warning
                     Swal.fire({
                         icon: 'warning',
                         title: locale === 'en' ? 'Invalid Characters' : 'अमान्य अक्षर',

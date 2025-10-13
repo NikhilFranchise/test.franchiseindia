@@ -1,377 +1,448 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('admin.layout.master')
+@section('M-POD', 'active open')
+@section('POD-L', 'active')
+@section('content')
+    @push('styles')
+        <style>
+            .search-results {
+                margin-top: 63px;
+                display: block;
+                width: 96%;
+            }
 
-<head>
-    <title>Franchise India Admin Panel</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{{ url('admin/css/bootstrap.min.css') }}" />
-    <link href="{{ url('admin/css/bootstrap-switch.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url('admin/css/bootstrap-responsive.min.css') }}" />
-    <link rel="stylesheet" href="{{ url('admin/css/matrix-style.css') }}" />
-    <link rel="stylesheet" href="{{ url('admin/css/matrix-media.css') }}" />
-    <link href="{{ url('admin/font-awesome/css/font-awesome.css') }}" rel="stylesheet" />
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" />
-    <style>
-        .search-results {
-            margin-top: 63px;
-            display: block;
-            width: 96%;
-        }
+            .search-results input {
+                width: 400px;
+            }
 
-        .search-results input {
-            width: 400px;
-        }
+            .search-result-inner {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                width: 100%;
+            }
 
-        .search-result-inner {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            width: 100%;
-        }
+            .search-result-inner a.greens {
+                height: 20px;
+            }
 
-        .search-result-inner a.greens {
-            height: 20px;
-        }
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 40px;
+                height: 20px;
+            }
 
-        .switch input {
-            display: none;
-        }
+            .switch input {
+                display: none;
+            }
 
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
 
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            -webkit-transition: .4s;
-            transition: .4s;
-        }
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 19px;
+                width: 19px;
+                left: 1px;
+                bottom: 1px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
 
-        input:checked+.slider {
-            background-color: #2196F3;
-        }
+            input:checked+.slider {
+                background-color: #2196F3;
+            }
 
-        input:focus+.slider {
-            box-shadow: 0 0 1px #2196F3;
-        }
+            input:focus+.slider {
+                box-shadow: 0 0 1px #2196F3;
+            }
 
-        input:checked+.slider:before {
-            -webkit-transform: translateX(26px);
-            -ms-transform: translateX(26px);
-            transform: translateX(26px);
-        }
+            input:checked+.slider:before {
+                -webkit-transform: translateX(26px);
+                -ms-transform: translateX(26px);
+                transform: translateX(26px);
+                right: 26px;
+                left: auto;
+            }
 
-        .gradeX>td {
-            text-align: center;
-        }
+            /* Rounded sliders */
+            .slider.round {
+                border-radius: 34px;
+            }
 
-        /* Rounded sliders */
-        .slider.round {
-            border-radius: 34px;
-        }
+            .slider.round:before {
+                border-radius: 50%;
+            }
 
-        .slider.round:before {
-            border-radius: 50%;
-        }
+            .custpagin {
+                background-color: #dfdfdf;
+                margin-bottom: 10px;
+            }
 
-        .round-button-circle {
-            width: 45px;
-            border-radius: 50%;
-            overflow: hidden;
-            background: #4679BD;
-            box-shadow: 0 0 3px gray;
-        }
+            .custpagin .pagination li {
+                display: inline-grid;
+                font-size: 20px;
+                margin-left: 1px;
+                margin-right: 1px;
+                border-width: 1px;
+                border-radius: 6px;
+            }
 
-        .round-button-circle:hover {
-            background: #30588e;
-        }
+            .custpagin .pagination {
+                text-align: right;
+            }
 
-        .round-button a {
-            display: block;
-            float: left;
-            width: 100%;
-            padding-top: 35%;
-            padding-bottom: 50%;
-            line-height: 1em;
-            margin-top: -0.5em;
-            text-align: center;
-            color: #e2eaf3;
-            font-family: "Verdana", "serif";
-            font-size: 1.2em;
-            font-weight: bold;
-            text-decoration: none;
-        }
+            .custpagin .pagination li.active {
+                background-color: #faa732;
+                color: #fff;
+                padding: 3px 7px;
+                border-radius: 6px;
+                border: 1px;
+            }
 
-        .custpagin {
-            background-color: #dfdfdf;
-            margin-bottom: 10px;
-        }
+            .custpagin .pagination li a {
+                padding: 3px 7px;
+                background-color: #41BEDD;
+                color: #fff;
+                border-radius: 6px;
+                border: 1px;
+            }
 
-        .custpagin .pagination li {
-            display: inline-grid;
-            font-size: 20px;
-            margin-left: 1px;
-            margin-right: 1px;
-            border-width: 1px;
-            border-radius: 6px;
-        }
+            .nav-tabs>li.active>a,
+            .nav-tabs>li.active>a:hover,
+            .nav-tabs>li.active>a:focus {
+                color: #fff;
+                cursor: default;
+                background-color: #4b4f54;
+                border: 1px solid #ddd;
+                border-bottom-color: transparent;
+            }
 
-        .custpagin .pagination {
-            text-align: right;
-        }
 
-        .custpagin .pagination li.active {
-            background-color: #faa732;
-            color: #fff;
-            padding: 3px 7px;
-            border-radius: 6px;
-            border: 1px;
-        }
+            .nav-tabs>li>a:hover,
+            .nav-tabs>li>a:focus {
+                margin-right: 2px;
+                line-height: 1.42857143;
+                border: 1px solid transparent;
+                border-radius: 4px 4px 0 0;
+                background-color: #4b4f54;
+                color: #fff;
+            }
 
-        .custpagin .pagination li a {
-            padding: 3px 7px;
-            background-color: #41BEDD;
-            color: #fff;
-            border-radius: 6px;
-            border: 1px;
-        }
-    </style>
+            #podTable td {
+                font-size: 13px;
+                text-align: left;
+            }
 
-</head>
+            #podTable th {
+                font-size: 13px;
+                padding: 7px;
+            }
 
-<body>
+            .btn-secondary {
+                color: #fff;
+                background-color: #6c757d;
+                border-color: #6c757d;
+                box-shadow: none;
+            }
+
+            .btn-secondary:hover {
+                color: #fff;
+                background-color: #5a6268;
+                border-color: #545b62;
+            }
+        </style>
+    @endpush
     @php
-        $locale = request()->segment(2);
-        $lang = $locale == 'en' ? 'English' : 'Hindi';
+        $language = $lang == 'en' ? 'English' : 'Hindi';
     @endphp
-    <!--Header-part-->
-    @include('admin.includes.header')
-    <!--close-top-Header-menu-->
-
-    <!--sidebar-menu-->
-    @section($lang . '-POD')
-        active
-    @endsection
-    @include('admin.includes.sidebar')
-    <!--sidebar-menu-->
-
-    <div id="content">
-
-        <!--breadcrumbs-->
-        <div id="content-header">
-            <div id="breadcrumb"> <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
-                        class="icon-home"></i> Home</a> <a href="#" class="tip-bottom">Podcast</a> <a
-                    href="#" class="current">{{ $lang }} Podcast LIst</a> </div>
-            <h1>{{ $lang }} Podcast Listing</h1>
+    <!--breadcrumbs-->
+    <div id="content-header">
+        <div id="breadcrumb"> <a href="{{ route('admin.Dashboard') }}" title="Go to Home" class="tip-bottom"><i
+                    class="fa fa-home"></i> Home</a> <a href="{{ route('podcast.list', ['lang' => $lang]) }}"
+                title="Go to Manage Podcast" class="tip-bottom"><i class="fa fa-podcast"></i> Manage Podcasts</a> <a
+                href="{{ url()->current() }}" class="current">{{ $language }} Podcasts</a>
         </div>
-        <br>
-        <!--End-breadcrumbs-->
-        <div class="search-results container-fluid">
-            <div class="search-result-inner">
+        <h1>{{ $language }} Podcasts</h1>
+    </div>
+    <br>
+    <!--End-breadcrumbs-->
+    <div class="search-results container-fluid">
+        <div class="search-result-inner">
 
-                <a href="{{ url('admin/createpodcast') }}"
-                    class="greens float-right btn btn-md btn-success">
-                    <i class="fa fa-plus-circle"></i>{{ ' Add New Podcast' }}
-                </a>
-                <form action="{{ url('admin/'.$locale.'/podcastlist') }}" method="get">
-                    <input type="text" name="search"class="span7" placeholder="Enter Podcast Id or Title to search"
-                        @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
-                    <input type="submit" class="btn"
-                        value="Search"style="margin-top: -12px; margin-left: 10px; width: 110px;" />
-                    <a href="{{ url('admin/'. $locale .'/podcastlist') }}" class="btn"style="margin-top: -12px;">Reset
-                        Search</a>
-                </form>
-            </div>
-        </div>
-        <div class="container-fluid">
-            <div class="row-fluid">
-                <div class="span12">
-                    <ul class="nav nav-tabs">
-                        <li @if (url()->current() == url('admin/en/podcastlist')) class="active" @endif><a
-                                href="{{ url('admin/en/podcastlist') }}">English Podcast List</a></li>
-                        <li @if (url()->current() == url('admin/hi/podcastlist')) class="active" @endif><a
-                                href="{{ url('admin/hi/podcastlist') }}">Hindi Podcast List</a></li>
-                    </ul>
-                    <div class="widget-box">
-                        <div class="widget-content nopadding">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Podcast Id</th>
-                                        <th>Spotify Link</th>
-                                        <th>Title</th>
-                                        <th>Website Link</th>
-                                        <th>Status</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tablecontent">
-                                    @foreach ($podlist as $data)
-                                        <tr class="gradeX">
-                                            @php
-                                                $url = url('/insights/' . $data->pod_lang . '/podcast');
-
-                                            @endphp
-                                            <td>{{ $data->podcast_id }}</td>
-                                            <td>{{ $data->podcast_link }}</td>
-                                            <td>{{ $data->title }}</td>
-                                            <td>
-                                                <div class="round-button">
-                                                    <div class="round-button-circle"><a href="{{ $url }}"
-                                                            target="_blank" class="round-button">Go</a></div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <center>
-                                                    <label class="switch">
-                                                        <input type="checkbox" value="{{ $data->sno }}"
-                                                            class="activestate"
-                                                            {{ $data->status == 'A' ? 'checked' : '' }}>
-                                                        <span class="slider round"></span>
-                                                    </label>
-                                                </center>
-                                            </td>
-                                            <td>
-                                                <center><button class="btn btn-medium btn-warning"
-                                                        style="border-radius: 4px"><a
-                                                            href="/admin/edit-podcast/{{ $data->sno }}">Edit</a></button>
-                                                </center>
-                                            </td>
-                                            <td>
-                                                <center><button class="btn btn-medium btn-danger deletepodcast"
-                                                        style="border-radius: 4px"
-                                                        data-value="{{ $data->sno }}">Delete</button>
-                                                </center>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <!-- Modal confirm -->
-                            <div class="modal" id="confirmModal" style="display: none; z-index: 1050;">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-body" id="confirmMessage">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" id="confirmOk">Ok</button>
-                                            <button type="button" class="btn btn-default"
-                                                id="confirmCancel">Cancel</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="custpagin">{{ $podlist->links('pagination::bootstrap-4') }}</div>
-                    </div>
-                </div>
-            </div>
-
+            <a href="{{ route('podcast.create', ['lang' => $lang]) }}" class="greens float-right btn btn-md btn-success">
+                <i class="fa fa-plus-circle"></i>{{ " Add New {$language} Podcast" }}
+            </a>
+            <form action="{{ route('podcast.list', ['lang' => $lang]) }}" method="get">
+                <input type="text" name="search" class="span7" placeholder="Enter Podcast Id or Title to search"
+                    @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
+                <input type="submit" class="btn btn-secondary" value="Search"
+                    style="margin-top: -12px; margin-left: 10px; width: 110px;" />
+                <a href="{{ route('podcast.list', ['lang' => $lang]) }}" class="btn btn-secondary"
+                    style="margin-top: -12px;">Reset
+                    Search</a>
+            </form>
         </div>
     </div>
-    <!--Footer-part-->
-    @include('admin.includes.footer')
-    <!--end-Footer-part-->
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <ul class="nav nav-tabs">
+                    <li @if (url()->current() == route('podcast.list', ['lang' => 'en'])) class="active" @endif><a
+                            href="{{ route('podcast.list', ['lang' => 'en']) }}">English Podcasts</a></li>
+                    <li @if (url()->current() == route('podcast.list', ['lang' => 'hi'])) class="active" @endif><a
+                            href="{{ route('podcast.list', ['lang' => 'hi']) }}">Hindi Podcasts</a></li>
+                </ul>
+                <div class="widget-box">
+                    <div class="widget-title" style="font-size: 13px"><span class="icon"><i
+                                class="fa fa-podcast"></i></span>
+                        @if (request()->query('search'))
+                            <h5>Displaying {{ $totalRecords }} records for the search term
+                                '<strong>{{ request()->query('search') }}</strong>'.</h5>
+                        @else
+                            <h5>Showing a total of {{ $totalRecords }} records.</h5>
+                        @endif
+                    </div>
+                    <div class="widget-content nopadding">
+                        @php
+                            $user = Auth::guard('admin')->user();
+                            $colspan = in_array($user->admin_role, ['admin']) ? 3 : 2;
+                            $canDelete = in_array($user->admin_role, ['admin']);
+                        @endphp
+                        <table class="table table-bordered table-striped" id="podTable">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">Podcast Id</th>
+                                    <th rowspan="2">Title</th>
+                                    <th rowspan="2">Date</th>
+                                    <th rowspan="2">Link</th>
+                                    <th colspan="{{ $colspan }}">Action</th>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Edit</th>
+                                    @if ($canDelete)
+                                        <th>Delete</th>
+                                    @endif
+                                </tr>
+                            </thead>
+                            <tbody id="tablecontent">
+                                @foreach ($podlist as $data)
+                                    <tr class="gradeX">
+                                        @php
+                                            $url = url('/insights/' . $data->pod_lang . '/podcast');
 
-    <script src="{{ url('admin/js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script>
-        @if (Session::has('success'))
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": true,
-            }
-            toastr.success("{{ session('success') }}")
-        @elseif (Session::has('error'))
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": true,
-            }
-            toastr.error(" {{ session('error') }}")
+                                        @endphp
+                                        <td>{{ $data->podcast_id }}</td>
+                                        <td>{{ $data->title }}</td>
+                                        <td title="{{ date('d-M-Y', strtotime($data->created_at)) }}">
+                                            {{ $data->created_at->diffForHumans() }}
+                                        </td>
+                                        <td>
+                                            <center><a href="{{ $url }}" target="_blank"
+                                                    class="btn btn-secondary"><i class="fa fa-external-link-alt"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <label class="switch">
+                                                    <input type="checkbox" value="{{ $data->sno }}" class="activestatus"
+                                                        {{ $data->status == 'A' ? 'checked' : '' }}>
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center><button class="btn btn-warning" style="border-radius: 4px"><a
+                                                        href="{{ route('podcast.edit', ['id' => $data->sno, 'lang' => $lang]) }}"><i
+                                                            class="fa fa-edit"></i></a></button>
+                                            </center>
+                                        </td>
+                                        @if ($canDelete)
+                                            <td>
+                                                <center>
+                                                    <a href="javascript:void(0);" class="btn btn-danger deletepodcast"
+                                                        data-id="{{ $data->sno }}">
+                                                        <i class="fa fa-trash-alt"></i>
+                                                    </a>
+                                                </center>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="custpagin">{{ $podlist->links('pagination::bootstrap-4') }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @push('scripts')
+        @if (session('success'))
+            <script>
+                Swal.fire({
+                    position: 'top-end',
+                    toast: true,
+                    icon: 'success',
+                    title: 'Success!',
+                    text: "{{ session('success') }}",
+                    timer: 3000,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    background: '#f0f9f4',
+                    color: '#155724',
+                    confirmButtonColor: '#28a745'
+                });
+            </script>
         @endif
-    </script>
-    <script type="text/javascript">
-        $('.activestate').click(function() {
-            var id = this.value;
-            var status = 'D';
-            if (this.checked)
-                status = 'A';
+        @if (session('warning'))
+            <script>
+                Swal.fire({
+                    position: 'top-end',
+                    toast: true,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    background: '#fff3cd',
+                    color: '#856404',
+                    icon: 'warning',
+                    title: 'Warning!',
+                    text: "{{ session('warning') }}",
+                    confirmButtonColor: '#ffc107'
+                });
+            </script>
+        @endif
+        @if (session('error'))
+            <script>
+                Swal.fire({
+                    position: 'top-end',
+                    toast: true,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    background: '#fff3cd',
+                    color: '#856404',
+                    icon: 'error',
+                    title: 'Oops!',
+                    text: `{{ session('error') }}`,
+                    confirmButtonColor: '#dc3545'
+                });
+            </script>
+        @endif
+        <script>
+            $('.activestatus').on('change', function() {
+                const id = this.value; // safer than val()
+                const status = this.checked ? 'A' : 'D';
 
-            $.ajax({
-                type: "POST",
-                url: '/updatepodcastatus',
-                data: {
-                    "podcast_id": id,
-                    "status": status,
-                    "_token": "{{ csrf_token() }}"
-                }
-            });
-        });
-
-        var YOUR_MESSAGE_STRING_CONST = "Are you sure to delete this news?";
-        $('.deletepodcast').click(function() {
-            var x = $(this).attr('data-value');
-            confirmDialog(YOUR_MESSAGE_STRING_CONST, function() {
                 $.ajax({
-                    type: "POST",
-                    url: '/deletepodcast',
+                    type: 'POST',
+                    url: "{{ route('podcast.status', ['lang' => $lang]) }}",
                     data: {
-                        "sno": x,
-                        "_token": "{{ csrf_token() }}"
+                        podId: id,
+                        status: status,
+                        _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                        $(document).ajaxStop(function() {
-                            window.location.reload();
+                        if (data.success) {
+                            const podStatus = (data.status == 'A') ? 'Active' : 'Inactive';
+                            Swal.fire({
+                                position: 'top-end',
+                                toast: true,
+                                icon: 'success',
+                                title: `Podcast status changed to ` + podStatus + `!`,
+                                timer: 3000,
+                                showConfirmButton: false,
+                                timerProgressBar: true
+                            });
+                        } else {
+                            Swal.fire({
+                                position: 'top-end',
+                                toast: true,
+                                icon: 'error',
+                                title: 'Error',
+                                text: data.message || 'Unable to update status.',
+                                timer: 3000,
+                                showConfirmButton: false,
+                                timerProgressBar: true
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        let res = xhr.responseJSON;
+                        let message = res?.message || 'Unexpected error occurred.';
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'error',
+                            title: 'Error',
+                            text: message,
+                            timer: 3000,
+                            showConfirmButton: false,
+                            timerProgressBar: true
                         });
                     }
                 });
             });
-        });
 
-        function confirmDialog(message, onConfirm) {
-            var fClose = function() {
-                modal.modal("hide");
-            };
-            var confirm = $("#confirmOk");
-            var modal = $("#confirmModal");
-            modal.modal("show");
-            $("#confirmMessage").empty().append(message);
-            confirm.one('click', onConfirm);
-            confirm.one('click', fClose);
-            $("#confirmCancel").one("click", fClose);
-        }
-    </script>
-    <script src="{{ url('admin/js/jquery.ui.custom.js') }}"></script>
-    <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url('admin/js/select2.min.js') }}"></script>
-    <script src="{{ url('admin/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ url('admin/js/matrix.js') }}"></script>
-    <script src="{{ url('admin/js/matrix.tables.js') }}"></script>
-</body>
-
-</html>
+            $('.deletepodcast').click(function() {
+                var podId = $(this).data('id');
+                var lang = '{{ $lang }}';
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You want to delete this Podcast ?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ route('delete.podcast', ['lang' => $lang, 'id' => '__ID__']) }}"
+                                .replace('__ID__', podId),
+                            data: {
+                                id: podId,
+                                lang: lang,
+                                _token: "{{ csrf_token() }}"
+                            },
+                            success: function(data) {
+                                Swal.fire({
+                                    position: 'top-end',
+                                    toast: true,
+                                    icon: 'success',
+                                    title: 'Deleted!',
+                                    text: 'The Podcast has been deleted.',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            },
+                            error: function() {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Something went wrong!'
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+    @endpush
+@endsection

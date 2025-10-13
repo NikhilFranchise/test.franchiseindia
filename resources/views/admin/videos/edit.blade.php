@@ -1,6 +1,6 @@
 @extends('admin.layout.master')
-@section('M-POD', 'active open')
-@section('POD-L', 'active')
+@section('VID', 'active open')
+@section('VL', 'active')
 @section('content')
     @push('styles')
         <style type="text/css">
@@ -39,52 +39,42 @@
     <div id="content-header">
         <div id="breadcrumb">
             <a href="{{ route('admin.Dashboard') }}" title="Go to Home" class="tip-bottom"><i class="fa fa-home"></i> Home</a>
-            <a href="{{ route('podcast.list', ['lang' => $lang]) }}" title="Go to Manange Podcasts" class="tip-bottom"><i
-                    class="fa fa-podcast"></i> Manage Podcasts</a>
-            <a href="{{ url()->current() }}" class="current">Add {{ $language }} Podcast</a>
+            <a href="{{ route('video.list', ['lang' => $lang]) }}" class="tip-bottom" title="Go to Manage Videos"><i
+                    class="fa fa-video"></i> Manage Videos</a>
+            <a href="{{ url()->current() }}" class="current">Edit {{ $language }} Video</a>
         </div>
+        {{-- <h1>Edit Video</h1> --}}
     </div>
     <!--End-breadcrumbs-->
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="widget-box">
-                <div class="widget-title"><span class="icon"> <i class="fa fa-podcast"></i> </span>
-                    <h5>Add {{ $language }} Podcast</h5>
+                <div class="widget-title"><span class="icon"> <i class="fa fa-video"></i> </span>
+                    <h5>Edit {{ $language }} Video</h5>
                 </div>
                 <div class="widget-content nopadding">
                     <form method="POST" class="form-horizontal" enctype="multipart/form-data"
-                        action="{{ route('podcast.store', ['lang' => $lang]) }}" id="podform" novalidate>
+                        action="{{ route('video.update', ['lang' => $lang]) }}" id="videoform" novalidate>
+                        <input type="hidden" name="sno" value="{{ $data->sno }}">
                         @csrf
                         <div class="control-group">
-                            <label class="control-label">Podcast ID :</label>
+                            <label class="control-label">Video ID :</label>
                             <div class="controls">
-                                <input required type="text" class="span11" name="podcastId" title="Podcast ID"
-                                    placeholder="Podcast ID" value="{{ old('podcastId', '') }}">
-                                @if ($errors->has('podcastId'))
-                                    @foreach ($errors->get('podcastId') as $error)
+                                <input type="text" required class="span11" name="videoId" title="Video ID"
+                                    placeholder="Video ID" value="{{ $data->videoID }}">
+                                @if ($errors->has('videoId'))
+                                    @foreach ($errors->get('videoId') as $error)
                                         <br><span style="color: red;">{{ $error }}</span>
                                     @endforeach
                                 @endif
                             </div>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label">Podcast URL :</label>
-                            <div class="controls">
-                                <input required type="text" class="span11" name="Podcast_url" title="Podcast URL"
-                                    placeholder="Podcast URL" value="{{ old('Podcast_url', '') }}" />
 
-                                @if ($errors->has('Podcast_url'))
-                                    @foreach ($errors->get('Podcast_url') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
-                            </div>
-                        </div>
                         <div class="control-group">
-                            <label class="control-label">Podcast Title :</label>
+                            <label class="control-label">Video Title :</label>
                             <div class="controls">
-                                <input type="text" maxlength="125" required class="span11" placeholder="Enter Title"
-                                    name="title" value="{{ old('title', '') }}" />
+                                <input type="text" maxlength="125" required class="span11"
+                                    placeholder="Enter Video Title" name="title" value="{{ $data->title }}" />
                                 @if ($errors->has('title'))
                                     @foreach ($errors->get('title') as $error)
                                         <br><span style="color: red;">{{ $error }}</span>
@@ -92,33 +82,53 @@
                                 @endif
                             </div>
                         </div>
-
                         <div class="control-group">
-                            <label class="control-label">Podcast Language :</label>
+                            <label class="control-label">Video Category :</label>
                             <div class="controls">
+                                <select class="span11" name="category" id="category">
+                                    <option value="">Select Category</option>
+                                    @foreach ($category as $cate)
+                                        <option value="{{ $cate->catid }}"
+                                            @if ($data->category == $cate->catid) selected @endif>{{ $cate->catname }}
+                                        </option>
+                                    @endforeach
+                                </select>
 
-                                <select required class="span11" name="podcast_lang">
+                                @if ($errors->has('category'))
+                                    @foreach ($errors->get('category') as $error)
+                                        <br><span style="color: red;">{{ $error }}</span>
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Video Language :</label>
+                            <div class="controls">
+                                <select required class="span11" name="pod_lang">
                                     <option value="" disabled>Select Language</option>
-                                    <option value="en" {{ $lang == 'en' ? 'selected' : '' }}>English</option>
-                                    <option value="hi" {{ $lang == 'hi' ? 'selected' : '' }}>Hindi</option>
+                                    <option value="en" @if ($data->pod_lang == 'en') selected @endif>English
+                                    </option>
+                                    <option value="hi" @if ($data->pod_lang == 'hi') selected @endif>Hindi
+                                    </option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label">Podcast Duration :</label>
+                            <label class="control-label">Video Duration :</label>
                             <div class="controls">
-                                <input type="text" class="span11" name="podcast_dur" placeholder="Podcast Duration"
-                                    value="{{ old('podcast_dur', '') }}">
+                                <input type="text" class="span11" name="video_duration" placeholder=" Video Duration"
+                                    value="{{ str_replace('.', ':', $data->duration) }}">
+
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label for="inputStatus" class="control-label">Podcast Description :</label>
+                            <label for="inputStatus" class="control-label">Video Description :</label>
                             <div class="controls span9">
                                 <div class="form-group">
                                     <textarea name="content" id="inputDescription" class="form-control customError" minlength="2"
-                                        placeholder="Content Description" required>{{ old('content', '') }}</textarea>
+                                        placeholder="Content Description" required>{{ $data->description }}</textarea>
                                     @if ($errors->has('content'))
                                         @foreach ($errors->get('content') as $error)
                                             <br><span style="color: red;">{{ $error }}</span>
@@ -126,30 +136,6 @@
                                     @endif
                                 </div>
                             </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Select Image :</label>
-                            <div class="controls">
-                                <input type="file" required id="showImage" class="span11" name="image"
-                                    value="{{ old('image', '') }}">
-                                @if ($errors->has('image'))
-                                    @foreach ($errors->get('image') as $error)
-                                        <br><span style="color: red;">{{ $error }}</span>
-                                    @endforeach
-                                @endif
-                                <div style="display: none; color: red;" id="showImage_msg">Invalid image type!
-                                    Please
-                                    select a valid image format (JPG, GIF, PNG, or WebP)</div>
-                                <div style="display: none; color: red;" id="showImage_msg_size">Please select a
-                                    image
-                                    of size(Less than 150 KB)</div>
-                                <br />
-                                Note : * Image Size 512x512
-                            </div>
-                            <!-- Image Preview Section -->
-                            <br>
-                            <img id="imagePreview" src="#" alt="Image Preview"
-                                style="display: none; max-width: 300px; margin:0px 195px 15px; border-radius: 5px;">
                         </div>
                         <div class="form-actions">
                             <a href="{{ route('podcast.list', ['lang' => $lang]) }}" class="btn btn-secondary"><i
@@ -207,90 +193,25 @@
                 };
                 tinymce.init(editor_config);
 
+                $("#videoform").validate({
+                    rules: {
+                        title: {
+                            maxlength: 100,
+                            minlength: 3
+                        },
+
+                    },
+                    errorPlacement: function(error, element) {
+                        if (element.hasClass('customError')) {
+                            // custom error placement
+                            element.parent().after(error);
+                        } else {
+                            element.after(error); // default error placement
+                        }
+                    }
+                });
+
             });
-            $("#showImage").change(function() {
-                var val = $(this).val();
-                var fileInput = this;
-                val = val.replace('jpeg', 'jpg');
-
-                switch (val.substring(val.lastIndexOf('.') + 1).toLowerCase()) {
-                    case 'gif':
-                    case 'jpg':
-                    case 'jpeg':
-                    case 'png':
-                    case 'webp':
-                        checkImageSize(fileInput);
-                        previewImage(fileInput); // Show image preview
-                        // $("#altText").show(); // Show alt input
-                        break;
-
-                    default:
-                        $(this).val('');
-                        Swal.fire({
-                            position: 'top-end',
-                            toast: true,
-                            icon: 'error',
-                            title: 'Invalid image type!',
-                            text: 'Please select JPG, GIF, PNG, or WebP format.',
-                            timer: 3000,
-                            showConfirmButton: false,
-                            timerProgressBar: true,
-                            background: '#f8d7da',
-                            color: '#721c24',
-                        });
-                        $('#showImage_msg').css('display', 'block');
-                        $('#newssubmit').prop('disabled', true);
-                        $('#imagePreview').hide();
-                        // $("#altText").hide();
-                        break;
-                }
-            });
-
-            function checkImageSize(fileInput) {
-                if (fileInput.files[0].size > 307200) {
-                    Swal.fire({
-                        position: 'top-end',
-                        toast: true,
-                        icon: 'error',
-                        title: 'Image size too large!',
-                        text: 'Image size should be 300 KB or less.',
-                        timer: 3000,
-                        showConfirmButton: false,
-                        timerProgressBar: true,
-                        background: '#f8d7da',
-                        color: '#721c24',
-                    });
-                    $('#showImage_msg_size').css('display', 'block');
-                    $('#newssubmit').prop('disabled', true);
-                    $('#imagePreview').hide();
-                    // $("#altText").hide();
-                } else {
-                    Swal.fire({
-                        position: 'top-end',
-                        toast: true,
-                        icon: 'success',
-                        title: 'Valid image size!',
-                        text: 'You can proceed.',
-                        timer: 3000,
-                        showConfirmButton: false,
-                        background: '#f0f9f4',
-                        color: '#155724',
-                    });
-                    $('#showImage_msg_size').css('display', 'none');
-                    $('#newssubmit').prop('disabled', false);
-                }
-            }
-
-            function previewImage(fileInput) {
-                if (fileInput.files && fileInput.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#imagePreview').attr('src', e.target.result).show();
-                        // $("#altText").show();
-                    };
-                    reader.readAsDataURL(fileInput.files[0]);
-                }
-            }
         </script>
         @if (session('success'))
             <script>
