@@ -122,17 +122,19 @@
                                             <div class="controls">
                                                 <select name="role" class="span11">
                                                     <option value="author"
-                                                        {{ old('role', $author->admin->admin_role ?? '') == 'author' ? 'selected' : '' }}>
+                                                        {{ old('role', optional($author->admin)->admin_role) == 'author' ? 'selected' : '' }}>
                                                         Author</option>
                                                     <option value="editor"
-                                                        {{ old('role', $author->admin->admin_role ?? '') == 'editor' ? 'selected' : '' }}>
+                                                        {{ old('role', optional($author->admin)->admin_role) == 'editor' ? 'selected' : '' }}>
                                                         Editor</option>
                                                     <option value="manager"
-                                                        {{ old('role', $author->admin->admin_role ?? '') == 'manager' ? 'selected' : '' }}>
+                                                        {{ old('role', optional($author->admin)->admin_role) == 'manager' ? 'selected' : '' }}>
                                                         Manager</option>
-                                                    @if ((!empty($author) && $author->admin->admin_role == 'admin') || Auth::guard('admin')->user()->admin_role == 'admin')
+                                                    @if (
+                                                        (!empty($author) && optional($author->admin)->admin_role == 'admin') ||
+                                                            (Auth::guard('admin')->check() && Auth::guard('admin')->user()->admin_role == 'admin'))
                                                         <option value="admin"
-                                                            {{ old('role', $author->admin->admin_role ?? '') == 'admin' ? 'selected' : '' }}>
+                                                            {{ old('role', optional($author->admin)->admin_role) == 'admin' ? 'selected' : '' }}>
                                                             Admin</option>
                                                     @endif
                                                 </select>

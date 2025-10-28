@@ -89,9 +89,9 @@
                             placeholder="email id & username" name="email" value="{{ old('email') }}" autofocus
                             required />
                     </div>
-                    @error('email')
+                    {{-- @error('email')
                         <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                    @enderror --}}
                 </div>
             </div>
             <div class="control-group">
@@ -99,20 +99,17 @@
                     <div class="main_input_box password-wrapper">
                         <span class="add-on bg_ly"><i class="fa fa-lock"></i></span>
                         <input type="password" class="validate-password" placeholder="Password" name="password"
-                            id="password"
-                            title="Password must be at least 6 characters long and include at least one uppercase letter, one lowercase letter, and one number."
-                            required />
+                            id="password" required />
                         <span class="toggle-password" onclick="togglePassword('password', this)">
                             <i class="fa fa-eye"></i>
                     </div>
-                    @error('password')
+                    {{-- @error('password')
                         <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                    @enderror --}}
                 </div>
             </div>
             <div class="form-actions">
-                <span class="pull-left"><a href="{{ route('admin.reset') }}"
-                        class="flip-link btn btn-secondary">&laquo;
+                <span class="pull-left"><a href="{{ route('admin.reset') }}" class="flip-link btn btn-secondary">&laquo;
                         Forgot
                         password?</a></span>
                 <span class="pull-right"><button type="submit" class="flip-link btn btn-success">Login

@@ -124,12 +124,14 @@
                             <label class="control-label">Insights Title :</label>
                             <div class="controls">
                                 <input type="text" maxlength="125" required class="span11" id="title"
-                                    placeholder="Enter Title" name="title" />
+                                    placeholder="Enter Title" name="title" oninput="updateCharCount('title')" />
                                 @if ($errors->has('title'))
                                     @foreach ($errors->get('title') as $error)
                                         <br><span style="color: red;">{{ $error }}</span>
                                     @endforeach
                                 @endif
+                                <p id="title_count" style="color: gray; margin-top: 5px;">(0 / 125 characters)</p>
+
                             </div>
                         </div>
                         <!-- Slug Input (Editable) -->
@@ -144,13 +146,13 @@
                             <label class="control-label">Insights Sub Title :</label>
                             <div class="controls">
                                 <input type="text" maxlength="255" required class="span11" placeholder="Sub title"
-                                    name="sub_title" id="sub_title" oninput="updateCharCount()" />
+                                    name="sub_title" id="sub_title" oninput="updateCharCount('sub_title')" />
                                 @if ($errors->has('sub_title'))
                                     @foreach ($errors->get('sub_title') as $error)
                                         <br><span style="color: red;">{{ $error }}</span>
                                     @endforeach
                                 @endif
-                                <p id="char_count" style="color: gray; margin-top: 5px;">(0 / 255 characters)</p>
+                                <p id="sub_title_count" style="color: gray; margin-top: 5px;">(0 / 255 characters)</p>
                             </div>
                         </div>
                         <div class="control-group">
@@ -559,12 +561,18 @@
                 }
             });
 
-            function updateCharCount() {
-                let inputField = document.getElementById('sub_title');
-                let charCount = inputField.value.length;
-                let maxLength = inputField.getAttribute('maxlength');
-                document.getElementById('char_count').textContent = charCount + " / " + maxLength + " characters";
+            function updateCharCount(fieldId) {
+                const input = document.getElementById(fieldId);
+                const countDisplay = document.getElementById(fieldId + '_count');
+
+                if (!input || !countDisplay) return; // Safety check
+
+                const currentLength = input.value.length;
+                const maxLength = input.getAttribute('maxlength');
+
+                countDisplay.textContent = `(${currentLength} / ${maxLength} characters)`;
             }
+
 
             document.getElementById("insightform").addEventListener("submit", function(e) {
                 let errors = [];

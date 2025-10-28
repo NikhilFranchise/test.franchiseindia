@@ -7,6 +7,8 @@ use App\Models\AdminUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\AuthorList;
+use App\Models\InsightList;
+use App\Models\InsightListHindi;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
@@ -98,12 +100,40 @@ class AuthorController extends Controller
      * Function to listing authors
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
      */
-    public function listAuthor()
+    public function listAuthor(Request $request)
     {
-        $authors = AuthorList::query()->with('admin')->orderBy('author_id', 'DESC')->paginate(10);
-        // dd($authors);
-        return view('admin.author.list', compact('authors'));
+        $search = $request->input('search');
+        $authorsQuery = AuthorList::query()->with('admin')
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'LIKE', "%{$search}%")
+                        ->orWhere('author_id', $search);
+                });
+            });
+
+        // paginate the query and compute total records from paginator
+        $authors = $authorsQuery->orderBy('author_id', 'DESC')->paginate(10);
+        $totalRecords = $authors->total();
+
+        // Add article count to each author model in the paginator collection
+        $authors->getCollection()->transform(function ($author) {
+            $englishCount = InsightList::where('author_id', $author->author_id)
+                ->whereNotIn('news_type', ['ir', 'ri'])
+                ->where('status', 1)
+                ->count();
+
+            $hindiCount = InsightListHindi::where('author_id', $author->author_id)
+                ->whereNotIn('news_type', ['ir', 'ri'])
+                ->where('status', 1)
+                ->count();
+
+            $author->total_articles = $englishCount + $hindiCount;
+            return $author;
+        });
+
+        return view('admin.author.list', compact('authors', 'totalRecords'));
     }
+
 
     /**
      * Function to view author for edit

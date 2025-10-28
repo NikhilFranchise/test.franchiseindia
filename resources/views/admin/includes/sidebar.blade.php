@@ -47,7 +47,7 @@
                 <li class="@yield('INL')"><a href="{{ route('insights.list', ['lang' => 'en']) }}"><i
                             class="far fa-circle nav-icon"></i>&nbsp; Insights List</a>
                 </li>
-                @if (in_array($user->admin_role, ['admin', 'manager']))
+                @if (in_array($user->admin_role, ['admin']))
                     <li class="@yield('QEI')"><a href="{{ route('insights.quick', ['lang' => 'en']) }}"><i
                                 class="far fa-circle nav-icon"></i>&nbsp; Quick-Edit</a>
                     </li>
@@ -70,10 +70,10 @@
                             class="far fa-circle nav-icon"></i>&nbsp; Video List</a></li>
             </ul>
         </li>
-        @if (in_array($user->admin_role, ['admin', 'manager']))
+        @if (in_array($user->admin_role, ['admin']))
             <li class="@yield('SM')"><a href="{{ route('search.data.form') }}"><i class="fa fa-search"
                         aria-hidden="true"></i>
-                    <span>Search Moniter</span></a></li>
+                    <span>Search Monitor</span></a></li>
         @endif
         {{-- old articles and interviews and blow --}}
         @if ($user->admin_role === 'admin')

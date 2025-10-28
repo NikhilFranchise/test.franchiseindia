@@ -156,7 +156,7 @@
             <div class="span12">
                 <div class="widget-box">
                     <div class="widget-title"> <span class="icon"><i class="fa fa-users"></i></span>
-                        <h5>Showing <strong>{{ $authors->total() }}</strong> Total Records</h5>
+                        <h5>Showing <strong>{{ $totalRecords }}</strong> Total Records</h5>
                     </div>
                     <div class="widget-content nopadding">
                         @php
@@ -172,6 +172,7 @@
                                     <th rowspan="2">Author Name</th>
                                     <th rowspan="2">Author Email</th>
                                     <th rowspan="2">Author Role</th>
+                                    <th rowspan="2">Total Articles</th>
                                     <th rowspan="2">Last Login</th>
                                     <th colspan="{{ $colspan }}">Action</th>
                                 </tr>
@@ -192,6 +193,7 @@
                                         <td>{{ $author->title ?? $author->admin->admin_name }}</td>
                                         <td>{{ $author->emailid ?? ($author->admin->admin_email ?? '') }}</td>
                                         <td>{{ ucwords($author->admin->admin_role ?? '') }}</td>
+                                        <td>{{ $author->total_articles ?? 0 }}</td>
                                         <td>
                                             @if ($author->admin)
                                                 @if (Auth::guard('admin')->check() && Auth::guard('admin')->id() === $author->admin->admin_id)

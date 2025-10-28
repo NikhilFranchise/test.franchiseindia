@@ -6,10 +6,10 @@ use App\Http\Controllers\Admin\SearchMonitorController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\AuthorController;
-use App\Http\Controllers\admin\CategoryController;
-use App\Http\Controllers\admin\InsightController;
-use App\Http\Controllers\admin\TagController;
-use App\Http\Controllers\admin\VideoPodcastController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\InsightController;
+use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\VideoPodcastController;
 
 Auth::routes();
 //Get routes

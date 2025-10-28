@@ -291,20 +291,34 @@
                                                     placeholder="Enter Instagram Profile">
                                             </div>
                                         </div>
-                                        <div class="control-group">
-                                            <label class="control-label">News Upload Capability :</label>
-                                            <div class="controls">
-                                                <select name="upload_capability" class="span11">
-                                                    <option value="1"
-                                                        {{ old('upload_capability', $author->news_upload_capability ?? '') == 1 ? 'selected' : '' }}>
-                                                        Yes</option>
-                                                    <option value="0"
-                                                        {{ old('upload_capability', $author->news_upload_capability ?? '') == 0 ? 'selected' : '' }}>
-                                                        No</option>
-                                                </select>
+                                        @if (in_array(Auth::guard('admin')->user()->admin_role, ['admin']))
+                                            <div class="control-group">
+                                                <label class="control-label">News Upload Capability :</label>
+                                                <div class="controls">
+                                                    <select name="upload_capability" class="span11">
+                                                        <option value="1"
+                                                            {{ old('upload_capability', $author->news_upload_capability ?? '') == 1 ? 'selected' : '' }}>
+                                                            Yes</option>
+                                                        <option value="0"
+                                                            {{ old('upload_capability', $author->news_upload_capability ?? '') == 0 ? 'selected' : '' }}>
+                                                            No</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-
+                                            <div class="control-group">
+                                                <label class="control-label">Author Create Capability :</label>
+                                                <div class="controls">
+                                                    <select name="can_create_author" class="span11">
+                                                        <option value="1"
+                                                            {{ old('can_create_author', $author->admin->can_create_author ?? '') == 1 ? 'selected' : '' }}>
+                                                            Yes</option>
+                                                        <option value="0"
+                                                            {{ old('can_create_author', $author->admin->can_create_author ?? '') == 0 ? 'selected' : '' }}>
+                                                            No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -330,7 +344,8 @@
 
                         <!-- Submit -->
                         <div class="form-actions">
-                            <a href="{{ route('list.author') }}" class="btn btn-secondary"><i class="fa fa-times"></i>
+                            <a href="{{ route('admin.Dashboard') }}" class="btn btn-secondary"><i
+                                    class="fa fa-times"></i>
                                 Cancel</a>
                             <button type="submit" class="btn btn-success float-right">
                                 <i class="fa fa-save"></i> Save Author</button>

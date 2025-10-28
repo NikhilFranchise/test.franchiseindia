@@ -2,13 +2,13 @@
 return [
     'staticBrands' => [
         '2025' => [
-            [
-                "brand" => "3M Car Care",
-                "logo" => "/topfranchiseleaders/staticLogo/2025/3mcarcare.jpg",
-                "industry" => "Automotive",
-                "sector" => "Car Wash / Ceramic Coating / Detailing",
-                "investment" => "Rs. 30 Lakh - 50 Lakh",
-            ],
+            // [
+            //     "brand" => "3M Car Care",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2025/3mcarcare.jpg",
+            //     "industry" => "Automotive",
+            //     "sector" => "Car Wash / Ceramic Coating / Detailing",
+            //     "investment" => "Rs. 30 Lakh - 50 Lakh",
+            // ],
             [
                 "brand" => "Ather Energy",
                 "logo" => "/topfranchiseleaders/staticLogo/2025/atherenergy.jpg",
@@ -16,13 +16,13 @@ return [
                 "sector" => "Electric Vehicles Two Wheelers (EV)",
                 "investment" => "Rs. 5 Cr above",
             ],
-            [
-                "brand" => "BlueDart",
-                "logo" => "/topfranchiseleaders/staticLogo/2025/bluedart.jpg",
-                "industry" => "Business Services",
-                "sector" => "Courier & Delivery",
-                "investment" => "Rs. 2 Lakh - 5 Lakh",
-            ],
+            // [
+            //     "brand" => "BlueDart",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2025/bluedart.jpg",
+            //     "industry" => "Business Services",
+            //     "sector" => "Courier & Delivery",
+            //     "investment" => "Rs. 2 Lakh - 5 Lakh",
+            // ],
             [
                 "brand" => "Caratlane",
                 "logo" => "/topfranchiseleaders/staticLogo/2025/caratlane.jpg",
@@ -107,13 +107,13 @@ return [
                 "sector" => "Others Food Service",
                 "investment" => "Rs. 30 Lakh - 50 Lakh",
             ],
-            [
-                "brand" => "Giva",
-                "logo" => "/topfranchiseleaders/staticLogo/2025/giva.jpg",
-                "industry" => "Fashion",
-                "sector" => "Precious Jewellery",
-                "investment" => "Rs. 30 Lakh - 50 Lakh",
-            ],
+            // [
+            //     "brand" => "Giva",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2025/giva.jpg",
+            //     "industry" => "Fashion",
+            //     "sector" => "Precious Jewellery",
+            //     "investment" => "Rs. 30 Lakh - 50 Lakh",
+            // ],
             [
                 "brand" => "Go Colors",
                 "logo" => "/topfranchiseleaders/staticLogo/2025/gocolors.jpg",
@@ -142,13 +142,13 @@ return [
                 "sector" => "Readymade",
                 "investment" => "Rs. 30 Lakh - 50 Lakh",
             ],
-            [
-                "brand" => "Lakme Academy",
-                "logo" => "/topfranchiseleaders/staticLogo/2025/lakmeacademy.jpg",
-                "industry" => "Education",
-                "sector" => "Beauty & Wellness Training Institute",
-                "investment" => "Rs. 50 Lakh - 1 Cr",
-            ],
+            // [
+            //     "brand" => "Lakme Academy",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2025/lakmeacademy.jpg",
+            //     "industry" => "Education",
+            //     "sector" => "Beauty & Wellness Training Institute",
+            //     "investment" => "Rs. 50 Lakh - 1 Cr",
+            // ],
             [
                 "brand" => "Lee Cooper",
                 "logo" => "/topfranchiseleaders/staticLogo/2025/leecooper.jpg",
@@ -261,13 +261,13 @@ return [
                 "sector" => "Others Clothing",
                 "investment" => "Rs. 10 Lakh - 20 Lakh",
             ],
-            [
-                "brand" => "Dhaba",
-                "logo" => "/topfranchiseleaders/staticLogo/2025/dhaba.jpg",
-                "industry" => "Food And Beverage",
-                "sector" => "Fine Dine Restaurants",
-                "investment" => "Rs. 1 Cr - 2 Cr",
-            ],
+            // [
+            //     "brand" => "Dhaba",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2025/dhaba.jpg",
+            //     "industry" => "Food And Beverage",
+            //     "sector" => "Fine Dine Restaurants",
+            //     "investment" => "Rs. 1 Cr - 2 Cr",
+            // ],
             [
                 "brand" => "Reliance Fashion World",
                 "logo" => "/topfranchiseleaders/staticLogo/2025/reliancefashionworld.jpg",
@@ -282,20 +282,20 @@ return [
                 "sector" => "Casuals",
                 "investment" => "Rs. 30 Lakh - 50 Lakh",
             ],
-            [
-                "brand" => "Gargi by PNGS",
-                "logo" => "/topfranchiseleaders/staticLogo/2025/gargibypngs.jpg",
-                "industry" => "Fashion",
-                "sector" => "Precious Jewellery",
-                "investment" => "Rs. 50 Lakh - 1 Cr",
-            ],
-            [
-                "brand" => "Mama Goto",
-                "logo" => "/topfranchiseleaders/staticLogo/2025/mamagoto.jpg",
-                "industry" => "Food And Beverage",
-                "sector" => "Casual Dine Restaurants",
-                "investment" => "Rs. 1 Cr - 2 Cr",
-            ],
+            // [
+            //     "brand" => "Gargi by PNGS",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2025/gargibypngs.jpg",
+            //     "industry" => "Fashion",
+            //     "sector" => "Precious Jewellery",
+            //     "investment" => "Rs. 50 Lakh - 1 Cr",
+            // ],
+            // [
+            //     "brand" => "Mama Goto",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2025/mamagoto.jpg",
+            //     "industry" => "Food And Beverage",
+            //     "sector" => "Casual Dine Restaurants",
+            //     "investment" => "Rs. 1 Cr - 2 Cr",
+            // ],
             [
                 "brand" => "Bodycraft Salon",
                 "logo" => "/topfranchiseleaders/staticLogo/2025/bodycraftsalon.jpg",
@@ -425,13 +425,13 @@ return [
                 "sector" => "Designer Jewellery",
                 "investment" => "Rs. 1 Cr - 2 Cr",
             ],
-            [
-                "brand" => "Mamagoto",
-                "logo" => "/topfranchiseleaders/staticLogo/2024/mamagoto.webp",
-                "industry" => "Food & Beverage",
-                "sector" => "Quick Service Restaurants",
-                "investment" => "Rs. 1 Cr - 2 Cr",
-            ],
+            // [
+            //     "brand" => "Mamagoto",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2024/mamagoto.webp",
+            //     "industry" => "Food & Beverage",
+            //     "sector" => "Quick Service Restaurants",
+            //     "investment" => "Rs. 1 Cr - 2 Cr",
+            // ],
             [
                 "brand" => "Cultfit",
                 "logo" => "/topfranchiseleaders/staticLogo/2024/cultfit.webp",
@@ -540,13 +540,13 @@ return [
             ],
         ],
         '2023' => [
-            [
-                "brand" => "3M Car Care",
-                "logo" => "/topfranchiseleaders/staticLogo/2023/3mcarcare.webp",
-                "industry" => "Automotive",
-                "sector" => "Automobile Accessories",
-                "investment" => "Rs. 30 Lakh - 50 Lakh",
-            ],
+            // [
+            //     "brand" => "3M Car Care",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2023/3mcarcare.webp",
+            //     "industry" => "Automotive",
+            //     "sector" => "Automobile Accessories",
+            //     "investment" => "Rs. 30 Lakh - 50 Lakh",
+            // ],
             [
                 "brand" => "AND",
                 "logo" => "/topfranchiseleaders/staticLogo/2023/and.webp",
@@ -575,13 +575,13 @@ return [
                 "sector" => "Designer Jewellery",
                 "investment" => "Rs. 1 Cr - 2 Cr",
             ],
-            [
-                "brand" => "Dhaba by Claridges",
-                "logo" => "/topfranchiseleaders/staticLogo/2023/dhaba.webp",
-                "industry" => "Food & Beverage",
-                "sector" => "Fine Dine Restaurants",
-                "investment" => "Rs. 1 Cr - 2 Cr",
-            ],
+            // [
+            //     "brand" => "Dhaba by Claridges",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2023/dhaba.webp",
+            //     "industry" => "Food & Beverage",
+            //     "sector" => "Fine Dine Restaurants",
+            //     "investment" => "Rs. 1 Cr - 2 Cr",
+            // ],
             [
                 "brand" => "Hero Electric",
                 "logo" => "/topfranchiseleaders/staticLogo/2023/heroelectric.webp",
@@ -603,13 +603,13 @@ return [
                 "sector" => "Solar Products",
                 "investment" => "Rs. 2 Lakh - 5 Lakh",
             ],
-            [
-                "brand" => "Mamagoto",
-                "logo" => "/topfranchiseleaders/staticLogo/2023/mama.webp",
-                "industry" => "Food & Beverage",
-                "sector" => "Casual Dine Restaurants",
-                "investment" => "Rs. 1 Cr - 2 Cr",
-            ],
+            // [
+            //     "brand" => "Mamagoto",
+            //     "logo" => "/topfranchiseleaders/staticLogo/2023/mama.webp",
+            //     "industry" => "Food & Beverage",
+            //     "sector" => "Casual Dine Restaurants",
+            //     "investment" => "Rs. 1 Cr - 2 Cr",
+            // ],
             [
                 "brand" => "US POLO",
                 "logo" => "/topfranchiseleaders/staticLogo/2023/uspolo.webp",
