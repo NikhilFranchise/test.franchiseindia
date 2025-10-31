@@ -50,6 +50,15 @@ class CommonController extends Controller
     /**
      * @return ResponseFactory|Response
      */
+
+    
+    public function plans(){
+
+        // dd('yes');
+        $investorId ='FIHL111001';
+         return view('investor.register.investor-plan', compact('investorId'));
+    }
+
     public function postExitPopup()
     {
         $emailCount = PopupLead::query()->where('email', request()->email)->orWhere('secondary_email', request()->email)->count();
@@ -422,6 +431,72 @@ class CommonController extends Controller
         return response()->json(['message' => 'SMS Sending successfull', 'status' => 'success']);
     }
 
+
+
+    public static function f2smsotp($mobileNo, $message){
+        $mobileNo = (string) ((int) $mobileNo);
+
+        if (strlen($mobileNo) == 12 && substr($mobileNo, 0, 2) == "91")
+            $mobileNo = substr($mobileNo, 2, 10);
+
+        if (strlen($mobileNo) > 10)
+            return response()->json(['message' => 'SMS Sending Failed(Not a valid indian number)', 'status' => 'failed']);
+
+        if (!is_numeric($mobileNo))
+            return response()->json(['message' => 'SMS Sending Failed(Not a valid numeric number)', 'status' => 'failed']);
+
+        if (!in_array(substr($mobileNo, 0, 1), [9, 8, 7, 6]))
+            return response()->json(['message' => 'SMS Sending Failed(Not a valid number)', 'status' => 'failed']);
+
+        $mobile_regex = "/^[6-9][0-9]{9}$/";
+        if (strlen($mobileNo) != 10 || !(preg_match($mobile_regex, $mobileNo) === 1))
+            return response()->json(['message' => 'SMS Sending Failed(Not a valid number)', 'status' => 'failed']);
+
+        $mobileNo = CommonController::cleanSpecialChar($mobileNo);
+
+                
+                $fields = array(
+                "sender_id" => env('SenderId'),
+                "message" => "200507",
+                "variables_values" => $message,
+                "route" => env('Route'),
+                "numbers" => $mobileNo,
+                );
+
+            $curl = curl_init();
+            $apiKey = env('Fastsmsapi');
+            curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://www.fast2sms.com/dev/bulkV2",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode($fields),
+            CURLOPT_HTTPHEADER => array(
+                "authorization: $apiKey",
+                "accept: */*",
+                "cache-control: no-cache",
+                "content-type: application/json"
+            ),
+            ));
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+            // echo "cURL Error #:" . $err;
+            return response()->json(['message' => 'SMS Sending Failed', 'status' => 'failure']);            } else {
+            // echo $response;
+             return response()->json(['message' => 'SMS Sending successfull', 'status' => 'success']);
+            }
+
+    }
     /**
      * @return ResponseFactory|string|Response
      */

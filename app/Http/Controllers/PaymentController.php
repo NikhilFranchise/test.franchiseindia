@@ -42,6 +42,7 @@ class PaymentController extends Controller
     public function upgradeInvestorMembership(Request $request)
     {
 
+        // dd($request->amt);
         $investorId = request()->user()->profile_str;
         $invName    = request()->user()->name;
         $invMobile  = request()->user()->mobile;
@@ -53,8 +54,26 @@ class PaymentController extends Controller
         if (!array_key_exists($mopt, config('constants.Charges'))) {
             $mopt = "OPTNBK";
         }
+
         $mop  = config('constants.Charges.' . $mopt);
         $amount = round($amount + $amount * ($mop) / 100);
+
+         if ($request->has('amt') && $request->amt > 0) {
+                // If amt is set and has a value
+                $amount_str = $request->amt;
+                $cleaned = preg_replace('/[^\d.]/', '', $amount_str); // Remove non-numeric characters (except decimal)
+                
+                // Convert to float
+                $amount_float = (float)$cleaned; 
+
+                // Convert to integer (truncate decimal)
+                $amount_int = (int)$amount_float; 
+
+                // Final amount
+                $amount = $amount_int;
+            } 
+
+            // dd($request->coupon);
         // Fetch Investor Details from table
         $invData    = InvestorDetails::query()->select('inv_address', 'inv_country', 'inv_state', 'inv_city', 'inv_pincode')
             ->where('investor_id', $investorId)
@@ -81,7 +100,7 @@ class PaymentController extends Controller
         // Send Email to Investor Acquisition team for Paid Membership pitching
         /* Html Code for email */
         $data = "<table> <tr> <td>Name : </td><td>" . $invName . "</td></tr><tr> <td>Email : </td><td>" . $invEmail . "</td></tr><tr> <td>Mobile No. : </td><td>" . $invMobile . "</td></tr><tr> <td>Investor Id : </td><td>" . $investorId . "</td></tr><tr> <td>Address : </td><td>" . $invAddress . ", Country: " . $invData->inv_country . "</td></tr><tr> <td>Time Of Payment : </td><td>" . date('Y-m-d H:i:s') . "</td></tr></table>";
-        Mail::to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
+        // Mail::to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
         // // End of Email to Investor Acquisition team
 
         if (!$insInvPay->save()) {
@@ -104,8 +123,9 @@ class PaymentController extends Controller
                 'product_details' => config('constants.invPlanDetails.' . $request->payment_plan),
                 'membership_plan' => $request->payment_plan,
                 'amount'          => $amount,
-                'mopt'          => $mopt,
+                'mopt'            => $mopt,
                 'gst_no'          => $request->gst_no,
+                'promo_code'      => $request->coupon,
                 'payment_status'  => 0
             ]);
 
