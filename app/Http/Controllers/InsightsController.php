@@ -531,6 +531,7 @@ class InsightsController extends Controller
             ->where('slug', $slug)
             ->where('status', 1)
             ->first();
+<<<<<<< HEAD
          // IDs that should redirect to external blog
             $redirectIds = [9, 32, 33];
             if (in_array($category->id, $redirectIds)) {
@@ -539,6 +540,16 @@ class InsightsController extends Controller
                 dd($externalUrl);
                 return redirect()->away($externalUrl);
             }
+=======
+        // IDs that should redirect to external blog
+        // $redirectIds = [9, 32, 33];
+        // if (in_array($category->id, $redirectIds)) {
+        //     $externalSlug = $category->slug;
+        //     $externalUrl = "https://www.entrepreneur.com/blog/{$locale}/{$externalSlug}";
+        //     dd($externalUrl);
+        //     return redirect()->away($externalUrl);
+        // }
+>>>>>>> 1a6213681acf16e29da55f497a6683319d5f5ff5
         if (!$category) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
@@ -614,7 +625,7 @@ class InsightsController extends Controller
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('news_id', $id)
             ->first();
-        // dd($newsDetails); chedch
+        // dd($newsDetails);
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
         }
@@ -626,7 +637,7 @@ class InsightsController extends Controller
             // Build target domain (change this domain)
             $targetDomain = "https://www.entrepreneurindia.com/blog/{$locale}/{$type}/{$newsDetails->slug}.{$id}";
             // dd($targetDomain);
-            return redirect()->away($targetDomain,301);
+            return redirect()->away($targetDomain, 301);
         }
 
         $correctSlug = $newsDetails->slug;
@@ -654,9 +665,6 @@ class InsightsController extends Controller
         // Fetch author details
         $authorId = empty($newsDetails->author[0]) ? 466 : $newsDetails->author_id;
         $author_details = AuthorList::query()->find($authorId);
-        // dd($authorId);
-        // $author_details = AuthorList::query()->where('author_id', $authorId)->first();
-
         // Fetch associated tags
         $associatedTags = $tagTable::query()
             ->where('content_id', $id)
@@ -669,54 +677,29 @@ class InsightsController extends Controller
             ->distinct()
             ->get();
 
-        // // Find brand matches
-        // $titleWords = preg_split('/\s+/', strtolower($newsDetails->title));
-        // $brandMatches = FranchisorBusinessDetail::where('profile_status', 1)
-        //     ->select('fran_detail_id', 'company_name', 'profile_name')
-        //     ->get()
-        //     ->filter(function ($item) use ($titleWords) {
-        //         $companyWords = array_map('strtolower', explode(' ', $item->company_name));
-        //         $pattern = '/\b' . implode('\b.*?\b', array_map(fn($word) => preg_quote($word, '/'), $companyWords)) . '\b/';
-        //         return preg_match($pattern, implode(' ', $titleWords));
-        //     })
-        //     ->take(10)
-        //     ->map(function ($item) {
-        //         return [
-        //             'fran_detail_id' => $item->fran_detail_id,
-        //             'company_name' => $item->company_name,
-        //             'profile_name' => $item->profile_name,
-        //         ];
-        //     })
-        //     ->values();
-
-        // // Prepare franchise data
-        // $franchiseData = $brandMatches->map(fn($match) => [
-        //     'fran_detail_id' => $match['fran_detail_id'],
-        //     'company_name' => $match['company_name'],
-        //     'profile_name' => $match['profile_name'],
-        //     'title' => $newsDetails->title,
-        // ])->toArray();
-        // ✅ Match franchises by article title using helper
+        // Match franchises by article title using helper
         $franchiseData = FranchiseHelper::matchFranchisesByTitle($newsDetails->title);
         $category = $newsDetails->category->first();
         if ($category) {
             $trendingArticles = $newsModel::with(['category', 'Subcategory'])
-                ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
+                ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type', 'created_at', 'published_date')
                 ->withEffectiveDate()
                 ->where('status', 1)
                 ->where('cat_id', $newsDetails->category[0]->id)
                 ->whereNot('news_id', $id)
                 ->whereNotIn('news_type', ['ri', 'ir'])
-                // ->whereIn('insight_type', ['Article', 'News', 'Interview'])
-                // ->orderByDesc('created_at')
                 ->orderByEffectiveDate('desc')
                 ->take(5)->get();
         } else {
             $trendingArticles = collect();
         }
+<<<<<<< HEAD
         
+=======
+        // dd($trendingArticles);
+>>>>>>> 1a6213681acf16e29da55f497a6683319d5f5ff5
         $latestArticles = $newsModel::with(['category', 'Subcategory'])
-            ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
+            ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type', 'created_at', 'published_date')
             ->withEffectiveDate()
             ->where('status', 1)
             ->whereNot('news_id', $id)

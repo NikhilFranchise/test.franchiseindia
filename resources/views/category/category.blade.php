@@ -1734,30 +1734,30 @@
         //     });
         // });
     </script>
-        <style>
-            /* Error message styling */
-            .text-danger {
-                color: red;
-                font-size: 12px;
-                margin-top: 5px;
-                display: block;
-            }
+    <style>
+        /* Error message styling */
+        .text-danger {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+        }
 
-            /* Red border for invalid input */
-            .has-error input,
-            .has-error select,
-            .has-error textarea,
-            {
-                border: 1px solid red !important;
-            }
+        /* Red border for invalid input */
+        .has-error input,
+        .has-error select,
+        .has-error textarea,
+        {
+        border: 1px solid red !important;
+        }
 
-            /* Red border on focus for invalid input */
-            .has-error input:focus,
-            .has-error select:focus,
-            .has-error textarea:focus {
-                border-color: red !important;
-                box-shadow: none;
-            }
-        </style>
+        /* Red border on focus for invalid input */
+        .has-error input:focus,
+        .has-error select:focus,
+        .has-error textarea:focus {
+            border-color: red !important;
+            box-shadow: none;
+        }
+    </style>
 
 @endsection

@@ -19,7 +19,7 @@ return [
     'awsS3Url' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com', // duplicate for news
     'OIDomain' => 'https://www.dealerindia.com', // duplicate for news
     'ARTICLE_UPLOAD_PATH' => 'opp/article/english/images/',
-	'ARTICLE_HINDI_UPLOAD_PATH' => 'opp/article/hindi/images/',
+    'ARTICLE_HINDI_UPLOAD_PATH' => 'opp/article/hindi/images/',
 
     'leadSource' => [
         'FiInstantApply' => 1,
@@ -453,7 +453,7 @@ return [
         'Pending' => 2,           // Email verification pending
         'Awaiting' => 3,           // Awaiting Moderator's approval
         'Rejected' => 4,
-        'Incomplete' => 5 ,          // Registration in progress
+        'Incomplete' => 5,          // Registration in progress
         'Hidden' => 11
     ],
 
@@ -604,7 +604,7 @@ return [
         8 => "Automotive",
         1 => "Beauty & Health",
         6 => "Business Services",
-        5 => "Dealers & Distributors",   
+        5 => "Dealers & Distributors",
         3 => "Education",
         10 => "Fashion",
         2 => "Food And Beverage",
@@ -667,20 +667,20 @@ return [
             "860" => "Security & Protection",
             "761" => "Sports, Fitness & Entertainment",
             //Adding new categories by pankaj
-            "1001"=>"Business Services",
-            "1002"=>"Chemicals",
-            "1003"=>"Furniture",
-            "1004"=>"Hotel supplies & Equipments",
-            "1005"=>"Jewellery, Gemstones & Astrology",
-            "1006"=>"Packaging, Paper & Plastic Products",
-            "1007"=>"Pharmaceuticals",
-            "1008"=>"Printing & Publishing",
-            "1009"=>"Retail & E-Retail",
-            "1010"=>"Scientific & Laboratory Instruments",
-            "1011"=>"Telecommunications",
-            "1012"=>"Textile, Fabrics & accessories",
-            "1013"=>"Toys & Games",
-            "1014"=>"Machinery, Machine Tools & Equipments",
+            "1001" => "Business Services",
+            "1002" => "Chemicals",
+            "1003" => "Furniture",
+            "1004" => "Hotel supplies & Equipments",
+            "1005" => "Jewellery, Gemstones & Astrology",
+            "1006" => "Packaging, Paper & Plastic Products",
+            "1007" => "Pharmaceuticals",
+            "1008" => "Printing & Publishing",
+            "1009" => "Retail & E-Retail",
+            "1010" => "Scientific & Laboratory Instruments",
+            "1011" => "Telecommunications",
+            "1012" => "Textile, Fabrics & accessories",
+            "1013" => "Toys & Games",
+            "1014" => "Machinery, Machine Tools & Equipments",
         ),
 
         "6" => array(
@@ -1120,24 +1120,24 @@ return [
         ),
         "1006" => array(
             // "1177"=>"Food Packaging Material & Supplies",
-            "1178"=>"Packaging & Labeling Services",
-            "1179"=>"Packaging & Lamination Tools & Machinery",
-            "1180"=>"Packaging Material & Supplies",
+            "1178" => "Packaging & Labeling Services",
+            "1179" => "Packaging & Lamination Tools & Machinery",
+            "1180" => "Packaging Material & Supplies",
             // "1181"=>"Packaging Pouches & Envelops",
             // "1182"=>"Plastic Boxes, Bags",
-            "1183"=>"Plastic Containers & Pet Bottles",
+            "1183" => "Plastic Containers & Pet Bottles",
             // "1184"=>"Plastic Raw Material",
             // "1185"=>"Woven & Non Woven Bags",
         ),
         "1007" => array(
-            "1186"=>"Cancer, TB, Tumor Drugs",
-            "1187"=>"Common Medicines & Drugs",
+            "1186" => "Cancer, TB, Tumor Drugs",
+            "1187" => "Common Medicines & Drugs",
             // "1188"=>"Flavours & Frangrances",
-            "1189"=>"Generic Drugs & Pharmaceuticals",
-            "1190"=>"Neutraceuticals & Dietary Supplements",
+            "1189" => "Generic Drugs & Pharmaceuticals",
+            "1190" => "Neutraceuticals & Dietary Supplements",
             // "1191"=>"Pain Relief Drugs & Medicines",
-            "1192"=>"PCD Pharma",
-            "1193"=>"Pediatric Medicines",
+            "1192" => "PCD Pharma",
+            "1193" => "Pediatric Medicines",
             // "1194"=>"Pharmaceutical Ointments & Creams",
             // "1195"=>"Respiratory System Drugs",
         ),
@@ -1146,44 +1146,44 @@ return [
             // "1197"=>"Branding & Advertising Agencies",
             // "1198"=>"Film & Media Production Services",
             // "1199"=>"Metal, Plastic & Industrial Printing",
-            "1200"=>"Offset Printing Machines",
+            "1200" => "Offset Printing Machines",
         ),
         "1009" => array(
-            "1201"=>"Books, Toys & Gifts",
-            "1202"=>"Consumer Durables & IT",
-            "1203"=>"E-Retail",
-            "1204"=>"Fashion",
-            "1205"=>"Home & Office",
-            "1206"=>"Supermarkets & Marts",
+            "1201" => "Books, Toys & Gifts",
+            "1202" => "Consumer Durables & IT",
+            "1203" => "E-Retail",
+            "1204" => "Fashion",
+            "1205" => "Home & Office",
+            "1206" => "Supermarkets & Marts",
         ),
         "1010" => array(
-            "1207"=>"Cleanroom Equipments & Supplies",
+            "1207" => "Cleanroom Equipments & Supplies",
             // "1208"=>"Compass, Telescopes & Survey Tools",
             // "1209"=>"Scientific Instruments & Devices",
         ),
         "1011" => array(
-            "1229"=>"Telecom Services, Engg & Maintenance",
-            "1230"=>"Telecommunication equipment & parts",
+            "1229" => "Telecom Services, Engg & Maintenance",
+            "1230" => "Telecommunication equipment & parts",
             // "1231"=>"Wireless Communication Devices",
         ),
         "1012" => array(
             // "1232"=>"Apparel Fabrics & Dress Material",
-            "1233"=>"Fabrics & Accessories",
-            "1234"=>"Handloom products",
+            "1233" => "Fabrics & Accessories",
+            "1234" => "Handloom products",
             // "1235"=>"Industrial Fabrics & Textile",
-            "1236"=>"Sewing Thread, Laces & accessories",
-            "1237"=>"Textile and Garments Machinery & equipments",
+            "1236" => "Sewing Thread, Laces & accessories",
+            "1237" => "Textile and Garments Machinery & equipments",
             // "1238"=>"Textile, Dyeing & Finishing Chemical",
 
         ),
         "1013" => array(
-            "1239"=>"Amusement Games & Equipments",
+            "1239" => "Amusement Games & Equipments",
             // "1240"=>"Electrical and Battery opertaed Toys",
             // "1241"=>"Figure Toys & Vehicle Toys",
             // "1242"=>"Plastic & Wooden Toys",
             // "1243"=>"Stuffed Toys",
             // "1244"=>"Toy Accessories",
-            "1245"=>"Toy Cars & Bikes",
+            "1245" => "Toy Cars & Bikes",
 
         ),
         "1014" => array(
@@ -1320,17 +1320,17 @@ return [
             "768" => "Musical Instruments",
             "769" => "Meat & Poultry",
             "961" => "Others"*/
-        //category id created by pankaj,
-            "1219"=>"Adventure Sporting & Tracking Goods",
+            //category id created by pankaj,
+            "1219" => "Adventure Sporting & Tracking Goods",
             // "1220"=>"Awards, Trophies & Memetoes",
-            "1221"=>"Fitness and Gym Equipments",
-            "1222"=>"Playground Equipments",
+            "1221" => "Fitness and Gym Equipments",
+            "1222" => "Playground Equipments",
             // "1223"=>"Sports Bags, Duffel Bags & Kit Bags",
-            "1224"=>"Sports Goods & Equipments",
+            "1224" => "Sports Goods & Equipments",
             // "1225"=>"Sports Safety Products & Equipments",
             // "1226"=>"Sports Wear & Athletic Accessories",
             // "1227"=>"Swimming Pool and water Sports Goods & Accessories",
-            "1228"=>"Swimming Pool Construction & Material",
+            "1228" => "Swimming Pool Construction & Material",
 
         ),
 
@@ -1431,14 +1431,14 @@ return [
             //"970" => "Life Saving Products & Equipments"
             //category id created by pankaj,
             // "1210"=>"Biometrics & Access Control Cards",
-            "1211"=>"CCTV Camera, Surveillance Equipments & Parts",
-            "1212"=>"Door Lock, Electronic Locks and Latches",
+            "1211" => "CCTV Camera, Surveillance Equipments & Parts",
+            "1212" => "Door Lock, Electronic Locks and Latches",
             // "1213"=>"Intelligence & Spying Devices",
             // "1214"=>"Life Safety Equipments",
             // "1215"=>"Residential & Commercial security",
-            "1216"=>"Safety Equipment & Systems",
+            "1216" => "Safety Equipment & Systems",
             // "1217"=>"Surveillance Equipments & Parts",
-            "1218"=>"Vehicle Security System & Protection Device",
+            "1218" => "Vehicle Security System & Protection Device",
 
         ),
 
@@ -2113,7 +2113,7 @@ return [
             "716" => "Strectcher",
         ),
         "968" => array(),
-        "445"=>array(),
+        "445" => array(),
     ],
 
     // Mobile OTP, SMS URL, Msg template
@@ -3515,6 +3515,3 @@ return [
 
 
 ];
-
-
-

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 use App\Models\ContentList;
 use App\Models\FranchisorBusinessDetail;
+use App\Models\FreeLead;
 use App\Models\TopFranchiseLeader;
 use App\Models\TopFranchisorLeaders;
 use Illuminate\Support\Facades\DB;
@@ -276,7 +277,7 @@ class StaticPageController extends Controller
 
     // single function for top 200/100
 
-   
+
     public function topFranchiseLeaders(Request $request)
     {
         $year = $request->year ?? null;
@@ -294,7 +295,7 @@ class StaticPageController extends Controller
         if (!$year) {
             $year = TopFranchisorLeaders::select('franchisor_year')->distinct()->orderByDesc('franchisor_year')->pluck('franchisor_year')->first();
         }
-         
+
         // Get franchise type for selected year
         $franchiseType = TopFranchisorLeaders::where('franchisor_year', $year)->value('franchisor_type');
         $totalCount = TopFranchisorLeaders::where('franchisor_year', $year)->count();
@@ -373,5 +374,22 @@ class StaticPageController extends Controller
         }
 
         return view('static.topfranchiseleaders.top-200', compact('data', 'years', 'franchiseType', 'year', 'count', 'totalCount'));
+    }
+
+    public function freeLeadStore(Request $request)
+    {
+        // Validation
+        $validated = $request->validate([
+            'name'   => 'required|string|max:100',
+            'email'  => 'required|email|max:150|unique:free_leads,email',
+            'mobile' => 'required|digits:10|unique:free_leads,mobile',
+        ]);
+
+        // Store data
+        FreeLead::create($validated);
+
+        return redirect()->back()->with([
+            'success' => 'Form submitted successfully!',
+        ]);
     }
 }

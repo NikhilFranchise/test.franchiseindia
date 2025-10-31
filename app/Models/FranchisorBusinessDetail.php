@@ -15,6 +15,11 @@ use App\Models\UserClick;
 use App\Models\UserAccount;
 use App\Models\TopFranchisorLeaders;
 use App\Models\FranchisorTradePartner;
+use App\Models\Regional\DealerRegional;
+use App\Models\Regional\FranchiseRegional;
+use App\Models\Regional\RegionalFranchisorSliderTenure;
+use App\Models\Regional\RegionalFranPaymentHistory;
+
 class FranchisorBusinessDetail extends Model
 {
     use HasFactory;
@@ -94,5 +99,36 @@ class FranchisorBusinessDetail extends Model
     public function franchisorTradePartner()
     {
         return $this->hasOne(FranchisorTradePartner::class, 'franchisor_id', 'franchisor_id');
+    }
+    /**
+     * Get the related regional franchisors for the business.
+     */
+    public function franchiseRegionals()
+    {
+        return $this->hasMany(FranchiseRegional::class, 'franchisor_id', 'franchisor_id');
+    }
+
+    /**
+     * Get the related dealer regional franchisors for the business.
+     */
+    public function dealerRegionals()
+    {
+        return $this->hasMany(DealerRegional::class, 'franchisor_id', 'franchisor_id');
+    }
+
+    /**
+     * Get the related regional slider tenures for the business.
+     */
+    public function regionalSliderTenures()
+    {
+        return $this->hasMany(RegionalFranchisorSliderTenure::class, 'franchisor_id', 'franchisor_id');
+    }
+
+    /**
+     * Get the related regional franchisor payment history.
+     */
+    public function regionalFranPaymentHistory()
+    {
+        return $this->hasMany(RegionalFranPaymentHistory::class, 'franchisor_id', 'franchisor_id');
     }
 }

@@ -164,13 +164,13 @@
 
     @include('admin.includes.header')
     @section('KICK')
-        active
+    active
     @endsection
     @include('admin.includes.sidebar')
     <!--sidebar-menu-->
     @php
-        $locale = request()->segment(4);
-        $lang = $locale == 'english' ? 'English' : 'Hindi';
+    $locale = request()->segment(4);
+    $lang = $locale == 'english' ? 'English' : 'Hindi';
     @endphp
     <div id="content">
         <!--breadcrumbs-->
@@ -192,11 +192,11 @@
                 </a>
 
                 <form action="{{ url('admin/kickers/list/' . $type) }}" method="get">
-                    <input type="text" name="search"class="span7" placeholder="Enter Tag name or Id to search"
+                    <input type="text" name="search" class="span7" placeholder="Enter Tag name or Id to search"
                         @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
                     <input type="submit" class="btn"
-                        value="Search"style="margin-top: -12px; margin-left: 10px; width: 110px;" />
-                    <a href="{{ url('admin/kickers/list/' . $type) }}" class="btn"style="margin-top: -12px;">Reset
+                        value="Search" style="margin-top: -12px; margin-left: 10px; width: 110px;" />
+                    <a href="{{ url('admin/kickers/list/' . $type) }}" class="btn" style="margin-top: -12px;">Reset
                         Search</a>
                 </form>
             </div>
@@ -214,7 +214,7 @@
                     <div class="widget-box">
                         <div class="widget-content nopadding">
                             @if (!empty(session()->get('success')))
-                                <div class="alert alert-success">{{ session()->get('success') }}</div>
+                            <div class="alert alert-success">{{ session()->get('success') }}</div>
                             @endif
                             <table class="table table-bordered table-striped">
                                 <thead>
@@ -227,17 +227,17 @@
                                 </thead>
                                 <tbody id="tablecontent">
                                     @php
-                                        $url = Config('constants.MainDomain') . '/';
+                                    $url = Config('constants.MainDomain') . '/';
                                     @endphp
                                     @foreach ($kickers as $kicker)
-                                        <tr class="gradeX">
-                                            <td>{{ $kicker->tag_id }}</td>
-                                            <td>{{ $kicker->name }}</td>
-                                            <td>{{ $kicker->frequency }}</td>
-                                            <td><button class="btn btn-medium btn-danger deletetag"
-                                                    style="border-radius: 4px"
-                                                    data-value="{{ $kicker->tag_id }}">Delete</button></td>
-                                        </tr>
+                                    <tr class="gradeX">
+                                        <td>{{ $kicker->tag_id }}</td>
+                                        <td>{{ $kicker->name }}</td>
+                                        <td>{{ $kicker->frequency }}</td>
+                                        <td><button class="btn btn-medium btn-danger deletetag"
+                                                style="border-radius: 4px"
+                                                data-value="{{ $kicker->tag_id }}">Delete</button></td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -279,7 +279,8 @@
             confirmDialog(YOUR_MESSAGE_STRING_CONST, function() {
                 $.ajax({
                     type: "POST",
-                    url: '{{ url('admin/delete-kicker') }}',
+                    url: '{{ url('
+                    admin / delete - kicker ') }}',
                     data: {
                         "tag_id": x,
                         "type": '{{ $type }}',

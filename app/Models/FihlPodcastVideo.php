@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\FihlVideoCategory;
+
 class FihlPodcastVideo extends Model
 {
     use HasFactory;
@@ -14,19 +15,35 @@ class FihlPodcastVideo extends Model
     protected $keyType = 'int';
 
     protected $fillable = [
+        'sno',
         'videoID',
         'podcast_id',
-        'podcast_link',
         'title',
+        'category',
+        'image',
         'image_path',
-        'duration',
-        'pod_lang',
-        'status',
-        'podcast_type',
+        'maxresimage',
+        'subcategory',
         'description',
+        'keyword',
+        'duration',
+        'podcast_type',
+        'podcast_link',
+        'pod_lang',
+        'total_comment',
+        'total_votes',
+        'total_value',
+        'views',
+        'status',
+        'create_date',
+        'fbshare',
+        'twittershare',
+        'linkedinshare',
+        'whasupshare'
     ];
 
-    public function VideoCategory(){
+    public function VideoCategory()
+    {
         return $this->hasMany(FihlVideoCategory::class, 'catid', 'category');
     }
 }
