@@ -18,7 +18,7 @@ Route::post('login', [LoginController::class, 'adminLogin'])->name('admin.Login'
 Route::get('logout', [LoginController::class, 'logout'])->name('admin.Logout');
 Route::view('reset', 'admin.auth.forgot-password')->name('admin.reset');
 Route::post('forgot', [LoginController::class, 'resetPassword'])->name('admin.forgot');
-Route::middleware(['contentAdmin'])->group(function () {
+Route::middleware(['ContentAdmin'])->group(function () {
     Route::get('dashboard', [LoginController::class, 'viewDashboard'])->name('admin.Dashboard');
 
 

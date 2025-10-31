@@ -60,9 +60,6 @@
                         action="{{ route('insights.update', ['lang' => $lang]) }}" id="insightform">
                         <input type="hidden" name="news_id" value="{{ $data->news_id }}" />
                         @csrf
-                        @php
-                            $author = $data->author->first();
-                        @endphp
                         <div class="control-group">
                             <label class="control-label" for="publisher">Insights Publisher :</label>
                             <div class="controls" id="insights_publisher">
@@ -70,14 +67,14 @@
                                     @if ($role === 'author') disabled @endif>
                                     @foreach ($authorData as $author)
                                         <option value="{{ $author['author_id'] ?? $author->author_id }}">
-                                            {{ $author['title'] ?? $author->title }}
+                                            {{ $author['title'] }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
+
                             @if ($role === 'author')
-                                <input type="hidden" name="insights_publisher"
-                                    value="{{ $authorData[0]['author_id'] ?? $authorData[0]->author_id }}">
+                                <input type="hidden" name="insights_publisher" value="{{ $authorData[0]['author_id'] }}">
                             @endif
                         </div>
                         <div class="control-group">
@@ -143,20 +140,21 @@
                             <label class="control-label">Insights Title :</label>
                             <div class="controls">
                                 <input type="text" required maxlength="125" class="span11" placeholder="Enter Title"
-                                    name="title" value="{{ $data->title }}" />
+                                    name="title" id="title" value="{{ $data->title }}"
+                                    oninput="updateCharCount('title')" />
                                 @if ($errors->has('title'))
                                     @foreach ($errors->get('title') as $error)
                                         <br><span style="color: red;">{{ $error }}</span>
                                     @endforeach
                                 @endif
+                                <p id="title_count" style="color: gray; margin-top: 5px;">( / 125 characters)</p>
                             </div>
                         </div>
-                        <div class="control-group">
+                        <div class="control-group" id="slug-container">
                             <label class="control-label">Published Url :</label>
                             <div class="controls">
-                                <input type="text" name="slug" id="slugId" oninput="validateInput()"
-                                    maxlength="125" class="span11" pattern="[a-z0-9\-]+"
-                                    title="Only small letters, numbers, and hyphens are allowed"
+                                <input type="text" name="slug" id="slug" maxlength="125" class="span11"
+                                    pattern="[a-z0-9\-]+" title="Only small letters, numbers, and hyphens are allowed"
                                     value="{{ $data->slug }}" />
                             </div>
                         </div>
@@ -174,8 +172,8 @@
                             <div class="controls">
                                 <input type="text" required maxlength="255" class="span11" placeholder="Sub title"
                                     name="sub_title" id="sub_title" value="{{ $data->shortDesc }}"
-                                    onload="updateCharCount()" />
-                                <p id="char_count" style="color: gray; margin-top: 5px;">
+                                    oninput="updateCharCount('sub_title_count')" />
+                                <p id="sub_title_count" style="color: gray; margin-top: 5px;">
                                     ({{ strlen(old('sub_title', $data->shortDesc)) }} / 255 characters)</p>
 
                                 @if ($errors->has('sub_title'))
@@ -262,6 +260,7 @@
         <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
         <script src="{{ url('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js') }}"></script>
         <script src="{{ url('tinymce/js/tinymce/tinymce.min.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@indic-transliteration/sanscript"></script>
         <script>
             $(document).ready(function() {
                 $('#select2').html("<option>No Data</option>");
@@ -547,22 +546,7 @@
                 };
                 tinymce.init(editor_config);
 
-                // $("#insightform").validate({
-                //     rules: {
-                //         title: {
-                //             maxlength: 100,
-                //             minlength: 3
-                //         },
-                //     },
-                //     errorPlacement: function(error, element) {
-                //         if (element.hasClass('customError')) {
-                //             // custom error placement
-                //             element.parent().after(error);
-                //         } else {
-                //             element.after(error); // default error placement
-                //         }
-                //     }
-                // });
+
             });
 
             document.addEventListener("DOMContentLoaded", function() {
@@ -599,16 +583,32 @@
                     }
                 });
 
-                function generateSlug() {
-                    let title = titleInput.value;
-                    let slug = title.toLowerCase()
-                        .trim()
-                        .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
-                        .replace(/\s+/g, "-") // Replace spaces with dashes
-                        .replace(/-+/g, "-"); // Remove multiple dashes
+                async function generateSlug() {
+                    const title = titleInput.value.trim();
+                    const lang = '{{ $lang }}';
 
-                    slugInput.value = slug;
+                    // Only generate slug if the slug input is empty
+                    if (!slugInput.value.trim()) {
+                        let slug = '';
+
+                        if (lang === 'hi') {
+                            // Convert Hindi (Devanagari) to Latin using Sanscript
+                            const transliterated = Sanscript.t(title, 'devanagari', 'itrans');
+                            slug = transliterated.toLowerCase()
+                                .replace(/[^a-z0-9\s-]/g, '')
+                                .replace(/\s+/g, '-')
+                                .replace(/-+/g, '-');
+                        } else {
+                            slug = title.toLowerCase()
+                                .replace(/[^a-z0-9\s-]/g, '')
+                                .replace(/\s+/g, '-')
+                                .replace(/-+/g, '-');
+                        }
+
+                        slugInput.value = slug;
+                    }
                 }
+
 
                 function validateSlug() {
                     let slug = slugInput.value;
@@ -621,11 +621,16 @@
                 }
             });
 
-            function updateCharCount() {
-                let inputField = document.getElementById('sub_title');
-                let charCount = inputField.value.length;
-                let maxLength = inputField.getAttribute('maxlength');
-                document.getElementById('char_count').textContent = charCount + " / " + maxLength + " characters";
+            function updateCharCount(fieldId) {
+                const input = document.getElementById(fieldId);
+                const countDisplay = document.getElementById(fieldId + '_count');
+
+                if (!input || !countDisplay) return; // Safety check
+
+                const currentLength = input.value.length;
+                const maxLength = input.getAttribute('maxlength');
+
+                countDisplay.textContent = `(${currentLength} / ${maxLength} characters)`;
             }
 
             document.getElementById("insightform").addEventListener("submit", function(e) {
@@ -668,10 +673,10 @@
                 }
 
                 // Image (required only for create)
-                let image = document.getElementById("showImage");
-                if (image && image.files.length === 0) {
-                    errors.push("Please upload an image.");
-                }
+                // let image = document.getElementById("showImage");
+                // if (image && image.files.length === 0) {
+                //     errors.push("Please upload an image.");
+                // }
                 if (errors.length > 0) {
                     e.preventDefault(); // stop form submission
                     Swal.fire({
@@ -681,6 +686,10 @@
                         confirmButtonText: 'OK'
                     });
                 }
+            });
+            window.addEventListener('DOMContentLoaded', () => {
+                updateCharCount('title');
+                updateCharCount('sub_title');
             });
         </script>
         @if (session('success'))

@@ -244,28 +244,21 @@ class InsightController extends Controller
 
         // Related Brands
         $brands = explode(",", $data->related_brand ?? '');
-        $company = FranchisorBusinessDetail::query()
-            ->whereIn('franchisor_id', $brands)
-            ->select('franchisor_id', 'company_name')
-            ->get();
+        // $company = FranchisorBusinessDetail::query()
+        //     ->whereIn('franchisor_id', $brands)
+        //     ->select('franchisor_id', 'company_name')
+        //     ->get();
 
         // Authenticated user
         $user  = Auth::guard('admin')->user();
         $role  = $user->admin_role; // assuming this column exists
-        $author = $user->author;   // assuming relation is defined
+        // $author = $user->author;   // assuming relation is defined
 
-        if ($author) {
-            // Author role: only their own record
-            $authorData = collect([[
-                'author_id' => $author->author_id,
-                'title'     => $author->title,
-            ]]);
-        } else {
-            // Admin/Manager role: all authors under this admin
-            $authorData = AuthorList::query()
-                ->where('admin_id', $user->admin_id)
-                ->get(['author_id', 'title']);
-        }
+        // Role-based Author Data
+        $authorData = $data->author->first() ? collect([[
+            'author_id' => $data->author->first()->author_id,
+            'title'     => $data->author->first()->title,
+        ]]) : collect();
 
         // Associated Tags
         $tagIds = $contentAssignModel::query()
@@ -286,7 +279,7 @@ class InsightController extends Controller
             'tags',
             'data',
             'assocTags',
-            'company',
+            // 'company',
             'authorData',   // role-based authors
             'role',         // current user role
             'InsightCategory',

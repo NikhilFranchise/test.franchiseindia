@@ -55,7 +55,13 @@
 
             .is-invalid {
                 border: 1px solid #dc3545 !important;
+
                 /* Red */
+            }
+
+            .text-danger {
+                color: rgb(224, 16, 16);
+                font-size: 12px;
             }
         </style>
     @endpush
@@ -76,6 +82,19 @@
                     <h5>{{ isset($author) ? 'Update' : 'Add' }} Author</h5>
                 </div>
                 <div class="widget-content nopadding">
+                    {{-- Validation error messages --}}
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            <strong>Please fix the following errors:</strong>
+                            <ul style="margin-top: 10px;">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form id="editform" method="POST"
                         action="{{ route(isset($author) ? 'update.author' : 'register.author') }}"
                         enctype="multipart/form-data" class="form-horizontal" onsubmit="return validateform()">
@@ -96,6 +115,9 @@
                                                 <input type="text" name="name" class="span11"
                                                     value="{{ old('name', $author->title ?? '') }}"
                                                     placeholder="Enter Author name" required>
+                                                @error('name')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -105,6 +127,9 @@
                                                 <input type="text" name="company" class="span11"
                                                     value="{{ old('company', $author->company ?? '') }}"
                                                     placeholder="Enter Company Name">
+                                                @error('company')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -114,30 +139,42 @@
                                                 <input type="text" name="designation" class="span11"
                                                     value="{{ old('designation', $author->designation ?? '') }}"
                                                     placeholder="Enter Designation">
+                                                @error('designation')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
-
+                                        @php
+                                            $author = $author ?? null;
+                                        @endphp
                                         <div class="control-group">
                                             <label class="control-label">Author Role :</label>
                                             <div class="controls">
                                                 <select name="role" class="span11">
                                                     <option value="author"
-                                                        {{ old('role', optional($author->admin)->admin_role) == 'author' ? 'selected' : '' }}>
-                                                        Author</option>
+                                                        {{ old('role', optional(optional($author)->admin)->admin_role) == 'author' ? 'selected' : '' }}>
+                                                        Author
+                                                    </option>
                                                     <option value="editor"
-                                                        {{ old('role', optional($author->admin)->admin_role) == 'editor' ? 'selected' : '' }}>
-                                                        Editor</option>
+                                                        {{ old('role', optional(optional($author)->admin)->admin_role) == 'editor' ? 'selected' : '' }}>
+                                                        Editor
+                                                    </option>
                                                     <option value="manager"
-                                                        {{ old('role', optional($author->admin)->admin_role) == 'manager' ? 'selected' : '' }}>
-                                                        Manager</option>
+                                                        {{ old('role', optional(optional($author)->admin)->admin_role) == 'manager' ? 'selected' : '' }}>
+                                                        Manager
+                                                    </option>
                                                     @if (
-                                                        (!empty($author) && optional($author->admin)->admin_role == 'admin') ||
+                                                        (!empty($author) && optional(optional($author)->admin)->admin_role == 'admin') ||
                                                             (Auth::guard('admin')->check() && Auth::guard('admin')->user()->admin_role == 'admin'))
                                                         <option value="admin"
-                                                            {{ old('role', optional($author->admin)->admin_role) == 'admin' ? 'selected' : '' }}>
-                                                            Admin</option>
+                                                            {{ old('role', optional(optional($author)->admin)->admin_role) == 'admin' ? 'selected' : '' }}>
+                                                            Admin
+                                                        </option>
                                                     @endif
                                                 </select>
+                                                @error('role')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -152,6 +189,9 @@
                                                         {{ old('status', $author->status ?? '') == 'D' ? 'selected' : '' }}>
                                                         Inactive</option>
                                                 </select>
+                                                @error('status')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -166,6 +206,9 @@
                                                         <i class="fa fa-eye"></i>
                                                     </span>
                                                 </div>
+                                                @error('password')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -181,8 +224,10 @@
                                                         onclick="togglePassword('password_confirmation', this)">
                                                         <i class="fa fa-eye"></i>
                                                     </span>
-
                                                 </div>
+                                                @error('password_confirmation')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -197,8 +242,13 @@
                                                     <input type="hidden" name="old_image"
                                                         value="{{ isset($author) ? Config('constants.franAwsS3Url') . ltrim($author->image, '/') : '' }}" />
                                                 @endif
-                                                <input type="file" name="image" class="span11" accept="image/*">
+                                                <input type="file" name="image" class="span11" accept="image/*"
+                                                    value="{{ old('image', '') }}">
                                                 <span class="help-inline">Note: * Image size 512x512</span>
+                                                <br>
+                                                @error('image')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -220,6 +270,9 @@
                                                 <input type="email" name="email" class="span11"
                                                     value="{{ old('email', $author->emailid ?? '') }}"
                                                     placeholder="Enter Email ID">
+                                                @error('email')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -229,6 +282,9 @@
                                                 <input type="tel" name="phone_no" class="span11"
                                                     value="{{ old('phone_no', $author->phone_no ?? '') }}"
                                                     placeholder="Enter Phone No">
+                                                @error('phone_no')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -238,6 +294,9 @@
                                                 <input type="text" name="address" class="span11"
                                                     value="{{ old('address', $author->address ?? '') }}"
                                                     placeholder="Enter Address">
+                                                @error('address')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -247,6 +306,9 @@
                                                 <input type="text" name="linkedin_profile" class="span11"
                                                     value="{{ old('linkedin_profile', $author->linkedin_profile ?? '') }}"
                                                     placeholder="Enter LinkedIn Profile">
+                                                @error('linkedin_profile')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -256,6 +318,10 @@
                                                 <input type="text" name="facebook_profile" class="span11"
                                                     value="{{ old('facebook_profile', $author->facebook_profile ?? '') }}"
                                                     placeholder="Enter Facebook Profile">
+                                                @error('facebook_profile')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+
                                             </div>
                                         </div>
 
@@ -265,6 +331,9 @@
                                                 <input type="text" name="twitter_profile" class="span11"
                                                     value="{{ old('twitter_profile', $author->twitter_profile ?? '') }}"
                                                     placeholder="Enter Twitter Profile">
+                                                @error('twitter_profile')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -274,6 +343,9 @@
                                                 <input type="text" name="insta_profile" class="span11"
                                                     value="{{ old('insta_profile', $author->insta_profile ?? '') }}"
                                                     placeholder="Enter Instagram Profile">
+                                                @error('insta_profile')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                         @if (in_array(Auth::guard('admin')->user()->admin_role, ['admin']))
@@ -288,6 +360,9 @@
                                                             {{ old('upload_capability', $author->news_upload_capability ?? '') == 0 ? 'selected' : '' }}>
                                                             No</option>
                                                     </select>
+                                                    @error('upload_capability')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                             <div class="control-group">
@@ -301,6 +376,9 @@
                                                             {{ old('can_create_author', $author->admin->can_create_author ?? '') == 0 ? 'selected' : '' }}>
                                                             No</option>
                                                     </select>
+                                                    @error('can_create_author')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         @endif
@@ -320,6 +398,9 @@
                                         <div class="control-group">
                                             <div class="controls textarea">
                                                 <textarea name="description" id="description" class="span11" rows="5">{{ old('description', $author->text ?? '') }}</textarea>
+                                                @error('description')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>

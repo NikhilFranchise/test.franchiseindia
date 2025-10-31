@@ -220,6 +220,7 @@
         <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
         <script src="{{ url('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js') }}"></script>
         <script src="{{ url('tinymce/js/tinymce/tinymce.min.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@indic-transliteration/sanscript"></script>
         <script>
             $(document).ready(function() {
                 $('#select2').html("<option>No Data</option>");
@@ -539,14 +540,25 @@
                     }
                 });
 
-                function generateSlug() {
-                    let title = titleInput.value;
-                    let slug = title.toLowerCase()
-                        .trim()
-                        .replace(/[^a-z0-9\s-]/g, "") // Remove special characters
-                        .replace(/\s+/g, "-") // Replace spaces with dashes
-                        .replace(/-+/g, "-"); // Remove multiple dashes
+                async function generateSlug() {
+                    const title = titleInput.value.trim();
+                    const lang = '{{ $lang }}';
+                    let slug = '';
 
+                    if (lang === 'hi') {
+                        // Convert Hindi (Devanagari) to Latin using Sanscript
+                        const transliterated = Sanscript.t(title, 'devanagari', 'itrans');
+                        // Generate Slug
+                        slug = transliterated.toLowerCase()
+                            .replace(/[^a-z0-9\s-]/g, '')
+                            .replace(/\s+/g, '-')
+                            .replace(/-+/g, '-');
+                    } else {
+                        slug = title.toLowerCase()
+                            .replace(/[^a-z0-9\s-]/g, '')
+                            .replace(/\s+/g, '-')
+                            .replace(/-+/g, '-');
+                    }
                     slugInput.value = slug;
                 }
 
@@ -559,6 +571,8 @@
 
                     slugInput.value = slug;
                 }
+
+
             });
 
             function updateCharCount(fieldId) {
@@ -572,6 +586,7 @@
 
                 countDisplay.textContent = `(${currentLength} / ${maxLength} characters)`;
             }
+
 
 
             document.getElementById("insightform").addEventListener("submit", function(e) {
