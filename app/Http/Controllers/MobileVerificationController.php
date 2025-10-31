@@ -176,8 +176,9 @@ class MobileVerificationController extends Controller
      */
     public function sendSmsToMobile($mobileNo, $otpCode)
     {
-        $smsMsg = sprintf(config('txtlocal.SmsOtpMsg'), 'User', $otpCode);
-        CommonController::sendTxtSms($mobileNo, $smsMsg);
+        // $smsMsg = sprintf(config('txtlocal.SmsOtpMsg'), 'User', $otpCode);
+        $smsMsg = "User| |" .$otpCode;
+        CommonController::f2smsotp($mobileNo, $smsMsg);
     }
 
     /**

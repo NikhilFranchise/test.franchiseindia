@@ -5,7 +5,8 @@
     date('Y') .
     ': Dive into the most successful franchisor and
     franchisee opportunities. Gain insights into the best sectors to launch and grow your franchise this year.')
-@section('seoKeywords', 'Franchise India Top 100 Franchisees, Top 100 Franchisees, Top 200 Franchise, Top 200
+@section('seoKeywords',
+    'Franchise India Top 100 Franchisees, Top 100 Franchisees, Top 200 Franchise, Top 200
     Franchisees, Top Business opportunities.')
     @push('styles')
         <link rel="stylesheet" href="{{ url('/css/top200.css') }}">
@@ -170,8 +171,19 @@
                 <div class="col-md-9">
                     @include('category.free-info')
                     <div class="buttons">
-                        <span id="recordCount">{{ $count }} RESULTS OF
-                            {{ $totalCount + count(config('staticBrands.staticBrands.2025')) }}</span>
+                        <span id="recordCount">
+                            {{ $count }} RESULTS OF
+                            {{ $totalCount +
+                                ($year == 2025
+                                    ? count(config('staticBrands.staticBrands.2025'))
+                                    : ($year == 2024
+                                        ? count(config('staticBrands.staticBrands.2024'))
+                                        : ($year == 2023
+                                            ? count(config('staticBrands.staticBrands.2023'))
+                                            : ($year == 2022
+                                                ? count(config('staticBrands.staticBrands.2022'))
+                                                : 0)))) }}
+                        </span>
                         <div class="list"><i class="fa fa-list"></i></div>
                         <div class="grid"><i class="fa fa-th-large"></i></div>
                     </div>
@@ -211,6 +223,7 @@
                 let sCount2025 = '{{ count(config('staticBrands.staticBrands.2025')) }}';
                 let sCount2024 = '{{ count(config('staticBrands.staticBrands.2024')) }}';
                 let sCount2023 = '{{ count(config('staticBrands.staticBrands.2023')) }}';
+                let sCount2022 = '{{ count(config('staticBrands.staticBrands.2022')) }}';
 
                 function fetchData() {
                     if (isLoading) return;
@@ -264,7 +277,15 @@
                             } else if (response.count == response.totalCount && response.year == 2023) {
                                 $("#recordCount").text((response.count + parseInt(sCount2023)) +
                                     " RESULTS OF " + (response.totalCount + parseInt(sCount2023)));
-                                    
+
+                            } else if (response.year == 2022 && response.count != response.totalCount) {
+                                $("#recordCount").text(response.count + " RESULTS OF " + (response
+                                    .totalCount + parseInt(sCount2022)));
+
+                            } else if (response.count == response.totalCount && response.year == 2022) {
+                                $("#recordCount").text((response.count + parseInt(sCount2022)) +
+                                    " RESULTS OF " + (response.totalCount + parseInt(sCount2022)));
+
                             } else {
                                 $("#recordCount").text(response.count + " RESULTS OF " + response
                                     .totalCount);

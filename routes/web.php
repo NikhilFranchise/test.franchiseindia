@@ -51,8 +51,6 @@ use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\SearchMonitorController;
 use Illuminate\Support\Facades\Redirect;
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -152,6 +150,8 @@ Route::get('privacy_policy', [StaticPageController::class, 'p_popicy']);
 
 Route::get('getcitylistBystatename', [CommonController::class, 'getCityListBystateName']);
 Route::get('invester-verifyformmobilenumber', [MobileVerificationController::class, 'investerverifyMobile']);
+Route::get('fsms', [CommonController::class, 'f2smsotp']);
+
 Route::get('/user/check-mobile-status', [CommonController::class, 'verifyMobile']);
 Route::get('verifyformmobilenumber', [MobileVerificationController::class, 'verifyMobile']);
 Route::get('verify', [MobileVerificationController::class, 'verifyMobile']);
@@ -251,6 +251,8 @@ Route::get('payment-success', function () {
 Route::get('payment-cancel', [PaymentNewController::class, 'showCancelPage'])->name('payment.cancel');
 
 Route::get('payment', [PaymentController::class, 'payment']);
+Route::get('inv-plan2', [CommonController::class, 'plans']);
+
 Route::group(['prefix' => 'investor'], function () {
     Route::get('plan', [InvestorController::class, 'campaignPlan']);
     Route::get('create-new', [InvestorController::class, 'campaignNewRegistration']);
@@ -266,6 +268,8 @@ Route::group(['prefix' => 'investor'], function () {
     Route::get('quickregistration', function () {
         return view('investor/register/investor-quick-registration');
     });
+
+
     // post routes of investor
     Route::post('inv-plan', [InvestorController::class, 'upgradeInvestor']);
     Route::post('register', [InvestorController::class, 'createInvestor']);
@@ -1177,24 +1181,6 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
         /*English Language setter*/
         Route::group(['prefix' => 'en'],            function () {
-                        $categories = [
-                        'msme',
-                        'electric-vehicles',
-                        'education',
-                    ];
-               foreach ($categories as $slug) {
-                    Route::get($slug, function (Request $request) use ($slug) {
-                        // dd($slug);
-                        $baseUrl = "https://www.entrepreneurindia.com/blog/en/{$slug}";
-                        $query   = $request->getQueryString();
-                        // dd($query);
-                        $newUrl  = $query ? $baseUrl . '?' . $query : $baseUrl;
-
-                        return redirect()->away($newUrl, 301); // ✅ Forces external redirect
-                    });
-                }
-
-
             Route::get('/export',                        [InsightsController::class, 'exportInsights']);
             Route::get('thanks',                    function () {
                 return view('insights.thanks');
@@ -1214,6 +1200,8 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('/{category}/{subcategory}',     [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
+
+            
         });
         /*Hindi Language setter*/
         Route::group(['prefix' => 'hi'], function () {
@@ -1277,6 +1265,8 @@ Route::get('reload-captcha', [AdviceController::class, 'reloadCaptcha']);
 Route::get('reload-captcha-contact', [ContactUsController::class, 'reloadCaptcha']);
 
 Route::post('/submit-form', [AdviceController::class, 'freeadviceHome'])->name('form.submit');
+Route::post('/submit-sidepopup', [AdviceController::class, 'sidepopup'])->name('form.sidepopup');
+
 Route::post('/submit-form-listing', [AdviceController::class, 'freeadvicelisting'])->name('form.submitlisting');
 
 Route::get('/brand-total-count', [CommonController::class, 'brand_total_count']);
@@ -1322,3 +1312,18 @@ Route::get('/sendmail', [CommonController::class, 'send_email']);
 Route::post('/submit-form2', [AdviceController::class, 'freeadviceHome_popup2'])->name('form.submithome2');
 
 
+Route::get('img/{size}/{path}', function ($size, $path) {
+    $relativePath = str_replace(['../', './'], '', $path);
+
+    // Call Node.js image service
+    $nodeUrl = 'http://127.0.0.1:3000/img/' . $size . '/' . $relativePath;
+
+    $response = Http::get($nodeUrl);
+
+    if ($response->failed()) {
+        abort(404, 'Image not found or processing failed');
+    }
+
+    return response($response->body(), 200)
+        ->header('Content-Type', 'image/webp');
+})->where('path', '.*');

@@ -614,8 +614,7 @@ class InsightsController extends Controller
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('news_id', $id)
             ->first();
-        // dd($newsDetails->cat_id);
-           
+        // dd($newsDetails); chedch
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
         }
@@ -627,7 +626,7 @@ class InsightsController extends Controller
             // Build target domain (change this domain)
             $targetDomain = "https://www.entrepreneurindia.com/blog/{$locale}/{$type}/{$newsDetails->slug}.{$id}";
             // dd($targetDomain);
-            return redirect()->away($targetDomain);
+            return redirect()->away($targetDomain,301);
         }
 
         $correctSlug = $newsDetails->slug;

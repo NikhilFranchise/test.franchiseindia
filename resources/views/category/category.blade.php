@@ -720,7 +720,7 @@
                             </form> --}}
                             <form id="catpagepopup" method="post">
                                 @csrf
-                                <h2 class="ttl">Free Advice - Ask Our Experts</h2>
+                                <h2 class="ttl">Free Advice - Ask wjd Our Experts</h2>
                                 <div id="errMsg1" style="display:none;">
                                     <font color="red"> Please Fill The form! </font>
                                 </div>

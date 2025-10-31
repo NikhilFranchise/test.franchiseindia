@@ -105,6 +105,36 @@
                         <div class="row">
                             <div class="col-xs-12 col-md-12">
                                 <div class="form-group margintop40">
+                                    <label class="col-xs-12 col-sm-4 col-md-4 com4mod control-label">Coupon Code</label>
+                                    <div class="col-sm-1 com1mod padtop20 hidden-xs">:</div>
+                                    <div  class="col-xs-12 col-sm-7 col-md-7 com7mod">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><img alt="promocode" src="{{url('images/promo.jpg')}}" style="height:20px"></span>
+                                            <input type="text" name="coupon" id="couponCode" class="form-control"  placeholder="Enter Coupon code">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="form-group margintop40">
+                                    <label class="col-xs-12 col-sm-4 col-md-4 com4mod control-label">Amount To Be Paid</label>
+                                    <div class="col-sm-1 com1mod padtop20 hidden-xs">:</div>
+                                    <div  class="col-xs-12 col-sm-7 col-md-7 com7mod">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><img alt="indianrupee" src="{{url('images/inr.jpg')}}" style="height: 20px"></span>
+                                            <input type="text" name="amt" id="amt" class="form-control" placeholder="" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="form-group margintop40">
                                     <label class="col-xs-12 col-sm-4 col-md-4 com4mod control-label">Payment Mode.</label>
                                     <div class="col-sm-1 com1mod padtop20 hidden-xs">:</div>
                                     <div  class="col-xs-12 col-sm-7 col-md-7 com7mod">
@@ -315,5 +345,73 @@
             $("#405").addClass('active');
         });
     </script>
+
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+<script>
+$(document).ready(function() {
+    const gstRate = 0.18;
+    const discountCode = "FRAN25";
+    const discountPercent = 25;
+
+    const planPrices = {
+        401: 0,      // Basic
+        403: 2599,   // Silver
+        404: 3999,   // Gold
+        405: 6999    // Platinum
+    };
+
+    function updateAmount(planId) {
+        // Show immediate feedback
+        $('#amt').val('Calculating...');
+
+        setTimeout(() => {
+            // Remove highlight
+            $('#401, #403, #404, #405').removeClass('active');
+            $('#' + planId).addClass('active');
+
+            // Get base
+            let baseAmount = planPrices[planId] || 0;
+            const coupon = $('#couponCode').val()?.trim().toUpperCase();
+
+            // Apply discount only for Gold & Platinum, on base price
+            if ((planId === '404' || planId === '405') && coupon === discountCode) {
+                baseAmount -= baseAmount * (discountPercent / 100);
+            }
+
+            // Add GST after discount
+            const totalAmount = baseAmount + (baseAmount * gstRate);
+
+            // Update amount field
+            $('#amt').val(`₹ ${totalAmount.toLocaleString('en-IN', { minimumFractionDigits: 0 })}`);
+        }, 30);
+    }
+
+    // ✅ When radio changes
+    $(document).on('change click', 'input[name="invPlan"]', function() {
+        const selectedPlanId = $(this).val();
+        updateAmount(selectedPlanId);
+    });
+
+    // ✅ When clicking the entire card (boxwidth)
+    $(document).on('click', '.boxwidth', function() {
+        const planId = $(this).attr('id');
+        // Select the corresponding radio button
+        $(this).find('input[type="radio"]').prop('checked', true).trigger('change');
+        updateAmount(planId);
+    });
+
+    // ✅ Handle coupon code input
+    $('#couponCode').on('input blur', function() {
+        const selectedPlan = $('input[name="invPlan"]:checked').val();
+        if (selectedPlan) updateAmount(selectedPlan);
+    });
+
+    // ✅ Initialize with selected plan
+    const selectedPlan = $('input[name="invPlan"]:checked').val();
+    if (selectedPlan) updateAmount(selectedPlan);
+});
+</script>
+
+
     @include('includes.banners-new.facebook-pixel')
 @endsection
