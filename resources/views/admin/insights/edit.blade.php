@@ -172,15 +172,15 @@
                             <div class="controls">
                                 <input type="text" required maxlength="255" class="span11" placeholder="Sub title"
                                     name="sub_title" id="sub_title" value="{{ $data->shortDesc }}"
-                                    oninput="updateCharCount('sub_title_count')" />
-                                <p id="sub_title_count" style="color: gray; margin-top: 5px;">
-                                    ({{ strlen(old('sub_title', $data->shortDesc)) }} / 255 characters)</p>
+                                    oninput="updateCharCount('sub_title')" />
 
                                 @if ($errors->has('sub_title'))
                                     @foreach ($errors->get('sub_title') as $error)
                                         <br><span style="color: red;">{{ $error }}</span>
                                     @endforeach
                                 @endif
+                                <p id="sub_title_count" style="color: gray; margin-top: 5px;">
+                                    ({{ strlen(old('sub_title', $data->shortDesc)) }} / 255 characters)</p>
                             </div>
                         </div>
                         <div class="control-group">
