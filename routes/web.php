@@ -1168,7 +1168,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
 
 
     Route::group(['prefix' => 'insights'], function () {
-        
+
 
         Route::get('/',                             [InsightsController::class, 'insightshome'])->name('newsEnHome');
         Route::get('/hindi',                        [InsightsController::class, 'insightshome'])->name('NewsHiHome');
@@ -1184,8 +1184,6 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         Route::post('newslettersignup',             [InsightsController::class, 'newslettersignup']);
         /*English Language setter*/
         Route::group(['prefix' => 'en'],            function () {
-<<<<<<< HEAD
-=======
             //Category redirection for Education, MSME ,EV START
             $categories = [
                 'msme',
@@ -1206,7 +1204,6 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
 
             //Category redirection for Education, MSME ,EV END
 
->>>>>>> 1a6213681acf16e29da55f497a6683319d5f5ff5
             Route::get('/export',                        [InsightsController::class, 'exportInsights']);
             Route::get('thanks',                    function () {
                 return view('insights.thanks');
@@ -1229,22 +1226,22 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
         });
         /*Hindi Language setter*/
         Route::group(['prefix' => 'hi'], function () {
-                          $categories = [
-                        'msme',
-                        'electric-vehicles',
-                        'education',
-                    ];
-               foreach ($categories as $slug) {
-                    Route::get($slug, function (Request $request) use ($slug) {
-                        // dd($slug);
-                        $baseUrl = "https://www.entrepreneurindia.com/blog/hi/{$slug}";
-                        $query   = $request->getQueryString();
-                        // dd($query);
-                        $newUrl  = $query ? $baseUrl . '?' . $query : $baseUrl;
+            $categories = [
+                'msme',
+                'electric-vehicles',
+                'education',
+            ];
+            foreach ($categories as $slug) {
+                Route::get($slug, function (Request $request) use ($slug) {
+                    // dd($slug);
+                    $baseUrl = "https://www.entrepreneurindia.com/blog/hi/{$slug}";
+                    $query   = $request->getQueryString();
+                    // dd($query);
+                    $newUrl  = $query ? $baseUrl . '?' . $query : $baseUrl;
 
-                        return redirect()->away($newUrl, 301); // ✅ Forces external redirect
-                    });
-                }
+                    return redirect()->away($newUrl, 301); // ✅ Forces external redirect
+                });
+            }
 
             Route::get('/search',               [InsightsController::class, 'insightSearch']);
             Route::get('thanks', function () {
@@ -1350,8 +1347,4 @@ Route::get('img/{size}/{path}', function ($size, $path) {
 
     return response($response->body(), 200)
         ->header('Content-Type', 'image/webp');
-<<<<<<< HEAD
 })->where('path', '.*');
-=======
-})->where('path', '.*');
->>>>>>> 1a6213681acf16e29da55f497a6683319d5f5ff5

@@ -624,7 +624,7 @@
 
                 // Content
                 let content = document.getElementById("inputDescription");
-                if (!content.value || content.value.length < 2) {
+                if (content.value == '') {
                     errors.push("Insights Content must have at least 2 characters.");
                 }
 
