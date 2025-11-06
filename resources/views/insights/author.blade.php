@@ -49,26 +49,26 @@
                                                         src="{{ url('/insight-new/images/social/facebook.jpg') }}" /></a>
                                             </li>
                                         @endif
-                                        @if(!empty($author->linkedin_profile))
+                                        @if (!empty($author->linkedin_profile))
                                             <li>
                                                 <a href="{{ $author->linkedin_profile }}" target="_blank"><img
                                                         src="{{ url('/insight-new/images/social/linkedin.jpg') }}" /></a>
                                             </li>
                                         @endif
-                                        @if(!empty($author->twitter_profile))
+                                        @if (!empty($author->twitter_profile))
                                             <li>
                                                 <a href="{{ $author->twitter_profile }}" target="_blank"><img
                                                         src="{{ url('/insight-new/images/social/twitter.jpg') }}" /></a>
                                             </li>
                                         @endif
-                                        @if(!empty($author->emailid))
+                                        @if (!empty($author->emailid))
                                             <li>
                                                 <a href="mailto:{{ $author->emailid }}" target="_blank">
                                                     <img src="{{ url('/insight-new/images/social/mail.jpg') }}" />
                                                 </a>
                                             </li>
                                         @endif
-                                        @if(!empty($author->insta_profile))
+                                        @if (!empty($author->insta_profile))
                                             <li>
                                                 <a href="{{ $author->insta_profile }}" target="_blank"><img
                                                         src="{{ url('/insight-new/images/social/instagram.jpg') }}" /></a>
@@ -148,9 +148,23 @@
                                                     <div class="author-latest-title">
                                                         <a href="{{ $latestArticleURL }}">{{ $latest->title }}</a>
                                                     </div>
-                                                    <p>
-                                                        {{ $latest->shortDesc }}
-                                                    </p>
+                                                    <p>{!! html_entity_decode(\Illuminate\Support\Str::words($latest->shortDesc, 22, ' ...')) !!}</p>
+                                                    <ul class="art-detail-read">
+                                                        <li>
+                                                            By - <a href=""
+                                                                hreflang="{{ $latest->lang }}">{{ $author->title }}</a>
+                                                        </li>
+                                                        <li><time datetime="33Z" class="datetime">
+                                                                @if ($latest->created_at >= $latest->published_date)
+                                                                    {{ date('M d, Y', strtotime($latest->created_at)) }}
+                                                                @else
+                                                                    {{ 'Last Updated ' . date('M d, Y', strtotime($latest->published_date)) }}
+                                                                @endif
+                                                            </time>/
+                                                            {{ app\Http\Controllers\InsightsController::calculateReadTime($latest) }}
+                                                            MIN READ</li>
+                                                    </ul>
+
                                                 </div>
                                             </div>
                                         </li>
@@ -188,9 +202,23 @@
                                                     <div class="author-latest-title">
                                                         <a href="{{ $mostArticleURL }}">{{ $viewed->title }}</a>
                                                     </div>
-                                                    <p>
-                                                        {{ $viewed->shortDesc }}
-                                                    </p>
+                                                    <p>{!! html_entity_decode(\Illuminate\Support\Str::words($viewed->shortDesc, 22, ' ...')) !!}</p>
+                                                    <ul class="art-detail-read">
+                                                        <li>
+                                                            By - <a href=""
+                                                                hreflang="{{ $viewed->lang }}">{{ $author->title }}</a>
+                                                        </li>
+                                                        <li><time datetime="33Z" class="datetime">
+                                                                @if ($viewed->created_at >= $viewed->published_date)
+                                                                    {{ date('M d, Y', strtotime($viewed->created_at)) }}
+                                                                @else
+                                                                    {{ 'Last Updated ' . date('M d, Y', strtotime($viewed->published_date)) }}
+                                                                @endif
+                                                            </time>/
+                                                            {{ app\Http\Controllers\InsightsController::calculateReadTime($viewed) }}
+                                                            MIN READ
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </li>

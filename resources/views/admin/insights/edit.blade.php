@@ -204,12 +204,13 @@
                                     value="{{ \App\Http\Controllers\Admin\AdminController::createimgurl($data->image, $lang) }}" />
                                 <input type="file" id="showImage" class="span11" name="image">
                                 <div style="display: none; color: red;" id="showImage_msg">Invalid image type!
-                                    Please
-                                    select a valid image format (JPG, GIF, PNG, or WebP)
+                                    Please select a valid image format (JPG, GIF, PNG, or WebP)
                                 </div>
                                 <div style="display: none; color: red;" id="showImage_msg_size">Please select a
                                     image of size(Less than 300 KB)
                                 </div>
+                                <div style="display: none; color: red;" id="showImage_msg_dimensions">Invalid image
+                                    dimensions! Image must be at least 1600x940 pixels.</div>
                                 <br />
                                 Note : * Image Size 1600x940
 
@@ -382,40 +383,133 @@
                 }
             });
 
+            // function checkImageSize(fileInput) {
+            //     if (fileInput.files[0].size > 307200) {
+            //         Swal.fire({
+            //             position: 'top-end',
+            //             toast: true,
+            //             icon: 'error',
+            //             title: 'Image size too large!',
+            //             text: 'Image size should be 300 KB or less.',
+            //             timer: 1500,
+            //             showConfirmButton: false,
+            //             timerProgressBar: true,
+            //             background: '#f8d7da',
+            //             color: '#721c24',
+            //         });
+            //         $('#showImage_msg_size').css('display', 'block');
+            //         $('#newssubmit').prop('disabled', true);
+            //         $('#imagePreview').hide();
+            //         $("#altText").hide();
+            //     } else {
+            //         Swal.fire({
+            //             position: 'top-end',
+            //             toast: true,
+            //             icon: 'success',
+            //             title: 'Valid image size!',
+            //             text: 'You can proceed.',
+            //             timer: 1500,
+            //             showConfirmButton: false,
+            //             timerProgressBar: true,
+            //             background: '#f0f9f4',
+            //             color: '#155724',
+            //         });
+            //         $('#showImage_msg_size').css('display', 'none');
+            //         $('#newssubmit').prop('disabled', false);
+            //     }
+            // }
             function checkImageSize(fileInput) {
-                if (fileInput.files[0].size > 307200) {
-                    Swal.fire({
-                        position: 'top-end',
-                        toast: true,
-                        icon: 'error',
-                        title: 'Image size too large!',
-                        text: 'Image size should be 300 KB or less.',
-                        timer: 1500,
-                        showConfirmButton: false,
-                        timerProgressBar: true,
-                        background: '#f8d7da',
-                        color: '#721c24',
-                    });
-                    $('#showImage_msg_size').css('display', 'block');
-                    $('#newssubmit').prop('disabled', true);
-                    $('#imagePreview').hide();
-                    $("#altText").hide();
-                } else {
-                    Swal.fire({
-                        position: 'top-end',
-                        toast: true,
-                        icon: 'success',
-                        title: 'Valid image size!',
-                        text: 'You can proceed.',
-                        timer: 1500,
-                        showConfirmButton: false,
-                        timerProgressBar: true,
-                        background: '#f0f9f4',
-                        color: '#155724',
-                    });
-                    $('#showImage_msg_size').css('display', 'none');
-                    $('#newssubmit').prop('disabled', false);
-                }
+                const file = fileInput.files[0];
+                if (!file) return;
+
+                const maxSize = 307200; // 300 KB
+                const requiredWidth = 1600;
+                const requiredHeight = 940;
+
+                const img = new Image();
+                img.src = URL.createObjectURL(file);
+
+                img.onload = function() {
+                    const width = img.width;
+                    const height = img.height;
+
+                    // -------------------------------
+                    // 1. Check File Size
+                    // -------------------------------
+                    if (file.size > maxSize) {
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'error',
+                            title: 'Image size too large!',
+                            text: 'Image size should be 300 KB or less.',
+                            timer: 3000,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            background: '#f8d7da',
+                            color: '#721c24',
+                        });
+                        $('#showImage_msg_size').fadeIn(200);
+                        setTimeout(() => {
+                            $('#showImage_msg_size').fadeOut(400);
+                        }, 5000);
+                        $('#newssubmit').prop('disabled', true);
+                        $('#newssubmit').css('cursor', 'not-allowed');
+                        $('#imagePreview').hide();
+                        $("#altText").hide();
+                        return;
+                    }
+
+                    // -------------------------------
+                    // 2. Check Dimensions
+                    // -------------------------------
+                    if (width < requiredWidth || height < requiredHeight) {
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'error',
+                            title: 'Invalid image dimensions!',
+                            text: `Image must be at least ${requiredWidth}×${requiredHeight} pixels.`,
+                            timer: 4000,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            background: '#fff3cd',
+                            color: '#856404',
+                        });
+                        $('#showImage_msg_dimensions').fadeIn(200);
+                        setTimeout(() => {
+                            $('#showImage_msg_dimensions').fadeOut(400);
+                        }, 5000);
+                        $('#newssubmit').prop('disabled', true);
+                        $('#newssubmit').css('cursor', 'not-allowed');
+                        $('#imagePreview').hide();
+                        $('#showImage').val('');
+                        // $("#altText").hide();
+                    } else {
+                        // -------------------------------
+                        // 3. All Good — Enable Submit
+                        // -------------------------------
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'success',
+                            title: 'Valid image!',
+                            text: `Good to go — ${width}×${height}px`,
+                            timer: 3000,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            background: '#f0f9f4',
+                            color: '#155724',
+                        });
+                        $('#showImage_msg_size, #showImage_msg_dimensions').fadeOut(200);
+                        $('#newssubmit').prop('disabled', false).css('cursor', 'pointer');
+                        $('#imagePreview').show();
+                        $("#altText").show();
+                    }
+
+                    // Free memory after image load
+                    URL.revokeObjectURL(img.src);
+                };
             }
 
             function previewImage(fileInput) {

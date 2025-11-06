@@ -1394,12 +1394,16 @@ class AdminController extends Controller
             // ---------------------------
             switch ($type) {
                 case 'Author':
+                    // $resizedImage = Image::make($image)
+                    //     ->resize(512, 512, function ($c) {
+                    //         $c->aspectRatio();
+                    //         $c->upsize();
+                    //     })
+                    //     ->encode($extension, 90);
                     $resizedImage = Image::make($image)
-                        ->resize(512, 512, function ($c) {
-                            $c->aspectRatio();
-                            $c->upsize();
-                        })
+                        ->resize(512, 512)
                         ->encode($extension, 90);
+
                     break;
 
                 case 'Gallery':
@@ -1408,12 +1412,16 @@ class AdminController extends Controller
                     break;
 
                 default: // Article, Interview, News, Report, Event, Terms
+                    // $resizedImage = Image::make($image)
+                    //     ->resize(1600, 940, function ($c) {
+                    //         $c->aspectRatio();
+                    //         $c->upsize();
+                    //     })
+                    //     ->encode($extension, 90);
                     $resizedImage = Image::make($image)
-                        ->resize(1600, 940, function ($c) {
-                            $c->aspectRatio();
-                            $c->upsize();
-                        })
+                        ->resize(1600, 940)
                         ->encode($extension, 90);
+
                     break;
             }
             // dd($resizedImage);

@@ -148,12 +148,14 @@ class InsightController extends Controller
 
         $model = ($lang === 'en') ? InsightList::class : InsightListHindi::class;
         $catModel = ($lang === 'en') ? InsightCategory::class : InsightsHindiCategory::class;
-
+        $authorModel = AuthorList::class;
         $search = $request->query('search');
         $type = $request->query('type');
         $ctgry = $request->query('category');
-
-        $query = $model::query()
+        $authorFilter = $request->query('author');
+        $categoryName = null;
+        $authorName = null;
+        $query = $model::query()->with(['category:id,catname', 'author:author_id,title'])
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
@@ -164,8 +166,13 @@ class InsightController extends Controller
             ->when($type, function ($query) use ($type) {
                 $query->where('insight_type', $type);
             })
-            ->when($ctgry, function ($query) use ($ctgry) {
+            ->when($authorFilter, function ($query) use ($authorFilter, $authorModel, &$authorName) {
+                $query->where('author_id', $authorFilter);
+                $authorName = $authorModel::where('author_id', $authorFilter)->value('title');
+            })
+            ->when($ctgry, function ($query) use ($ctgry, $catModel, &$categoryName) {
                 $query->where('cat_id', $ctgry);
+                $categoryName = $catModel::where('id', $ctgry)->value('catname');
             })
             ->whereIn('status', [0, 1, 2]);
 
@@ -179,7 +186,7 @@ class InsightController extends Controller
                 "Content-Disposition" => "attachment; filename=\"$filename\"",
             ];
 
-            $columns = ['news_id', 'title', 'insight_type', 'catname', 'status', 'created_at'];
+            $columns = ['Id', 'Title', 'Insight Type', 'Category', 'Status', 'Created Date'];
 
             $callback = function () use ($data, $columns) {
                 $file = fopen('php://output', 'w');
@@ -191,10 +198,9 @@ class InsightController extends Controller
                         $row->news_id,
                         $row->title,
                         $row->insight_type,
-                        // $row->cat_id,
-                        optional($row->category)->catname ?? '',
+                        $row->category->first()->catname ?? '',
                         $row->status,
-                        $row->created_at,
+                        date('d-m-Y', strtotime($row->created_at)),
                     ]);
                 }
 
@@ -208,18 +214,24 @@ class InsightController extends Controller
         $totalRecords = $query->count();
         $insightTypes = $model::distinct()->pluck('insight_type');
         $InsightsCategory = $catModel::select('id', 'catname')->get();
-
+        $Authors = AuthorList::select('author_id', 'title')
+            ->where('status', 'A')
+            ->get();
         $data = $query->orderByDesc('news_id')
             ->paginate(25)
-            ->appends(['search' => $search, 'type' => $type]);
-
+            ->appends(['search' => $search, 'type' => $type, 'category' => $ctgry, 'author' => $authorFilter]);
+        // dd($data);
         return view('admin.insights.list', compact(
             'lang',
             'data',
             'totalRecords',
             'insightTypes',
             'type',
-            'InsightsCategory'
+            'InsightsCategory',
+            'categoryName',
+            'authorFilter',
+            'Authors',
+            'authorName'
         ));
     }
 
