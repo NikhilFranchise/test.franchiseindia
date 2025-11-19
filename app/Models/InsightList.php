@@ -16,6 +16,36 @@ class InsightList extends Model
 
     protected $table = 'insights_list_english';
     protected $primaryKey = 'news_id';
+    protected $fillable = [
+        // 'prev_id',
+        'news_type',
+        // 'source',
+        'insight_type',
+        'cat_id',
+        'subcat_id',
+        // 'kicker',
+        'title',
+        // 'homeTitle',
+        'shortDesc',
+        'content',
+        'image',
+        'img_alt',
+        'slug',
+        // 'related_brand',
+        'time',
+        'views',
+        // 'totalComment',
+        // 'totalVotes',
+        // 'facebook_shared',
+        // 'is_intl',
+        // 'is_hindi',
+        'status',
+        'author_id',
+        'updated_by',
+        'scheduled_at',
+        'published_date',
+    ];
+    protected $guarded = [];
     protected $dates = ['deleted_at'];
 
 

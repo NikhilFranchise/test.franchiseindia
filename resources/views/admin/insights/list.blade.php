@@ -155,6 +155,26 @@
             background-color: #5a6268;
             border-color: #545b62;
         }
+
+        .status-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .status-label {
+            /* cursor: pointer; */
+            text-align: center;
+        }
+
+        .status-label input[type="radio"] {
+            display: none;
+            /* hide radio buttons */
+        }
+
+        .status-label i {
+            font-size: 18px;
+        }
     </style>
 @endpush
 @section('content')
@@ -164,6 +184,7 @@
         $author = $user->author;
         $canManage = in_array($user->admin_role, ['admin', 'manager']);
     @endphp
+    {{-- @dd(new dateTime()); --}}
     <!--breadcrumbs-->
     <div id="content-header">
         <div id="breadcrumb">
@@ -337,7 +358,7 @@
                                         <td>{{ date('d-m-Y', strtotime($date)) }}</td>
                                         <td><a href="{{ $url }}" target="_blank" class="btn btn-secondary">
                                                 <i class="fa fa-external-link-alt"></i></a></td>
-                                        <td>
+                                        {{-- <td>
                                             <center>
                                                 <div class="labelwrap">
                                                     @if ($canEditDelete)
@@ -375,7 +396,114 @@
                                                     @endif
                                                 </div>
                                             </center>
+                                        </td> --}}
+                                        <td style="text-align:center;">
+                                            <div class="status-icons">
+                                                @if ($canEditDelete)
+                                                    {{-- Published --}}
+                                                    <label class="status-label" title="Published">
+                                                        <input type="radio" name="status_{{ $insights->news_id }}"
+                                                            id="{{ $insights->news_id }}" value="1"
+                                                            class="activestate"
+                                                            {{ $insights->status == 1 ? 'checked' : '' }}>
+                                                        <i
+                                                            class="fa fa-check-circle {{ $insights->status == 1 ? 'text-success' : 'text-muted' }}"></i>
+                                                    </label>
+
+                                                    {{-- Draft --}}
+                                                    <label class="status-label" title="Draft">
+                                                        <input type="radio" name="status_{{ $insights->news_id }}"
+                                                            id="{{ $insights->news_id }}" value="0"
+                                                            class="activestate"
+                                                            {{ $insights->status == 0 ? 'checked' : '' }}>
+                                                        <i
+                                                            class="fa fa-pencil-alt {{ $insights->status == 0 ? 'text-primary' : 'text-muted' }}"></i>
+                                                    </label>
+
+                                                    {{-- Preview --}}
+                                                    <label class="status-label" title="Preview">
+                                                        <input type="radio" name="status_{{ $insights->news_id }}"
+                                                            id="{{ $insights->news_id }}" value="2"
+                                                            class="activestate"
+                                                            {{ $insights->status == 2 ? 'checked' : '' }}>
+                                                        <i
+                                                            class="fa fa-eye {{ $insights->status == 2 ? 'text-warning' : 'text-muted' }}"></i>
+                                                    </label>
+
+                                                    {{-- Scheduled --}}
+                                                    <label class="status-label" title="Scheduled (auto-publish)">
+                                                        <input type="radio" name="status_{{ $insights->news_id }}"
+                                                            id="{{ $insights->news_id }}" value="3"
+                                                            class="activestate"
+                                                            {{ $insights->status == 3 ? 'checked' : '' }}>
+                                                        <i
+                                                            class="fa fa-clock {{ $insights->status == 3 ? 'text-info' : 'text-muted' }}"></i>
+
+                                                        @if ($insights->status == 3 && $insights->scheduled_at)
+                                                            {{-- <br> --}}
+                                                            <small style="font-size:10px;">
+                                                                {{ \Carbon\Carbon::parse($insights->scheduled_at)->diffForHumans() }}
+                                                            </small>
+                                                        @endif
+                                                    </label>
+                                                @else
+                                                    <label class="status-label" title="Published"
+                                                        style="cursor:not-allowed;">
+                                                        <input type="radio" disabled
+                                                            name="status_{{ $insights->news_id }}"
+                                                            id="{{ $insights->news_id }}" value="1"
+                                                            class="activestate"
+                                                            {{ $insights->status == 1 ? 'checked' : '' }}>
+                                                        <i
+                                                            class="fa fa-check-circle {{ $insights->status == 1 ? 'text-success' : 'text-muted' }}"></i>
+                                                    </label>
+
+                                                    {{-- Draft --}}
+                                                    <label class="status-label" title="Draft"
+                                                        style="cursor:not-allowed;">
+                                                        <input type="radio" disabled
+                                                            name="status_{{ $insights->news_id }}"
+                                                            id="{{ $insights->news_id }}" value="0"
+                                                            class="activestate"
+                                                            {{ $insights->status == 0 ? 'checked' : '' }}>
+                                                        <i
+                                                            class="fa fa-pencil-alt {{ $insights->status == 0 ? 'text-primary' : 'text-muted' }}"></i>
+                                                    </label>
+
+                                                    {{-- Preview --}}
+                                                    <label class="status-label" title="Preview"
+                                                        style="cursor:not-allowed;">
+                                                        <input type="radio" disabled
+                                                            name="status_{{ $insights->news_id }}"
+                                                            id="{{ $insights->news_id }}" value="2"
+                                                            class="activestate"
+                                                            {{ $insights->status == 2 ? 'checked' : '' }}>
+                                                        <i
+                                                            class="fa fa-eye {{ $insights->status == 2 ? 'text-warning' : 'text-muted' }}"></i>
+                                                    </label>
+
+                                                    {{-- Scheduled --}}
+                                                    <label class="status-label" title="Scheduled (auto-publish)"
+                                                        style="cursor:not-allowed;">
+                                                        <input type="radio" disabled
+                                                            name="status_{{ $insights->news_id }}"
+                                                            id="{{ $insights->news_id }}" value="3"
+                                                            class="activestate"
+                                                            {{ $insights->status == 3 ? 'checked' : '' }}>
+                                                        <i
+                                                            class="fa fa-clock {{ $insights->status == 3 ? 'text-info' : 'text-muted' }}"></i>
+
+                                                        @if ($insights->status == 3 && $insights->scheduled_at)
+                                                            {{-- <br> --}}
+                                                            <small style="font-size:10px;">
+                                                                {{ \Carbon\Carbon::parse($insights->scheduled_at)->diffForHumans() }}
+                                                            </small>
+                                                        @endif
+                                                    </label>
+                                                @endif
+                                            </div>
                                         </td>
+
                                         <td>
                                             <center>
                                                 @if ($canEditDelete)

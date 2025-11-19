@@ -204,6 +204,15 @@
                                     id="select3"></select>
                             </div>
                         </div>
+                        <div class="control-group">
+                            <label class="control-label">Schedule Publish Time :</label>
+                            <div class="controls">
+                                <input type="datetime-local" name="scheduled_at" class="span11">
+                                <br>
+                                <small style="color: gray;">Leave empty to publish immediately</small>
+                            </div>
+                        </div>
+
                         <div class="form-actions">
                             <a href="{{ route('insights.list', ['lang' => $lang]) }}" class="btn btn-secondary"><i
                                     class="fa fa-times"></i> Cancel</a>

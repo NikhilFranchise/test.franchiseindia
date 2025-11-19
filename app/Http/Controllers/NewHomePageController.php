@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Events;
 use Illuminate\Http\Request;
 use App\Models\FranchisorBusinessDetail;
 use App\Models\Videos;
@@ -37,6 +38,7 @@ class NewHomePageController extends Controller
             'brandsffc' => 'brandsffc_cache',
             'articles_data_cache' => 'articles_data_cache',
             'fivideohi' => 'fivideohi',
+            'upcoming_events' => 'upcoming_events_cache',
         ];
         // Define cache expiration time in seconds
         $cacheExpiration = 3600; // You can adjust this as needed
@@ -164,8 +166,31 @@ class NewHomePageController extends Controller
 
             return $videosData;
         });
-
-        return view('newHomepage.newmasterhomepage')->with(compact('news', 'articles', 'interviews',  'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
+        $events = Cache::remember($cacheKeys['upcoming_events'], $cacheExpiration, function () {
+            // Fetch upcoming events logic here
+            $eventsdata = [];
+            $events = Events::query()
+                ->select(
+                    'fih_title as title',
+                    'fih_url as url',
+                    'fih_imageurl as image',
+                    'fih_displaydate as date',
+                    'fih_address as venue',
+                    'fih_mobile as contact',
+                    'fih_homepage as isDisplayOnHome',
+                    'fih_status as status',
+                )->where('fih_status', 1)
+                ->where('fih_homepage', 1)
+                ->where('fih_date', '>=', Carbon::now())
+                ->orderBy('fih_date', 'ASC')
+                ->get();
+            foreach ($events as $event) {
+                $eventsdata[] = $event->toArray();
+            }
+            return $eventsdata;
+        });
+        // dd($news);
+        return view('newHomepage.newmasterhomepage')->with(compact('news', 'articles', 'interviews',  'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos', 'events'));
     }
 
     public function homeNew(Request $request, MobileDetect $detect)
@@ -174,67 +199,6 @@ class NewHomePageController extends Controller
             app()->setLocale('en');
             session()->put('locale', 'en');
         }
-        // $cacheKeys = [
-        //     'brandslft' => 'brandslft_cache',
-        //     'brandstbo' => 'brandstbo_cache',
-        //     'brandstfo' => 'brandstfo_cache',
-        //     'brandsffc' => 'brandsffc_cache',
-        //     'articles_data_cache_english' => 'articles_data_cache_english',
-        //     'fivideo' => 'fivideo',
-        // ];
-
-        // // Define cache expiration time in seconds
-        // $cacheExpiration = 3600; // You can adjust this as needed
-
-        // // Check if the 'brandslft' data exists in the cache
-        // $isBrandslftCached = Cache::has($cacheKeys['brandslft']);
-
-        // // Retrieve cached data or fetch and cache if not available
-        // $brandslft = Cache::remember($cacheKeys['brandslft'], $cacheExpiration, function () {
-        //     return HomePremiumPageBrand::query()
-        //         ->where('status', 1)
-        //         ->where('brand_section', 2)
-        //         ->where('page_type', 1)
-        //         ->orderBy('inventory_backup', 'ASC')
-        //         ->take(4)
-        //         ->get()
-        //         ->shuffle();
-        // });
-
-        // $brandstbo = Cache::remember($cacheKeys['brandstbo'], $cacheExpiration, function () {
-        //     return HomePremiumPageBrand::query()
-        //         ->where('status', 1)
-        //         ->where('brand_section', 3)
-        //         ->where('page_type', 1)
-        //         ->orderBy('inventory_backup', 'ASC')
-        //         ->take(12)
-        //         ->get()
-        //         ->shuffle();
-        // });
-
-        // $brandstfo = Cache::remember($cacheKeys['brandstfo'], $cacheExpiration, function () {
-        //     return    HomePremiumPageBrand::query()
-        //         ->where('status', 1)
-        //         ->where('brand_section', 4)
-        //         ->where('page_type', 1)
-        //         ->orderBy('inventory_backup', 'ASC')
-        //         ->take(25)
-        //         ->get()
-        //         ->shuffle();
-        // });
-
-
-        // $brandsffc = Cache::remember($cacheKeys['brandsffc'], $cacheExpiration, function () {
-        //     return HomePremiumPageBrand::query()
-        //         ->where('status', 1)
-        //         ->where('brand_section', 5)
-        //         ->orderBy('inventory_backup', 'ASC')
-        //         ->take(48)
-        //         ->get()
-        //         ->shuffle();
-        // });
-
-
         $cacheKeys = [
             'brandslft' => 'brandslft_cache',
             'brandstbo' => 'brandstbo_cache',
@@ -242,130 +206,73 @@ class NewHomePageController extends Controller
             'brandsffc' => 'brandsffc_cache',
             'articles_data_cache_english' => 'articles_data_cache_english',
             'fivideo' => 'fivideo',
+            'upcoming_events' => 'upcoming_events_cache',
         ];
 
-$cacheExpiration = 3600; // 1 hour
+        $cacheExpiration = 3600; // 1 hour
 
-// Define limits per section
-$sections = [
-    2 => ['key' => $cacheKeys['brandslft'], 'limit' => 4],
-    3 => ['key' => $cacheKeys['brandstbo'], 'limit' => 12],
-    4 => ['key' => $cacheKeys['brandstfo'], 'limit' => 25],
-    5 => ['key' => $cacheKeys['brandsffc'], 'limit' => 48],
-];
+        // Define limits per section
+        $sections = [
+            2 => ['key' => $cacheKeys['brandslft'], 'limit' => 4],
+            3 => ['key' => $cacheKeys['brandstbo'], 'limit' => 12],
+            4 => ['key' => $cacheKeys['brandstfo'], 'limit' => 25],
+            5 => ['key' => $cacheKeys['brandsffc'], 'limit' => 48],
+        ];
 
-// Step 1: Load from cache
-$cachedBrands = [];
-$missingSections = [];
+        // Step 1: Load from cache
+        $cachedBrands = [];
+        $missingSections = [];
 
-foreach ($sections as $section => $info) {
-    $data = Cache::get($info['key']);
-    if ($data) {
-        $cachedBrands[$section] = $data;
-    } else {
-        $missingSections[$section] = $info['limit'];
-    }
-}
+        foreach ($sections as $section => $info) {
+            $data = Cache::get($info['key']);
+            if ($data) {
+                $cachedBrands[$section] = $data;
+            } else {
+                $missingSections[$section] = $info['limit'];
+            }
+        }
 
-// Step 2: If any cache missing, do a single query
-if (!empty($missingSections)) {
-    $fetched = HomePremiumPageBrand::query()
-        ->select('brand_id','brand_img','brand_link','brand_alt','brand_heading','investment_range','investment_range_new','area_required','brand_category','brand_category_id','page_type','weightage','status','brand_section','franchise_outlets')
-        ->where('status', 1)
-        ->where('page_type', 1)
-        ->whereIn('brand_section', array_keys($missingSections))
-        ->orderBy('inventory_backup', 'ASC')
-        ->get()
-        ->groupBy('brand_section');
+        // Step 2: If any cache missing, do a single query
+        if (!empty($missingSections)) {
+            $fetched = HomePremiumPageBrand::query()
+                ->select('brand_id', 'brand_img', 'brand_link', 'brand_alt', 'brand_heading', 'investment_range', 'investment_range_new', 'area_required', 'brand_category', 'brand_category_id', 'page_type', 'weightage', 'status', 'brand_section', 'franchise_outlets')
+                ->where('status', 1)
+                ->where('page_type', 1)
+                ->whereIn('brand_section', array_keys($missingSections))
+                ->orderBy('inventory_backup', 'ASC')
+                ->get()
+                ->groupBy('brand_section');
 
-    foreach ($missingSections as $section => $limit) {
-        $data = ($fetched[$section] ?? collect())->shuffle()->take($limit);
-        Cache::put($sections[$section]['key'], $data, $cacheExpiration);
-        $cachedBrands[$section] = $data;
-    }
-}
+            foreach ($missingSections as $section => $limit) {
+                $data = ($fetched[$section] ?? collect())->shuffle()->take($limit);
+                Cache::put($sections[$section]['key'], $data, $cacheExpiration);
+                $cachedBrands[$section] = $data;
+            }
+        }
 
-// Step 3: Assign to existing variables
-$brandslft = $cachedBrands[2] ?? collect();
-$brandstbo = $cachedBrands[3] ?? collect();
-$brandstfo = $cachedBrands[4] ?? collect();
-$brandsffc = $cachedBrands[5] ?? collect();
-// dd($brandstbo);
+        // Step 3: Assign to existing variables
+        $brandslft = $cachedBrands[2] ?? collect();
+        $brandstbo = $cachedBrands[3] ?? collect();
+        $brandstfo = $cachedBrands[4] ?? collect();
+        $brandsffc = $cachedBrands[5] ?? collect();
+        // dd($brandstbo);
 
+        if (!$detect->isMobile()) {
+            $all = InsightList::query()
+                ->with('category')
+                ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date', 'insight_type')
+                ->withEffectiveDate()
+                ->where('status', 1)
+                ->whereNot('cat_id', '')
+                ->whereIn('insight_type', ['News', 'Article', 'Interview'])
+                ->orderByEffectiveDate('desc')
+                ->get()
+                ->groupBy('insight_type');
 
-// Optional debug log
-// logger()->info("Brands loaded: ", ['sections' => array_keys($cachedBrands)]);
-
-
-        // $news = InsightList::query()->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
-        //     ->with('category')
-        //     ->withEffectiveDate()
-        //     ->where('status', 1)
-        //     ->where('insight_type', 'News')
-        //     ->whereNot('cat_id', '=', '')
-        //     ->orderByEffectiveDate('desc')
-        //     ->limit(16)
-        //     ->get();
-
-        // $articles = InsightList::query()->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
-        //     ->with('category')
-        //     ->withEffectiveDate()
-        //     ->where('status', 1)
-        //     ->where('insight_type', 'Article')
-        //     ->whereNot('cat_id', '=', '')
-        //     ->orderByEffectiveDate('desc')
-        //     ->limit(16)
-        //     ->get();
-        //     // dd($articles);
-        // $interviews = InsightList::with('category')
-        //     ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date')
-        //     ->withEffectiveDate()
-        //     ->where('status', 1)
-        //     ->where('insight_type', 'Interview')
-        //     ->whereNot('cat_id', '=', '')
-        //     ->orderByEffectiveDate('desc')
-        //     ->limit(16)
-        //     ->get();
-
-    // $insights = InsightList::query()
-    // ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date', 'insight_type')
-    // ->with('category')
-    // ->where('status', 1)
-    // ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    // ->whereNotNull('cat_id')
-    // ->where('cat_id', '!=', '')
-    // ->orderBy('updated_at', 'desc')
-    // ->limit(150) // fetch a reasonable subset first
-    // ->get()
-    // ->groupBy('insight_type');
-  
-//   $agent = new Agent();
-
-     if (!$detect->isMobile() ) {
-        $all = InsightList::query()
-            ->with('category')
-            ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date', 'insight_type')
-            ->withEffectiveDate()
-            ->where('status', 1)
-            ->whereNot('cat_id', '')
-            ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-            ->orderByEffectiveDate('desc')
-            ->get()
-            ->groupBy('insight_type');
-
-        $news = $all['News']->take(16);
-        $articles = $all['Article']->take(16);
-        $interviews = $all['Interview']->take(16);
-    }
-
-
-// $news = $grouped->get('News', collect())->take(16);
-// $articles = $grouped->get('Article', collect())->take(16);
-// $interviews = $grouped->get('Interview', collect())->take(16);
-
-
-
-
+            $news = $all['News']->take(16);
+            $articles = $all['Article']->take(16);
+            $interviews = $all['Interview']->take(16);
+        }
 
         $youtubeApiKey = 'AIzaSyCB2nVhCCrLyMmHhAdIuGVBOyV_ywUATUA';
         $videos = Cache::remember($cacheKeys['fivideo'], $cacheExpiration, function () use ($youtubeApiKey) {
@@ -412,16 +319,42 @@ $brandsffc = $cachedBrands[5] ?? collect();
 
             return $videosData;
         });
-
-        if (!$detect->isMobile()){
-        return view('newHomepage.newmasterhomepage')->with(compact('news', 'articles', 'interviews', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
-
+        // events data can be added here similarly if needed
+        $events = Cache::remember($cacheKeys['upcoming_events'], $cacheExpiration, function () {
+            // Fetch upcoming events logic here
+            $eventsdata = [];
+            $events = Events::query()
+                ->select(
+                    'fih_title as title',
+                    'fih_url as url',
+                    'fih_imageurl as image',
+                    'fih_displaydate as date',
+                    'fih_startdate as start_date',
+                    'fih_date as endDate',
+                    'fih_address as venue',
+                    'fih_mobile as contact',
+                    'fih_homepage as isDisplayOnHome',
+                    'fih_facebook as facebook',
+                    'fih_twitter as twitter',
+                    'fih_linkedin as linkedin',
+                    'fih_status as priority',
+                    'show_website'
+                )->where('fih_status', 1)
+                ->where('fih_homepage', 1)
+                ->where('fih_date', '>=', Carbon::now())
+                ->orderBy('fih_date', 'ASC')
+                ->get();
+            foreach ($events as $event) {
+                $eventsdata[] = $event->toArray();
+            }
+            return $eventsdata;
+        });
+        // dd($events);
+        if (!$detect->isMobile()) {
+            return view('newHomepage.newmasterhomepage')->with(compact('news', 'articles', 'interviews', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos', 'events'));
+        } else {
+            return view('newHomepage.newmasterhomepage')->with(compact('brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos', 'events'));
         }
-        else{
-        return view('newHomepage.newmasterhomepage')->with(compact('brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
-
-        }
-        // return view('newHomepage.newmasterhomepage')->with(compact('news', 'articles', 'interviews', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos'));
     }
 
 

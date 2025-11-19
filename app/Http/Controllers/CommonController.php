@@ -51,12 +51,13 @@ class CommonController extends Controller
      * @return ResponseFactory|Response
      */
 
-    
-    public function plans(){
+
+    public function plans()
+    {
 
         // dd('yes');
-        $investorId ='FIHL111001';
-         return view('investor.register.investor-plan', compact('investorId'));
+        $investorId = 'FIHL111001';
+        return view('investor.register.investor-plan', compact('investorId'));
     }
 
     public function postExitPopup()
@@ -138,7 +139,7 @@ class CommonController extends Controller
         $locationType = FranchisorBusinessDetail::query()->select('expansion_loc_type')
             ->where('franchisor_id', $request->franId)->first()->expansion_loc_type;
         if ($locationType == 2) {
-           $citiesType2 = FranchisorLocState::query()->where('franchisor_id', $request->franId)
+            $citiesType2 = FranchisorLocState::query()->where('franchisor_id', $request->franId)
                 ->where('state', Config('location.stateArr.' . $request->state))->get()->pluck('city');
 
             if (!empty($citiesType2)) {
@@ -433,7 +434,8 @@ class CommonController extends Controller
 
 
 
-    public static function f2smsotp($mobileNo, $message){
+    public static function f2smsotp($mobileNo, $message)
+    {
         $mobileNo = (string) ((int) $mobileNo);
 
         if (strlen($mobileNo) == 12 && substr($mobileNo, 0, 2) == "91")
@@ -454,18 +456,18 @@ class CommonController extends Controller
 
         $mobileNo = CommonController::cleanSpecialChar($mobileNo);
 
-                
-                $fields = array(
-                "sender_id" => env('SenderId'),
-                "message" => "200507",
-                "variables_values" => $message,
-                "route" => env('Route'),
-                "numbers" => $mobileNo,
-                );
 
-            $curl = curl_init();
-            $apiKey = env('Fastsmsapi');
-            curl_setopt_array($curl, array(
+        $fields = array(
+            "sender_id" => env('SenderId'),
+            "message" => "200507",
+            "variables_values" => $message,
+            "route" => env('Route'),
+            "numbers" => $mobileNo,
+        );
+
+        $curl = curl_init();
+        $apiKey = env('Fastsmsapi');
+        curl_setopt_array($curl, array(
             CURLOPT_URL => "https://www.fast2sms.com/dev/bulkV2",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
@@ -482,20 +484,20 @@ class CommonController extends Controller
                 "cache-control: no-cache",
                 "content-type: application/json"
             ),
-            ));
+        ));
 
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
 
-            curl_close($curl);
+        curl_close($curl);
 
-            if ($err) {
+        if ($err) {
             // echo "cURL Error #:" . $err;
-            return response()->json(['message' => 'SMS Sending Failed', 'status' => 'failure']);            } else {
+            return response()->json(['message' => 'SMS Sending Failed', 'status' => 'failure']);
+        } else {
             // echo $response;
-             return response()->json(['message' => 'SMS Sending successfull', 'status' => 'success']);
-            }
-
+            return response()->json(['message' => 'SMS Sending successfull', 'status' => 'success']);
+        }
     }
     /**
      * @return ResponseFactory|string|Response
@@ -1099,7 +1101,8 @@ class CommonController extends Controller
     }
 
 
-    public function url(){
+    public function url()
+    {
         $m_cat = Config('constants.CategoryArr');
         $loc = Config('location.stateArr');
 
@@ -1121,7 +1124,7 @@ class CommonController extends Controller
                 $locationId = $index;
 
                 // Create the URL by appending the modified category, location, key, and location ID
-                $url = $baseUrl . urlencode($categorySlug) . '-in-' . urlencode($locationSlug) . '/mc-' . $key . '/loc-' .$locationId;
+                $url = $baseUrl . urlencode($categorySlug) . '-in-' . urlencode($locationSlug) . '/mc-' . $key . '/loc-' . $locationId;
                 $urls[] = $url; // Add the URL to the array
             }
         }
@@ -1134,79 +1137,76 @@ class CommonController extends Controller
 
     }
 
-    public function subcaturl(){
+    public function subcaturl()
+    {
         $subCategoryArr = Config('constants.subCategoryArr');
         $loc = Config('location.stateArr');
 
-            $baseUrl = Config('constants.MainDomain') . '/business-opportunities/';
-            $urls = []; // Array to hold the generated URLs
+        $baseUrl = Config('constants.MainDomain') . '/business-opportunities/';
+        $urls = []; // Array to hold the generated URLs
 
-                foreach ($subCategoryArr as $mainCategoryKey => $subCategories) {
-                    foreach ($subCategories as $subCategoryKey => $subCategory) {
-                    // Replace spaces and commas with hyphens and remove multiple hyphens
-                    $subCategorySlug = preg_replace('/[ ,]+/', '-', $subCategory);
-                    $mainCategorySlug = preg_replace('/[ ,]+/', '-', $mainCategoryKey); // Use main category key
+        foreach ($subCategoryArr as $mainCategoryKey => $subCategories) {
+            foreach ($subCategories as $subCategoryKey => $subCategory) {
+                // Replace spaces and commas with hyphens and remove multiple hyphens
+                $subCategorySlug = preg_replace('/[ ,]+/', '-', $subCategory);
+                $mainCategorySlug = preg_replace('/[ ,]+/', '-', $mainCategoryKey); // Use main category key
 
-                    // Trim hyphens from the start and end
-                    $subCategorySlug = trim($subCategorySlug, '-');
-                    $mainCategorySlug = trim($mainCategorySlug, '-');
+                // Trim hyphens from the start and end
+                $subCategorySlug = trim($subCategorySlug, '-');
+                $mainCategorySlug = trim($mainCategorySlug, '-');
 
-                        foreach ($loc as $index => $location) {
-                        // Replace spaces and commas with hyphens for location
-                        $locationSlug = preg_replace('/[ ,]+/', '-', $location);
-                        $locationSlug = trim($locationSlug, '-');
+                foreach ($loc as $index => $location) {
+                    // Replace spaces and commas with hyphens for location
+                    $locationSlug = preg_replace('/[ ,]+/', '-', $location);
+                    $locationSlug = trim($locationSlug, '-');
 
-                        // Create the URL by appending the modified subcategory, location, and keys
-                        $url = $baseUrl  . urlencode($subCategorySlug) . '-in-' . urlencode($locationSlug) . '/sc-' . $subCategoryKey . '/loc-' . $index;
-                        $urls[] = $url; // Add the URL to the array
-                        }
-                    }
+                    // Create the URL by appending the modified subcategory, location, and keys
+                    $url = $baseUrl  . urlencode($subCategorySlug) . '-in-' . urlencode($locationSlug) . '/sc-' . $subCategoryKey . '/loc-' . $index;
+                    $urls[] = $url; // Add the URL to the array
                 }
+            }
+        }
 
-            // To check the generated URLs
-            dd($urls);
-
-
-
+        // To check the generated URLs
+        dd($urls);
     }
 
-    public function subsubcaturl(){
+    public function subsubcaturl()
+    {
         $subCategoryArr = Config('constants.subSubCategoryArr');
         $loc = Config('location.stateArr');
 
-            $baseUrl = Config('constants.MainDomain') . '/business-opportunities/';
-            $urls = []; // Array to hold the generated URLs
+        $baseUrl = Config('constants.MainDomain') . '/business-opportunities/';
+        $urls = []; // Array to hold the generated URLs
 
-                foreach ($subCategoryArr as $mainCategoryKey => $subCategories) {
-                    foreach ($subCategories as $subCategoryKey => $subCategory) {
-                    // Replace spaces and commas with hyphens and remove multiple hyphens
-                    $subCategorySlug = preg_replace('/[ ,]+/', '-', $subCategory);
-                    $mainCategorySlug = preg_replace('/[ ,]+/', '-', $mainCategoryKey); // Use main category key
+        foreach ($subCategoryArr as $mainCategoryKey => $subCategories) {
+            foreach ($subCategories as $subCategoryKey => $subCategory) {
+                // Replace spaces and commas with hyphens and remove multiple hyphens
+                $subCategorySlug = preg_replace('/[ ,]+/', '-', $subCategory);
+                $mainCategorySlug = preg_replace('/[ ,]+/', '-', $mainCategoryKey); // Use main category key
 
-                    // Trim hyphens from the start and end
-                    $subCategorySlug = trim($subCategorySlug, '-');
-                    $mainCategorySlug = trim($mainCategorySlug, '-');
+                // Trim hyphens from the start and end
+                $subCategorySlug = trim($subCategorySlug, '-');
+                $mainCategorySlug = trim($mainCategorySlug, '-');
 
-                        foreach ($loc as $index => $location) {
-                        // Replace spaces and commas with hyphens for location
-                        $locationSlug = preg_replace('/[ ,]+/', '-', $location);
-                        $locationSlug = trim($locationSlug, '-');
+                foreach ($loc as $index => $location) {
+                    // Replace spaces and commas with hyphens for location
+                    $locationSlug = preg_replace('/[ ,]+/', '-', $location);
+                    $locationSlug = trim($locationSlug, '-');
 
-                        // Create the URL by appending the modified subcategory, location, and keys
-                        $url = $baseUrl  . urlencode($subCategorySlug) . '-in-' . urlencode($locationSlug) . '/ssc-' . $subCategoryKey . '/loc-' . $index;
-                        $urls[] = $url; // Add the URL to the array
-                        }
-                    }
+                    // Create the URL by appending the modified subcategory, location, and keys
+                    $url = $baseUrl  . urlencode($subCategorySlug) . '-in-' . urlencode($locationSlug) . '/ssc-' . $subCategoryKey . '/loc-' . $index;
+                    $urls[] = $url; // Add the URL to the array
                 }
+            }
+        }
 
-            // To check the generated URLs
-            dd($urls);
-
-
-
+        // To check the generated URLs
+        dd($urls);
     }
 
-    function saveUrlData($urls) {
+    function saveUrlData($urls)
+    {
         // Example: Iterate over each URL and perform your saving logic
         foreach ($urls as $url) {
             // Here you can use file_get_contents or cURL to fetch data from the URL
@@ -1262,61 +1262,63 @@ class CommonController extends Controller
 
 
     public function convertToWebP(Request $request)
-{
-    // Validate the incoming request
-    $request->validate([
-        'images' => 'required|array',
-        'images.*' => 'required|url',
-    ]);
+    {
+        // Validate the incoming request
+        $request->validate([
+            'images' => 'required|array',
+            'images.*' => 'required|url',
+        ]);
 
-    // Get the list of image URLs
-    $imageUrls = $request->input('images');
+        // Get the list of image URLs
+        $imageUrls = $request->input('images');
 
-    // Define the path where you want to save the WebP images
-    $path = public_path('images/converted/');
+        // Define the path where you want to save the WebP images
+        $path = public_path('images/converted/');
 
-    // Ensure the directory exists
-    if (!file_exists($path)) {
-        mkdir($path, 0755, true);
-    }
-
-    $convertedImages = [];
-
-    foreach ($imageUrls as $imageUrl) {
-        // Get image content from the URL
-        $imageContent = file_get_contents($imageUrl);
-        if ($imageContent === false) {
-            return response()->json(['message' => 'Failed to retrieve image from URL: ' . $imageUrl], 400);
+        // Ensure the directory exists
+        if (!file_exists($path)) {
+            mkdir($path, 0755, true);
         }
 
-        // Create a new image instance from the content
-        $image = Image::make($imageContent);
+        $convertedImages = [];
 
-        // Generate a unique filename
-        $filename = pathinfo(parse_url($imageUrl, PHP_URL_PATH), PATHINFO_FILENAME);
-        $webpFilename = $filename . '.webp';
+        foreach ($imageUrls as $imageUrl) {
+            // Get image content from the URL
+            $imageContent = file_get_contents($imageUrl);
+            if ($imageContent === false) {
+                return response()->json(['message' => 'Failed to retrieve image from URL: ' . $imageUrl], 400);
+            }
 
-        // Save the image in WebP format
-        $image->encode('webp', 100)->save($path . $webpFilename);
+            // Create a new image instance from the content
+            $image = Image::make($imageContent);
 
-        // Collect the path of the converted image
-        $convertedImages[] = asset('images/converted/' . $webpFilename);
+            // Generate a unique filename
+            $filename = pathinfo(parse_url($imageUrl, PHP_URL_PATH), PATHINFO_FILENAME);
+            $webpFilename = $filename . '.webp';
+
+            // Save the image in WebP format
+            $image->encode('webp', 100)->save($path . $webpFilename);
+
+            // Collect the path of the converted image
+            $convertedImages[] = asset('images/converted/' . $webpFilename);
+        }
+
+        return response()->json([
+            'message' => 'Images converted to WebP successfully!',
+            'webp_images' => $convertedImages,
+        ]);
     }
 
-    return response()->json([
-        'message' => 'Images converted to WebP successfully!',
-        'webp_images' => $convertedImages,
-    ]);
-}
 
 
 
-
-    public function webp_conversion(){
+    public function webp_conversion()
+    {
         return view('/img_convert');
     }
 
-    public function listing_layout(){
+    public function listing_layout()
+    {
         return view('listing_layout.master');
     }
 
@@ -1330,78 +1332,76 @@ class CommonController extends Controller
     // }
 
     public function fetchDataajax(Request $request)
-{
-    // dd('yes');
-    $sortby = $request->input('sortby');
-    $shuffledResults = collect($request->input('shuffledResults'));
+    {
+        // dd('yes');
+        $sortby = $request->input('sortby');
+        $shuffledResults = collect($request->input('shuffledResults'));
 
-    if ($sortby == 1) {
-        $shuffledResults = $shuffledResults->sortByDesc('activated_at')->values();
+        if ($sortby == 1) {
+            $shuffledResults = $shuffledResults->sortByDesc('activated_at')->values();
+        } elseif ($sortby == 2) {
+            // Alphabetical order
+            $shuffledResults = $shuffledResults->sortBy('company_name')->values();
+        } elseif ($sortby == 3) {
+            $shuffledResults = $shuffledResults->sortByDesc('views')->values();
+        }
 
-    } elseif ($sortby == 2) {
-        // Alphabetical order
-        $shuffledResults = $shuffledResults->sortBy('company_name')->values();
+        // return response()->json($shuffledResults);
 
-    } elseif ($sortby == 3) {
-        $shuffledResults = $shuffledResults->sortByDesc('views')->values();
+        $html = view('category.listingloop', ['shuffledResults' => $shuffledResults])->render();
+        // dd($html);
+        return response()->json(['html' => $html]);
     }
 
-    // return response()->json($shuffledResults);
 
-    $html = view('category.listingloop', ['shuffledResults' => $shuffledResults])->render();
-    // dd($html);
-    return response()->json(['html' => $html]);
-}
+    public function fetchDataajax2(Request $request)
+    {
+        // dd('yes');
+        $sortby = $request->input('sortby');
+        $shuffledResults = collect($request->input('shuffledResults'));
 
+        if ($sortby == 1) {
+            $shuffledResults = $shuffledResults->sortByDesc('activated_at')->values();
+        } elseif ($sortby == 2) {
+            // Alphabetical order
+            $shuffledResults = $shuffledResults->sortBy('company_name')->values();
+        } elseif ($sortby == 3) {
+            $shuffledResults = $shuffledResults->sortByDesc('views')->values();
+        }
 
-public function fetchDataajax2(Request $request)
-{
-    // dd('yes');
-    $sortby = $request->input('sortby');
-    $shuffledResults = collect($request->input('shuffledResults'));
+        // return response()->json($shuffledResults);
 
-    if ($sortby == 1) {
-        $shuffledResults = $shuffledResults->sortByDesc('activated_at')->values();
-
-    } elseif ($sortby == 2) {
-        // Alphabetical order
-        $shuffledResults = $shuffledResults->sortBy('company_name')->values();
-
-    } elseif ($sortby == 3) {
-        $shuffledResults = $shuffledResults->sortByDesc('views')->values();
+        $html = view('category.listingloop_range_sortby', ['shuffledResults' => $shuffledResults])->render();
+        // dd($html);
+        return response()->json(['html' => $html]);
     }
 
-    // return response()->json($shuffledResults);
 
-    $html = view('category.listingloop_range_sortby', ['shuffledResults' => $shuffledResults])->render();
-    // dd($html);
-    return response()->json(['html' => $html]);
-}
+    public function send_email()
+    {
+        //sending the email on testing
+        $code = Str::random(16);
+        $data = [
+            'companyName' => 'Nikhil',
+            'code' => $code,
+        ];
+        $email = 'cnikhil@franchiseindia.net';
+        Mail::getFacadeRoot()->to($email)->send(new confirmed($data));
+    }
 
+    public function reset(Request $request)
+    {
+        dd($request->email);
+    }
 
-public function send_email()
-{
-    //sending the email on testing
-    $code = Str::random(16);
-    $data = [
-        'companyName' => 'Nikhil',
-        'code' => $code,
-    ];
-    $email='cnikhil@franchiseindia.net';
-    Mail::getFacadeRoot()->to($email)->send(new confirmed($data));
-}
+    public function thankYou(Request $request)
+    {
+        $message = session('message');
+        // dd($message);
+        return view('thanks.thanks', compact('message'));
+    }
 
-public function reset(Request $request){
-    dd($request->email);
-}
-
-public function thankYou(Request $request){
-    $message = session('message');
-    // dd($message);
-    return view('thanks.thanks' , compact('message'));
-}
-
-public static function send_sms_freeinfo($mobileNo, $message)
+    public static function send_sms_freeinfo($mobileNo, $message)
     {
         // dd('yes');
         $mobileNo = (string) ((int) $mobileNo);
@@ -1466,5 +1466,3 @@ public static function send_sms_freeinfo($mobileNo, $message)
         return response()->json(['message' => 'SMS Sending successfull', 'status' => 'success']);
     }
 }
-
- 

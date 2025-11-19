@@ -266,7 +266,6 @@
                             <ul class="what-new">
                                 @foreach ($articles as $art)
                                     @if ($loop->index < 8)
-                                    {{-- @dd($art); --}}
                                         @php
                                             $locale = request()->segment(1) == 'hi' ? 'hi' : 'en';
                                             $mainDomain = config('constants.MainDomain');
@@ -380,14 +379,16 @@
                                         @php
                                             $locale = request()->segment(1) == 'hi' ? 'hi' : 'en';
                                             $mainDomain = config('constants.MainDomain');
-                                            $url = "{$mainDomain}/insights/{$locale}/news/{$new->slug}.{$new->news_id}";
+                                            $slug = $new->slug ?? Str::slug($new->title); // Safely access the slug or create it from the title
+                                            $url = "{$mainDomain}/insights/{$locale}/news/{$slug}.{$new->news_id}";
 
                                             $imgUrl = \App\Http\Controllers\InsightsController::createimgurl(
                                                 $new->image,
                                             );
                                             $cat = $new->category->first();
                                             $categoryName = $cat ? $cat->catname : '';
-                                            $caturl = "{$mainDomain}/insights/{$locale}/{$cat->slug}";
+                                            $categorySlug = $cat ? $cat->slug : '';
+                                            $caturl = "{$mainDomain}/insights/{$locale}/{$categorySlug}";
 
                                         @endphp
                                         <li>
@@ -404,7 +405,7 @@
                                                                 <div class="bdr">
                                                                     <div class="count">
                                                                         <a href="{{ $caturl }}" target="_blank"
-                                                                            aria-label="{{ $cat->catname }}">{{ $categoryName }}</a>
+                                                                            aria-label="{{ $categoryName }}">{{ $categoryName }}</a>
                                                                     </div>
                                                                     <div class="name">
                                                                         <a href="{{ $url }}" target="_blank"
@@ -428,14 +429,16 @@
                                         @php
                                             $locale = request()->segment(1) == 'hi' ? 'hi' : 'en';
                                             $mainDomain = config('constants.MainDomain');
-                                            $url = "{$mainDomain}/insights/{$locale}/news/{$new->slug}.{$new->news_id}";
+                                            $slug = $new->slug ?? Str::slug($new->title);
+                                            $url = "{$mainDomain}/insights/{$locale}/news/{$slug}.{$new->news_id}";
 
                                             $imgUrl = \App\Http\Controllers\InsightsController::createimgurl(
                                                 $new->image,
                                             );
                                             $cat = $new->category->first();
                                             $categoryName = $cat ? $cat->catname : '';
-                                            $caturl = "{$mainDomain}/insights/{$locale}/{$cat->slug}";
+                                            $categorySlug = $cat ? $cat->slug : '';
+                                            $caturl = "{$mainDomain}/insights/{$locale}/{$categorySlug}";
 
                                         @endphp
                                         <li>
@@ -490,14 +493,16 @@
                                         @php
                                             $locale = request()->segment(1) == 'hi' ? 'hi' : 'en';
                                             $mainDomain = config('constants.MainDomain');
-                                            $url = "{$mainDomain}/insights/{$locale}/interview/{$inter->slug}.{$inter->news_id}";
+                                            $slug = $inter->slug ?? Str::slug($inter->title);
+                                            $url = "{$mainDomain}/insights/{$locale}/interview/{$slug}.{$inter->news_id}";
 
                                             $imgUrl = \App\Http\Controllers\InsightsController::createimgurl(
                                                 $inter->image,
                                             );
                                             $cat = $inter->category->first();
                                             $categoryName = $cat ? $cat->catname : '';
-                                            $caturl = "{$mainDomain}/insights/{$locale}/{$cat->slug}";
+                                            $categorySlug = $cat ? $cat->slug : '';
+                                            $caturl = "{$mainDomain}/insights/{$locale}/{$categorySlug}";
 
                                         @endphp
                                         <li>
@@ -545,7 +550,8 @@
                                             );
                                             $cat = $inter->category->first();
                                             $categoryName = $cat ? $cat->catname : '';
-                                            $caturl = "{$mainDomain}/insights/{$locale}/{$cat->slug}";
+                                            $categorySlug = $cat ? $cat->slug : '';
+                                            $caturl = "{$mainDomain}/insights/{$locale}/{$categorySlug}";
 
                                         @endphp
                                         <li>

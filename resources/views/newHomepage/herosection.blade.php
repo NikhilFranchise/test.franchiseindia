@@ -204,7 +204,10 @@
             <img src="{{ url('cvw/assets/img/banner-expo.webp') }}" alt="Franchise India" class="banner-expo">
         </picture>
         <div class="container">
-            <div class="lnkblk"><a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank" aria-label="easy gym" class="setpat"><img src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.webp" width="300" alt="easy gym" height="76"></a></div>
+            <div class="lnkblk"><a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank"
+                    aria-label="easy gym" class="setpat"><img
+                        src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.webp" width="300"
+                        alt="easy gym" height="76"></a></div>
             <div class="row">
                 <div class="col-md-12">
                     @notmobile

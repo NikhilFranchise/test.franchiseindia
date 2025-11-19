@@ -626,16 +626,7 @@ class InsightsController extends Controller
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
         }
-        // // ✅ Check for specific category IDs
-        if (in_array($newsDetails->cat_id, [9, 32, 33])) {
-            // Get the current slug (assuming it's in `slug` column)
-            $slug = $newsDetails->slug ?? $newsDetails->news_id;
-            $type = strtolower($newsDetails->insight_type);
-            // Build target domain (change this domain)
-            $targetDomain = "https://www.entrepreneurindia.com/blog/{$locale}/{$type}/{$newsDetails->slug}.{$id}";
-            // dd($targetDomain);
-            return redirect()->away($targetDomain, 301);
-        }
+
 
         $correctSlug = $newsDetails->slug;
         $type = strtolower($newsDetails->insight_type);
@@ -648,6 +639,16 @@ class InsightsController extends Controller
         switch ($newsDetails->status) {
             case 1:
                 // Status 1: Proceed as normal
+                // // ✅ Check for specific category IDs
+                if (in_array($newsDetails->cat_id, [9, 32, 33])) {
+                    // Get the current slug (assuming it's in `slug` column)
+                    $slug = $newsDetails->slug ?? $newsDetails->news_id;
+                    $type = strtolower($newsDetails->insight_type);
+                    // Build target domain (change this domain)
+                    $targetDomain = "https://www.entrepreneurindia.com/blog/{$locale}/{$type}/{$newsDetails->slug}.{$id}";
+                    // dd($targetDomain);
+                    return redirect()->away($targetDomain, 301);
+                }
                 break;
             case 2:
                 // Status 2: Require admin authentication

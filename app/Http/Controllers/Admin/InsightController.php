@@ -121,6 +121,13 @@ class InsightController extends Controller
         $insight->author_id    = $request->insights_publisher;
         $insight->updated_by   = Auth::guard('admin')->user()->admin_email;
 
+        if ($request->scheduled_at) {
+            $insight->scheduled_at = $request->scheduled_at;
+            $insight->status = 3; // scheduled
+        } else {
+            $insight->status = 2; // preview
+            // $insight->time = now(); // your publish time column
+        }
 
         if (!$insight->save()) {
             return redirect($redirectUrl)->with('error', "Insights " . $request->insights_type . " Couldn't Be Saved.");
@@ -174,7 +181,7 @@ class InsightController extends Controller
                 $query->where('cat_id', $ctgry);
                 $categoryName = $catModel::where('id', $ctgry)->value('catname');
             })
-            ->whereIn('status', [0, 1, 2]);
+            ->whereIn('status', [0, 1, 2, 3]);
 
         // 👉 Export to CSV if ?export=1 is present
         if ($request->has('export')) {

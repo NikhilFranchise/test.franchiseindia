@@ -14,7 +14,7 @@ class EventController extends Controller
     //
     public function event(Request $request)
     {
-		$cacheKey = 'events_cache'; // Define a single cache key for events
+        $cacheKey = 'events_cache'; // Define a single cache key for events
 
         // Define cache expiration time in seconds
         $cacheExpiration = 3600; // 1 hour
@@ -44,7 +44,7 @@ class EventController extends Controller
             // Apply conditions based on request
             if ($eventdata === 'upcoming') {
                 $query->where('fih_status', 1)
-                      ->where('fih_date', '>=', DB::raw('CURDATE()'));
+                    ->where('fih_date', '>=', DB::raw('CURDATE()'));
             }
 
             return $query->orderBy('fih_date', 'ASC')->get()->toArray();
@@ -52,6 +52,17 @@ class EventController extends Controller
 
         // Return view with cached events data
         return view('static.event-new')->with(compact('events'));
-}
+    }
+    public static function getEvents()
+    {
+        $events = Events::query()->select('fih_url as url', 'fih_title as title',  'fih_displaydate as date', 'fih_address as place')
+            ->where('fih_status', 1)
+            ->where('fih_date', '>=', DB::raw('CURDATE()'))
+            ->orderBy('fih_date', 'ASC')
+            ->take(5)
+            ->get()
+            ->toArray();
 
+        return $events;
+    }
 }
