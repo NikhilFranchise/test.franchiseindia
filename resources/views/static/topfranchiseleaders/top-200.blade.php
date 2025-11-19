@@ -171,7 +171,7 @@
                 <div class="col-md-9">
                     @include('category.free-info')
                     <div class="buttons">
-                        <span id="recordCount">
+                        {{-- <span id="recordCount">
                             {{ $count }} RESULTS OF
                             {{ $totalCount +
                                 ($year == 2025
@@ -182,7 +182,13 @@
                                             ? count(config('staticBrands.staticBrands.2023'))
                                             : ($year == 2022
                                                 ? count(config('staticBrands.staticBrands.2022'))
-                                                : 0)))) }}
+                                                : ($year == 2021
+                                                    ? count(config('staticBrands.staticBrands.2021'))
+                                                    : 0))))) }}
+                        </span> --}}
+                        <span id="recordCount">
+                            {{ $count }} RESULTS OF
+                            {{ $totalCount + count(config("staticBrands.staticBrands.$year") ?? []) }}
                         </span>
                         <div class="list"><i class="fa fa-list"></i></div>
                         <div class="grid"><i class="fa fa-th-large"></i></div>
@@ -220,10 +226,12 @@
             $(document).ready(function() {
                 let isLoading = false;
                 let getfreecount = 0; // Initialize the counter
-                let sCount2025 = '{{ count(config('staticBrands.staticBrands.2025')) }}';
-                let sCount2024 = '{{ count(config('staticBrands.staticBrands.2024')) }}';
-                let sCount2023 = '{{ count(config('staticBrands.staticBrands.2023')) }}';
-                let sCount2022 = '{{ count(config('staticBrands.staticBrands.2022')) }}';
+                let sCount2025 = {{ count(config('staticBrands.staticBrands.2025')) }};
+                let sCount2024 = {{ count(config('staticBrands.staticBrands.2024')) }};
+                let sCount2023 = {{ count(config('staticBrands.staticBrands.2023')) }};
+                let sCount2022 = {{ count(config('staticBrands.staticBrands.2022')) }};
+                let sCount2021 = {{ count(config('staticBrands.staticBrands.2021')) }};
+                let sCount2020 = {{ count(config('staticBrands.staticBrands.2020')) }};
 
                 function fetchData() {
                     if (isLoading) return;
@@ -252,57 +260,50 @@
                         },
                         success: function(response) {
                             $("#wrapper").html(response.html);
-                            // console.log(response.count, response.totalCount, response.year, response
-                            //     .franchisor_type);
-                            if (response.year == 2025 && response.count != response.totalCount) {
-                                $("#recordCount").text(response.count + " RESULTS OF " + (response
-                                    .totalCount + parseInt(sCount2025)));
 
-                            } else if (response.count == response.totalCount && response.year == 2025) {
-                                $("#recordCount").text((response.count + parseInt(sCount2025)) +
-                                    " RESULTS OF " + (response.totalCount + parseInt(sCount2025)));
+                            // Mapping year → sCount variable
+                            const sCountMap = {
+                                2025: sCount2025,
+                                2024: sCount2024,
+                                2023: sCount2023,
+                                2022: sCount2022,
+                                2021: sCount2021,
+                                2020: sCount2020,
+                            };
 
-                            } else if (response.year == 2024 && response.count != response.totalCount) {
-                                $("#recordCount").text(response.count + " RESULTS OF " + (response
-                                    .totalCount + parseInt(sCount2024)));
+                            const year = response.year;
+                            const count = response.count;
+                            const total = response.totalCount;
+                            const extraCount = sCountMap[year] ? parseInt(sCountMap[year]) : 0;
 
-                            } else if (response.count == response.totalCount && response.year == 2024) {
-                                $("#recordCount").text((response.count + parseInt(sCount2024)) +
-                                    " RESULTS OF " + (response.totalCount + parseInt(sCount2024)));
-
-                            } else if (response.year == 2023 && response.count != response.totalCount) {
-                                $("#recordCount").text(response.count + " RESULTS OF " + (response
-                                    .totalCount + parseInt(sCount2023)));
-
-                            } else if (response.count == response.totalCount && response.year == 2023) {
-                                $("#recordCount").text((response.count + parseInt(sCount2023)) +
-                                    " RESULTS OF " + (response.totalCount + parseInt(sCount2023)));
-
-                            } else if (response.year == 2022 && response.count != response.totalCount) {
-                                $("#recordCount").text(response.count + " RESULTS OF " + (response
-                                    .totalCount + parseInt(sCount2022)));
-
-                            } else if (response.count == response.totalCount && response.year == 2022) {
-                                $("#recordCount").text((response.count + parseInt(sCount2022)) +
-                                    " RESULTS OF " + (response.totalCount + parseInt(sCount2022)));
-
+                            if (year && extraCount > 0) {
+                                if (count === total) {
+                                    // case when counts are equal
+                                    $("#recordCount").text(
+                                        (count + extraCount) + " RESULTS OF " + (total + extraCount)
+                                    );
+                                } else {
+                                    // case when counts differ
+                                    $("#recordCount").text(
+                                        count + " RESULTS OF " + (total + extraCount)
+                                    );
+                                }
                             } else {
-                                $("#recordCount").text(response.count + " RESULTS OF " + response
-                                    .totalCount);
+                                // fallback if no matching year
+                                $("#recordCount").text(count + " RESULTS OF " + total);
                             }
 
+                            // --- franchisor_type update ---
                             if (response.franchisor_type) {
                                 $("#ftypeSelect").html(
-                                    `<option value="${response.franchisor_type}">
-                            ${response.franchisor_type === "top-100" ? "Top 100" : "Top 200"}
-                        </option>`
+                                    `<option value="${response.franchisor_type}">${response.franchisor_type === "top-100" ? "Top 100" : "Top 200"}</option>`
                                 );
+
                                 const franchiseYear = $('#yearSelect').val();
                                 const franchiseLabel = response.franchisor_type === "top-100" ? "Top 100" :
                                     "Top 200";
-                                // Update the heading
-                                $('#ftype_with_year').html(`${franchiseLabel} Franchise ${franchiseYear}`);
 
+                                $('#ftype_with_year').html(`${franchiseLabel} Franchise ${franchiseYear}`);
                             }
 
                             $("#loading").hide();

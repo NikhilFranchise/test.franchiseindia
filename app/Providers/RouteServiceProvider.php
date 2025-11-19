@@ -27,7 +27,7 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
-           // ✅ Custom limiter just for search
+        // ✅ Custom limiter just for search
         //    RateLimiter::for('search-limit', function (Request $request) {
         //     return Limit::perMinute(10)->by($request->ip());
         // });
@@ -39,6 +39,9 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+            Route::middleware('web')
+                ->prefix('admin')
+                ->group(base_path('routes/admin.php'));
         });
     }
 }

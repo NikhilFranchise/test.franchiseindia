@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-
 use App\Models\Advertise;
 use App\Mail\AdvertiseMail;
 use Illuminate\Support\Facades\Log;

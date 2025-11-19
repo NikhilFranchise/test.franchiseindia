@@ -24,6 +24,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\RawMail;
+use App\Models\Regional\DealerRegional;
+use App\Models\Regional\FranchiseRegional;
+use App\Models\Regional\RegionalFranPaymentHistory;
 
 class CronController extends Controller
 {
@@ -400,6 +403,10 @@ class CronController extends Controller
                 'membership_weightage_backup' => 0,
                 'is_fixed_brand' => 0
             ]);
+        // ----------------------
+        // Regional Franchisors
+        // ----------------------
+        $this->expireRegionalBrands(); // Call your regional function here
     }
 
     /**
@@ -486,6 +493,164 @@ class CronController extends Controller
     }
 
     /**
+     * Main Cron for Regional Brand Expiration (State & Type wise)
+     */
+    public function expireRegionalBrands()
+    {
+        //Paid Active Regional Franchisors
+        $paidRegionalFranchisors = RegionalFranPaymentHistory::query()
+            ->where('status', 1)
+            ->whereDate('end_date', '>', date('Y-m-d', strtotime('-1 day')))
+            ->get(['franchisor_id', 'state_id', 'type'])
+            ->map(fn($item) => $item->franchisor_id)
+            ->unique()
+            ->toArray();
+
+        //Expiring Today (Regional)
+        $regionalExpiringToday = RegionalFranPaymentHistory::query()
+            ->where('status', 1)
+            ->where('expire_after_leads', 0)
+            ->whereDate('end_date', '<', date('Y-m-d'))
+            ->whereNotIn('franchisor_id', $paidRegionalFranchisors)
+            ->get(['franchisor_id', 'state_id', 'type']);
+
+        // Group by state
+        $stateWiseExpired = [];
+        foreach ($regionalExpiringToday as $item) {
+            $stateWiseExpired[$item->state_id][] = [
+                'franchisor_id' => $item->franchisor_id,
+                'type'          => $item->type,
+                'state_id'      => $item->state_id,
+            ];
+        }
+
+        // Process state-wise expiration
+        foreach ($stateWiseExpired as $state_id => $brands) {
+            $this->regionalBrandExpiration($brands);
+        }
+
+        //Handle Lead-based Expiration (type = 1)
+        $this->expireRegionalCompletedBrands();
+    }
+
+    /**
+     * Lead-based Regional Expiration
+     */
+    public function expireRegionalCompletedBrands()
+    {
+        $expiringBrands = RegionalFranPaymentHistory::query()
+            ->where('status', 1)
+            ->where('expire_after_leads', 1)
+            ->whereDate('end_date', '<=', date('Y-m-d', strtotime('-1 day')))
+            ->get(['franchisor_id', 'state_id', 'type', 'start_date', 'committed_leads']);
+
+        // Group by state
+        $stateWiseBrands = [];
+
+        foreach ($expiringBrands as $brand) {
+            // Calculate total leads
+            $totalLeads = UserActivity::query()
+                ->where('franchisor_id', $brand->franchisor_id)
+                ->where('visit_date', '>=', $brand->start_date)
+                ->count()
+                + ExpressInstaApply::query()
+                ->where('franchisor_id', $brand->franchisor_id)
+                ->where('create_date', '>=', $brand->start_date)
+                ->count();
+            if ($totalLeads >= $brand->committed_leads) {
+                $stateWiseBrands[$brand->state_id][] = [
+                    'franchisor_id' => $brand->franchisor_id,
+                    'type'          => $brand->type,
+                    'state_id'      => $brand->state_id,
+                ];
+            }
+        }
+
+        // Process state-wise expiration
+        foreach ($stateWiseBrands as $state_id => $brands) {
+
+            $this->regionalBrandExpiration($brands);
+        }
+    }
+
+    /**
+     * Regional Brand Expiration (state-wise & type-wise)
+     *
+     * @param array $expiringBrands Array of ['franchisor_id', 'state_id', 'type']
+     */
+    public function regionalBrandExpiration(array $expiringBrands)
+    {
+        if (empty($expiringBrands)) return;
+
+        // Load state names from config
+        $stateArr = config('location.stateArr');
+
+        // Prepare log/mail content
+        $details = [];
+        foreach ($expiringBrands as $brand) {
+            $stateName = $stateArr[$brand['state_id']] ?? 'Unknown State';
+            $details[] = [
+                'franchisor_id' => $brand['franchisor_id'],
+                'state_id'      => $brand['state_id'],
+                'state_name'    => $stateName,
+                'type'          => $brand['type']
+            ];
+        }
+
+        // Convert to string for logs & mail
+        $logData = json_encode($details, JSON_PRETTY_PRINT);
+
+        // Log
+        Storage::append('Expiring-regional-franchisors.txt', "\n" . date('d-m-Y'));
+        Storage::append('Expiring-regional-franchisors.txt', "Regional brands expiring today = " . $logData);
+
+        // Mail
+        $rows = [];
+
+        foreach ($details as $d) {
+            $rows[] .= "Franchisor ID: {$d['franchisor_id']} | State: {$d['state_name']} ({$d['state_id']}) | Type: {$d['type']}\n";
+        }
+        // ['pganesh@franchiseindia.net']
+        $mailBody = "Regional Franchisors expiring today:\n\n" . implode("\n", $rows);
+
+        Mail::getFacadeRoot()->to(['service@franchiseindia.net', 'techsupport@franchiseindia.net'])
+            // Mail::getFacadeRoot()->to(['pganesh@franchiseindia.net'])
+            ->send(new RawMail($mailBody, [
+                'subject' => 'Regional Franchisors expiring today',
+                'from' => 'franchisor-update@franchiseindia.com',
+                'attachment' => ''
+            ]));
+
+        // Process each brand by type
+        foreach ($expiringBrands as $brand) {
+            if ($brand['type'] === 'franchise') {
+                FranchiseRegional::query()
+                    ->where('fihl_id', $brand['franchisor_id'])
+                    ->where('state_id', $brand['state_id'])
+                    ->update([
+                        'membership_type' => 0,
+                        'membership_plan' => null
+                    ]);
+            } else {
+                DealerRegional::query()
+                    ->where('fihl_id', $brand['franchisor_id'])
+                    ->where('state_id', $brand['state_id'])
+                    ->update([
+                        'membership_type' => 0,
+                        'membership_plan' => null
+                    ]);
+            }
+
+            RegionalFranPaymentHistory::query()
+                ->where('franchisor_id', $brand['franchisor_id'])
+                ->where('state_id', $brand['state_id'])
+                ->where('type', $brand['type'])
+                ->update(['status' => 2]);
+        }
+    }
+
+
+    /**
      * Daily investor report sending to Akash and Rekha for paid investors on last date
      */
     public function sendInvestorPaidData()
@@ -497,7 +662,7 @@ class CronController extends Controller
             ->where('order_status', 1)
             ->where('payment_status', 1)
             ->get();
-            // dd($investors);
+        // dd($investors);
         if ($investors->isEmpty()) {
             return; // Exit early if no data
         }

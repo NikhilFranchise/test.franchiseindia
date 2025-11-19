@@ -16,12 +16,11 @@ class ContentAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // if (!($request->session()->has('adminEmail')))
-        //     return redirect('admin/login');
-        // dd(Auth::guard('admin')->user());
         if (!Auth::guard('admin')->check()) {
-            return redirect('admin/login')->with('error', 'You must be an admin to access this page.');
+            return redirect()->route('admin.Login')
+                ->with('error', 'You must be logged in as Author, Manager, and Admin to access this page.');
         }
+
         return $next($request);
     }
 }

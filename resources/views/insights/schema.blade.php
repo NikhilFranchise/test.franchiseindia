@@ -16,8 +16,7 @@
     //$author_details
     $authorSlug = $author_details->slug ?? strtolower(str_replace(' ', '-', $author_details->title));
     //dd($authorSlug);
-    $authorUrl =
-        Config('constants.MainDomain') . "/insights/author/" . $authorSlug . '-' . $author_details->author_id;
+    $authorUrl = Config('constants.MainDomain') . '/insights/author/' . $authorSlug . '-' . $author_details->author_id;
 
     $authorImage = !empty($author_details->image)
         ? \App\Http\Controllers\InsightsController::authorImageurl($author_details->image)
@@ -105,7 +104,7 @@
               "url": "{{$newsUrl}}",
               "name": "{{$newsDetails->title}} - FranchiseIndia",
               "datePublished": "{{$newsDetails->created_at}}",
-              "dateModified": "{{$newsDetails->published_date}}",
+              "dateModified": "{{isset($newsDetails->published_date) ? $newsDetails->published_date : $newsDetails->created_at}}",
               "isPartOf": { "@id": "{{ Config('constants.MainDomain')}}/#website" },
               "primaryImageOfPage": { "@id": "{{$ogimage}}" },
               "inLanguage": "en-IN",
@@ -137,7 +136,7 @@
               "headline": "{{$newsDetails->title}} - FranchiseIndia",
               "description": "{{strip_tags($newsDetails->description)}}",
               "datePublished": "{{$newsDetails->created_at}}",
-              "dateModified": "{{$newsDetails->updated_at}}",
+              "dateModified": "{{isset($newsDetails->published_date) ? $newsDetails->published_date : $newsDetails->created_at}}",
               "image": { "@id": "{{$ogimage}}" },
               "author": { "@id": "{{$authorUrl}}", "name": "{{$author_details->title}}" },
               "copyrightYear": "{{date('Y')}}",

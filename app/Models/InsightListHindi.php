@@ -8,12 +8,16 @@ use App\Models\AuthorList;
 use App\Models\InsightsHindiCategory;
 use App\Models\InsightsHindiSubCategory;
 use App\Traits\hasEffectiveDate;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class InsightListHindi extends Model
 {
-    use HasFactory, hasEffectiveDate;
+    use HasFactory, hasEffectiveDate, SoftDeletes;
+
     protected $table = 'insights_list_hindi';
     protected $primaryKey = 'news_id';
+    protected $dates = ['deleted_at'];
+
 
     public function author()
     {

@@ -28,7 +28,7 @@
                                 </div>
                                 <br />
                             @endif
-                            <form id="homepagefree" name="homepage" method="post" action="{{ route('form.submit') }}">
+                            <form id="homepagefree" name="homepage" method="post" action="{{ route('form.sidepopup') }}">
                                 @csrf
                                 <h2 class="ttl">Free Advice - Ask Our Experts</h2>
                                 <div id="errMsg" style="display:none;"><span style="color: red; ">Please select one
@@ -55,45 +55,53 @@
                                         <span class="input-group-addon">
                                             <div class="usersprite"></div>
                                         </span>
-                                        <input type="text" class="form-control" name="namefreeadvice"
-                                            id="namefreeadvice" placeholder="Enter Name">
-                                        <span style="font-size: 10px" class="error-message"
-                                            id="namefreeadvice-error"></span>
+                                        <input type="text" class="form-control" name="name"
+                                            id="name" placeholder="Enter Name">
+                                       
                                     </div>
+                                     <span style="font-size: 10px" class="error-message"
+                                            id="name-error"></span>
+
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <div class="emailsprite"></div>
                                         </span>
-                                        <input type="text" name="emailfreeadvice" id="emailfreeadvice"
+                                        <input type="text" name="email" id="emailfreeadvice"
                                             class="form-control" placeholder="Enter E-mail">
-                                        <span style="font-size: 10px" class="error-message"
-                                            id="emailfreeadvice-error"></span>
+                                        
                                     </div>
+                                    <span style="font-size: 10px" class="error-message"
+                                            id="email-error"></span>
+
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <div class="usersprite"></div>
                                         </span>
                                         <input type="text" class="form-control" maxlength="10"
-                                            name="mobilefreeadvice" id="mobilefreeadvice" placeholder="Enter Mobile">
-                                        <span style="font-size: 10px" class="error-message"
-                                            id="mobilefreeadvice-error"></span>
+                                            name="mobile" id="mobilefreeadvice" placeholder="Enter Mobile">
+                                      
                                     </div>
+                                      <span style="font-size: 10px" class="error-message"
+                                            id="mobile-error"></span>
+
                                     <div class="input-group">
                                         <span class="input-group-addon"><img alt="pincode"
                                                 src="{{ Config('constants.MainDomain') }}/images/pincode.png"></span>
-                                        <input type="text" name="pincodefreeadvice" id="pincodefreeadvice"
+                                        <input type="text" name="pincode" id="pincodefreeadvice"
                                             class="form-control" placeholder="Enter Pincode">
-                                        <span style="font-size: 10px" class="error-message"
-                                            id="pincodefreeadvice-error"></span>
+                                      
                                     </div>
+                                      <span style="font-size: 10px" class="error-message"
+                                            id="pincode-error"></span>
                                     <div class="input-group">
                                         <span class="input-group-addon height80">
                                             <div class="addreesssprite"></div>
                                         </span>
-                                        <textarea class="form-control height80" name="detailsfreeadvice" id="detailsfreeadvice" placeholder="Enter Details"></textarea>
-                                        <span style="font-size: 10px" class="error-message"
-                                            id="detailsfreeadvice-error"></span>
+                                        <textarea class="form-control height80" name="details" id="detailsfreeadvice" placeholder="Enter Details"></textarea>
+                                       
                                     </div>
+                                     <span style="font-size: 10px" class="error-message"
+                                            id="details-error"></span>
                                     <div class="form-group mt-4 mb-4">
                                         <div class="captcha">
                                             <span>{!! captcha_img() !!}</span>
@@ -106,13 +114,14 @@
                                     <div class="form-group mb-4">
                                         <input id="captcha" type="text" class="form-control"
                                             placeholder="Enter Captcha" name="captcha">
-                                        <span style="font-size: 10px" class="error-message"
-                                            id="captcha-error"></span>
+                                      
                                     </div>
+                                      <span style="font-size: 10px" class="error-message"
+                                            id="captcha-error"></span>
                                     <div class="checkbox rm-prop">
                                         <label>
-                                            <input type="checkbox" name="is_newsletterfreeadvice"
-                                                id="is_newsletterfreeadvice" value="1" checked> Yes, i want to
+                                            <input type="checkbox" name="is_newsletter"
+                                                id="is_newsletter" value="1" checked> Yes, i want to
                                             subscribe for weekly
                                             Newsletter
                                         </label>
@@ -165,56 +174,83 @@
             }
         });
     });
+$(document).ready(function() {
+    // Disable submit initially
+    $('#btnhome').prop('disabled', true);
+    
+    // Function to check if all required fields are filled
+    function checkFormValidity() {
+        var isValid = true;
 
-    $(document).ready(function() {
-        $('#homepagefree').on('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
+        // Check if all fields have values
+        $('#homepagefree input, #homepagefree textarea').each(function() {
+            if ($(this).val() === '') {
+                isValid = false;
+            }
+        });
 
-            // Get form data
-            var formData = $(this).serialize();
+        // If the form is valid, enable the submit button
+        if (isValid) {
+            $('#btnhome').prop('disabled', false);
+        } else {
+            $('#btnhome').prop('disabled', true);
+        }
+    }
 
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: formData,
-                success: function(response) {
-                    $('#response').html('<p>Form submitted successfully!</p>');
-                    window.location = "/thanks-advice-form";
+    // Check form fields on input change
+    $('#homepagefree input, #homepagefree textarea').on('input', function() {
+        checkFormValidity();
+    });
 
-                    // Clear previous error messages and placeholders
-                    $('.error-message').text('');
-                    // $('input').attr('placeholder', '');
-                },
-                error: function(xhr) {
-                    // Clear previous error messages and placeholders
-                    $('.error-message').text('');
-                    // $('input').attr('placeholder', '');
+    // Handle form submission
+    $('#homepagefree').on('submit', function(e) {
+        e.preventDefault(); // Prevent default form submission
 
-                    var errors = xhr.responseJSON.errors;
+        // Show "Please wait..." and disable the submit button
+        $('#btnhome').val('Please wait...').prop('disabled', true);
 
-                    $.each(errors, function(key, errorMessages) {
-                        // Check if the error message is for captcha and replace it with a custom message
-                        if (key === 'captcha' && errorMessages[0] ===
-                            'validation.captcha') {
-                            var customMessage = 'Invalid captcha value.';
-                            $('#' + key + '-error').text(customMessage);
-                            // $('#' + key).attr('placeholder', customMessage);
-                        } else {
-                            // Use the error messages provided by the server response
-                            var errorMessage = errorMessages[0];
-                            $('#' + key + '-error').text(errorMessage);
-                            // $('#' + key).attr('placeholder', errorMessage);
-                        }
-                    });
+        // Get form data
+        var formData = $(this).serialize();
 
-                    // Optionally, handle global errors
-                    if (xhr.responseJSON.message) {
-                        $('#response').html('<p>' + xhr.responseJSON.message + '</p>');
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: formData,
+            success: function(response) {
+                $('#response').html('<p>Form submitted successfully!</p>');
+                window.location = "/thanks-advice-form";
+
+                // Clear previous error messages
+                $('.error-message').text('');
+            },
+            error: function(xhr) {
+                // Show error message if there are any validation issues
+                var errors = xhr.responseJSON.errors;
+
+                $.each(errors, function(key, errorMessages) {
+                    // Handle CAPTCHA error if exists
+                    if (key === 'captcha' && errorMessages[0] === 'validation.captcha') {
+                        var customMessage = 'Invalid captcha value.';
+                        $('#' + key + '-error').text(customMessage);
+                    } else {
+                        // Use the error message from server response
+                        var errorMessage = errorMessages[0];
+                        $('#' + key + '-error').text(errorMessage);
                     }
+                });
+
+                // Optionally, handle global errors
+                if (xhr.responseJSON.message) {
+                    $('#response').html('<p>' + xhr.responseJSON.message + '</p>');
                 }
-            });
+
+                // Re-enable submit button after error
+                $('#btnhome').val('Ask Our Experts').prop('disabled', false);
+            }
         });
     });
+});
+
 </script>
 
 <style>

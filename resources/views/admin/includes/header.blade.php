@@ -4,18 +4,31 @@
 <!--close-Header-part-->
 <!--top-Header-menu-->
 <div id="user-nav" class="navbar navbar-inverse">
+    @php
+    $user = Auth::guard('admin')->user();
+    $author = $user->author;
+    @endphp
     <ul class="nav">
         <li class="dropdown" id="profile-messages"><a title="" href="#" data-toggle="dropdown"
-                data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i> <span
-                    class="text">Welcome {{ Auth::guard('admin')->user()->admin_name }}</span><b class="caret"></b></a>
+                data-target="#profile-messages" class="dropdown-toggle"><i class="fa fa-user" aria-hidden="true"></i>
+                <span class="text"><strong>Welcome
+                        {{ $author->title ?? $user->admin_name }}</strong>
+                    {{ ' (' . ucwords($user->admin_role) . ') ' }}</span></a>
             <ul class="dropdown-menu">
-                <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
-                <li class="divider"></li>
-                <li><a href="{{ Config('constants.MainDomain') }}/admin-logout"><i class="icon-key"></i> Log Out</a>
+                <li><a href="{{ route('author.profile', ['id' => $author->author_id]) }}"><i class="fa fa-user"
+                            aria-hidden="true"></i>
+                        My Profile</a></li>
+                {{-- <li class="divider"></li> --}}
+                <li><a href="{{ route('admin.Logout') }}"><i class="fas fa-sign-out-alt"></i>
+
+
+                        Log Out</a>
                 </li>
             </ul>
         </li>
-        <li class=""><a title="" href="{{ Config('constants.MainDomain') }}/admin-logout"><i
-                    class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+        <li class=""><a title="" href="{{ route('admin.Logout') }}"><i class="fas fa-sign-out-alt"></i>
+
+
+                <span class="text">Logout</span></a></li>
     </ul>
 </div>

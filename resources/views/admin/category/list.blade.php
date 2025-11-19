@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Franchise India Admin Panel</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type='text/css' href="{{ url('admin/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" type='text/css' href="{{ url('admin/css/bootstrap-switch.css') }}">
-    <link rel="stylesheet" type='text/css' href="{{ url('admin/css/bootstrap-responsive.min.css') }}" />
-    <link rel="stylesheet" type='text/css' href="{{ url('admin/css/matrix-style.css') }}" />
-    <link rel="stylesheet" type='text/css' href="{{ url('admin/css/matrix-media.css') }}" />
-    <link rel="stylesheet" type='text/css' href="{{ url('admin/font-awesome/css/font-awesome.css') }}" />
-    <link rel="stylesheet" type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+@extends('admin.layout.master')
+@section('content')
+@section('CAT', 'active open')
+@section('CATL', 'active')
+@push('styles')
     <style>
         .search-results {
             margin-top: 63px;
@@ -34,6 +24,7 @@
         .search-result-inner a.greens {
             height: 20px;
         }
+
         .switch {
             position: relative;
             display: inline-block;
@@ -83,11 +74,11 @@
             transform: translateX(26px);
         }
 
-        .gradeX>td {
-            text-align: center;
-        }
+        /* .gradeX>td {
+                                                                                                text-align: center;
+                                                                                            }
 
-        /* Rounded sliders */
+                                                                                            /* Rounded sliders */
         .slider.round {
             border-radius: 34px;
         }
@@ -124,7 +115,7 @@
             text-decoration: none;
         }
 
-        .custpagin {
+        */ .custpagin {
             background-color: #dfdfdf;
             margin-bottom: 10px;
         }
@@ -157,187 +148,261 @@
             border-radius: 6px;
             border: 1px;
         }
+
+        .nav-tabs>li.active>a,
+        .nav-tabs>li.active>a:hover,
+        .nav-tabs>li.active>a:focus {
+            color: #fff;
+            cursor: default;
+            background-color: #4b4f54;
+            border: 1px solid #ddd;
+            border-bottom-color: transparent;
+        }
+
+
+        .nav-tabs>li>a:hover,
+        .nav-tabs>li>a:focus {
+            margin-right: 2px;
+            line-height: 1.42857143;
+            border: 1px solid transparent;
+            border-radius: 4px 4px 0 0;
+            background-color: #4b4f54;
+            color: #fff;
+        }
+
+        #catTable td {
+            font-size: 13px;
+            text-align: center;
+        }
+
+        #catTable th {
+            font-size: 13px;
+            padding: 7px;
+        }
+
+        .btn-secondary {
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #6c757d;
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            color: #fff;
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
     </style>
-</head>
-
-<body>
-
-    @include('admin.includes.header')
-    @section('CAT')
-        active
-    @endsection
-    @include('admin.includes.sidebar')
-    <!--sidebar-menu-->
+@endpush
+<!--breadcrumbs-->
+<div id="content-header">
     @php
-        $locale = request()->segment(2);
-        $lang = $locale == 'en' ? 'English' : 'Hindi';
+        $language = $lang == 'en' ? 'English' : 'Hindi';
     @endphp
-    <div id="content">
-        <!--breadcrumbs-->
-        <div id="content-header">
-            <div id="breadcrumb"> <a href="{{ url('admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i
-                        class="icon-home"></i> Home</a> <a href="#" class="tip-bottom">{{ $lang }} Main Category/{{ $lang }} Sub
-                    Category</a>
-                <a href="#" class="current">List {{ $lang }} Main Category</a>
-            </div>
-            <h1>{{ $lang }} Main Category Listing</h1>
-
-        </div>
-        <!--End-breadcrumbs-->
-
+    <div id="breadcrumb">
+        <a href="{{ route('admin.Dashboard') }}" title="Go to Home" class="tip-bottom"><i class="fa fa-home"></i> Home</a>
+        <a href="{{ route('cat.list', ['lang' => $lang]) }}" title="Go to Manage Categories" class="tip-bottom"><i
+                class="fa fa-cube"></i> Manage
+            Categories</a>
+        <a href="{{ url()->current() }}" class="current">{{ $language }} Main Categories</a>
+    </div>
+    <h1>{{ $language }} Main Categories</h1>
+</div>
+<!--End-breadcrumbs-->
 <br>
-        <div class="search-results container-fluid">
-            <div class="search-result-inner">
+<div class="search-results container-fluid">
+    <div class="search-result-inner">
+        <a href="{{ route('cat.create', ['lang' => $lang]) }}" class="greens float-right btn btn-md btn-success">
+            <i class="fa fa-plus-circle"></i>{{ ' Add New ' . $language . ' Category' }}
+        </a>
+        <form action="{{ route('cat.list', ['lang' => $lang]) }}" method="get">
+            <input type="text" name="search" class="span7"
+                placeholder="Enter Main Category or Category Id to search"
+                @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
+            <input type="submit" class="btn btn-secondary" value="Search"
+                style="margin-top: -12px; margin-left: 10px; width: 110px;" />
+            <a href="{{ route('cat.list', ['lang' => $lang]) }}" class="btn btn-secondary"
+                style="margin-top: -12px;">Reset
+                Search</a>
+        </form>
+    </div>
+</div>
 
-                <a href="{{ url('admin/' . $locale . '/cat/create') }}"
-                    class="greens float-right btn btn-md btn-success">
-                    <i class="fa fa-plus-circle"></i>{{ ' Add New ' . $lang . ' Category' }}
-                </a>
-                <form action="{{ url('admin/'. $locale.'/cat/list/') }}" method="get">
-                    <input type="text" name="search"class="span7" placeholder="Enter Main Category or Category Id to search"
-                        @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
-                    <input type="submit" class="btn"
-                        value="Search"style="margin-top: -12px; margin-left: 10px; width: 110px;" />
-                    <a href="{{ url('admin/'.$locale.'/cat/list/') }}" class="btn"style="margin-top: -12px;">Reset
-                        Search</a>
-                </form>
-            </div>
-        </div>
-
-        <div class="container-fluid">
-            <div class="row-fluid">
-                <div class="span12">
-                    <ul class="nav nav-tabs">
-                        <li @if (url()->current() == url('admin/en/cat/list')) class="active" @endif><a
-                                href="{{ url('admin/en/cat/list') }}">English Main Category List</a></li>
-                        <li @if (url()->current() == url('admin/hi/cat/list')) class="active" @endif><a
-                                href="{{ url('admin/hi/cat/list') }}">Hindi Main Category List</a></li>
-                        <li @if (url()->current() == url('admin/en/subcat/list')) class="active" @endif><a
-                                href="{{ url('admin/en/subcat/list') }}">English Sub Category List</a></li>
-                        <li @if (url()->current() == url('admin/hi/subcat/list')) class="active" @endif><a
-                                href="{{ url('admin/hi/subcat/list') }}">Hindi Sub Category List</a></li>
-                    </ul>
-                    <div class="widget-box">
-                        <div class="widget-content nopadding">
-                            @if (session()->has('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
-
-                        @if (session()->has('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @endif
-
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Category Id</th>
-                                        <th>Main Category Name</th>
-                                        <th>Slug</th>
-                                        <th colspan="2">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tablecontent">
-                                    @php
-                                        $url = Config('constants.MainDomain') . '/';
-                                    @endphp
-                                    @foreach ($catdata as $data)
-                                        <tr class="gradeX">
-                                            <td>{{ $data->id }}</td>
-                                            <td>{{ $data->catname }}</td>
-                                            <td>{{ $data->slug }}</td>
-                                            <td><center><button class="btn btn-medium btn-warning" style="border-radius: 4px"><a href="edit/{{$data->id}}">Edit</a></button></center></td>
-                                            <td><button class="btn btn-medium btn-danger deletetag"
-                                                    style="border-radius: 4px"
-                                                    data-value="{{ $data->id }}">Delete</button></td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <!-- Modal confirm -->
-                            <div class="modal" id="confirmModal" style="display: none; z-index: 1050;">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-body" id="confirmMessage">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" id="confirmOk">Ok</button>
-                                            <button type="button" class="btn btn-default"
-                                                id="confirmCancel">Cancel</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <ul class="nav nav-tabs">
+                <li @if (url()->current() == route('cat.list', ['lang' => 'en'])) class="active" @endif><a
+                        href="{{ route('cat.list', ['lang' => 'en']) }}">English Main Categories</a></li>
+                <li @if (url()->current() == route('cat.list', ['lang' => 'hi'])) class="active" @endif><a
+                        href="{{ route('cat.list', ['lang' => 'hi']) }}">Hindi Main Categories</a></li>
+                <li @if (url()->current() == route('subcat.list', ['lang' => 'en'])) class="active" @endif><a
+                        href="{{ route('subcat.list', ['lang' => 'en']) }}">English Sub Categories</a></li>
+                <li @if (url()->current() == route('subcat.list', ['lang' => 'hi'])) class="active" @endif><a
+                        href="{{ route('subcat.list', ['lang' => 'hi']) }}">Hindi Sub Categories</a></li>
+            </ul>
+            <div class="widget-box">
+                <div class="widget-title"> <span class="icon"><i class="fa fa-cube"></i></span>
+                    @if (request()->query('search'))
+                        <h5>Displaying {{ $totalRecords }} records for the search term
+                            '<strong>{{ request()->query('search') }}</strong>'.</h5>
+                    @else
+                        <h5>Showing a total of {{ $totalRecords }} records.</h5>
+                    @endif
+                    @php
+                        $user = Auth::guard('admin')->user();
+                        $author = $user->author;
+                        $canManage = in_array($user->admin_role, ['admin', 'manager']);
+                    @endphp
                 </div>
-            </div>
-            <div class="custpagin">
-                {!! $catdata->appends(['search' => request()->search])->render('pagination::bootstrap-4') !!}
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped" id="catTable">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Category Id</th>
+                                <th rowspan="2">Main Category Name</th>
+                                <th rowspan="2">Slug</th>
+                                <th colspan="2">Action</th>
+                            </tr>
+                            <tr>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablecontent">
+                            @php
+                                $url = Config('constants.MainDomain') . '/';
+                            @endphp
+                            @foreach ($catdata as $data)
+                                <tr class="gradeX">
+                                    <td>{{ $data->id }}</td>
+                                    <td>{{ $data->catname }}</td>
+                                    <td>{{ $data->slug }}</td>
+                                    <td>
+                                        <center><button class="btn btn-medium btn-warning" style="border-radius: 4px"><a
+                                                    href="{{ route('cat.edit', ['lang' => $lang, 'id' => $data->id]) }}"><i
+                                                        class="fa fa-edit"></i> Edit</a></button>
+                                        </center>
+                                    </td>
+                                    <td><button class="btn btn-medium btn-danger deletecat" style="border-radius: 4px"
+                                            data-value="{{ $data->id }}"><i class="fa fa-trash-alt"></i>
+                                            Delete</button></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-    <!--Footer-part-->
-    @include('admin.includes.footer')
-    <!--end-Footer-part-->
+    <div class="custpagin">
+        {!! $catdata->appends(['search' => request()->search])->render('pagination::bootstrap-4') !!}
+    </div>
+</div>
+@push('scripts')
+    <script>
+        var YOUR_MESSAGE_STRING_CONST = "Are you sure to delete this Category?";
+        $('.deletecat').on('click', function(e) {
+            e.preventDefault();
 
-    <script src="{{ url('admin/js/jquery.min.js') }}"></script>
-    <script src="{{ url('admin/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url('admin/js/matrix.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script type="text/javascript">
-        var YOUR_MESSAGE_STRING_CONST = "Are you sure to delete this category?";
-        $('.deletetag').on('click', function() {
-            var x = $(this).attr('data-value');
-            var lang = '{{ $locale }}';
-            confirmDialog(YOUR_MESSAGE_STRING_CONST, function() {
-                $.ajax({
-                    type: "POST",
-                    url: `{{ url('admin/') }}/${lang}/delete-category`, // Dynamic URL with lang
-                    data: {
-                        "id": x,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success: function() {
-                        $(document).ajaxStop(function() {
-                            window.location.reload();
-                        });
-                    }
-                });
+            var catId = $(this).attr('data-value');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: YOUR_MESSAGE_STRING_CONST,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('delete.cat', ['lang' => $lang, 'id' => '__ID__']) }}"
+                            .replace('__ID__', catId),
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deleted!',
+                                text: 'The Category has been deleted.',
+                                timer: 1500,
+                                showConfirmButton: false
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        },
+                        error: function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                            });
+                        }
+                    });
+                }
             });
         });
-
-        function confirmDialog(message, onConfirm) {
-            var confirmOk = $("#confirmOk");
-            var fClose = function() {
-                modal.modal("hide");
-            };
-            var modal = $("#confirmModal");
-            modal.modal("show");
-            $("#confirmMessage").empty().append(message);
-            confirmOk.one('click', onConfirm);
-            confirmOk.one('click', fClose);
-            $("#confirmCancel").one("click", fClose);
-        }
     </script>
-    <script>
-        @if (Session::has('success'))
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": true,
-            }
-            toastr.success("{{ session('success') }}")
-        @elseif (Session::has('error'))
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": true,
-            }
-            toastr.error(" {{ session('error') }}")
-        @endif
-    </script>
-</body>
 
-</html>
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                toast: true,
+                icon: 'success',
+                title: 'Success!',
+                text: `{!! session('success') !!}`,
+                timer: 3000,
+                showConfirmButton: false,
+                timerProgressBar: true,
+                background: '#f0f9f4',
+                color: '#155724',
+                confirmButtonColor: '#28a745'
+            });
+        </script>
+    @endif
+
+    // Warning Message
+    @if (session('warning'))
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                toast: true,
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                background: '#fff3cd',
+                color: '#856404',
+                icon: 'warning',
+                title: 'Warning!',
+                text: `{!! session('warning ') !!}`,
+                confirmButtonColor: '#ffc107'
+            });
+        </script>
+    @endif
+
+    // Error Messages (validation or manual)
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                position: 'top-end',
+                toast: true,
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                background: '#fff3cd',
+                color: '#856404',
+                icon: 'error',
+                title: 'Oops!',
+                html: `{!! session('error') !!}`,
+                confirmButtonColor: '#dc3545'
+            });
+        </script>
+    @endif
+@endpush
+@endsection

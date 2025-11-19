@@ -87,11 +87,11 @@
 
 <body>
     @php
-        $catArr = Config('constants.CategoryArr');
-        asort($catArr);
+    $catArr = Config('constants.CategoryArr');
+    asort($catArr);
     @endphp
     @php
-        use Illuminate\Support\Str;
+    use Illuminate\Support\Str;
     @endphp
 
     <div class="o-wrapper" id="o-wrapper"></div>
@@ -101,7 +101,7 @@
 
                 <!--only mode start here -->
                 <div class="mobiehe">
-                    <div class="tolfree">Hotline: 1800 102 2007</div>
+                    <div class="tolfree">Visit: <a href="https://www.franchiseindia.com/expo/mumbai/?id=dotcom-international" class="mum" target="_blank" style="color:#3f3f3f">Franchise India Show</a></div>
                     <div> &nbsp;</div>
                 </div>
                 <!--only mode end  here -->
@@ -120,17 +120,17 @@
                                     class="form-control myselectclasscat2" required>
                                     <option value="">Select Industry</option>
                                     @foreach ($catArr as $categoryId => $categoryName)
-                                        @php
-                                            $url =
-                                                Config('constants.MainDomain') .
-                                                '/business-opportunities/' .
-                                                Config('category.SeoCategoryArr.' . $categoryId) .
-                                                '.m' .
-                                                $categoryId;
-                                        @endphp
-                                        <option value="{{ $categoryId }}"
-                                            slug="{{ Config('category.SeoCategoryArr.' . $categoryId) }}"
-                                            url="{{ $url }}">{{ $categoryName }}</option>
+                                    @php
+                                    $url =
+                                    Config('constants.MainDomain') .
+                                    '/business-opportunities/' .
+                                    Config('category.SeoCategoryArr.' . $categoryId) .
+                                    '.m' .
+                                    $categoryId;
+                                    @endphp
+                                    <option value="{{ $categoryId }}"
+                                        slug="{{ Config('category.SeoCategoryArr.' . $categoryId) }}"
+                                        url="{{ $url }}">{{ $categoryName }}</option>
                                     @endforeach
                                 </select>
                             </li>
@@ -138,8 +138,8 @@
                                 <select class="form-control myselectclasscat" id="stateHeaderTop" name="loc">
                                     <option value="">Select Location</option>
                                     @foreach (Config('location.stateArr') as $key => $value)
-                                        <option value="{{ $key }}"
-                                            slug="{{ strtolower(Str::slug($value)) }}">{{ $value }}</option>
+                                    <option value="{{ $key }}"
+                                        slug="{{ strtolower(Str::slug($value)) }}">{{ $value }}</option>
                                     @endforeach
                                 </select>
                             </li>
@@ -147,10 +147,11 @@
                                 <select class="form-control myselectclasscat" id="investmentTop" name="investment">
                                     <option value=""> Select Investment</option>
                                     @foreach (Config('constants.investRangeInWords') as $key => $value)
-                                        <option value="{{ $key }}"
-                                            min_range="{{ Config('constants.InvestRange.' . $key . '.min') }}"
-                                            max_range="{{ Config('constants.InvestRange.' . $key . '.max') }}">
-                                            {{ $value }}</option>
+                                    <option value="{{ $key }}"
+                                        min_range="{{ Config('constants.InvestRange.' . $key . '.min') }}"
+                                        max_range="{{ Config('constants.InvestRange.' . $key . '.max') }}">
+                                        {{ $value }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </li>
@@ -174,41 +175,41 @@
                     <div class="btnblk">
                         <ul class="righlink">
                             @php
-                                $loginUrl = Config('constants.MainDomain') . '/loginform';
-                                $loginName = 'Login';
-                                $class = '';
-                                $regName = 'Register';
-                                $regUrl = '#';
-                                $modelWindow = 'data-toggle=modal data-target=#login-pnl';
-                                if (Auth::check()) {
-                                    $loginUrl = Config('constants.MainDomain') . '/logoutprofile';
-                                    if (Auth::user()->profile_type == config('constants.ProfileType.Franchisor')) {
-                                        $regUrl = Config('constants.MainDomain') . '/franchisor/myaccount/dashboard';
-                                    }
-                                    if (Auth::user()->profile_type == config('constants.ProfileType.Investor')) {
-                                        $regUrl = Config('constants.MainDomain') . '/investor/myaccount/dashboard';
-                                    }
-                                    $loginName = 'Logout';
-                                    $regName = 'My Account';
-                                    $modelWindow = '';
-                                    $class = 'mybtn';
-                                }
+                            $loginUrl = Config('constants.MainDomain') . '/loginform';
+                            $loginName = 'Login';
+                            $class = '';
+                            $regName = 'Register';
+                            $regUrl = '#';
+                            $modelWindow = 'data-toggle=modal data-target=#login-pnl';
+                            if (Auth::check()) {
+                            $loginUrl = Config('constants.MainDomain') . '/logoutprofile';
+                            if (Auth::user()->profile_type == config('constants.ProfileType.Franchisor')) {
+                            $regUrl = Config('constants.MainDomain') . '/franchisor/myaccount/dashboard';
+                            }
+                            if (Auth::user()->profile_type == config('constants.ProfileType.Investor')) {
+                            $regUrl = Config('constants.MainDomain') . '/investor/myaccount/dashboard';
+                            }
+                            $loginName = 'Logout';
+                            $regName = 'My Account';
+                            $modelWindow = '';
+                            $class = 'mybtn';
+                            }
                             @endphp
                             <li class="hidemobilemenu"><a href="{{ $regUrl }}" {{ $modelWindow }}
                                     class="btn btn-default {{ $class }}"
                                     id="registerselect">{{ $regName }}</a></li>
                             @if (Auth::check())
-                                <li class="hidedesktopmenu"><span id="c-button--slide-right"
-                                        class="btn btn-default myaccount {{ $class }}">My Account</span></li>
-                                <li><a href="{{ $loginUrl }}" class="btn btn-default {{ $class }}"
-                                        id="loginselect">{{ $loginName }}</a></li>
+                            <li class="hidedesktopmenu"><span id="c-button--slide-right"
+                                    class="btn btn-default myaccount {{ $class }}">My Account</span></li>
+                            <li><a href="{{ $loginUrl }}" class="btn btn-default {{ $class }}"
+                                    id="loginselect">{{ $loginName }}</a></li>
                             @endif
                             @if (!Auth::check())
-                                <li class="hidedesktopmenu"><a href="{{ $regUrl }}" {{ $modelWindow }}
-                                        class="btn btn-default {{ $class }}" id="mobilereg">Register</a></li>
-                                <li><a href="{{ $regUrl }}" {{ $modelWindow }}
-                                        class="btn btn-default {{ $class }}"
-                                        id="loginselect">{{ $loginName }}</a></li>
+                            <li class="hidedesktopmenu"><a href="{{ $regUrl }}" {{ $modelWindow }}
+                                    class="btn btn-default {{ $class }}" id="mobilereg">Register</a></li>
+                            <li><a href="{{ $regUrl }}" {{ $modelWindow }}
+                                    class="btn btn-default {{ $class }}"
+                                    id="loginselect">{{ $loginName }}</a></li>
                             @endif
                         </ul>
                     </div>
@@ -221,7 +222,9 @@
     <div class="topbt">
         <div class="container">
             <div class="row">
-                <div class="col-sm-4 col-md-2 bdn mrg-mdy txt-center">Hotline: 1800 102 2007</div>
+                <div class="col-sm-4 col-md-2 bdn mrg-mdy txt-center">
+                    Visit: <a href="https://www.franchiseindia.com/expo/mumbai/?id=dotcom-international" class="mum" target="_blank" style="color:#3f3f3f">Franchise India Show</a>
+                </div>
                 <div class="col-sm-8 col-md-9 headmodfiy">
                     <ul class="sublink">
                         <li><a href="{{ Config('constants.MainDomain') }}/insights/">What's New</a></li>
@@ -247,10 +250,13 @@
                                         class="entin"> </a></li>
                                 <li><a href="https://indianretailer.com/restaurant" class="riin"> </a>
                                 </li>
-                                <li><a href="https://www.franchiseindia.com/insights/en/beauty-wellness" class="wiin"> </a></li>
-                                <li><a href="https://www.franchiseindia.com/insights/en/education" class="eiin"></a></li>
+                                <li><a href="https://www.franchiseindia.com/insights/en/beauty-wellness"
+                                        class="wiin"> </a></li>
+                                <li><a href="https://www.franchiseindia.com/insights/en/education" class="eiin"></a>
+                                </li>
                                 <li><a href="https://www.licenseindia.com/" target="_blank" class="liin"></a></li>
-                                <li><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5" class="dealerin"></a>
+                                <li><a href="https://www.franchiseindia.com/business-opportunities/dealers-and-distributors.m5"
+                                        class="dealerin"></a>
                                 </li>
                             </ul>
                         </div>
@@ -466,9 +472,10 @@
                                                 style="display:none">Edit</span>
                                             <span class="vrfy" onclick="validateLoginMobileOTP()" id="get_otp_btn"
                                                 style="display:none">Get OTP</span>
-                                            </div>
-                                            <div style="display:none; color:red;" id="mismatch-mob" class="login-pnl-error">This mobile number
-                                                is not registered.</div>
+                                        </div>
+                                        <div style="display:none; color:red;" id="mismatch-mob"
+                                            class="login-pnl-error">This mobile number
+                                            is not registered.</div>
                                         <div class="input-group" id="password_group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
@@ -477,9 +484,11 @@
                                                 placeholder="Enter Your Password">
                                         </div>
 
-                                        <div class="input-group" id="otp-block-wider" style="display: none;width:100%;">
+                                        <div class="input-group" id="otp-block-wider"
+                                            style="display: none;width:100%;">
                                             <input type="text" name="otp" id="otp-insta-wider" maxlength="4"
-                                                class="form-control blur" placeholder="Enter OTP" style="width:100%;">
+                                                class="form-control blur" placeholder="Enter OTP"
+                                                style="width:100%;">
                                             <span class="vrfy" id="resend_otp" onclick="resendOTP()"
                                                 style="display:none">Resend
                                                 OTP</span>
@@ -548,4 +557,3 @@
             </div>
         </div>
     </div>
-

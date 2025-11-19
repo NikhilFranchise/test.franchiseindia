@@ -1303,15 +1303,23 @@ class InsightSitemapController extends Controller
 
     public function googleNewsSitemap()
     {
+        // Ensure no previous output is sent (clean all output buffers)
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+
+        // Optional: disable error display in this response to avoid notices printing in output
+        ini_set('display_errors', '0');
+
+        // --- rest of your method ---
         $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
 
         $insightModel = $locale == 'en' ? InsightList::class : InsightListHindi::class;
-        $tagModel = $locale == 'en' ? SeoTag::class : SeoTagHindi::class;
+        $tagModel     = $locale == 'en' ? SeoTag::class : SeoTagHindi::class;
         $contentModel = $locale == 'en' ? ContentTagsAssigned::class : ContentTagsAssignedHindi::class;
 
-        // Fetch articles
         $articles = $insightModel::query()->select('news_id', 'title', 'slug', 'insight_type', 'cat_id', 'created_at', 'published_date')
             ->withEffectiveDate()
             ->where('status', 1)
@@ -1323,26 +1331,22 @@ class InsightSitemapController extends Controller
                 $item->lang = $locale;
                 return $item;
             });
-        // dd($articles);
 
-        // Extract article IDs
         $articleIds = $articles->pluck('news_id')->toArray();
 
-        // Get associated tag IDs for each article
         $associatedTags = $contentModel::query()
             ->whereIn('content_id', $articleIds)
             ->where('content_type', 2)
-            ->select('content_id', 'tag_id') // Select both columns
+            ->select('content_id', 'tag_id')
             ->get()
-            ->groupBy('content_id'); // Group by news_id
-        // $tagIds = $associatedTags->pluck('tag_id')->flatten()->unique()->toArray();
+            ->groupBy('content_id');
+
         $tagIds = collect($associatedTags)->flatten()->pluck('tag_id')->unique()->toArray();
 
         $tagNames = $tagModel::query()
-            ->whereIn('tag_id', $tagIds) // Now it's a proper array
-            ->pluck('name', 'tag_id'); // key = tag_id, value = tag_name
+            ->whereIn('tag_id', $tagIds)
+            ->pluck('name', 'tag_id');
 
-        // Group tags by news_id
         $groupedTags = [];
         foreach ($associatedTags as $newsId => $tags) {
             $groupedTags[$newsId] = collect($tags)->pluck('tag_id')->map(function ($tagId) use ($tagNames) {
@@ -1350,31 +1354,30 @@ class InsightSitemapController extends Controller
             })->filter()->toArray();
         }
 
-        // Generate XML
+        // Build XML string (no whitespace before the XML declaration)
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
         $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"' . "\n";
-        $xml .= '        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">' . "\n";
+        $xml .= ' xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">' . "\n";
 
         foreach ($articles as $article) {
             $tags = isset($groupedTags[$article->news_id]) ? implode(', ', $groupedTags[$article->news_id]) : '';
 
-            $xml .= "    <url>\n";
-            $xml .= "        <loc>" . URL::to("/insights/{$article->lang}/" . strtolower($article->insight_type) . "/{$article->slug}.{$article->news_id}") . "</loc>\n";
-            $xml .= "        <news:news>\n";
-            $xml .= "            <news:publication>\n";
-            $xml .= "                <news:name>" . Config('constants.MainDomain') . "/insights</news:name>\n";
-            $xml .= "                <news:language>{$locale}</news:language>\n";
-            $xml .= "            </news:publication>\n";
-            $xml .= "            <news:publication_date>" . date('Y-m-d', strtotime($article->effective_date)) . "</news:publication_date>\n";
-            $xml .= "            <news:title>" . htmlspecialchars($article->title) . "</news:title>\n";
-            $xml .= "            <news:keywords>" . htmlspecialchars($tags) . "</news:keywords>\n"; // Add keywords
-
-            $xml .= "        </news:news>\n";
-            $xml .= "    </url>\n";
+            $xml .= "<url>\n";
+            $xml .= "<loc>" . URL::to("/insights/{$article->lang}/" . strtolower($article->insight_type) . "/{$article->slug}.{$article->news_id}") . "</loc>\n";
+            $xml .= "<news:news>\n";
+            $xml .= "<news:publication>\n";
+            $xml .= "<news:name>" . Config('constants.MainDomain') . "/insights</news:name>\n";
+            $xml .= "<news:language>{$locale}</news:language>\n";
+            $xml .= "</news:publication>\n";
+            $xml .= "<news:publication_date>" . date('Y-m-d', strtotime($article->effective_date)) . "</news:publication_date>\n";
+            $xml .= "<news:title>" . htmlspecialchars($article->title) . "</news:title>\n";
+            $xml .= "<news:keywords>" . htmlspecialchars($tags) . "</news:keywords>\n";
+            $xml .= "</news:news>\n";
+            $xml .= "</url>\n";
         }
 
         $xml .= '</urlset>';
 
-        return response($xml, 200, ['Content-Type' => 'application/xml']);
+        return response($xml, 200, ['Content-Type' => 'application/xml; charset=UTF-8']);
     }
 }
