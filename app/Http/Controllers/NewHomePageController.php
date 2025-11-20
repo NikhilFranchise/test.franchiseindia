@@ -4,18 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Events;
 use Illuminate\Http\Request;
-use App\Models\FranchisorBusinessDetail;
 use App\Models\HomePremiumPageBrand;
 use App\Models\Videos;
 use App\Models\InsightList;
 use App\Models\InsightListHindi;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 use Detection\MobileDetect;
@@ -23,10 +16,9 @@ use Detection\MobileDetect;
 class NewHomePageController extends Controller
 {
 
-    public function test(Request $request)
-    {
-        return view('newHomepage.test');
-    }
+    // public function test(Request $request){
+    //     return view('newHomepage.test');
+    // }
 
     public function hindiHomePage()
     {
@@ -207,7 +199,7 @@ class NewHomePageController extends Controller
             }
             return $eventsdata;
         });
-        // dd($news);
+
         return view('newHomepage.newmasterhomepage')->with(compact('news', 'articles', 'interviews',  'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos', 'events'));
     }
 
@@ -253,47 +245,6 @@ class NewHomePageController extends Controller
             }
         }
 
-        // Step 2: If any cache missing, do a single query
-        if (!empty($missingSections)) {
-            $fetched = HomePremiumPageBrand::query()
-                ->select('brand_id', 'brand_img', 'brand_link', 'brand_alt', 'brand_heading', 'investment_range', 'investment_range_new', 'area_required', 'brand_category', 'brand_category_id', 'page_type', 'weightage', 'status', 'brand_section', 'franchise_outlets')
-                ->where('status', 1)
-                ->where('page_type', 1)
-                ->whereIn('brand_section', array_keys($missingSections))
-                ->orderBy('inventory_backup', 'ASC')
-                ->get()
-                ->groupBy('brand_section');
-
-            foreach ($missingSections as $section => $limit) {
-                $data = ($fetched[$section] ?? collect())->shuffle()->take($limit);
-                Cache::put($sections[$section]['key'], $data, $cacheExpiration);
-                $cachedBrands[$section] = $data;
-            }
-        }
-
-        // Step 3: Assign to existing variables
-        $brandslft = $cachedBrands[2] ?? collect();
-        $brandstbo = $cachedBrands[3] ?? collect();
-        $brandstfo = $cachedBrands[4] ?? collect();
-        $brandsffc = $cachedBrands[5] ?? collect();
-        // dd($brandstbo);
-
-        if (!$detect->isMobile()) {
-            $all = InsightList::query()
-                ->with('category')
-                ->select('slug', 'cat_id', 'image', 'news_id', 'title', 'created_at', 'published_date', 'insight_type')
-                ->withEffectiveDate()
-                ->where('status', 1)
-                ->whereNot('cat_id', '')
-                ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-                ->orderByEffectiveDate('desc')
-                ->get()
-                ->groupBy('insight_type');
-
-            $news = $all['News']->take(16);
-            $articles = $all['Article']->take(16);
-            $interviews = $all['Interview']->take(16);
-        }
         // Step 2: If any cache missing, do a single query
         if (!empty($missingSections)) {
             $fetched = HomePremiumPageBrand::query()
@@ -405,16 +356,10 @@ class NewHomePageController extends Controller
                     'fih_url as url',
                     'fih_imageurl as image',
                     'fih_displaydate as date',
-                    'fih_startdate as start_date',
-                    'fih_date as endDate',
                     'fih_address as venue',
                     'fih_mobile as contact',
                     'fih_homepage as isDisplayOnHome',
-                    'fih_facebook as facebook',
-                    'fih_twitter as twitter',
-                    'fih_linkedin as linkedin',
-                    'fih_status as priority',
-                    'show_website'
+                    'fih_status as status',
                 )->where('fih_status', 1)
                 ->where('fih_homepage', 1)
                 ->where('fih_date', '>=', Carbon::now())
@@ -425,7 +370,7 @@ class NewHomePageController extends Controller
             }
             return $eventsdata;
         });
-        // dd($events);
+
         if (!$detect->isMobile()) {
             return view('newHomepage.newmasterhomepage')->with(compact('news', 'articles', 'interviews', 'brandstfo', 'brandslft', 'brandstbo',    'brandsffc', 'videos', 'events'));
         } else {
@@ -515,37 +460,37 @@ class NewHomePageController extends Controller
         return view('static.top-100-franchisors');
     }
 
-    public function insights_news()
-    {
-        $articles = InsightList::query()
-            ->where('status', 1)
-            ->whereIn('insight_type', ['News'])
-            ->orderByDesc('created_at')
-            ->limit(10)
-            ->get();
+    // public function insights_news()
+    // {
+    //     $articles = InsightList::query()
+    //         ->where('status', 1)
+    //         ->whereIn('insight_type', ['News'])
+    //         ->orderByDesc('created_at')
+    //         ->limit(10)
+    //         ->get();
 
-        $articles2 = InsightList::query()
-            ->where('status', 1)
-            ->whereIn('insight_type', ['Interview'])
-            ->orderByDesc('created_at')
-            ->limit(10)
-            ->get();
+    //     $articles2 = InsightList::query()
+    //         ->where('status', 1)
+    //         ->whereIn('insight_type', ['Interview'])
+    //         ->orderByDesc('created_at')
+    //         ->limit(10)
+    //         ->get();
 
-        return view('newhomepage.f_news')->with(compact('articles', 'articles2'));
-    }
+    //     return view('newhomepage.f_news')->with(compact('articles', 'articles2'));
+    // }
 
 
-    public function insights_news_hi()
-    {
-        $articles = InsightListHindi::query()
-            ->where('status', 1)
-            ->whereIn('insight_type', ['Article'])
-            ->orderByDesc('created_at')
-            ->limit(10)
-            ->get();
+    // public function insights_news_hi()
+    // {
+    //     $articles = InsightListHindi::query()
+    //         ->where('status', 1)
+    //         ->whereIn('insight_type', ['Article'])
+    //         ->orderByDesc('created_at')
+    //         ->limit(10)
+    //         ->get();
 
-        return view('newhomepage.f_news')->with(compact('articles'));
-    }
+    //     return view('newhomepage.f_news')->with(compact('articles'));
+    // }
     public static function getinsights_interview_Slug($title, $id)
     {
 
