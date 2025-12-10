@@ -186,7 +186,7 @@ class InsightController extends Controller
         // 👉 Export to CSV if ?export=1 is present
         if ($request->has('export')) {
             $filename = "insightsData_" . now()->format('Y-m-d_H-i-s') . ".csv";
-            $data = $query->with('category')->orderByDesc('news_id')->get();
+            $data = $query->with('category')->orderByDesc('news_id')->paginate(100)->items();
 
             $headers = [
                 "Content-Type" => "text/csv",

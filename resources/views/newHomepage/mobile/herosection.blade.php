@@ -1,40 +1,40 @@
 @php
-    use Illuminate\Support\Str;
-    $catArr = Config('constants.CategoryArr');
-    asort($catArr);
-    $states = Config('location.stateArr');
-    asort($states);
+use Illuminate\Support\Str;
+$catArr = Config('constants.CategoryArr');
+asort($catArr);
+$states = Config('location.stateArr');
+asort($states);
 @endphp
 <section class="hero-moblie" id="hero-mobile">
 
     <div class="lnkblk">
         <a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank" class="setpat"><img
-                src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.webp" alt="easy gym" width="237"
+                src="{{ url('newhomepage/assets/img/delhi_2026-w.webp') }}" alt="easy gym" width="237"
                 height="60"></a>
     </div>
     @if (request()->segment(1) == 'hi')
-        <h1><span>15 हजार से अधिक </span> कारोबारी विक्लपों में अपने लिए तलाश करें</h1>
-        <h2>दुनियाभर में सबसे अधिक तलाश किया जाने वाला फ्रैंचाइज वेबसाइट नेटवर्क।</h2>
+    <h1><span>15 हजार से अधिक </span> कारोबारी विक्लपों में अपने लिए तलाश करें</h1>
+    <h2>दुनियाभर में सबसे अधिक तलाश किया जाने वाला फ्रैंचाइज वेबसाइट नेटवर्क।</h2>
     @else
-        <h1>15000+ Business Options</h1>
-        <h2>World&apos;s highest visited franchise website network</h2>
+    <h1>15000+ Business Options</h1>
+    <h2>World&apos;s highest visited franchise website network</h2>
     @endif
     <div class="warpper">
         <input class="radio" id="one" name="group" type="radio" checked>
         <input class="radio" id="two" name="group" type="radio">
         <input class="radio" id="three" name="group" type="radio">
         @if (request()->segment(1) == 'hi')
-            <div class="tabs">
-                <label class="tab" id="one-tab" for="one">कैटेगरी</label>
-                <label class="tab" id="two-tab" for="two">लोकेशन</label>
-                <label class="tab" id="three-tab" for="three">निवेश</label>
-            </div>
+        <div class="tabs">
+            <label class="tab" id="one-tab" for="one">कैटेगरी</label>
+            <label class="tab" id="two-tab" for="two">लोकेशन</label>
+            <label class="tab" id="three-tab" for="three">निवेश</label>
+        </div>
         @else
-            <div class="tabs">
-                <label class="tab" id="one-tab" for="one">Categories</label>
-                <label class="tab" id="two-tab" for="two">Location</label>
-                <label class="tab" id="three-tab" for="three">Investment</label>
-            </div>
+        <div class="tabs">
+            <label class="tab" id="one-tab" for="one">Categories</label>
+            <label class="tab" id="two-tab" for="two">Location</label>
+            <label class="tab" id="three-tab" for="three">Investment</label>
+        </div>
         @endif
         <div class="panels">
             <div class="panel" id="one-panel">
@@ -48,10 +48,11 @@
                                 id="getMainCategoryDataHeader1" onchange="getSubCategoryHeader1(this.value)">
                                 <option value="" hidden="">Select Industry</option>
                                 @foreach ($catArr as $index => $value)
-                                    <option value="{{ $index }}"
-                                        slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
-                                        @if (isset($mc) && $index == $mc) selected @endif>
-                                        {{ $value }}</option>
+                                <option value="{{ $index }}"
+                                    slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
+                                    @if (isset($mc) && $index==$mc) selected @endif>
+                                    {{ $value }}
+                                </option>
                                 @endforeach
 
                             </select>
@@ -100,10 +101,11 @@
                                 name="mc" id="getMainCategoryDataHeaderLoc1">
                                 <option value="" hidden="">Select Industry</option>
                                 @foreach ($catArr as $index => $value)
-                                    <option value="{{ $index }}"
-                                        slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
-                                        @if (isset($mc) && $index == $mc) selected @endif>
-                                        {{ $value }}</option>
+                                <option value="{{ $index }}"
+                                    slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
+                                    @if (isset($mc) && $index==$mc) selected @endif>
+                                    {{ $value }}
+                                </option>
                                 @endforeach
 
                             </select>
@@ -116,9 +118,10 @@
                                 onchange="getcity1(this.value)">
                                 <option value="" hidden="">Select a State</option>
                                 @foreach ($states as $index => $value)
-                                    <option value="{{ $index }}" slug="{{ strtolower(Str::slug($value)) }}"
-                                        @if (isset($loc[0]) && $loc[0] == $index) selected @endif>
-                                        {{ $value }}</option>
+                                <option value="{{ $index }}" slug="{{ strtolower(Str::slug($value)) }}"
+                                    @if (isset($loc[0]) && $loc[0]==$index) selected @endif>
+                                    {{ $value }}
+                                </option>
                                 @endforeach
                             </select>
                         </li>
@@ -146,10 +149,11 @@
                                 class="form-control form-control-custom dropdown-toogle-icon">
                                 <option value="" hidden="">Select Industry</option>
                                 @foreach ($catArr as $index => $value)
-                                    <option value="{{ $index }}"
-                                        slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
-                                        @if (isset($mc) && $index == $mc) selected @endif>
-                                        {{ $value }}</option>
+                                <option value="{{ $index }}"
+                                    slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
+                                    @if (isset($mc) && $index==$mc) selected @endif>
+                                    {{ $value }}
+                                </option>
                                 @endforeach
                             </select>
                         </li>

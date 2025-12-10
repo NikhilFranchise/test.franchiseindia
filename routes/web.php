@@ -1261,7 +1261,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
-            Route::get('/export',              [InsightsController::class, 'exportInsights']);
+            Route::get('/export',                       [InsightsController::class, 'exportInsights']);
         });
     });
 });

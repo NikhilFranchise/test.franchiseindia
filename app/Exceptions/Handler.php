@@ -27,4 +27,21 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    /**
+     * Custom render method for CRRE 404 page
+     */
+    public function render($request, Throwable $exception)
+    {
+        // If error is 404
+        if ($this->isHttpException($exception) && $exception->getStatusCode() === 404) {
+
+            // If the URL starts with /crre/
+            if ($request->is('crre/*')) {
+                return response()->view('crre.404', [], 404);
+            }
+        }
+
+        return parent::render($request, $exception);
+    }
 }

@@ -52,7 +52,6 @@ class BusinessListingController extends Controller
 
     public function listingLocation()
     {
-        // dd('yes');
         // Initialize the variables
         $seoTitle = '';
         $seoDesc = '';
@@ -223,6 +222,7 @@ class BusinessListingController extends Controller
      */
     public function searchBusinessListing(Request $request)
     {
+        // dd('test');
         $searchTerm = $request->route('searchTerm');
         $categoryIds = $request->route('categoryIds');
         $locationIds = $request->route('locationIds');
@@ -748,7 +748,6 @@ class BusinessListingController extends Controller
      */
     public function getBusinessListing(Request $request)
     {
-        // dd($request);
         // Fetch the request parameters
         $catParam      = request()->category_param;
         $mcat      = request()->catUrl;
@@ -1620,6 +1619,7 @@ class BusinessListingController extends Controller
     // optimized function
     public function getBusinessListingnormalization(Request $request)
     {
+        // dd($request->all());
         // Fetch the request parameters
         $catParam      = $request->category_param;
         $catUrl      = $request->catUrl;

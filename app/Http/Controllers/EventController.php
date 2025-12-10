@@ -37,6 +37,8 @@ class EventController extends Controller
                 'fih_facebook as facebook',
                 'fih_twitter as twitter',
                 'fih_linkedin as linkedin',
+                'instagram_url as instagram',
+                'youtube_url as youtube',
                 'fih_status as priority',
                 'show_website'
             );

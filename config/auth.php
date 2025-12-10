@@ -44,6 +44,10 @@ return [
             'driver' => 'session',
             'provider' => 'admins',
         ],
+        'crreAdmin' => [ // Add this admin guard
+            'driver' => 'session',
+            'provider' => 'crreAdmins',
+        ],
     ],
 
     /*
@@ -71,6 +75,10 @@ return [
         'admins' => [ // Add this admin provider
             'driver' => 'eloquent',
             'model' => App\Models\AdminUser::class, // Ensure this model exists
+        ],
+        'crreAdmins' => [ // Add this admin provider
+            'driver' => 'eloquent',
+            'model' => App\Models\Crre\CrreAdminUsers::class, // Ensure this model exists
         ],
 
         // 'users' => [

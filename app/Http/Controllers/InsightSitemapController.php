@@ -23,34 +23,7 @@ use Illuminate\Support\Str;
 
 class InsightSitemapController extends Controller
 {
-    //html sitemap start here //
 
-    // public function sitemap()
-    // {
-    //     // Query years from English table
-    //     $englishYears = InsightList::query()
-
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->where('status', 1)
-    //         ->selectRaw('YEAR(created_at) as year')
-    //         ->groupByRaw('YEAR(created_at)')
-    //         ->pluck('year');
-
-    //     // Query years from Hindi table
-    //     $hindiYears = InsightListHindi::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->where('status', 1)
-    //         ->selectRaw('YEAR(created_at) as year')
-    //         ->groupByRaw('YEAR(created_at)')
-    //         ->pluck('year');
-
-    //     // Combine and sort the years
-    //     $allYears = $englishYears->merge($hindiYears)->unique()->sortDesc()->values();
-    //     // dd($allYears);
-    //     return view('insights.sitemaps.year_sitemap', compact('allYears'));
-    // }
     public function sitemap()
     {
         // Query years from English table
@@ -77,34 +50,6 @@ class InsightSitemapController extends Controller
         return view('insights.sitemaps.year_sitemap', compact('allYears'));
     }
 
-
-
-
-    // public function monthsitemap(Request $request, $year)
-    // {
-    //     $Y = $year;
-    //     $englishMonths = InsightList::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->where('status', 1)
-    //         ->whereRaw('YEAR(created_at) = ?', [$Y])
-    //         ->selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-    //         ->groupByRaw('MONTH(created_at)')
-    //         ->pluck('month');
-
-    //     $hindiMonths = InsightListHindi::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->where('status', 1)
-    //         ->whereRaw('YEAR(created_at) = ?', [$Y])
-    //         ->selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-    //         ->groupByRaw('MONTH(created_at)')
-    //         ->pluck('month');
-    //     // Combine and sort the years
-    //     $allMonths = $englishMonths->merge($hindiMonths)->unique()->sort()->values();
-    //     // dd($allMonths);
-    //     return view('insights.sitemaps.month_sitemap', compact('allMonths', 'Y'));
-    // }
     public function monthsitemap(Request $request, $year)
     {
         $Y = $year;
@@ -133,35 +78,7 @@ class InsightSitemapController extends Controller
     }
 
 
-    // public function daysitemap(Request $request, $year, $month)
-    // {
-    //     $Y = $year;
-    //     $M = $month;
 
-    //     $englishDays = InsightList::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->where('status', 1)
-    //         ->whereRaw('YEAR(created_at) = ?', [$Y])
-    //         ->whereRaw('MONTH(created_at) = ?', [$M])
-    //         ->selectRaw('DAY(created_at) as day, COUNT(*) as total')
-    //         ->groupByRaw('DAY(created_at)')
-    //         ->orderByRaw('DAY(created_at)') // Order by the same column used in GROUP BY
-    //         ->pluck('day');
-
-    //     $hindiDays = InsightListHindi::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->where('status', 1)
-    //         ->whereRaw('YEAR(created_at) = ?', [$Y])
-    //         ->whereRaw('MONTH(created_at) = ?', [$M])
-    //         ->selectRaw('DAY(created_at) as day, COUNT(*) as total')
-    //         ->groupByRaw('DAY(created_at)')
-    //         ->orderByRaw('DAY(created_at)') // Order by the same column used in GROUP BY
-    //         ->pluck('day');
-    //     $allDays = $englishDays->merge($hindiDays)->unique()->sort()->values();
-    //     return view('insights.sitemaps.day_sitemap', compact('allDays', 'M', 'Y'));
-    // }
     public function daysitemap(Request $request, $year, $month)
     {
         $Y = $year;
@@ -196,42 +113,7 @@ class InsightSitemapController extends Controller
 
 
 
-    // public function datesitemap(Request $request, $year, $month, $day)
-    // {
-    //     // Fetch English data with a source identifier
-    //     $englishData = InsightList::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->where('status', 1)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->whereRaw('YEAR(created_at) = ?', [$year])
-    //         ->whereRaw('MONTH(created_at) = ?', [$month])
-    //         ->whereRaw('DAY(created_at) = ?', [$day])
-    //         ->orderBy('created_at')
-    //         ->get()
-    //         ->map(function ($item) {
-    //             $item->source = 'en'; // Add source identifier
-    //             return $item;
-    //         });
 
-    //     // Fetch Hindi data with a source identifier
-    //     $hindiData = InsightListHindi::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->where('status', 1)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->whereRaw('YEAR(created_at) = ?', [$year])
-    //         ->whereRaw('MONTH(created_at) = ?', [$month])
-    //         ->whereRaw('DAY(created_at) = ?', [$day])
-    //         ->get()
-    //         ->map(function ($item) {
-    //             $item->source = 'hi'; // Add source identifier
-    //             return $item;
-    //         });
-
-    //     // Combine and process all data
-    //     $allData = $englishData->merge($hindiData)->unique()->values();
-    //     // dd($allData);
-    //     return view('insights.sitemaps.date_sitemap', compact('allData', 'year', 'month', 'day'));
-    // }
     public function datesitemap(Request $request, $year, $month, $day)
     {
         // Fetch English data
@@ -272,34 +154,7 @@ class InsightSitemapController extends Controller
 
 
 
-    // public function todaysitemap()
-    // {
-    //     $enTodayData = InsightList::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->where('status', 1)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->whereDate('created_at', Carbon::today())
-    //         ->get()
-    //         ->map(function ($item) {
-    //             $item->source = 'en'; // Add source identifier
-    //             return $item;
-    //         });
 
-    //     $hiTodayData = InsightListHindi::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->where('status', 1)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->whereDate('created_at', Carbon::today())
-    //         ->get()
-    //         ->map(function ($item) {
-    //             $item->source = 'hi'; // Add source identifier
-    //             return $item;
-    //         });
-
-    //     $allTodayData = $enTodayData->merge($hiTodayData)->unique()->values();
-
-    //     return view('insights.sitemaps.today_sitemap', compact('allTodayData'));
-    // }
     public function todaysitemap()
     {
         $today = Carbon::today()->toDateString();
@@ -332,34 +187,7 @@ class InsightSitemapController extends Controller
     }
 
 
-    // public function yesterdaysitemap()
-    // {
-    //     // Fetch yesterday's data
-    //     $englishYdayData = InsightList::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->where('status', 1)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->whereDate('created_at', Carbon::yesterday())
-    //         ->get()
-    //         ->map(function ($item) {
-    //             $item->source = 'en'; // Add source identifier
-    //             return $item;
-    //         });
-    //     $hindiYdayData = InsightListHindi::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->where('status', 1)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->whereDate('created_at', Carbon::yesterday())
-    //         ->get()
-    //         ->map(function ($item) {
-    //             $item->source = 'hi'; // Add source identifier
-    //             return $item;
-    //         });
 
-    //     $allYdayData = $englishYdayData->merge($hindiYdayData)->unique()->values();
-
-    //     return view('insights.sitemaps.yesterday_sitemap', compact('allYdayData'));
-    // }
     public function yesterdaysitemap()
     {
         $yesterday = Carbon::yesterday()->toDateString();
@@ -391,35 +219,7 @@ class InsightSitemapController extends Controller
         return view('insights.sitemaps.yesterday_sitemap', compact('allYdayData'));
     }
 
-    // public function thisweeksitemap()
-    // {
-    //     // Fetch yesterday's data
-    //     $engThisWeekData = InsightList::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->where('status', 1)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::MONDAY), Carbon::now()->endOfWeek(Carbon::SATURDAY)])
-    //         ->get()
-    //         ->map(function ($item) {
-    //             $item->source = 'en';
-    //             return $item;
-    //         });
 
-    //     $hinThisWeekData = InsightListHindi::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->where('status', 1)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->whereBetween('created_at', [Carbon::now()->startOfWeek(Carbon::MONDAY), Carbon::now()->endOfWeek(Carbon::SATURDAY)])
-    //         ->get()
-    //         ->map(function ($item) {
-    //             $item->source = 'hi';
-    //             return $item;
-    //         });
-
-    //     $allThisWeekData = $engThisWeekData->merge($hinThisWeekData)->unique()->values();
-    //     // Render the view with the data
-    //     return view('insights.sitemaps.thisweek_sitemap', compact('allThisWeekData'));
-    // }
     public function thisweeksitemap()
     {
         $start = Carbon::now()->startOfWeek(Carbon::MONDAY)->toDateString();
@@ -452,42 +252,7 @@ class InsightSitemapController extends Controller
         return view('insights.sitemaps.thisweek_sitemap', compact('allThisWeekData'));
     }
 
-    // public function lastweeksitemap()
-    // {
-    //     // Fetch last week's data
-    //     $engLastWeekData = InsightList::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->where('status', 1)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->whereBetween('created_at', [
-    //             Carbon::now()->subWeek()->startOfWeek(Carbon::MONDAY),
-    //             Carbon::now()->subWeek()->endOfWeek(Carbon::SUNDAY)
-    //         ])
-    //         ->get()
-    //         ->map(function ($item) {
-    //             $item->source = 'en';
-    //             return $item;
-    //         });
 
-    //     $hinLastWeekData = InsightListHindi::query()
-    //         ->whereIn('insight_type', ['News', 'Article', 'Interview'])
-    //         ->where('status', 1)
-    //         ->whereNotIn('news_type', ['ri', 'ir'])
-    //         ->whereBetween('created_at', [
-    //             Carbon::now()->subWeek()->startOfWeek(Carbon::MONDAY),
-    //             Carbon::now()->subWeek()->endOfWeek(Carbon::SUNDAY)
-    //         ])
-    //         ->get()
-    //         ->map(function ($item) {
-    //             $item->source = 'hi';
-    //             return $item;
-    //         });
-
-    //     $allLastWeekData = $engLastWeekData->merge($hinLastWeekData)->unique()->values();
-
-    //     // Render the view with the data
-    //     return view('insights.sitemaps.lastweek_sitemap', compact('allLastWeekData'));
-    // }
 
     public function lastweeksitemap()
     {
@@ -738,12 +503,6 @@ class InsightSitemapController extends Controller
             ->view('insights.sitemaps.subcat_sitemap', ['subcategories' => $subcategories])
             ->header('Content-Type', 'text/xml');
     }
-
-
-
-
-
-
 
     public function tagsitemap()
     {

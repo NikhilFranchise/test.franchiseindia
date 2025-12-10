@@ -12,6 +12,19 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-        return $request->expectsJson() ? null : route('login');
+        if ($request->expectsJson()) {
+            return null;
+        }
+        // Detect guard name
+        $guard = $request->route()->getAction('guard') ?? null;
+
+        switch ($guard) {
+            case 'crreAdmin':
+                return route('crre.loginview'); // crre login
+            case 'admin':
+                return route('admin.LoginView'); // admin login
+            default:
+                return route('franchise.login'); // normal franchise login
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use App\Http\Controllers\SitemapController;
+
 class Kernel extends HttpKernel
 {
     /**
@@ -22,7 +23,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        
+
     ];
 
     /**
@@ -44,7 +45,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
@@ -71,6 +72,7 @@ class Kernel extends HttpKernel
         'invAuth' => \App\Http\Middleware\invAuth::class,
         'franAuth' => \App\Http\Middleware\franAuth::class,
         'ContentAdmin' => \App\Http\Middleware\ContentAdmin::class,
+        'CrreContentAdmin' => \App\Http\Middleware\CrreContentAdmin::class,
         'TrailingSlashRedirect' => \App\Http\Middleware\TrailingSlashRedirect::class,
         'Localization' => \App\Http\Middleware\Localization::class,
 
@@ -81,9 +83,9 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         // Other middlewares
         'Localization' => \App\Http\Middleware\Localization::class,
-        'contentAdmin' => \App\Http\Middleware\ContentAdmin::class, // Add this line
+        'ContentAdmin' => \App\Http\Middleware\ContentAdmin::class, // Add this line
+        'CrreContentAdmin' => \App\Http\Middleware\CrreContentAdmin::class, // Add this line
+        'setLocale' => \App\Http\Middleware\Setlocale::class,
 
     ];
-
-
 }

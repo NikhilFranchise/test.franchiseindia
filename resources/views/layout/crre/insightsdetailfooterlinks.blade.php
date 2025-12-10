@@ -1,0 +1,110 @@
+<!-- resources/views/layout/insights/footerlinks.blade.php -->
+<!-- Vendor JS Files -->
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
+<script src="{{ url('insight-new/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}" defer></script>
+<!-- Template Main JS File -->
+<script src="{{url('insight-new/assets/js/main.js')}}" defer></script>
+<script src="{{ url('insight-new/assets/js/swiper.min.js') }}" defer></script> --}}
+
+
+{{-- //Raman sir started  --}}
+{{-- //Footer raman sir --}}
+<link rel="stylesheet" href="{{url('detailpage/css/mobile-nav.css?ver='.date('d'))}}" rel="preload" as="style"/>
+<link rel="stylesheet" href="https://www.franchiseindia.com/insight-new/assets/vendor/icofont/icofont.min.css" rel="preload" as="style"/>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet" />
+
+<script defer src="{{url('detailpage/js/jquery.min.js')}}"></script>
+<script defer src="{{url('detailpage/js/bootstrap.bundle.min.js')}}"></script>
+<script defer src="{{url('detailpage/js/main.js')}}" ></script>
+
+{{-- //Raman sir ended --}}
+{{-- @stack('scripts')
+<script>
+(function initWhenIdle(cb){
+  (window.requestIdleCallback||function(f){setTimeout(f,200)})(cb);
+})(function(){
+  if (document.querySelector('.maycontentblk .swiper-container')) {
+    new Swiper('.maycontentblk .swiper-container', {
+      slidesPerView: 1, spaceBetween: 10, loop: false,
+      autoplay: { delay: 2500, speed: 1200, disableOnInteraction: true, watchSlidesProgress: true, watchVisibility: true },
+      pagination: { el: '.maycontentblk  .swiper-pagination', clickable: true },
+      navigation: { nextEl: '.maycontentblk .swiper-button-next', prevEl: '.maycontentblk .swiper-button-prev' },
+      keyboard: { enabled: true, onlyInViewport: true },
+      breakpoints: { 320:{slidesPerView:1.5,spaceBetween:20}, 768:{slidesPerView:3,spaceBetween:40}, 1024:{slidesPerView:6,spaceBetween:15} }
+    });
+  }
+  if (document.querySelector('.maincateblk .swiper-container')) {
+    new Swiper('.maincateblk .swiper-container', {
+      slidesPerView: 1, spaceBetween: 10, loop: false,
+      autoplay: { delay: 2500, speed: 1200, disableOnInteraction: true, watchSlidesProgress: true, watchVisibility: true },
+      pagination: { el: '.maincateblk  .swiper-pagination', clickable: true },
+      navigation: { nextEl: '.maincateblk .swiper-button-next', prevEl: '.maincateblk .swiper-button-prev' },
+      keyboard: { enabled: true, onlyInViewport: true },
+      breakpoints: { 320:{slidesPerView:1.5,spaceBetween:15}, 768:{slidesPerView:4,spaceBetween:40}, 1024:{slidesPerView:3,spaceBetween:15} }
+    });
+  }
+  if (document.querySelector('.slidercomman .swiper-container')) {
+    new Swiper('.slidercomman .swiper-container', {
+      slidesPerView: 1, spaceBetween: 10, loop: false,
+      autoplay: { delay: 2500, speed: 1200, disableOnInteraction: true, watchSlidesProgress: true, watchVisibility: true },
+      pagination: { el: '.slidercomman  .swiper-pagination', clickable: true },
+      navigation: { nextEl: '.slidercomman .swiper-button-next', prevEl: '.slidercomman .swiper-button-prev' },
+      keyboard: { enabled: true, onlyInViewport: true },
+      breakpoints: { 320:{slidesPerView:1.5,spaceBetween:20}, 768:{slidesPerView:4,spaceBetween:40}, 1024:{slidesPerView:4,spaceBetween:15} }
+    });
+  }
+  if (document.querySelector('.sliderauthor .swiper-container')) {
+    new Swiper('.sliderauthor .swiper-container', {
+      slidesPerView: 1, spaceBetween: 10, loop: false,
+      autoplay: { delay: 2700, speed: 1000, disableOnInteraction: true, watchSlidesProgress: true, watchVisibility: true },
+      pagination: { el: '.sliderauthor  .swiper-pagination', clickable: true },
+      navigation: { nextEl: '.sliderauthor .swiper-button-next', prevEl: '.sliderauthor .swiper-button-prev' },
+      keyboard: { enabled: true, onlyInViewport: true },
+      breakpoints: { 320:{slidesPerView:1.5,spaceBetween:10,loop:true}, 768:{slidesPerView:4,spaceBetween:10,loop:true}, 1024:{slidesPerView:5,spaceBetween:10} }
+    });
+  }
+  if (document.querySelector('.slidereport .swiper-container')) {
+    new Swiper('.slidereport .swiper-container', {
+      slidesPerView: 1, spaceBetween: 10, loop: false,
+      autoplay: { delay: 2700, speed: 1000, disableOnInteraction: true, watchSlidesProgress: true, watchVisibility: true },
+      pagination: { el: '.slidereport  .swiper-pagination', clickable: true },
+      navigation: { nextEl: '.slidereport .swiper-button-next', prevEl: '.slidereport .swiper-button-prev' },
+      keyboard: { enabled: true, onlyInViewport: true },
+      breakpoints: { 320:{slidesPerView:1.5,spaceBetween:10,loop:true}, 768:{slidesPerView:4,spaceBetween:10,loop:true}, 1024:{slidesPerView:5,spaceBetween:10} }
+    });
+  }
+  if (document.querySelector('.popup-youtube')) {
+    var s = document.createElement('script');
+    s.src = 'https://dimsemenov.com/plugins/magnific-popup/dist/jquery.magnific-popup.min.js';
+    s.onload = function(){ $('.popup-youtube').magnificPopup({ type: 'iframe' }); };
+    document.head.appendChild(s);
+  }
+});
+</script>
+<script>
+  $(document).ready(function() {
+    $("#tog1").click(function() { $('img', this).toggle(); $('#searchbar').toggle(); });
+    $("#show1").click(function(){ $(".ftrblk1").toggle(400); });
+    $("#show2").click(function(){ $(".ftrblk2").toggle(400); });
+    $("#show3").click(function(){ $(".ftrblk3").toggle(400); });
+    $("#show4").click(function(){ $(".ftrblk4").toggle(400); });
+    $("#show5").click(function(){ $(".ftrblk5").toggle(400); });
+    $("#show6").click(function(){ $(".ftrblk6").toggle(400); });
+    $("#show7").click(function(){ $(".ftrblk7").toggle(400); });
+    $("#show8").click(function(){ $(".ftrblk8").toggle(400); });
+    if(screen.width<600) {
+      $("#sidefeedbackfrm").click(function() {
+        let s=$(".sidefeedback");
+        s.css('right')==='-303px' ? s.animate({right: "+=303px"},1000) : s.animate({right: "-=303px"},1000);
+      });
+    } else {
+      $("#sidefeedbackfrm").click(function() {
+        let s=$(".sidefeedback");
+        s.css('right')==='-375px' ? s.animate({right: "+=375px"},1000) : s.animate({right: "-=375px"},1000);
+      });
+    }
+    $('.popup-youtube').length && $.fn.magnificPopup && $('.popup-youtube').magnificPopup({ type: 'iframe' });
+  });
+</script> --}}

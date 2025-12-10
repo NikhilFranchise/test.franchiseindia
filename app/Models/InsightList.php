@@ -8,6 +8,7 @@ use App\Models\AuthorList;
 use App\Models\InsightCategory;
 use App\Models\InsightSubcategory;
 use App\Traits\hasEffectiveDate;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class InsightList extends Model
@@ -17,28 +18,18 @@ class InsightList extends Model
     protected $table = 'insights_list_english';
     protected $primaryKey = 'news_id';
     protected $fillable = [
-        // 'prev_id',
         'news_type',
-        // 'source',
         'insight_type',
         'cat_id',
         'subcat_id',
-        // 'kicker',
         'title',
-        // 'homeTitle',
         'shortDesc',
         'content',
         'image',
         'img_alt',
         'slug',
-        // 'related_brand',
         'time',
         'views',
-        // 'totalComment',
-        // 'totalVotes',
-        // 'facebook_shared',
-        // 'is_intl',
-        // 'is_hindi',
         'status',
         'author_id',
         'updated_by',
@@ -48,6 +39,31 @@ class InsightList extends Model
     protected $guarded = [];
     protected $dates = ['deleted_at'];
 
+    protected $casts = [
+        'created_at'     => 'datetime',
+        'updated_at'     => 'datetime',
+        'published_date' => 'datetime',
+        'effective_date' => 'datetime',  // Important for display formatting
+    ];
+    /**
+     * ACCESSOR: Display formatted date with "Last Updated"
+     */
+    public function getDisplayDateAttribute()
+    {
+        $effective = $this->effective_date ?? $this->created_at;
+
+        if (!($effective instanceof Carbon)) {
+            $effective = Carbon::parse($effective);
+        }
+
+        // When updated later than creation date
+        if ($this->published_date > $this->created_at) {
+            return 'Last Updated ' . $effective->format('M d, Y');
+        }
+
+        // Normal created/published date
+        return $effective->format('M d, Y');
+    }
 
     public function author()
     {

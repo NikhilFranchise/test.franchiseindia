@@ -43,9 +43,9 @@
             <img src="{{ url('cvw/assets/img/banner-expo.webp') }}" alt="Franchise India" class="banner-expo">
         </picture>
         <div class="container">
-            <div class="lnkblk"><a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank"
-                    class="setpat"><img src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.webp"
-                        width="300" alt="easy gym" height="76"></a></div>
+            <div class="lnkblk"><a href="https://www.franchiseindia.com/expo/" target="_blank" class="setpat"><img
+                        src="{{ url('newhomepage/assets/img/delhi_2026-w.webp') }}" width="300" alt="easy gym"
+                        height="76"></a></div>
             <div class="row">
                 <div class="col-md-12">
                     @notmobile
@@ -80,7 +80,8 @@
                                                     <option value="{{ $index }}"
                                                         slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                         @if (isset($mc) && $index == $mc) selected @endif>
-                                                        {{ $value }}</option>
+                                                        {{ $value }}
+                                                    </option>
                                                 @endforeach
                                             </select></li>
                                         <li class="p-0 m-0"><select name="sc" id="getSubCategoryDataHeader1"
@@ -113,7 +114,8 @@
                                                     <option value="{{ $index }}"
                                                         slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                         @if (isset($mc) && $index == $mc) selected @endif>
-                                                        {{ $value }}</option>
+                                                        {{ $value }}
+                                                    </option>
                                                 @endforeach
                                             </select></li>
                                         <li class="p-0 m-0"><select name="loc" id="stateHeader1"
@@ -124,7 +126,8 @@
                                                     <option value="{{ $index }}"
                                                         slug="{{ strtolower(Str::slug($value)) }}"
                                                         @if (isset($loc[0]) && $loc[0] == $index) selected @endif>
-                                                        {{ $value }}</option>
+                                                        {{ $value }}
+                                                    </option>
                                                 @endforeach
                                             </select></li>
                                         <li class="p-0 m-0"><select name="city"
@@ -152,7 +155,8 @@
                                                     <option value="{{ $index }}"
                                                         slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                         @if (isset($mc) && $index == $mc) selected @endif>
-                                                        {{ $value }}</option>
+                                                        {{ $value }}
+                                                    </option>
                                                 @endforeach
                                             </select></li>
                                         <li class="p-0 m-0"><select name="min_cost"
@@ -204,10 +208,9 @@
             <img src="{{ url('cvw/assets/img/banner-expo.webp') }}" alt="Franchise India" class="banner-expo">
         </picture>
         <div class="container">
-            <div class="lnkblk"><a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank"
-                    aria-label="easy gym" class="setpat"><img
-                        src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.webp" width="300"
-                        alt="easy gym" height="76"></a></div>
+            <div class="lnkblk"><a href="https://www.franchiseindia.com/expo/" target="_blank" class="setpat"><img
+                        src="{{ url('newhomepage/assets/img/delhi_2026-w.webp') }}" width="250" alt="easy gym"
+                        height="76"></a></div>
             <div class="row">
                 <div class="col-md-12">
                     @notmobile
@@ -243,7 +246,8 @@
                                                     <option value="{{ $index }}"
                                                         slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                         @if (isset($mc) && $index == $mc) selected @endif>
-                                                        {{ $value }}</option>
+                                                        {{ $value }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </li>
@@ -284,7 +288,8 @@
                                                     <option value="{{ $index }}"
                                                         slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                         @if (isset($mc) && $index == $mc) selected @endif>
-                                                        {{ $value }}</option>
+                                                        {{ $value }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </li>
@@ -296,7 +301,8 @@
                                                     <option value="{{ $index }}"
                                                         slug="{{ strtolower(Str::slug($value)) }}"
                                                         @if (isset($loc[0]) && $loc[0] == $index) selected @endif>
-                                                        {{ $value }}</option>
+                                                        {{ $value }}
+                                                    </option>
                                                 @endforeach
                                             </select></li>
                                         <li class="p-0 m-0">
@@ -330,7 +336,8 @@
                                                     <option value="{{ $index }}"
                                                         slug="{{ Config('category.SeoCategoryArr.' . $index) }}"
                                                         @if (isset($mc) && $index == $mc) selected @endif>
-                                                        {{ $value }}</option>
+                                                        {{ $value }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </li>
