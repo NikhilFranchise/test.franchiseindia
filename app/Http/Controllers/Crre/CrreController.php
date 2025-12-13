@@ -112,7 +112,9 @@ class CrreController extends Controller
 
         // -------------------- Authors with Article Counts --------------------
         // Optimized: two subqueries instead of N queries inside a loop
-        $authors = CrreAuthors::query()
+        $authors = CrreAuthors::query()->with('admin')->whereHas('admin', function ($query) {
+            $query->whereNot('admin_role', 'superadmin');
+        })
             ->select('author_id', 'title', 'slug', 'image', 'designation')
             ->where('status', 'A')
             ->get();
@@ -755,7 +757,9 @@ class CrreController extends Controller
         }
 
         // Fetch author details and append article count & language
-        $authorDetails = CrreAuthors::query()
+        $authorDetails = CrreAuthors::query()->with('admin')->whereHas('admin', function ($query) {
+            $query->whereNot('admin_role', 'superadmin');
+        })
             ->select('author_id', 'title', 'slug', 'image', 'designation')
             ->whereNotIn('title', ['Franchise India Bureau', 'Opportunity India Desk', 'TFW Bureau', 'Guest Author'])
             ->where('status', 'A')

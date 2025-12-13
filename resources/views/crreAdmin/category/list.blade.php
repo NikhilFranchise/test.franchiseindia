@@ -75,10 +75,10 @@
         }
 
         /* .gradeX>td {
-                                                                                                                                                                                        text-align: center;
-                                                                                                                                                                                    }
+                                                                                                                                                                                                                            text-align: center;
+                                                                                                                                                                                                                        }
 
-                                                                                                                                                                                    /* Rounded sliders */
+                                                                                                                                                                                                                        /* Rounded sliders */
         .slider.round {
             border-radius: 34px;
         }
@@ -194,11 +194,25 @@
         }
     </style>
 @endpush
+
+@php
+    $user = Auth::guard('crreAdmin')->user();
+
+    $isSuperAdmin = $user->admin_role === 'superadmin';
+    $isAdmin = $user->admin_role === 'admin';
+    $isManager = $user->admin_role === 'manager';
+
+    // Edit allowed for admin + superadmin + manager
+    $canEdit = $isSuperAdmin || $isAdmin || $isManager;
+
+    // Delete ONLY admin + superadmin
+    $canDelete = $isSuperAdmin || $isAdmin;
+
+    $language = $lang === 'en' ? 'English' : 'Hindi';
+@endphp
+
 <!--breadcrumbs-->
 <div id="content-header">
-    @php
-        $language = $lang == 'en' ? 'English' : 'Hindi';
-    @endphp
     <div id="breadcrumb">
         <a href="{{ route('crreAdmin.dashboard') }}" title="Go to Home" class="tip-bottom"><i class="fa fa-home"></i>
             Home</a>
@@ -251,11 +265,6 @@
                     @else
                         <h5>Showing a total of {{ $totalRecords }} records.</h5>
                     @endif
-                    @php
-                        $user = Auth::guard('crreAdmin')->user();
-                        $author = $user->author;
-                        $canManage = in_array($user->admin_role, ['admin', 'manager']);
-                    @endphp
                 </div>
                 <div class="widget-content nopadding">
                     <table class="table table-bordered table-striped" id="catTable">
@@ -281,14 +290,26 @@
                                     <td>{{ $data->catname }}</td>
                                     <td>{{ $data->slug }}</td>
                                     <td>
-                                        <center><button class="btn btn-medium btn-warning" style="border-radius: 4px"><a
-                                                    href="{{ route('crreAdmin.cat.edit', ['lang' => $lang, 'id' => $data->id]) }}"><i
-                                                        class="fa fa-edit"></i> Edit</a></button>
-                                        </center>
+                                        @if ($canEdit)
+                                            <a href="{{ route('crreAdmin.cat.edit', ['lang' => $lang, 'id' => $data->id]) }}"
+                                                class="btn btn-warning btn-sm">
+                                                <i class="fa fa-edit"></i> Edit
+                                            </a>
+                                        @else
+                                            <span class="text-muted">No Access</span>
+                                        @endif
                                     </td>
-                                    <td><button class="btn btn-medium btn-danger deletecat" style="border-radius: 4px"
-                                            data-value="{{ $data->id }}"><i class="fa fa-trash-alt"></i>
-                                            Delete</button></td>
+                                    <!-- DELETE BUTTON -->
+                                    <td>
+                                        @if ($canDelete)
+                                            <button class="btn btn-danger btn-sm deletecat"
+                                                data-value="{{ $data->id }}">
+                                                <i class="fa fa-trash-alt"></i> Delete
+                                            </button>
+                                        @else
+                                            <span class="text-muted">No Access</span>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

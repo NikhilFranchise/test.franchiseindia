@@ -159,10 +159,19 @@
 @endpush
 @section('content')
     @php
-        $language = $lang == 'en' ? 'English' : 'Hindi';
+        $language = $lang === 'en' ? 'English' : 'Hindi';
+        // User & Role Helpers
         $user = Auth::guard('crreAdmin')->user();
         $author = $user->author;
-        $canManage = in_array($user->admin_role, ['admin', 'manager']);
+
+        $isSuperAdmin = $user->admin_role === 'superadmin';
+        $isAdmin = $user->admin_role === 'admin';
+        $isManager = $user->admin_role === 'manager';
+        $isAuthor = $user->admin_role === 'author';
+
+        // Permissions
+        $canManage = $isSuperAdmin || $isAdmin || $isManager;
+        $canViewExport = $canManage;
     @endphp
     <!--breadcrumbs-->
     <div id="content-header">
@@ -251,17 +260,19 @@
                 <div class="widget-box">
                     <div class="widget-title d-flex justify-content-between align-items-center">
                         <span class="icon"><i class="fa fa-newspaper"></i></span>
-                        @if (request()->search || request()->type || $categoryName || $authorName)
-                            <h5>Displaying {{ $totalRecords }} records for the search term
-                                '<strong>
-                                    {{ request()->search ? 'Search: ' . request()->search : '' }}
-                                    {{ request()->type ? ' | Type: ' . request()->type : '' }}
-                                    {{ $categoryName ? ' | Category: ' . $categoryName : '' }}
-                                    {{ $authorName ? ' | Author: ' . $authorName : '' }}
-                                </strong>'.</h5>
-                        @else
-                            <h5>Showing a total of {{ $totalRecords }} records.</h5>
-                        @endif
+                        <h5>
+                            @if (request('search') || request('type') || $categoryName || $authorName)
+                                Displaying {{ $totalRecords }} records:
+                                <strong>
+                                    {{ request('search') ? 'Search: ' . request('search') . ' ' : '' }}
+                                    {{ request('type') ? '| Type: ' . request('type') . ' ' : '' }}
+                                    {{ $categoryName ? '| Category: ' . $categoryName . ' ' : '' }}
+                                    {{ $authorName ? '| Author: ' . $authorName . ' ' : '' }}
+                                </strong>
+                            @else
+                                Showing {{ $totalRecords }} total records
+                            @endif
+                        </h5>
 
                         @if ($canManage)
                             <div style="padding-top: 3px; float: right; margin-right: 3px;">
@@ -302,28 +313,21 @@
                             <tbody id="tablecontent">
                                 @forelse ($data as $insights)
                                     @php
-                                        $slug = !empty($insights->slug) ? $insights->slug : Str::slug($insights->title);
                                         $url = crreUrl($insights);
-                                        $date = $insights->published_date ?: $insights->created_at;
-                                        // permissions
-                                        $user = Auth::guard('crreAdmin')->user();
-                                        $author = $user->author;
-                                        $canManage = in_array($user->admin_role, ['admin', 'manager']);
-                                        $isOwnArticle =
-                                            $user->admin_role === 'author' &&
-                                            $author->author_id == $insights->author_id;
-                                        $canEditDelete = $canManage || $isOwnArticle;
+
+                                        $publishedDate = $insights->published_date ?: $insights->created_at;
+
+                                        $canEditDelete =
+                                            $canManage || ($isAuthor && $author->author_id == $insights->author_id);
                                     @endphp
                                     <tr class="gradeX">
                                         <td>{{ $insights->news_id }}</td>
                                         <td>{{ $insights->title }}</td>
-                                        <td>{{ empty($insights->insight_type) ? 'No Content Type' : $insights->insight_type }}
-                                            / {{ '(' . $insights->views . ')' }}
-                                        </td>
+                                        <td>{{ $insights->insight_type ?? 'No Type' }} ({{ $insights->views }})</td>
                                         {{-- <td>{{ $insights->views }}</td> --}}
                                         <td>{{ $insights->author->first()->title ?? '' }}</td>
                                         <td>{{ date('d-m-Y', strtotime($insights->created_at)) }}</td>
-                                        <td>{{ date('d-m-Y', strtotime($date)) }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($publishedDate)) }}</td>
                                         <td><a href="{{ $url }}" target="_blank" class="btn btn-secondary">
                                                 <i class="fa fa-external-link-alt"></i></a></td>
                                         <td>
@@ -331,36 +335,30 @@
                                                 <div class="labelwrap">
                                                     @if ($canEditDelete)
                                                         <label>
-                                                            <input type="radio" name="status_{{ $insights->news_id }}"
-                                                                id="{{ $insights->news_id }}" value="1"
-                                                                class="activestate"
-                                                                {{ $insights->status == 1 ? 'checked' : '' }}> Public
+                                                            <input type="radio" class="activestate"
+                                                                data-id="{{ $insights->news_id }}"
+                                                                name="status_{{ $insights->news_id }}" value="1"
+                                                                {{ $insights->status == 1 ? 'checked' : '' }}>
+                                                            Public
                                                         </label>
+
                                                         <label>
-                                                            <input type="radio" name="status_{{ $insights->news_id }}"
-                                                                id="{{ $insights->news_id }}" value="0"
-                                                                class="activestate"
-                                                                {{ $insights->status == 0 ? 'checked' : '' }}> Draft
+                                                            <input type="radio" class="activestate"
+                                                                data-id="{{ $insights->news_id }}"
+                                                                name="status_{{ $insights->news_id }}" value="0"
+                                                                {{ $insights->status == 0 ? 'checked' : '' }}>
+                                                            Draft
                                                         </label>
+
                                                         <label>
-                                                            <input type="radio" name="status_{{ $insights->news_id }}"
-                                                                id="{{ $insights->news_id }}" value="2"
-                                                                class="activestate"
-                                                                {{ $insights->status == 2 ? 'checked' : '' }}> Private
+                                                            <input type="radio" class="activestate"
+                                                                data-id="{{ $insights->news_id }}"
+                                                                name="status_{{ $insights->news_id }}" value="2"
+                                                                {{ $insights->status == 2 ? 'checked' : '' }}>
+                                                            Private
                                                         </label>
                                                     @else
-                                                        <label>
-                                                            <input type="radio" disabled
-                                                                {{ $insights->status == 1 ? 'checked' : '' }}> Public
-                                                        </label>
-                                                        <label>
-                                                            <input type="radio" disabled
-                                                                {{ $insights->status == 0 ? 'checked' : '' }}> Draft
-                                                        </label>
-                                                        <label>
-                                                            <input type="radio" disabled
-                                                                {{ $insights->status == 2 ? 'checked' : '' }}> Private
-                                                        </label>
+                                                        <span class="text-muted">No Access</span>
                                                     @endif
                                                 </div>
                                             </center>
@@ -369,16 +367,12 @@
                                             <center>
                                                 @if ($canEditDelete)
                                                     <a href="{{ route('crreAdmin.content.edit', ['lang' => $lang, 'id' => $insights->news_id]) }}"
-                                                        class="btn btn-warning" style="border-radius: 4px"
-                                                        title="Edit Article">
+                                                        class="btn btn-warning">
                                                         <i class="fa fa-edit"></i>
                                                     </a>
                                                 @else
-                                                    <button class="btn btn-warning"
-                                                        style="border-radius: 4px;cursor:not-allowed;" disabled
-                                                        title="Not Allowed">
-                                                        <i class="fa fa-edit text-muted"></i>
-                                                    </button>
+                                                    <button class="btn btn-warning" disabled><i
+                                                            class="fa fa-edit text-muted"></i></button>
                                                 @endif
                                             </center>
                                         </td>
@@ -386,16 +380,12 @@
                                             <center>
                                                 @if ($canEditDelete)
                                                     <button class="btn btn-danger deleteInsight"
-                                                        style="border-radius: 4px" data-value="{{ $insights->news_id }}"
-                                                        data-type="{{ $insights->insight_type }}" title="Delete Article">
+                                                        data-value="{{ $insights->news_id }}" title="Delete Article">
                                                         <i class="fa fa-trash-alt"></i>
                                                     </button>
                                                 @else
-                                                    <button class="btn btn-danger"
-                                                        style="border-radius: 4px;cursor:not-allowed;" disabled
-                                                        title="Not Allowed">
+                                                    <button class="btn btn-danger" disabled>
                                                         <i class="fa fa-trash-alt text-muted"></i>
-
                                                     </button>
                                                 @endif
                                             </center>
@@ -420,10 +410,12 @@
     @push('scripts')
         <script>
             $('.activestate').click(function() {
+
                 var status = this.value;
-                var id = this.id;
+                var id = $(this).data('id'); // FIXED
                 var lang = '{{ $lang }}';
                 let inStatus = '';
+
                 Swal.fire({
                     title: "Are you sure ?",
                     text: "Do you want to change the status?",
@@ -434,45 +426,49 @@
                     confirmButtonText: "Yes, change it!"
                 }).then((result) => {
                     if (result.isConfirmed) {
+
                         $.ajax({
                             type: "POST",
                             url: "{{ route('crreAdmin.content.status', ['lang' => $lang]) }}",
                             data: {
-                                "id": id,
-                                "status": status,
-                                "_token": "{{ csrf_token() }}"
+                                id: id,
+                                status: status,
+                                _token: "{{ csrf_token() }}"
                             },
                             success: function(response) {
+
                                 switch (response.status) {
-                                    case '1':
+                                    case 1:
                                         inStatus = 'Public';
                                         break;
-                                    case '0':
+                                    case 0:
                                         inStatus = 'Draft';
                                         break;
-                                    case '2':
+                                    case 2:
                                         inStatus = 'Private';
                                         break;
                                     default:
                                         inStatus = 'Unknown';
                                 }
+
                                 Swal.fire({
-                                    title: "Updated!",
                                     toast: true,
                                     position: 'top-end',
-                                    title: `Content status changed to ` + inStatus + `!`,
+                                    text: `Content status changed to ${inStatus}!`,
                                     icon: "success",
                                     timer: 2000,
-                                    showConfirmButton: false,
+                                    showConfirmButton: false
                                 });
                             },
-                            error: function() {
-                                Swal.fire("Error!", "Something went wrong.", "error");
+                            error: function(xhr) {
+                                Swal.fire("Error!", xhr.responseJSON?.message ||
+                                    "Something went wrong.", "error");
                             }
                         });
                     }
                 });
             });
+
 
             $('.deleteInsight').click(function() {
                 var insightId = $(this).data('value');

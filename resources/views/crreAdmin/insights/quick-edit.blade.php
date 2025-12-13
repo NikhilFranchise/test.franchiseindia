@@ -298,7 +298,19 @@
             }
         </style>
     @endpush
+
     @php
+        $language = $lang === 'en' ? 'English' : 'Hindi';
+        // User & Role Helpers
+        $user = Auth::guard('crreAdmin')->user();
+        $author = $user->author;
+        $isSuperAdmin = $user->admin_role === 'superadmin';
+        $isAdmin = $user->admin_role === 'admin';
+        $isManager = $user->admin_role === 'manager';
+        $isAuthor = $user->admin_role === 'author';
+        // Permissions
+        $canManage = $isSuperAdmin || $isAdmin || $isManager;
+        $canViewExport = $canManage;
         $language = $lang === 'en' ? 'English' : 'Hindi';
     @endphp
     <!--breadcrumbs-->
@@ -446,21 +458,19 @@
 
                 <div class="widget-box">
                     <div class="widget-title"> <span class="icon"><i class="fa fa-newspaper"></i></span>
-                        @if (request()->search || request()->type || request()->category)
-                            <h5>Displaying {{ $totalRecords }} records for the search term
-                                '<strong>
+                        <h5>
+                            @if (request()->search || request()->type || request()->category)
+                                Displaying {{ $totalRecords }} records for the search term
+                                <strong>
                                     {{ request()->search ? 'Search: ' . request()->search : '' }}
                                     {{ request()->type ? ' | Type: ' . request()->type : '' }}
                                     {{ $categoryName ? ' | Category: ' . $categoryName : '' }}
-                                </strong>'</h5>
-                        @else
-                            <h5>Showing a total of {{ $totalRecords }} records.</h5>
-                        @endif
-                        @php
-                            $user = Auth::guard('crreAdmin')->user();
-                            $author = $user->author;
-                            $canManage = in_array($user->admin_role, ['admin', 'manager']);
-                        @endphp
+                                </strong>
+                            @else
+                                Showing a total of {{ $totalRecords }} records.
+                            @endif
+                        </h5>
+
                         @if ($canManage)
                             <div style="padding-top: 3px; float: right; margin-right: 3px;">
                                 <a href="{{ request()->fullUrlWithQuery(['export' => 1]) }}" class="btn btn-secondary"><i
@@ -469,7 +479,8 @@
                             </div>
                         @else
                             <div style="padding-top: 3px; float: right; margin-right: 3px;">
-                                <a class="btn btn-secondary" disabled><i class="fa fa-file-export"></i> Export Data</a>
+                                <a class="btn btn-secondary" disabled><i class="fa fa-file-export"></i> Export
+                                    Data</a>
                             </div>
                         @endif
 

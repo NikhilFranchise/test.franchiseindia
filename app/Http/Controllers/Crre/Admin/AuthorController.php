@@ -104,11 +104,19 @@ class AuthorController extends Controller
     public function listAuthor(Request $request)
     {
         $search = $request->input('search');
-        $authorsQuery = CrreAuthors::query()->with('admin')
+        $authorsQuery = CrreAuthors::query()
+            ->with('admin')
+            ->whereHas('admin', function ($query) {
+                $query->whereNot('admin_role', 'superadmin');
+            })
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('title', 'LIKE', "%{$search}%")
-                        ->orWhere('author_id', $search);
+                        ->orWhere('author_id', $search)
+                        ->orWhereHas('admin', function ($adminQ) use ($search) {
+                            $adminQ->where('admin_name', 'LIKE', "%{$search}%")
+                                ->orWhere('admin_email', 'LIKE', "%{$search}%");
+                        });
                 });
             });
 

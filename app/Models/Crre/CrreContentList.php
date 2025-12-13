@@ -9,10 +9,11 @@ use App\Traits\hasEffectiveDate;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CrreContentList extends Model
 {
-    use HasFactory, hasEffectiveDate;
+    use HasFactory, hasEffectiveDate, SoftDeletes;
     protected $table = 'crre_content';
     protected $primaryKey = 'news_id';
     protected $fillable = [

@@ -58,6 +58,30 @@
             }
         </style>
     @endpush
+    @php
+        // Load once for entire file
+        $user = Auth::guard('crreAdmin')->user();
+        $author = $author ?? null;
+
+        // Role permissions
+        $isSuperAdmin = $user->admin_role === 'superadmin';
+        $isAdmin = $user->admin_role === 'admin';
+        $isManager = $user->admin_role === 'manager';
+
+        // Editable admin roles
+        $roleList = ['author', 'editor', 'manager'];
+
+        // Admin can assign admin
+        if ($isAdmin) {
+            $roleList[] = 'admin';
+        }
+
+        // Superadmin can assign everything including superadmin
+        if ($isSuperAdmin) {
+            $roleList[] = 'admin';
+            $roleList[] = 'superadmin';
+        }
+    @endphp
     <!--breadcrumbs-->
     <div id="content-header">
         <div id="breadcrumb"><a href="{{ route('crreAdmin.dashboard') }}" title="Go to Home" class="tip-bottom"><i
@@ -77,7 +101,7 @@
                         enctype="multipart/form-data" class="form-horizontal" onsubmit="return validateform()">
                         @csrf
                         <input type="hidden" name="author_id" value="{{ $author->author_id ?? '' }}">
-                        @if (request()->segment('3') == 'profile')
+                        @if (request()->segment(4) == 'profile')
                             <input type="hidden" name="profile" value="1">
                         @endif
                         <div class="row-fluid">
@@ -115,45 +139,21 @@
                                                     placeholder="Enter Designation">
                                             </div>
                                         </div>
-                                        @php
-                                            $user = Auth::guard('crreAdmin')->user();
-                                            $access = in_array($user->admin_role, ['admin', 'manager']);
-                                        @endphp
-                                        @if ($access)
-                                            <div class="control-group">
-                                                <label class="control-label">Author Role :</label>
-                                                <div class="controls">
-                                                    <select name="role" class="span11">
-                                                        @if ((!empty($author) && $author->admin->admin_role == 'admin') || Auth::guard('admin')->user()->admin_role == 'admin')
-                                                            <option value="admin"
-                                                                {{ old('role', $author->admin->admin_role ?? '') == 'admin' ? 'selected' : '' }}>
-                                                                Admin</option>
-                                                        @endif
-                                                        <option value="author"
-                                                            {{ old('role', $author->admin->admin_role ?? '') == 'author' ? 'selected' : '' }}>
-                                                            Author</option>
-                                                        <option value="editor"
-                                                            {{ old('role', $author->admin->admin_role ?? '') == 'editor' ? 'selected' : '' }}>
-                                                            Editor</option>
-                                                        <option value="manager"
-                                                            {{ old('role', $author->admin->admin_role ?? '') == 'manager' ? 'selected' : '' }}>
-                                                            Manager</option>
 
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        @else
-                                            <div class="control-group">
-                                                <label class="control-label">Author Role :</label>
-                                                <div class="controls">
-                                                    <select name="role" class="span11">
-                                                        <option value="{{ $author->admin->admin_role }}">
-                                                            {{ ucwords($author->admin->admin_role) }}
+                                        <div class="control-group">
+                                            <label class="control-label">Author Role :</label>
+                                            <div class="controls">
+                                                <select name="role" class="span11">
+                                                    @foreach ($roleList as $role)
+                                                        <option value="{{ $role }}"
+                                                            {{ old('role', $author->admin->admin_role ?? '') == $role ? 'selected' : '' }}>
+                                                            {{ ucfirst($role) }}
                                                         </option>
-                                                    </select>
-                                                </div>
+                                                    @endforeach
+                                                </select>
                                             </div>
-                                        @endif
+                                        </div>
+
 
                                         <div class="control-group">
                                             <label class="control-label">Status :</label>
@@ -206,10 +206,6 @@
                                                 @if (!empty($author->image))
                                                     <img src="{{ Config('constants.franAwsS3Url') . ltrim($author->image, '/') }}"
                                                         class="img-polaroid" width="120" style="margin-bottom:10px;">
-                                                @endif
-                                                @if (isset($author))
-                                                    <input type="hidden" name="old_image"
-                                                        value="{{ isset($author) ? Config('constants.franAwsS3Url') . ltrim($author->image, '/') : '' }}" />
                                                 @endif
                                                 <input type="file" name="image" class="span11" accept="image/*">
                                                 <span class="help-inline">Note: * Image size 512x512</span>
@@ -290,7 +286,7 @@
                                                     placeholder="Enter Instagram Profile">
                                             </div>
                                         </div>
-                                        @if (in_array(Auth::guard('admin')->user()->admin_role, ['admin']))
+                                        @if ($isAdmin || $isSuperAdmin)
                                             <div class="control-group">
                                                 <label class="control-label">News Upload Capability :</label>
                                                 <div class="controls">
@@ -343,7 +339,7 @@
 
                         <!-- Submit -->
                         <div class="form-actions">
-                            <a href="{{ route('admin.Dashboard') }}" class="btn btn-secondary"><i
+                            <a href="{{ route('crreAdmin.dashboard') }}" class="btn btn-secondary"><i
                                     class="fa fa-times"></i>
                                 Cancel</a>
                             <button type="submit" class="btn btn-success float-right">
@@ -360,31 +356,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="{{ url('tinymce/js/tinymce/tinymce.min.js') }}"></script>
         <script>
-            function checkImageSize(fileInput) {
-                const minSize = 200 * 1024;
-                const maxSize = 250 * 1024;
-                // Check if file exists and validate its size
-                if (fileInput.files[0] && fileInput.files[0].size > maxSize) {
-                    toastr.error('Image size should be 250 KB or less.');
-                    $('#showImage_msg_size').css('display', 'block');
-                    setTimeout(function() {
-                        $('#showImage_msg_size').css('display', 'none');
-                    }, 5000);
-                    $('#newssubmit').prop('disabled', true); // Disable the submit button
-                } else if (fileInput.files[0] && fileInput.files[0].size < minSize) {
-                    toastr.error('Image size should be at least 200 KB.');
-                    $('#showImage_msg_size').css('display', 'block');
-                    setTimeout(function() {
-                        $('#showImage_msg_size').css('display', 'none');
-                    }, 5000);
-                    $('#newssubmit').prop('disabled', true); // Disable the submit button
-                } else {
-                    // Success: Image size is valid
-                    $('#showImage_msg_size').css('display', 'none');
-                    $('#newssubmit').prop('disabled', false); // Enable the submit button
-                }
-            }
-
             let editor_config = {
                 path_absolute: "/",
                 height: 300,
@@ -449,10 +420,7 @@
                     const designation = $('#designation').val().trim();
                     const company = $('#company').val().trim();
                     const phone_no = $('#phone_no').val().trim();
-                    // const address = $('#address').val().trim();
-                    // const linkedin = $('#linkedin_profile').val().trim();
-                    // const facebook = $('#facebook_profile').val().trim();
-                    // const twitter = $('#twitter_profile').val().trim();
+
                     const description = $('#description').val().trim();
                     const pwd = $('#password').val();
                     const confirmPwd = $('#password_confirmation').val();
@@ -481,11 +449,7 @@
                         $('#phone_no').focus();
                         return false;
                     }
-                    // if (address === '') {
-                    //     toastr.error('Address is required.');
-                    //     $('#address').focus();
-                    //     return false;
-                    // }
+
                     if (description === '') {
                         toastr.error('Description is required.');
                         $('#description').focus();

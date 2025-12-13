@@ -1,5 +1,16 @@
 @php
     use Carbon\Carbon;
+
+    $user = Auth::guard('crreAdmin')->user();
+
+    // Role logic
+    $isSuperAdmin = $user->admin_role === 'superadmin';
+    $isAdmin = $user->admin_role === 'admin';
+    $isManager = $user->admin_role === 'manager';
+
+    // Permissions
+    $canDelete = $isSuperAdmin || ($isAdmin && $user->can_create_author == 1);
+    $colspan = $canDelete ? 3 : 2;
 @endphp
 @extends('crreAdmin.layout.master')
 @section('DAU', 'active open')
@@ -161,12 +172,6 @@
                         <h5>Showing <strong>{{ $totalRecords }}</strong> Total Records</h5>
                     </div>
                     <div class="widget-content nopadding">
-                        @php
-                            $user = Auth::guard('crreAdmin')->user();
-                            $colspan = in_array($user->admin_role, ['admin']) ? 3 : 2;
-                            $canDelete = in_array($user->admin_role, ['admin']);
-                        @endphp
-
                         <table class="table table-bordered data-table" id="authorTable">
                             <thead>
                                 <tr>
@@ -190,41 +195,32 @@
                             </thead>
                             <tbody>
                                 @foreach ($authors as $author)
+                                    @php
+                                        $admin = $author->admin;
+                                        $lastLogin = $admin->last_login_at ?? null;
+                                        $adminActive = $admin->admin_is_active ?? 0;
+                                        $checked = $author->status === 'A' && $adminActive == 1 ? 'checked' : '';
+                                    @endphp
                                     <tr class="gradeX">
                                         <td>{{ $author->author_id }}</td>
-                                        <td>{{ $author->title ?? $author->admin->admin_name }}</td>
-                                        <td>{{ $author->emailid ?? ($author->admin->admin_email ?? '') }}</td>
-                                        <td>{{ ucwords($author->admin->admin_role ?? '') }}</td>
+                                        <td>{{ $author->title ?? $admin->admin_name }}</td>
+                                        <td>{{ $author->emailid ?? ($admin->admin_email ?? '') }}</td>
+                                        <td>{{ ucwords($admin->admin_role ?? '') }}</td>
                                         <td>{{ $author->total_articles ?? 0 }}</td>
                                         <td>
-                                            @if ($author->admin)
-                                                @if (Auth::guard('admin')->check() && Auth::guard('admin')->id() === $author->admin->admin_id)
-                                                    <span class="btn btn-secondary">User Logged In</span>
-                                                @elseif ($author->admin->last_login_at)
-                                                    @php
-                                                        $lastLogin = Carbon::parse($author->admin->last_login_at);
-                                                    @endphp
-                                                    <span title="{{ $lastLogin->format('d M Y, h:i A') }}">
-                                                        {{ $lastLogin->diffForHumans() }}
-                                                    </span>
-                                                @else
-                                                    <span class="text-muted">Never Logged In</span>
-                                                @endif
-                                            @else
+                                            @if (!$admin)
                                                 <span class="text-muted">No Admin Account</span>
+                                            @elseif(auth()->id() === $admin->admin_id)
+                                                <span class="btn btn-secondary">User Logged In</span>
+                                            @elseif($lastLogin)
+                                                <span title="{{ Carbon::parse($lastLogin)->format('d M Y, h:i A') }}">
+                                                    {{ Carbon::parse($lastLogin)->diffForHumans() }}
+                                                </span>
+                                            @else
+                                                <span class="text-muted">Never Logged In</span>
                                             @endif
                                         </td>
-
-                                        @php
-                                            $admin_status = $author->admin->admin_is_active ?? 0;
-                                            $button = 'success';
-                                            $status = 'active';
-                                            if ($author->status == 'D' && $admin_status == 0) {
-                                                $button = 'danger';
-                                                $status = 'Deactivated';
-                                            }
-                                        @endphp
-                                        <td>
+                                        {{-- <td>
                                             <center>
                                                 <label class="switch">
                                                     @php
@@ -238,12 +234,27 @@
                                                     <span class="slider round"></span>
                                                 </label>
                                             </center>
-                                        </td>
+                                        </td> --}}
+                                        <!-- Status toggle -->
                                         <td>
+                                            <label class="switch">
+                                                <input type="checkbox" class="activestate" value="{{ $author->author_id }}"
+                                                    {{ $checked }}>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td>
+
+                                        {{-- <td>
                                             <center><a href="{{ route('crreAdmin.edit.author', $author->author_id) }}"
                                                     class="btn btn-warning"><i class="fa fa-edit"></i></a></center>
+                                        </td> --}}
+                                        <!-- Edit -->
+                                        <td>
+                                            <a href="{{ route('crreAdmin.edit.author', $author->author_id) }}"
+                                                class="btn btn-warning"><i class="fa fa-edit"></i></a>
                                         </td>
-                                        @if (in_array($user->admin_role, ['admin']) && $user->can_create_author == 1)
+                                        <!-- Delete -->
+                                        @if ($canDelete)
                                             <td>
                                                 <a href="javascript:void(0);" class="btn btn-danger deleteauthor"
                                                     data-id="{{ $author->author_id }}">
@@ -256,167 +267,81 @@
                             </tbody>
                         </table>
                         <div class="custpagin">
-                            {!! $authors->appends(['search' => request()->search])->render('pagination::bootstrap-4') !!}
+                            {!! $authors->appends(['search' => request()->search])->links('pagination::bootstrap-4') !!}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    @push('scripts')
-        @if (session('success'))
-            <script>
-                Swal.fire({
-                    position: 'top-end',
-                    toast: true,
-                    icon: 'success',
-                    title: 'Success!',
-                    text: "{{ session('success') }}",
-                    timer: 3000,
-                    showConfirmButton: false,
-                    timerProgressBar: true,
-                    background: '#f0f9f4',
-                    color: '#155724',
-                    confirmButtonColor: '#28a745'
-                });
-            </script>
-        @endif
-        @if (session('warning'))
-            <script>
-                Swal.fire({
-                    position: 'top-end',
-                    toast: true,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                    background: '#fff3cd',
-                    color: '#856404',
-                    icon: 'warning',
-                    title: 'Warning!',
-                    text: "{{ session('warning') }}",
-                    confirmButtonColor: '#ffc107'
-                });
-            </script>
-        @endif
-        @if (session('error'))
-            <script>
-                Swal.fire({
-                    position: 'top-end',
-                    toast: true,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                    background: '#fff3cd',
-                    color: '#856404',
-                    icon: 'error',
-                    title: 'Oops!',
-                    text: `{{ session('error') }}`,
-                    confirmButtonColor: '#dc3545'
-                });
-            </script>
-        @endif
-        <script>
-            $('.activestate').on('change', function() {
-                const id = $(this).val(); // safer than val()
-                const status = this.checked ? 'A' : 'D';
-                console.log(id);
-                $.ajax({
-                    type: 'POST',
-                    url: "{{ route('crreAdmin.status.author') }}",
-                    data: {
-                        authorId: id,
-                        authorstatus: status,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(data) {
-                        if (data.success) {
-                            Swal.fire({
-                                position: 'top-end',
-                                toast: true,
-                                icon: 'success',
-                                title: `Author status changed to ${data.statusText}.`,
-                                timer: 3000,
-                                showConfirmButton: false,
-                                timerProgressBar: true
-                            });
-                        } else {
-                            Swal.fire({
-                                position: 'top-end',
-                                toast: true,
-                                icon: 'error',
-                                title: 'Error',
-                                text: data.message || 'Unable to update status.',
-                                timer: 3000,
-                                showConfirmButton: false,
-                                timerProgressBar: true
-                            });
-                        }
-                    },
-                    error: function(xhr) {
-                        let res = xhr.responseJSON;
-                        let message = res?.message || 'Unexpected error occurred.';
-                        Swal.fire({
-                            position: 'top-end',
-                            toast: true,
-                            icon: 'error',
-                            title: 'Error',
-                            text: message,
-                            timer: 3000,
-                            showConfirmButton: false,
-                            timerProgressBar: true
-                        });
-                    }
-                });
-            });
-
-
-            var YOUR_MESSAGE_STRING_CONST = "Are you sure to delete this User?";
-
-            $('.deleteauthor').on('click', function(e) {
-                e.preventDefault();
-
-                var authorId = $(this).attr('data-id');
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: YOUR_MESSAGE_STRING_CONST,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: 'Yes, delete it!',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: "POST",
-                            url: "{{ route('crreAdmin.delete.author', '') }}/" + authorId,
-                            data: {
-                                "authorId": authorId,
-                                "_token": "{{ csrf_token() }}"
-                            },
-                            success: function(data) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Deleted!',
-                                    text: 'The author has been deleted.',
-                                    timer: 1500,
-                                    showConfirmButton: false
-                                }).then(() => {
-                                    window.location.reload();
-                                });
-                            },
-                            error: function() {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: 'Something went wrong!',
-                                });
-                            }
-                        });
-                    }
-                });
-            });
-        </script>
-    @endpush
 @endsection
+@push('scripts')
+    @foreach (['success' => 'success', 'warning' => 'warning', 'error' => 'error'] as $type => $icon)
+        @if (session($type))
+            <script>
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: '{{ $icon }}',
+                    title: '{{ ucfirst($type) }}',
+                    text: "{{ session($type) }}",
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            </script>
+        @endif
+    @endforeach
+
+    <script>
+        $('.activestate').on('change', function() {
+            const id = $(this).val();
+            const status = this.checked ? 'A' : 'D';
+
+            $.post("{{ route('crreAdmin.status.author') }}", {
+                authorId: id,
+                authorstatus: status,
+                _token: '{{ csrf_token() }}'
+            }).done(function(data) {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: data.success ? 'success' : 'error',
+                    title: data.success ? `Status: ${data.statusText}` : "Error",
+                    text: data.message || "",
+                    timer: 3000,
+                    showConfirmButton: false
+                });
+            });
+        });
+
+        $('.deleteauthor').on('click', function(e) {
+            e.preventDefault();
+
+            let id = $(this).data('id');
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to delete this author?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#6c757d",
+                confirmButtonText: "Yes, delete",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post("{{ route('crreAdmin.delete.author', '') }}/" + id, {
+                        authorId: id,
+                        _token: "{{ csrf_token() }}"
+                    }).done(() => {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Deleted!",
+                            timer: 1500,
+                            showConfirmButton: false
+                        }).then(() => location.reload());
+                    });
+                }
+            });
+        });
+    </script>
+@endpush

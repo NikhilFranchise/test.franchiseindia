@@ -93,67 +93,67 @@
                         <div class="alert alert-danger">{{ $message }}
                 </div>
                 @enderror --}}
-                </div>
             </div>
-            <div class="control-group">
-                <div class="controls">
-                    <div class="main_input_box password-wrapper">
-                        <span class="add-on bg_ly"><i class="fa fa-lock"></i></span>
-                        <input type="password" class="validate-password" placeholder="Password" name="password"
-                            id="password" required />
-                        <span class="toggle-password" onclick="togglePassword('password', this)">
-                            <i class="fa fa-eye"></i>
-                    </div>
-                    {{-- @error('password')
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <div class="main_input_box password-wrapper">
+                <span class="add-on bg_ly"><i class="fa fa-lock"></i></span>
+                <input type="password" class="validate-password" placeholder="Password" name="password"
+                    id="password" required />
+                <span class="toggle-password" onclick="togglePassword('password', this)">
+                    <i class="fa fa-eye"></i>
+            </div>
+            {{-- @error('password')
                         <div class="alert alert-danger">{{ $message }}
         </div>
         @enderror --}}
-                </div>
-            </div>
-            <div class="form-actions">
-                <span class="pull-left"><a href="{{ route('crreAdmin.reset') }}" class="flip-link btn btn-secondary"
-                        id="forgotLink"style="display:none;">&laquo; Forgot
-                        password?</a></span>
-                <span class="pull-right"><button type="submit" class="flip-link btn btn-success">Login
-                        &raquo;</button></span>
-            </div>
-        </form>
+    </div>
+    </div>
+    <div class="form-actions">
+        <span class="pull-left"><a href="{{ route('crreAdmin.reset') }}" class="flip-link btn btn-secondary"
+                id="forgotLink" style="display:none;">&laquo; Forgot
+                password?</a></span>
+        <span class="pull-right"><button type="submit" class="flip-link btn btn-success">Login
+                &raquo;</button></span>
+    </div>
+    </form>
     </div>
 
     <script src="{{ URL::asset('admin/js/jquery.min.js') }}"></script>
     <script src="{{ URL::asset('admin/js/matrix.login.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: `{!! session('success') !!}`,
-                confirmButtonColor: '#28a745'
-            });
-        </script>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: `{!! session('success') !!}`,
+            confirmButtonColor: '#28a745'
+        });
+    </script>
     @endif
 
     @if (session('warning'))
-        <script>
-            Swal.fire({
-                icon: 'warning',
-                title: 'Warning!',
-                text: `{!! session('warning') !!}`,
-                confirmButtonColor: '#ffc107'
-            });
-        </script>
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Warning!',
+            text: `{!! session('warning') !!}`,
+            confirmButtonColor: '#ffc107'
+        });
+    </script>
     @endif
 
     @if (session('error'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                html: `{!! session('error') !!}`,
-                confirmButtonColor: '#dc3545'
-            });
-        </script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            html: `{!! session('error') !!}`,
+            confirmButtonColor: '#dc3545'
+        });
+    </script>
     @endif
 
     <script>
@@ -203,7 +203,7 @@
                     .then(res => res.json())
                     .then(data => {
 
-                        if (data.role == "admin") {
+                        if (data.role == "admin" || data.role == "superadmin") {
                             forgotLink.style.display = 'inline-block';
                         } else {
                             forgotLink.style.display = 'none';

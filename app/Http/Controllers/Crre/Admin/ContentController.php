@@ -374,12 +374,34 @@ class ContentController extends Controller
 
     public function status(Request $request, $lang)
     {
-        $newsId    = $request->id;
-        $status    = $request->status;
-        $model = ($lang === 'en') ? CrreContentList::class : CrreHindiContentList::class;
-        $model::query()->where('news_id', $newsId)->update(['status' => $status]);
+        $request->validate([
+            'id'     => 'required|integer',
+            'status' => 'required|in:0,1,2',
+        ]);
 
-        return response()->json(['success' => 'Status updated successfully.', 'status' => $status]);
+        $newsId = (int) $request->id;
+        $status = (int) $request->status;
+
+        $model = ($lang === 'en')
+            ? CrreContentList::class
+            : CrreHindiContentList::class;
+
+        $updated = $model::query()
+            ->where('news_id', $newsId)
+            ->update(['status' => $status]);
+
+        if (!$updated) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Record not found or update failed',
+                'newsId' => $newsId
+            ], 400);
+        }
+
+        return response()->json([
+            'success' => true,
+            'status'  => $status
+        ]);
     }
 
     public function ContentRecords(Request $request, $lang)

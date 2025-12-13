@@ -58,8 +58,8 @@ class LoginController extends Controller
             // Create Admin account
             $user = CrreAdminUsers::create([
                 'admin_email'     => $request->email,
-                'admin_name'      => 'Admin',
-                'admin_role'      => 'admin',
+                'admin_name'      => 'SuperAdmin',
+                'admin_role'      => 'superadmin',
                 'admin_is_active' => 1,
                 'can_create_author' => 1,
                 'admin_password'  => Hash::make($request->password),
@@ -103,6 +103,8 @@ class LoginController extends Controller
         if ($user->admin_is_active != 1) {
             return back()->with('warning', 'Your account is not active. Please contact admin.');
         }
+
+
 
         // ----------------------------------------------------------
         // Normal Login Attempt
@@ -157,21 +159,21 @@ class LoginController extends Controller
     }
 
     public function CrreDashboard()
-    { {
-            $months = 6;
-            $startDate = now()->subMonths($months)->startOfMonth();
-            $endDate = now()->endOfMonth();
+    {
+        $months = 6;
+        $startDate = now()->subMonths($months)->startOfMonth();
+        $endDate = now()->endOfMonth();
 
-            // --- Helper: insights count by type per month ---
-            $getMonthlyInsights = function ($model, $months) {
-                $data = [];
-                for ($i = $months; $i >= 0; $i--) {
-                    $start = now()->subMonths($i)->startOfMonth();
-                    $end = now()->subMonths($i)->endOfMonth();
+        // --- Helper: insights count by type per month ---
+        $getMonthlyInsights = function ($model, $months) {
+            $data = [];
+            for ($i = $months; $i >= 0; $i--) {
+                $start = now()->subMonths($i)->startOfMonth();
+                $end = now()->subMonths($i)->endOfMonth();
 
-                    $query = $model::select(
-                        'insight_type',
-                        DB::raw("
+                $query = $model::select(
+                    'insight_type',
+                    DB::raw("
                     CASE 
                         WHEN published_date IS NULL THEN created_at
                         WHEN published_date = created_at THEN created_at
@@ -179,14 +181,14 @@ class LoginController extends Controller
                         ELSE created_at
                     END AS effective_date
                 ")
-                    );
-                    // ->where('status', 1)
-                    $base = $query->toBase();
+                );
+                // ->where('status', 1)
+                $base = $query->toBase();
 
-                    $counts = DB::table(DB::raw("({$base->toSql()}) as subquery"))
-                        ->mergeBindings($base)
-                        ->whereBetween('effective_date', [$start, $end])
-                        ->selectRaw("
+                $counts = DB::table(DB::raw("({$base->toSql()}) as subquery"))
+                    ->mergeBindings($base)
+                    ->whereBetween('effective_date', [$start, $end])
+                    ->selectRaw("
                     COUNT(CASE WHEN insight_type = 'Article' THEN 1 END) AS article_count,
                     COUNT(CASE WHEN insight_type = 'News' THEN 1 END) AS news_count,
                     COUNT(CASE WHEN insight_type = 'Interview' THEN 1 END) AS interview_count,
@@ -194,52 +196,51 @@ class LoginController extends Controller
                     COUNT(CASE WHEN insight_type = 'Event' THEN 1 END) AS event_count,
                     COUNT(CASE WHEN insight_type NOT IN ('Article','News','Interview','Report','Event') THEN 1 END) AS others_count
                 ")
-                        ->first();
+                    ->first();
 
-                    $data[] = [
-                        'month' => now()->subMonths($i)->format('M Y'),
-                        'Article' => $counts->article_count,
-                        'News' => $counts->news_count,
-                        'Interview' => $counts->interview_count,
-                        'Report' => $counts->report_count,
-                        'Event' => $counts->event_count,
-                        'Others' => $counts->others_count,
-                    ];
-                }
-
-                return $data;
-            };
-
-            // Insights data
-            $englishInsights = $getMonthlyInsights(CrreContentList::class, $months);
-            $hindiInsights = $getMonthlyInsights(CrreHindiContentList::class, $months);
-
-            $insightsChart = [];
-            foreach ($englishInsights as $index => $monthData) {
-                $insightsChart[] = [
-                    'month' => $monthData['month'],
-                    'Article' => $monthData['Article'] + $hindiInsights[$index]['Article'],
-                    'News' => $monthData['News'] + $hindiInsights[$index]['News'],
-                    'Interview' => $monthData['Interview'] + $hindiInsights[$index]['Interview'],
-                    'Report' => $monthData['Report'] + $hindiInsights[$index]['Report'],
-                    'Event' => $monthData['Event'] + $hindiInsights[$index]['Event'],
-                    'Others' => $monthData['Others'] + $hindiInsights[$index]['Others'],
+                $data[] = [
+                    'month' => now()->subMonths($i)->format('M Y'),
+                    'Article' => $counts->article_count,
+                    'News' => $counts->news_count,
+                    'Interview' => $counts->interview_count,
+                    'Report' => $counts->report_count,
+                    'Event' => $counts->event_count,
+                    'Others' => $counts->others_count,
                 ];
             }
 
-            // Users per month
-            $usersChart = [];
-            for ($i = $months; $i >= 0; $i--) {
-                $start = now()->subMonths($i)->startOfMonth();
-                $end = now()->subMonths($i)->endOfMonth();
-                $usersChart[] = [
-                    'month' => $start->format('M Y'),
-                    'count' => CrreAuthors::whereBetween('created_at', [$start, $end])->count(),
-                ];
-            }
+            return $data;
+        };
 
-            return view('crreAdmin.admin-dashboard', compact('insightsChart', 'usersChart'));
+        // Insights data
+        $englishInsights = $getMonthlyInsights(CrreContentList::class, $months);
+        $hindiInsights = $getMonthlyInsights(CrreHindiContentList::class, $months);
+
+        $insightsChart = [];
+        foreach ($englishInsights as $index => $monthData) {
+            $insightsChart[] = [
+                'month' => $monthData['month'],
+                'Article' => $monthData['Article'] + $hindiInsights[$index]['Article'],
+                'News' => $monthData['News'] + $hindiInsights[$index]['News'],
+                'Interview' => $monthData['Interview'] + $hindiInsights[$index]['Interview'],
+                'Report' => $monthData['Report'] + $hindiInsights[$index]['Report'],
+                'Event' => $monthData['Event'] + $hindiInsights[$index]['Event'],
+                'Others' => $monthData['Others'] + $hindiInsights[$index]['Others'],
+            ];
         }
+
+        // Users per month
+        $usersChart = [];
+        for ($i = $months; $i >= 0; $i--) {
+            $start = now()->subMonths($i)->startOfMonth();
+            $end = now()->subMonths($i)->endOfMonth();
+            $usersChart[] = [
+                'month' => $start->format('M Y'),
+                'count' => CrreAuthors::whereBetween('created_at', [$start, $end])->count(),
+            ];
+        }
+
+        return view('crreAdmin.admin-dashboard', compact('insightsChart', 'usersChart'));
     }
 
     public function CrreLogout(Request $request)

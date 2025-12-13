@@ -65,6 +65,22 @@
             }
         </style>
     @endpush
+    @php
+        // Load once for entire file
+        $user = Auth::guard('crreAdmin')->user();
+        $author = $author ?? null;
+
+        // Role permissions
+        $isSuperAdmin = $user->admin_role === 'superadmin';
+        $isAdmin = $user->admin_role === 'admin';
+
+        // Editable admin roles
+        $allowedRoles = ['author', 'editor', 'manager'];
+
+        if ($isAdmin || $isSuperAdmin) {
+            $allowedRoles[] = 'admin';
+        }
+    @endphp
     <!--breadcrumbs-->
     <div id="content-header">
         <div id="breadcrumb"><a href="{{ route('crreAdmin.dashboard') }}" title="Go to Home" class="tip-bottom"><i
@@ -151,26 +167,12 @@
                                             <label class="control-label">Author Role :</label>
                                             <div class="controls">
                                                 <select name="role" class="span11">
-                                                    <option value="author"
-                                                        {{ old('role', optional(optional($author)->admin)->admin_role) == 'author' ? 'selected' : '' }}>
-                                                        Author
-                                                    </option>
-                                                    <option value="editor"
-                                                        {{ old('role', optional(optional($author)->admin)->admin_role) == 'editor' ? 'selected' : '' }}>
-                                                        Editor
-                                                    </option>
-                                                    <option value="manager"
-                                                        {{ old('role', optional(optional($author)->admin)->admin_role) == 'manager' ? 'selected' : '' }}>
-                                                        Manager
-                                                    </option>
-                                                    @if (
-                                                        (!empty($author) && optional(optional($author)->admin)->admin_role == 'admin') ||
-                                                            (Auth::guard('crreAdmin')->check() && Auth::guard('crreAdmin')->user()->admin_role == 'admin'))
-                                                        <option value="admin"
-                                                            {{ old('role', optional(optional($author)->admin)->admin_role) == 'admin' ? 'selected' : '' }}>
-                                                            Admin
+                                                    @foreach ($allowedRoles as $role)
+                                                        <option value="{{ $role }}"
+                                                            {{ old('role', optional(optional($author)->admin)->admin_role) == $role ? 'selected' : '' }}>
+                                                            {{ ucfirst($role) }}
                                                         </option>
-                                                    @endif
+                                                    @endforeach
                                                 </select>
                                                 @error('role')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -348,7 +350,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        @if (in_array(Auth::guard('crreAdmin')->user()->admin_role, ['admin']))
+                                        @if ($isAdmin || $isSuperAdmin)
                                             <div class="control-group">
                                                 <label class="control-label">News Upload Capability :</label>
                                                 <div class="controls">
@@ -549,10 +551,6 @@
                     const designation = $('#designation').val().trim();
                     const company = $('#company').val().trim();
                     const phone_no = $('#phone_no').val().trim();
-                    // const address = $('#address').val().trim();
-                    // const linkedin = $('#linkedin_profile').val().trim();
-                    // const facebook = $('#facebook_profile').val().trim();
-                    // const twitter = $('#twitter_profile').val().trim();
                     const description = $('#description').val().trim();
                     const pwd = $('#password').val();
                     const confirmPwd = $('#password_confirmation').val();
@@ -581,11 +579,6 @@
                         $('#phone_no').focus();
                         return false;
                     }
-                    // if (address === '') {
-                    //     toastr.error('Address is required.');
-                    //     $('#address').focus();
-                    //     return false;
-                    // }
                     if (description === '') {
                         toastr.error('Description is required.');
                         $('#description').focus();

@@ -157,11 +157,7 @@
                         @else
                             <h5>Showing a total of {{ $totalRecords }} records.</h5>
                         @endif
-                        @php
-                            $user = Auth::guard('crreAdmin')->user();
-                            $author = $user->author;
-                            $canManage = in_array($user->admin_role, ['admin', 'manager']);
-                        @endphp
+
                     </div>
                     <div class="widget-content nopadding">
                         @if (!empty(session()->get('success')))
