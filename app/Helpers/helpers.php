@@ -32,36 +32,6 @@ if (!function_exists('crreUrl')) {
     }
 }
 
-if (!function_exists('categoryData')) {
-    function categoryData($name, $locale)
-    {
-        $map = [
-            'Education'         => ['Education.png', 'शिक्षा व्यापार'],
-            'Retail'            => ['Retail.png', 'खुदरा व्यापार'],
-            'Food and Beverage' => ['FoodBeverage.png', 'खाद्य और पेय पदार्थ'],
-            'expansion'         => ['Expansion.png', 'व्यापार विस्तार'],
-            'Launch'            => ['StoreLaunch.png', 'नया लॉन्च'],
-            'Startup'           => ['Startup.png', 'व्यापार स्टार्टअप'],
-            'funding'           => ['Funding.png', 'व्यापार में अनुदान'],
-            'expansion plans'   => ['ExpansionPlans.png', 'व्यापार विस्तार योजनाएँ'],
-            'Franchise 100'     => ['Franchise100.png', 'फ्रेंचाइज़ 100'],
-            'investment'        => ['Investment.png', 'व्यापार में निवेश'],
-        ];
-
-        $defaultImage = 'Investment.png';
-
-        $key = $name;
-
-        $image = $map[$key][0] ?? $defaultImage;
-        $hindi = $map[$key][1] ?? $name;
-
-        return [
-            'image' => url("insight-new/assets/images/$image"),
-            'name'  => $locale == 'en' ? ucwords($name) : $hindi,
-        ];
-    }
-}
-
 if (!function_exists('authorUrl')) {
     function authorUrl($author)
     {
@@ -159,4 +129,59 @@ function getPopularArticles($articleIds = [], $limit = 6, $cat = null)
     return $query->orderByEffectiveDate('desc')
         ->limit($limit)
         ->get();
+}
+
+
+// insights helper functions 
+
+if (!function_exists('insightsCategoryUrl')) {
+    function insightsCategoryUrl($cat)
+    {
+        $locale = app()->getLocale();
+
+        return Config('constants.MainDomain')
+            . "/insights/{$locale}/{$cat->slug}";
+    }
+}
+
+if (!function_exists('insightsUrl')) {
+    function insightsUrl($item, $locale = null)
+    {
+        $locale = $locale ?? app()->getLocale();
+        $mainDomain = config('constants.MainDomain');
+
+        return "{$mainDomain}/insights/{$locale}/" .
+            strtolower($item->insight_type) . "/" .
+            "{$item->slug}.{$item->news_id}";
+    }
+}
+
+if (!function_exists('insightsCategoryData')) {
+    function insightsCategoryData($name, $locale)
+    {
+        $map = [
+            'Education'         => ['Education.png', 'शिक्षा व्यापार'],
+            'Retail'            => ['Retail.png', 'खुदरा व्यापार'],
+            'Food and Beverage' => ['FoodBeverage.png', 'खाद्य और पेय पदार्थ'],
+            'expansion'         => ['Expansion.png', 'व्यापार विस्तार'],
+            'Launch'            => ['StoreLaunch.png', 'नया लॉन्च'],
+            'Startup'           => ['Startup.png', 'व्यापार स्टार्टअप'],
+            'funding'           => ['Funding.png', 'व्यापार में अनुदान'],
+            'expansion plans'   => ['ExpansionPlans.png', 'व्यापार विस्तार योजनाएँ'],
+            'Franchise 100'     => ['Franchise100.png', 'फ्रेंचाइज़ 100'],
+            'investment'        => ['Investment.png', 'व्यापार में निवेश'],
+        ];
+
+        $defaultImage = 'Investment.png';
+
+        $key = $name;
+
+        $image = $map[$key][0] ?? $defaultImage;
+        $hindi = $map[$key][1] ?? $name;
+
+        return [
+            'image' => url("insight-new/assets/images/$image"),
+            'name'  => $locale == 'en' ? ucwords($name) : $hindi,
+        ];
+    }
 }

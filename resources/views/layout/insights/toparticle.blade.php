@@ -1,81 +1,94 @@
+@php
+    $locale = App::getLocale();
+@endphp
+
 <div class="headblk">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h1 class="mainhead">
-                    {{ App::getLocale() == 'en' ? 'Opportunities. Growth. Trends. Business' : 'अवसर.विकास.रुझान.व्यवसाय' }}
+                    {{ $locale === 'en' ? 'Opportunities. Growth. Trends. Business' : 'अवसर.विकास.रुझान.व्यवसाय' }}
+                </h1>
             </div>
         </div>
     </div>
 </div>
+
 <div class="topblk">
     <div class="container">
         <div class="row">
-            @foreach ($homeArticle as $insightArticle)
+
+            {{-- ================= MAIN FEATURED ARTICLE ================= --}}
+            @foreach ($homeArticle as $article)
                 @php
-                    $locale = App::getLocale();
-                    $url =
-                        Config('constants.MainDomain') .
-                        '/insights/' .
-                        $locale .
-                        '/' .
-                        strtolower($insightArticle['insight_type']) .
-                        '/' .
-                        $insightArticle['slug'] .
-                        '.' .
-                        $insightArticle['news_id'];
+                    $url = insightsUrl($article, $locale);
+                    $image = insightsImageUrl($article->image, $locale);
                 @endphp
-                <div class="col-xs-12 col-sm-12 col-md-7 topmod1">
+
+                <div class="col-md-7 topmod1">
                     <div class="topimgbl">
-                        <img src="{{ \App\Http\Controllers\InsightsController::createimgurl($insightArticle['image']) }}"
-                            alt="{{ $insightArticle['title'] . ' image' }}" />
+
+                        <img src="{{ $image }}" alt="{{ $article->title }} image">
+
                         <div class="overlay">
-                            @foreach ($insightArticle->category as $cat)
-                                <div class="topcat">{{ $cat->catname }}</div>
+
+                            @foreach ($article->category as $cat)
+                                <div class="topcat">
+                                    <a href="{{ insightsCategoryUrl($cat) }}">{{ $cat->catname }}</a>
+                                </div>
                             @endforeach
 
                             <div class="tophead">
-                                <a href="{{ $url }}">{{ $insightArticle['title'] }}</a>
+                                <a href="{{ $url }}">{{ $article->title }}</a>
                             </div>
-                            <div class="toptxt">{{ $insightArticle->shortDesc }}</div>
+
+                            <div class="toptxt">{{ $article->shortDesc }}</div>
+
                         </div>
                     </div>
                 </div>
             @endforeach
-            <div class="col-xs-12 col-sm-12 col-md-5 topmod2">
-                    <h2 class="subhead">{{ App::getLocale() == 'en' ? 'Top Trending Stories' : 'रुझान वाले प्रमुख समाचार (लेख)' }}</h2>
+
+            {{-- ================= RIGHT SIDE: TOP TRENDING STORIES ================= --}}
+            <div class="col-md-5 topmod2">
+
+                <h2 class="subhead">
+                    {{ $locale === 'en' ? 'Top Trending Stories' : 'रुझान वाले प्रमुख समाचार (लेख)' }}
+                </h2>
+
                 <ul class="filist">
-                    @foreach ($topstories as $topArticles)
+                    @foreach ($topstories as $story)
                         @php
-                            $url2 =
-                                Config('constants.MainDomain') .
-                                '/insights/' .
-                                $locale .
-                                '/' .
-                                strtolower($topArticles['insight_type']) .
-                                '/' .
-                                $topArticles['slug'] .
-                                '.' .
-                                $topArticles['news_id'];
+                            $urlStory = insightsUrl($story, $locale);
+                            $imageStory = insightsImageUrl($story->image, $locale);
                         @endphp
+
                         <li>
                             <div class="imgbl">
-                                <a href="{{ $url2 }}"><img
-                                        src="{{ \App\Http\Controllers\InsightsController::createimgurl($topArticles['image']) }}"
-                                        alt="{{ $topArticles->title . ' image' }}" /></a>
+                                <a href="{{ $urlStory }}">
+                                    <img src="{{ $imageStory }}" alt="{{ $story->title }} image">
+                                </a>
                             </div>
+
                             <div class="conblk">
-                                @foreach ($topArticles->category as $cat)
-                                    <div class="tagl">{{ $cat->catname }}</div>
+
+                                @foreach ($story->category as $cat)
+                                    <div class="tagl">
+                                        <a href="{{ insightsCategoryUrl($cat) }}">{{ $cat->catname }}</a>
+                                    </div>
                                 @endforeach
+
                                 <div class="hname">
-                                    <a href="{{ $url2 }}">{{ $topArticles->title }}</a>
+                                    <a href="{{ $urlStory }}">{{ $story->title }}</a>
                                 </div>
+
                             </div>
                         </li>
                     @endforeach
                 </ul>
+
             </div>
+
         </div>
     </div>
 </div>
