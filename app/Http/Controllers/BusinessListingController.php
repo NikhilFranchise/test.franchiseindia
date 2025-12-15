@@ -37,6 +37,7 @@ class BusinessListingController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
+    
     public function searchBusiness(Request $request)
     {
         $search = $request['query'];
@@ -52,7 +53,7 @@ class BusinessListingController extends Controller
 
     public function listingLocation()
     {
-        // dd('yes');
+        dd('yes');
         // Initialize the variables
         $seoTitle = '';
         $seoDesc = '';
@@ -92,39 +93,101 @@ class BusinessListingController extends Controller
 
         $franData->whereIn('profile_status', [1, 11]);
 
+        // $city = "";
+        // if (!empty(request()->city)) {
+        //     $city = ucwords(str_replace('-', ' ', request()->city));
+
+        //     $stateNames = config('location.StateCity.' . $city);
+        //     // dd($stateNames);
+        //     $loc_id = array_search($stateNames, config('location.stateArr'));
+        //     // dd($loc_id);
+        //     $today = Carbon::today()->toDateString();
+        //     // dd($today);   
+        //     $popup = EventLocPopup::where('location', $loc_id)
+        //         ->where('start_date', '<=', $today)  // start_date <= today
+        //         ->where('end_date', '>=', $today)    // end_date <= today
+        //         ->where('status', 1)
+        //         ->get();
+        //     // dd($popup);
+        //     $cityArr = FranchisorLocState::query()->distinct('franchisor_id')
+        //         ->where('city', $city)
+        //         ->get()
+        //         ->pluck('franchisor_id')
+        //         ->toArray();
+        //     if (count($cityArr) == 0) {
+        //         $cityArr = FranchisorLocState::query()->distinct('franchisor_id')
+        //             ->where('state', $stateNames)
+        //             ->limit(50)
+        //             ->get()
+        //             ->pluck('franchisor_id')
+        //             ->toArray();
+        //     }
+        //     $franData->whereIn('franchisor_id', $cityArr)->get();
+        // }
+        // $orderbyVal = 'membership_weightage';
+        // $franData->orderBy($orderbyVal, 'desc');
+        // dd($franData);
+
         $city = "";
         if (!empty(request()->city)) {
             $city = ucwords(str_replace('-', ' ', request()->city));
 
+            // Map city aliases
+        $cityAlias = [
+            'Bengaluru'        => ['Bengaluru', 'Bangalore Urban District'],
+
+            // Added as requested
+            'Gurugram'         => ['Gurugram', 'Gurgaon'],
+            'Kanpur'           => ['Kanpur', 'Kanpur Nagar'],
+            'Mumbai'           => ['Mumbai', 'Mumbai City'],
+            'Mysuru'           => ['Mysuru', 'Mysore'],
+            'Prayagraj'        => ['Prayagraj', 'Allahabad'],
+            'Visakhapatnam'    => ['Visakhapatnam', 'Vishakhapatnam'],
+            'Thiruvananthpuram' => ['Thiruvananthapuram', 'Thiruvananthpuram'],
+            'Jamshedpur'       => ['Jamshedpur', 'Bokaro'],
+        ];
+
+
+            // If alias exists, use the array; otherwise use the city itself
+            $citySearch = $cityAlias[$city] ?? [$city];
+
             $stateNames = config('location.StateCity.' . $city);
-            // dd($stateNames);
+
             $loc_id = array_search($stateNames, config('location.stateArr'));
-            // dd($loc_id);
             $today = Carbon::today()->toDateString();
-            // dd($today);   
+
             $popup = EventLocPopup::where('location', $loc_id)
-                ->where('start_date', '<=', $today)  // start_date <= today
-                ->where('end_date', '>=', $today)    // end_date <= today
+                ->where('start_date', '<=', $today)
+                ->where('end_date', '>=', $today)
                 ->where('status', 1)
                 ->get();
-            // dd($popup);
+
+            // Get franchisor records matching ANY of the alias names
             $cityArr = FranchisorLocState::query()->distinct('franchisor_id')
-                ->where('city', $city)
-                ->get()
+                ->whereIn('city', $citySearch)
                 ->pluck('franchisor_id')
                 ->toArray();
+
             if (count($cityArr) == 0) {
                 $cityArr = FranchisorLocState::query()->distinct('franchisor_id')
                     ->where('state', $stateNames)
                     ->limit(50)
-                    ->get()
                     ->pluck('franchisor_id')
                     ->toArray();
             }
-            $franData->whereIn('franchisor_id', $cityArr)->get();
+
+            $franData->whereIn('franchisor_id', $cityArr);
         }
-        $orderbyVal = 'membership_weightage';
+         $orderbyVal = 'membership_weightage';
         $franData->orderBy($orderbyVal, 'desc');
+
+//         $franList = $franData->orderBy('membership_weightage', 'desc')->get();
+
+// // 👉 Get only franchisor IDs
+// $franchisorIds = $franList->pluck('franchisor_id')->toArray();
+
+// dd($franchisorIds);
+
 
         if ($orderby == 1) {
             $orderbyVal = 'fran_detail_id';
@@ -223,6 +286,7 @@ class BusinessListingController extends Controller
      */
     public function searchBusinessListing(Request $request)
     {
+        
         $searchTerm = $request->route('searchTerm');
         $categoryIds = $request->route('categoryIds');
         $locationIds = $request->route('locationIds');
@@ -748,7 +812,7 @@ class BusinessListingController extends Controller
      */
     public function getBusinessListing(Request $request)
     {
-        // dd($request);
+        dd($request);
         // Fetch the request parameters
         $catParam      = request()->category_param;
         $mcat      = request()->catUrl;
@@ -1620,6 +1684,7 @@ class BusinessListingController extends Controller
     // optimized function
     public function getBusinessListingnormalization(Request $request)
     {
+        // dd('yes');
         // Fetch the request parameters
         $catParam      = $request->category_param;
         $catUrl      = $request->catUrl;

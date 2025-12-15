@@ -531,16 +531,6 @@ class InsightsController extends Controller
             ->where('slug', $slug)
             ->where('status', 1)
             ->first();
-<<<<<<< HEAD
-         // IDs that should redirect to external blog
-            $redirectIds = [9, 32, 33];
-            if (in_array($category->id, $redirectIds)) {
-                $externalSlug = $category->slug;
-                $externalUrl = "https://www.entrepreneur.com/blog/{$locale}/{$externalSlug}";
-                dd($externalUrl);
-                return redirect()->away($externalUrl);
-            }
-=======
         // IDs that should redirect to external blog
         // $redirectIds = [9, 32, 33];
         // if (in_array($category->id, $redirectIds)) {
@@ -549,7 +539,6 @@ class InsightsController extends Controller
         //     dd($externalUrl);
         //     return redirect()->away($externalUrl);
         // }
->>>>>>> 1a6213681acf16e29da55f497a6683319d5f5ff5
         if (!$category) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
@@ -693,11 +682,7 @@ class InsightsController extends Controller
         } else {
             $trendingArticles = collect();
         }
-<<<<<<< HEAD
-        
-=======
         // dd($trendingArticles);
->>>>>>> 1a6213681acf16e29da55f497a6683319d5f5ff5
         $latestArticles = $newsModel::with(['category', 'Subcategory'])
             ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type', 'created_at', 'published_date')
             ->withEffectiveDate()

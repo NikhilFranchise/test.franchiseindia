@@ -283,10 +283,12 @@ class PaymentController extends Controller
         if ($paymentData->membership_plan > 403) {
 
             if ($paymentData->membership_plan == 404)
-                $code = 'ENT-HYS-PC-CR';
+                // $code = 'ENT-HYS-PC-CR';
+                $code = 'TFW-YS-PC-CR';
 
             if ($paymentData->membership_plan == 405)
-                $code = 'ENT-YS-PC-CR';
+                // $code = 'ENT-YS-PC-CR';
+                $code = 'TFW-YS-PC-CR';
 
             $campaign = $amount . " rs. " . Config('constants.invPlanDetails.' . $paymentData->membership_plan);
 

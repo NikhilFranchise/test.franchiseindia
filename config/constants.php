@@ -716,7 +716,7 @@ return [
 
         "9" => array(
             "36" => "Books, Toys & Gifts",
-            "34" => "Consumer Durables & It",
+            "34" => "Consumer Durables, Telecom & IT",
             "39" => "E-Retail",
             "556" => "Fashion",
             "38" => "Home & Office",

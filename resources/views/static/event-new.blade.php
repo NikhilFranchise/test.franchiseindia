@@ -797,22 +797,27 @@
                 <div class="col-xs-12 col-sm-6 col-md-7 mdfy"><h1 class="evn">Upcoming Events</h1></div>
                 <div class="col-xs-12 col-sm-6 col-md-5 rightp">
                     <a href="{{ Config::get('constants.MainDomain') }}/event-archives">Archives</a>
+
                 </div>
             </div>
         </div>
         <!-- Vikas  -->
+
         <style type="text/css">
             .countdays { font-size:18px; color: #fff; position: absolute; z-index:1;
                 font-weight: 700;
             }
+
+        </style>
+        <style type="text/css">
             .countdays { font-size:14px; line-height:20px;  color: #fff; position: absolute; z-index:1;
                 font-weight: 700; right:5px; top:5px;
                 background: #dc3322;
                 padding:5px; border-radius:4px;
             }
+
         </style>
         @php
-
             $closed = [];
              $currentd = date("Y/m/d");
 

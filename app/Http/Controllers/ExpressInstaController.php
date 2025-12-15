@@ -79,13 +79,16 @@ class ExpressInstaController extends Controller
 
         if ($insert == 1) {
             //Lead Notification to Free Franchisor
-
             if($franData->membership_type != 1){
             $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 30) . ".." : $request->user()->name);
             $this->sendFranNotifications($franData->userDetail->email, $details[1], $franData->userDetail->mobile, $franSmsMsg, 'free');
 
             }
           
+
+            // $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 30) . ".." : $request->user()->name);
+            // $this->sendFranNotifications($franData->userDetail->email, $details[1], $franData->userDetail->mobile, $franSmsMsg, 'free');
+
             //Lead Notification to Free Investor
             $invSmsMsg = sprintf(config('txtlocal.InvFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 30) . ".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40) . ".." : $franData->company_name);
             $this->sendInvNotifications($request->user()->email, $dataInvFree, $request->user()->mobile, $invSmsMsg, 'free');
@@ -97,108 +100,120 @@ class ExpressInstaController extends Controller
      * Function to express interest by free investor
      * @return \Illuminate\Http\JsonResponse|string
      */
+
+
     public function invLead(Request $request)
     {
-        if (!Auth::check()) return "";
-
-        $user = $request->user();
-        $franId = $request->input('franId');
-        $flag = $request->flag ?? null;
+        if (!Auth::check())
+            return "";
 
         $visibility = 0;
         $action = 0;
         $lastApply = 0;
 
-        $check = UserActivity::where('franchisor_id', $franId)
-            ->where('investor_id', $user->profile_str)
+        $check = UserActivity::query()->select('visibility')
+            ->where('franchisor_id', $request->input('franId'))
+            ->where('investor_id', $request->user()->profile_str)
             ->first();
-        $invData = InvestorDetails::where('investor_id', $user->profile_str)->first();
-        $franData = FranchisorBusinessDetail::with('userDetail')
-            ->select('franchisor_business_details.*', 'user_accounts.name', 'user_accounts.email', 'user_accounts.mobile')
+        // dd($check);
+        $invData  = InvestorDetails::query()->where('investor_id', $request->user()->profile_str)->first();
+        $franData = FranchisorBusinessDetail::query()->select('franchisor_business_details.*', 'user_accounts.name', 'user_accounts.email', 'user_accounts.mobile')
+            ->where('franchisor_id', $request->input('franId'))
             ->leftJoin('user_accounts', 'franchisor_business_details.franchisor_id', '=', 'user_accounts.profile_str')
-            ->where('franchisor_id', $franId)
             ->first();
-        if ($check?->visibility == 1) {
-            return response()->json(['success' => true, 'user' => $franData]);
-        }
+        // dd($franData->membership_type);
+        if (!empty($check) && $check->visibility == 1)
+            return json_encode(array('success' => true, 'user' => $franData));
 
-        $insert = empty($check);
+        $insert = (empty($check) ? 1 : 0);
+        $update = (empty($check) ? 0 : 1);
 
-        $update = !$insert;
-
-        // Handle different membership types
-        $franIsFree = $franData->membership_type != 1;
-
-        $invIsPaid = $user->membership_type == 1 && $user->membership_plan != 401;
-        $invHasLimitedPlan = $user->membership_type == 1 && $user->membership_plan != 405;
-
-        if ($franIsFree && !$invIsPaid) {
+        //express interest with condition of free investor and free franchisor
+        if ($franData->membership_type != 1 && $request->user()->membership_type != 1)
             $action = 1;
-        }
 
-        if ($invHasLimitedPlan) {
-            if (in_array($flag, ['confirm', 'expint'])) {
+        //express interest with condition of paid investor and free franchisor
+        if ($request->user()->membership_type == 1 && $request->user()->membership_plan != 405 || $request->user()->reg_source == "DelhiExpoPaid") {
+
+            //check for the confirmation of cutting the credit
+            if (isset($request->flag) && ($request->flag == 'confirm' || $request->flag == 'expint'))
                 return $invData->credit_limit;
-            }
 
-            InvestorDetails::where('investor_id', $user->profile_str)->decrement('credit_limit');
-            $invData->refresh();
+            //decrement the credits for a paid investor who is not having unlimited plan
+            InvestorDetails::query()->where('investor_id', $request->user()->profile_str)
+                ->decrement('credit_limit');
 
-            if ($invData->credit_limit < 1) {
+            //fetch the new credit limit
+            $reCreditLimit = InvestorDetails::query()->select('credit_limit')
+                ->where('investor_id', $request->user()->profile_str)
+                ->first()->credit_limit;
+
+            //expire the investor membership if his/her credit has been end
+            if ($reCreditLimit < 1) {
                 $lastApply = 1;
-                $membershipUpdate = ['membership_type' => 0, 'membership_plan' => 401];
 
-                InvestorDetails::where('investor_id', $user->profile_str)->update($membershipUpdate);
-                UserAccount::where('profile_str', $user->profile_str)->update($membershipUpdate);
+                //update the investor detail table
+                InvestorDetails::query()->where('investor_id', $request->user()->profile_str)
+                    ->update([
+                        'membership_type' => 0,
+                        'membership_plan' => 401
+                    ]);
+                //update the user account table
+                UserAccount::query()->where('profile_str', $request->user()->profile_str)
+                    ->update([
+                        'membership_type' => 0,
+                        'membership_plan' => 401
+                    ]);
             }
         }
 
-        // dd(request()->cookie('utm_source'));
+        if ($request->user()->membership_type == 1 && $request->user()->membership_plan != 401 || $request->user()->reg_source == 'DelhiExpoPaid') {
+            $visibility = 1;
+        }
+
         $source = 'DOTCOM';  // Default value
 
         if (request()->hasCookie('utm_source')) {
-        $source = request()->cookie('utm_source');
-        // dd("Cookie Found: " . $source);  // Debugging to see the cookie value
+            $source = request()->cookie('utm_source');
+            // dd("Cookie Found: " . $source);  // Debugging to see the cookie value
         }
 
-// dd("Source: " . $source);  // Final source value
+        //update details of existing record
+        if ($update == 1) {
+            UserActivity::query()->where('investor_id', $request->user()->profile_str)
+                ->where('franchisor_id', $request->input('franId'))
+                ->update(['visibility' => $visibility, 'source' => $source]);
+        }
 
-
-            
-            
-//             dd($source);
-
-        if ($invIsPaid) $visibility = 1;
-
-        // Insert or Update UserActivity
-        if ($update) {
-            UserActivity::where('investor_id', $user->profile_str)
-                ->where('franchisor_id', $franId)
-                ->update(['visibility' => $visibility,'source' => $source]);
-        } elseif ($insert) {
-            // dd($insert);
-            // dd($source);
-            UserActivity::create([
-                'investor_id' => $user->profile_str,
-                'franchisor_id' => $franId,
-                'email' => $user->email,
+        //insert a new record if not in the database
+        if ($insert == 1) {
+            UserActivity::query()->insert([
+                'investor_id' => $request->user()->profile_str,
+                'franchisor_id' => $request->input('franId'),
+                'email' => $request->user()->email,
                 'expressInt' => 'Y',
-                'source' => $source,
                 'visibility' => $visibility,
-                'visit_date' => now()->format('Y-m-d'),
-                'franchisor_visibility' => $franData->membership_type == 1 ? 1 : 0,
-                'franchisor_visibility_date' => $franData->membership_type == 1 ? now() : null,
+                'source' => $source,
+                'visit_date' => date('Y-m-d'),
+                'franchisor_visibility' => ($franData->membership_type == 1 ? 1 : 0),
+                'franchisor_visibility_date' => ($franData->membership_type == 1 ? date('Y-m-d H:i:s') : null)
             ]);
         }
 
-        // Prepare data for notifications
-        $invCity = $invData->inv_city ?? "Unknown";
-        $invState = $invData->inv_state ?? "Unknown";
 
-        $details = [
-            ['name' => $user->name, 'email' => $user->email, 'mobile' => $user->mobile, 'state' => $invState, 'city' => $invCity],
-            $franData->ceo_name
+        //check and allot the value of invcity and invstate for the mail
+        $invCity = (empty($invData->inv_city) ? "Unknown" : $invData->inv_city);
+        $invState = (empty($invData->inv_state) ? "Unknown" : $invData->inv_state);
+
+        $details[0] = [
+            'name' => $request->user()->name,
+            'email' => $request->user()->email,
+            'mobile' => $request->user()->mobile,
+            'state' => $invState,
+            'city' => $invCity
         ];
+
+        $details[1] = $franData->ceo_name;
 
         $detailsInv = [
             'companyName' => $franData->company_name,
@@ -209,72 +224,45 @@ class ExpressInstaController extends Controller
             'city' => $franData->city
         ];
 
-        $dataInvFree = [$franData->company_name, $user->name];
+        $dataInvFree = [$franData->company_name, $request->user()->name];
 
-        if ($insert || ($update && $visibility)) {
-            // Franchisor Notifications
-            $nameTrunc = Str::limit($user->name, 40, '..');
-            $mobileTrunc = Str::limit($user->mobile, 15, '..');
+        if ($insert == 1 || ($update == 1 && $visibility == 1)) {
 
-            if ($franIsFree) {
-                $this->sendFranNotifications(
-                    $franData->userDetail->email,
-                    $details[1],
-                    $franData->userDetail->mobile,
-                    sprintf(config('txtlocal.FranFree'), $nameTrunc),
-                    'free'
-                );
+            //Sending notifications to franchisor
+            if ($franData->membership_type != 1) {
+                //Lead Notification to Free Franchisor
+                $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name);
+                $this->sendFranNotifications($franData->userDetail->email, $details[1], $franData->userDetail->mobile, $franSmsMsg, 'free');
             } else {
-                $this->sendFranNotifications(
-                    $franData->userDetail->email,
-                    $details,
-                    $franData->userDetail->mobile,
-                    sprintf(config('txtlocal.FranPaid'), $nameTrunc, $mobileTrunc),
-                    'paid'
-                );
+                //Lead Notification to paid franchisor
+                $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name, strlen($request->user()->mobile) > 15 ? substr($request->user()->mobile, 0, 15) . ".." : $request->user()->mobile);
+                $this->sendFranNotifications($franData->userDetail->email, $details, $franData->userDetail->mobile, $franSmsMsg, 'paid');
             }
 
-            // Investor Notifications
-            if (!$invIsPaid && !$lastApply) {
-                $this->sendInvNotifications(
-                    $user->email,
-                    $dataInvFree,
-                    $user->mobile,
-                    sprintf(config('txtlocal.InvFree'), $nameTrunc, Str::limit($franData->company_name, 40, '..')),
-                    'free'
-                );
+            //Sending notifications to Investor
+            if ($request->user()->membership_type != 1 && $lastApply != 1) {
+                //Lead Notification to Free Investor
+                $invSmsMsg = sprintf(config('txtlocal.InvFree'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40) . ".." : $franData->company_name);
+                $this->sendInvNotifications($request->user()->email, $dataInvFree, $request->user()->mobile, $invSmsMsg, 'free');
             } else {
-                $this->sendInvNotifications(
-                    $user->email,
-                    $detailsInv,
-                    $user->mobile,
-                    sprintf(config('txtlocal.InvPaid'), $nameTrunc, Str::limit($franData->company_name, 40, '..'), $mobileTrunc),
-                    'paid'
-                );
+                //Lead Notifications to a Paid Investor
+                $invSmsMsg = sprintf(config('txtlocal.InvPaid'), strlen($request->user()->name) > 40 ? substr($request->user()->name, 0, 40) . ".." : $request->user()->name, strlen($franData->company_name) > 40 ? substr($franData->company_name, 0, 40) . ".." : $franData->company_name, strlen($franData->userDetail->mobile) > 15 ? substr($franData->userDetail->mobile, 0, 15) . ".." : $franData->userDetail->mobile);
+                $this->sendInvNotifications($request->user()->email, $detailsInv, $request->user()->mobile, $invSmsMsg, 'paid');
             }
         }
 
-        // Return conditions
-        if ($flag === 'expint' && !$invIsPaid) return "showMsg";
-        if ($action || !$invIsPaid) return "upgrade";
-        // Success Response
-        return response()->json([
-            'success' => true,
-            'user' => [
-                'company_name' => $franData->company_name,
-                'ceo_name' => $franData->ceo_name,
-                'telephone' => $franData->telephone ?: 'NA',
-                'fran_address' => $franData->fran_address,
-                'city' => $franData->city,
-                'state' => $franData->state,
-                'pincode' => $franData->pincode,
-                'email' => $franData->userDetail->email,
-                'mobile' => $franData->userDetail->mobile,
-                'website' => $franData->website ?: 'NA',
-            ]
-        ]);
-    }
+        if (isset($request->flag) && $request->flag == 'expint' && $request->user()->membership_type != 1)
+            return "showMsg";
 
+        if ($action == 1 || $request->user()->membership_type != 1)
+            return 'upgrade';
+
+
+        $telephone = ($franData->telephone == '') ? 'NA' : $franData->telephone;
+        $Website = ($franData->website == '') ? 'NA' : $franData->website;
+        $myJson = '{"success":true,"user":{"company_name":"' . $franData->company_name . '","ceo_name":"' . $franData->ceo_name . '","telephone":"' . $telephone . '","fran_address":"' . $franData->fran_address . '","city":"' . $franData->city . '","state":"' . $franData->state . '","pincode":"' . $franData->pincode . '","email":"' . $franData->userDetail->email . '","website":"' . $Website . '"}}';
+        return $myJson;
+    }
 
     /**
      * @param Request $request
@@ -388,7 +376,6 @@ class ExpressInstaController extends Controller
      * Function to express interest by random visitor, multiple select on from listing page
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-
     public function freeInfo(Request $request)
     {
 
@@ -504,21 +491,47 @@ class ExpressInstaController extends Controller
 
                 if ($countOld == 0) {
 
-                    if ($franchisorDetail->membership_type != 0 || (!empty($regionalFranData) && $regionalFranData->membership_type == 1)) {
-                        //sms sending
-                        $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name, strlen($phone) > 40 ? substr($phone, 0, 15) . ".." : $phone);
+                                // Determine if franchisor is paid
+                        $isFranchisorPaid = ($franchisorDetail->membership_type != 0);
 
-                        //Sending Paid Franchisor Notifications
-                        $this->sendFranNotifications($userDetail->email, $details, $userDetail->mobile, $franSmsMsg, 'paid');
-                    }
+                        // Determine if regional franchisor is paid
+                        $isRegionalPaid = (!empty($regionalFranData) && $regionalFranData->membership_type == 1);
 
-                    if ($franchisorDetail->membership_type == 0 || (empty($regionalFranData) || $regionalFranData->membership_type != 1)) {
-                        //sms text to be send for free franchisor sending
-                        $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
+                        // FINAL: A franchisor is considered PAID if either themselves OR their regional franchisor is paid
+                        $isPaid = $isFranchisorPaid || $isRegionalPaid;
 
-                        //Sending Free Franchisor Notifications
-                        $this->sendFranNotifications($userDetail->email, $details[1], $userDetail->mobile, $franSmsMsg, 'free');
-                    }
+                        // ---- SEND PAID NOTIFICATION ----
+                        if ($isPaid) {
+                            $franSmsMsg = sprintf(
+                                config('txtlocal.FranPaid'),
+                                strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name,
+                                strlen($phone) > 15 ? substr($phone, 0, 15) . ".." : $phone
+                            );
+
+                            $this->sendFranNotifications(
+                                $userDetail->email,
+                                $details,
+                                $userDetail->mobile,
+                                $franSmsMsg,
+                                'paid'
+                            );
+                        } 
+                        // ---- SEND FREE NOTIFICATION ----
+                        else {
+                            $franSmsMsg = sprintf(
+                                config('txtlocal.FranFree'),
+                                strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name
+                            );
+
+                            $this->sendFranNotifications(
+                                $userDetail->email,
+                                $details[1],
+                                $userDetail->mobile,
+                                $franSmsMsg,
+                                'free'
+                            );
+                        }
+
                 }
                 //msg to be displayed
                 $success .= $franchisorDetail->company_name . ", ";
@@ -564,6 +577,7 @@ class ExpressInstaController extends Controller
 
         return view('thanks/brandcontact', compact('result'));
     }
+
 
     /**
      * @param Request $request
@@ -638,6 +652,7 @@ class ExpressInstaController extends Controller
                 ->where('profile_type', 1)
                 ->first();
             // dd($userDetail);
+            $regionalFranData = FranchiseRegional::query()->where('fihl_id', $franId)->where('status', 1)->first();
             $resource = 'DOTCOM'; // Default
 
             // Priority 1: utm_source cookie
@@ -658,8 +673,6 @@ class ExpressInstaController extends Controller
                 $resource = 'leadPopup';
             }
 
-
-            // dd($resource);
 
             $source_ref = "";
             // if (!empty(Cookie::get('campaignSource')))
@@ -746,21 +759,51 @@ class ExpressInstaController extends Controller
 
             $details[1] = $franchisorDetail->ceo_name;
 
-            if ($franchisorDetail->membership_type != 0 || (!empty($regionalFranData) && $regionalFranData->membership_type == 1)) {
-                //Sms message
-                $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name, strlen($phone) > 15 ? substr($phone, 0, 15) . ".." : $phone);
+            // if ($franchisorDetail->membership_type != 0 || (!empty($regionalFranData) && $regionalFranData->membership_type == 1)) {
+            //     //Sms message
+            //     $franSmsMsg = sprintf(config('txtlocal.FranPaid'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name, strlen($phone) > 15 ? substr($phone, 0, 15) . ".." : $phone);
 
-                //Sending Paid Franchisor Notifications
-                // $this->sendFranNotifications($userDetail?->email, $details, $userDetail->mobile, $franSmsMsg, 'paid');
-            }
+            //     //Sending Paid Franchisor Notifications
+            //     $this->sendFranNotifications($userDetail->email, $details, $userDetail->mobile, $franSmsMsg, 'paid');
+            // }
 
-            if ($franchisorDetail->membership_type == 0 || (empty($regionalFranData) || $regionalFranData->membership_type != 1)) {
-                //sms sending
-                $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
+            // if ($franchisorDetail->membership_type == 0 || (empty($regionalFranData) || $regionalFranData->membership_type != 1)) {
+            //     //sms sending
+            //     $franSmsMsg = sprintf(config('txtlocal.FranFree'), strlen($name) > 40 ? substr($name, 0, 40) . ".." : $name);
 
-                //Sending Free Franchisor Notifications
-                // $this->sendFranNotifications($userDetail?->email, $details[1], $userDetail?->mobile, $franSmsMsg, 'free');
-            }
+            //     //Sending Free Franchisor Notifications
+            //     $this->sendFranNotifications($userDetail->email, $details[1], $userDetail->mobile, $franSmsMsg, 'free');
+            // }
+           // Determine paid status
+                $isPaid = (
+                    $franchisorDetail->membership_type != 0 ||
+                    (!empty($regionalFranData) && $regionalFranData->membership_type == 1)
+                );
+
+                // --- PAID EMAIL (only for paid users) ---
+                if ($isPaid) {
+
+                    $this->sendFranNotifications(
+                        $userDetail->email,
+                        $details,     // paid template
+                        $userDetail->mobile,
+                        null,
+                        'paid'
+                    );
+
+                }
+                // --- FREE EMAIL (only if NOT paid) ---
+                else {
+
+                    $this->sendFranNotifications(
+                        $userDetail->email,
+                        $details[1],  // free template
+                        $userDetail->mobile,
+                        null,
+                        'free'
+                    );
+                }
+
 
             $detailMail[0] = $franchisorDetail->company_name;
             $detailMail[1] = $request->input('infoname');
@@ -940,4 +983,6 @@ class ExpressInstaController extends Controller
     {
         Storage::append($path, $msg);
     }
+
+    
 }

@@ -510,4 +510,129 @@ public function sidepopup(Request $request)
 
         return response()->json(['message' => 'Form submitted successfully.']);
     }
+
+ public function submitEnquiry(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'name'   => 'required|string|max:255',
+        'mobile' => 'required|digits:10',
+        'email'  => 'required|email',
+        'message'=> 'required|string',
+        'state'  => 'required',
+        'city'   => 'required',
+        'user'   => 'required|in:franchisor,investor',
+        'brand_name' => 'required_if:user,investor'
+    ]);
+
+    // Return JS-friendly validation errors
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 'error',
+            'errors' => $validator->errors()
+        ], 422);
+    }
+
+    $user = $request->user;
+    $table = ($user == 'franchisor') ? AskFranchisor::query() : AskInvestor::query();
+
+    $insertData = [
+        'name'     => $request->name,
+        'email'    => $request->email,
+        'mobile'   => $request->mobile,
+        'details'  => $request->message,
+        'city'     => $request->city,
+        'state'    => $request->state,
+        'ip'       => $request->ip(),
+        'country'  => 'India'
+    ];
+
+    if ($user == 'investor') {
+        $insertData['brand_name'] = $request->brand_name;
+    }
+
+    $inserted = $table->insert($insertData);
+
+    if (!$inserted) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Database insert failed.'
+        ], 500);
+    }
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Your enquiry has been submitted!',
+        'redirect' => url('thanks-advice-form')
+    ]);
+}
+
+ 
+public function submitEnquiry2(Request $request)
+{
+    // Validate form fields
+    $request->validate([
+        'name'   => 'required|string|max:255',
+        'mobile' => 'required|digits:10',
+        'email'  => 'required|email',
+        'message'=> 'required|string',
+        'state'  => 'required',
+        'city'   => 'required',
+        'brand_name' => 'required',
+        'user'   => 'required|in:franchisor,investor',
+    ]);
+
+    // Read common fields
+    $user       = $request->user; // franchisor OR investor
+    $name       = $request->name;
+    $email      = $request->email;
+    $mobile     = $request->mobile;
+    $city       = $request->city;
+    $state      = $request->state;
+    $details    = $request->message;
+    $brand_name = $request->brand_name;
+    $ip         = $request->ip();
+   
+    
+    // Choose table dynamically
+    $table = ($user == 'franchisor') ? AskFranchisor::query() : AskInvestor::query();
+
+    // Insert data
+    $insertData = [
+        'name'       => $name,
+        'city'       => $city,
+        'state'      => $state,
+        'email'      => $email,
+        'mobile'     => $mobile,
+        'details'    => $details,
+        'brand_name'    => $brand_name,
+        'ip'         => $ip,
+        'country'    => "India",
+        
+    ];
+
+    // Extra field only for Investor (tab 2)
+    if ($user == 'investor') {
+        $insertData['brand_name'] = $brand_name;
+    }
+
+    // Insert into database
+    $saved = $table->insert($insertData);
+    
+    // dd('saved?', $saved, $insertData);
+
+
+    if (!$saved) {
+        return response()->json("Error: Could not save data", 500);
+    }
+
+  
+    // If JS/AJAX submission
+    if ($request->expectsJson()) {
+        return response()->json("true", 200);
+    }
+
+    // Normal browser submit
+    // return redirect()->back()->with('success', 'Your enquiry has been submitted!');
+    return redirect('thanks-advice-form');
+}
 }

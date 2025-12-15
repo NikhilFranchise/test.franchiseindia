@@ -399,11 +399,15 @@
                                 <div class="logo"><a href="https://www.franchiseindia.com"><img
                                             src="https://www.franchiseindia.com/newhomepage/assets/img/Logo.svg"
                                             alt="Franchise India" height="32" width="200"></a></div>
+                                    <button class="btn popup-btn-head" data-toggle="modal" data-target="#desktop_modal_homepage">
+                                        ENQUIRE NOW
+                                    </button>
                                 <div class="d-flex m-search"><span class="search" id="search">
 
                                         <div class="p-2" data-toggle="modal" data-target="#search-main"><img
                                                 src="https://www.franchiseindia.com/newhomepage/assets/img/Search.svg"
                                                 alt="Search"><span>Search</span></div>
+                                               
 
                                     </span><span class="login-text-right text-right d-main"><span>
                                             @if (Auth::check())

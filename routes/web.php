@@ -204,6 +204,11 @@ Route::get('cy_mails/unsubscribeme/',        [MailerController::class, 'unsub'])
 Route::get('all-insta-responce-csv',                [FranchisorController::class, 'allInstaResponse']); // Insta Responces interest csv copy
 Route::get('all-interests-csv',                     [FranchisorController::class, 'allInterestToCsv']);
 // post and get routes
+
+Route::post('/submit-enquiry', [AdviceController::class, 'submitEnquiry'])->name('submit.enquiry');
+Route::post('/submit-enquiry2', [AdviceController::class, 'submitEnquiry2'])->name('submit.enquiry2');
+
+
 Route::post('multipleInvFreeinfo',            [ExpressInstaController::class, 'expressInterestMultiple']); //reg inv multiple
 Route::post('newslettersignup', [NewsLetterController::class, 'newsletter']);
 Route::post('subscribenews', [NewsLetterController::class, 'subscriptionFormsubmit']);
@@ -312,6 +317,7 @@ Route::group(['prefix' => 'investor'], function () {
         Route::post('feedback', [FeedbackController::class, 'feedback']);
     });
 });
+
 // Investor payment route
 Route::post('invpaymentsubmit', [InvPaymentController::class, 'paymentHdfcPayuPg']);
 Route::post('invfailed', [InvPaymentController::class, 'paymentFailure']);
@@ -320,6 +326,7 @@ Route::post('invcancelled', [InvPaymentController::class, 'paymentFailure']);
 Route::get('franchisorregistration', function () {
     return redirect('franchisor/registration/step/1');
 });
+
 Route::get('franchisor/registration/step/{step}', [FranchisorController::class, 'viewFranchisorRegistrationForm']);
 Route::post('franchisor/registration/step/2', [FranchisorController::class, 'firstStepSubmit']);
 Route::post('franchisor/registration/step/3', [FranchisorController::class, 'secondStepSubmit']);

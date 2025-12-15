@@ -14,6 +14,7 @@
         @include('newHomepage.mobile.ffc')
         {{-- @include('newHomepage.mobile.franchise_insights_news') --}}
         @include('newHomepage.mobile.testimonials')
+        @include('newHomepage.mobile.mobile_popup')
     </main>
     @include('newHomepage.mobile.sidemenu-mobile')
     <div class="overlay"></div>
@@ -37,6 +38,7 @@
         @include('newHomepage.ffc')
         @include('newHomepage.f_insights_news')
         @include('newHomepage.testimonials')
+        @include('newHomepage.desktop_popup')
         @include('newHomepage.loginmodal')
         {{--  @include('newHomepage.popupfranchiseindiamumbai')  --}}
     </main>

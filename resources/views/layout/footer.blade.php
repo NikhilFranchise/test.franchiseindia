@@ -495,7 +495,7 @@
                 <div class="brows-by-location">
                     <ul class="fihl-loaction-browse">
                         <li> <a href="https://www.franchiseindia.com/location/agra">Agra</a></li>
-                        <li> <a href="https://www.franchiseindia.com/location/ahemdabad">Ahemdabad</a></li>
+                        <li> <a href="https://www.franchiseindia.com/location/ahmedabad">Ahmedabad</a></li>
                         <li> <a href="https://www.franchiseindia.com/location/ajmer">Ajmer</a></li>
                         <li> <a href="https://www.franchiseindia.com/location/amrawati">Amrawati</a></li>
                         <li> <a href="https://www.franchiseindia.com/location/amritsar">Amritsar</a></li>

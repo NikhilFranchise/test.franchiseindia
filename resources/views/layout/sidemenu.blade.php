@@ -312,8 +312,8 @@
         <li><a target="_blank" href="https://www.francorp.in/" rel="nofollow">francorp.in</a></li>
         <li><a target="_blank" href="https://www.franglobal.com/"
                rel="nofollow">franglobal.com</a></li>
-        <li><a target="_blank"
-               href="http://www.franchiseindiaventures.com/" rel="nofollow">franchiseindiaventures.com</a></li>
+        <!-- <li><a target="_blank"
+               href="http://www.franchiseindiaventures.com/" rel="nofollow">franchiseindiaventures.com</a></li> -->
         <li><a target="_blank" href="https://www.gauravmarya.com/"
                rel="nofollow">gauravmarya.com</a></li>
                 
@@ -339,7 +339,7 @@
                 &amp; Books</a>
         </li>
         <li><a href="https://www.franchiseindia.com/event/" target="_blank">Event</a></li>
-        {{-- <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a></li> --}}
+        <!-- <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a></li>  -->
     </ul>
     <ul class="list-unstyled components">
         <li><a href="https://www.franchiseindia.com/investor/create"

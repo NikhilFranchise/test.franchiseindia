@@ -70,7 +70,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-ask-experts">
-                                <h4>{{ Request::segment(1) == 'hi' ? 'हमारे विशेषज्ञों से पूछें' : 'Ask our Experts' }}
+                                <h4>{{ Request::segment(1) == 'hi' ? 'हमारे विशेषज्ञों से पूछें' : 'Ask our Expertsjhj' }}
                                 </h4>
                                 <form id="homepage" name="homepage" method="post">
                                     @csrf

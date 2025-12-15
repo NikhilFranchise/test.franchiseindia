@@ -56,6 +56,7 @@ else{
     $h1 = 'Business opportunities in '.$catName ;
 }
 
+// @dd($h1);
 
 if (strpos($seoTitle, "- Franchise India") !== false){
 $_h1 = explode('- Franchise India',$seoTitle);
