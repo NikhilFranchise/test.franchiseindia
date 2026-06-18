@@ -114,9 +114,9 @@
                                             <span class="form-group" id="otpblk1"
                                                 style="display:none; color:red;"></span>
                                         </div>
-                                        {{-- <div class="form-group" id="otpblk1" style="display:none; color:red;">
+                                        <!-- <div class="form-group" id="otpblk1" style="display:none; color:red;">
                                             OTP mismatch..!
-                                        </div> --}}
+                                        </div> -->
                                         <div class="form-group">
                                             <select class="form-control" id="state" name="infostate"
                                                 onchange="getcityinfoinsta(this.value)">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\UserAccount;
 use App\Models\UserActivity;
 use App\Models\InvestorDetails;
@@ -139,7 +140,7 @@ class FeedbackController extends Controller
 
         $company = FranchisorBusinessDetail::query()->select('company_name')->where('franchisor_id', $franchisorId)->first()->company_name;
         $data = "<table><tr><td>FranchisorId</td><td>&nbsp;:&nbsp;</td><td>" . $franchisorId . "</td></tr><tr><td>Company Name</td><td>&nbsp;:&nbsp;</td><td>" . $company . "</td></tr><tr><td>Experience with FranchiseIndia.com</td><td>&nbsp;:&nbsp;</td><td>" . $request->expRating . "</td></tr><tr><td>Satisfaction level for the quantity of leads</td><td>&nbsp;:&nbsp;</td><td>" . $request->leadQuantity . "</td></tr><tr><td>Satisfaction level for the quality of leads</td><td>&nbsp;:&nbsp;</td><td>" . $request->leadQuality . "</td></tr><tr><td>Number of prospects received from the website</td><td>&nbsp;:&nbsp;</td><td>" . Config('constants.NoOfProspects.' . $request->noOfProspects) . "</td></tr><tr><td>Happiness were you with franchise India's service</td><td>&nbsp;:&nbsp;</td><td>" . $request->happiness . "</td></tr><tr><td>Feedback For Month</td><td>&nbsp;:&nbsp;</td><td>" . $request->feedbackMonth . "</td></tr><tr><td>Comment</td><td>&nbsp;:&nbsp;</td><td>" . $request->feedbackComment . "</td></tr></table>";
-        Mail::to(['service@franchiseindia.net'])->send(new RawMail($data, array('subject' => 'Paid Franchisor Feedback', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
+        Mail::getFacadeRoot()->to(['service@franchiseindia.net'])->send(new RawMail($data, array('subject' => 'Paid Franchisor Feedback', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
         return "success";
     }
 

@@ -35,7 +35,7 @@ class confirmed extends Mailable
         // dd($this->code);
         return $this->from('no-reply@franchiseindia.com')
                     //->bcc('techsupport@franchiseindia.com')
-                    ->subject('Thankyou for registration | Franchise India')
+                    ->subject('Thank you for registration | Franchise India')
                     ->view('mail.confirmation')
                     ->with([
                             'companyName' => $this->company,

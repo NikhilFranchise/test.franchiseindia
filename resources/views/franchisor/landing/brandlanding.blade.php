@@ -1,6 +1,4 @@
 @extends('layout.master')
-{{-- @extends('listing_layout.master') --}}
-
 @section('seoTitle', $seoTitle)
 @if (!empty($seoDesc))
     @section('seoDesc', $seoDesc)
@@ -67,7 +65,7 @@
     @endif
     @include('includes.breadcrumb')
     {{-- @if (count($images) < 4 || $franDetails->membership_type != 1) --}}
-    {{--  @dd($images->count());  --}}
+    {{-- @if (count($images) < 4) --}}
     @if (empty($images) || $images->count() < 4)
         @include('includes.brandlanding.layout-1')
     @elseif($franDetails->page_layout_type == '1')
@@ -394,9 +392,7 @@
     @if (!empty(request()->popup_lead) && !Auth::check())
         @include('includes/brandlanding/lead-popup')
     @endif
-
-    {{-- @include('includes.login-modal'); --}}
-
+    
     <script type="text/javascript">
         //action on submit your interest
         $('#expbtn').on('click', function() {
@@ -412,58 +408,43 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
-                    // Case: Numeric credit count
+
+
                     if ($.isNumeric(data)) {
                         $('#expintbutton').show();
                         $('#creditRemaining').html('You have ' + data +
-                            ' credits remaining. Do you want to use a credit?');
-                    }
-                    // Case: Redirect to payment
-                    else if (data === "showMsg") {
+                            ' credits remaining. Do you want to use the credit');
+                    } else if (data == "showMsg") {
                         window.location.assign('{{ url('/investor/myaccount/payment') }}');
-                    }
-                    // Case: Success - show contact details
-                    else if (data.success) {
+                    } else {
+
                         $('#expbtnloading').hide();
                         $('#expmsg1').show();
-
-                        const user = data.user;
-
-                        $('#ceocontactinsta').html(user.ceo_name || 'N/A');
-                        $('#telephonecontactinsta').html(user.telephone || 'N/A');
-                        $('#addressocontactinsta').html(
-                            (user.fran_address || '') + ' ' +
-                            (user.city || '') + ' ' +
-                            (user.state || '') + ' ' +
-                            (user.pincode || '')
-                        );
-                        $('#emailcontactinsta').html("<a href='mailto:" + user.email +
-                            "' target='_blank'>" + user.email + "</a>");
-                        $('#mobilecontactinsta').html(user.mobile || 'N/A');
-                        $('#websitecontactinsta').html("<a href='http://" + user.website +
-                            "' target='_blank'>" + user.website + "</a>");
-                    }
-                    // Fallback
-                    else {
-                        $('#expbtnloading').hide();
-                        $('#expbtn').show();
-                        alert("Unexpected response received.");
+                        var obj = jQuery.parseJSON(data);
+                        //alert(obj);
+                        $('#ceocontactinsta1').text(obj.user.ceo_name);
+                        $('#telephonecontactinsta1').text(obj.user.telephone);
+                        $('#addressocontactinsta1').text(obj.user.fran_address + " " + obj.user.city +
+                            " " + obj.user.state + " " + obj.user.pincode);
+                        $('#emailcontactinsta1').html("<a href='mailto:" + obj.user.email +
+                            "' target='_blank'>" + obj.user.email + "</a>");
+                        $('#mobilecontactinsta1').text(obj.user.mobile);
+                        $('#websitecontactinsta1').html("<a href='http://" + obj.user.website +
+                            "' target='_blank'>" + obj.user.website + "</a>");
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error('AJAX Error:', status, error);
                     $('#expbtnloading').hide();
                     $('#expbtn').show();
-                    alert("An error occurred. Please try again.");
                 }
             });
         });
 
 
-
         $('#proceedInterest').on('click', function() {
             $('#expintbutton').hide();
-            $('#creditRemaining').html('Please wait....'); // changed
+            $('#creditRemaining').text('Please wait....');
             $('#expbtnloading').removeClass('hidden');
             $('#expmsg').addClass('hidden');
 
@@ -477,41 +458,31 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
+
                     $('#expbtnloading').hide();
                     $('#expmsg1').show();
+                    var obj = jQuery.parseJSON(data);
 
-                    if (data.success) {
-                        // alert('brandlanding blade');
-                        const user = data.user;
-
-                        $('#ceocontactinsta').html(user.ceo_name || 'N/A'); // changed
-                        $('#telephonecontactinsta').html(user.telephone || 'N/A'); // changed
-                        $('#addressocontactinsta').html(
-                            (user.fran_address || '') + ' ' +
-                            (user.city || '') + ' ' +
-                            (user.state || '') + ' ' +
-                            (user.pincode || '')
-                        ); // changed
-                        $('#emailcontactinsta').html("<a href='mailto:" + user.email +
-                            "' target='_blank'>" + user.email + "</a>");
-                        $('#mobilecontactinsta').html(user.mobile || 'N/A'); // changed
-                        $('#websitecontactinsta').html("<a href='http://" + user.website +
-                            "' target='_blank'>" + user.website + "</a>");
-                    } else {
-                        $('#creditRemaining').html(
-                        'Unexpected response received. Please try again.'); // changed
-                        $('#expintbutton').show();
-                    }
+                  //  alert(JSON.stringify(data));
+                  console.log(obj);
+                    $('#ceocontactinsta1').html(obj.user.ceo_name);
+                    $('#telephonecontactinsta1').html(obj.user.telephone);
+                    $('#addressocontactinsta1').html(obj.user.fran_address + " " + obj.user.city +
+                        " " + obj.user.state + " " + obj.user.pincode);
+                    $('#emailcontactinsta1').html("<a href='mailto:" + obj.user.email +
+                        "' target='_blank'>" + obj.user.email + "</a>");
+                    $('#mobilecontactinsta1').html(obj.user.mobile);
+                    $('#websitecontactinsta1').html("<a href='http://" + obj.user.website +
+                        "' target='_blank'>" + obj.user.website + "</a>");
                 },
                 error: function(xhr, status, error) {
                     console.error('AJAX Error:', status, error);
                     $('#expbtnloading').hide();
                     $('#expintbutton').show();
-                    $('#creditRemaining').html('An error occurred. Please try again.'); // changed
+                    $('#creditRemaining').html('An error occurred. Please try again.');
                 }
             });
         });
-
 
 
         $('#cancelinterest').on('click', function() {
@@ -536,7 +507,6 @@
         $('#Investor').on('click', function() {
             $('#waitquery').css('display', 'block');
             var franId = document.getElementById('freeinfovalue').value;
-
             $.ajax({
                 type: 'post',
                 url: '{{ URL('/inv-lead?flag=confirm') }}',
@@ -545,58 +515,42 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
-                    $('#waitquery').css('display', 'none');
 
-                    // Case: Just returning a number (credit check)
+                    $('#waitquery').css('display', 'none');
                     if ($.isNumeric(data)) {
                         $('#paidinvBeforeApply').css('display', 'block');
                         $('#queryCount').html('You have ' + data +
-                            ' credits remaining. Do you want to use a credit?');
-                    }
-                    // Case: Need to upgrade
-                    else if (data === 'upgrade') {
+                            ' credits remaining. Do you want to use the credit');
+                    } else if (data == 'upgrade') {
                         $('#upgradeContact').css('display', 'block');
-                    }
-                    // Case: Success with data object
-                    else if (data.success) {
-                        const user = data.user;
+                    } else {
 
+
+                        var obj = jQuery.parseJSON(data);
+                        // alert(obj);
                         $('#conactheading').html("Contact Details");
                         $('#ajaxReshideblock').css('display', 'none');
                         $('#ajaxResshowblock').css('display', 'block');
-
-                        $('#ceocontact').html(user.ceo_name || 'N/A');
-                        $('#telephonecontact').html(user.telephone || 'N/A');
-                        $('#addressocontact').html(
-                            (user.fran_address || '') + ', ' +
-                            (user.city || '') + ', ' +
-                            (user.state || '') + ' - ' +
-                            (user.pincode || '')
-                        );
-                        $('#emailcontact').html("<a href='mailto:" + user.email + "' target='_blank'>" +
-                            user.email + "</a>");
-                        $('#mobilecontact').html(user.mobile || 'N/A');
-                        $('#websitecontact').html("<a href='http://" + user.website +
-                            "' target='_blank'>" + user.website + "</a>");
+                        $('#ceocontact').html(obj.user.ceo_name);
+                        $('#telephonecontact').html(obj.user.telephone);
+                        $('#addressocontact').html(obj.user.fran_address + "" + obj.user.city + "" + obj
+                            .user.state + "" + obj.user.pincode);
+                        $('#emailcontact').html("<a href='mailto:" + obj.user.email +
+                            "' target='_blank'>" + obj.user.email + "</a>");
+                        $('#mobilecontact').html(obj.user.mobile);
+                        $('#websitecontact').html("<a href='http://" + obj.user.website +
+                            "' target='_blank'>" + obj.user.website + "</a>");
                     }
-                    // Fallback
-                    else {
-                        alert("Unexpected response. Please try again.");
-                    }
-                },
-                error: function(xhr, status, error) {
-                    $('#waitquery').css('display', 'none');
-                    console.error("AJAX Error: ", error);
-                    alert("An error occurred. Please try again.");
                 }
             });
         });
+
+
 
         $('#paidYesInvestor').on('click', function() {
             var franId = document.getElementById('freeinfovalue').value;
             $('#waitquery').css('display', 'block');
             $('#paidinvBeforeApply').css('display', 'none');
-
             $.ajax({
                 type: 'post',
                 url: '{{ URL('/inv-lead?flag=confirmed') }}',
@@ -605,54 +559,24 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
+                    var obj = jQuery.parseJSON(data);
+
                     $('#waitquery').css('display', 'none');
-                    // Check for success
-                    if (data.success) {
-                        const user = data.user;
-
-                        $('#conactheading').html("Contact Details");
-                        $('#ajaxReshideblock').css('display', 'none');
-                        $('#ajaxResshowblock').css('display', 'block');
-
-                        $('#ceocontact').html(user.ceo_name || 'N/A');
-                        $('#telephonecontact').html(user.telephone || 'N/A');
-                        $('#addressocontact').html(
-                            (user.fran_address || '') + ', ' +
-                            (user.city || '') + ', ' +
-                            (user.state || '') + ' - ' +
-                            (user.pincode || '')
-                        );
-                        $('#emailcontact').html(
-                            "<a href='mailto:" + user.email + "' target='_blank'>" + user.email +
-                            "</a>"
-                        );
-                        $('#mobilecontact').html(user.mobile || 'N/A');
-                        $('#websitecontact').html(
-                            "<a href='http://" + user.website + "' target='_blank'>" + user
-                            .website + "</a>"
-                        );
-                    } else {
-                        // Handle known flags like upgrade or showMsg
-                        if (data.message === 'upgrade') {
-                            alert("Please upgrade your membership to view contact details.");
-                        } else if (data.message === 'showMsg') {
-                            alert("Please express interest to view details.");
-                        } else {
-                            alert("Something went wrong.");
-                        }
-
-                        $('#paidinvBeforeApply').css('display', 'block');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    $('#waitquery').css('display', 'none');
-                    $('#paidinvBeforeApply').css('display', 'block');
-                    console.error("AJAX Error: ", error);
-                    alert("An error occurred while processing your request.");
+                    $('#conactheading').html("Contact Details");
+                    $('#ajaxReshideblock').css('display', 'none');
+                    $('#ajaxResshowblock').css('display', 'block');
+                    $('#ceocontact').html(obj.user.ceo_name);
+                    $('#telephonecontact').html(obj.user.telephone);
+                    $('#addressocontact').html(obj.user.fran_address + "" + obj.user.city + "" + obj
+                        .user.state + "" + obj.user.pincode);
+                    $('#emailcontact').html("<a href='mailto:" + obj.user.email +
+                        "' target='_blank'>" + obj.user.email + "</a>");
+                    $('#mobilecontact').html(obj.user.mobile);
+                    $('#websitecontact').html("<a href='http://" + obj.user.website +
+                        "' target='_blank'>" + obj.user.website + "</a>");
                 }
             });
         });
-
 
         //Cancelling the view contact form and sending the normal lead
         $('#cancelContact').on('click', function() {
@@ -910,7 +834,7 @@
         });
 
         @php
-            $a = Auth::check() ? 1 : 0;
+        $a = Auth::check() ? 1 : 0;
         @endphp
 
         //like count
@@ -918,29 +842,29 @@
             // console.log('like');
             var phpVar = @json($a);
             //  console.log(phpVar);
-            if (phpVar == 0) {
+            if(phpVar == 0){
                 // alert('user not logged in');
-                $('#login-pnl').modal('show');
-                $('#loginactive').tab('show');
+                $('#login-pnl').modal('show'); 
 
-            } else if (phpVar == 1) {
-                //   alert('user logged in');
-                var like_id = franId;
-                $.ajax({
-                    type: 'POST',
-                    url: '/brandlikes',
-                    data: {
-                        "fid": like_id,
-                        "_token": "{{ csrf_token() }}"
-                    },
-                    success: function(data) {
-                        $("#likecount").html(data.newCount);
-                        $("#likeButton").attr('onclick', "#");
-                        $("#likeButton").html("Liked");
-                    }
-                });
             }
-
+            else if(phpVar == 1){
+            //   alert('user logged in');
+              var like_id = franId;
+            $.ajax({
+                type: 'POST',
+                url: '/brandlikes',
+                data: {
+                    "fid": like_id,
+                    "_token": "{{ csrf_token() }}"
+                },
+                success: function(data) {
+                    $("#likecount").html(data.newCount);
+                    $("#likeButton").attr('onclick', "#");
+                    $("#likeButton").html("Liked");
+                }
+            });
+            }
+         
         }
 
         $('#newemail').on('keyup', function() {
@@ -962,20 +886,19 @@
             })
         })
 
-        function ratebtn() {
+        function ratebtn(){
             // console.log('yes');
             var phpVar = @json($a);
             //  console.log(phpVar);
-            if (phpVar == 0) {
+            if(phpVar == 0){
                 // alert('user not logged in');
-                $('#login-pnl').modal('show');
-                // $('#login-pnl').on('shown.bs.modal', function () {
-                //         // Activate the "Login" tab
-                //         $('#loginactive').tab('show');
-                //     });
+                $('#login-pnl').modal('show'); 
+            
 
-            } else if (phpVar == 1) {
-                $('#myRating').modal('show');
+
+            }
+            else if(phpVar == 1){
+                $('#myRating').modal('show'); 
             }
 
         }

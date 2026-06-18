@@ -16,8 +16,7 @@
                 @endphp
                 {{-- @foreach ($brands->where('brand_section', 2)->where('page_type', $pageType)->take(4)->shuffle() as $logoDetail) --}}
                 @foreach($brandslft->shuffle() as $logoDetail)
-
-              @php
+                    @php
                         $brandUrl = Config('constants.MainDomain').$logoDetail['brand_link'];
                         if(isset($hindiFrans) && is_array($hindiFrans) && in_array($logoDetail['fihl_id'], $hindiFrans))
                         $brandUrl = Config('constants.MainDomain').'/hi'.$logoDetail['brand_link'];

@@ -10,6 +10,7 @@ use App\Models\FranchisorBusinessDetail;
 use App\Models\InsightCategory;
 use App\Models\InsightList;
 use App\Models\InsightListHindi;
+use App\Models\Insights\FeaturedInsightsContent;
 use App\Models\InsightsHindiCategory;
 use App\Models\InsightsHindiSubCategory;
 use App\Models\InsightSubcategory;
@@ -121,6 +122,7 @@ class InsightController extends Controller
         $insight->author_id    = $request->insights_publisher;
         $insight->updated_by   = Auth::guard('admin')->user()->admin_email;
 
+        $newsId = $insight->news_id;
 
         if (!$insight->save()) {
             return redirect($redirectUrl)->with('error', "Insights " . $request->insights_type . " Couldn't Be Saved.");
@@ -139,6 +141,41 @@ class InsightController extends Controller
             );
         }
 
+        // -----------------------------
+        // FEATURED CONTENT HANDLING
+        // -----------------------------
+        if ($request->has('is_featured') && $request->is_featured == 1) {
+
+            // Slot-2 restriction
+            if (
+                $request->featured_slot == 2 &&
+                $request->insights_type !== 'Article'
+            ) {
+                return back()->withErrors([
+                    'featured_slot' => 'Slot 2 allows only Article content.'
+                ]);
+            }
+
+            // 1️⃣ Deactivate existing active featured
+            FeaturedInsightsContent::where('slot', $request->featured_slot)
+                ->where('locale', $lang === 'en' ? 'en' : 'hi')
+                ->where('status', 1)
+                ->update(['status' => 0]);
+
+            // 2️⃣ Insert new featured record
+            FeaturedInsightsContent::create([
+                'slot'         => $request->featured_slot,
+                'locale'       => $lang === 'en' ? 'en' : 'hi',
+                'news_id'      => $newsId,
+                'insight_type' => $request->insights_type,
+                'start_at'     => now()->toDateString(),
+                'end_at'       => now()->addDays($request->featured_days ?? 2)->toDateString(),
+                'status'       => 1,
+                'created_by'   => Auth::guard('admin')->user()->admin_id ?? $request->insights_publisher,
+            ]);
+        }
+
+
         return redirect($redirectUrl)
             ->with('success', 'Insights ' . $request->insights_type . ' Saved Successfully.');
     }
@@ -148,12 +185,14 @@ class InsightController extends Controller
 
         $model = ($lang === 'en') ? InsightList::class : InsightListHindi::class;
         $catModel = ($lang === 'en') ? InsightCategory::class : InsightsHindiCategory::class;
-
+        $authorModel = AuthorList::class;
         $search = $request->query('search');
         $type = $request->query('type');
         $ctgry = $request->query('category');
-
-        $query = $model::query()
+        $authorFilter = $request->query('author');
+        $categoryName = null;
+        $authorName = null;
+        $query = $model::query()->with(['category:id,catname', 'author:author_id,title'])
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->when($search, function ($query) use ($search) {
                 $query->where(function ($q) use ($search) {
@@ -164,8 +203,13 @@ class InsightController extends Controller
             ->when($type, function ($query) use ($type) {
                 $query->where('insight_type', $type);
             })
-            ->when($ctgry, function ($query) use ($ctgry) {
+            ->when($authorFilter, function ($query) use ($authorFilter, $authorModel, &$authorName) {
+                $query->where('author_id', $authorFilter);
+                $authorName = $authorModel::where('author_id', $authorFilter)->value('title');
+            })
+            ->when($ctgry, function ($query) use ($ctgry, $catModel, &$categoryName) {
                 $query->where('cat_id', $ctgry);
+                $categoryName = $catModel::where('id', $ctgry)->value('catname');
             })
             ->whereIn('status', [0, 1, 2]);
 
@@ -179,7 +223,7 @@ class InsightController extends Controller
                 "Content-Disposition" => "attachment; filename=\"$filename\"",
             ];
 
-            $columns = ['news_id', 'title', 'insight_type', 'catname', 'status', 'created_at'];
+            $columns = ['Id', 'Title', 'Insight Type', 'Category', 'Status', 'Created Date'];
 
             $callback = function () use ($data, $columns) {
                 $file = fopen('php://output', 'w');
@@ -191,10 +235,9 @@ class InsightController extends Controller
                         $row->news_id,
                         $row->title,
                         $row->insight_type,
-                        // $row->cat_id,
-                        optional($row->category)->catname ?? '',
+                        $row->category->first()->catname ?? '',
                         $row->status,
-                        $row->created_at,
+                        date('d-m-Y', strtotime($row->created_at)),
                     ]);
                 }
 
@@ -208,18 +251,24 @@ class InsightController extends Controller
         $totalRecords = $query->count();
         $insightTypes = $model::distinct()->pluck('insight_type');
         $InsightsCategory = $catModel::select('id', 'catname')->get();
-
+        $Authors = AuthorList::select('author_id', 'title')
+            ->where('status', 'A')
+            ->get();
         $data = $query->orderByDesc('news_id')
             ->paginate(25)
-            ->appends(['search' => $search, 'type' => $type]);
-
+            ->appends(['search' => $search, 'type' => $type, 'category' => $ctgry, 'author' => $authorFilter]);
+        // dd($data);
         return view('admin.insights.list', compact(
             'lang',
             'data',
             'totalRecords',
             'insightTypes',
             'type',
-            'InsightsCategory'
+            'InsightsCategory',
+            'categoryName',
+            'authorFilter',
+            'Authors',
+            'authorName'
         ));
     }
 
@@ -237,13 +286,17 @@ class InsightController extends Controller
 
         // Insight data
         $data = $insightModel::query()->with('author')->findOrFail($id);
-
+        $featured = FeaturedInsightsContent::where('news_id', $id)
+            ->where('locale', $lang === 'en' ? 'en' : 'hi')
+            ->where('status', 1)
+            ->where('end_at', '>=', now()) // only active
+            ->first();
         // Categories and Subcategories
         $InsightCategory    = $catModel::query()->where('status', '1')->get();
         $InsightSubcategory = $subCatModel::query()->where('mcat_id', $data->cat_id)->get();
 
         // Related Brands
-        $brands = explode(",", $data->related_brand ?? '');
+        // $brands = explode(",", $data->related_brand ?? '');
         // $company = FranchisorBusinessDetail::query()
         //     ->whereIn('franchisor_id', $brands)
         //     ->select('franchisor_id', 'company_name')
@@ -254,10 +307,9 @@ class InsightController extends Controller
         $role  = $user->admin_role; // assuming this column exists
         // $author = $user->author;   // assuming relation is defined
 
-        // Role-based Author Data
-        $authorData = $data->author->first() ? collect([[
-            'author_id' => $data->author->first()->author_id,
-            'title'     => $data->author->first()->title,
+        $authorData = $data->author ? collect([[
+            'author_id' => $data->author->author_id,
+            'title'     => $data->author->title,
         ]]) : collect();
 
         // Associated Tags
@@ -279,13 +331,12 @@ class InsightController extends Controller
             'tags',
             'data',
             'assocTags',
-            // 'company',
             'authorData',   // role-based authors
             'role',         // current user role
             'InsightCategory',
-            'brands',
             'InsightSubcategory',
-            'lang'
+            'lang',
+            'featured'
         ));
     }
 
@@ -304,15 +355,12 @@ class InsightController extends Controller
         ]);
 
         $role            = $request->session()->get('role', 'fi');
-        // $brand           = $request->brands ? $this->stringyfyText($request->brands) : "";
         $title           = $request->title;
-        // $homeTitle       = $request->home_title;
         $subTitle        = $request->sub_title;
         $desc            = $request->input('content');
         $insight_type    = $request->insights_type;
         $cat_id          = $request->insights_cat;
         $subcat_id       = $request->insights_subcat;
-        // $isInternational = ($request->is_intl == 1) ? 1 : 0;
         $alt             = $request->img_alt;
         $published_date  = $request->published_date;
 
@@ -342,15 +390,12 @@ class InsightController extends Controller
         $update = [
             'title'          => $title,
             'news_type'      => $role,
-            // 'homeTitle'      => $homeTitle,
             'shortDesc'      => $subTitle,
             'content'        => $desc,
             'insight_type'   => $insight_type,
             'cat_id'         => $cat_id,
             'subcat_id'      => $subcat_id,
-            // 'related_brand'  => $brand,
             'slug'           => $slug,
-            // 'is_intl'        => $isInternational,
             'updated_by'     => Auth::guard('admin')->user()->admin_email,
             'author_id'      => $request->insights_publisher,
             'img_alt'        => $alt,
@@ -367,15 +412,45 @@ class InsightController extends Controller
         $model = $lang === 'en' ? InsightList::class : InsightListHindi::class;
         $model::query()->where('news_id', $request->news_id)->update($update);
 
-        // ---------------------------
-        // 6. Kickers + Associated Tags
-        // ---------------------------
-        // if (!empty($request->kicker)) {
-        //     $this->insertKickers($request->kicker, $request->news_id, 2);
-        // }
-
         if (!empty($request->associated_tags)) {
             $adminController->insertAssociatedTags($request->associated_tags, $request->news_id, 2, 1, $lang);
+        }
+
+        if ($request->has('is_featured') && $request->is_featured == 1) {
+
+            // Slot 2 rule
+            if (
+                $request->featured_slot == 2 &&
+                $request->insights_type !== 'Article'
+            ) {
+                return back()->withErrors([
+                    'featured_slot' => 'Slot 2 allows only Article content.'
+                ]);
+            }
+
+            // 1️⃣ Deactivate existing active featured for same slot + locale
+            FeaturedInsightsContent::where('slot', $request->featured_slot)
+                ->where('locale', $lang === 'en' ? 'en' : 'hi')
+                ->where('status', 1)
+                ->update(['status' => 0]);
+
+            // 2️⃣ Insert new featured content
+            FeaturedInsightsContent::create([
+                'slot'         => $request->featured_slot,
+                'locale'       => $lang === 'en' ? 'en' : 'hi',
+                'news_id'      => $request->news_id,
+                'insight_type' => $request->insights_type,
+                'start_at'     => now()->toDateString(),
+                'end_at'       => now()->addDays($request->featured_days ?? 2)->toDateString(),
+                'status'       => 1,
+                'created_by'   => Auth::guard('admin')->user()->admin_id,
+            ]);
+        } else {
+            // Admin unchecked featured → just deactivate, DO NOT delete
+            FeaturedInsightsContent::where('news_id', $request->news_id)
+                ->where('locale', $lang === 'en' ? 'en' : 'hi')
+                ->where('status', 1)
+                ->update(['status' => 0]);
         }
 
         // ---------------------------
@@ -401,14 +476,27 @@ class InsightController extends Controller
 
     public function status(Request $request, $lang)
     {
-        $newsId    = $request->id;
-        $status    = $request->status;
+        $newsId = $request->id;
+        $status = $request->status;
+
+        // Resolve model by language
         $model = ($lang === 'en') ? InsightList::class : InsightListHindi::class;
-        $model::query()->where('news_id', $newsId)->update(['status' => $status]);
+        $locale = ($lang === 'en') ? 'en' : 'hi';
 
-        return response()->json(['success' => 'Status updated successfully.', 'status' => $status]);
+        /* ================= UPDATE MAIN CONTENT ================= */
+        $model::where('news_id', $newsId)
+            ->update(['status' => $status]);
+
+        /* ================= UPDATE FEATURED CONTENT (IF EXISTS) ================= */
+        FeaturedInsightsContent::where('news_id', $newsId)
+            ->where('locale', $locale)
+            ->update(['status' => $status]);
+
+        return response()->json([
+            'success' => 'Status updated successfully.',
+            'status'  => $status
+        ]);
     }
-
     public function insightsRecords(Request $request, $lang)
     {
         $model = ($lang === 'en') ? InsightList::class : InsightListHindi::class;

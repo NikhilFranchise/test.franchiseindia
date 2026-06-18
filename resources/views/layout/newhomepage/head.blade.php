@@ -16,7 +16,7 @@
 <meta name="google-site-verification" content="8W9CXigRDmfNyf8vOfkZBefougI9sPXO4xvDBFLIjaw" />
 <meta name="y_key" content="0f4f718975ac23ed" />
 <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
-<meta content="noindex,nofollow" name="robots" />
+<meta content="index,follow" name="robots" />
 @if ($__env->yieldContent('prev'))
     <link href="@yield('prev')" rel="prev">
     <link href="@yield('next')" rel="next">
@@ -34,7 +34,7 @@
 
 @mobile
     <link rel="stylesheet" href="{{ url('newhomepage/assets/css/style-mobile-new.css?ver=12.8') }}">
-    <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
+
     @include('layout.newhomepage.topsearch')
 @endmobile
 @desktop
@@ -59,6 +59,7 @@
 </script>
 
 <!-- Google Tag Manager -->
+
 <script>
     (function(w, d, s, l, i) {
         w[l] = w[l] || [];
@@ -75,9 +76,11 @@
         f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
 </script>
-
-
-    
+<script async>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KW4K6WV6');</script>
 
 <!-- End Google Tag Manager -->
 
@@ -93,8 +96,8 @@
 
     gtag('config', 'G-8MKFEZLR18');
 </script>
-{{--
-<script type="text/javascript">
+
+{{-- <script type="text/javascript">
     (function(c, l, a, r, i, t, y) {
         c[a] = c[a] || function() {
             (c[a].q = c[a].q || []).push(arguments)
@@ -106,51 +109,3 @@
         y.parentNode.insertBefore(t, y);
     })(window, document, "clarity", "script", "gnbfg0nm67");
 </script> --}}
-
-<script type="application/ld+json">
-    {
-      "@context": "https://schema.org/",
-      "@type": "WebSite",
-      "name": "FranchiseIndia",
-      "url": "https://www.franchiseindia.com/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.franchiseindia.com/category/search?text={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Franchise India",
-      "url": "https://www.franchiseindia.com/",
-      "logo": "https://www.franchiseindia.com/newhomepage/assets/img/Logo.svg",
-      "alternateName": "FranchiseIndia",
-      "sameAs": [
-        "https://www.facebook.com/FranchiseIndiaMedia",
-        "https://twitter.com/FranchiseIndia",
-        "https://www.instagram.com/franchiseindia_/",
-        "https://www.youtube.com/user/FranchiseIndia",
-                    "https://muckrack.com/media-outlet/franchiseindia",
-        "https://www.linkedin.com/company/franchiseindia/"
-      ],
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "telephone": "1800 102 2007",
-          "contactType": "customer service",
-          "email": "advertise@franchiseindia.com",
-          "contactOption": "TollFree",
-          "areaServed": "IN",
-          "availableLanguage": [
-            "en",
-            "hi"
-          ]
-        }
-      ]
-    }
-    </script>
-    
-    

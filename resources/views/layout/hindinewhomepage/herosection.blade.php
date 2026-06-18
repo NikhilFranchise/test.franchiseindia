@@ -219,5 +219,21 @@ use Illuminate\Support\Str;
     </div>
 </section>
 
+<script type="text/javascript">if(screen.width<767){$(document).ready(function(){setTimeout(function(){$("#searchblk").slideUp(800);$('#clickhidebtn').show();$('#clickshowbtn').hide();},3000);$("#clickhidebtn").click(function(){$("#searchblk").slideDown("slow");$('#clickhidebtn').hide();$('#clickshowbtn').show();});$("#clickshowbtn").click(function(){$("#searchblk").slideUp("slow");$('#clickhidebtn').show();$('#clickshowbtn').hide();});});}
+    $('#registerselect').click(function(){$('#registeractive').click();});$('#loginselect').click(function(){$('#loginactive').click();});$('#mobilereg').click(function(){$('#registeractive').click();});$("#changeLang").on('click',function(){$('#langType').slideToggle();})
+    $('#registerselect1').click(function(){$('#login').addClass("active");$('#register').removeClass("active");$('#loginactiveopen').addClass("active");$('#registeractiveopen').removeClass("active");});$('#loginselect1').click(function(){$('#login').removeClass("active");$('#register').addClass("active");$('#loginactiveopen').removeClass("active");$('#registeractiveopen').addClass("active");});function selectMax(selectmaxheaderval){let amountConfigArr={!!json_encode(Config('constants.investRangeInWordsSingle'))!!};let maxAmount=$('#maxAmount');let getSlugAmount={!!json_encode(Config('constants.InvestRange'))!!};maxAmount.html("");selectmaxheaderval=parseInt(selectmaxheaderval);$.each(amountConfigArr,function(key,value){if(key>selectmaxheaderval)
+        $('#maxAmount').append($("<option></option>").attr({"value":key,"slug":getSlugAmount[key]['min']}).text(value));});if(selectmaxheaderval===21)
+        maxAmount.append($("<option></option>").attr("value",21).text("Above"));}
+    function getSubCategoryHeader(value){$.ajax({type:'GET',url:'{{url('getsubcategory')}}',data:{categoryID:value},success:function(data){$("#getSubCategoryDataHeader").html(data);}});}
+    function getSubCatCategoryHeader(value){$.ajax({type:'GET',url:'{{url('getsubcatcategory')}}',data:{subcategoryID:value},success:function(data){$("#getSubCatCategoryDataHeader").html(data);}});}
+    function getcity(value){$.ajax({type:'GET',url:'{{url('getcitylist')}}',data:{state:value},success:function(data){$("#headercity").html(data);}});}
+
+    function getSubCategoryHeader1(value){$.ajax({type:'GET',url:'{{url('getsubcategory')}}',data:{categoryID:value},success:function(data){$("#getSubCategoryDataHeader1").html(data);}});}
+    function getSubCatCategoryHeader1(value){$.ajax({type:'GET',url:'{{url('getsubcatcategory')}}',data:{subcategoryID:value},success:function(data){$("#getSubCatCategoryDataHeader1").html(data);}});}
+    function getcity1(value){$.ajax({type:'GET',url:'{{url('getcitylist')}}',data:{state:value},success:function(data){$("#headercity1").html(data);}});}
+
+
+    $(document).ready(function(){$('#searchoptnew').click(function(){$('.searchblknew').show(400);$('.searchspace').hide(400);});$('#closegsearch').click(function(){$('.searchspace').show(400);$('.searchblknew').hide(400);});if(screen.width>1199&&screen.height<=768)
+        $(".gsc-wrapper").css({"max-height":"340px","overflow":"auto"});$('#searchopt').click(function(){$('.open').click();$('.searchoption').toggle(400);return false;});$('#searchopt2').click(function(){$('.searchoption').hide(400);});$('.dropdown-toggle').click(function(){$('.searchoption').hide(400);});});</script>
 
 

@@ -33,7 +33,7 @@ class InsertleadMail extends Mailable
     public function build()
     {
         return $this->from('no-reply@franchiseindia.com')
-                    ->subject('Brand suggestion - FranchiseIndia')
+                    ->subject('Brand suggestion - FranchiseIndia.com')
                     ->view('mail.lead-insert-mail')
                     ->with([
                         'category'  => $this->category,

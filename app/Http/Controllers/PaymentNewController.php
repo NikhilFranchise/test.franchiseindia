@@ -21,21 +21,21 @@ class PaymentNewController extends Controller
     {
         // dd($request);
       // Extract data from the incoming request
-    $cphone =  $request->input('mobile');  // This is hardcoded, change if dynamic data is required
-    $cname = $request->input('name');
-    $email = $request->input('email');
-    $currency = $request->input('currency');
-    $membership = $request->input('membership');
-    $paymentMethodType = $request->input('paymentMethodType');
-    $mopt  = $request->input('mop'); 
-    $amount =  $request->input('camount');
-    $caddress = $request->input('address');
-    $ccountry  = config('location.countryName.' . $request->input('country'));
-    $pincode = $request->input('pincode');
-    $cdetails = $request->input('details');
-    $pgateway = 'HDFC';
-    $userIp   = $request->ip();
-
+      $cphone =  $request->input('mobile');  // This is hardcoded, change if dynamic data is required
+      $cname = $request->input('name');
+      $email = $request->input('email');
+      $currency = $request->input('currency');
+      $membership = $request->input('membership');
+      $paymentMethodType = $request->input('paymentMethodType');
+      $mopt  = $request->input('mop'); 
+      $amount =  $request->input('camount');
+      $caddress = $request->input('address');
+      $ccountry  = config('location.countryName.' . $request->input('country'));
+      $pincode = $request->input('pincode');
+      $cdetails = $request->input('details');
+      $pgateway = 'HDFC';
+      $userIp   = $request->ip();
+      
     // Default values for payment filters
     $paymentMethodType = "CARD"; // Default to "CARD" for CREDIT/DEBIT
     $cardTypes = []; // This will dynamically hold the card type for CREDIT/DEBIT
@@ -43,10 +43,10 @@ class PaymentNewController extends Controller
 
      // Charges based on payment method (CREDIT, DEBIT, and NETBANK)
     $Charges = array(
-        "CREDIT" => 2.06,  // Credit Card charge percentage
-        "DEBIT" => 0,      // Debit Card charge percentage (no extra charge)
+        "CREDIT" => 3.5,  // Credit Card charge percentage
+        "DEBIT" => 3.5,      // Debit Card charge percentage (no extra charge)
         "UPI" => 0,        // UPI charge percentage (no extra charge)
-        "NB" => 2.12       // Net Banking charge percentage
+        "NB" => 3.5       // Net Banking charge percentage
     );
 
     // Set paymentMethodType and cardTypes based on the selected mode of payment (CREDIT, DEBIT, UPI)
@@ -62,6 +62,13 @@ class PaymentNewController extends Controller
         $paymentMethodType = "NB";
     }
 
+	$currencyOpt = "";
+    if ($currency != 'USD') {
+        $currencyOpt = "";  // Set paymentMethodType to "CARD" for CREDIT
+    }else{
+		$currencyOpt = $currency;
+	}
+		
     // If cardTypes are defined (for CREDIT/DEBIT), build the card filters
     if (!empty($cardTypes)) {
         $paymentFilterOptions = [
@@ -86,26 +93,24 @@ class PaymentNewController extends Controller
         $amount = round($amount + $extraCharge, 2);  // Add the extra charge to the total amount
     }
 
-
-// dd($mopt);  
-// dd($cdetails);
-    // Insert payment details into the database
-    $payment = DB::table('general_payments')->insertGetId([
-        'cname' => $cname,  // Update column name to 'cname' instead of 'name'
-        'cemail' => $email,  // Update column name to 'cemail' instead of 'email'
-        'created_at' => now(),
-        'cdetail' => $membership,
-        'camount' => $amount,  // Update column name to 'camount' instead of 'amount'
-        'cphone' => $cphone,  // Update column name to 'cphone' instead of 'mobile'
-        'currency' => $currency,
-        'payment_mode' => $mopt,  
-        'caddress' =>$caddress,
-        'ccountry' => $ccountry,
-        'pincode' => $pincode,
-        'cdetail' => $cdetails,
-        'pgateway' =>$pgateway,
-        'client_ip' => $userIp,
-    ]);
+  // dd($cdetails);
+      // Insert payment details into the database
+      $payment = DB::table('general_payments')->insertGetId([
+          'cname' => $cname,  // Update column name to 'cname' instead of 'name'
+          'cemail' => $email,  // Update column name to 'cemail' instead of 'email'
+          'created_at' => now(),
+          'cdetail' => $membership,
+          'camount' => $amount,  // Update column name to 'camount' instead of 'amount'
+          'cphone' => $cphone,  // Update column name to 'cphone' instead of 'mobile'
+          'currency' => $currency,
+          'payment_mode' => $mopt,  
+          'caddress' =>$caddress,
+          'ccountry' => $ccountry,
+          'pincode' => $pincode,
+          'cdetail' => $cdetails,
+          'pgateway' =>$pgateway,
+          'client_ip' => $userIp,
+      ]);
 
     $orderId = "FIG-" . $payment;
     $customerId = (string)$payment;
@@ -123,13 +128,14 @@ class PaymentNewController extends Controller
         "payment_page_client_id" => "37770",
         "action" => "paymentPage",
         "currency" => $currency,
+		"metadata.JUSPAY:gateway_reference_id" => $currencyOpt,
         "return_url" => url('handlePaymentResponse'), // Use route to generate the URL dynamically
         "cancel_url" => url('handlePaymentResponse'),
         // "return_url" => "http://127.0.0.1:8000/pg/handlePaymentResponse.php",
         "description" => "Complete your payment",
         "first_name" => $cname,  // Corrected column name for name
         "last_name" => "",
-
+        
         "payment_filter" => [
             "allowDefaultOptions" => false,
             "options" => [
@@ -140,14 +146,14 @@ class PaymentNewController extends Controller
                 ]
             ]
         ],
-       
+
     ];
 
     // Initialize CURL for the API request
     $curl = curl_init();
 
     curl_setopt_array($curl, [
-        CURLOPT_URL => 'https://smartgateway.hdfcbank.com/session',
+        CURLOPT_URL => 'https://smartgateway.hdfc.bank.in/session',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -166,7 +172,7 @@ class PaymentNewController extends Controller
 
     $response = curl_exec($curl);
     curl_close($curl);
-// dd($curl);
+
     // Handle the API response
     $responseData = json_decode($response, true);
     if (json_last_error() !== JSON_ERROR_NONE) {
@@ -225,7 +231,7 @@ class PaymentNewController extends Controller
         ]);
     
         return ($status === "CHARGED") 
-            ? redirect()->route('payment.success',['order_id' => $orderId])
+            ? redirect()->route('payment.success', ['order_id' => $orderId])
             : redirect()->route('payment.cancel', ['order_id' => $orderId]);
     }
 

@@ -296,9 +296,6 @@
                                             <input type="text" class="form-control" name="mobile" id='txtPhone' placeholder="मोबाइल नंबर दर्ज करें" maxlength="10" class="trrr" autocomplete="off" onkeyup="getMobileStatus(this.value);"/>
                                             <input class="verif-submitbtn" id="verifybutton" value="Verify" type="button" onclick="veryfie()">
                                             <input class="verif-submitbtn" id="editmobile" value="Edit"  type="button" onclick="editmobileinsta();" style="display: none">
-                                            {{-- <input type="text" name="mobile" id='txtPhone' class="form-control"
-                                            placeholder="मोबाइल नंबर दर्ज करें" maxlength="10" autocomplete="off"
-                                            /> --}}
                                         </div>
                                         <div class="form-group" id="otpblk" style="display:none;">
                                             <input type="text" id="otp" class="form-control" placeholder="एक बार इस्तेमाल किये जाने वाला पासवर्ड"/>

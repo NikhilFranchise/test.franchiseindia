@@ -61,7 +61,7 @@
 
 
     .fi-bg-expo {
-        height:262px;
+        height:240px;
         width: 600px;
         margin: 0 auto;
         background: url("https://www.franchiseindia.com/images/popup/fro-bengaluru-popup-footer.jpg") no-repeat center top;
@@ -126,7 +126,7 @@
     }
 
 
-.headtag { height: 288px; overflow: hidden; width: 600px;
+.headtag { height: 310px; overflow: hidden; width: 600px;
 background: url("https://www.franchiseindia.com/images/popup/fro-bengaluru-popup-header.jpg") no-repeat center top;
 overflow: hidden;
 
@@ -185,7 +185,7 @@ overflow: hidden;
                                     <div class="f1">
                                          <select name="txtCity" class="form-control myselect" id="popupcity" required="">
                                             <option value="">Select City</option>
-                                            <!-- <option value="delhi">delhi</option> -->
+                                            <!-- <option value="delhi">delhi</option>  -->
                                         </select>
                                     </div>
                                     <div class="f3">
@@ -193,6 +193,8 @@ overflow: hidden;
                       <option value="Saturday31stAugust" selected="selected">Saturday, 31st August</option>
                <option value="Sunday1stSeptember">Sunday, 1st September</option>
               <option value="Bothdays31Aug1Sep">Bothdays, 31st Aug - 1st September</option>
+              <option value="Bothdays31Aug1Sep">Bothdays, 31st Aug - 1st September</option>
+              <option value="Bothdays31Aug1SepVip">Bothdays, 31st Aug - 1st September - Vip Delegate Pass</option>
                   </select>
                                     </div>
                                 </div>

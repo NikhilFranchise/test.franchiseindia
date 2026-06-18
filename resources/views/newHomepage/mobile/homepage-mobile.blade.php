@@ -13,7 +13,6 @@
     @include('cwv-mobile.ffc')
     @include('cwv-mobile.franchise_insights_news')
     @include('cwv-mobile.testimonials')
-    @include('mobile_popup')
 </main>
 @include('cwv-mobile.sidemenu-mobile')
 <div class="overlay"></div>

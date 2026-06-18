@@ -61,12 +61,12 @@ class InvestorCampaignPaymentMail extends Mailable
                           //->bcc('vasanthm.bx@gmail.com');
         
         if ($this->payStatus == 1) {
-            $mailSend = $mailSend->subject('Investor Membership Upgradion - Payment Success');
+            $mailSend = $mailSend->subject('Investor Membership Upgradation - Payment Success');
             //array_push($emailsCc, 'sajeet@franchiseindia.net');
            // array_push($emailsCc, 'acsmedia@franchiseindia.com');
 
         } else {
-            $mailSend = $mailSend->subject('Investor Membership Upgradion - Payment Failed');
+            $mailSend = $mailSend->subject('Investor Membership Upgradation - Payment Failed');
         }
                     
         return $mailSend->view('mail.generalpayment')

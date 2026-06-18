@@ -27,74 +27,40 @@ i<style type="text/css">
                 <div class="popbrand">{{$franDetails->company_name}}
                     <span>{{Config('constants.subSubCategoryArr.'.$franDetails->ind_cat.'.'.$franDetails->ind_sub_cat)}}</span>
                 </div>
-                {{-- @php
-                    $area = $franDetails->prop_area_min.' - '.$franDetails->prop_area_max.' Sq.ft';
-
-                    if(empty($franDetails->prop_area_max))
-                        $area = $franDetails->prop_area_min;
-
-                    if (is_numeric($franDetails->prop_area_min) && empty($franDetails->prop_area_max))
-                        $area = $franDetails->prop_area_min . ' Sq.ft';
-
-                    if (empty($franDetails->prop_area_min))
-                        $area = '-N/A-';
-
-                    $minValue = $franDetails->unit_inv_min;
-                    $maxValue = $franDetails->unit_inv_max;
-
-                    if($minValue < 100000 && $minValue > 10000)
-                        $minValue = substr(($minValue/1000),0,5).' K';
-
-                    if($minValue <= 9999999 && $minValue > 100000)
-                        $minValue = substr(($minValue/100000),0,5).' Lac';
-
-                    if($minValue > 9999999)
-                        $minValue = substr(($minValue/10000000),0,5).' Cr';
-
-                    if($maxValue < 100000 && $maxValue > 10000)
-                        $maxValue = substr(($maxValue/1000),0,5).' K';
-
-                    if($maxValue <= 9999999 && $maxValue > 100000)
-                        $maxValue = substr(($maxValue/100000),0,5).' Lac';
-
-                    if($maxValue > 9999999)
-                        $maxValue = substr(($maxValue/10000000),0,5).' Cr';
-                @endphp --}}
-
                 @php
-    // Safely handle property area
-    $area = '-N/A-'; // Default value
-    if (!empty($franDetails->prop_area_min)) {
-        if (!empty($franDetails->prop_area_max)) {
-            $area = $franDetails->prop_area_min . ' - ' . $franDetails->prop_area_max . ' Sq.ft';
-        } else {
-            $area = $franDetails->prop_area_min . ' Sq.ft';
-        }
-    }
-
-    // Initialize and validate min and max investment values
-    $minValue = is_numeric($franDetails->unit_inv_min) ? $franDetails->unit_inv_min : 0;
-    $maxValue = is_numeric($franDetails->unit_inv_max) ? $franDetails->unit_inv_max : 0;
-
-    // Format min value
-    if ($minValue >= 10000 && $minValue < 100000) {
-        $minValue = number_format($minValue / 1000, 2) . ' K';
-    } elseif ($minValue >= 100000 && $minValue <= 9999999) {
-        $minValue = number_format($minValue / 100000, 2) . ' Lac';
-    } elseif ($minValue > 9999999) {
-        $minValue = number_format($minValue / 10000000, 2) . ' Cr';
-    }
-
-    // Format max value
-    if ($maxValue >= 10000 && $maxValue < 100000) {
-        $maxValue = number_format($maxValue / 1000, 2) . ' K';
-    } elseif ($maxValue >= 100000 && $maxValue <= 9999999) {
-        $maxValue = number_format($maxValue / 100000, 2) . ' Lac';
-    } elseif ($maxValue > 9999999) {
-        $maxValue = number_format($maxValue / 10000000, 2) . ' Cr';
-    }
-@endphp
-
+                // Safely handle property area
+                $area = '-N/A-'; // Default value
+                if (!empty($franDetails->prop_area_min)) {
+                    if (!empty($franDetails->prop_area_max)) {
+                        $area = $franDetails->prop_area_min . ' - ' . $franDetails->prop_area_max . ' Sq.ft';
+                    } else {
+                        $area = $franDetails->prop_area_min . ' Sq.ft';
+                    }
+                }
+            
+                // Initialize and validate min and max investment values
+                $minValue = is_numeric($franDetails->unit_inv_min) ? $franDetails->unit_inv_min : 0;
+                $maxValue = is_numeric($franDetails->unit_inv_max) ? $franDetails->unit_inv_max : 0;
+            
+                // Format min value
+                if ($minValue >= 10000 && $minValue < 100000) {
+                    $minValue = number_format($minValue / 1000, 2) . ' K';
+                } elseif ($minValue >= 100000 && $minValue <= 9999999) {
+                    $minValue = number_format($minValue / 100000, 2) . ' Lac';
+                } elseif ($minValue > 9999999) {
+                    $minValue = number_format($minValue / 10000000, 2) . ' Cr';
+                }
+            
+                // Format max value
+                if ($maxValue >= 10000 && $maxValue < 100000) {
+                    $maxValue = number_format($maxValue / 1000, 2) . ' K';
+                } elseif ($maxValue >= 100000 && $maxValue <= 9999999) {
+                    $maxValue = number_format($maxValue / 100000, 2) . ' Lac';
+                } elseif ($maxValue > 9999999) {
+                    $maxValue = number_format($maxValue / 10000000, 2) . ' Cr';
+                }
+            @endphp
+            
 
                 <div class="popback">
                     <div class="popbackblk">Area Req <span>{{ $area }}</span></div>

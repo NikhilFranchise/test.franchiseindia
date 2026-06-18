@@ -249,8 +249,8 @@
     <ul class="list-unstyled components border-bottom-1">
         <!--<li><a target="_blank" href="{{ Config('constants.MainDomain') }}/hi/content">फ्रैंचाइज़ी इनसाइट्स</a></li>
         <li><a target="_blank" href="https://news.franchiseindia.com/hi">समाचार</a></li>-->
-        <li><a target="_blank" href="https://www.franchiseindia.com/insights/hindi">फ्रैंचाइज़ी इनसाइट्स</a></li>
-        <li><a target="_blank" href="https://www.franchiseindia.com/insights/hindi">समाचार</a></li>
+        <li><a target="_blank" href="https://www.opportunityindia.com/hindi">फ्रैंचाइज़ी इनसाइट्स</a></li>
+        <li><a target="_blank" href="https://www.opportunityindia.com/hindi">समाचार</a></li>
         <li><a href="https://video.franchiseindia.com/" target="_blank">वीडियो</a></li>
         <li><a target="_blank" href="{{ Config('constants.MainDomain') }}/magazine">पत्रिका</a></li>
     </ul>
@@ -310,8 +310,8 @@
         <li><a target="_blank" href="https://www.franchiseindia.com/wellness/">wellnessindia.org</a></li>
         <li><a target="_blank" href="https://www.franchiseindia.com/education/">educationbiz.com</a></li>-->
         <li><a target="_blank" href="https://www.restaurantindia.in">restaurantindia.in</a></li>
-        <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/beauty-wellness">wellnessindia.org</a></li>
-        <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/education">educationbiz.com</a></li>
+        <li><a target="_blank" href="https://www.opportunityindia.com/wellness/">wellnessindia.org</a></li>
+        <li><a target="_blank" href="https://www.franchiseindia.com/education/">educationbiz.com</a></li>
         <li><a target="_blank" href="https://www.franchise.ae/" rel="nofollow">franchise.ae</a></li>
         <li><a target="_blank" href="https://www.franchisebangladesh.com/" rel="nofollow">franchisebangladesh.com</a>
         </li>
@@ -324,8 +324,8 @@
         <li><a target="_blank" href="https://www.franchiseindia.in/" rel="nofollow">franchiseindia.in</a></li>
         <li><a target="_blank" href="https://www.francorp.in/" rel="nofollow">francorp.in</a></li>
         <li><a target="_blank" href="https://www.franglobal.com/" rel="nofollow">franglobal.com</a></li>
-        <!-- <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
-                rel="nofollow">franchiseindiaventures.com</a></li> -->
+        <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
+                rel="nofollow">franchiseindiaventures.com</a></li>
         <li><a target="_blank" href="https://www.gauravmarya.com/" rel="nofollow">gauravmarya.com</a></li>
     </ul>
     <ul class="list-unstyled components border-bottom-1">

@@ -24,20 +24,10 @@ class VerifyCsrfToken extends Middleware
         'payment/cancelled',
         'payment/success',
         'franchisor-feedback',
-        'reload-captcha',
-        'getfreeinfo',
-        'loginform',
-        'fetch-data',
-        'fetch-data2',
-        'newslettersignup',
-        'price_filter',
-        'feedback',
-        'password/email',
-        'api/*', 
+		'fetch-data',    
+        'newslettersignup', 
         'handlePaymentResponse',
         'paymentnewsubmit',
-        'admin/login-check',
-
-
+        'inv-lead',
     ];
 }

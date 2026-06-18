@@ -17,13 +17,13 @@
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tbody>
                 <tr>
-                    <td valign="top" class="td-business" style="padding:0 90px 26px 90px; line-height:22px; text-align:center; font-size:16px; color:#666666;"><span style="font-family: Arial, Helvetica, sans-serif; ">Greetings from Franchise India!</span></td>
+                    <td valign="top" class="td-business" style="padding:0 90px 26px 90px; line-height:22px; text-align:center; font-size:16px; color:#666666;"><span style="font-family: Arial, Helvetica, sans-serif; ">Congratulations from Franchise India!</span></td>
                 </tr>
                 </tbody>
             </table>
         </td>
     </tr>
-    <tr>
+    {{-- <tr>
         <td valign="top">
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tbody>
@@ -33,7 +33,7 @@
                 </tbody>
             </table>
         </td>
-    </tr>
+    </tr> --}}
     <tr>
         <td valign="top">
             <table width="100%" cellspacing="0" cellpadding="0">

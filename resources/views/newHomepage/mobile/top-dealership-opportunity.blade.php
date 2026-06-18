@@ -5,44 +5,44 @@
 
         <div class="leading-card">
             <div class="brand-ins">
-                <a href="https://www.franchiseindia.com/brands/supergas.103865" target="_blank" aria-label="SUPERGAS">
-                    <img src="{{ config('constants.MainDomain') . '/images/dealers-india/846455832.webp' }}" alt="SUPERGAS" width="199" height="81" loading="lazy"></a>
+                <a href="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/67e4fc6bcbf91.webp" target="_blank" aria-label="PappuDaddu">
+                    <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/67e4fc6bcbf91.webp" alt="PappuDaddu" width="199" height="81" loading="lazy"></a>
             </div>
-            <div class="leading-card-brand-category"><a aria-label="SUPERGAS" href="https://www.franchiseindia.com/business-opportunities/lpg-distributors.ssc530" target="_blank">LPG Distributors</a>
+            <div class="leading-card-brand-category"><a aria-label="PappuDaddu" href="https://www.franchiseindia.com/brands/pappu-daddu-healthy-foods.104318" target="_blank">LPG Distributors</a>
             </div>
             <div class="leading-card-brand-title">
-                <h2><a href="https://www.franchiseindia.com/brands/supergas.103865" target="_blank" aria-label="SUPERGAS">SUPERGAS </a>
+                <h2><a href="https://www.franchiseindia.com/brands/pappu-daddu-healthy-foods.104318" target="_blank" aria-label="PappuDaddu">PappuDaddu</a>
                 </h2>
             </div>
             <div class="leading-card-investment">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
-                <div class="card-info-amt"> ₹ 20 Lac - 30 Lac</div>
+                <div class="card-info-amt"> ₹ 50 K - 2 Lac</div>
             </div>
             <div class="leading-card-area">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}</div>
-                <div class="card-info-amt">1500 - 4500 Sq.ft</div>
+                <div class="card-info-amt">100 - 200 Sq.ft</div>
             </div>
             <div class="leading-card-outlets">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'स्थान' : 'Location' }}</div>
                 <div class="card-info-amt">Delhi, Haryana +33 More</div>
             </div>
-            <a href="https://www.franchiseindia.com/brands/supergas.103865" target="_blank"
-                class="know-more" aria-label="SUPERGAS">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+            <a href="https://www.franchiseindia.com/brands/pappu-daddu-healthy-foods.104318" target="_blank"
+                class="know-more" aria-label="PappuDaddu">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
 
         <div class="leading-card">
             <div class="brand-ins">
-                <a href="https://www.franchiseindia.com/brands/avpl-international.106003"
-                    target="_blank" aria-label="AVPL International"><img loading="lazy" src="{{ config('constants.MainDomain') . '/images/dealers-india/_3.webp' }}"
-                        alt="AVPL International" width="199" height="81">
+                <a href="https://www.franchiseindia.com/brands/drivex-mobility.102504"
+                    target="_blank" aria-label="Drivex Mobility"><img loading="lazy" src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/drivex-mobility_1.jpg"
+                        alt="Drivex Mobility" width="199" height="81">
             </div>
             <div class="leading-card-brand-category">
-                <a aria-label="AVPL International" target="_blank" href="https://www.franchiseindia.com/business-opportunities/farming-tools-equipments-and-machines.ssc1021">Farming Tools, equipments & Machines</a>
+                <a aria-label="Drivex Mobility" target="_blank" href="https://www.franchiseindia.com/brands/drivex-mobility.102504">Two Wheeler & Parts</a>
             </div>
             <div class="leading-card-brand-title">
-                <h2><a href="https://www.franchiseindia.com/brands/avpl-international.106003"
-                        target="_blank" aria-label="AVPL International">AVPL International</a></h2>
+                <h2><a href="https://www.franchiseindia.com/brands/drivex-mobility.102504"
+                        target="_blank" aria-label="Drivex Mobility">Drivex Mobility</a></h2>
             </div>
             <div class="leading-card-investment">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
@@ -50,80 +50,82 @@
             </div>
             <div class="leading-card-area">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}</div>
-                <div class="card-info-amt"> 200 - 500 Sq.ft</div>
+                <div class="card-info-amt"> 800 - 1000 Sq.ft</div>
             </div>
             <div class="leading-card-outlets">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'स्थान' : 'Location' }}</div>
                 <div class="card-info-amt">Delhi, Haryana +33 More</div>
             </div>
-            <a href="https://www.franchiseindia.com/brands/avpl-international.106003"
-                target="_blank" class="know-more" aria-label="AVPL International">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+            <a href="https://www.franchiseindia.com/brands/drivex-mobility.102504"
+                target="_blank" class="know-more" aria-label="Drivex Mobility">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
         </div>
 
 
         <div class="leading-card">
             <div class="brand-ins">
-                <a href="https://www.dealerindia.com/manufacturer/rocketpay-29321177"
-                    target="_blank" aria-label="RocketPay"><img src="{{ config('constants.MainDomain') . '/images/dealers-india/257198266.webp' }}" alt="rocketpay"
+                <a href="https://www.franchiseindia.com/brands/essae-teraoka.104857"
+                    target="_blank" aria-label="Essae Teraoka"><img src="{{ config('constants.MainDomain') . '/images/dealers-india/essae.webp' }}" alt="Essae Teraoka"
                         width="199" height="81" loading="lazy">
             </div>
-            <div class="leading-card-brand-category"><a
-                    href="https://www.dealerindia.com/dir/computer-mobile-softwares-apps" target="_blank" aria-label="RocketPay"> Computer &
-                    Mobile Softwares & Apps</a>
+            <div class="leading-card-brand-category">
+                <a href="https://www.franchiseindia.com/business-opportunities/electronic-intruments.ssc921" target="_blank" aria-label="Essae Teraoka">Electronic Instruments</a>
             </div>
             <div class="leading-card-brand-title">
                 <h2>
-                    <a href="https://www.dealerindia.com/manufacturer/rocketpay-29321177" target="_blank"
-                    aria-label="RocketPay"> RocketPay</a>
+                    <a href="https://www.franchiseindia.com/brands/essae-teraoka.104857" target="_blank"
+                    aria-label="Essae Teraoka">Essae Teraoka</a>
                 </h2>
             </div>
             <div class="leading-card-investment">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
-                <div class="card-info-amt">₹ 75 K - 2 Lac</div>
+                <div class="card-info-amt">INR 50 K - 2 Lakh</div>
             </div>
             <div class="leading-card-area">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}
                 </div>
-                <div class="card-info-amt">NIL</div>
+                <div class="card-info-amt">500 - 1000 Sq.ft</div>
             </div>
             <div class="leading-card-outlets">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'स्थान' : 'Location' }}</div>
-                <div class="card-info-amt">Assam, Manipur +35 More</div>
+                <div class="card-info-amt">Delhi, Haryana +33 More</div>
             </div>
 
-            <a href="https://www.dealerindia.com/manufacturer/rocketpay-29321177" target="_blank"
-                class="know-more" aria-label="RocketPay">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' :
+            <a href="https://www.franchiseindia.com/brands/essae-teraoka.104857" target="_blank"
+                class="know-more" aria-label="Essae Teraoka">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' :
                 'Know More' }}</a>
         </div>
 
 
         <div class="leading-card">
-            <div class="brand-ins"><a href="https://www.dealerindia.com/manufacturer/safedrugs-health-solutions-pvt-ltd-29321256"
-                    target="_blank" aria-label="Arogyamithra"><img src="{{ config('constants.MainDomain') . '/images/dealers-india/795871608.webp' }}"
-                        alt="Arogyamithra" width="188" height="81" loading="lazy"></a>
+            <div class="brand-ins">
+                <a href="https://www.franchiseindia.com/brands/evolve-india-solar.102350" target="_blank" aria-label="Evolve Energy Group">
+                    <img src="https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/evolve-india-solar_2.webp" alt="Evolve Energy Group" width="199" height="81" loading="lazy">
+                </a>
             </div>
-            <div class="leading-card-brand-category"><a href="https://www.dealerindia.com/dir/healthcare-medical-products"
-                    target="_blank" aria-label="Arogyamithra">Healthcare & Medical Products</a>
+            <div class="leading-card-brand-category">
+                <a href="https://www.franchiseindia.com/brands/evolve-india-solar.102350" target="_blank" aria-label="Evolve Energy Group">Healthcare & Medical Products</a>
             </div>
             <div class="leading-card-brand-title">
-                <h2><a href="https://www.dealerindia.com/manufacturer/safedrugs-health-solutions-pvt-ltd-29321256" target="_blank" aria-label="Arogyamithra">Arogyamithra</a></h2>
+                <h2>
+                    <a href="https://www.franchiseindia.com/brands/evolve-india-solar.102350" target="_blank" aria-label="Evolve Energy Group">Evolve Energy Group</a>
+                </h2>
             </div>
             <div class="leading-card-investment">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'निवेश सीमा' : 'Investment Range' }}</div>
-                <div class="card-info-amt">₹ 15 K - 7.5 Lac</div>
+                <div class="card-info-amt">₹ 50 K - 2 Lac</div>
             </div>
             <div class="leading-card-area">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'जगह की आवश्यकता है' : 'Space Required' }}
                 </div>
-                <div class="card-info-amt">100 - 250 Sq. ft</div>
+                <div class="card-info-amt">N/A</div>
             </div>
             <div class="leading-card-outlets">
                 <div class="card-info">{{ Request::segment(1) == 'hi' ? 'स्थान' : 'Location' }}</div>
-                <div class="card-info-amt">Telangana, Andhra Pradesh</div>
+                <div class="card-info-amt">Delhi, Haryana +33 More</div>
             </div>
 
-            <a href="https://www.dealerindia.com/manufacturer/safedrugs-health-solutions-pvt-ltd-29321256" target="_blank"
-                class="know-more" aria-label="Arogyamithra">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}</a>
+            <a href="https://www.franchiseindia.com/brands/evolve-india-solar.102350" target="_blank" class="know-more" aria-label="Evolve Energy Group">{{ Request::segment(1) == 'hi' ? 'अधिक जानिए' : 'Know More' }}
+            </a>
         </div>
 
 

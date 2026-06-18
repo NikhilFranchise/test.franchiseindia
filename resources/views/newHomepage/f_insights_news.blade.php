@@ -238,7 +238,8 @@
 <section class="newssection section-30" id="newssection">
     <div class="container">
         <div class="section-ptb">
-            <h2>{{ Request::segment(1) == 'hi' ? 'फ्रैंचाइज के बारे में गहन जानकारियां और खबरें' : 'Franchise Insights and News' }}
+            <h2>{{ Request::segment(1) == 'hi' ? 'फ्रैंचाइज के बारे में गहन जानकारियां और खबरें' : 'Franchise Insights
+                and News' }}
             </h2>
         </div>
         <ul class="nav nav-tabs" role="tablist">
@@ -265,97 +266,88 @@
                         <div class="item active">
                             <ul class="what-new">
                                 @foreach ($articles as $art)
-                                    @if ($loop->index < 8)
-                                    {{-- @dd($art); --}}
-                                        @php
-                                            $locale = request()->segment(1) == 'hi' ? 'hi' : 'en';
-                                            $mainDomain = config('constants.MainDomain');
-                                            $url = "{$mainDomain}/insights/{$locale}/article/{$art->slug}.{$art->news_id}";
-                                            $imgUrl = \App\Http\Controllers\InsightsController::createimgurl(
-                                                $art->image,
-                                            );
-                                            $cat = $art->category->first() ?? '';
-                                            $categoryName = $cat ? $cat->catname : '';
-                                            $catslug = $cat->slug ?? Str::slug($categoryName); // Safely access the slug or create it from the category name
-                                            $caturl = "{$mainDomain}/insights/{$locale}/{$catslug}";
+                                @if ($loop->index < 8) @php $locale=app()->getLocale();
+                                    // $mainDomain = config('constants.MainDomain');
+                                    $url = insightsUrl($art);
+                                    $imgUrl = insightsImageUrl($art->image, $locale);
+                                    $cat = $art->category ?? '';
+                                    $categoryName = $cat ? $cat->catname : '';
+                                    $caturl = insightsCategoryUrl($cat, $locale);
 
-                                        @endphp
-                                        <li>
-                                            <div class="new-cat-list">
-                                                <div class="cat-img">
-                                                    <a href="{{ $url }}" target="_blank"
-                                                        aria-label="{{ $art->title }}">
-                                                        <img src="{{ $imgUrl }}" alt="{{ $art->title }}"
-                                                            height="" width="" loading="lazy">
-                                                    </a>
-                                                    <div class="info">
-                                                        <div class="search-count">
-                                                            <div class="vertical-mid">
-                                                                <div class="bdr">
-                                                                    <div class="count">
-                                                                        <a href="{{ $caturl }}" target="_blank"
-                                                                            aria-label="{{ $categoryName }}">{{ $categoryName }}</a>
-                                                                    </div>
-                                                                    <div class="name">
-                                                                        <a href="{{ $url }}" target="_blank"
-                                                                            aria-label="{{ $art->title }}">{{ $art->title }}</a>
-                                                                    </div>
-
+                                    @endphp
+                                    <li>
+                                        <div class="new-cat-list">
+                                            <div class="cat-img">
+                                                <a href="{{ $url }}" target="_blank" aria-label="{{ $art->title }}">
+                                                    <img src="{{ $imgUrl }}" alt="{{ $art->title }}" height="" width=""
+                                                        loading="lazy">
+                                                </a>
+                                                <div class="info">
+                                                    <div class="search-count">
+                                                        <div class="vertical-mid">
+                                                            <div class="bdr">
+                                                                <div class="count">
+                                                                    <a href="{{ $caturl }}" target="_blank"
+                                                                        aria-label="{{ $categoryName }}">{{
+                                                                        $categoryName }}</a>
                                                                 </div>
+                                                                <div class="name">
+                                                                    <a href="{{ $url }}" target="_blank"
+                                                                        aria-label="{{ $art->title }}">{{ $art->title
+                                                                        }}</a>
+                                                                </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                        </li>
+                                            </div>
+                                    </li>
                                     @endif
-                                @endforeach
+                                    @endforeach
                             </ul>
                         </div>
                         <div class="item">
                             <ul class="what-new">
                                 @foreach ($articles as $art)
-                                    @if ($loop->index >= 8)
-                                        @php
-                                            $locale = request()->segment(1) == 'hi' ? 'hi' : 'en';
-                                            $mainDomain = config('constants.MainDomain');
-                                            $url = "{$mainDomain}/insights/{$locale}/article/{$art->slug}.{$art->news_id}";
-                                            $imgUrl = \App\Http\Controllers\InsightsController::createimgurl(
-                                                $art->image,
-                                            );
-                                            $cat = $art->category->first();
-                                            $categoryName = $cat ? $cat->catname : '';
-                                            $catslug = $cat->slug ?? Str::slug($categoryName); // Safely access the slug or create it from the category name
-                                            $caturl1 = "{$mainDomain}/insights/{$locale}/{$catslug}";
+                                @if ($loop->index >= 8)
+                                @php
 
-                                        @endphp
-                                        <li>
-                                            <div class="new-cat-list">
-                                                <div class="cat-img">
-                                                    <a href="{{ $url }}" target="_blank"
-                                                        aria-label="{{ $art->title }}">
-                                                        <img src="{{ $imgUrl }}" alt="{{ $art->title }}"
-                                                            height="" width="" loading="lazy">
-                                                    </a>
-                                                    <div class="info">
-                                                        <div class="search-count">
-                                                            <div class="vertical-mid">
-                                                                <div class="bdr">
-                                                                    <div class="count">
-                                                                        <a href="{{ $caturl }}" target="_blank"
-                                                                            aria-label="">{{ $categoryName }}</a>
-                                                                    </div>
-                                                                    <div class="name">
-                                                                        <a href="{{ $url }}" target="_blank"
-                                                                            aria-label="{{ $art->title }}">{{ $art->title }}</a>
-                                                                    </div>
+                                $url = insightsUrl($art, $locale);
+                                $imgUrl = insightsImageUrl($art->image, $locale);
+                                $cat = $art->category ?? '';
+                                $categoryName = $cat ? $cat->catname : '';
+                                $caturl = insightsCategoryUrl($cat, $locale);
 
-                                                                </div>
+                                @endphp
+                                <li>
+                                    <div class="new-cat-list">
+                                        <div class="cat-img">
+                                            <a href="{{ $url }}" target="_blank" aria-label="{{ $art->title }}">
+                                                <img src="{{ $imgUrl }}" alt="{{ $art->title }}" height="" width=""
+                                                    loading="lazy">
+                                            </a>
+                                            <div class="info">
+                                                <div class="search-count">
+                                                    <div class="vertical-mid">
+                                                        <div class="bdr">
+                                                            <div class="count">
+                                                                <a href="{{ $caturl }}" target="_blank"
+                                                                    aria-label="{{ $categoryName }}">{{
+                                                                    $categoryName }}</a>
                                                             </div>
+                                                            <div class="name">
+                                                                <a href="{{ $url }}" target="_blank"
+                                                                    aria-label="{{ $art->title }}">{{ $art->title }}</a>
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
-                                        </li>
-                                    @endif
+                                            </div>
+                                        </div>
+                                </li>
+                                @endif
                                 @endforeach
                             </ul>
                         </div>
@@ -376,96 +368,87 @@
                         <div class="item active">
                             <ul class="what-new">
                                 @foreach ($news as $new)
-                                    @if ($loop->index < 8)
-                                        @php
-                                            $locale = request()->segment(1) == 'hi' ? 'hi' : 'en';
-                                            $mainDomain = config('constants.MainDomain');
-                                            $url = "{$mainDomain}/insights/{$locale}/news/{$new->slug}.{$new->news_id}";
+                                @if ($loop->index < 8) @php $locale=app()->getLocale();
+                                    $url = insightsUrl($new, $locale);
+                                    $imgUrl = insightsImageUrl($new->image, $locale);
+                                    $cat = $new->category ?? '';
+                                    $categoryName = $cat ? $cat->catname : '';
+                                    $caturl = insightsCategoryUrl($cat, $locale);
 
-                                            $imgUrl = \App\Http\Controllers\InsightsController::createimgurl(
-                                                $new->image,
-                                            );
-                                            $cat = $new->category->first();
-                                            $categoryName = $cat ? $cat->catname : '';
-                                            $caturl = "{$mainDomain}/insights/{$locale}/{$cat->slug}";
-
-                                        @endphp
-                                        <li>
-                                            <div class="new-cat-list">
-                                                <div class="cat-img">
-                                                    <a href="{{ $url }}" target="_blank"
-                                                        aria-label="{{ $new->title }}">
-                                                        <img src="{{ $imgUrl }}" alt="{{ $new->title }}"
-                                                            height="" width="" loading="lazy">
-                                                    </a>
-                                                    <div class="info">
-                                                        <div class="search-count">
-                                                            <div class="vertical-mid">
-                                                                <div class="bdr">
-                                                                    <div class="count">
-                                                                        <a href="{{ $caturl }}" target="_blank"
-                                                                            aria-label="{{ $cat->catname }}">{{ $categoryName }}</a>
-                                                                    </div>
-                                                                    <div class="name">
-                                                                        <a href="{{ $url }}" target="_blank"
-                                                                            aria-label="{{ $new->title }}">{{ $new->title }}</a>
-                                                                    </div>
-
+                                    @endphp
+                                    <li>
+                                        <div class="new-cat-list">
+                                            <div class="cat-img">
+                                                <a href="{{ $url }}" target="_blank" aria-label="{{ $new->title }}">
+                                                    <img src="{{ $imgUrl }}" alt="{{ $new->title }}" height="" width=""
+                                                        loading="lazy">
+                                                </a>
+                                                <div class="info">
+                                                    <div class="search-count">
+                                                        <div class="vertical-mid">
+                                                            <div class="bdr">
+                                                                <div class="count">
+                                                                    <a href="{{ $caturl }}" target="_blank"
+                                                                        aria-label="{{ $categoryName }}">{{
+                                                                        $categoryName }}</a>
                                                                 </div>
+                                                                <div class="name">
+                                                                    <a href="{{ $url }}" target="_blank"
+                                                                        aria-label="{{ $new->title }}">{{ $new->title
+                                                                        }}</a>
+                                                                </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                        </li>
+                                            </div>
+                                    </li>
                                     @endif
-                                @endforeach
+                                    @endforeach
                             </ul>
                         </div>
                         <div class="item">
                             <ul class="what-new">
                                 @foreach ($news as $new)
-                                    @if ($loop->index >= 8)
-                                        @php
-                                            $locale = request()->segment(1) == 'hi' ? 'hi' : 'en';
-                                            $mainDomain = config('constants.MainDomain');
-                                            $url = "{$mainDomain}/insights/{$locale}/news/{$new->slug}.{$new->news_id}";
+                                @if ($loop->index >= 8)
+                                @php
+                                $locale = app()->getLocale();
+                                $url = insightsUrl($new, $locale);
+                                $imgUrl = insightsImageUrl($new->image, $locale);
+                                $cat = $new->category ?? '';
+                                $categoryName = $cat ? $cat->catname : '';
+                                $caturl = insightsCategoryUrl($cat, $locale);
 
-                                            $imgUrl = \App\Http\Controllers\InsightsController::createimgurl(
-                                                $new->image,
-                                            );
-                                            $cat = $new->category->first();
-                                            $categoryName = $cat ? $cat->catname : '';
-                                            $caturl = "{$mainDomain}/insights/{$locale}/{$cat->slug}";
-
-                                        @endphp
-                                        <li>
-                                            <div class="new-cat-list">
-                                                <div class="cat-img">
-                                                    <a href="{{ $url }}" target="_blank"
-                                                        aria-label="{{ $new->title }}">
-                                                        <img src="{{ $imgUrl }}" alt="{{ $new->title }}"
-                                                            height="" width="" loading="lazy">
-                                                    </a>
-                                                    <div class="info">
-                                                        <div class="search-count">
-                                                            <div class="vertical-mid">
-                                                                <div class="bdr">
-                                                                    <div class="count">
-                                                                        <a href="{{ $caturl }}" target="_blank"
-                                                                            aria-label="">{{ $categoryName }}</a>
-                                                                    </div>
-                                                                    <div class="name">
-                                                                        <a href="{{ $url }}" target="_blank"
-                                                                            aria-label="{{ $new->title }}">{{ $new->title }}</a>
-                                                                    </div>
-
-                                                                </div>
+                                @endphp
+                                <li>
+                                    <div class="new-cat-list">
+                                        <div class="cat-img">
+                                            <a href="{{ $url }}" target="_blank" aria-label="{{ $new->title }}">
+                                                <img src="{{ $imgUrl }}" alt="{{ $new->title }}" height="" width=""
+                                                    loading="lazy">
+                                            </a>
+                                            <div class="info">
+                                                <div class="search-count">
+                                                    <div class="vertical-mid">
+                                                        <div class="bdr">
+                                                            <div class="count">
+                                                                <a href="{{ $caturl }}" target="_blank"
+                                                                    aria-label="{{ $categoryName }}">{{
+                                                                    $categoryName }}</a>
                                                             </div>
+                                                            <div class="name">
+                                                                <a href="{{ $url }}" target="_blank"
+                                                                    aria-label="{{ $new->title }}">{{ $new->title }}</a>
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
-                                        </li>
-                                    @endif
+                                            </div>
+                                        </div>
+                                </li>
+                                @endif
                                 @endforeach
                             </ul>
                         </div>
@@ -486,96 +469,88 @@
                         <div class="item active">
                             <ul class="what-new">
                                 @foreach ($interviews as $inter)
-                                    @if ($loop->index < 8)
-                                        @php
-                                            $locale = request()->segment(1) == 'hi' ? 'hi' : 'en';
-                                            $mainDomain = config('constants.MainDomain');
-                                            $url = "{$mainDomain}/insights/{$locale}/interview/{$inter->slug}.{$inter->news_id}";
+                                @if ($loop->index < 8) @php $url=insightsUrl($inter, $locale);
+                                    $imgUrl=insightsImageUrl($inter->image, $locale);
+                                    $cat = $inter->category ?? '';
+                                    $categoryName = $cat ? $cat->catname : '';
+                                    $caturl = insightsCategoryUrl($cat, $locale);
 
-                                            $imgUrl = \App\Http\Controllers\InsightsController::createimgurl(
-                                                $inter->image,
-                                            );
-                                            $cat = $inter->category->first();
-                                            $categoryName = $cat ? $cat->catname : '';
-                                            $caturl = "{$mainDomain}/insights/{$locale}/{$cat->slug}";
-
-                                        @endphp
-                                        <li>
-                                            <div class="new-cat-list">
-                                                <div class="cat-img">
-                                                    <a href="{{ $url }}" target="_blank"
-                                                        aria-label="{{ $inter->title }}">
-                                                        <img src="{{ $imgUrl }}" alt="{{ $inter->title }}"
-                                                            height="" width="" loading="lazy">
-                                                    </a>
-                                                    <div class="info">
-                                                        <div class="search-count">
-                                                            <div class="vertical-mid">
-                                                                <div class="bdr">
-                                                                    <div class="count">
-                                                                        <a href="{{ $caturl }}" target="_blank"
-                                                                            aria-label="">{{ $categoryName }}</a>
-                                                                    </div>
-                                                                    <div class="name">
-                                                                        <a href="{{ $url }}" target="_blank"
-                                                                            aria-label="{{ $inter->title }}">{{ $inter->title }}</a>
-                                                                    </div>
-
+                                    @endphp
+                                    <li>
+                                        <div class="new-cat-list">
+                                            <div class="cat-img">
+                                                <a href="{{ $url }}" target="_blank" aria-label="{{ $inter->title }}">
+                                                    <img src="{{ $imgUrl }}" alt="{{ $inter->title }}" height=""
+                                                        width="" loading="lazy">
+                                                </a>
+                                                <div class="info">
+                                                    <div class="search-count">
+                                                        <div class="vertical-mid">
+                                                            <div class="bdr">
+                                                                <div class="count">
+                                                                    <a href="{{ $caturl }}" target="_blank"
+                                                                        aria-label="{{ $categoryName }}">{{
+                                                                        $categoryName }}</a>
                                                                 </div>
+                                                                <div class="name">
+                                                                    <a href="{{ $url }}" target="_blank"
+                                                                        aria-label="{{ $inter->title }}">{{
+                                                                        $inter->title }}</a>
+                                                                </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                        </li>
+                                            </div>
+                                    </li>
                                     @endif
-                                @endforeach
+                                    @endforeach
 
                             </ul>
                         </div>
                         <div class="item">
                             <ul class="what-new">
                                 @foreach ($interviews as $inter)
-                                    @if ($loop->index >= 8)
-                                        @php
-                                            $locale = request()->segment(1) == 'hi' ? 'hi' : 'en';
-                                            $mainDomain = config('constants.MainDomain');
-                                            $url = "{$mainDomain}/insights/{$locale}/interview/{$inter->slug}.{$inter->news_id}";
-                                            $imgUrl = \App\Http\Controllers\InsightsController::createimgurl(
-                                                $inter->image,
-                                            );
-                                            $cat = $inter->category->first();
-                                            $categoryName = $cat ? $cat->catname : '';
-                                            $caturl = "{$mainDomain}/insights/{$locale}/{$cat->slug}";
+                                @if ($loop->index >= 8)
+                                @php
 
-                                        @endphp
-                                        <li>
-                                            <div class="new-cat-list">
-                                                <div class="cat-img">
-                                                    <a href="{{ $url }}" target="_blank"
-                                                        aria-label="{{ $inter->title }}">
-                                                        <img src="{{ $imgUrl }}" alt="{{ $inter->title }}"
-                                                            height="" width="" loading="lazy">
-                                                    </a>
-                                                    <div class="info">
-                                                        <div class="search-count">
-                                                            <div class="vertical-mid">
-                                                                <div class="bdr">
-                                                                    <div class="count">
-                                                                        <a href="{{ $caturl }}" target="_blank"
-                                                                            aria-label="">{{ $categoryName }}</a>
-                                                                    </div>
-                                                                    <div class="name">
-                                                                        <a href="{{ $url }}" target="_blank"
-                                                                            aria-label="{{ $inter->title }}">{{ $inter->title }}</a>
-                                                                    </div>
+                                $url = insightsUrl($inter, $locale);
+                                $imgUrl = insightsImageUrl($inter->image, $locale);
+                                $cat = $inter->category ?? '';
+                                $categoryName = $cat ? $cat->catname : '';
+                                $caturl = insightsCategoryUrl($cat, $locale);
 
-                                                                </div>
+                                @endphp
+                                <li>
+                                    <div class="new-cat-list">
+                                        <div class="cat-img">
+                                            <a href="{{ $url }}" target="_blank" aria-label="{{ $inter->title }}">
+                                                <img src="{{ $imgUrl }}" alt="{{ $inter->title }}" height="" width=""
+                                                    loading="lazy">
+                                            </a>
+                                            <div class="info">
+                                                <div class="search-count">
+                                                    <div class="vertical-mid">
+                                                        <div class="bdr">
+                                                            <div class="count">
+                                                                <a href="{{ $caturl }}" target="_blank"
+                                                                    aria-label="{{ $categoryName }}">{{
+                                                                    $categoryName }}</a>
                                                             </div>
+                                                            <div class="name">
+                                                                <a href="{{ $url }}" target="_blank"
+                                                                    aria-label="{{ $inter->title }}">{{ $inter->title
+                                                                    }}</a>
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
-                                        </li>
-                                    @endif
+                                            </div>
+                                        </div>
+                                </li>
+                                @endif
                                 @endforeach
                             </ul>
                         </div>

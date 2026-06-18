@@ -20,6 +20,6 @@ class InsightsHindiSubCategory extends Model
 
     public function category()
     {
-        return $this->hasMany(InsightsHindiCategory::class, 'id','mcat_id');
+        return $this->belongsTo(InsightsHindiCategory::class, 'mcat_id', 'id');
     }
 }

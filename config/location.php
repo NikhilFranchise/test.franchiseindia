@@ -387,13 +387,14 @@ return [
         '5' => 'Lakshadweep', 
         '6' => 'Daman and Diu',
         '7' => 'Ladakh'
+
     ],
 
     'stateArr' => [
         "1" => "Andhra Pradesh", 
         "2" => "Arunachal Pradesh", 
         "3" => "Assam", 
-        "4" => "Bihar",   
+        "4" => "Bihar", 
         "5" => "Chandigarh", 
         "6" => "Chhattisgarh", 
         "7" => "Daman and Diu", 
@@ -424,8 +425,8 @@ return [
         "32" => "Uttar Pradesh", 
         "33" => "West Bengal", 
         "34" => "Telangana",
-        "35" => "Andaman and Nicobar",
-        "36"=>  "Ladakh"
+        "35" => 'Andaman and Nicobar',
+        "36" => 'Ladakh'
     ],
 
     
@@ -475,15 +476,19 @@ return [
         '34'=>array('Hyderabad', 'Mahabubnagar', 'Nalgonda', 'Nizamabad', 'Suryapet', 'Warangal'),
         '35'=>array('Port Blair', 'Havelock Island', 'Neil Island', 'Ross Island', 'Diglipur', 'Long Island', 'Clinque Island', 'Mayabunder', 'Little Andaman'),
         '36'=>array('Leh','Kargil','Nubra Valley','Zanskar','Korzok','Spangmik','Hemis','Sham Valley')
+
     ],
 
     "CountryCodes" =>   ["971","213","376","244","1264","1268","54","374","297","61","43","994","1242","973","880","1246","375","32","501","229","1441","975","591","387","267","55","673","359","226","257","855","237","1","238","1345","236","56","86","57","269","242","682","506","385","53","90392","357","42","45","253","1809","1809","593","20","503","240","291","372","251","500","298","679","358","33","594","689","241","220","7880","49","233","350","30","299","1473","590","671","502","224","245","592","509","504","852","36","354","91","62","98","964","353","972","39","1876","81","962","7","254","686","850","82","965","996","856","371","961","266","231","218","417","370","352","853","389","261","265","60","960","223","356","692","596","222","269","52","691","373","377","976","1664","212","258","95","264","674","977","31","687","64","505","227","234","683","672","670","47","968","680","507","675","595","51","63","48","351","1787","974","262","40","7","250","378","239","966","221","381","248","232","65","421","386","677","252","27","34","94","290","1869","1758","249","597","268","46","41","963","886","7","66","228","676","1868","216","90","7","993","1649","688","256","44","380","598","1","7","678","379","58","84","84","84","681","969","967","260","263"
            ],
 
- "City" => array(
-        // "Agra", "Ahmedabad", "Amritsar", "Aurangabad", "Bengaluru", "Bhopal", "Bhubaneswar", "Chandigarh", "Chennai", "Coimbatore", "Dehradun", "Faridabad", "Ghaziabad", "Gurugram", "Guwahati", "Hyderabad", "Indore", "Jabalpur", "Jaipur", "Jamshedpur", "Jodhpur", "Kanpur", "Kochi", "Kolkata", "Kota", "Lucknow", "Ludhiana", "Madurai", "Mangalore", "Meerut", "Mumbai", "Mysuru", "Nagpur", "Nashik", "Navi Mumbai", "New Delhi", "Noida", "Patna", "Prayagraj", "Pune", "Raipur", "Rajkot", "Ranchi", "Shimla", "Surat", "Thiruvananthpuram", "Udaipur", "Vadodara", "Varanasi", "Vijayawada", "Visakhapatnam"
-           "Agra","Ahmedabad","Ajmer","Amrawati","Amritsar","Aurangabad","Bareilly","Bathinda","Bengaluru","Bharatpur","Bhilwara","Bhopal","Bhubaneswar","Bilaspur","Bulandshahr","Chandigarh","Chennai","Chittoor","Coimbatore","Cuttack","Dehradun","Erode","Faridabad","Firozabad","Ghaziabad","Guntur","Gurugram","Guwahati","Gwalior","Hubli","Hyderabad","Indore","Jabalpur","Jaipur","Jalandhar","Jammu","Jamshedpur","Jhansi","Jodhpur","Kanpur","Kochi","Kolkata","Kota","Kottayam","Kozhikode","Lucknow","Ludhiana","Madurai","Mangalore","Meerut","Moradabad","Mumbai","Mysuru","Nagpur","Nashik","Navi Mumbai","Nellore","New Delhi","Noida","Panchkula","Panipat","Patna","Prayagraj","Puducherry","Pune","Raipur","Rajkot","Ranchi","Shimla","Srinagar","Surat","Thiruvananthpuram ","Thrissur","Udaipur","Ujjain","Vadodara","Varanasi","Vellore","Vijayawada","Visakhapatnam","Warangal"
-    ),
+//  "City" => array(
+//         "Agra", "Ahmedabad", "Amritsar", "Aurangabad", "Bengaluru", "Bhopal", "Bhubaneswar", "Chandigarh", "Chennai", "Coimbatore", "Dehradun", "Faridabad", "Ghaziabad", "Gurugram", "Guwahati", "Hyderabad", "Indore", "Jabalpur", "Jaipur", "Jamshedpur", "Jodhpur", "Kanpur", "Kochi", "Kolkata", "Kota", "Lucknow", "Ludhiana", "Madurai", "Mangalore", "Meerut", "Mumbai", "Mysuru", "Nagpur", "Nashik", "Navi Mumbai", "New Delhi", "Noida", "Patna", "Prayagraj", "Pune", "Raipur", "Rajkot", "Ranchi", "Shimla", "Surat", "Thiruvananthpuram", "Udaipur", "Vadodara", "Varanasi", "Vijayawada", "Visakhapatnam"
+//     ),
+"City" => array(
+    // "Agra", "Ahmedabad", "Amritsar", "Aurangabad", "Bengaluru", "Bhopal", "Bhubaneswar", "Chandigarh", "Chennai", "Coimbatore", "Dehradun", "Faridabad", "Ghaziabad", "Gurugram", "Guwahati", "Hyderabad", "Indore", "Jabalpur", "Jaipur", "Jamshedpur", "Jodhpur", "Kanpur", "Kochi", "Kolkata", "Kota", "Lucknow", "Ludhiana", "Madurai", "Mangalore", "Meerut", "Mumbai", "Mysuru", "Nagpur", "Nashik", "Navi Mumbai", "New Delhi", "Noida", "Patna", "Prayagraj", "Pune", "Raipur", "Rajkot", "Ranchi", "Shimla", "Surat", "Thiruvananthpuram", "Udaipur", "Vadodara", "Varanasi", "Vijayawada", "Visakhapatnam"
+       "Agra","Ahmedabad","Ajmer","Amrawati","Amritsar","Aurangabad","Bareilly","Bathinda","Bengaluru","Bharatpur","Bhilwara","Bhopal","Bhubaneswar","Bilaspur","Bulandshahr","Chandigarh","Chennai","Chittoor","Coimbatore","Cuttack","Dehradun","Erode","Faridabad","Firozabad","Ghaziabad","Guntur","Gurugram","Guwahati","Gwalior","Hubli","Hyderabad","Indore","Jabalpur","Jaipur","Jalandhar","Jammu","Jamshedpur","Jhansi","Jodhpur","Kanpur","Kochi","Kolkata","Kota","Kottayam","Kozhikode","Lucknow","Ludhiana","Madurai","Mangalore","Meerut","Moradabad","Mumbai","Mysuru","Nagpur","Nashik","Navi Mumbai","Nellore","New Delhi","Noida","Panchkula","Panipat","Patna","Prayagraj","Puducherry","Pune","Raipur","Rajkot","Ranchi","Shimla","Srinagar","Surat","Thiruvananthpuram ","Thrissur","Udaipur","Ujjain","Vadodara","Varanasi","Vellore","Vijayawada","Visakhapatnam","Warangal"
+),
 
     "Hindicity" => array (
         "आगरा", "अहमदाबाद", "अमृतसर", "औरंगाबाद", "बेंगलुरु", "भोपाल", "भुवनेश्वर", "चंडीगढ़", "चेन्नई", "कोयंबटूर", "देहरादून", "फरीदाबाद", "गाजियाबाद "," गुरुग्राम "," गुवाहाटी "," हैदराबाद "," इंदौर "," जबलपुर "," जयपुर "," जमशेदपुर "," जोधपुर "," कानपुर "," कोच्चि "," कोलकाता "," कोटा ", "लखनऊ", "लुधियाना", "मदुरै", "मैंगलोर", "मेरठ", "मुंबई", "मैसूरु", "नागपुर", "नासिक", "नवी मुंबई", "नई दिल्ली", "नोएडा", "पटना", "प्रयागराज", "पुणे", "रायपुर", "राजकोट", "रांची", "शिमला", "सूरत", "तिरुवनंतपुरम", "उदयपुर", "वडोदरा", "वाराणसी", "विजयवाड़ा", "विशाखापत्तनम"

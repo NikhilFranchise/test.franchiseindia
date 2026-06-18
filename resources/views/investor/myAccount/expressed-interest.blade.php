@@ -107,7 +107,6 @@
                     url: '{{URL('/inv-lead?flag=confirm')}}',
                     data: {
                         franId: franId,
-                        _token: '{{ csrf_token() }}' // <-- Add this line
                     },
                     success: function (data) {
                         if ($.isNumeric(data)) {
@@ -132,8 +131,6 @@
                 url: '{{URL('/inv-lead?flag=confirmed')}}',
                 data: {
                     franId: data.substr(4), 
-                    _token: '{{ csrf_token() }}' // <-- Add this line
-
                 },
                 success: function () {
                     window.location.reload();

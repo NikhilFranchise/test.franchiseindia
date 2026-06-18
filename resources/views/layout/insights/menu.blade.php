@@ -49,6 +49,8 @@
                             $murl = '/insights/hindi';
                         }
                     @endphp
+                    <!-- <a href="{{ $murl }}" class="logo mr-auto"><img
+                            src="{{ url('insight-new/images/logo.png') }}" alt="Franchise india Insights" /></a> -->
                     <a href="{{ $murl }}" class="logo mr-auto"><img
                             src="https://www.franchiseindia.com/newhomepage/assets/img/Logo.svg" alt="Franchise india Insights" /></a>
 
@@ -134,4 +136,5 @@
         </div>
     </div>
 </header>
-{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<!--  above jquery version is affecting jquery 3.1 and causing error on price range slider  -->

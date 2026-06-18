@@ -232,6 +232,8 @@
                 let sCount2022 = {{ count(config('staticBrands.staticBrands.2022')) }};
                 let sCount2021 = {{ count(config('staticBrands.staticBrands.2021')) }};
                 let sCount2020 = {{ count(config('staticBrands.staticBrands.2020')) }};
+                let sCount2019 = {{ count(config('staticBrands.staticBrands.2019')) }};
+
 
                 function fetchData() {
                     if (isLoading) return;
@@ -269,6 +271,7 @@
                                 2022: sCount2022,
                                 2021: sCount2021,
                                 2020: sCount2020,
+                                2019: sCount2019,
                             };
 
                             const year = response.year;

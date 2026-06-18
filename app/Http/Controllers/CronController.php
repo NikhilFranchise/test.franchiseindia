@@ -212,7 +212,7 @@ class CronController extends Controller
 
         $logMessage = $startMessage . ' End Time : ' . date('Y-m-d H:i:s');
 
-        //Log file generation
+        //Log file generation 
         $this->generateLog($fileName, $logMessage);
     }
 
@@ -342,7 +342,7 @@ class CronController extends Controller
 
         $logMessage = $startMessage . '  Franchisor Ids : ' . $franchisors . 'End Time : ' . date('Y-m-d H:i:s');
 
-        //Log file generation
+        //Log file generation 
         $this->generateLog($fileName, $logMessage);
     }
 
@@ -403,10 +403,9 @@ class CronController extends Controller
                 'membership_weightage_backup' => 0,
                 'is_fixed_brand' => 0
             ]);
-        // ----------------------
-        // Regional Franchisors
-        // ----------------------
-        $this->expireRegionalBrands(); // Call your regional function here
+
+        // Call your regional function here
+        $this->expireRegionalBrands();
     }
 
     /**
@@ -648,7 +647,6 @@ class CronController extends Controller
                 ->update(['status' => 2]);
         }
     }
-
 
     /**
      * Daily investor report sending to Akash and Rekha for paid investors on last date

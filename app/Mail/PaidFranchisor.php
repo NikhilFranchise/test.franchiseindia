@@ -22,6 +22,8 @@ class PaidFranchisor extends Mailable
     protected $city;
     protected $state;
     protected $franName;
+    protected $profilename;
+
 
     public function __construct($details)
     {
@@ -31,6 +33,8 @@ class PaidFranchisor extends Mailable
         $this->city           = $details[0]['city'];
         $this->state          = $details[0]['state'];
         $this->franName       = $details[1];
+        // $this->profilename    = $details[2];
+
     }
 
     /**
@@ -40,9 +44,9 @@ class PaidFranchisor extends Mailable
      */
     public function build()
     {
-
+		
 		return $this->from('no-reply@franchiseindia.com')
-		    //->bcc('techsupport@franchiseindia.com')
+		    //->bcc('techsupport@franchiseindia.com')			
 			->subject('you have received an enquiry at FranchiseIndia.com')
 			->view('mail.paidfranchisor')
 			->with([
@@ -51,7 +55,9 @@ class PaidFranchisor extends Mailable
 				'phone'    => $this->Phone,
 				'city'     => $this->city,
 				'state'    => $this->state,
-				'franName' => $this->franName
+				'franName' => $this->franName,
+				// 'profilename' => $this->profilename
+
 			]);
     }
 }

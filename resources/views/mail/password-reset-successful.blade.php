@@ -27,7 +27,7 @@
         <td valign="top"><table width="100%" cellspacing="0" cellpadding="0">
                 <tbody>
                 <tr>
-                    <td valign="top" class="td-business" style="padding:0 82px 40px 82px; line-height:22px; text-align:center; font-size:18px; color:#666666;"><span style="font-family: Arial, Helvetica, sans-serif; ">Thanks for visiting FranchiseIndia.com! Your password has been sucessfully changed as per your request.</span></td>
+                    <td valign="top" class="td-business" style="padding:0 82px 40px 82px; line-height:22px; text-align:center; font-size:18px; color:#666666;"><span style="font-family: Arial, Helvetica, sans-serif; ">Thank you for visiting FranchiseIndia.com! Your password has been sucessfully updated as per your request.</span></td>
                 </tr>
                 </tbody>
             </table>
@@ -39,7 +39,7 @@
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tbody>
                 <tr>
-                    <td valign="top" class="td-business" style="padding:0 82px 40px 82px; line-height:22px; text-align:center; font-size:18px; color:#666666;"><span style="font-family: Arial, Helvetica, sans-serif; ">Login your account in <a href="{{Config('constants.MainDomain')}}/loginform" style="color:#006699; text-decoration:none;">FranchiseIndia.com</a> to view your dashboard, make changes to your profile, upgrade your subscriptions, and much more.</span></td>
+                    <td valign="top" class="td-business" style="padding:0 82px 40px 82px; line-height:22px; text-align:center; font-size:18px; color:#666666;"><span style="font-family: Arial, Helvetica, sans-serif; ">Log in to your account on <a href="{{Config('constants.MainDomain')}}/loginform" style="color:#006699; text-decoration:none;">FranchiseIndia.com</a> to access your dashboard, update your profile, upgrade subscriptions and much more.</span></td>
                 </tr>
                 </tbody>
             </table>

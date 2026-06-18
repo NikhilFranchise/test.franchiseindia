@@ -983,6 +983,4 @@ class ExpressInstaController extends Controller
     {
         Storage::append($path, $msg);
     }
-
-    
 }

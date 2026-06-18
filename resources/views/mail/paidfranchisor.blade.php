@@ -16,13 +16,13 @@
         <td valign="top">
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tbody><tr>
-                    <td valign="top" class="td-business" style="padding:0 90px 26px 90px; line-height:22px; text-align:center; font-size:16px; color:#666666;"><span style="font-family: Arial, Helvetica, sans-serif; ">Greetings from Franchise India!</span></td>
+                    <td valign="top" class="td-business" style="padding:0 90px 26px 90px; line-height:22px; text-align:center; font-size:16px; color:#666666;"><span style="font-family: Arial, Helvetica, sans-serif; ">Congratulations from Franchise India!</span></td>
                 </tr>
                 </tbody>
             </table>
         </td>
     </tr>
-    <tr>
+    {{-- <tr>
         <td valign="top">
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tbody>
@@ -32,13 +32,13 @@
                 </tbody>
             </table>
         </td>
-    </tr>
+    </tr> --}}
     <tr>
         <td valign="top">
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tbody>
                 <tr>
-                    <td valign="top" class="td-business" style="padding:0 76px 40px 76px; line-height:22px; text-align:center; font-size:18px; color:#666666;"><span style="font-family: Arial, Helvetica, sans-serif; "><b style="color:#333;">"{{$name}}"</b> is interested in your brand at FranchiseIndia.com. Please find the below the contact details of the investor</span></td>
+                    <td valign="top" class="td-business" style="padding:0 76px 40px 76px; line-height:22px; text-align:center; font-size:18px; color:#666666;"><span style="font-family: Arial, Helvetica, sans-serif; "><b style="color:#333;">"{{$name}}"</b> has expressed interested in your brand at FranchiseIndia.com. Please find the investor's contact details below</span></td>
                 </tr>
                 </tbody>
             </table>

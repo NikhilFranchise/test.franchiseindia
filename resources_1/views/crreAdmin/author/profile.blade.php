@@ -1,0 +1,535 @@
+@extends('crreAdmin.layout.master')
+@section('content')
+    @push('styles')
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <style>
+            .btn-success {
+                background-color: #28a745;
+                border-color: #28a745;
+                color: #fff;
+                float: right;
+                box-shadow: none;
+            }
+
+            .btn-secondary {
+                background-color: #6c757d;
+                border-color: #5a6268;
+                color: #fff;
+                box-shadow: none;
+            }
+
+            .btn-success:hover {
+                background-color: #218838;
+                border-color: #1e7e34;
+                color: #fff;
+            }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                border-color: #545b62;
+                color: #fff;
+            }
+
+            .password-wrapper {
+                position: relative;
+            }
+
+            .toggle-password {
+                position: absolute;
+                top: 50%;
+                right: 35px;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: #888;
+            }
+
+            .main_input_box input {
+                padding-right: 35px;
+            }
+
+            .is-valid {
+                border: 2px solid #28a745 !important;
+                /* Green */
+            }
+
+            .is-invalid {
+                border: 2px solid #dc3545 !important;
+                /* Red */
+            }
+        </style>
+    @endpush
+    @php
+        // Load once for entire file
+        $user = Auth::guard('crreAdmin')->user();
+        $author = $author ?? null;
+
+        // Role permissions
+        $isSuperAdmin = $user->admin_role === 'superadmin';
+        $isAdmin = $user->admin_role === 'admin';
+        $isManager = $user->admin_role === 'manager';
+
+        // Editable admin roles
+        $roleList = ['author', 'editor', 'manager'];
+
+        // Admin can assign admin
+        if ($isAdmin) {
+            $roleList[] = 'admin';
+        }
+
+        // Superadmin can assign everything including superadmin
+        if ($isSuperAdmin) {
+            $roleList[] = 'admin';
+            $roleList[] = 'superadmin';
+        }
+    @endphp
+    <!--breadcrumbs-->
+    <div id="content-header">
+        <div id="breadcrumb"><a href="{{ route('crreAdmin.dashboard') }}" title="Go to Home" class="tip-bottom"><i
+                    class="fa fa-home"></i> Home</a> <a href="{{ url()->current() }}" class="current">Author Profile</a></div>
+
+    </div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <span class="icon"> <i class="fa fa-users"></i> </span>
+                    <h5>Author Profile</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <form id="editform" method="POST"
+                        action="{{ route(isset($author) ? 'crreAdmin.update.author' : 'crreAdmin.register.author') }}"
+                        enctype="multipart/form-data" class="form-horizontal" onsubmit="return validateform()">
+                        @csrf
+                        <input type="hidden" name="author_id" value="{{ $author->author_id ?? '' }}">
+                        @if (request()->segment(4) == 'profile')
+                            <input type="hidden" name="profile" value="1">
+                        @endif
+                        <div class="row-fluid">
+                            <!-- Left column -->
+                            <div class="span6">
+                                <div class="widget-box">
+                                    <div class="widget-title">
+                                        <h5>General</h5>
+                                    </div>
+                                    <div class="widget-content nopadding">
+
+                                        <div class="control-group">
+                                            <label class="control-label">Author Name :</label>
+                                            <div class="controls">
+                                                <input type="text" name="name" class="span11"
+                                                    value="{{ old('name', $author->title ?? '') }}"
+                                                    placeholder="Enter Author name" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">Company :</label>
+                                            <div class="controls">
+                                                <input type="text" name="company" class="span11"
+                                                    value="{{ old('company', $author->company ?? '') }}"
+                                                    placeholder="Enter Company Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">Designation :</label>
+                                            <div class="controls">
+                                                <input type="text" name="designation" class="span11"
+                                                    value="{{ old('designation', $author->designation ?? '') }}"
+                                                    placeholder="Enter Designation">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">Author Role :</label>
+                                            <div class="controls">
+                                                <select name="role" class="span11">
+                                                    @foreach ($roleList as $role)
+                                                        <option value="{{ $role }}"
+                                                            {{ old('role', $author->admin->admin_role ?? '') == $role ? 'selected' : '' }}>
+                                                            {{ ucfirst($role) }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="control-group">
+                                            <label class="control-label">Status :</label>
+                                            <div class="controls">
+                                                <select name="status" class="span11">
+                                                    <option value="A"
+                                                        {{ old('status', $author->status ?? '') == 'A' ? 'selected' : '' }}>
+                                                        Active</option>
+                                                    <option value="D"
+                                                        {{ old('status', $author->status ?? '') == 'D' ? 'selected' : '' }}>
+                                                        Inactive</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">Password :</label>
+                                            <div class="controls">
+                                                <div class="main_input_box password-wrapper">
+                                                    <input type="password" id="password" name="password"
+                                                        placeholder="Password" class="span11 validate-password" />
+                                                    <span class="toggle-password"
+                                                        onclick="togglePassword('password', this)">
+                                                        <i class="fa fa-eye"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Confirm Password -->
+                                        <div class="control-group">
+                                            <label class="control-label">Confirm Password :</label>
+                                            <div class="controls">
+                                                <div class="main_input_box password-wrapper">
+                                                    <input type="password" id="password_confirmation"
+                                                        name="password_confirmation" placeholder="Confirm Password"
+                                                        class="span11 validate-password" />
+                                                    <span class="toggle-password"
+                                                        onclick="togglePassword('password_confirmation', this)">
+                                                        <i class="fa fa-eye"></i>
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">Author Image :</label>
+                                            <div class="controls">
+                                                @if (!empty($author->image))
+                                                    <img src="{{ Config('constants.franAwsS3Url') . ltrim($author->image, '/') }}"
+                                                        class="img-polaroid" width="120" style="margin-bottom:10px;">
+                                                @endif
+                                                <input type="file" name="image" class="span11" accept="image/*">
+                                                <span class="help-inline">Note: * Image size 512x512</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right column -->
+                            <div class="span6">
+                                <div class="widget-box">
+                                    <div class="widget-title">
+                                        <h5>Social</h5>
+                                    </div>
+                                    <div class="widget-content nopadding">
+
+                                        <div class="control-group">
+                                            <label class="control-label">Email ID :</label>
+                                            <div class="controls">
+                                                <input type="email" name="email" class="span11"
+                                                    value="{{ old('email', $author->emailid ?? '') }}"
+                                                    placeholder="Enter Email ID">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">Phone No :</label>
+                                            <div class="controls">
+                                                <input type="tel" name="phone_no" class="span11"
+                                                    value="{{ old('phone_no', $author->phone_no ?? '') }}"
+                                                    placeholder="Enter Phone No">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">Address :</label>
+                                            <div class="controls">
+                                                <input type="text" name="address" class="span11"
+                                                    value="{{ old('address', $author->address ?? '') }}"
+                                                    placeholder="Enter Address">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">LinkedIn :</label>
+                                            <div class="controls">
+                                                <input type="text" name="linkedin_profile" class="span11"
+                                                    value="{{ old('linkedin_profile', $author->linkedin_profile ?? '') }}"
+                                                    placeholder="Enter LinkedIn Profile">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">Facebook :</label>
+                                            <div class="controls">
+                                                <input type="text" name="facebook_profile" class="span11"
+                                                    value="{{ old('facebook_profile', $author->facebook_profile ?? '') }}"
+                                                    placeholder="Enter Facebook Profile">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">Twitter :</label>
+                                            <div class="controls">
+                                                <input type="text" name="twitter_profile" class="span11"
+                                                    value="{{ old('twitter_profile', $author->twitter_profile ?? '') }}"
+                                                    placeholder="Enter Twitter Profile">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="control-label">Instagram :</label>
+                                            <div class="controls">
+                                                <input type="text" name="insta_profile" class="span11"
+                                                    value="{{ old('insta_profile', $author->insta_profile ?? '') }}"
+                                                    placeholder="Enter Instagram Profile">
+                                            </div>
+                                        </div>
+                                        @if ($isAdmin || $isSuperAdmin)
+                                            <div class="control-group">
+                                                <label class="control-label">News Upload Capability :</label>
+                                                <div class="controls">
+                                                    <select name="upload_capability" class="span11">
+                                                        <option value="1"
+                                                            {{ old('upload_capability', $author->news_upload_capability ?? '') == 1 ? 'selected' : '' }}>
+                                                            Yes</option>
+                                                        <option value="0"
+                                                            {{ old('upload_capability', $author->news_upload_capability ?? '') == 0 ? 'selected' : '' }}>
+                                                            No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label">Author Create Capability :</label>
+                                                <div class="controls">
+                                                    <select name="can_create_author" class="span11">
+                                                        <option value="1"
+                                                            {{ old('can_create_author', $author->admin->can_create_author ?? '') == 1 ? 'selected' : '' }}>
+                                                            Yes</option>
+                                                        <option value="0"
+                                                            {{ old('can_create_author', $author->admin->can_create_author ?? '') == 0 ? 'selected' : '' }}>
+                                                            No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- About section -->
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="widget-box">
+                                    <div class="widget-title">
+                                        <h5>About</h5>
+                                    </div>
+                                    <div class="widget-content nopadding">
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <textarea name="description" id="description" class="span11" rows="5">{{ old('description', $author->text ?? '') }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="form-actions">
+                            <a href="{{ route('crreAdmin.dashboard') }}" class="btn btn-secondary"><i
+                                    class="fa fa-times"></i>
+                                Cancel</a>
+                            <button type="submit" class="btn btn-success float-right">
+                                <i class="fa fa-save"></i> Save Author</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    @push('scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="{{ url('tinymce/js/tinymce/tinymce.min.js') }}"></script>
+        <script>
+            let editor_config = {
+                path_absolute: "/",
+                height: 300,
+                selector: "textarea",
+                plugins: [
+                    "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                    "searchreplace wordcount visualblocks visualchars code fullscreen",
+                    "insertdatetime media nonbreaking save table contextmenu directionality",
+                    "emoticons template paste textcolor colorpicker textpattern"
+                ],
+                toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+                relative_urls: false,
+                file_browser_callback: function(field_name, url, type) {
+                    let x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName(
+                        'body')[0].clientWidth;
+                    let y = window.innerHeight || document.documentElement.clientHeight || document
+                        .getElementsByTagName('body')[0].clientHeight;
+
+                    let cmsURL = editor_config.path_absolute + 'laravel-filemanager?field_name=' + field_name;
+                    if (type == 'image') {
+                        cmsURL = cmsURL + "&type=Images";
+                    } else {
+                        cmsURL = cmsURL + "&type=Files";
+                    }
+
+                    tinyMCE.activeEditor.windowManager.open({
+                        file: cmsURL,
+                        title: 'Filemanager',
+                        width: x * 0.8,
+                        height: y * 0.8,
+                        resizable: "yes",
+                        close_previous: "no"
+                    });
+                }
+            };
+
+            tinymce.init(editor_config);
+
+            // password validation
+
+            function togglePassword(id, toggleIcon) {
+                const input = document.getElementById(id);
+                const icon = toggleIcon.querySelector('i');
+
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = "password";
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            }
+
+            $(document).ready(function() {
+                const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+
+                function validateform() {
+                    const name = $('#name').val().trim();
+                    const email = $('#email').val().trim();
+                    const designation = $('#designation').val().trim();
+                    const company = $('#company').val().trim();
+                    const phone_no = $('#phone_no').val().trim();
+
+                    const description = $('#description').val().trim();
+                    const pwd = $('#password').val();
+                    const confirmPwd = $('#password_confirmation').val();
+                    if (name === '') {
+                        toastr.error('Author name is required.');
+                        $('#name').focus();
+                        return false;
+                    }
+                    if (email !== '' && !/^\S+@\S+\.\S+$/.test(email)) {
+                        toastr.error('Please enter a valid email address.');
+                        $('#email').focus();
+                        return false;
+                    }
+                    if (designation === '') {
+                        toastr.error('Designation is required.');
+                        $('#designation').focus();
+                        return false;
+                    }
+                    if (company === '') {
+                        toastr.error('Company name is required.');
+                        $('#company').focus();
+                        return false;
+                    }
+                    if (phone_no === '' || !/^\d{10}$/.test(phone_no)) {
+                        toastr.error('Please enter a valid 10-digit phone number.');
+                        $('#phone_no').focus();
+                        return false;
+                    }
+
+                    if (description === '') {
+                        toastr.error('Description is required.');
+                        $('#description').focus();
+                        return false;
+                    }
+                    if (!regex.test(pwd)) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Weak Password',
+                            text: 'Password must contain at least 6 characters, including an uppercase letter, lowercase letter, and a number.'
+                        });
+                        $('#password').focus();
+                        return false;
+                    }
+
+                    if (pwd !== confirmPwd) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Passwords Do Not Match',
+                            text: 'Please ensure both password fields match.'
+                        });
+                        $('#password_confirmation').focus();
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                // live validation on typing
+                $('#password').on('input', function() {
+                    $(this).removeClass('is-valid is-invalid');
+                    $(this).addClass(regex.test($(this).val()) ? 'is-valid' : 'is-invalid');
+                });
+
+                $('#password_confirmation').on('input', function() {
+                    const pwd = $('#password').val();
+                    $(this).removeClass('is-valid is-invalid');
+                    $(this).addClass($(this).val() === pwd ? 'is-valid' : 'is-invalid');
+                });
+
+                // validate on form submit
+                $('#editform').on('submit', function(e) {
+                    if (!validateform()) {
+                        e.preventDefault();
+                    }
+                });
+            });
+        </script>
+        @if (session('success'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: "{{ session('success') }}",
+                    confirmButtonColor: '#28a745'
+                });
+            </script>
+        @endif
+
+        {{-- // Warning Message --}}
+        @if (session('warning'))
+            <script>
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Warning!',
+                    text: "{{ session('warning') }}",
+                    confirmButtonColor: '#ffc107'
+                });
+            </script>
+        @endif
+
+        @if (session('error'))
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops!',
+                    text: "{{ session('error') }}",
+                    confirmButtonColor: '#dc3545'
+                });
+            </script>
+        @endif
+    @endpush
+@endsection

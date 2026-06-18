@@ -1,3 +1,4 @@
+
 <section class="video-event">
     <div class="container">
         <div class="padset">
@@ -53,7 +54,6 @@
                                         <h2><a href="{{ $videos1[$firstVideoIndex]['url'] }}"
                                                 target="_blank">{{ $videos1[$firstVideoIndex]['title'] }}</a></h2>
                                         <div class="videtxt">
-                                            {{-- {{ $videos1[$firstVideoIndex]['description'] }} --}}
                                             {{-- {{ $videos1[$firstVideoIndex]['description'] }} --}}
                                             {{strip_tags(Str::limit($videos1[$firstVideoIndex]['description'], 200,'...')) }}
 
@@ -115,116 +115,21 @@
                         <div class="swiper-slide">
                             <div class="eshowblk">
                                 <div class="eshowimg">
-                                    <a href="https://www.franchiseindia.net/fro/bengaluru/" target="_blank">
-                                        <img class="" alt="FROEXPO Bengaluru"
-                                            src="https://www.franchiseindia.com/images/fro-bengaluru.webp"></a>
+                                    <a href="https://www.franchiseindia.net/fro-bos/visakhapatnam/" target="_blank">
+                                        <img alt="Franchise Expo Vishakhapatnam"
+                                            src="https://www.franchiseindia.com/images/franchise-expo-vishakhapatnam.webp"></a>
                                 </div>
                                 <div class="eshowcontent">
-                                    <h2>FROEXPO Bengaluru</h2>
+                                    <h2>Franchise Expo Vishakhapatnam</h2>
                                     <div class="eshowtxt">
-                                        31 Aug - 1 Sep 2024, BIEC, Bengaluru, Karnataka
+                                        19 October 2024, Hotel Green Park, Visakhapatnam
                                     </div>
                                     <div class="link-section  text-capitalize">
-                                        <a href="https://www.franchiseindia.net/fro/bengaluru/"
-                                            target="_blank">Registration</a>
-                                    </div>
-                                    <div class="eventhotline  text-capitalize">
-                                        Hotline: <span>+91 9311254088</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="swiper-slide">
-                            <div class="eshowblk">
-                                <div class="eshowimg">
-                                    <a href="https://www.entrepreneurindia.com/" target="_blank">
-                                        <img class="" alt="Entrepreneur 2024"
-                                            src="https://www.franchiseindia.com/images/entrepreneur.webp"></a>
-                                </div>
-                                <div class="eshowcontent">
-                                    <h2>Entrepreneur 2024</h2>
-                                    <div class="eshowtxt">
-                                        4 September 2024, Bharat Mandapam, Delhi
-                                    </div>
-                                    <div class="link-section  text-capitalize">
-                                        <a href="https://www.entrepreneurindia.com/" target="_blank">Registration</a>
-                                    </div>
-                                    <div class="eventhotline text-capitalize">
-                                        Hotline: <span>+91 7290037182</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="swiper-slide">
-                            <div class="eshowblk">
-                                <div class="eshowimg">
-                                    <a href="https://www.franchiseindia.net/fro/ahmedabad/" target="_blank">
-                                        <img class="" alt="FROEXPO Gujarat"
-                                            src="https://www.franchiseindia.com/images/fro-gujarat.webp"></a>
-                                </div>
-                                <div class="eshowcontent">
-                                    <h2>FROEXPO Ahmedabad</h2>
-                                    <div class="eshowtxt">
-                                        21-22 September 2024, Mahatma Mandir Convention...
-                                    </div>
-                                    <div class="link-section  text-capitalize">
-                                        <a href="https://www.franchiseindia.net/fro/ahmedabad/"
+                                        <a href="https://www.franchiseindia.net/fro-bos/visakhapatnam/"
                                             target="_blank">Registration</a>
                                     </div>
                                     <div class="eventhotline text-capitalize">
-                                        Hotline: <span>+91 9311254088</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="swiper-slide">
-                            <div class="eshowblk">
-                                <div class="eshowimg">
-                                    <a href="https://www.restaurantindia.in/congress/" target="_blank">
-                                        <img class="" alt="Indian Restaurant Congress & Awards 2024"
-                                            src="https://www.franchiseindia.com/images/restaurant.webp"></a>
-                                </div>
-                                <div class="eshowcontent">
-                                    <h2>Indian Restaurant Congress & Awards 2024</h2>
-                                    <div class="eshowtxt">
-                                        8-9 October 2024, YASHOBHOOMI, (IICC), New Delhi
-                                    </div>
-                                    <div class="link-section  text-capitalize">
-                                        <a href="https://www.restaurantindia.in/congress/"
-                                            target="_blank">Registration</a>
-                                    </div>
-                                    <div class="eventhotline text-capitalize">
-                                        Hotline: <span>+91 9667698380</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="swiper-slide">
-                            <div class="eshowblk">
-                                <div class="eshowimg">
-                                    <a href="https://www.franglobal.com/oman-franchise-distribution-show/"
-                                        target="_blank">
-                                        <img class="" alt="Oman Franchise Show"
-                                            src="https://www.franchiseindia.com/images/oman.webp"></a>
-                                </div>
-                                <div class="eshowcontent">
-                                    <h2>Oman Franchise Show</h2>
-                                    <div class="eshowtxt">
-                                        13 October 2024, Sheraton Oman Hotel
-                                    </div>
-                                    <div class="link-section  text-capitalize">
-                                        <a href="https://www.franglobal.com/oman-franchise-distribution-show/"
-                                            target="_blank">Registration</a>
-                                    </div>
-                                    <div class="eventhotline text-capitalize">
-                                        Hotline: <span>+91 9717683838</span>
+                                        Hotline: <span>+91 8800638077</span>
                                     </div>
                                 </div>
                             </div>
@@ -235,7 +140,7 @@
                             <div class="eshowblk">
                                 <div class="eshowimg">
                                     <a href="https://www.franchiseindia.com/expo/mumbai/" target="_blank">
-                                        <img class="" alt="Franchise India 2024 Mumbai"
+                                        <img alt="Franchise India 2024 Mumbai"
                                             src="https://www.franchiseindia.com/images/franchise-india.webp"></a>
                                 </div>
                                 <div class="eshowcontent">
@@ -259,7 +164,7 @@
                             <div class="eshowblk">
                                 <div class="eshowimg">
                                     <a href="https://www.irec.asia/mumbai/" target="_blank">
-                                        <img class="" alt="IReC 2024"
+                                        <img alt="IReC 2024"
                                             src="https://www.franchiseindia.com/images/irec.webp"></a>
                                 </div>
                                 <div class="eshowcontent">
@@ -272,6 +177,273 @@
                                     </div>
                                     <div class="eventhotline  text-capitalize">
                                         Hotline: <span>+91 9310438783</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                    <a href="https://www.entrepreneurindia.com/influencer/" target="_blank">
+                                        <img alt="Influencer Awards 2024" src="https://www.franchiseindia.com/images/influencer.webp">
+                                    </a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>Influencer Awards 2024</h2>
+                                    <div class="eshowtxt">
+                                        29 November 2024, Jio World Convention Centre
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a href="https://www.entrepreneurindia.com/influencer/"
+                                            target="_blank">Registration</a>
+                                    </div>
+                                    <div class="eventhotline  text-capitalize">
+                                        Hotline: <span>+91 7869670462</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                         <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                    <a href="https://www.restaurantindia.in/awards/hyderabad/" target="_blank">
+                                        <img alt="Restaurant Awards Hyderabad" src="https://www.franchiseindia.com/images/restaurant-awards.webp">
+                                    </a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>Restaurant Awards Hyderabad</h2>
+                                    <div class="eshowtxt">
+                                        12 December 2024, Hotel Trident, Hyderabad
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a href="https://www.restaurantindia.in/awards/hyderabad/"
+                                            target="_blank">Registration</a>
+                                    </div>
+                                    <div class="eventhotline  text-capitalize">
+                                        Hotline: <span>+91 9654964838</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                    <a href="https://www.successpreneur.in/hyderabad/" target="_blank">
+                                        <img alt="Successpreneur Awards Hyderabad" src="https://www.franchiseindia.com/images/successpreneur-hyderabad.webp">
+                                    </a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>Successpreneur Awards Hyderabad</h2>
+                                    <div class="eshowtxt">
+                                        12 December 2024, Hotel Trident, Hyderabad
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a href="https://www.successpreneur.in/hyderabad/"
+                                            target="_blank">Registration</a>
+                                    </div>
+                                    <div class="eventhotline  text-capitalize">
+                                        Hotline: <span>+91 9958620920</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                    <a href="https://www.franchiseindia.net/fro-bos/bhubaneswar/" target="_blank">
+                                        <img alt="Franchise Expo Bhubaneswar" src="https://www.franchiseindia.com/images/franchise-expo-bhubaneswar.webp">
+                                    </a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>Franchise Expo Bhubaneswar</h2>
+                                    <div class="eshowtxt">
+                                        15 December 2024, Welcomhotel By ITC Hotels
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a href="https://www.franchiseindia.net/fro-bos/bhubaneswar/"
+                                            target="_blank">Registration</a>
+                                    </div>
+                                    <div class="eventhotline  text-capitalize">
+                                        Hotline: <span>+91 8800638077</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                    <a href="https://www.franchiseindia.net/fro-bos/indore/" target="_blank">
+                                        <img alt="Franchise Expo Indore" src="https://www.franchiseindia.com/images/franchise-expo-indore.webp">
+                                    </a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>Franchise Expo Indore</h2>
+                                    <div class="eshowtxt">
+                                        21 December 2024, Sheraton Grand Palace
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a href="https://www.franchiseindia.net/fro-bos/indore/"
+                                            target="_blank">Registration</a>
+                                    </div>
+                                    <div class="eventhotline  text-capitalize">
+                                        Hotline: <span>+91 8800638077</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                    <a href="https://www.franchiseindia.net/fro-bos/patna/" target="_blank">
+                                        <img alt="Franchise Expo Patna" src="https://www.franchiseindia.com/images/franchise-expo-patna.webp">
+                                    </a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>Franchise Expo Patna</h2>
+                                    <div class="eshowtxt">
+                                        12 January 2025, Lemon Tree Premier
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a href="https://www.franchiseindia.net/fro-bos/patna/"
+                                            target="_blank">Registration</a>
+                                    </div>
+                                    <div class="eventhotline  text-capitalize">
+                                        Hotline: <span>+91 8800638077</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                    <a href="https://www.franchiseindia.net/fro-bos/coimbatore/" target="_blank">
+                                        <img alt="Franchise Expo Coimbatore" src="https://www.franchiseindia.com/images/franchise-expo-coimbatore.webp">
+                                    </a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>Franchise Expo Coimbatore</h2>
+                                    <div class="eshowtxt">
+                                        18-19 January 2025, CODISSIA Trade Fair Complex
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a href="https://www.franchiseindia.net/fro-bos/coimbatore/"
+                                            target="_blank">Registration</a>
+                                    </div>
+                                    <div class="eventhotline  text-capitalize">
+                                        Hotline: <span>+91 8800638077</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                         <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                <a>
+                                        <img alt="Saudi Franchise Expo" src="https://www.franchiseindia.com/images/sfe.webp">
+                                    </a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>Saudi Franchise Expo</h2>
+                                    <div class="eshowtxt">
+                                        27-29 January 2025, RIEC, Saudi Arabia
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a>Registration</a>
+                                    </div>
+                                    <div class="eventhotline  text-capitalize">
+                                        Hotline: <span>+91 9717683838</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                    <a href="https://www.franchiseindia.net/fro/hyderabad/" target="_blank">
+                                        <img alt="FROEXPO Hyderabad" src="https://www.franchiseindia.com/images/fro-hyderabad.webp">
+                                    </a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>FROEXPO Hyderabad</h2>
+                                    <div class="eshowtxt">
+                                        8-9 March 2025, Hitex Exhibition Centre,Hall No. 2
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a href="https://www.franchiseindia.net/fro/hyderabad/"
+                                            target="_blank">Registration</a>
+                                    </div>
+                                    <div class="eventhotline  text-capitalize">
+                                        Hotline: <span>+91 9311148342</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                    <a href="https://www.franchiseindia.net/fro/chennai/" target="_blank">
+                                        <img alt="FROEXPO Chennai" src="https://www.franchiseindia.com/images/fro-chennai.webp">
+                                    </a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>FROEXPO Chennai</h2>
+                                    <div class="eshowtxt">
+                                        27-28 June 2025, Chennai Trade Centre, Hall No. 2
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a href="https://www.franchiseindia.net/fro/chennai/"
+                                            target="_blank">Registration</a>
+                                    </div>
+                                    <div class="eventhotline  text-capitalize">
+                                        Hotline: <span>+91 9311148342</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="swiper-slide">
+                            <div class="eshowblk">
+                                <div class="eshowimg">
+                                    <a href="https://www.franchiseindia.net/fro/bengaluru/" target="_blank">
+                                        <img alt="FROEXPO Bengaluru" src="https://www.franchiseindia.com/images/fro-bengaluru.webp">
+                                    </a>
+                                </div>
+                                <div class="eshowcontent">
+                                    <h2>FROEXPO Bengaluru</h2>
+                                    <div class="eshowtxt">
+                                     30-31 August 2025, BIEC, Bengaluru
+                                    </div>
+                                    <div class="link-section  text-capitalize">
+                                        <a href="https://www.franchiseindia.net/fro/bengaluru/"
+                                            target="_blank">Registration</a>
+                                    </div>
+                                    <div class="eventhotline  text-capitalize">
+                                        Hotline: <span>+91 9311148342</span>
                                     </div>
                                 </div>
                             </div>

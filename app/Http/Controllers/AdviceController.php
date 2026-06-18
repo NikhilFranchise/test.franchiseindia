@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\AskFranchisor;
 use App\Models\AskInvestor;
 use App\Mail\FreeAdviceForm;
+use App\Mail\Enquirenow;
+
 use App\Models\Pincode;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
@@ -22,6 +24,11 @@ class AdviceController extends Controller
 
     public function freeadvice(Request $request)
     { // Define validation rules
+       $request->validate([
+            'captcha' => 'required|captcha',
+     ]);
+
+     
         $rules = [
             'email' => 'required_without:emailfreeadvice|email',
             'emailfreeadvice' => 'required_without:email|email',
@@ -38,11 +45,30 @@ class AdviceController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+
+        $countryCode = $request->country_code ?? '+91';
+        $mobileRaw   = $request->mobile ?? $request->mobilefreeadvice;
+
+        // Remove spaces, dashes, etc.
+        $mobileRaw = preg_replace('/\D/', '', $mobileRaw);
+        $mobile = $countryCode . ' ' . $mobileRaw;
+        // Append country code only if NOT +91
+        // if ($countryCode !== '+91') {
+        //     $mobile = $countryCode . ' ' . $mobileRaw;
+        // } else {
+        //     $mobile = $mobileRaw;
+        // }
+        $request->merge([
+            'mobile' => $mobile,
+            'name'   => $request->name ?? $request->namefreeadvice,
+            'country_code' => $countryCode
+        ]);
+        // dd($mobile);
         // Process the request data
         $user = $request->optionsRadios;
         $name = $request->name ?? $request->namefreeadvice;
         $email = $request->email ?? $request->emailfreeadvice;
-        $mobile = $request->mobile ?? $request->mobilefreeadvice;
+        $mobile = $mobile ?? $request->mobilefreeadvice;
         $pincode = $request->pincode ?? $request->pincodefreeadvice;
         $details = $request->details ?? $request->detailsfreeadvice;
         $newsLetter = $request->is_newsletter ?? $request->is_newsletterfreeadvice;
@@ -50,6 +76,19 @@ class AdviceController extends Controller
         $state = "";
         $ip = $request->ip();
         $table = ($user == 'franchisor') ? AskFranchisor::query() : AskInvestor::query();
+
+        // Process the request data
+        // $user = $request->optionsRadios;
+        // $name = $request->name ?? $request->namefreeadvice;
+        // $email = $request->email ?? $request->emailfreeadvice;
+        // $mobile = $request->mobile ?? $request->mobilefreeadvice;
+        // $pincode = $request->pincode ?? $request->pincodefreeadvice;
+        // $details = $request->details ?? $request->detailsfreeadvice;
+        // $newsLetter = $request->is_newsletter ?? $request->is_newsletterfreeadvice;
+        // $city = "";
+        // $state = "";
+        // $ip = $request->ip();
+        // $table = ($user == 'franchisor') ? AskFranchisor::query() : AskInvestor::query();
 
         // Retrieve pincode details
         $pincodeDetails = Pincode::query()->select('city', 'state')->where('pincode', $pincode)->first();
@@ -61,7 +100,8 @@ class AdviceController extends Controller
 
         // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
         // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "info@franchiseindia.com";
-        $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "corp@franchiseindia.net";
+        // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "expo@franchiseindia.com";
+        $mailTo = ($user != 'franchisor') ? "" : "expo@franchiseindia.com";
         $mailcc = ($user != 'franchisor') ? "" : "info@franchiseindia.com";
 
 
@@ -87,9 +127,9 @@ class AdviceController extends Controller
         Mail::getFacadeRoot()->to($mailTo)->cc($mailcc)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
 
         // Subscribe to newsletter if requested
-        if ($newsLetter == 1) {
-            NewsLetterController::createNewsLetter($request->input('email'), "fi");
-        }
+        // if ($newsLetter == 1) {
+        //     NewsLetterController::createNewsLetter($request->input('email'), "fi");
+        // }
 
         if ($request->expectsJson()) {
             return response()->json('true', 200);
@@ -123,8 +163,6 @@ class AdviceController extends Controller
             'is_newsletterfreeadvice' => $request->has('is_newsletterfreeadvice') && !$request->has('is_newsletterfreeadvice1') ? 'required' : 'nullable',
             'is_newsletterfreeadvice1' => $request->has('is_newsletterfreeadvice1') && !$request->has('is_newsletterfreeadvice') ? 'required' : 'nullable',
         ]);
-        // dd('yes');
-
 
         $user = $request->optionsRadios;
         $name = $request->name ?? $request->namefreeadvice;
@@ -146,9 +184,9 @@ class AdviceController extends Controller
         }
 
         // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
-        $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "corp@franchiseindia.net";
-        // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "info@franchiseindia.com";
-        // $mailTo = ($user != 'franchisor') ? "cnihkil@franchiseindia.net" : "cnikhil@franchiseindia.net";
+        // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "expo@franchiseindia.com";      
+        $mailTo = ($user != 'franchisor') ? "" : "expo@franchiseindia.com";
+
         $mailcc = ($user != 'franchisor') ? "" : "info@franchiseindia.com";
 
 
@@ -169,7 +207,7 @@ class AdviceController extends Controller
             return response()->json('Insertion failed..!');
 
 
-        // Mail::getFacadeRoot()->to($mailTo)->cc($mailcc)->bcc("techsupport@franchiseindia.net")->send(new FreeAdviceForm($request));
+        Mail::getFacadeRoot()->to($mailTo)->cc($mailcc)->bcc("techsupport@franchiseindia.net")->send(new FreeAdviceForm($request));
 
         // Mail::getFacadeRoot()->to($mailTo)->bcc("techsupport@franchiseindia.com")->send(new FreeAdviceForm($request));
 
@@ -181,78 +219,6 @@ class AdviceController extends Controller
         //     return redirect('thanks-advice-form');
         // }
     }
-public function sidepopup(Request $request)
-{
-    // Step 1: Validate incoming request
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-        'mobile' => 'required|digits:10',
-        'captcha' => 'required|captcha',
-        'pincode' => 'required|string|max:6',
-        'details' => 'required|string|max:500',
-        'is_newsletter' => 'nullable|boolean',
-    ]);
-
-    // Step 2: Get the values from the request
-    $user = $request->input('optionsRadios');
-    $name = $request->input('name');
-    $email = $request->input('email');
-    $mobile = $request->input('mobile');
-    $pincode = $request->input('pincode');
-    $details = $request->input('details');
-    $newsLetter = $request->input('is_newsletter') ?? 0; // Default to 0 if not checked
-    $city = '';
-    $state = '';
-    $ip = $request->ip();
-
-    // Step 3: Determine which table to insert into based on user type
-    $table = ($user == 'franchisor') ? new AskFranchisor() : new AskInvestor();
-
-    // Step 4: Get city and state based on pincode
-    $pincodeDetails = Pincode::where('pincode', $pincode)->first();
-    if ($pincodeDetails) {
-        $city = ucfirst(strtolower($pincodeDetails->city));
-        $state = ucfirst(strtolower($pincodeDetails->state));
-    }
-
-    // Step 5: Insert data into the respective table
-    $insertData = [
-        'name' => $name,
-        'city' => $city,
-        'state' => $state,
-        'pincode' => $pincode,
-        'email' => $email,
-        'mobile' => $mobile,
-        'details' => $details,
-        'ip' => $ip,
-        'reg_source' => Cookie::get('campaignSource') ?? null, // Get campaign source from cookie
-    ];
-
-    // Insert the data
-    $users = $table->create($insertData);
-
-    // Step 6: Handle insertion failure
-    if (!$users) {
-        return response()->json(['error' => 'Insertion failed..!'], 500);
-    }
-
-    // Step 7: Send the email (if needed)
-    $mailTo = ($user == 'franchisor') ? "corp@franchiseindia.net" : "subscribe@franchiseindia.net";
-    $mailcc = ($user == 'franchisor') ? "info@franchiseindia.com" : "";
-
-    // Uncomment and use the code below when you set up email functionality
-    // Mail::to($mailTo)->cc($mailcc)->bcc("techsupport@franchiseindia.net")->send(new FreeAdviceForm($request));
-
-    // Step 8: Handle Newsletter Subscription if opted
-    if ($newsLetter == 1) {
-        NewsLetterController::createNewsLetter($email, "fi");
-    }
-
-    // Step 9: Return success response
-    return response()->json(['success' => 'Form submitted successfully.']);
-}
-
 
     public function reloadCaptcha()
     {
@@ -293,7 +259,9 @@ public function sidepopup(Request $request)
 
         // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
         // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "info@franchiseindia.com";
-        $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "corp@franchiseindia.net";
+
+        // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "expo@franchiseindia.com";
+        $mailTo = ($user != 'franchisor') ? "" : "expo@franchiseindia.com";
         $mailcc = ($user != 'franchisor') ? "" : "info@franchiseindia.com";
 
 
@@ -323,103 +291,7 @@ public function sidepopup(Request $request)
         //     return redirect('thanks-advice-form');
         // }
     }
-    // public function freeadviceHome_popup2(Request $request)
-    // {
-    //     // dd('yes'); 
-    //     $validator = Validator::make(
-    //         $request->all(),
-    //         [
-    //             'optionsRadios1' => 'required|in:franchisor,investor',
-    //             'namefreeadvice1' => 'required|string|max:255',
-    //             'emailfreeadvice1' => 'required|email|max:255',
-    //             'mobilefreeadvice1' => ['required', 'regex:/^[6-9][0-9]{9}$/'],
-    //             'pincodefreeadvice1' => 'nullable|digits:6',
-    //             'detailsfreeadvice1' => 'nullable|string|max:1000',
-    //             'captcha' => 'required|captcha'
-    //         ],
-    //         [
-    //             // Custom error messages
-    //             'captcha.captcha' => 'Invalid captcha entered.',
-    //             // 'mobilefreeadvice1.regex' => 'Mobile number must be 10 digits and start with 6, 7, 8, or 9.',
-    //             // 'optionsRadios1.in' => 'Please select a valid option: franchisor or investor.',
-    //         ]
-    //     );
 
-    //     if ($validator->fails()) {
-    //         return response()->json(['errors' => $validator->errors()], 422);
-    //     }
-
-    //     $user = $request->optionsRadios1;
-    //     $name =  $request->namefreeadvice1;
-    //     $email = $request->emailfreeadvice1;
-    //     $mobile = $request->mobilefreeadvice1;
-    //     $pincode =  $request->pincodefreeadvice1;
-    //     $details =  $request->detailsfreeadvice1;
-    //     $newsLetter =  $request->is_newsletterfreeadvice1;
-    //     $city = "";
-    //     $state = "";
-    //     $ip = $request->ip();
-    //     $table = ($user == 'franchisor') ? AskFranchisor::query() : AskInvestor::query();
-
-    //     // dd($mobile);
-    //     // dd($request);
-    //     $pincodeDetails = Pincode::query()->select('city', 'state')->where('pincode', $pincode)->first();
-    //     if (!empty($pincodeDetails)) {
-    //         $city  = ucfirst(strtolower($pincodeDetails->city));
-    //         $state = ucfirst(strtolower($pincodeDetails->state));
-    //     }
-
-    //     // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "mgaurav@franchiseindia.com";
-    //     // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "corp@franchiseindia.net";      
-    //     // $mailTo = ($user != 'franchisor') ? "subscribe@franchiseindia.net" : "info@franchiseindia.com";
-    //     // $mailTo = ($user == 'franchisor') ? "corp@franchiseindia.net" : "subscribe@franchiseindia.net";
-    //     // $mailTo = ($user == 'franchisor') ? "corp@franchiseindia.net" : "";
-    //     $mailTo = ($user == 'franchisor') ? "expo@franchiseindia.com" : "";
-
-
-    //     $mailcc = ($user == 'franchisor') ? "" : "info@franchiseindia.com";
-
-
-
-    //     $users = $table->insert([
-    //         'name' => $name,
-    //         'city' => $city,
-    //         'state' => $state,
-    //         'pincode' => $pincode,
-    //         'email' => $email,
-    //         'mobile' => $mobile,
-    //         'details' => $details,
-    //         'ip' => $ip,
-    //         'reg_source' => !empty(Cookie::get('campaignSource')) ? Cookie::get('campaignSource') : ""
-    //     ]);
-    //     // return response()->json($users);
-    //     //If insertion fails
-
-    //     $details = (object)[
-    //         'optionsRadios' => $request->optionsRadios1,
-    //         'name' => $name,
-    //         'email' => $email,
-    //         'mobile' => $mobile,
-    //         'pincode' => $pincode,
-    //         'details' => $details
-    //     ];
-    //     if (!$users)
-    //         return response()->json('Insertion failed..!');
-
-
-    //     Mail::getFacadeRoot()->to($mailTo)->cc($mailcc)->bcc("techsupport@franchiseindia.net")->send(new FreeAdviceForm($details));
-
-
-    //     if ($newsLetter == 1)
-    //         NewsLetterController::createNewsLetter($request->input('email'), "fi");
-
-
-
-
-    //     // Process and save your form logic here...
-
-    //     return response()->json(['message' => 'Form submitted successfully.']);
-    // }
 
     public function freeadviceHome_popup2(Request $request)
     {
@@ -515,13 +387,17 @@ public function sidepopup(Request $request)
 {
     $validator = Validator::make($request->all(), [
         'name'   => 'required|string|max:255',
-        'mobile' => 'required|digits:10',
+        'mobile' => 'required',
         'email'  => 'required|email',
         'message'=> 'required|string',
         'state'  => 'required',
         'city'   => 'required',
         'user'   => 'required|in:franchisor,investor',
-        'brand_name' => 'required_if:user,investor'
+        'brand_name' => 'required_if:user,franchisor',
+        'country' => 'required',
+        'pincode' => 'required',
+        'captcha' => 'required|captcha',
+
     ]);
 
     // Return JS-friendly validation errors
@@ -531,6 +407,14 @@ public function sidepopup(Request $request)
             'errors' => $validator->errors()
         ], 422);
     }
+    
+        $countryCode = $request->country_code ?? '+91';
+        $mobileRaw   = $request->mobile ;
+
+        // Remove spaces, dashes, etc.
+        $mobileRaw = preg_replace('/\D/', '', $mobileRaw);
+
+        $mobile = $countryCode . ' ' . $mobileRaw;
 
     $user = $request->user;
     $table = ($user == 'franchisor') ? AskFranchisor::query() : AskInvestor::query();
@@ -538,15 +422,16 @@ public function sidepopup(Request $request)
     $insertData = [
         'name'     => $request->name,
         'email'    => $request->email,
-        'mobile'   => $request->mobile,
+        'mobile'   => $mobile,
         'details'  => $request->message,
         'city'     => $request->city,
         'state'    => $request->state,
         'ip'       => $request->ip(),
-        'country'  => 'India'
+        'country'  =>  $request->country,
+        'pincode'  => $request->pincode
     ];
 
-    if ($user == 'investor') {
+    if ($user == 'franchisor') {
         $insertData['brand_name'] = $request->brand_name;
     }
 
@@ -558,6 +443,12 @@ public function sidepopup(Request $request)
             'message' => 'Database insert failed.'
         ], 500);
     }
+        $mailTo = ($user != 'franchisor') ? "" : "expo@franchiseindia.com";
+        $mailcc = ($user != 'franchisor') ? "" : "info@franchiseindia.com";
+        // $mailTo = ($user != 'franchisor') ? "" : "cnikhil@franchiseindia.net";
+
+        Mail::getFacadeRoot()->to($mailTo)->cc($mailcc)->bcc("techsupport@franchiseindia.com")->send(new Enquirenow($request));
+
 
     return response()->json([
         'status' => 'success',
@@ -635,4 +526,5 @@ public function submitEnquiry2(Request $request)
     // return redirect()->back()->with('success', 'Your enquiry has been submitted!');
     return redirect('thanks-advice-form');
 }
+
 }

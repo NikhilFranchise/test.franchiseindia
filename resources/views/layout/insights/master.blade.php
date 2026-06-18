@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
+
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -9,11 +10,12 @@
         <meta name="keywords" content="@yield('seoKeywords', 'Business News, Franchise News, Entrepreneurship News, Business news India, Start a Business, latest business news, business India, Franchise India, Industry News')" />
     @endif
     <meta name="original-source" content="@yield('url')" />
-    <meta name='robots' content='noindex, nofollow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'  />
     <link href="@yield('canonicalUrl', request()->get('page') ? url()->full() : url()->current())" rel="canonical">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
+
         function gtag() {
             dataLayer.push(arguments);
         }
@@ -63,19 +65,24 @@
     <meta name="twitter:creator" content="@franchiseindia">
     <meta name="twitter:site" content="@franchiseindia">
     <meta name="twitter:domain" content="franchiseindia.com">
+    {{-- <meta content="@yield('index', 'index,follow')" name="robots" /> --}}
     <meta property="fb:app_id" content="110294989480112" />
     <meta name="google-site-verification" content="8W9CXigRDmfNyf8vOfkZBefougI9sPXO4xvDBFLIjaw" />
     <meta name="y_key" content="0f4f718975ac23ed" />
     <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
     @include('layout.insights.headerlinks')
-    @include('includes.banners-new.google-tags')
+    @hasSection('load-gpt')
+        @include('insights.partials.ads')
+    @endif
+    {{-- @include('includes.banners-new.google-tags') --}}
     @yield('header-schema')
     @yield('author-schema')
-    @include('layout.insights.menu')
 </head>
+
 <body>
+    @include('layout.insights.menu')
     <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
-        style="display:none;visibility:hidden"></iframe></noscript>
+            style="display:none;visibility:hidden"></iframe></noscript>
     @yield('content')
     <div class="fixsocial">
         <ul class="sociallist">
@@ -96,4 +103,5 @@
     @include('layout.insights.footer')
     @include('layout.insights.footerlinks')
 </body>
+
 </html>

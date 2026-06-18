@@ -25,6 +25,7 @@ class UserActivity extends Model
         'franchisor_visibility_date',
     ];
 
+
     /**
      * Get the record associated with the user: franchisor.
      */

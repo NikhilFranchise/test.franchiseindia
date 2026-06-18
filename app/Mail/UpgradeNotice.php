@@ -37,8 +37,9 @@ class UpgradeNotice extends Mailable
     public function build()
     {
         return $this->from('no-reply@franchiseindia.com')
-                    ->subject('Reg: Free Franchisor logo upload - alert')
+                    ->subject('Free Franchisor logo upload - Alert')
                     ->cc('service@franchiseindia.net')
+                    ->cc('member@franchiseindia.com')
                     ->view('mail.fran-img-upgrade')
                     ->with(['fid'         => $this->fid,
                             'companyName' => $this->companyName,

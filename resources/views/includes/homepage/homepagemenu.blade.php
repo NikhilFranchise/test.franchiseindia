@@ -1,39 +1,52 @@
-<script language="javascript">$(document).ready(function(){$(".rht-menu").hover(function(){$(".avb",$(this).parent()).addClass("hvr")},function(){$(".avb").removeClass("hvr")})});</script>
+<script language="javascript">
+    $(document).ready(function() {
+        $(".rht-menu").hover(function() {
+            $(".avb", $(this).parent()).addClass("hvr")
+        }, function() {
+            $(".avb").removeClass("hvr")
+        })
+    });
+</script>
 <div class="cat-lst-lftnew">
     <div class="cat-lst-lft">
         <div class="cat-sec">
             <ul class="lft-menu">
                 @php
-                    $categoryArr = Config('constants.CategoryArr');
-                    asort($categoryArr);
+                $categoryArr = Config('constants.CategoryArr');
+                asort($categoryArr);
                 @endphp
                 @foreach($categoryArr as $key => $value)
-                    <li>
-                        <a target="_blank" href="/business-opportunities/{{Config('category.SeoCategoryArr.'.$key)}}.m{{$key}}" class="avb"><div class="cat-{{$loop->index > 8 ? $loop->index+2 : $loop->index+1 }}sprite"></div><span>{{$value}}</span></a>
-                        <div class="rht-menu">
-                            <div class="row">
-                                @php
-                                    $count = 1;
-                                @endphp
-                                @foreach(Config('constants.subCategoryArr.'.$key) as $key1 => $value1)
-                                    @if ($count%4 == 1) <div class="row"> @endif
-                                    <div class="col-xs-12 col-sm-3 col-md-3 sec-pad">
-                                        <a target="_blank" href="/business-opportunities/{{Config('category.SeoSubCategoryArr.'.$key1)}}.sc{{$key1}}"><div class="cat-ttl">{{$value1}}</div></a>
-                                        <ul>
-                                            @foreach(Config('constants.subSubCategoryArr.'.$key1) as $key2 => $value2)
-                                                @if($loop->index < 4 && in_array($key2, json_decode(\Illuminate\Support\Facades\Storage::getFacadeRoot()->get('ssc.json'), true)))
-                                                    <li><a target="_blank" href="/business-opportunities/{{Config('category.SeoSubSubCategoryArr.'.$key2)}}.ssc{{$key2}}">{{$value2}}</a></li>
-                                                @endif
+                <li>
+                    <a target="_blank" href="/business-opportunities/{{Config('category.SeoCategoryArr.'.$key)}}.m{{$key}}" class="avb">
+                        <div class="cat-{{$loop->index > 8 ? $loop->index+2 : $loop->index+1 }}sprite"></div><span>{{$value}}</span>
+                    </a>
+                    <div class="rht-menu">
+                        <div class="row">
+                            @php
+                            $count = 1;
+                            @endphp
+                            @foreach(Config('constants.subCategoryArr.'.$key) as $key1 => $value1)
+                            @if ($count%4 == 1) <div class="row"> @endif
+                                <div class="col-xs-12 col-sm-3 col-md-3 sec-pad">
+                                    <a target="_blank" href="/business-opportunities/{{Config('category.SeoSubCategoryArr.'.$key1)}}.sc{{$key1}}">
+                                        <div class="cat-ttl">{{$value1}}</div>
+                                    </a>
+                                    <ul>
+                                        @foreach(Config('constants.subSubCategoryArr.'.$key1) as $key2 => $value2)
+                                        @if($loop->index < 4 && in_array($key2, json_decode(\Illuminate\Support\Facades\Storage::getFacadeRoot()->get('ssc.json'), true)))
+                                            <li><a target="_blank" href="/business-opportunities/{{Config('category.SeoSubSubCategoryArr.'.$key2)}}.ssc{{$key2}}">{{$value2}}</a></li>
+                                            @endif
                                             @endforeach
                                             <div class="view-all"><a target="_blank" href="/business-opportunities/{{Config('category.SeoSubCategoryArr.'.$key1)}}.sc{{$key1}}">View All ></a></div>
-                                        </ul>
-                                    </div>
-                                    @if ($count%4 == 0) </div> @endif
-                                    @php $count++; @endphp
-                                @endforeach
+                                    </ul>
+                                </div>
+                                @if ($count%4 == 0)
+                            </div> @endif
+                            @php $count++; @endphp
+                            @endforeach
                             @if ($count%4 != 1) </div> @endif
-                        </div>
-                    </li>
+                    </div>
+                </li>
                 @endforeach
             </ul>
         </div>
@@ -46,10 +59,10 @@
         </div>
         <div class="cat-sec bdr-tp">
             <ul class="lft-menu">
-                <li><a target="_blank" href="{{ url('content') }}">Franchise Insights</a></li>
-                <li><a target="_blank" href="https://news.franchiseindia.com/">News</a></li>
+                <li><a target="_blank" href="https://www.franchiseindia.com/insights">Franchise Insights</a></li>
+                <li><a target="_blank" href="https://www.franchiseindia.com/insights">News</a></li>
                 <li><a target="_blank" href="https://video.franchiseindia.com/">Video</a></li>
-                <li><a target="_blank" href="{{ url('magazine') }}">Magazine</a></li>
+                <li><a target="_blank" href="https://master.franchiseindia.com/magazine-subscribe/">Magazine</a></li>
             </ul>
         </div>
         <div class="cat-sec bdr-tp">

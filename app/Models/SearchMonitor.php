@@ -14,7 +14,9 @@ class SearchMonitor extends Model
         'keyword',
         'source',
         'date',
-        'count',
-        'ip_address'
+        'count', 
+        'ip_address',
+
     ];
+
 }

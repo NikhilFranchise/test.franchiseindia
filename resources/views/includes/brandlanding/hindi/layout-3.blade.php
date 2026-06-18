@@ -371,7 +371,7 @@
                     @endif
 
                     @if(!Auth::check() || Auth::user()->profile_type == Config('constants.ProfileType.Franchisor'))
-                        <div class="insta-apply" id="show-m"> 
+                        <div class="insta-apply" id="show-m">
                             <div class="ttl" id="instahead">Insta Apply</div>
                             <div id="instaMsg" style="display:none;" class="green">
                                 <div class="bigth">धन्यवाद!</div>
@@ -397,9 +397,6 @@
                                         <input type="text" class="form-control" name="mobile" id='txtPhone' placeholder="मोबाइल नंबर दर्ज करें" maxlength="10" class="trrr" autocomplete="off" onkeyup="getMobileStatus(this.value);"/>
                                         <input class="verif-submitbtn" id="verifybutton" value="Verify" type="button" onclick="veryfie()">
                                         <input class="verif-submitbtn" id="editmobile" value="Edit"  type="button" onclick="editmobileinsta();" style="display: none">
-                                        {{-- <input type="text" name="mobile" id='txtPhone' class="form-control"
-                                        placeholder="मोबाइल नंबर दर्ज करें" maxlength="10" autocomplete="off"
-                                        /> --}}
                                     </div>
                                     <div class="form-group" id="otpblk" style="display:none;">
                                         <input type="text" id="otp" class="form-control" placeholder="एक बार इस्तेमाल किये जाने वाला पासवर्ड"/>
@@ -527,6 +524,87 @@
 </div>
 <!--galley section end  here -->
 
+{{--<script type="text/javascript">--}}
+    {{--$(document).on('scroll', function () {--}}
+
+
+        {{--scrollTop     = $(this).scrollTop();--}}
+        {{--business      = $("#business_tab").offset().top -150;--}}
+        {{--investmentnew = $("#investmentnew_tab").offset().top -150;--}}
+        {{--property      = $("#property_tab").offset().top -150;--}}
+        {{--training      = $("#training_tab").offset().top -150;--}}
+        {{--others        = $("#others_tab").offset().top -150;--}}
+
+        {{--if(scrollTop >= 118 && scrollTop < investmentnew) {--}}
+            {{--$(".tabScroll li a").removeClass("active");--}}
+            {{--$("#businessnew_tab").addClass("active");--}}
+        {{--}--}}
+        {{--if(scrollTop >= investmentnew && scrollTop < property) {--}}
+            {{--$(".tabScroll li a").removeClass("active");--}}
+            {{--$("#investmenttab_tab").addClass("active");--}}
+        {{--}--}}
+        {{--if(scrollTop >= property && scrollTop < training) {--}}
+            {{--$(".tabScroll li a").removeClass("active");--}}
+            {{--$("#propertynew_tab").addClass("active");--}}
+        {{--}--}}
+        {{--if(scrollTop >= training && scrollTop < others) {--}}
+            {{--$(".tabScroll li a").removeClass("active");--}}
+            {{--$("#trainingnew_tab").addClass("active");--}}
+        {{--}--}}
+        {{--if(scrollTop >= others) {--}}
+            {{--$(".tabScroll li a").removeClass("active");--}}
+            {{--$("#othersnew_tab").addClass("active");--}}
+        {{--}--}}
+
+        {{--console.log("scrollTop" + scrollTop + "::" + "others-" + others);--}}
+
+        {{--var $gallery = $('.gallery');--}}
+        {{--$gallery.vitGallery({--}}
+            {{--debag: true,--}}
+            {{--thumbnailMargin: 13,--}}
+
+            {{--fullscreen: true--}}
+        {{--});--}}
+
+        {{--$('#applbtn').click(function () {--}}
+            {{--var tags = $("html, body");--}}
+            {{--$('.aplbtn').hide();--}}
+            {{--tags.animate({ scrollTop: $('#show-m').offset().top-150 }, 1000);--}}
+            {{--tags.animate({ scrollTop: $('#expbtn').offset().top-150 }, 1000);--}}
+            {{--return false;--}}
+        {{--});--}}
+
+        {{--if(screen.width < 768) {--}}
+            {{--$("#myGallery").removeAttr( "id" );--}}
+        {{--}--}}
+
+    {{--});--}}
+
+    {{--function setPos(getid, id){--}}
+        {{--$(".tabScroll li a").removeClass("active");--}}
+        {{--$("#" + id).addClass("active");--}}
+        {{--var pageScroll = $("#" + getid).offset().top -150;--}}
+        {{--var body = $("html, body");--}}
+        {{--body.stop().animate({scrollTop:pageScroll}, 500, 'swing', function() {--}}
+        {{--});--}}
+    {{--}--}}
+
+    {{--if(screen.width>767) {--}}
+        {{--$(window).scroll(function() {--}}
+            {{--if ($(this).scrollTop() > 1){--}}
+                {{--$('#searchopt2').click();--}}
+                {{--$('#landfixoptiongalley').addClass("stickylandgallry");--}}
+            {{--}--}}
+            {{--else{--}}
+                {{--$('#landfixoptiongalley').removeClass("stickylandgallry");--}}
+            {{--}--}}
+        {{--});--}}
+    {{--}--}}
+
+    {{--if("{{ $checkData['message'] }}" != "") {--}}
+        {{--alert("{{ $checkData['message'] }}");--}}
+    {{--}--}}
+{{--</script>--}}
 
 <script type="text/javascript">
     $(document).on('scroll', function () {
@@ -559,7 +637,7 @@
             $(".tabScroll li a").removeClass("active");
             $("#othersnew_tab").addClass("active");
         }
-        // console.log("scrollTop" + scrollTop + "::" + "others-" + others);
+        console.log("scrollTop" + scrollTop + "::" + "others-" + others);
 
     });
 

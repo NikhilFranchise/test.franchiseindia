@@ -133,7 +133,7 @@ use Illuminate\Support\Str;
                                                                             <label>
                                                                                 <input value="{{ $subSubCatIndex }}" {{ $subsubcatchecked }} slug="{{Config('category.SeoSubSubCategoryArr.'.$subSubCatIndex)}}" mainCat="{{$indexMainCat}}" subCat="{{$subCatIndex}}" subCat="{{$subCatIndex}}" id="optionsRadiosSubSub{{ $indexMainCat }}_{{ $subSubCatIndex }}" class="subSubCat" name="subSubCat[]" type="checkbox" url="{{ $subsubCatUrl }}" />
                                                                                 <a href="{{$subsubCatUrl}}" class="sub-sub-cat-disable" id="aoptionsRadiosSubSub{{ $indexMainCat }}_{{ $subSubCatIndex }}">
-                                                                                    {{ $subSubCat }}
+                                                                                    {{ $subSubCat }}test
                                                                                 </a>
                                                                             </label>
                                                                         </div>
@@ -302,9 +302,9 @@ use Illuminate\Support\Str;
     $('.trigger').click(function(){$('.content').hide();$('.'+$(this).data('rel')).show();$("input.group1").removeAttr("disabled").removeAttr("checked");});$('.subtrigger').click(function(){$('.subcontent').hide();$('.'+$(this).data('rel')).show();});/*]]>*/
 
     @if(isset($mc) && $mc == 5)
-        $('.logo a img').attr('src', '{{ url('images/dealers-india/dealer-logo.png') }}');
+    $('.logo a img').attr('src', '{{ url('images/dealers-india/dealer-logo.svg') }}');
     $('.logo a').attr('href', '{{ url('/business-opportunities/dealers-and-distributors.m5') }}');
-    $('.logo a img').attr('width', '200px');
+    $('.logo a img').attr('width', '195px');
     $('#c-button--slide-left img').attr('src', '{{ url('images/menu-iconei.png') }}');
     @endif
 

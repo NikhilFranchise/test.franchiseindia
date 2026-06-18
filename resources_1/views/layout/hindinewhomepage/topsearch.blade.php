@@ -1,0 +1,270 @@
+@php
+use Illuminate\Support\Str;
+@endphp
+@php
+
+    $catArr = Config('hindiConstants.CategoryArr');
+    asort($catArr);
+    $states = Config('location.stateArr');
+    asort($states);
+    $loginUrl = 'https://www.franchiseindia.com/loginform';
+    $loginName = 'लॉगिन';
+    $class = '';
+    $regName = 'पंजीकृत करें';
+    $regUrl = '#';
+    $modelWindow = "data-toggle=modal data-target=#login-pnl";
+    $barndStick = 0;
+    $googleSearchTop = 0;
+    $gcodeurl = 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+    if(request()->segment(1) === 'brands' || (request()->segment(1) === 'hi' && request()->segment(2) === 'brands'))
+        $barndStick = 1;
+    $eduUrlSelected = '';
+    $wellUrlSelected = '';
+    $dotUrlSelected = '';
+    $logo = "logo-black.svg";
+    $menuicon = "menu-icon.png";
+    $logoClass = "logo";
+    $mainUrl = "";
+    $webtitleUrl = request()->segment(1);
+    $mangecls = "";
+    if ($webtitleUrl == 'content')
+        $dotUrlSelected = 'class=dropactive';
+    if ($webtitleUrl == 'education') {
+        $eduUrlSelected = 'class=dropactive';
+        $logo = "education-logo-black.svg";
+        $menuicon = "menu-iconei.png";
+        $logoClass = "logo wiei";
+        $mainUrl = "education";
+        $mangecls = "wiei";
+    }
+    if ($webtitleUrl == 'wellness') {
+        $wellUrlSelected = 'class=dropactive';
+        $logo = "wellness-logo-black.svg";
+        $menuicon = "menu-iconwi.png";
+        $logoClass = "logo wiei";
+        $mainUrl = "wellness";
+        $mangecls = "wiei";
+    }
+@endphp
+<div class="modal modal-cust fade" id="search-main" tabindex="-1"
+     aria-labelledby="search-mainLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-cust">
+        <div class="modal-content modal-content-cust">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+            <div class="modal-body modal-body-search-custom">
+                <div class="searchbox">
+                    <form method="get" action="{{url('category/search')}}">
+                        <div class="input-group
+                                 input-group-search-section-main">
+                            <input type="text" class="form-control
+                                    form-control-search-custom" name="text" placeholder="व्यवसाय के अवसरों के लिए खोज" id="dealer-bar-search" aria-describedby="basic-addon2">
+                            <span class="input-group-addon
+                                    input-group-addon-search-custom"
+                                  id="basic-addon2">
+                           <button class="btn btn-group-sm btn-main
+                                       bhide-main">
+                              <i class="fa fa-search"
+                                 aria-hidden="true"></i>
+                           </button>
+                        </span>
+                        </div>
+                    </form>
+                </div>
+                <div class="or-cat">
+                    <h2>
+                        या द्वारा पता करें
+                    </h2>
+                </div>
+                <ul class="nav nav-tabs custom-nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#categories">केटेगरी</a></li>
+                    <li><a data-toggle="tab" href="#location">स्थान</a></li>
+                    <li><a data-toggle="tab" href="#investment">निवेश</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="categories" class="tab-pane tab-pane-main fade in active">
+                        <form name="catform"class="form-horizontal" method="get" action="{{url('category/searchby')}}" onsubmit="return submitCategory()">
+                            <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="search-section-select">
+                                        <div class="form-group form-group-search-section-li">
+                                            <input type="hidden" name="catTab" value="1">
+                                            <select name="mc" id="getMainCategoryDataHeader" onchange="getSubCategoryHeader(this.value)" class="form-control form-control-search-main-custom">
+                                                <option value="" hidden>उद्योग का चयन करें</option>
+                                                @foreach($catArr as $index => $value)
+                                                    <option value="{{ $index }}" slug="{{Config('category.SeoCategoryArr.'.$index)}}" @if(isset($mc) && $index == $mc) selected @endif>{!! $value !!}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="search-section-select">
+                                        <div class="form-group
+                                       form-group-search-section-li">
+                                            <select name="sc" id="getSubCategoryDataHeader" onchange="getSubCatCategoryHeader(this.value)" class="form-control
+                                          form-control-search-main-custom"
+                                                    id="exampleFormControlSelect1">
+                                                <option value="" hidden>क्षेत्र का चयन करें</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="search-section-select">
+                                        <div class="form-group
+                                       form-group-search-section-li">
+                                            <select class="form-control
+                                          form-control-search-main-custom"
+                                                    name="ssc" id="getSubCatCategoryDataHeader" required="required">
+                                                <option hidden>सेवा / उत्पाद का चयन करे</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-group-sm btn-main
+                                 bhide-main bhide">
+                                        पता लगाना
+                                    </button>
+                                    <span class="clear">
+                                 <a href="javascript:void(0)" onclick="catform.reset();">साफ करे</a>
+                              </span>
+                                </div>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="location" class="tab-pane tab-pane-main fade">
+                        <form name="locform" class="form-horizontal" method="get" action="{{url('category/searchby')}}" onsubmit="return submitLocation()">
+                          <input type="hidden" name="locTab" value="1">
+                            <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="search-section-select">
+                                        <div class="form-group
+                                       form-group-search-section-li">
+                                            <select class="form-control
+                                          form-control-search-main-custom" name="mc" id="getMainCategoryDataHeaderLoc">
+                                                <option value="" hidden>उद्योग का चयन करें</option>
+                                                @foreach($catArr as $index => $value)
+                                                    <option value="{{ $index }}" slug="{{Config('category.SeoCategoryArr.'.$index)}}" @if(isset($mc) && $index == $mc) selected @endif>{!! $value !!}</option>
+                                                @endforeach
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="search-section-select">
+                                        <div class="form-group
+                                       form-group-search-section-li">
+                                            <select class="form-control
+                                          form-control-search-main-custom" name="loc" id="stateHeader" required="required" onchange="getcity(this.value)">
+                                                <option value="" hidden>एक राज्य का चयन करे</option>
+                                                @foreach($states as $index => $value)
+                                                    <option slug="{{strtolower(Str::slug($value))}}" value="{{ $index }}" @if(isset($loc[0]) && $loc[0] == $index) selected @endif>{{ Config('location.hindiStatesArr.'.$value) }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="search-section-select">
+                                        <div class="form-group
+                                       form-group-search-section-li">
+                                            <select class="form-control
+                                          form-control-search-main-custom"
+                                                    id="headercity" name="city">
+                                                <option value="" hidden>एक शहर का चयन करें</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-group-sm btn-main
+                                 bhide-main bhide">
+                                        पता लगाना
+                                    </button>
+                                    <span class="clear">
+                                 <a href="javascript:void(0)" onclick="locform.reset();">साफ करे</a>
+                              </span>
+                                </div>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="investment" class="tab-pane tab-pane-main fade">
+                        <form name="invform" class="form-horizontal" method="get" action="{{url('category/searchby')}}" onsubmit="return submitInvestment()">
+                            <input type="hidden" name="invTab" value="1">
+                            <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="search-section-select">
+                                        <div class="form-group
+                                       form-group-search-section-li">
+                                            <select name="mc" id="getMainCategoryDataHeaderInv" class="form-control
+                                          form-control-search-main-custom">
+                                                <option value="" hidden>उद्योग का चयन करें</option>
+                                                @foreach($catArr as $index => $value)
+                                                    <option value="{{ $index }}" slug="{{Config('category.SeoCategoryArr.'.$index)}}" @if(isset($mc) && $index == $mc) selected @endif>{!! $value !!}</option>
+                                                @endforeach
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="search-section-select">
+                                        <div class="form-group
+                                       form-group-search-section-li">
+                                            <select name="min_cost" class="form-control
+                                          form-control-search-main-custom" id="minAmount" required="required" onchange="selectMax(this.value)"">
+                                            <option value="" hidden> न्यूनतम निवेश का चयन करें </option>
+                                            @foreach(Config('constants.investRangeInWordsSingle') as $index => $value)
+                                                <option slug="{{Config('constants.InvestRange')[$index]['min']}}" @if(isset($minCost)) @if($minCost==$index) selected @endif @endif value="{{ $index }}">{!! $value !!}</option>
+                                                @endforeach
+                                                </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="search-section-select">
+                                        <div class="form-group
+                                       form-group-search-section-li">
+                                            <select name="max_cost" class="form-control
+                                          form-control-search-main-custom" id="minAmount" required="required">
+                                                <option value="" hidden> अधिकतम निवेश का चयन करें </option>
+                                                @foreach(Config('constants.investRangeInWordsSingle') as $index => $value)
+                                                    <option slug="{{Config('constants.InvestRange')[$index]['min']}}" @if(isset($minCost)) @if($minCost == $index) selected @endif @endif value="{{ $index }}">{!! $value !!}</option>
+                                                @endforeach
+
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-group-sm btn-main
+                                 bhide-main bhide">
+                                        पता लगाना
+                                    </button>
+                                    <span class="clear">
+                                 <a href="javascript:void(0)" onclick="invform.reset();">साफ करे</a>
+                              </span>
+                                </div>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<!-- Modal -->

@@ -11,7 +11,8 @@
                                     <span>नियुक्त करें</span><br /> चैनल<br /> पार्टनर्स
                                 </div>
                                 <div class="regtxtbtm">
-                                    फ्री में करें <span>रजिस्ट्रेशन <img alt="drop right home" src="{{ url('images/droprighthome.png')}}"/></span>
+                                    फ्री में करें <span>रजिस्ट्रेशन <img alt="drop right home"
+                                            src="{{ url('images/droprighthome.png') }}" /></span>
                                 </div>
                             </a>
                         </li>
@@ -21,7 +22,8 @@
                                     <span>आज ही</span> <br /> शुरू करें <br /> <span>बिजनेस!</span>
                                 </div>
                                 <div class="regtxtbtm">
-                                    फ्री में करें <span>रजिस्ट्रेशन <img alt="drop right home" src="{{ url('images/droprighthome.png')}}"/> </span>
+                                    फ्री में करें <span>रजिस्ट्रेशन <img alt="drop right home"
+                                            src="{{ url('images/droprighthome.png') }}" /> </span>
                                 </div>
                             </a>
                         </li>
@@ -32,40 +34,65 @@
                 <div class="hometopadsleft">
                     <div class="adshom newbandfp">
                         @desktop
-                        <div class="homeadd728">
-                            @if(isset($mc) && $mc == 2)
-                                <div id='div-gpt-ad-1542018830077-0' style='height:90px; width:728px;margin: 0 auto;'></div>
-                            @elseif(isset($mc) && !empty($mc) && empty($sc) && empty($ssc[0]) && $mc == 3)
-                                <div id='div-gpt-ad-1568723407638-0' style='height:90px; width:728px;margin: 0 auto;'></div>
-                            @elseif(isset($mc) && !empty($mc) && !empty($sc) && empty($ssc[0]) && $mc == 3)
-                                <div id='div-gpt-ad-1573815617456-0' style='height:90px; width:728px;margin: 0 auto;'></div>
-                            @elseif(isset($mc) && !empty($mc) && !empty($sc) && empty($ssc[0]) && $sc == 21)
-                                <div id='div-gpt-ad-1555584209385-0' style='height:90px; width:728px;margin: 0 auto;'></div>
-                            @elseif(isset($mc) && !empty($mc) && !empty($sc) && empty($ssc[0]) && $sc == 423)
-                                <div id='div-gpt-ad-1555484449148-0' style='height:90px; width:728px;margin: 0 auto;'></div>
-                            @elseif(isset($mc) && !empty($mc) && empty($sc) && empty($ssc[0]) && $mc == 1)
-                                <div id='div-gpt-ad-1548423273179-0' style='height:90px; width:728px;margin: 0 auto;'></div>
-                            @else
-                                @include('includes.banners-new.HP_DSK_ATF_728x90')
-                            @endif
-                        </div>
+                            <div class="homeadd728">
+                                @if (isset($mc) && $mc == 2)
+                                    <div id='div-gpt-ad-1542018830077-0' style='height:90px; width:728px;margin: 0 auto;'>
+                                    </div>
+                                @elseif(isset($mc) && !empty($mc) && empty($sc) && empty($ssc[0]) && $mc == 3)
+                                    <div id='div-gpt-ad-1568723407638-0' style='height:90px; width:728px;margin: 0 auto;'>
+                                    </div>
+                                @elseif(isset($mc) && !empty($mc) && !empty($sc) && empty($ssc[0]) && $mc == 3)
+                                    <div id='div-gpt-ad-1573815617456-0' style='height:90px; width:728px;margin: 0 auto;'>
+                                    </div>
+                                @elseif(isset($mc) && !empty($mc) && !empty($sc) && empty($ssc[0]) && $sc == 21)
+                                    <div id='div-gpt-ad-1555584209385-0' style='height:90px; width:728px;margin: 0 auto;'>
+                                    </div>
+                                @elseif(isset($mc) && !empty($mc) && !empty($sc) && empty($ssc[0]) && $sc == 423)
+                                    <div id='div-gpt-ad-1555484449148-0' style='height:90px; width:728px;margin: 0 auto;'>
+                                    </div>
+                                @elseif(isset($mc) && !empty($mc) && empty($sc) && empty($ssc[0]) && $mc == 1)
+                                    <div id='div-gpt-ad-1548423273179-0' style='height:90px; width:728px;margin: 0 auto;'>
+                                    </div>
+                                @else
+                                    @include('includes.banners-new.HP_DSK_ATF_728x90')
+                                @endif
+                            </div>
                         @enddesktop
                         @tablet
-                        <div class="homeadd468">
-                            @include('includes.banners-new.HP_TB_ATF_468x60')
-                        </div>
+                            <div class="homeadd468">
+                                @include('includes.banners-new.HP_TB_ATF_468x60')
+                            </div>
                         @endtablet
                     </div>
                 </div>
                 <div class="hometopadsright">
-                    <div class="upcomhead"> <a href="https://www.franchiseindia.com/event" target="_blank" style="color:#333">आने वाले कार्यक्रम</a></div>
+                    <div class="upcomhead"> <a href="https://www.franchiseindia.com/event" target="_blank"
+                            style="color:#333">आने वाले कार्यक्रम</a></div>
                     <div id="slideshow">
                         @php
-                            $events = App\Http\Controllers\CommonController::getEvents();
+                            $events = App\Http\Controllers\EventController::getEvents();
                         @endphp
-                        @foreach($events['event'] as $event)
+                        @foreach ($events as $event)
+                            @php
+                                $place = trim($event['place'], ', ');
+                                // Split into main part + last part after the final comma
+                                $parts = explode(',', $place);
+                                $lastPart = trim(end($parts));
+                                // Split last part into words
+                                $words = preg_split('/\s+/', $lastPart);
+                                // If last part contains 2+ words → take last 2
+                                // If it contains only 1 word → take that 1
+                                if (count($words) >= 2) {
+                                    $last = implode(' ', array_slice($words, -2));
+                                } else {
+                                    $last = $words[0];
+                                }
+                            @endphp
                             <div class="eventc">
-                                <a href="{{ $event['url'] }}" target="_blank"><div class="eventvenuedate">{{ $event['name'] }}  <span>{{ $event['date'] }}, {{ $event['place'] }}</span></div></a>
+                                <a href="{{ $event['url'] }}" target="_blank">
+                                    <div class="eventvenuedate">{{ $event['title'] }} <span>{{ $event['date'] }},
+                                            {{ $last }}</span></div>
+                                </a>
                             </div>
                         @endforeach
                     </div>

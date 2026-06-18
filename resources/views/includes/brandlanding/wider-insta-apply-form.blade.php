@@ -72,7 +72,6 @@
                             <input type="text" class="form-control blur" name="address" placeholder="Enter Address">
                         </div>
                     </div>
-                    
                     <div class="col-xs-12 col-sm-6 col-md-6" id="otp-block" style="display:none">
                         <div class="form-group pos-rel">
                             <input id="otp-input" type="text" maxlength="4" class="form-control"

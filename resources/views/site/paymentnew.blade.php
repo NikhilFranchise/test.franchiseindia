@@ -37,7 +37,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><img src="{{ url('images/mobile.png') }}" alt="mobile"></span>
                             <input type="text" class="form-control" id="mobile" name="mobile"
-                                placeholder="Enter Mobile" maxlength="10">
+                                placeholder="Enter Mobile" maxlength="15">
                         </div>
                     </div>
                 </div>
@@ -143,14 +143,13 @@
                         <div class="input-group">
                             <span class="input-group-addon"><img src="{{ url('images/country.png') }}"
                                     alt="country"></span>
-                            <select name="mop" id="mop" class="form-control myselectclass">
-                                <option value="OPTCRDC">Mode Of Payment</option>
-                                <option value="CREDIT">Credit Card</option>
-                                <option value="DEBIT">Debit Card</option>
-                                <option value="UPI">UPI</option>
-                                <option value="NB">NET BANKING</option>
-
-                            </select>
+                                    <select name="mop" id="mop" class="form-control myselectclass">
+                                        <option value="OPTCRDC">Mode Of Payment</option>
+                                        <option value="CREDIT">Credit Card</option>
+                                        <option value="DEBIT">Debit Card</option>
+                                        <option value="UPI">UPI</option>
+                                        <option value="NB">NET BANKING</option>
+                                    </select>
                         </div>
                     </div>
                 </div>
@@ -178,20 +177,6 @@
                     email: {
                         required: true,
                         email: true
-                    },
-                    mobile: {
-                        required: true,
-                        accept: "[0-9]",
-                        minlength: 10,
-                        maxlength: 10,
-                        number: true
-                    },
-                    pincode: {
-                        required: true,
-                        accept: "[0-9]",
-                        minlength: 6,
-                        maxlength: 6,
-                        number: true
                     },
                     details: {
                         required: true,
@@ -223,13 +208,6 @@
                         email: ""
                     },
                     mobile: {
-                        required: "",
-                        accept: "",
-                        minlength: jQuery.format(""),
-                        maxlength: jQuery.format(""),
-                        number: ""
-                    },
-                    pincode: {
                         required: "",
                         accept: "",
                         minlength: jQuery.format(""),
@@ -271,13 +249,6 @@
                             required: true,
                             email: true
                         },
-                        mobile: {
-                            required: true,
-                            accept: "[0-9]",
-                            minlength: 10,
-                            maxlength: 10,
-                            number: true
-                        },
                         details: {
                             required: true,
                             minlength: 3,
@@ -285,8 +256,7 @@
                         },
                         camount: {
                             required: true,
-                            // accept: "[0-9]",
-                            minlength:1,
+                            accept: "[0-9]",
                             maxlength: 8,
                             number: true
                         },
@@ -318,13 +288,6 @@
                             required: "",
                             minlength: jQuery.format(""),
                             maxlength: jQuery.format("")
-                        },
-                        pincode: {
-                            required: "",
-                            accept: "",
-                            minlength: jQuery.format(""),
-                            maxlength: jQuery.format(""),
-                            number: ""
                         },
                         camount: {
                             required: "",

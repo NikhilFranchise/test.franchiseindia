@@ -35,7 +35,7 @@ class autoInvestorRegistration extends Mailable
     public function build()
     {
         return $this->from('no-reply@franchiseindia.com')
-                    ->subject('Thankyou for registration | Franchise India')
+                    ->subject('Thank you for registration | Franchise India')
                     ->view('mail.auto-investor-registration-confirmation')
                     ->with([
                             'companyName' => $this->company,

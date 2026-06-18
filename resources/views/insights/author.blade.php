@@ -1,4 +1,5 @@
 @extends('layout.insights.master')
+@section('load-gpt', true)
 @section('author-schema')
     @include('insights.author_schema', ['author' => $author])
 @endsection
@@ -7,6 +8,26 @@
         <div class="inner-top-head">
             <div class="container">
                 <h1>{{ 'Author' }}</h1>
+            </div>
+        </div>
+        <div class="container">
+            <div class="inner-article-detail-desktop-top-ad">
+                @desktop
+                    <div id='FI_Desktop_ROS_728x90_ATF'></div>
+                    <script>
+                        googletag.cmd.push(function() {
+                            googletag.display('FI_Desktop_ROS_728x90_ATF');
+                        });
+                    </script>
+                @enddesktop
+                @mobile
+                    <div id='FI_Desktop_ROS_300x250_ATF'></div>
+                    <script>
+                        googletag.cmd.push(function() {
+                            googletag.display('FI_Desktop_ROS_300x250_ATF');
+                        });
+                    </script>
+                @endmobile
             </div>
         </div>
         <div class="container">
@@ -22,10 +43,7 @@
         <div class="author-top-new">
             <div class="container">
                 @php
-                    $author_image = url('images/defaultuser.png');
-                    $author_image = $author->image
-                        ? \App\Http\Controllers\InsightsController::authorImageurl($author->image)
-                        : $author_image;
+                    $author_image = insightsAuthorImageUrl($author->image);
                 @endphp
                 <div class="row">
                     <div class="col-md-12">
@@ -49,26 +67,26 @@
                                                         src="{{ url('/insight-new/images/social/facebook.jpg') }}" /></a>
                                             </li>
                                         @endif
-                                        @if(!empty($author->linkedin_profile))
+                                        @if (!empty($author->linkedin_profile))
                                             <li>
                                                 <a href="{{ $author->linkedin_profile }}" target="_blank"><img
                                                         src="{{ url('/insight-new/images/social/linkedin.jpg') }}" /></a>
                                             </li>
                                         @endif
-                                        @if(!empty($author->twitter_profile))
+                                        @if (!empty($author->twitter_profile))
                                             <li>
                                                 <a href="{{ $author->twitter_profile }}" target="_blank"><img
                                                         src="{{ url('/insight-new/images/social/twitter.jpg') }}" /></a>
                                             </li>
                                         @endif
-                                        @if(!empty($author->emailid))
+                                        @if (!empty($author->emailid))
                                             <li>
                                                 <a href="mailto:{{ $author->emailid }}" target="_blank">
                                                     <img src="{{ url('/insight-new/images/social/mail.jpg') }}" />
                                                 </a>
                                             </li>
                                         @endif
-                                        @if(!empty($author->insta_profile))
+                                        @if (!empty($author->insta_profile))
                                             <li>
                                                 <a href="{{ $author->insta_profile }}" target="_blank"><img
                                                         src="{{ url('/insight-new/images/social/instagram.jpg') }}" /></a>
@@ -80,6 +98,16 @@
                                         </li>
                                     </ul>
                                 </div>
+                                @desktop
+                                    <div class="author-left" style="margin-top: 20px; float:left; width:160px; height:600px;">
+                                        <div id="FI_Desktop_LHS_skinner_160x600"></div>
+                                        <script>
+                                            googletag.cmd.push(function() {
+                                                googletag.display('FI_Desktop_LHS_skinner_160x600');
+                                            });
+                                        </script>
+                                    </div>
+                                @enddesktop
                             </div>
                             <div class="author-new-wrap-right">
                                 <div class="author-left-nam-desc">{{ $author->title }}</div>
@@ -122,21 +150,19 @@
                             </li>
                             <li><a href="#viewed" data-toggle="tab">MOST VIEWED</a></li>
                         </ul>
+                        <div id="mid-ad-pool" style="display:none;">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <div id="FI_Desktop_ROS_Inline_{{ $i }}_300x250"></div>
+                            @endfor
+                        </div>
                         <div class="tab-content">
                             {{-- latest stories section start here --}}
                             <div class="tab-pane active stab" id="latest">
                                 <ul>
-                                    @forelse ($latestArticles as $latest)
+                                    @foreach ($latestArticles as $latest)
                                         @php
-                                            $image = \App\Http\Controllers\InsightsController::createimgurl1(
-                                                $latest->image,
-                                                $latest->lang,
-                                            );
-                                            $latestArticleURL =
-                                                Config('constants.MainDomain') .
-                                                "/insights/{$latest->lang}/" .
-                                                strtolower($latest->insight_type) .
-                                                "/{$latest->slug}.{$latest->news_id}";
+                                            $image = insightsImageUrl($latest->image, $latest->lang);
+                                            $latestArticleURL = insightsUrl($latest, $latest->lang);
                                         @endphp
                                         <li>
                                             <div class="author-fresh">
@@ -148,15 +174,31 @@
                                                     <div class="author-latest-title">
                                                         <a href="{{ $latestArticleURL }}">{{ $latest->title }}</a>
                                                     </div>
-                                                    <p>
-                                                        {{ $latest->shortDesc }}
-                                                    </p>
+                                                    <p>{!! html_entity_decode(Str::words($latest->shortDesc, 22, ' ...')) !!}</p>
+                                                    <ul class="art-detail-read">
+                                                        <li>
+                                                            By - <a href=""
+                                                                hreflang="{{ $latest->lang }}">{{ $author->title }}</a>
+                                                        </li>
+                                                        <li><time datetime="33Z" class="datetime">
+                                                                {{ $latest->display_date }}
+                                                            </time>/
+                                                            {{ calculateReadTime($latest) }}
+                                                            MIN READ
+                                                        </li>
+                                                    </ul>
+
                                                 </div>
                                             </div>
                                         </li>
-                                    @empty
-                                        <p>No Records</p>
-                                    @endforelse
+                                        @if ($loop->iteration % 3 == 0)
+                                            <li>
+                                                <div class="mid-placeholder text-center"
+                                                    data-mid="{{ $loop->iteration / 3 }}">
+                                                </div>
+                                            </li>
+                                        @endif
+                                    @endforeach
                                 </ul>
                                 <div class="video-pagination">
                                     {{ $latestArticles->links('pagination::bootstrap-5') }}
@@ -166,18 +208,12 @@
                             {{-- most viewd stories section start here --}}
                             <div class="tab-pane stab" id="viewed">
                                 <ul>
-                                    @forelse ($mostViewedArticles as $viewed)
+                                    @foreach ($mostViewedArticles as $viewed)
                                         @php
-                                            $image = \App\Http\Controllers\InsightsController::createimgurl1(
-                                                $viewed->image,
-                                                $viewed->lang,
-                                            );
-                                            $mostArticleURL =
-                                                Config('constants.MainDomain') .
-                                                "/insights/{$viewed->lang}/" .
-                                                strtolower($viewed->insight_type) .
-                                                "/{$viewed->slug}.{$viewed->news_id}";
+                                            $image = insightsImageUrl($viewed->image, $viewed->lang);
+                                            $mostArticleURL = insightsUrl($viewed, $viewed->lang);
                                         @endphp
+
                                         <li>
                                             <div class="author-fresh">
                                                 <div class="author-latest-pic">
@@ -188,15 +224,30 @@
                                                     <div class="author-latest-title">
                                                         <a href="{{ $mostArticleURL }}">{{ $viewed->title }}</a>
                                                     </div>
-                                                    <p>
-                                                        {{ $viewed->shortDesc }}
-                                                    </p>
+                                                    <p>{!! html_entity_decode(Str::words($viewed->shortDesc, 22, ' ...')) !!}</p>
+                                                    <ul class="art-detail-read">
+                                                        <li>
+                                                            By - <a href=""
+                                                                hreflang="{{ $viewed->lang }}">{{ $author->title }}</a>
+                                                        </li>
+                                                        <li><time datetime="33Z" class="datetime">
+                                                                {{ $viewed->display_date }}
+                                                            </time>/
+                                                            {{ calculateReadTime($viewed) }}
+                                                            MIN READ
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </li>
-                                    @empty
-                                        <p>No Records</p>
-                                    @endforelse
+                                        @if ($loop->iteration % 3 == 0)
+                                            <li>
+                                                <div class="mid-placeholder text-center"
+                                                    data-mid="{{ $loop->iteration / 3 }}">
+                                                </div>
+                                            </li>
+                                        @endif
+                                    @endforeach
                                 </ul>
 
                                 <div class="video-pagination">
@@ -211,10 +262,10 @@
                     <div class="col-md-4">
                         {{-- ads section start here --}}
                         <div class="ad-right-author">
-                            <div id='adslot300x250_ATF'>
+                            <div id='FI_Desktop_ROS_RHS_300x250_ATF'>
                                 <script>
                                     googletag.cmd.push(function() {
-                                        googletag.display('adslot300x250_ATF');
+                                        googletag.display('FI_Desktop_ROS_RHS_300x250_ATF');
                                     });
                                 </script>
                             </div>
@@ -222,7 +273,7 @@
                         {{-- ads section end here --}}
                         {{-- popular articles section start here --}}
                         <div class="popular-articles">
-                            <div class="popular-title">Trending Articles</div>
+                            <div class="popular-title">Popular Articles</div>
                             <div class="region region-home-top-right">
                                 <div class="views-element-container block block-views block-views-blockhome-popular-article-block-1"
                                     id="block-views-block-home-popular-article-block-1">
@@ -232,34 +283,24 @@
                                             <div class="view-content">
                                                 <div>
                                                     <ul class="popular-list">
-                                                        @forelse($popularArticles as $popular)
+                                                        @foreach ($popArticles as $popular)
                                                             @php
-                                                                $popArticleURL =
-                                                                    Config('constants.MainDomain') .
-                                                                    "/insights/{$popular->lang}/" .
-                                                                    strtolower($popular->insight_type) .
-                                                                    "/{$popular->slug}.{$popular->news_id}";
+                                                                $popArticleURL = insightsUrl($popular);
+                                                                $cat = $popular->category;
+                                                                $catURL = insightsCategoryUrl($cat);
+                                                                $catName = $cat?->catname;
                                                             @endphp
                                                             <li>
-                                                                @foreach ($popular->category as $cat)
-                                                                    @php
-                                                                        $catURL =
-                                                                            Config('constants.MainDomain') .
-                                                                            "/insights/{$popular->lang}/{$cat->slug}";
-                                                                    @endphp
-                                                                    <div class="popular-sub">
-                                                                        <a href="{{ $catURL }}"
-                                                                            hreflang="{{ $popular->lang }}">{{ $cat->catname }}</a>
-                                                                    </div>
-                                                                @endforeach
+                                                                <div class="popular-sub">
+                                                                    <a href="{{ $catURL }}"
+                                                                        hreflang="">{{ $catName }}</a>
+                                                                </div>
                                                                 <div class="popular-head">
                                                                     <a
                                                                         href="{{ $popArticleURL }}">{{ $popular->title }}</a>
                                                                 </div>
                                                             </li>
-                                                        @empty
-                                                            <p>No Recods</p>
-                                                        @endforelse
+                                                        @endforeach
                                                     </ul>
                                                 </div>
                                             </div>
@@ -271,16 +312,26 @@
                         {{-- popular articles section end here --}}
                         {{-- ads section start here --}}
                         <div class="ad-right-sticky">
-                            <div id="adslot300x250_1">
+                            <div id="FI_Desktop_ROS_RHS_300x250_1">
                                 <script>
                                     googletag.cmd.push(function() {
-                                        googletag.display('adslot300x250_1');
+                                        googletag.display('FI_Desktop_ROS_RHS_300x250_1');
                                     });
                                 </script>
                             </div>
                         </div>
                         {{-- ads section end here --}}
                     </div>
+                </div>
+                <div class="inner-article-detail-desktop-top-ad">
+                    @desktop
+                        <div id='FI_Desktop_ROS_728x90_BTF'></div>
+                        <script>
+                            googletag.cmd.push(function() {
+                                googletag.display('FI_Desktop_ROS_728x90_BTF');
+                            });
+                        </script>
+                    @enddesktop
                 </div>
             </div>
         </div>
@@ -291,4 +342,87 @@
             </div>
         </div>
     </div>
+    <script>
+        (function() {
+            /* ================= UTIL ================= */
+            function log(...args) {
+                console.log('[MID-ADS]', ...args);
+            }
+
+            function getSlotByDivId(divId) {
+                if (!window.googletag || !googletag.pubads) {
+                    log('GPT not ready');
+                    return null;
+                }
+                return googletag.pubads()
+                    .getSlots()
+                    .find(slot => slot.getSlotElementId() === divId);
+            }
+
+            function getMidAd(index) {
+                return document.getElementById('FI_Desktop_ROS_Inline_' + index + '_300x250');
+            }
+
+            /* ================= CORE ================= */
+
+            function attachAndRefresh(tabId) {
+                log('Attach & refresh →', tabId);
+
+                const holders = document.querySelectorAll(
+                    '#' + tabId + ' .mid-placeholder'
+                );
+
+                log('Placeholders found:', holders.length);
+
+                holders.forEach(holder => {
+                    const index = holder.dataset.mid;
+                    const ad = getMidAd(index);
+
+                    if (!ad) {
+                        log('Ad not found for index:', index);
+                        return;
+                    }
+
+                    holder.innerHTML = '';
+                    holder.appendChild(ad);
+                    log('Ad attached:', ad.id);
+
+                    setTimeout(() => {
+                        googletag.cmd.push(() => {
+                            const slot = getSlotByDivId(ad.id);
+                            if (slot) {
+                                log('Refreshing slot:', ad.id);
+                                googletag.pubads().refresh([slot]);
+                            } else {
+                                log('Slot NOT FOUND for:', ad.id);
+                            }
+                        });
+                    }, 250);
+                });
+            }
+
+            /* ================= INITIAL LOAD ================= */
+
+            document.addEventListener('DOMContentLoaded', () => {
+                log('DOM ready → initial attach');
+                attachAndRefresh('latest');
+            });
+
+            /* ================= TAB CLICK HANDLER ================= */
+
+            document.querySelectorAll('.nav-tabs a').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    setTimeout(() => {
+                        const activePane = document.querySelector('.tab-pane.active');
+                        if (!activePane) {
+                            log('No active tab pane found');
+                            return;
+                        }
+                        attachAndRefresh(activePane.id);
+                    }, 120);
+                });
+            });
+
+        })();
+    </script>
 @endsection

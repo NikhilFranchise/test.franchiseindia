@@ -19,11 +19,11 @@
             'bgcolor' => '140,140,140',
         ],
         '2' => [
-            'url' => 'https://www.franchiseindia.com/brands/easygym.95394',
-            'image' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/easygym_1.jpg',
-            'category' => 'Gyms And Fitness Centres',
-            'title' => 'Easygym',
-            'description' => 'Globally renowned fitness brand which is part of British conglomerate easyGroup from The UK & France',
+            'url' => 'https://www.franchiseindia.com/brands/bagelstein.99562',
+            'image' => 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/bagelstein_1.gif',
+            'category' => 'Quick Service Restaurants',
+            'title' => 'BAGELSTEIN',
+            'description' => 'Bagelstein, a French bagel chain, has carved a niche in the European market since its inception in Strasbourg in 2011.',
             'bgcolor' => '140,140,140',
         ],
         '3' => [

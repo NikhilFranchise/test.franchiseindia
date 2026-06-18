@@ -42,7 +42,7 @@ class PaidInvestor extends Mailable
     {
         return $this->from('no-reply@franchiseindia.com')
                     //->bcc('techsupport@franchiseindia.com')
-                    ->subject('Application successful at FranchiseIndia.com')
+                    ->subject('Application Successful at FranchiseIndia.com')
                     ->view('mail.paidinvestor')
                     ->with([
                             'companyName' => $this->companyName,

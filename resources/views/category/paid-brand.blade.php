@@ -1,13 +1,10 @@
-<div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding sec-slide-effect" >
+<div class="col-xs-12 col-sm-6 col-md-6 catlistinfo row-no-padding sec-slide-effect">
     <div class="comparechk">
         <input type="checkbox" id="compare{{ $loop->index }}" class="brandCompareCheckbox" name="compareCheckbox"
             onClick="getBrandsForComparison()" value="{{ $brandResult->franchisor_id }}">
         <label for="compare{{ $loop->index }}"><span></span></label>
     </div>
-    {{-- @php
-@dd($brandResult->company_name);
 
-@endphp --}}
     <div class="padfb15">
         <a href="{{ $brandUrl }}" target="_blank">
             <div class="catimgmobile">
@@ -52,7 +49,7 @@
 
         <div class="catlist">
             <a href="{{ $brandUrl }}" id="brandnamecategory{{ $brandResult->franchisor_id }}" target="_blank">
-                {{ $brandResult->company_name }} 
+                {{ $brandResult->company_name }}
             </a>
         </div>
 

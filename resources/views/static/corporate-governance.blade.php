@@ -1,6 +1,6 @@
 @section('seoTitle', 'Corporate Governance - Franchise India')
 @section('seoDesc', 'Please read the following terms, email newsletter Subscription and membership obligations carefully before using this web site.')
-@section('seoKeywords', 'terms and obligations Franchise India Holding Ltd., franchise business opportunities, franchise for sale, retail franchise,
+@section('seoKeywords', 'terms and obligations Franchise India Holding Ltd., franchise business opportunities, franchise for sale, retail franchise, 
 					franchise investment, small business franchise, franchise business for sale')
 
 @extends('layout.master')
@@ -132,6 +132,11 @@
 			<td>Ramasamy Jayapal</td>
 			<td>Chairman & Member</td>
 			<td>Non-Executive (Non-Independent) Director</td>
+		</tr>
+		<tr>
+			<td>Velayutham Thiyagarajan</td>
+			<td>Member</td>
+			<td>Independent Director</td>
 		</tr>
 		<tr>
 			<td>Sachin Marya</td>

@@ -7,13 +7,15 @@
 </head>
 
 <body>
+  
     <!-- Google Tag Manager (noscript) -->
+  
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KW4K6WV6"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
             style="display:none;visibility:hidden"></iframe>
     </noscript>
-
-        
     <!-- End Google Tag Manager (noscript) -->
     @php
         $pageType = request()->segment(1) == 'premiumbrand' || request()->segment(2) == 'premiumbrand' ? 2 : 1;
@@ -956,7 +958,7 @@
     <script src="https://www.franchiseindia.com/js/jquery-3.1.1.min.js"></script>
     @include('layout.newhomepage.jslink')
 
-    {{--  <script>
+    <script>
         $(document).ready(function() {
             function selectMax(selectmaxheaderval) {
                 let amountConfigArr = {
@@ -979,30 +981,7 @@
                     maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
             }
         });
-    </script>  --}}
-    <script>
-        $(document).ready(function() {
-            function selectMax(selectmaxheaderval) {
-                let amountConfigArr = @json(Config('constants.investRangeInWordsSingle'));
-                let maxAmount = $('#maxAmount');
-                let getSlugAmount = @json(Config('constants.InvestRange'));
-                maxAmount.html("");
-                selectmaxheaderval = parseInt(selectmaxheaderval);
-                $.each(amountConfigArr, function(key, value) {
-                    if (key > selectmaxheaderval) {
-                        $('#maxAmount').append($("<option></option>").attr({
-                            "value": key,
-                            "slug": getSlugAmount[key]['min']
-                        }).text(value));
-                    }
-                });
-                if (selectmaxheaderval === 21) {
-                    maxAmount.append($("<option></option>").attr("value", 21).text("Above"));
-                }
-            }
-        });
     </script>
-
     <script>
         function setCookie() {
             document.cookie = "accept_cookie=ok";

@@ -31,7 +31,7 @@ class FreeFranchisor extends Mailable
     {
         return $this->from('no-reply@franchiseindia.com')
                     //->bcc('techsupport@franchiseindia.com')
-                    ->subject('you have received an enquiry at FranchiseIndia.com.')
+                    ->subject('Received an enquiry | Upgrade your profile at FranchiseIndia.com')
                     ->view('mail.freefranchisor')
                     ->with(['franName' => $this->franName]);
     }

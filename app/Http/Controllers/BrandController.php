@@ -22,68 +22,317 @@ use App\Models\Regional\FranchiseRegional;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 
-
 class BrandController extends Controller
 {
+
+
     //pankaj redis implementation start
+    // public function brandDetails(Request $request)
+    // {
+    //     // Initialize the variables
+    //     // dd($request->all());
+    //     // dd('yes');
+    //     $ratings = 0;
+    //     $likesCnt = 0;
+    //     $brandUrlParam = $request->profileName;         // Fetch the request parameter
+    //     $brandParamsArr = explode('.', $brandUrlParam);  // Explode it by separator & fetch details from DB
+    //     $images = [];
+    //     $view = "brandlanding";
+    //     // return dd($request);
+
+    //     // dd($brandParamsArr);
+    //     if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
+    //         return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
+    //     }
+    //      //cache start
+
+    //      $cacheDuration = 604800;
+    //     //  // Cache key for franchisor details
+    //     //  $franDetailsCacheKey = "fran_details_{$brandParamsArr[1]}";
+    //     //  $franDetails = Cache::remember($franDetailsCacheKey, $cacheDuration, function () use ($brandParamsArr) {
+    //     //      return FranchisorBusinessDetail::find($brandParamsArr[1]);
+    //     //  });
+    //              $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
+
+
+    //              $main_cat = Config('constants.CategoryArr');
+    //              // dd($franDetails->ind_main_cat);
+    //              $a = $franDetails->ind_main_cat;
+    //              // dd($main_cat[$a]);
+    //              $index_value = $main_cat[$a];
+    //              // dd($index_value);
+    //              $u_slug = Config('category.SeoCategoryArr');
+    //              $url_slug = $u_slug[$a];
+    //              // dd($url_slug);
+    //           $fran_new_data = FranchisorBusinessDetail::query()
+    //          ->select('fran_detail_id', 'franchisor_id', 'profile_name', 'company_name','unit_inv_min','unit_inv_max','company_logo')
+    //          ->where('profile_status', 1)
+    //          ->where('membership_type',1)
+    //          ->where('ind_main_cat', $franDetails->ind_main_cat)
+    //          ->take(9)
+    //          ->get();
+    //             // Cache key for insight matches
+    //             $insightMatchesCacheKey = "insight_matches_{$franDetails->company_name}";
+    //             $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
+    //                 // Prepare the regex pattern
+    //                 $companyNameRegex = preg_quote($franDetails->company_name, '/'); // Escape special regex characters
+    //                 // Add boundaries to the company name, allowing spaces or punctuation around it
+    //                 $pattern = '(?i)(^|[[:space:][:punct:]])' . $companyNameRegex . '([[:space:][:punct:]]|$)';
+
+    //                 return InsightList::query()
+    //                     ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
+    //                     ->where('status', 1)
+    //                     // ->whereIn('insight_type', ['News', 'Article', 'Interview']) // Uncomment if needed
+    //                     ->whereRaw("title REGEXP ?", [$pattern])
+    //                     ->orderByDesc('created_at')
+    //                     ->limit(3)
+    //                     ->get()
+    //                     ->map(function ($item) {
+    //                         $item->url = url('insights/en/' . strtolower($item->insight_type) . '/' . $item->slug . '.' . $item->news_id);
+    //                         return $item;
+    //                     });
+    //             });
+
+    //             // dd($insightMatches);
+
+
+    //                         // Cache key for API response
+    //                         // $apiDataCacheKey = "api_data_{$franDetails->company_name}";
+    //                         // $dataFromB = Cache::remember($apiDataCacheKey, $cacheDuration, function () use ($franDetails) {
+    //                         //     $apiUrl = 'https://www.opportunityindia.com/api/article/apibrandnamedataforfi';
+    //                         //     $response = Http::get($apiUrl, ['company_name' => $franDetails->company_name]);
+
+    //                         //     return $response->json();
+    //                         // });
+
+    //                         // $insightMatchesArray = $insightMatches->toArray();
+    //                         // $dataFromBArray = $dataFromB;
+
+    //                         // // Combine both arrays into one
+    //                         // $combinedDataArray = array_merge($insightMatchesArray, $dataFromBArray);
+    //                         // $combinedDataCollection = collect($combinedDataArray);
+    //                         $combinedDataCollection = $insightMatches->toArray();
+    //                         $combinedDataCollection = collect($combinedDataCollection);
+
+
+    //         //cache end
+
+
+    //     //OI Redirection Start
+    //     // if (!empty($franDetails) && $franDetails->ind_main_cat == 5) {
+    //     //     $oiBrandsCacheKey = "oi_brands_{$franDetails->franchisor_id}";
+    //     //      // Retrieve OI Brands data from cache or database
+    //     //         $iobrands = Cache::remember($oiBrandsCacheKey, $cacheDuration, function () use ($franDetails) {
+    //     //             return OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
+    //     //         });
+    //     //     // $iobrands = OiBrands::query()->where('franchise_id', $franDetails->franchisor_id)->first();
+    //     //     //dd($iobrands);
+    //     //     if (!empty($iobrands)) {
+    //     //         $ioRedirect = Config('constants.OIDomain') . '/manufacturer/' . $iobrands->profile_name . '-' . $iobrands->brand_id;
+    //     //         return redirect($ioRedirect, 301);
+    //     //     }
+    //     // }
+    //     //OI Redirection Code End
+
+    //     if (!empty($franDetails) && request()->segment(1) == 'hi' && $franDetails->is_hindi == 0)
+    //         return redirect()->back();
+
+    //     if (!empty($franDetails) && $franDetails->franchisor_id == "FIHL978776")
+    //         return redirect(Config('constants.MainDomain') . '/brands/GodrejInterio-123.8762', 301);
+
+    //      if (empty($franDetails) || ($franDetails->profile_status != 1 && $franDetails->profile_status != 11)) 
+    //             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
+
+    //     if ($franDetails->profile_name != $brandParamsArr[0] && $request->segment(1) == 'brands')
+    //         return redirect('brands/' . $franDetails->profile_name . '.' . $brandParamsArr[1], 301);
+
+    //     if ($franDetails->profile_name != $brandParamsArr[0] && $request->segment(1) != 'brands')
+    //         return redirect('hi/brands/' . $franDetails->profile_name . '.' . $brandParamsArr[1], 301);
+
+    //     $region = $franDetails->multiUnit;
+    //     $stateList = (!empty($franDetails->franchisorLocState) ? $franDetails->franchisorLocState->toArray() : "");
+    //     // dd($region, $stateList);
+    //     $likeTableData = $franDetails->franchisorLike;
+    //     $pageLayout = $franDetails->page_layout_type;
+
+    //     $franDetails->business_desc = CommonController::cleanContent($franDetails->business_desc);
+
+    //     // Update number of views in franchisor_business_details table
+    //     $update = $franDetails->increment('views');
+
+    //     // User Likes & Ratings
+    //     if ($likeTableData !== null && $likeTableData->count() > 0) {
+    //         $likesCnt = $likeTableData->blike; //like count
+
+    //         // User Ratings
+    //         if (!empty($likeTableData->brate))
+    //             $ratings = ($likeTableData->brate / $likeTableData->bclick);
+    //     }
+
+
+    //     // Insert into unique visits table if there is no entry
+    //     $uniqVisitsCheck = $franDetails->uniqueVisit;
+    //     // dd($uniqVisitsCheck);
+
+    //     if (!empty($uniqVisitsCheck))
+    //         $uniqVisitsCheck = $uniqVisitsCheck->where('ip', $request->ip())->where('date', date('Y-m-d'))->first();
+
+    //     if (empty($uniqVisitsCheck)) {
+    //         $insUniqVisit = UniqueVisit::query()->create([
+    //             'franchisor_id' => $franDetails->franchisor_id,
+    //             'ip' => $request->ip(),
+    //             'date' => date('Y-m-d')
+    //         ]);
+    //     }
+
+    //     // Check for the userclicks table count
+    //     $click = $franDetails->userClick;
+
+    //     if (!empty($click))
+    //         $click = $click->toArray();
+
+    //     // If there's no record, create a new one
+    //     if (empty($click)) {
+    //         $firstClick = UserClick::query()->create([
+    //             'franchisor_id' => $franDetails->franchisor_id,
+    //             'clicks' => 0
+    //         ]);
+    //     }
+
+    //     // If record exists, iterate the value by 1
+    //     if (!empty($click))
+    //         UserClick::query()->where('franchisor_id', $franDetails->franchisor_id)->increment('clicks');
+
+    //     //layout image selection conditions and selection
+    //     $layoutType = ($pageLayout == 3) ? "image_type_slider2" : "image_type_slider1";
+
+    //     $sliderCheck = FranchisorSliderTenure::query()->where('franchisor_id', $franDetails->franchisor_id)->first();
+
+    //     if (!empty($sliderCheck) && $sliderCheck->status == 1 && $sliderCheck->end_date >= date('Y-m-d H:i:s')) {
+
+    //         if ($pageLayout == 3 || $pageLayout == 2) {
+
+    //             //Fetching the slider images with frandetail object
+    //             $images = $franDetails->franchisorSliderImage;
+
+    //             if (!empty($images))
+    //                 $images = $images->select($layoutType)
+    //                     ->where($layoutType, '!=', '')
+    //                     ->where('franchisor_id', $franDetails->franchisor_id)
+    //                     ->where('status', 1)
+    //                     ->get();
+    //         }
+    //     }
+
+    //     $franTradePartnerData = FranchisorTradePartner::query()->where('franchisor_id', $franDetails->franchisor_id)->get();
+
+
+    //     if ($franDetails->franchisor_id == "FIHL231593") {
+    //         // SEO Meta Tags
+    //         $seoTitle = "3D Technology Dealership and Distributorship Opportunities in India";
+    //         $seoDesc = "Get 3D Technology distributorship opportunities for sale to drive commercial growth. You will find here distributors of 3D printer, 3D scanner, Steam Lab, Atal Lab, 3D consumables manufacturers in India.";
+    //         $seoKeywords = "3D printer dealers, 3D printer distributors 3D scanner distributors, Steam Lab distributors, Atal Lab distributors, 3D consumables manufacturer, 3D printer distributors";
+    //     } 
+    //     elseif($franDetails->ind_main_cat == 5){
+    //         $seoTitle = sprintf('%s  Dealership & Distributorship – Cost, How to Get, Contact, Fee, Apply', $franDetails->company_name);
+    //         $seoDesc = sprintf('Get %1$s Dealership & Distributorship. Get the %1$s dealership/distributorship information including start-up costs, dealership fees, requirements, growth history and more. Join %1$s dealership/distributorship and be on your way to owning and running a successful business.', $franDetails->company_name);
+    //         $seoKeywords = sprintf('%1$s Dealership, %1$s Distributorship, %1$s dealership cost, %1$s distributorship cost, %1$s contact number, how to get %1$s dealership/distributorship, %1$s dealership/distributorship profit, %1$s franchise enquiry, %1$s dealership/distributorship requirements, %1$s dealership/distributorship apply , %1$s fee, %1$s dealership/distributorship monthly income.', $franDetails->company_name);
+
+    //     }
+    //     else {
+    //         // SEO Meta Tags
+    //         // SEO Meta Tags
+    //         $seoTitle = sprintf('%s Franchise Cost |How to Get | Contact| Fee | Apply', $franDetails->company_name);
+    //         $seoDesc = sprintf('Own your %1$s franchise. Get the %1$s franchising information including start-up costs, franchise fees, requirements, growth history and more. Join %1$s franchise and be on your way to owning and running a successful franchise business.', $franDetails->company_name);
+    //         $seoKeywords = sprintf('%1$s franchise in India, %1$s franchise cost, %1$s franchise contact number, how to get %1$s franchise, %1$s franchise profit, %1$s franchise enquiry, %1$s franchise requirements, %1$s franchise apply , %1$s franchise fee, %1$s franchise monthly income, %1$s franchise reviews', $franDetails->company_name);
+    //     }
+
+
+    //     //for related business Articles
+    //     $relatedBrands = $this->getRelatedBrands(6, $franDetails);
+
+    //     //Investor Auth check and fetch expressed interest data
+    //     $expIntVal = $this->investorDataSet($franDetails);
+
+    //     $isHindi = request()->segment(1) == 'hi' ? 1 : 0;
+
+    //     //for You may like
+    //     $likeArticles = $this->getContentForBrandLanding(10, $franDetails, $isHindi);
+
+    //     if (request()->segment(1) == 'hi') {
+    //         $view = "brandlanding-hindi";
+    //     }
+    //     if (Auth::check()) {
+    //         $inv_credits =  InvestorDetails::select('investor_details.credit_limit', 'user_accounts.reg_source')
+    //             ->join('user_accounts', 'investor_details.investor_id', '=', 'user_accounts.profile_str')
+    //             ->where('investor_details.investor_id', request()->user()->profile_str)->where('user_accounts.reg_source', 'DelhiExpoPaid')
+    //             ->first();
+
+    //         // return the investor data to blade view
+    //         return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'inv_credits', 'combinedDataCollection'));
+    //     } else {
+    //         // return the data to blade view
+    //         return view('franchisor/landing/' . $view, compact('seoTitle', 'seoDesc', 'seoKeywords', 'franDetails', 'region', 'stateList', 'likesCnt', 'ratings', 'expIntVal', 'images', 'relatedBrands', 'likeArticles', 'franTradePartnerData', 'combinedDataCollection','fran_new_data','index_value','main_cat','url_slug'));
+    //     }
+    // }
+
     public function brandDetails(Request $request)
     {
-        // dd(Cookie::get('utm_source'));
-        // $referrer = $request->headers->get('referer', 'No referrer found');
-        // dd($referrer);
-        // $referrer = 'https://www.franchiseindia.net/tamil-nadu/';
-        // $referrer = 'http://localhost/franchise.net_api/jammu-kashmir/';
+            // dd(Cookie::get('utm_source'));
 
-        //     if ($referrer && parse_url($referrer, PHP_URL_HOST) === 'localhost') {
-        //         $path = parse_url($referrer, PHP_URL_PATH);
+        //  $referrer = $request->headers->get('referer', 'No referrer found');
+        // // dd($referrer);
+
+
+        //     if ($referrer && str_contains(parse_url($referrer, PHP_URL_HOST), 'franchiseindia.net')) {
+        //         // Extract the path from the URL
+        //         $path = parse_url($referrer, PHP_URL_PATH); // e.g. /franchise.net_api/jammu-kashmir/
+
+        //         // Explode the path to get segments
         //         $segments = explode('/', trim($path, '/'));
-        //         $state = end($segments);
 
-        //         $cookieValue = 'DOTNET ' . strtoupper(str_replace('-', ' ', $state));
+        //         // Get the last segment as the state name
+        //         $state = end($segments); // jammu-kashmir
 
-        //         Cookie::queue('utm_source', $cookieValue, 60 * 24); // minutes
+        //         // Format the cookie value
+        //         $cookieValue = 'DOTNET ' . strtoupper(str_replace('-', ' ', $state)); // DOTNET JAMMU KASHMIR
 
-        //         // return response('Cookie queued'); // MUST return a response
+        //         // Set the cookie for 24 hours
+        //         Cookie::queue('utm_source', $cookieValue, 60 * 24 ); // minutes
         //     }
 
-
-         $utmCampaign = $request->query('utm_campaign');
+            $utmCampaign = $request->query('utm_campaign');
+            $cookieValue = null;
 
             if ($utmCampaign) {
-                $cookieValue = strtoupper(str_replace('-', ' ', $utmCampaign)); // Optional: format nicely
+                // Use utm_campaign directly
+                $cookieValue = strtoupper(str_replace('-', ' ', $utmCampaign));
+
             } else {
-                // 2. Fallback to referrer logic
+                // Fallback to referrer-based logic
                 $referrer = $request->headers->get('referer');
 
-                if ($referrer && parse_url($referrer, PHP_URL_HOST) === 'localhost') {
+                if ($referrer && str_contains(parse_url($referrer, PHP_URL_HOST), 'franchiseindia.net')) {
                     $path = parse_url($referrer, PHP_URL_PATH); // e.g. /franchise.net_api/jammu-kashmir/
                     $segments = explode('/', trim($path, '/'));
                     $state = end($segments);
+
                     $cookieValue = 'DOTNET ' . strtoupper(str_replace('-', ' ', $state));
-                } else {
-                    // No UTM or valid referrer – do nothing or set default
-                    $cookieValue = null;
                 }
             }
 
-            // 3. Set the cookie if we have a value
+            // Set the cookie if a value is available
             if ($cookieValue) {
-                Cookie::queue('utm_source', $cookieValue, 60 * 24); // 24 hours
+                Cookie::queue('utm_source', $cookieValue, 60 * 24); // Expires in 24 hours
             }
 
-            // Proceed with response
-            // return response('Cookie handled');
-        
-
-            // dd(Cookie::get('utm_source'));
-
-    
         $ratings = 0;
         $likesCnt = 0;
         $brandUrlParam = $request->profileName;         // Fetch the request parameter
         $brandParamsArr = explode('.', $brandUrlParam);  // Explode it by separator & fetch details from DB
         $images = [];
         $view = "brandlanding";
+
         if ($brandUrlParam == "fpf.96936") {
             $brandUrlParam = "fiery-pot-foods.103010";
             return redirect(Config('constants.MainDomain') . '/brands/' . $brandUrlParam, 301);
@@ -92,7 +341,7 @@ class BrandController extends Controller
             $brandUrlParam = "berger-paints.93087";
             return redirect(Config('constants.MainDomain') . '/brands/' . $brandUrlParam, 301);
         }
-        // dd($brandParamsArr);
+
         if (count($brandParamsArr) < 2 || !is_numeric($brandParamsArr[1])) {
             return redirect(Config('constants.MainDomain') . '/business-opportunities/all/all', 301);
         }
@@ -101,7 +350,6 @@ class BrandController extends Controller
         $cacheDuration = 604800;
         $franDetails = FranchisorBusinessDetail::query()->find($brandParamsArr[1]);
 
-        //  dd($franDetails);
         $main_cat = Config('constants.CategoryArr');
         $a = $franDetails->ind_main_cat;
         $index_value = $main_cat[$a];
@@ -114,6 +362,7 @@ class BrandController extends Controller
             ->where('ind_main_cat', $franDetails->ind_main_cat)
             ->take(9)
             ->get();
+
         // Cache key for insight matches
         $insightMatchesCacheKey = "insight_matches_{$franDetails->company_name}";
         $insightMatches = Cache::remember($insightMatchesCacheKey, $cacheDuration, function () use ($franDetails) {
@@ -127,6 +376,7 @@ class BrandController extends Controller
             return InsightList::query()
                 ->select('news_id', 'title', 'insight_type', 'slug', 'created_at')
                 ->where('status', 1)
+                // ->whereIn('insight_type', ['News', 'Article', 'Interview']) // Uncomment if needed
                 ->whereRaw("LOWER(title) REGEXP LOWER(?)", [$pattern])
                 ->orderByDesc('created_at')
                 ->limit(3)
@@ -139,7 +389,7 @@ class BrandController extends Controller
 
         $combinedDataCollection = $insightMatches->toArray();
         $combinedDataCollection = collect($combinedDataCollection);
-        //OI Redirection Code End
+
 
         if (!empty($franDetails) && request()->segment(1) == 'hi' && $franDetails->is_hindi == 0)
             return redirect()->back();
@@ -178,31 +428,11 @@ class BrandController extends Controller
 
 
         // Insert into unique visits table if there is no entry
-        $uniqVisitsCheck = $franDetails->uniqueVisit;
-        // dd($uniqVisitsCheck);
-
-        if (!empty($uniqVisitsCheck))
-            $uniqVisitsCheck = $uniqVisitsCheck->where('ip', $request->ip())->where('date', date('Y-m-d'))->first();
-
-        if (empty($uniqVisitsCheck)) {
-            $insUniqVisit = UniqueVisit::query()->create([
-                'franchisor_id' => $franDetails->franchisor_id,
-                'ip' => $request->ip(),
-                'date' => date('Y-m-d')
-            ]);
-        }
-
-        $regionalFranchisorMembership = FranchiseRegional::query()
-            ->where('fihl_id', $franDetails->franchisor_id)
-            ->where('status', 1)
-            ->value('membership_type'); // returns the first column value directly
-
-        if ($regionalFranchisorMembership == 0) {
-            $regionalFranchisorMembership = DealerRegional::query()
-                ->where('fihl_id', $franDetails->franchisor_id)
-                ->where('status', 1)
-                ->value('membership_type');
-        }
+            UniqueVisit::firstOrCreate([
+            'franchisor_id' => $franDetails->franchisor_id,
+            'ip' => $request->ip(),
+            'date' => now()->toDateString()
+        ]);
 
         // Check for the userclicks table count
         $click = $franDetails->userClick;
@@ -262,7 +492,17 @@ class BrandController extends Controller
             $seoDesc = sprintf('Own your %1$s franchise. Get the %1$s franchising information including start-up costs, franchise fees, requirements, growth history and more. Join %1$s franchise and be on your way to owning and running a successful franchise business.', $franDetails->company_name);
             $seoKeywords = sprintf('%1$s franchise in India, %1$s franchise cost, %1$s franchise contact number, how to get %1$s franchise, %1$s franchise profit, %1$s franchise enquiry, %1$s franchise requirements, %1$s franchise apply , %1$s franchise fee, %1$s franchise monthly income, %1$s franchise reviews', $franDetails->company_name);
         }
+        $regionalFranchisorMembership = FranchiseRegional::query()
+            ->where('fihl_id', $franDetails->franchisor_id)
+            ->where('status', 1)
+            ->value('membership_type'); // returns the first column value directly
 
+        if ($regionalFranchisorMembership == 0) {
+            $regionalFranchisorMembership = DealerRegional::query()
+                ->where('fihl_id', $franDetails->franchisor_id)
+                ->where('status', 1)
+                ->value('membership_type');
+        }
 
         //for related business Articles
         $relatedBrands = $this->getRelatedBrands(6, $franDetails);
@@ -292,7 +532,7 @@ class BrandController extends Controller
         }
     }
 
-    //pankaj redis implementation end
+    //pankaj redis implementation end 
 
     /**
      * @param Request $request

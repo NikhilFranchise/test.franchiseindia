@@ -8,6 +8,7 @@ use App\Models\AuthorList;
 use App\Models\InsightCategory;
 use App\Models\InsightSubcategory;
 use App\Traits\hasEffectiveDate;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class InsightList extends Model
@@ -16,23 +17,93 @@ class InsightList extends Model
 
     protected $table = 'insights_list_english';
     protected $primaryKey = 'news_id';
+
+    protected $fillable = [
+        'news_type',
+        'insight_type',
+        'cat_id',
+        'subcat_id',
+        'title',
+        'shortDesc',
+        'content',
+        'image',
+        'img_alt',
+        'slug',
+        'time',
+        'views',
+        'status',
+        'author_id',
+        'updated_by',
+        'scheduled_at',
+        'published_date',
+    ];
+    protected $guarded = [];
     protected $dates = ['deleted_at'];
 
+    protected $casts = [
+        'created_at'     => 'datetime',
+        'updated_at'     => 'datetime',
+        'published_date' => 'datetime',
+        'effective_date' => 'datetime',  // Important for display formatting
+    ];
+    /**
+     * ACCESSOR: Display formatted date with "Last Updated"
+     */
+    public function getDisplayDateAttribute()
+    {
+        $effective = $this->effective_date ?? $this->created_at;
+
+        if (!($effective instanceof Carbon)) {
+            $effective = Carbon::parse($effective);
+        }
+
+        // When updated later than creation date
+        if ($this->published_date > $this->created_at) {
+            return 'Last Updated ' . $effective->format('M d, Y');
+        }
+
+        // Normal created/published date
+        return $effective->format('M d, Y');
+    }
 
     public function author()
     {
-        return $this->hasMany(AuthorList::class, 'author_id', 'author_id');
+        return $this->belongsTo(AuthorList::class, 'author_id', 'author_id');
     }
     public function category()
     {
-        return $this->hasMany(InsightCategory::class, 'id', 'cat_id');
+        return $this->belongsTo(InsightCategory::class, 'cat_id', 'id');
     }
     public function Subcategory()
     {
-        return $this->hasMany(InsightSubcategory::class, 'id', 'subcat_id');
+        return $this->belongsTo(InsightSubcategory::class, 'subcat_id', 'id');
     }
     public function ContentTagsAssigned()
     {
         return $this->hasMany(ContentTagsAssigned::class, 'content_id', 'news_id');
+    }
+
+    public function scopePopularArticles($query)
+    {
+        return $query->with('category')
+            ->select(
+                'news_id',
+                'insight_type',
+                'news_type',
+                'cat_id',
+                'title',
+                'shortDesc',
+                'slug',
+                'image',
+                'views',
+                'created_at',
+                'published_date'
+            )
+            ->withEffectiveDate()
+            ->where('insight_type', 'Article')
+            ->whereNotIn('news_type', ['ir', 'ri'])
+            ->where('status', 1)
+            ->whereNotNull(['image', 'cat_id'])
+            ->orderByDesc('views');
     }
 }

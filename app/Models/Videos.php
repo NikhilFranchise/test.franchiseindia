@@ -13,5 +13,4 @@ class Videos extends Model
     // In your Videos model
 protected $fillable = ['fih_id','fih_url','fih_imageurl','fih_title','fih_description','fih_views','fih_date','fih_status','updated_at'];
 
-
 }

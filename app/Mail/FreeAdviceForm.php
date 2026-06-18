@@ -18,8 +18,7 @@ class FreeAdviceForm extends Mailable
      * @return void
      */
     public function __construct($details)
-    { 
-        // dd($details);
+    {
         $this->details = $details;
     }
 
@@ -33,6 +32,10 @@ class FreeAdviceForm extends Mailable
         $subject = $this->details->optionsRadios == "franchisor" ? "Expand My Brand" : "Buy a Franchise";
         return $this->from('no-reply@franchiseindia.com')
                     ->bcc('techsupport@franchiseindia.com')
+                    // ->cc('info@franchiseindia.com')
+                    // ->bcc('cnikhil@franchiseindia.net')
+                    // ->bcc('service@franchiseindia.net')
+
                     ->subject($subject.' enquiry at FranchiseIndia.com')
                     ->view('mail.expand-brand')
                     ->with(['details' => $this->details]);

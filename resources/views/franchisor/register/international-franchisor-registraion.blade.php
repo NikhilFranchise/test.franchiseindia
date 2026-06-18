@@ -4,7 +4,7 @@
         label.error {
             color: red;
         }
-
+        
         .posabsoblock .posabso {
             z-index: 2
         }

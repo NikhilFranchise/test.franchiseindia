@@ -22,6 +22,10 @@ class StaticPageController extends Controller
      * about us page
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function test()
+    {
+        return view('static.test');
+    }
     public function aboutus()
     {
         return view('static.aboutus');
@@ -262,11 +266,54 @@ class StaticPageController extends Controller
     }
 
 
-    public function topfranchiseleads()
+    // public function topfranchiseleads()
+    // {
+    //     $leaders = TopFranchiseLeader::query()->get();
+    //     return view('static.topfranchiseleaders', compact('leaders'));
+    // }
+
+    public function topfranchiseleads(Request $request)
     {
-        $leaders = TopFranchiseLeader::query()->get();
-        return view('static.topfranchiseleaders', compact('leaders'));
+        // All available years (DESC)
+        $availableYears = TopFranchiseLeader::where('status', 1)
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year')
+            ->values();
+
+        // Latest year
+        $latestYear = $availableYears->first();
+
+        // Selected year from query
+        $year = (int) $request->query('year', $latestYear);
+
+        // Redirect if invalid year
+        if (! $availableYears->contains($year)) {
+            return redirect()->to(
+                url()->current() . '?year=' . $latestYear
+            );
+        }
+
+        // Base query
+        $leadersQuery = TopFranchiseLeader::where('status', 1)
+            ->where('year', $year);
+
+        // Count (Query 1)
+        $leadersCount = (clone $leadersQuery)->count();
+
+        // Data (Query 2)
+        $leaders = $leadersQuery
+            ->orderBy('id')
+            ->get();
+
+        return view('static.topfranchiseleaders', compact(
+            'leaders',
+            'leadersCount',
+            'year',
+            'availableYears'
+        ));
     }
+
     public function franchiseleader($year, $slug, $id)
     {
         // dd($id);
@@ -274,9 +321,6 @@ class StaticPageController extends Controller
         // dd($leader);
         return view('static.topfranchiseleaders.leader_profile', compact('leader'));
     }
-
-    // single function for top 200/100
-
 
     public function topFranchiseLeaders(Request $request)
     {

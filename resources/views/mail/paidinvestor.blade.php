@@ -26,7 +26,7 @@
         <td valign="top"><table width="100%" cellspacing="0" cellpadding="0">
                 <tbody>
                 <tr>
-                    <td valign="top" class="td-business" style="padding:0 82px 40px 82px; line-height:22px; text-align:center; font-size:18px; color:#666666;"><span style="font-family: Arial, Helvetica, sans-serif; ">Thanks for showing interest in <span style="color:#333333; font-weight:bold;">"{{$companyName}}"</span> Please find below the contact details of the brand.</span></td>
+                    <td valign="top" class="td-business" style="padding:0 82px 40px 82px; line-height:22px; text-align:center; font-size:18px; color:#666666;"><span style="font-family: Arial, Helvetica, sans-serif; ">Thank you for showing interest in <span style="color:#333333; font-weight:bold;">"{{$companyName}}"</span> Please find the brand's contact details below.</span></td>
                 </tr>
                 </tbody>
             </table>

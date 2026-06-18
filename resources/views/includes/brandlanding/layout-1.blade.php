@@ -27,8 +27,8 @@
                         }
                     @endphp
                     <div class="brand-logo"><img src="{{ $img }}" alt="{{ $franDetails->company_name }}" /></div>
-                    @if($franDetails->brand_verified == 1)
-                    <div class="brand-verify-detail-mobile"><i class="fa fa-check"></i> Verified</div>
+                    @if ($franDetails->brand_verified == 1)
+                        <div class="brand-verify-detail-mobile"><i class="fa fa-check"></i> Verified</div>
                     @endif
                 </div>
                 <div class="col-xs-12 col-sm-10 col-md-10 mdy-width">
@@ -38,15 +38,17 @@
                             <div class="sub-ttl">
                                 {{ Config('constants.subSubCategoryArr.' . $franDetails->ind_cat . '.' . $franDetails->ind_sub_cat) }}
                             </div>
-                            @if($franDetails->ind_main_cat == 5)
-                            <h1 class="ttl">{{ $franDetails->company_name }} Dealership & Distributorship Cost – How to get, Contact, Apply, Fee</h1>
+                            @if ($franDetails->ind_main_cat == 5)
+                                <h1 class="ttl">{{ $franDetails->company_name }} Dealership & Distributorship Cost –
+                                    How to get, Contact, Apply, Fee</h1>
                             @else
-                            <h1 class="ttl">{{ $franDetails->company_name }} Franchise Cost – How to get, Contact,
-                                Apply, Fee</h1>
+                                <h1 class="ttl">{{ $franDetails->company_name }} Franchise Cost – How to get,
+                                    Contact,
+                                    Apply, Fee</h1>
                             @endif
-                           
+
                         </div>
-                        {{-- @if($franDetails->brand_verified == 1)
+                        {{-- @if ($franDetails->brand_verified == 1)
                         <div style="text-align: right;">
                         <img src="https://thumbs.dreamstime.com/b/verified-vector-stamp-isolated-white-background-41827520.jpg" style="height: 50px;">
                         </div>
@@ -97,11 +99,10 @@
                                     @endif
                                 </div>
 
-                                @if($franDetails->brand_verified == 1)
-                                <div class="brand-verify-detail"><i class="fa fa-check"></i> Verified</div>
+                                @if ($franDetails->brand_verified == 1)
+                                    <div class="brand-verify-detail"><i class="fa fa-check"></i> Verified</div>
+                                @endif
 
-                                 @endif
-                                
                             </div>
                         </div>
                         <!-- Tab Panel End Here -->
@@ -172,7 +173,7 @@
                                 </li>
                             </ul> --}}
 
-                            
+                                                      
 <div class="brand-brief-wrap-two">
      @php
                                     $area =
@@ -265,8 +266,6 @@
     </tbody>
 </table>
 </div>
-
-
                         </div>
 
                         <!-- Business Section Start here -->
@@ -533,7 +532,7 @@
                                         </div>
                                         <div class="submit-btn" id="sub" style="float: none;">
                                             <input type="submit" id="btninsta" class="btn btn-default btn-red"
-                                                value="Apply Now">
+                                                value="Apply Now" disabled />
                                         </div>
 
                                     </form>
@@ -609,7 +608,7 @@
         })
     })
 </script>
- 
+
 <!-- INACTIVE BRANDS POPUP -->
 @if ($franDetails->profile_status == 11)
     <div id="inactive-brands">
@@ -879,67 +878,12 @@
 
                 </div>
             </div>
-            <div class="inb-cont">This brand is currently not accepting franchise applications. However, you can explore the brands with similar category that offer franchising opportunities.</div>
-          <div class="inb-brands">
-            <ul>
-                @php
-                $cat_url = Config('constants.MainDomain').'/business-opportunities/' .$url_slug .'.m' .$franDetails->ind_main_cat;;
-                @endphp
-                
-                @foreach($fran_new_data as $brands)
-                @php
-                 $brandImagepath = Config('constants.franAwsImgPath').$brands->company_logo;
-                 $brandUrl       = sprintf(Config('constants.brandPagePattern'), Config('constants.MainDomain'), $brands->profile_name, $brands->fran_detail_id);
-                 $minValue = $brands->unit_inv_min;
-                        if (is_numeric($minValue)) {
-                            if ($minValue < 100000 && $minValue > 10000) {
-                                $minValue = substr($minValue / 1000, 0, 5) . ' K';
-                            } elseif ($minValue <= 9999999 && $minValue > 100000) {
-                                $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
-                            } elseif ($minValue > 9999999) {
-                                $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
-                            }
-                        }
 
-                        $maxValue = $brands->unit_inv_max;
-                        if (is_numeric($maxValue)) {
-                            if ($maxValue < 100000 && $maxValue > 10000) {
-                                $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
-                            } elseif ($maxValue <= 9999999 && $maxValue > 100000) {
-                                $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
-                            } elseif ($maxValue > 9999999) {
-                                $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
-                            }
-                        }
-                @endphp
-                <li>
-                    <div class="inb-brand-pic">
-                        <a href="{{$brandUrl}}" target="_blank"><img src="{{$brandImagepath}}" alt="Grow Inn Steps"></a>
-                    </div>
-                    <div class="inb-brand-title">
-                        <a href="{{$brandUrl}}" target="_blank">{{$brands->company_name}} </a>
-                    </div>
-                    <div class="inb-brand-inv">
-                        INR {{ $minValue }} - {{ $maxValue }}
-                    </div>
-                </li>
-                @endforeach
-               
-            </ul>
-          </div>
-          <div class="inb-view">
-            <a href="{{$cat_url}}" target="_blank">VIEW MORE</a>
-            {{-- <a href="" target="_blank">VIEW MORE</a> --}}
-
-          </div>
+            <script>
+                setTimeout(function() {
+                    $('#inactive-brands').inb();
+                }, 100);
+            </script>
         </div>
-    
-    <script>
-      setTimeout(function() {
-        $('#inactive-brands').inb();
-    }, 100);
-    </script>
-    </div>
-    @endif
-    <!-- INACTIVE BRANDS POPUP -->
-    
+@endif
+<!-- INACTIVE BRANDS POPUP -->

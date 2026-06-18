@@ -44,7 +44,7 @@ return [
     'google' => [
         'client_id' => '419712793551-job4lnjbv425s7lqcnkfj8f8m7o2f2f3.apps.googleusercontent.com',
         'client_secret' => 'h2jtjDzljsRqKIQY8eF58RwM',
-        'redirect' => 'https://fiuat.franchiseindia.com/auth/google/callback',
+        'redirect' => 'https://www.franchiseindia.com/auth/google/callback',
     ],
 
     'linkedin' => [

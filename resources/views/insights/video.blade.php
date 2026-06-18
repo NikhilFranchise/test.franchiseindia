@@ -1,16 +1,42 @@
 @extends('layout.insights.master')
+@section('load-gpt', true)
 @section('content')
+    @php
+        $locale = App::getLocale();
+        $pageTitle = $locale === 'en' ? 'Video & Podcast' : 'वीडियो और पॉडकास्ट';
+    @endphp
     <div class="maininnver homeh">
         <div class="inner-top-head">
             <div class="container">
-                <h1>{{ App::getLocale() == 'en' ? 'Video & Podcast' : 'वीडियो और पॉडकास्ट' }}</h1>
+                <h1>{{ $pageTitle }}</h1>
+            </div>
+        </div>
+        <div class="container">
+            <div class="inner-article-detail-desktop-top-ad">
+                @desktop
+                    <div id='FI_Desktop_ROS_728x90_ATF'></div>
+                    <script>
+                        googletag.cmd.push(function() {
+                            googletag.display('FI_Desktop_ROS_728x90_ATF');
+                        });
+                    </script>
+                @enddesktop
+                @mobile
+                    <div id='FI_Desktop_ROS_300x250_ATF'>
+                        <script>
+                            googletag.cmd.push(function() {
+                                googletag.display('FI_Desktop_ROS_300x250_ATF');
+                            });
+                        </script>
+                    </div>
+                @endmobile
             </div>
         </div>
         <div class="authblk">
             <div class="container">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('/insights') }}">Home</a></li>
-                    <li class="breadcrumb-item">{{ App::getLocale() == 'en' ? 'Video & Podcast' : 'वीडियो और पॉडकास्ट' }}
+                    <li class="breadcrumb-item">{{ $pageTitle }}
                     </li>
                 </ul>
             </div>
@@ -18,13 +44,13 @@
     </div>
     <div class="stories">
         <div class="container">
-            <h3>{{ App::getLocale() == 'en' ? 'Video & Podcast' : 'वीडियो और पॉडकास्ट' }}</h3>
+            <h3>{{ $pageTitle }}</h3>
             <div class="row">
                 <div class="col-md-8">
                     <div class="tab-content">
                         <div class="tab-pane active stab" id="latest">
                             <ul>
-                                @forelse ($listVideo as $fivideo)
+                                @foreach ($listVideo as $fivideo)
                                     <li>
                                         <div class="author-fresh">
                                             <div class="author-latest-pic">
@@ -53,9 +79,23 @@
                                             </div>
                                         </div>
                                     </li>
-                                @empty
-                                    <p>No Records.</p>
-                                @endforelse
+                                    @if ($loop->iteration % 3 == 0)
+                                        @php
+                                            $adIndex = $loop->iteration / 3;
+                                        @endphp
+                                        <li class="list-ad">
+                                            <div class="article-ad text-center">
+                                                <div id="FI_Desktop_ROS_Inline_{{ $adIndex }}_300x250">
+                                                    <script>
+                                                        googletag.cmd.push(function() {
+                                                            googletag.display('FI_Desktop_ROS_Inline_{{ $adIndex }}_300x250');
+                                                        });
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endif
+                                @endforeach
                             </ul>
                             <div class="video-pagination">
                                 {{ $videos->links('pagination::bootstrap-5') }}
@@ -69,10 +109,10 @@
                 <div class="col-md-4">
                     {{-- ads section start here --}}
                     <div class="ad-right-author">
-                        <div id='adslot300x250_ATF'>
+                        <div id='FI_Desktop_ROS_RHS_300x250_ATF'>
                             <script>
                                 googletag.cmd.push(function() {
-                                    googletag.display('adslot300x250_ATF');
+                                    googletag.display('FI_Desktop_ROS_RHS_300x250_ATF');
                                 });
                             </script>
                         </div>
@@ -81,40 +121,31 @@
                     <div class="popular-articles">
                         <div class="popular-title">Popular Articles</div>
                         <ul class="popular-list">
-                            @forelse ($popArticles as $popular)
+                            @foreach ($popArticles as $popular)
                                 @php
-                                    $locale = App::getLocale();
-                                    $mainDomain = Config('constants.MainDomain');
-                                    $image = \App\Http\Controllers\InsightsController::createimgurl($popular->image);
-                                    $popUrl =
-                                        "{$mainDomain}/insights/{$locale}/" .
-                                        strtolower($popular->insight_type) .
-                                        "/{$popular->slug}.{$popular->news_id}";
+                                    $popUrl = insightsUrl($popular, $locale);
+                                    $cat = $popular->category ?? null;
+                                    $catURL = $cat ? insightsCategoryUrl($cat) : null;
+                                    $catName = $cat ? $cat->catname : null;
                                 @endphp
                                 <li>
-                                    @foreach ($popular->category as $cat)
-                                        @php
-                                            $catURL = "{$mainDomain}/insights/{$locale}/{$cat->slug}";
-                                            $catName = $cat->catname;
-                                        @endphp
+                                    @if ($cat)
                                         <div class="popular-sub"><a href="{{ $catURL }}"
                                                 hreflang="{{ $locale }}">{{ ucwords($catName) }}</a>
                                         </div>
-                                    @endforeach
+                                    @endif
                                     <div class="popular-head"><a href="{{ $popUrl }}">{{ $popular->title }}</a>
                                     </div>
                                 </li>
-                            @empty
-                                <p>No Results.</p>
-                            @endforelse
+                            @endforeach
                         </ul>
                     </div>
                     {{-- ads section start here --}}
                     <div class="ad-right-sticky">
-                        <div id="adslot300x250_1">
+                        <div id="FI_Desktop_ROS_RHS_300x250_1">
                             <script>
                                 googletag.cmd.push(function() {
-                                    googletag.display('adslot300x250_1');
+                                    googletag.display('FI_Desktop_ROS_RHS_300x250_1');
                                 });
                             </script>
                         </div>
@@ -128,14 +159,11 @@
     <div class="podcastblk">
         <div class="container">
             <div class="comhead">
-                @php
-                    $locale = App::getLocale();
 
-                @endphp
-                <a href="#">{{ App::getLocale() == 'en' ? 'Latest Podcast' : 'नवीनतम पॉडकास्ट' }}</a>
+                <a href="#">{{ $locale == 'en' ? 'Latest Podcast' : 'नवीनतम पॉडकास्ट' }}</a>
                 <span class="slidervall">
                     <a href="{{ url('insights/' . $locale . '/podcast') }}"
-                        target="_blank">{{ App::getLocale() == 'en' ? 'View All' : 'सभी को देखें' }}</a>
+                        target="_blank">{{ $locale == 'en' ? 'View All' : 'सभी को देखें' }}</a>
                 </span>
             </div>
         </div>
@@ -156,9 +184,19 @@
                     </li>
                 @endforeach
             </ul>
-
             <!-- below list start here  -->
+            <div class="inner-article-detail-desktop-top-ad">
+                @desktop
+                    <div id='FI_Desktop_ROS_728x90_BTF'></div>
+                    <script>
+                        googletag.cmd.push(function() {
+                            googletag.display('FI_Desktop_ROS_728x90_BTF');
+                        });
+                    </script>
+                @enddesktop
+            </div>
         </div>
+
     </div>
     @include('layout.insights.magblock')
     @include('layout.insights.brandlist')

@@ -10,6 +10,7 @@
         <!-- Swiper -->
         <div class="swiper-container">
             <div class="swiper-wrapper">
+
                 <div class="swiper-slide">
                     <div class="swiper-slide-events-main">
                         <div class="overlay-card"></div>

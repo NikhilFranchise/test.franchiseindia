@@ -261,7 +261,7 @@
                                         </div>
                                     </div>
                                 </form>
-                               
+                             
                             </div>
                             <div role="tabpanel" class="tab-pane active" id="register">
                                 <form class="form-horizontal" id="registration">

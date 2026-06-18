@@ -26,7 +26,6 @@ class ArticleController extends Controller
      */
     public function articleKickersPage(Request $request)
     {
-        // dd($request);
         //fetch kicker and replace '-' with ' '
         $kickerContentArr = [];
         $brand            = new BrandController;
@@ -96,6 +95,7 @@ class ArticleController extends Controller
 
         //for Videos
         $videoArticles    = $this->getvideoArticle(9);
+
         //for News
         $newsArticles     = $this->getNews(4);
 
@@ -166,10 +166,6 @@ class ArticleController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function contentredirect(Request $request){
-        dd($request);
-
-    }
     public function getHindiKickerList()
     {
 
@@ -268,7 +264,7 @@ class ArticleController extends Controller
         $contentIdParam      = $contentArr[1];
         
         if( !is_numeric($contentIdParam))
-            return redirect('/'.$redirectionSite); 
+            return redirect('/'.$redirectionSite);
 
         //fetch data with selected contentId
         $articles             = ContentList::query()->find($contentIdParam);
@@ -276,7 +272,14 @@ class ArticleController extends Controller
         // if ( count($articles) == 0 || $articles->status != 1)
         //     return redirect('/'.$redirectionSite, 301);
 
+        if ($articles === null) {
+            return redirect('/'.$redirectionSite, 301);
+        }
         
+        // dd($articles);
+        if ($articles->status != 1) {
+            return redirect('/'.$redirectionSite, 301);
+        }
 
         $artSite              = config('constants.articleArr.' . $articles['site_type']);
         $redirectUrl = 'http://opportunityindia.franchiseindia.com/article/'. $articles['slug'].'-'.$contentIdParam;
@@ -802,9 +805,5 @@ class ArticleController extends Controller
         $articles = $articles->toArray();
 
         return CommonController::contentUrlSlug($articles);
-    }
-    public function check(){
-
-        dd('yes');
     }
 }

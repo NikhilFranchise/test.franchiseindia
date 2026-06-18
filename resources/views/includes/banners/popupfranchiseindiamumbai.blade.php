@@ -190,10 +190,15 @@ overflow: hidden;
                                     <div class="f3">
 
                   <select type="text" placeholder="Select event date" id="eventdays" name="eventdays" class="form-control myselectclass3" accesskey="" onchange="checkNumbers();">
-                                 <option value="Bothdays2930November" selected="">Expo Visit for Both days</option>
+                                 <option value="Bothdays2930November" selected>Expo Visit for Both days</option>
                                  <option value="Friday29November">Expo Visit Friday 29 November</option>
-                                 <option value="Saturday30November">Expo Visit Saturday 30 November</option>
-                                 <option value="Bothdays2930NovemberIReCXLABELSConference">Expo Visit for Both days with Conference</option>
+                                 <option value="Saturday30November">Expo Visit Saturday 30 December</option>
+                                 <option value="Friday29NovemberIReCXLABELSConference">Conference Pass Friday 29
+                                    November</option>
+                                 <option value="Saturday30NovemberIReCXLABELSConference">Conference Pass Saturday 30
+                                    November</option>
+                                 <option value="Bothdays2930NovemberIReCXLABELSConference">Conference Pass for Both days
+                                 </option>
                               </select>
 
                                     </div>

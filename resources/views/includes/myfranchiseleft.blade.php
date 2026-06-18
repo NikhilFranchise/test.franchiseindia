@@ -1,6 +1,5 @@
 <div class="col-xs-12 col-sm-2 col-md-2 row-no-padding myaccleft">
     <div class="bor-radius backwhite myshadow">
-
         @if (
             !empty(request()->user()) &&
                 request()->user()->membership_type == 0 &&
@@ -390,17 +389,13 @@
                                 <div class="hdk">Rate your satisfaction level for the quality of leads.</div>
                                 <div class="ratingleadsquality">
                                     <label><input type="radio" name="ratingleadsquality" value="5"
-                                            title="5 stars">
-                                        5</label>
+                                            title="5 stars"> 5</label>
                                     <label><input type="radio" name="ratingleadsquality" value="4"
-                                            title="4 stars">
-                                        4</label>
+                                            title="4 stars"> 4</label>
                                     <label><input type="radio" name="ratingleadsquality" value="3"
-                                            title="3 stars">
-                                        3</label>
+                                            title="3 stars"> 3</label>
                                     <label><input type="radio" name="ratingleadsquality" value="2"
-                                            title="2 stars">
-                                        2</label>
+                                            title="2 stars"> 2</label>
                                     <label><input type="radio" name="ratingleadsquality" value="1"
                                             title="1 star"> 1</label>
                                 </div>
@@ -411,8 +406,7 @@
                                 </div>
                                 <ul class="webrating">
                                     <li><input type="radio" name="websiterating" value="1" title="0-5"
-                                            checked="checked">0-5
-                                    </li>
+                                            checked="checked">0-5</li>
                                     <li><input type="radio" name="websiterating" value="2"
                                             title="6-10">6-10</li>
                                     <li><input type="radio" name="websiterating" value="3"

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+
 use App\Models\Advertise;
 use App\Mail\AdvertiseMail;
 use Illuminate\Support\Facades\Log;
@@ -68,7 +70,7 @@ class AdvertiseController extends Controller
             return view('thanks.thanks', compact('message'));
         }
 
-        $ch     = curl_init();
+       /* $ch     = curl_init();
         curl_setopt($ch,CURLOPT_URL, url('dotcom-api/advertise-us-salescrm-leads.php?advertise_id='.$advertiseData));
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
         curl_exec($ch);
@@ -77,7 +79,7 @@ class AdvertiseController extends Controller
             Log::getFacadeRoot()->alert('SMS Sending in Curl Failed  : ' . curl_error($ch));
 
         curl_close($ch);  // Close the curl connection
-
+		*/
         if(!$advertiseData)
             return response()->json('Insertion failed..!');
 

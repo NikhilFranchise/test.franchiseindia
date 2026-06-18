@@ -289,12 +289,9 @@
                href="https://www.entrepreneur.com/" rel="nofollow">entrepreneur.com</a></li>
         <li><a target="_blank" href="https://www.indianretailer.com/"
                rel="nofollow">indianretailer.com</a></li>
-        <!--<li><a target="_blank" href="https://www.restaurantindia.in">restaurantindia.in</a></li>
-        <li><a target="_blank" href="https://www.franchiseindia.com/wellness/">wellnessindia.org</a></li>
-        <li><a target="_blank" href="https://www.franchiseindia.com/education/">educationbiz.com</a></li>-->
 		<li><a target="_blank" href="https://www.restaurantindia.in">restaurantindia.in</a></li>
         <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/beauty-wellness">wellnessindia.org</a></li>
-        <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/education">educationbiz.com</a></li>
+            <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/education">educationbiz.com</a>
         <!--<li><a target="_blank" href="https://www.franchise.ae/" rel="nofollow">franchise.ae</a></li>-->
         <li><a target="_blank" href="https://www.franchisebangladesh.com/"
                rel="nofollow">franchisebangladesh.com</a> </li>
@@ -312,8 +309,8 @@
         <li><a target="_blank" href="https://www.francorp.in/" rel="nofollow">francorp.in</a></li>
         <li><a target="_blank" href="https://www.franglobal.com/"
                rel="nofollow">franglobal.com</a></li>
-        <!-- <li><a target="_blank"
-               href="http://www.franchiseindiaventures.com/" rel="nofollow">franchiseindiaventures.com</a></li> -->
+        {{-- <li><a target="_blank"
+               href="http://www.franchiseindiaventures.com/" rel="nofollow">franchiseindiaventures.com</a></li> --}}
         <li><a target="_blank" href="https://www.gauravmarya.com/"
                rel="nofollow">gauravmarya.com</a></li>
                 
@@ -339,7 +336,7 @@
                 &amp; Books</a>
         </li>
         <li><a href="https://www.franchiseindia.com/event/" target="_blank">Event</a></li>
-        <!-- <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a></li>  -->
+        {{-- <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a></li> --}}
     </ul>
     <ul class="list-unstyled components">
         <li><a href="https://www.franchiseindia.com/investor/create"

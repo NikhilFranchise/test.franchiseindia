@@ -13,7 +13,7 @@
                                     <tr>
                                         <td valign="top"> <a href="https://www.facebook.com/FranchiseIndiaMedia" style="text-decoration: none; color: black;"> <img alt="facebook" src="{{url('mail/images/facebook.gif')}}" style="display:block; line-height:0; border:0;"> </a> </td>
                                         <td valign="top" width="15">&nbsp;</td>
-                                        <td valign="top"><a hrurlef="http://twitter.com/FranchiseeIndia" style="text-decoration: none; color: black;"><img alt="twitter" src="{{url('mail/images/twitter.gif')}}" style="display:block; line-height:0; border:0;"> </a></td>
+                                        <td valign="top"><a hrurlef="https://x.com/i/flow/login?redirect_after_login=%2FFranchiseIndia" style="text-decoration: none; color: black;"><img alt="twitter" src="{{url('mail/images/twitter.gif')}}" style="display:block; line-height:0; border:0;"> </a></td>
                                         <td valign="top" width="15">&nbsp;</td>
                                         <td valign="top"> <a href="http://www.linkedin.com/company/102548?trk=tyah" style="text-decoration: none; color: black;"><img alt="linkedin" src="{{url('mail/images/linkedin.gif')}}" style="display:block; line-height:0; border:0;"> </a> </td>
                                         <td valign="top" width="15">&nbsp;</td>

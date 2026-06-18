@@ -154,8 +154,8 @@
             <li><a target="_blank" href="https://www.franchiseindia.in/" rel="nofollow">franchiseindia.in</a></li>
             <li><a target="_blank" href="https://www.francorp.in/" rel="nofollow">francorp.in</a></li>
             <li><a target="_blank" href="https://www.franglobal.com/" rel="nofollow">franglobal.com</a></li>
-            <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
-                    rel="nofollow">franchiseindiaventures.com</a></li>
+            {{-- <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
+                    rel="nofollow">franchiseindiaventures.com</a></li> --}}
             <li><a target="_blank" href="https://www.gauravmarya.com/" rel="nofollow">gauravmarya.com</a></li>
 
         </ul>
@@ -393,8 +393,8 @@
             <li><a target="_blank" href="https://www.franchiseindia.in/" rel="nofollow">franchiseindia.in</a></li>
             <li><a target="_blank" href="https://www.francorp.in/" rel="nofollow">francorp.in</a></li>
             <li><a target="_blank" href="https://www.franglobal.com/" rel="nofollow">franglobal.com</a></li>
-            <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
-                    rel="nofollow">franchiseindiaventures.com</a></li>
+            {{-- <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
+                    rel="nofollow">franchiseindiaventures.com</a></li> --}}
             <li><a target="_blank" href="https://www.gauravmarya.com/" rel="nofollow">gauravmarya.com</a></li>
 
         </ul>

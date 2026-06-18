@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
+
+class autoInvestorRegistration extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    protected $company;
+    protected $code;
+    protected $password;
+
+    public function __construct($companyname)
+    {
+        $this->code     = $companyname['code'];
+        $this->company  = $companyname['companyName'];
+        $this->password = $companyname['password'];
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->from('no-reply@franchiseindia.com')
+                    ->subject('Thankyou for registration | Franchise India')
+                    ->view('mail.auto-investor-registration-confirmation')
+                    ->with([
+                            'companyName' => $this->company,
+                            'companyCode' => $this->code,
+                            'password'    => $this->password
+                        ]);
+    
+    }
+}

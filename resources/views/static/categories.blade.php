@@ -2,6 +2,15 @@
 @section('content')
 
 <!--form start here -->
+
+<style type="text/css">
+.s80{width: 55px;}
+.s80:first-child{width: 75px;}
+.homeb{width: 55px;}
+.img-icon{top: -4px;}
+@media screen and (max-width:768px){.mainhead-7000{font-size: 22px;}.s80:first-child{width:73px;}.s80{width: 49px;}}
+</style>
+
 <div class="container formsection margintop60 staicp">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -65,7 +74,7 @@
     <div class="full-seven-blk-left">
 
         <div class="sevenbusblock" id="automotive">
-            <div class="mainhead-7000"><span class="img-icon"><img src="{{URL::asset('images/car.png?id=2')}}" alt="automotive"></span><a
+            <div class="mainhead-7000"><span class="img-icon"><img src="https://www.franchiseindia.com/images/icons/automotive.png" alt="automotive" class="s80"></span><a
                         href="{{Config::get('constants.MainDomain')}}/business-opportunities/automotive.m8">Automotive</a></div>
 
             <div class="seven-list-block">
@@ -219,7 +228,7 @@
         </div>
 
         <div class="sevenbusblock" id="dealers">
-            <div class="mainhead-7000"><span class="img-icon"><img src="{{URL::asset('images/car.png?id=2')}}" alt="dealers and distributors"></span><a
+            <div class="mainhead-7000"><span class="img-icon"><img src="https://www.franchiseindia.com/images/icons/dealer.png" alt="dealers and distributors" class="s80"></span><a
                         href="https://www.dealerindia.com" target="_blank">Dealers &amp; Distributors</a>
             </div>
 
@@ -256,7 +265,7 @@
 
 
         <div class="sevenbusblock" id="education">
-            <div class="mainhead-7000"><span class="img-icon"><img src="{{URL::asset('images/education.jpg?id=2')}}" alt="education"></span><a
+            <div class="mainhead-7000"><span class="img-icon"><img src="https://www.franchiseindia.com/images/icons/educations.png" alt="education" class="s80"></span><a
                         href="{{Config::get('constants.MainDomain')}}/business-opportunities/education.m3">Education</a></div>
 
             <div class="seven-list-block">
@@ -337,8 +346,8 @@
 
         <div class="sevenbusblock" id="entertainment">
 
-            <div class="mainhead-7000"><span class="img-icon"><img src="{{URL::asset('images/entertainment.jpg?id=2')}}" alt="entertainment"></span><a
-                        href="{{Config::get('constants.MainDomain')}}/business-opportunities/education.m3">Entertainment</a></div>
+            <div class="mainhead-7000"><span class="img-icon"><img src="https://www.franchiseindia.com/images/icons/entertainments.png" alt="entertainment" class="s80"></span><a
+                        href="{{Config::get('constants.MainDomain')}}/business-opportunities/entertainment-and-leisure.sc45">Entertainment and Leisure</a></div>
 
             <div class="seven-list-block">
                 <div class="subhead-7000"><a href="{{Config::get('constants.MainDomain')}}/business-opportunities/entertainment-and-leisure.sc45">Entertainment
@@ -357,7 +366,7 @@
         </div>
 
         <div class="sevenbusblock" id="fashion">
-            <div class="mainhead-7000"><span class="img-icon"><img src="{{URL::asset('images/fashionnew.jpg?id=2')}}" alt="fashion"></span><a
+            <div class="mainhead-7000"><span class="img-icon"><img src="https://www.franchiseindia.com/images/icons/fashions.png" alt="fashion" class="s80"></span><a
                         href="{{Config::get('constants.MainDomain')}}/business-opportunities/fashion.m10">Fashion</a></div>
             <div class="seven-list-block">
                 <div class="subhead-7000"><a href="{{Config::get('constants.MainDomain')}}/business-opportunities/clothing.sc40">Clothing</a><span
@@ -413,7 +422,7 @@
         </div>
 
         <div class="sevenbusblock" id="food">
-            <div class="mainhead-7000"><span class="img-icon"><img src="{{URL::asset('images/food.jpg?id=2')}}" food and beverage></span><a
+            <div class="mainhead-7000"><span class="img-icon"><img src="https://www.franchiseindia.com/images/icons/food-beverages.png" alt="food and beverage" class="s80"></span><a
                         href="{{Config::get('constants.MainDomain')}}/business-opportunities/food-and-beverage.m2">Food and Beverage</a></div>
             <div class="seven-list-block">
                 <div class="subhead-7000"><a href="{{Config::get('constants.MainDomain')}}/business-opportunities/food-and-beverage-sub.sc16">Food and Beverage
@@ -448,7 +457,7 @@
         </div>
 
         <div class="sevenbusblock" id="hotels">
-            <div class="mainhead-7000"><span class="img-icon"><img src="{{URL::asset('images/hotels.jpg?id=2')}}" alt="hotels and resorts"></span><a
+            <div class="mainhead-7000"><span class="img-icon"><img src="https://www.franchiseindia.com/images/icons/hotels.png" alt="hotels and resorts" class="s80"></span><a
                         href="{{Config::get('constants.MainDomain')}}/business-opportunities/hotels-travel-and-tourism.m263">Hotels and Resorts</a></div>
             <div class="seven-list-block">
                 <div class="subhead-7000"><a href="{{Config::get('constants.MainDomain')}}/business-opportunities/hotels-and-resorts-sub.sc15">Hotels and
@@ -465,7 +474,7 @@
         </div>
 
         <div class="sevenbusblock" id="home">
-            <div class="mainhead-7000"><span class="img-icon"><img src="{{URL::asset('images/home.jpg?id=2')}}" alt="home based buisness"></span><a
+            <div class="mainhead-7000"><span class="img-icon"><img src="https://www.franchiseindia.com/images/icons/home-business.png" alt="home based buisness" class="homeb"></span><a
                         href="{{Config::get('constants.MainDomain')}}/business-opportunities/home-based-business.m7">Home Based Business</a></div>
             <div class="seven-list-block">
                 <div class="subhead-7000"><a href="{{Config::get('constants.MainDomain')}}/business-opportunities/home-based-businesses.sc32">Home Based
@@ -503,7 +512,7 @@
         {{--</div>--}}
 
         <div class="sevenbusblock" id="retail">
-            <div class="mainhead-7000"><span class="img-icon"><img src="{{URL::asset('images/retail-2.png?id=2')}}" alt="retail" ></span><a
+            <div class="mainhead-7000"><span class="img-icon"><img src="https://www.franchiseindia.com/images/icons/retails.png" alt="retail" class="s80"></span><a
                         href="{{Config::get('constants.MainDomain')}}/business-opportunities/retail.m9">Retail</a></div>
             <div class="seven-list-block">
                 <div class="subhead-7000"><a href="{{Config::get('constants.MainDomain')}}/business-opportunities/consumer-durables-and-it.sc34">Consumer

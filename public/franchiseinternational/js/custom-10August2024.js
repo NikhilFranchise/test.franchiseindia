@@ -52,7 +52,7 @@ $(document).ready(function () {
             // window.location = '/hi'+url;
             window.open('/hi'+url, '_blank');
         } else{
-            window.open(url, '_blank');
+            window.location.href = url;
             // window.location = url;
         }
         return false;
@@ -92,7 +92,7 @@ $(document).ready(function () {
             // window.location = '/hi'+url;
             window.open('/hi'+url, '_blank');
         } else{
-            window.open(url, '_blank');
+            window.location.href = url;
             // window.location = url;
         }
         return false;

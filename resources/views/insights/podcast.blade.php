@@ -1,16 +1,43 @@
 @extends('layout.insights.master')
+@section('load-gpt', true)
 @section('content')
+    @php
+        $locale = App::getLocale();
+        $pageTitle = $locale === 'en' ? 'Podcast' : 'पॉडकास्ट';
+    @endphp
     <div class="maininnver homeh">
         <div class="inner-top-head">
             <div class="container">
-                <h1>{{ App::getLocale() == 'en' ? 'Podcast' : 'पॉडकास्ट' }}</h1>
+                <h1>{{ $pageTitle }}</h1>
             </div>
         </div>
-        <div class="authblk">
-            <div class="container">
+        <div class="container">
+            <div class="inner-article-detail-desktop-top-ad">
+                @desktop
+                    <div id='FI_Desktop_ROS_728x90_ATF'>
+                        <script>
+                            googletag.cmd.push(function() {
+                                googletag.display('FI_Desktop_ROS_728x90_ATF');
+                            });
+                        </script>
+                    </div>
+                @enddesktop
+                @mobile
+                    <div id='FI_Desktop_ROS_300x250_ATF'>
+                        <script>
+                            googletag.cmd.push(function() {
+                                googletag.display('FI_Desktop_ROS_300x250_ATF');
+                            });
+                        </script>
+                    </div>
+                @endmobile
+            </div>
+        </div>
+        <div class="container">
+            <div class="authblk">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('/insights') }}">Home</a></li>
-                    <li class="breadcrumb-item">{{ App::getLocale() == 'en' ? 'Podcast' : 'पॉडकास्ट' }}
+                    <li class="breadcrumb-item">{{ $pageTitle }}
                     </li>
                 </ul>
             </div>
@@ -18,13 +45,13 @@
     </div>
     <div class="stories">
         <div class="container">
-            <h3>{{ App::getLocale() == 'en' ? 'Podcast' : 'पॉडकास्ट' }}</h3>
+            <h3>{{ $pageTitle }}</h3>
             <div class="row">
                 <div class="col-md-8">
                     <div class="tab-content">
                         <div class="tab-pane active stab" id="latest">
                             <ul>
-                                @forelse ($podcasts as $audio)
+                                @foreach ($podcasts as $audio)
                                     <li>
                                         <div class="author-fresh">
                                             <div class="podcast-latest-pic">
@@ -35,7 +62,7 @@
                                             <div class="author-fresh-cont">
                                                 <div class="author-latest-title"><a
                                                         href="{{ $audio['podcast_link'] }}">{{ $audio['title'] }}</a></div>
-                                                <p>{{ html_entity_decode(strip_tags(\Illuminate\Support\Str::words($audio['description'], 33, ' ...')), ENT_QUOTES | ENT_HTML5, 'UTF-8') }}
+                                                <p>{{ html_entity_decode(strip_tags(Str::words($audio['description'], 32, ' ...')), ENT_QUOTES | ENT_HTML5, 'UTF-8') }}
                                                 </p>
                                                 <ul class="art-detail-read">
                                                     <time datetime="33Z" class="vidpod_datetime">
@@ -47,9 +74,23 @@
                                             </div>
                                         </div>
                                     </li>
-                                @empty
-                                    <p>No Records.</p>
-                                @endforelse
+                                    @if ($loop->iteration % 3 == 0)
+                                        @php
+                                            $adIndex = $loop->iteration / 3;
+                                        @endphp
+                                        <li class="list-ad">
+                                            <div class="article-ad text-center">
+                                                <div id="FI_Desktop_ROS_Inline_{{ $adIndex }}_300x250">
+                                                    <script>
+                                                        googletag.cmd.push(function() {
+                                                            googletag.display('FI_Desktop_ROS_Inline_{{ $adIndex }}_300x250');
+                                                        });
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endif
+                                @endforeach
                             </ul>
                             <div class="video-pagination">
                                 {{ $podcasts->links('pagination::bootstrap-5') }}
@@ -64,10 +105,10 @@
                 <div class="col-md-4">
                     {{-- ads section start here --}}
                     <div class="ad-right-author">
-                        <div id='adslot300x250_ATF'>
+                        <div id='FI_Desktop_ROS_RHS_300x250_ATF'>
                             <script>
                                 googletag.cmd.push(function() {
-                                    googletag.display('adslot300x250_ATF');
+                                    googletag.display('FI_Desktop_ROS_RHS_300x250_ATF');
                                 });
                             </script>
                         </div>
@@ -76,46 +117,47 @@
                     <div class="popular-articles">
                         <div class="popular-title">Popular Articles</div>
                         <ul class="popular-list">
-                            @forelse ($popArticles as $popular)
+                            @foreach ($popArticles as $popular)
                                 @php
-                                    $locale = App::getLocale();
-                                    $mainDomain = Config('constants.MainDomain');
-                                    $image = \App\Http\Controllers\InsightsController::createimgurl($popular->image);
-                                    $popUrl =
-                                        "{$mainDomain}/insights/{$locale}/" .
-                                        strtolower($popular->insight_type) .
-                                        "/{$popular->slug}.{$popular->news_id}";
+                                    $popUrl = insightsUrl($popular, $locale);
+                                    $cat = $popular->category ?? null;
+                                    $catURL = $cat ? insightsCategoryUrl($cat) : null;
+                                    $catName = $cat ? $cat->catname : null;
                                 @endphp
                                 <li>
-                                    @foreach ($popular->category as $cat)
-                                        @php
-                                            $catURL = "{$mainDomain}/insights/{$locale}/{$cat->slug}";
-                                            $catName = $cat->catname;
-                                        @endphp
+                                    @if ($cat)
                                         <div class="popular-sub"><a href="{{ $catURL }}"
                                                 hreflang="{{ $locale }}">{{ ucwords($catName) }}</a>
                                         </div>
-                                    @endforeach
+                                    @endif
                                     <div class="popular-head"><a href="{{ $popUrl }}">{{ $popular->title }}</a>
                                     </div>
                                 </li>
-                            @empty
-                                <p>No Results.</p>
-                            @endforelse
+                            @endforeach
                         </ul>
                     </div>
                     {{-- ads section start here --}}
                     <div class="ad-right-sticky">
-                        <div id="adslot300x250_1">
+                        <div id="FI_Desktop_ROS_RHS_300x250_1">
                             <script>
                                 googletag.cmd.push(function() {
-                                    googletag.display('adslot300x250_1');
+                                    googletag.display('FI_Desktop_ROS_RHS_300x250_1');
                                 });
                             </script>
                         </div>
                     </div>
                     {{-- ads section end here --}}
                 </div>
+            </div>
+            <div class="inner-article-detail-desktop-top-ad">
+                @desktop
+                    <div id='FI_Desktop_ROS_728x90_BTF'></div>
+                    <script>
+                        googletag.cmd.push(function() {
+                            googletag.display('FI_Desktop_ROS_728x90_BTF');
+                        });
+                    </script>
+                @enddesktop
             </div>
         </div>
     </div>
@@ -124,19 +166,25 @@
     <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
     <script>
         window.onSpotifyIframeApiReady = (IFrameAPI) => {
-            var i = 1;
-            for (i = 1; i <= {{ $podcastcount }}; i++) {
+
+            const podcastCount = @json($podcastcount);
+
+            for (let i = 1; i <= podcastCount; i++) {
+
                 const element = document.getElementById("embed-iframe-" + i);
-                const id = document.getElementById("spotyfyId_" + i).value;
-                //alert(id);
+                const input = document.getElementById("spotyfyId_" + i);
+
+                if (!element || !input) continue; // 🔒 safety
+
+                const id = input.value;
+
                 const options = {
                     width: "100%",
                     height: "160px",
                     uri: "spotify:episode:" + id,
                 };
 
-                const callback = (EmbedController) => {};
-                IFrameAPI.createController(element, options, callback);
+                IFrameAPI.createController(element, options, () => {});
             }
         };
     </script>

@@ -15,16 +15,7 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 row-no-padding">
-            {{-- @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif --}}
-            <form class="form-horizontal"id="contactForm" method="post">
+            <form class="form-horizontal" id="contactForm" action="{{ url('contact-submit') }}" method="post">
                 @csrf
                 <div class="form-group">
                     <label class="col-xs-12 col-sm-4 col-md-4 com4mod control-label mandatory">Name</label>
@@ -152,30 +143,6 @@
                         </div>
                     </div>
                 </div>
-
-
-                <div class="form-group">
-                    <label class="col-xs-12 col-sm-4 col-md-4 com4mod control-label mandatory">Captcha</label>
-                    <span id="captcha-image">{!! captcha_img() !!}</span>
-                    <button type="button" class="btn btn-danger" class="reload_captcha" id="reload_captcha">
-                        &#x21bb;
-                    </button> 
-                    <div class="col-sm-1 com1mod padtop20 hidden-xs">:</div>
-                    <br>
-                    <div class="col-xs-12 col-sm-7 col-md-6">
-                        <div class="input-group">
-                            <span class="input-group-addon"><img src="{{ url('images/pincode.png') }}"
-                                    alt="pincode"></span>
-                            <input type="text" class="form-control" name="captcha" placeholder="Enter Captcha">
-
-                        </div>
-                        <span style="font-size: 10px" class="error-message" id="captcha-error"></span>
-
-                    </div>
-                </div>
-                
-               
-               
                 <div class="form-group">
                     <label for="contreason" class="col-xs-12 col-sm-4 col-md-4 com4mod control-label"></label>
                     <div class="col-sm-1 com1mod padtop20 hidden-xs"></div>
@@ -186,7 +153,6 @@
                         @else
                             {{-- i agree to the <a href="{{ Config('constants.MainDomain') }}/terms" target="_blank">Term of
                                 services</a> --}}
-
                                 I authorise <a href="{{ Config('constants.MainDomain') }}">Franchiseindia.com Ltd </a>& its representatives to contact me with updates and notifications via Email/SMS/What'sApp/Call. This will override DND/NDNC.
                         @endif
                     </div>
@@ -306,49 +272,6 @@
                     $('#btnhome').prop('disabled', true);
                 }
             })
-        });
-
-        
-        $(document).ready(function() {
-    // Handle form submission
-    $('#contactForm').on('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        // Get form data
-        var formData = $(this).serialize();
-
-        $.ajax({
-            url: '{{ url('contact-submit') }}', // Your form submission URL
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                // Handle success (e.g., show a success message)
-                alert('Form submitted successfully!');
-                // Optionally reset the form
-                $('#contactForm')[0].reset();
-                // Reload captcha
-                $('#reload_captcha').click();
-            },
-            error: function(xhr) {
-                // Handle errors (e.g., show error messages)
-                var errors = xhr.responseJSON.errors;
-                $.each(errors, function(key, error) {
-                    $('#' + key + '-error').text(error[0]); // Display the error message
-                });
-            }
-        });
-    });
-
-    // Reload captcha when button is clicked
- $('#reload_captcha').click(function() {
-        $.ajax({
-            url: '{{ url('reload-captcha') }}',
-            type: 'GET',
-            success: function(data) {
-                $('#captcha-image').html(data.captcha); // Update CAPTCHA image
-            }
-        });
-    });
-
+        })
     </script>
 @endsection

@@ -1284,71 +1284,7 @@ class AdminController extends Controller
      * @return mixed
      */
 
-    // public function uploadImage($image, $type, $isDelete, $store_type, $oldImagePath)
-    // {
-    //     $uploadPath = "uploads/";
 
-    //     // Delete old image if needed
-    //     if ($isDelete == 1 && $store_type == 'public' && !empty($oldImagePath)) {
-    //         unlink(public_path($oldImagePath));
-    //     }
-
-    //     if ($isDelete == 1 && $store_type == 's3') {
-    //         Storage::getFacadeRoot()->disk('s3')->delete(parse_url($oldImagePath)['path']);
-    //     }
-
-    //     // Define the upload path based on the type
-    //     $extension = 'webp'; // Saving images in webp format
-    //     $picPath = config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
-
-    //     switch ($type) {
-    //         case 'Author':
-    //             $picPath = $uploadPath . sprintf(config('constants.AdminAuthor'), date('md')) . '/' . uniqid() . '.' . $extension;
-    //             break;
-    //         case 'Article':
-    //             $picPath = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/art/' . uniqid() . '.' . $extension;
-    //             break;
-    //         case 'Interview':
-    //             $picPath = $uploadPath . config('constants.AdminArticleInterview') . '/' . session()->get('role') . '/int/' . uniqid() . '.' . $extension;
-    //             break;
-    //         case 'Gallery':
-    //             $picPath = config('constants.AdminArticleInterview') . '/gallery/art/' . uniqid() . '.' . $extension;
-    //             break;
-    //         case 'Magazine':
-    //             $picPath = $uploadPath . config('constants.AdminMagazine') . '/' . '' . uniqid() . '.' . $extension;
-    //             break;
-    //         case 'News':
-    //             $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
-    //             break;
-    //         case 'Report':
-    //             $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
-    //             break;
-    //         case 'Event':
-    //             $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
-    //             break;
-    //         case 'Terms':
-    //             $picPath = $uploadPath . config('constants.AdminNews') . '/' . session()->get('role') . '/' . uniqid() . '.' . $extension;
-    //             break;
-    //     }
-
-    //     if ($type != 'Author' && $type  != 'Gallery' && $type  != 'Magazine') {
-    //         $resizedImage = Image::make($image)->resize(1600, 940)->encode('webp', 90);
-    //     } else if ($type == 'Author') {
-    //         $resizedImage = Image::make($image)->resize(512, 512)->encode('webp', 90);
-    //     } else {
-    //         $resizedImage = Image::make($image)->encode('webp', 90);
-    //     }
-    //     // Store the image in the specified storage
-    //     Storage::getFacadeRoot()->disk($store_type)->put($picPath, (string) $resizedImage, 'public');
-    //     $imageUrl = Storage::getFacadeRoot()->disk($store_type)->url($picPath);
-
-    //     // Return the correct image URL
-    //     if ($store_type == 's3' && $type != 'Gallery') {
-    //         return str_replace('storage', 'uploads', parse_url($imageUrl, PHP_URL_PATH));
-    //     }
-
-    //     return str_replace('storage', 'uploads', $imageUrl);
-    // }
     public function uploadImage($image, $type, $isDelete = 0, $storeType = 'public', $oldImagePath = null)
     {
         try {
@@ -1395,10 +1331,7 @@ class AdminController extends Controller
             switch ($type) {
                 case 'Author':
                     $resizedImage = Image::make($image)
-                        ->resize(512, 512, function ($c) {
-                            $c->aspectRatio();
-                            $c->upsize();
-                        })
+                        ->resize(512, 512)
                         ->encode($extension, 90);
                     break;
 
@@ -1409,10 +1342,7 @@ class AdminController extends Controller
 
                 default: // Article, Interview, News, Report, Event, Terms
                     $resizedImage = Image::make($image)
-                        ->resize(1600, 940, function ($c) {
-                            $c->aspectRatio();
-                            $c->upsize();
-                        })
+                        ->resize(1600, 940)
                         ->encode($extension, 90);
                     break;
             }
@@ -1445,62 +1375,6 @@ class AdminController extends Controller
      * @param $height
      * @param $width
      */
-    // public function thumbnailCreation($imageUrl, $type, $width, $height)
-    // {
-    //     //thumbnail creation
-    //     // dd($imageUrl, $type, $width, $height);
-    //     $sourcePhoto     = public_path($imageUrl);
-    //     $locale = App::getLocale();
-    //     // dd($locale);
-    //     if ($type == 'Gallery') {
-    //         $sourcePhoto = $imageUrl;
-    //     } else if ($type == 'News' && $locale == 'en') {
-    //         $sourcePhoto = Config('constants.franAwsS3Url') . $imageUrl;
-    //     } else if ($type == 'News' && $locale == 'hi') {
-    //         $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
-    //     } else if ($type == 'Article' && $locale == 'en') {
-    //         $sourcePhoto = Config('constants.franAwsS3Url') . $imageUrl;
-    //     } else if ($type == 'Article' && $locale == 'hi') {
-    //         $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
-    //     }
-    //     if ($type != 'Gallery')
-    //         $sourcePhoto = Config('constants.awsS3Url') . $imageUrl;
-    //     $imageName       = pathinfo($sourcePhoto)['basename'];
-    //     // dd($sourcePhoto);
-
-    //     $destinationPath = "uploads";
-
-    //     switch ($type) {
-    //         case 'Article':
-    //             $destinationPath = public_path('uploads/thumbnails/article/' . session()->get('role') . '/art/');
-    //             break;
-
-    //         case 'Interview':
-    //             $destinationPath = public_path('uploads/thumbnails/interview/' . session()->get('role') . '/int/');
-    //             break;
-
-    //         case 'Gallery':
-    //             $destinationPath = public_path('uploads/thumbnails/ga');
-    //             break;
-
-    //         case 'News':
-    //             $destinationPath = public_path('uploads/thumbnails/news/' . session()->get('role') . '/');
-    //             // dd($destinationPath);
-    //     }
-
-    //     try {
-    //         // dd($destinationPath);
-    //         if (!file_exists($destinationPath)) {
-    //             mkdir($destinationPath, 0777, true);
-    //         }
-    //         $image = Image::make($sourcePhoto)->resize($width, $height)->save($destinationPath . '/' . $imageName, 90);
-    //         // dd($image);
-
-    //     } catch (\Exception $e) {
-    //         $this->setLog('Thumbnail creation error ' . $e->getMessage());
-    //         die;
-    //     }
-    // }
 
     public function thumbnailCreation($imageUrl, $type, $width, $height)
     {

@@ -108,7 +108,6 @@ Route::get('hi/content/{kicker}', function ($kicker) {
     return redirect('https://www.opportunityindia.com/hindi/tag/' . $kicker, 301);
 });
 
-
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
@@ -116,10 +115,15 @@ Route::get('campaign/franchisor/{id}', [CommonController::class, 'franAutoLogin'
 Route::get('campaign/deactivate/franchisor/{id}', [CommonController::class, 'franCampaignDeactivation']);
 Route::get('franchiseinternational', [InternationalController::class, 'getHomePage']); // International Page routes
 Route::get('/', [NewHomePageController::class, 'homeNew']);
+Route::get('/nofollow', [NewHomePageController::class, 'nofollow']);
+
 
 Route::get('/home', function () {
     return redirect('/', 301);
 });
+Route::get('/api/countries-with-states',[CommonController::class, 'get_country']);
+Route::post('/api/get-cities', [CommonController::class, 'getCities']);
+
 Route::get('/dashboard', function () {
     return redirect('/', 301);
 });
@@ -1268,7 +1272,7 @@ Route::middleware(['TrailingSlashRedirect'])->group(function () {
             Route::get('/{category}/{subcategory}',      [InsightsController::class, 'insightsubcategory']);
             Route::get('industryfocus',                 [InsightsController::class, 'industryfocus']);
             Route::get('{slug}',                        [InsightsController::class, 'insightscategorydata']);
-            Route::get('/export',              [InsightsController::class, 'exportInsights']);
+            Route::get('/export',                       [InsightsController::class, 'exportInsights']);
         });
     });
 });

@@ -37,14 +37,13 @@
       <meta name="google-site-verification" content="8W9CXigRDmfNyf8vOfkZBefougI9sPXO4xvDBFLIjaw" />
       <meta name="y_key" content="0f4f718975ac23ed" />
       <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
-      <meta content="noindex,nofollow" name="robots" />
+      <meta content="index,follow" name="robots" />
       <link rel="preload" fetchpriority="high" as="image" href="{{ url('cwv-mobile/images/mobile-banner.webp') }}" type="image/webp">
       <link rel="stylesheet" href="{{ url('cwv-mobile/css/style.css')}}" rel="preload" as="style">
       <link rel="stylesheet" href="{{ url('cwv-mobile/css/bootstrap.min.css') }}" rel="preload" as="style">
       <link rel="stylesheet" href="{{ url('cwv-mobile/css/jquery.mCustomScrollbar.min.css') }}" rel="preload" as="style">
       <!-- Google Tag Manager -->
-
-      <script async>
+          <script async>
          (function(w, d, s, l, i) {
              w[l] = w[l] || [];
              w[l].push({
@@ -59,10 +58,13 @@
              f.parentNode.insertBefore(j, f);
          })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
       </script>
-
-     
-         
-
+      
+      <script async>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+         })(window,document,'script','dataLayer','GTM-KW4K6WV6');</script>
+  
       <!-- End Google Tag Manager -->
       <!-- Global site tag (gtag.js) - Google Analytics -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-8MKFEZLR18"></script>
@@ -86,7 +88,7 @@
          gtag('config', 'AW-991358906');
       </script> --}}
 
-      <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16776470774"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16776470774"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -168,11 +170,10 @@
         {{--  schema newly added 16-oct-2024  --}}
    </head>
    <body>
-       <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
+      <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD" height="0" width="0"
          style="display:none;visibility:hidden"></iframe></noscript>
-     
-         
-     
+         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KW4K6WV6"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <header class="header">
          <div class="container-fluid">
             <div class="row">

@@ -15,32 +15,6 @@
     $engUrl = str_replace('/hi/', '/', url()->current());
 @endphp
 
-
-
-{{-- //Pankaj start --}}
-@if(URL::Current() == Config('constants.MainDomain') .'/business-opportunities/dealers-and-distributors.m5')
-@section('seoTitle', $brandResults->total() . '+ ' .' Dealership and Distributorship Opportunities in India – Dealer India')
-@section('seoDesc','Access to ' . $brandResults->total() . '+ ' .'best dealership/distributorship business opportunities in India. Dealer and distributors a financially rewarding business in the growing industry.' )
-@section('seoKeywords','distributorship opportunities, looking for distributorship opportunities, dealership opportunities, looking for dealership opportunities, distributorship business ideas, distributorship business in india, distributorship business plan')
-@endif
-
-@if(!empty($loc) && $mc == 5)
-@php
-            $stateId = $loc[0]; 
-            $stateName = Config::get("location.stateArr.$stateId");
-        @endphp
-  @section('seoTitle', $brandResults->total() . '+ ' . $catArr->catname . ' Dealers & Distributors in ' .  $stateName)
-  @section('seoDesc', 'Find ' . $catArr->catname . ' Dealership & Distributors in ' . $stateName . ' to run a successful ' . $catArr->catname . ' business in ' . $stateName . '. You can explore some of the established and well-known ' .  $catArr->catname . ' Dealers in ' . $stateName .' here.')
-  @section('seoKeywords', $catArr->catname . ' dealership in ' . $stateName . ', ' . $catArr->catname . ' distributorship in ' . $stateName . ', ' . $catArr->catname . ' dealer in ' . $stateName . ', ' . $catArr->catname . ' dealership opportunities in ' . $stateName . ', Dealer India, ' . $catArr->catname . ' distributors in ' . $stateName)
-
-@elseif(empty($loc) && $mc == 5)
-@section('seoTitle', $brandResults->total() . '+ ' . $catName . ' Dealers & Distributors in India')
-@section('seoDesc', 'Dealer India offers a wide variety of ' . $catName . ' Dealership & Distributorship opportunities to run a successful ' . $catName . ' business. You can explore some of the established and well-known ' . $catName . ' Dealers here.')
-@section('seoKeywords', $catName . ' dealership in India, ' . $catName . ' distributorship in India, ' . $catName . ' dealers in India, ' . $catName . ' dealership opportunities in India, Dealer India, ' . $catName . ' distributors in India')
-@else
-
-@endif
-
 @section('hindiUrl', $hindiUrl)
 @section('englishUrl', $engUrl)
 
@@ -48,7 +22,7 @@
     {{-- <link href="{{ str_replace('/hi/', '/amp/hi/', $hindiUrl) }}" rel="amphtml"> --}}
     <link rel="alternate" href="{{ $engUrl }}" hreflang="en-IN" />
     <link rel="alternate" href="{{ $hindiUrl }}" hreflang="hi-IN" />
-@endsection   
+@endsection
 
 @section('content')
 

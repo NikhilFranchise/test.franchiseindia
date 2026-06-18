@@ -69,7 +69,7 @@
                     <tbody>
                     @foreach($franTradePartnerData as $tradeData)
                         <tr>
-                            {{-- <td data-label="Types of Channels">{{$tradeData->channel_type}}</td>    --}}
+                            {{-- <td data-label="Types of Channels">{{$tradeData->channel_type}}</td> --}}
                             <td data-label="Types of Channels">
                                 @if($tradeData->channel_type == 2)
                                 डीएसए

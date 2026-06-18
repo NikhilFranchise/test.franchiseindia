@@ -179,11 +179,11 @@
                                     @endforeach
                                 @endif
                                 <div style="display: none; color: red;" id="showImage_msg">Invalid image type!
-                                    Please
-                                    select a valid image format (JPG, GIF, PNG, or WebP)</div>
+                                    Please select a valid image format (JPG, GIF, PNG, or WebP)</div>
                                 <div style="display: none; color: red;" id="showImage_msg_size">Please select a
-                                    image
-                                    of size(Less than 300 KB)</div>
+                                    image of size(Less than 300 KB)</div>
+                                <div style="display: none; color: red;" id="showImage_msg_dimensions">Invalid image
+                                    dimensions! Image must be at least 1600x940 pixels.</div>
                                 <br />
                                 Note : * Image Size 1600x940
                                 <!-- Alt Text Input (Initially Hidden) -->
@@ -204,6 +204,40 @@
                                     id="select3"></select>
                             </div>
                         </div>
+                        {{-- Featured Content Section --}}
+                        <div class="control-group">
+                            <label class="control-label">Featured Content</label>
+                            <div class="controls">
+                                <label>
+                                    <input type="checkbox" id="is_featured" name="is_featured" value="1">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="featuredOptions" style="display:none;">
+                            <div class="control-group">
+                                <label class="control-label">Featured Slot</label>
+                                <div class="controls">
+                                    <select name="featured_slot" class="span11">
+                                        <option value="">Select Slot</option>
+                                        <option value="1">Slot 1 (Any Content)</option>
+                                        <option value="2">Slot 2 (Only Article)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">Featured Duration</label>
+                                <div class="controls">
+                                    <select name="featured_days" class="span11">
+                                        <option value="2">2 Days (Default)</option>
+                                        <option value="3">3 Days</option>
+                                        <option value="7">7 Days</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-actions">
                             <a href="{{ route('insights.list', ['lang' => $lang]) }}" class="btn btn-secondary"><i
                                     class="fa fa-times"></i> Cancel</a>
@@ -222,6 +256,10 @@
         <script src="{{ url('tinymce/js/tinymce/tinymce.min.js') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/@indic-transliteration/sanscript"></script>
         <script>
+            document.getElementById('is_featured').addEventListener('change', function() {
+                document.getElementById('featuredOptions').style.display =
+                    this.checked ? 'block' : 'none';
+            });
             $(document).ready(function() {
                 $('#select2').html("<option>No Data</option>");
                 var lang = '{{ $lang }}';
@@ -342,41 +380,141 @@
                 }
             });
 
+            // function checkImageSize(fileInput) {
+            //     if (fileInput.files[0].size > 307200) {
+            //         Swal.fire({
+            //             position: 'top-end',
+            //             toast: true,
+            //             icon: 'error',
+            //             title: 'Image size too large!',
+            //             text: 'Image size should be 300 KB or less.',
+            //             timer: 3000,
+            //             showConfirmButton: false,
+            //             timerProgressBar: true,
+            //             background: '#f8d7da',
+            //             color: '#721c24',
+            //         });
+            //         $('#showImage_msg_size').css('display', 'block');
+            //         $('#newssubmit').prop('disabled', true);
+            //         $('#imagePreview').hide();
+            //         $("#altText").hide();
+            //     } else if (fileInput.files[0].) {
+
+            //     }
+            //     else {
+            //         Swal.fire({
+            //             position: 'top-end',
+            //             toast: true,
+            //             icon: 'success',
+            //             title: 'Valid image size!',
+            //             text: 'You can proceed.',
+            //             timer: 3000,
+            //             showConfirmButton: false,
+            //             timerProgressBar: true,
+            //             background: '#f0f9f4',
+            //             color: '#155724',
+            //         });
+            //         $('#showImage_msg_size').css('display', 'none');
+            //         $('#newssubmit').prop('disabled', false);
+            //     }
+            // }
             function checkImageSize(fileInput) {
-                if (fileInput.files[0].size > 307200) {
-                    Swal.fire({
-                        position: 'top-end',
-                        toast: true,
-                        icon: 'error',
-                        title: 'Image size too large!',
-                        text: 'Image size should be 300 KB or less.',
-                        timer: 3000,
-                        showConfirmButton: false,
-                        timerProgressBar: true,
-                        background: '#f8d7da',
-                        color: '#721c24',
-                    });
-                    $('#showImage_msg_size').css('display', 'block');
-                    $('#newssubmit').prop('disabled', true);
-                    $('#imagePreview').hide();
-                    $("#altText").hide();
-                } else {
-                    Swal.fire({
-                        position: 'top-end',
-                        toast: true,
-                        icon: 'success',
-                        title: 'Valid image size!',
-                        text: 'You can proceed.',
-                        timer: 3000,
-                        showConfirmButton: false,
-                        timerProgressBar: true,
-                        background: '#f0f9f4',
-                        color: '#155724',
-                    });
-                    $('#showImage_msg_size').css('display', 'none');
-                    $('#newssubmit').prop('disabled', false);
-                }
+                const file = fileInput.files[0];
+                if (!file) return;
+
+                const maxSize = 307200; // 300 KB
+                const requiredWidth = 1600;
+                const requiredHeight = 940;
+
+                const img = new Image();
+                img.src = URL.createObjectURL(file);
+
+                img.onload = function() {
+                    const width = img.width;
+                    const height = img.height;
+
+                    // -------------------------------
+                    // 1. Check File Size
+                    // -------------------------------
+                    if (file.size > maxSize) {
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'error',
+                            title: 'Image size too large!',
+                            text: 'Image size should be 300 KB or less.',
+                            timer: 3500,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            background: '#f8d7da',
+                            color: '#721c24',
+                        });
+                        $('#showImage_msg_size').fadeIn(200);
+                        setTimeout(() => {
+                            $('#showImage_msg_size').fadeOut(400);
+                        }, 5000);
+                        $('#newssubmit').prop('disabled', true);
+                        $('#newssubmit').css('cursor', 'not-allowed');
+                        $('#imagePreview').hide();
+                        $("#altText").hide();
+                        $('#showImage').val('');
+
+                        return;
+                    }
+
+                    // -------------------------------
+                    // 2. Check Dimensions
+                    // -------------------------------
+                    if (width < requiredWidth || height < requiredHeight) {
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'error',
+                            title: 'Invalid image dimensions!',
+                            text: `Image must be at least ${requiredWidth}×${requiredHeight} pixels.`,
+                            timer: 4000,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            background: '#fff3cd',
+                            color: '#856404',
+                        });
+                        $('#showImage_msg_dimensions').fadeIn(200);
+                        setTimeout(() => {
+                            $('#showImage_msg_dimensions').fadeOut(400);
+                        }, 5000);
+                        $('#newssubmit').prop('disabled', true);
+                        $('#newssubmit').css('cursor', 'not-allowed');
+                        $('#imagePreview').hide();
+                        $("#altText").hide();
+                        $('#showImage').val('');
+
+                    } else {
+                        // -------------------------------
+                        // 3. All Good — Enable Submit
+                        // -------------------------------
+                        Swal.fire({
+                            position: 'top-end',
+                            toast: true,
+                            icon: 'success',
+                            title: 'Valid image!',
+                            text: `Good to go — ${width}×${height}px`,
+                            timer: 3000,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                            background: '#f0f9f4',
+                            color: '#155724',
+                        });
+                        $('#showImage_msg_size', '#showImage_msg_dimensions').fadeOut(200);
+                        $('#newssubmit').prop('disabled', false).css('cursor', 'pointer');
+                        $('#imagePreview').show();
+                        $("#altText").show();
+                    }
+
+                    // Free memory after image load
+                    URL.revokeObjectURL(img.src);
+                };
             }
+
 
             function previewImage(fileInput) {
                 if (fileInput.files && fileInput.files[0]) {

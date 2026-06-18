@@ -147,7 +147,9 @@
                                             Explore
                                         </button>
                                         <span class="clear">
-                                            <a href="javascript:void(0)" onclick="catform.reset();">Clear All</a>
+                                            {{-- <a href="javascript:void(0)" onclick="catform.reset();">Clear All</a> --}}
+                                            <a href="javascript:void(0)"
+                                                onclick="document.getElementById('catform').reset();">Clear All</a>
                                         </span>
                                     </div>
                                 </div>
@@ -370,7 +372,7 @@
         let maxAmount = $('#maxAmount');
         let getSlugAmount = {!! json_encode(Config('constants.InvestRange')) !!};
         maxAmount.html("");
-
+        
         selectmaxheaderval = parseInt(selectmaxheaderval);
         $.each(amountConfigArr, function(key, value) {
             if (key > selectmaxheaderval)
@@ -394,19 +396,19 @@
     });
     {{--  //code end by gp  --}}
 
-function getSubCategoryHeader(value) {
-    $.ajax({
-        type: 'GET',
-        url: '{{ url('getsubcategory') }}',
-        data: {
-            categoryID: value
-        },
-        success: function(data) {
-            console.log(data);
-            $("#getSubCategoryDataHeader2").html(data);
-        }
-    });
-}
+    function getSubCategoryHeader(value) {
+        $.ajax({
+            type: 'GET',
+            url: '{{ url('getsubcategory') }}',
+            data: {
+                categoryID: value
+            },
+            success: function(data) {
+               console.log(data);
+                $("#getSubCategoryDataHeader2").html(data);
+            }
+        });
+    }
 
     function getSubCatCategoryHeader(value) {
         $.ajax({

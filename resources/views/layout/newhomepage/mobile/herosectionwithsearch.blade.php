@@ -45,12 +45,13 @@
         $mangecls = 'wiei';
     }
 @endphp
+
 <section class="hero-moblie" id="hero-mobile">
 
     <div class="container-fluid">
         <div class="lnkblk">
-            <a href="https://www.franchiseindia.com/brands/direct-english.78387" target="_blank" class="setpat"><img
-                    src="https://www.franchiseindia.com/newhomepage/assets/img/direct-english.png"></a>
+            <a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank" class="setpat"><img
+                    src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.png" alt="easyGym"></a>
         </div>
 
         <div class="row">

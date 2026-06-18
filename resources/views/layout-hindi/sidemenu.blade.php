@@ -463,9 +463,6 @@
         <li><a target="_blank" href="https://www.franchiseindia.com/insights/hindi">समाचार</a></li>
         <li><a href="https://video.franchiseindia.com/" target="_blank">वीडियो</a></li>
         <li><a target="_blank" href="{{ Config('constants.MainDomain') }}/magazine">पत्रिका</a></li>
-        <li><a href="{{ url('top-100-franchise') }}" target="_blank">Top 100 Franchise</a></li>
-            <li><a href="{{ url('/top-franchise-leaders') }}" target="_blank">Top Franchise Leaders</a></li>
-            <li><a href="{{ url('/most-visitedbrands') }}" target="_blank">Most Searched Franchise Brands</a></li>
     </ul>
 
     <div class="categoryall-franchise border-bottom-1">
@@ -482,7 +479,7 @@
                 <li>
                     <label for="folder1">
                         <a target="_blank"
-                            href="{{  '/business-opportunities/' . Config('category.SeoCategoryArr.' . $key) . '.m' . $key }}
+                            href="{{ '/business-opportunities/' . Config('category.SeoCategoryArr.' . $key) . '.m' . $key }}
                            ">{{ $value }}</a>
                     </label> <input type="checkbox" id="folder1">
                     <ol>
@@ -490,7 +487,7 @@
                             <li>
                                 <label for="subsubfolder1">
                                     <a target="_blank"
-                                        href="{{ '/business-opportunities/' . Config('category.SeoSubCategoryArr.' . $key1) . '.sc' . $key1 }}">{{ $value1 }}</a></label>
+                                        href="{{'/business-opportunities/' . Config('category.SeoSubCategoryArr.' . $key1) . '.sc' . $key1 }}">{{ $value1 }}</a></label>
                                 <input type="checkbox" id="subsubfolder1">
                                 <ol>
                                     @foreach (Config('constants.subSubCategoryArr.' . $key1) as $key2 => $value2)
@@ -527,8 +524,7 @@
         <li><a target="_blank" href="https://www.entrepreneur.com/" rel="nofollow">entrepreneur.com</a></li>
         <li><a target="_blank" href="https://www.indianretailer.com/" rel="nofollow">indianretailer.com</a></li>
         <li><a target="_blank" href="https://restaurant.indianretailer.com/">restaurantindia.in</a></li>
-        <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/beauty-wellness">wellnessindia.org</a>
-        </li>
+        <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/beauty-wellness">wellnessindia.org</a></li>
         <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/education">educationbiz.com</a></li>
         <li><a target="_blank" href="https://www.franchise.ae/" rel="nofollow">franchise.ae</a></li>
         <li><a target="_blank" href="https://www.franchisebangladesh.com/" rel="nofollow">franchisebangladesh.com</a>

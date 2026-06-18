@@ -6,7 +6,6 @@
 
     <div class="padfb15">
         <a href="{{ $brandUrl }}" target="_blank"><div class="catimgmobile"><img src="{{$brandImagepath}}" alt="{{$brandResult->company_name}}" /></div></a>
-        {{-- <div class="catlisthead hindi">{{$SubCatName}}</div> --}}
         <div class="catlisthead hindi">
             {{ $SubCatName }}
             @if($brandResult->brand_verified == 1)

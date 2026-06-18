@@ -35,7 +35,7 @@
 <meta name="y_key" content="0f4f718975ac23ed"/>
 <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
 <meta name="robots" content="NOODP"/>
-<meta content="noindex,nofollow" name="robots"/>
+<meta content="index,follow" name="robots"/>
 @if($__env->yieldContent('prev'))
     <link href="@yield('prev')" rel="prev">
     <link href="@yield('next')" rel="next">

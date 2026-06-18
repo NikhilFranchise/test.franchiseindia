@@ -1,4 +1,5 @@
 @extends('layout.insights.master')
+@section('load-gpt', true)
 @section('seoTitle',
     'Latest ' .
     $subcatData->subcat_name .
@@ -12,8 +13,10 @@
     FranchiseIndia.com.')
 @section('content')
     @php
-        use Illuminate\Support\Str;
         $locale = App::getLocale();
+        $category = $subcatData->category;
+        $categoryUrl = insightsCategoryUrl($category);
+        $categoryName = $category->catname ?? '';
     @endphp
     <div class="maininnver homeh">
         <div class="inner-top-head">
@@ -21,12 +24,31 @@
                 <h1>{{ $subcatData->subcat_name }}</h1>
             </div>
         </div>
+        <div class="container">
+            <div class="inner-article-detail-desktop-top-ad">
+                @desktop
+                    <div id='FI_Desktop_ROS_728x90_ATF'></div>
+                    <script>
+                        googletag.cmd.push(function() {
+                            googletag.display('FI_Desktop_ROS_728x90_ATF');
+                        });
+                    </script>
+                @enddesktop
+                @mobile
+                    <div id='FI_Desktop_ROS_300x250_ATF'></div>
+                    <script>
+                        googletag.cmd.push(function() {
+                            googletag.display('FI_Desktop_ROS_300x250_ATF');
+                        });
+                    </script>
+                @endmobile
+            </div>
+        </div>
         <div class="authblk">
             <div class="container">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url('/insights') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a
-                            href="{{ url("/insights/{$locale}/{$subcatData->category[0]['slug']}") }}">{{ $subcatData->category[0]['catname'] }}</a>
+                    <li class="breadcrumb-item"><a href="{{ $categoryUrl }}">{{ $categoryName }}</a>
                     </li>
                     <li class="breadcrumb-item">{{ $subcatData->subcat_name }}</li>
                 </ul>
@@ -40,49 +62,14 @@
                         <div class="tab-content">
                             <div class="tab-pane active stab" id="latest">
                                 <ul>
-                                    @forelse ($contentData as $article)
+                                    @foreach ($contentData as $article)
                                         @php
                                             // Generate article details
-                                            $image = \App\Http\Controllers\InsightsController::createimgurl(
-                                                $article->image,
-                                            );
-                                            $locale = App::getLocale();
-                                            $url =
-                                                Config('constants.MainDomain') .
-                                                '/insights/' .
-                                                $locale .
-                                                '/' .
-                                                strtolower($article->insight_type) .
-                                                '/' .
-                                                $article->slug .
-                                                '.' .
-                                                $article->news_id;
-
-                                            // Default author details
-
-                                            $author_image = url('images/defaultuser.png');
-
-                                            // Fetch author details (if available)
-                                            if (!empty($article->author) && $article->author->isNotEmpty()) {
-                                                $author = $article->author->first();
-                                                $authorname = $author->title ?? 'Franchise India bureau';
-                                                $author_image = !empty($author->image)
-                                                    ? \App\Http\Controllers\InsightsController::authorImageurl(
-                                                        $author->image,
-                                                    )
-                                                    : $author_image;
-                                                if (!empty($article->author->slug)) {
-                                                    $slug = strtolower(str_replace(' ', '-', $authorname));
-                                                } else {
-                                                    $slug = $author->slug;
-                                                }
-                                                $authorUrl =
-                                                    Config('constants.MainDomain') .
-                                                    '/insights/author/' .
-                                                    $slug .
-                                                    '-' .
-                                                    $author->author_id;
-                                            }
+                                            $image = insightsImageUrl($article->image, $locale);
+                                            $url = insightsUrl($article, $locale);
+                                            $author = $article->author;
+                                            $authorname = $author->title ?? 'Franchise India Bureau';
+                                            $authorUrl = insightsAuthorUrl($author);
                                         @endphp
                                         <li>
                                             <div class="author-fresh">
@@ -93,28 +80,38 @@
                                                 <div class="author-fresh-cont">
                                                     <div class="author-latest-title"><a
                                                             href="{{ $url }}">{{ $article->title }}</a></div>
-                                                    <p>{!! html_entity_decode(Str::words($article->shortDesc, 22, ' ...'), ENT_QUOTES, 'UTF-8') !!}</p>
+                                                    <p>{!! html_entity_decode(Str::words($article->shortDesc, 22, ' ...')) !!}</p>
                                                     <ul class="art-detail-read">
                                                         <li>By - <a href="{{ $authorUrl }}"
                                                                 hreflang="{{ $locale }}">{{ $authorname }}</a>
                                                         </li>
                                                         <li><time datetime="33Z" class="datetime">
-                                                                @if ($article->created_at >= $article->published_date)
-                                                                    {{ date('M d, Y', strtotime($article->created_at)) }}
-                                                                @else
-                                                                    {{ 'Last updated ' . date('M d, Y', strtotime($article->published_date)) }}
-                                                                @endif
+                                                                {{ $article->display_date }}
                                                             </time>/
-                                                            {{ app\Http\Controllers\InsightsController::calculateReadTime($article) }}
-                                                            MIN READ</li>
+                                                            {{ calculateReadTime($article) }}
+                                                            MIN READ
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </li>
-                                    @empty
-                                        <p>No Records.</p>
-                                    @endforelse
-
+                                        @if ($loop->iteration % 3 == 0)
+                                            @php
+                                                $adIndex = $loop->iteration / 3;
+                                            @endphp
+                                            <li class="list-ad">
+                                                <div class="article-ad text-center">
+                                                    <div id="FI_Desktop_ROS_Inline_{{ $adIndex }}_300x250">
+                                                        <script>
+                                                            googletag.cmd.push(function() {
+                                                                googletag.display('FI_Desktop_ROS_Inline_{{ $adIndex }}_300x250');
+                                                            });
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        @endif
+                                    @endforeach
                                 </ul>
                                 <div class="video-pagination">
                                     {{ $contentData->links('pagination::bootstrap-5') }}
@@ -128,10 +125,10 @@
                     <div class="col-md-4">
                         {{-- ads section start here --}}
                         <div class="ad-right-author">
-                            <div id='adslot300x250_ATF'>
+                            <div id='FI_Desktop_ROS_RHS_300x250_ATF'>
                                 <script>
                                     googletag.cmd.push(function() {
-                                        googletag.display('adslot300x250_ATF');
+                                        googletag.display('FI_Desktop_ROS_RHS_300x250_ATF');
                                     });
                                 </script>
                             </div>
@@ -140,42 +137,31 @@
                         <div class="popular-articles">
                             <div class="popular-title">Popular Articles</div>
                             <ul class="popular-list">
-                                @forelse ($popArticles as $popular)
+                                @foreach ($popArticles as $popular)
                                     @php
-                                        $image = \App\Http\Controllers\InsightsController::createimgurl(
-                                            $popular->image,
-                                        );
-                                        $mainDomain = Config('constants.MainDomain');
-                                        $popUrl =
-                                            "{$mainDomain}/insights/{$locale}/" .
-                                            strtolower($popular->insight_type) .
-                                            "/{$popular->slug}.{$popular->news_id}";
+                                        $popUrl = insightsUrl($popular, $locale);
+                                        $cat = $popular->category ?? null;
+                                        $catURL = insightsCategoryUrl($cat);
+                                        $catName = $cat->catname ?? '';
                                     @endphp
-
                                     <li>
-                                        @foreach ($popular->category as $cat)
-                                            @php
-                                                $catURL = "{$mainDomain}/insights/{$locale}/{$cat->slug}";
-                                                $catName = $cat->catname;
-                                            @endphp
+                                        @if ($cat)
                                             <div class="popular-sub"><a href="{{ $catURL }}"
                                                     hreflang="{{ $locale }}">{{ ucwords($catName) }}</a>
                                             </div>
-                                        @endforeach
+                                        @endif
                                         <div class="popular-head"><a href="{{ $popUrl }}">{{ $popular->title }}</a>
                                         </div>
                                     </li>
-
-                                @empty
-                                @endforelse
+                                @endforeach
                             </ul>
                         </div>
                         {{-- ads section start here --}}
                         <div class="ad-right-sticky">
-                            <div id="adslot300x250_1">
+                            <div id="FI_Desktop_ROS_RHS_300x250_1">
                                 <script>
                                     googletag.cmd.push(function() {
-                                        googletag.display('adslot300x250_1');
+                                        googletag.display('FI_Desktop_ROS_RHS_300x250_1');
                                     });
                                 </script>
                             </div>
@@ -183,15 +169,19 @@
                         {{-- ads section end here --}}
                     </div>
                 </div>
+                <div class="inner-article-detail-desktop-top-ad">
+                    @desktop
+                        <div id='FI_Desktop_ROS_728x90_BTF'></div>
+                        <script>
+                            googletag.cmd.push(function() {
+                                googletag.display('FI_Desktop_ROS_728x90_BTF');
+                            });
+                        </script>
+                    @enddesktop
+                </div>
             </div>
         </div>
         @include('layout.insights.brandlist')
-
         @include('layout.insights.magblock')
-        <div class="listblk">
-            <div class="container">
-                <ul class="artilsit">
-                </ul>
-            </div>
-        </div>
-    @endsection
+    </div>
+@endsection

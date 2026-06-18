@@ -90,8 +90,7 @@
             </li>
             <li><a target="_blank" href="https://www.restaurantindia.in">restaurantindia.in</a></li>
             <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/beauty-wellness">wellnessindia.org</a></li>
-            <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/education">educationbiz.com</a>
-            </li>
+            <li><a target="_blank" href="https://www.franchiseindia.com/insights/en/education">educationbiz.com</a></li>
             <li><a target="_blank" href="https://www.franchisebangladesh.com/"
                     rel="nofollow">franchisebangladesh.com</a></li>
             <li><a target="_blank" href="https://www.businessex.com/" rel="nofollow">businessex.com</a></li>
@@ -103,8 +102,8 @@
             <li><a target="_blank" href="https://www.franchiseindia.in/" rel="nofollow">franchiseindia.in</a></li>
             <li><a target="_blank" href="https://www.francorp.in/" rel="nofollow">francorp.in</a></li>
             <li><a target="_blank" href="https://www.franglobal.com/" rel="nofollow">franglobal.com</a></li>
-            <!-- <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
-                    rel="nofollow">franchiseindiaventures.com</a></li> -->
+            {{-- <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
+                    rel="nofollow">franchiseindiaventures.com</a></li> --}}
             <li><a target="_blank" href="https://www.gauravmarya.com/" rel="nofollow">gauravmarya.com</a></li>
         </ul>
         <ul class="list-unstyled components border-bottom-1">
@@ -121,8 +120,8 @@
             <li><a href="https://www.franchiseindia.com/book" target="_blank">रिपोर्टों
                     &amp; पुस्तकें</a></li>
             <li><a href="https://www.franchiseindia.com/event/" target="_blank">प्रतिस्पर्धा</a></li>
-            <!-- {{-- <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a>
-            </li> --}} -->
+            {{-- <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a>
+            </li> --}}
         </ul>
         <ul class="list-unstyled components">
             <li><a href="https://www.franchiseindia.com/investor/create" target="_blank">निवेशक साइनअप</a></li>
@@ -268,7 +267,6 @@
                     </li>
                 @endforeach
                 <li>
-
                     <span class="shaicon">
                         <div class="rightdimg"></div>
                     </span>
@@ -276,7 +274,6 @@
                         Cost Business Opportunities</a>
                 </li>
             </ol>
-
         </div>
         <div class="busheadmebu martop">Our Group website</div>
         <ul class="list-unstyled components border-bottom-1">
@@ -300,8 +297,8 @@
             <li><a target="_blank" href="https://www.franchiseindia.in/" rel="nofollow">franchiseindia.in</a></li>
             <li><a target="_blank" href="https://www.francorp.in/" rel="nofollow">francorp.in</a></li>
             <li><a target="_blank" href="https://www.franglobal.com/" rel="nofollow">franglobal.com</a></li>
-            <!-- <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
-                    rel="nofollow">franchiseindiaventures.com</a></li> -->
+            {{-- <li><a target="_blank" href="http://www.franchiseindiaventures.com/"
+                    rel="nofollow">franchiseindiaventures.com</a></li> --}}
             <li><a target="_blank" href="https://www.gauravmarya.com/" rel="nofollow">gauravmarya.com</a></li>
         </ul>
         <ul class="list-unstyled components border-bottom-1">
@@ -318,8 +315,8 @@
                     Magazine</a></li>
             <li><a href="https://www.franchiseindia.com/book" target="_blank">Reports &amp; Books</a></li>
             <li><a href="https://www.franchiseindia.com/event/" target="_blank">Event</a></li>
-            <!-- <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a>
-            </li>  -->
+            {{-- <li><a href="https://www.franchiseindia.com/pg/initiatePaymentDataForm.php" target="_blank">Pay Now</a>
+            </li> --}}
         </ul>
         <ul class="list-unstyled components">
             <li><a href="https://www.franchiseindia.com/investor/create" target="_blank">Investor Signup</a></li>

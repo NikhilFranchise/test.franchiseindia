@@ -54,16 +54,13 @@
             @if (Auth::user()->membership_plan == 401)
 
                 <div class="investviewleft">
-                    <span>
                     @if (!empty($userAccountData->reg_source))
                         @if ($userAccountData->reg_source == 'DelhiExpoPaid' && $credits->credit_limit > 0)
                             Credits left:
                             {{ $credits->credit_limit }} / {{ $credits->total_credits }}
                         @endif
                     @endif
-                    </span>
-                    {{--  </br>  --}}
-                    <a href="{{ Config('constants.MainDomain') }}/investor/myaccount/payment"
+                    </br><a href="{{ Config('constants.MainDomain') }}/investor/myaccount/payment"
                         class="btn btn-default btnupg">Upgrade Account </a>
                 </div>
             @else

@@ -8,7 +8,7 @@
                         <div class="carousel-item-a">
                             <div class="testimonial-main">
                                 <div class="testimonial-brand-section">
-                                    <img src="https://www.franchiseindia.com/images/testimonials/apollohome.png"
+                                    <img src="https://www.franchiseindia.com/images/testimonials/apollohome.webp"
                                         class="img-b-fluid" alt="Apollo Health and Lifestyle Limited">
                                 </div>
                                 <div class="testimonial-brand-summury">
@@ -144,7 +144,7 @@
                         <div class="carousel-item-a">
                             <div class="testimonial-main">
                                 <div class="testimonial-brand-section">
-                                    <img src="https://www.franchiseindia.com/images/testimonials/apollohome.png"
+                                    <img src="https://www.franchiseindia.com/images/testimonials/apollohome.webp"
                                         class="img-b-fluid" alt="Apollo Health and Lifestyle Limited">
                                 </div>
                                 <div class="testimonial-brand-summury">

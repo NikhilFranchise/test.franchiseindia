@@ -37,7 +37,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><img src="{{ url('images/mobile.png') }}" alt="mobile"></span>
                             <input type="text" class="form-control" id="mobile" name="mobile"
-                                placeholder="Enter Mobile" maxlength="10">
+                                placeholder="Enter Mobile" maxlength="15">
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-12 col-sm-4 col-md-4 com4mod control-label mandatory">Pincode</label>
+                    <label class="col-xs-12 col-sm-4 col-md-4 com4mod control-label">Pincode</label>
                     <div class="col-sm-1 com1mod padtop20 hidden-xs">:</div>
                     <div class="col-xs-12 col-sm-7 col-md-6">
                         <div class="input-group">
@@ -97,7 +97,7 @@
                         <div class="input-group">
                             <span class="input-group-addon height100"><img src="{{ url('images/addreess.png') }}"
                                     alt="address"></span>
-                            <textarea class="form-control height100" id="details" name="details" placeholder="Enter Your Detail"
+                            <textarea class="form-control height100" id="details" name="details" placeholder="Provide Event Name and Details"
                                 maxlength="60"></textarea>
                         </div>
                     </div>
@@ -144,14 +144,12 @@
                             <span class="input-group-addon"><img src="{{ url('images/country.png') }}"
                                     alt="country"></span>
                             <select name="mop" id="mop" class="form-control myselectclass">
-                                <option value="OPTCRDC">Mode Of Payment</option>
+                                <option value="OPTUPI">Mode Of Payment</option>
+                                <option value="OPTUPI">UPI</option>
                                 <option value="OPTCRDC">Credit Card</option>
                                 <option value="OPTDBCRD">Debit Card</option>
                                 <option value="OPTNBK">Net Banking</option>
                                 <option value="OPTEMI">EMI</option>
-                                <option value="OPTUPI">UPI</option>
-
-
                             </select>
                         </div>
                     </div>
@@ -185,13 +183,13 @@
                         required: true,
                         accept: "[0-9]",
                         minlength: 10,
-                        maxlength: 10,
+                        maxlength: 15,
                         number: true
                     },
                     pincode: {
-                        required: true,
+                        required: false,
                         accept: "[0-9]",
-                        minlength: 6,
+                        minlength: 4,
                         maxlength: 6,
                         number: true
                     },
@@ -231,13 +229,13 @@
                         maxlength: jQuery.format(""),
                         number: ""
                     },
-                    pincode: {
-                        required: "",
-                        accept: "",
-                        minlength: jQuery.format(""),
-                        maxlength: jQuery.format(""),
-                        number: ""
-                    },
+                    // pincode: {
+                    //     required: "",
+                    //     accept: "",
+                    //     minlength: jQuery.format(""),
+                    //     maxlength: jQuery.format(""),
+                    //     number: ""
+                    // },
                     details: {
                         required: "",
                         minlength: jQuery.format(""),
@@ -280,6 +278,13 @@
                             maxlength: 10,
                             number: true
                         },
+                        pincode: {
+                        required: false,
+                        accept: "[0-9]",
+                        minlength: 4,
+                        maxlength: 6,
+                        number: true
+                        },
                         details: {
                             required: true,
                             minlength: 3,
@@ -320,13 +325,13 @@
                             minlength: jQuery.format(""),
                             maxlength: jQuery.format("")
                         },
-                        pincode: {
-                            required: "",
-                            accept: "",
-                            minlength: jQuery.format(""),
-                            maxlength: jQuery.format(""),
-                            number: ""
-                        },
+                        // pincode: {
+                        //     required: "",
+                        //     accept: "",
+                        //     minlength: jQuery.format(""),
+                        //     maxlength: jQuery.format(""),
+                        //     number: ""
+                        // },
                         camount: {
                             required: "",
                             accept: "",

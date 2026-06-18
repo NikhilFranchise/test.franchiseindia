@@ -34,7 +34,7 @@ class ExpressInstaVisitorMail extends Mailable
     {
         return $this->from('no-reply@franchiseindia.com')
                     //->bcc('techsupport@franchiseindia.com')
-                    ->subject('Application successful at FranchiseIndia.com')
+                    ->subject('Application Successful | Upgrade your profile at FranchiseIndia.com')
                     ->view('mail.website-visitor')
                     ->with([
                         'companyName' => $this->franchisorName,

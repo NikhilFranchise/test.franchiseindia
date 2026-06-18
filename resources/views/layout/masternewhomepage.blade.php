@@ -21,8 +21,9 @@
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NW38FD"
             height="0" width="0" style="display:none;visibility:hidden"></iframe>
 </noscript>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KW4K6WV6"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-    
 <!-- End Google Tag Manager (noscript) -->
 
 @mobile
@@ -418,13 +419,13 @@
         $query = App\Http\Controllers\CommonController::getIpLocationState($ip);
         if(!empty($query))
         $query = strtolower($query);
-		$southCodes = ['tamil nadu', 'telangana', 'kerala', 'pondicherry'];
+		$southCodes = ['andhra pradesh'];
         $eastCodes = ['bihar', 'jharkhand', 'odisha', 'nepal', 'arunachal pradesh', 'assam', 'meghalaya', 'orissa', 'tripura'];
         $westCodes  = ['goa', 'gujarat',  'rajasthan'];
         $northCodes  = ['punjab', 'jammu and kashmir', 'jammu', 'kashmir', 'himachal pradesh', 'uttarakhand', 'uttar pradesh', 'delhi', 'haryana'];
 		$centerCodes = ['madhya pradesh', 'chhattisgarh', 'maharashtra'];
         $indiaCodes  = ['andhra pradesh', 'kerala', 'lakshadweep', 'pondicherry', 'telangana', 'tamil nadu', 'tamilnadu', 'haryana'];
-        $ClientCodes  =  ['uttar pradesh', 'rajasthan', 'chandigarh'];
+        $ClientCodes  =  ['west bengal'];
 
         App\Http\Controllers\CommonController::checkCampaignUrl();
     @endphp
@@ -433,63 +434,63 @@
 		@if(in_array($query, $southCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfroahmedabad')
+                    @include('includes.banners.popupmag')
                 @endif
             @else
-                @include('includes.banners.popupfroahmedabad')
+                @include('includes.banners.popupmag')
             @endif
 		@elseif(in_array($query, $eastCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfroahmedabad')
+                    @include('includes.banners.popupmag')
                 @endif
             @else
-                @include('includes.banners.popupfroahmedabad')
+                @include('includes.banners.popupmag')
             @endif
 
 		@elseif(in_array($query, $ClientCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfroahmedabad')
+                    @include('includes.banners.popupmag')
                 @endif
             @else
-                @include('includes.banners.popupfroahmedabad')
+                @include('includes.banners.popupmag')
             @endif
 
 		@elseif(in_array($query, $westCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfroahmedabad')
+                    @include('includes.banners.popupmag')
                 @endif
             @else
-                @include('includes.banners.popupfroahmedabad')
+                @include('includes.banners.popupmag')
             @endif
 
 		@elseif(in_array($query, $northCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfroahmedabad')
+                    @include('includes.banners.popupmag')
                 @endif
             @else
-                @include('includes.banners.popupfroahmedabad')
+                @include('includes.banners.popupmag')
             @endif
 
 		@elseif(in_array($query, $centerCodes))
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfroahmedabad')
+                    @include('includes.banners.popupmag')
                 @endif
             @else
-                @include('includes.banners.popupfroahmedabad')
+                @include('includes.banners.popupmag')
             @endif
 
 		@else
             @if(request()->segment(1) == 'brands')
                 @if($franDetails->membership_type != 1)
-                    @include('includes.banners.popupfroahmedabad')
+                    @include('includes.banners.popupmag')
 				@endif
 			@else
-		        @include('includes.banners.popupfroahmedabad')
+		        @include('includes.banners.popupmag')
 			@endif
 		@endif
     @endif

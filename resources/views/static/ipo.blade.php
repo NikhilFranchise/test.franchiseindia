@@ -1,4 +1,4 @@
-@section('seoTitle', 'Draft Red Herring Prospectus. - Franchise India')
+@section('seoTitle', 'Draft Red Herring Prospectus - Franchise India')
 @section('seoDesc', 'Please read the following terms, email newsletter Subscription and membership obligations carefully before using this web site.')
 @section('seoKeywords', 'terms and obligations Franchise India Holding Ltd., franchise business opportunities, franchise for sale, retail franchise,
 					franchise investment, small business franchise, franchise business for sale')

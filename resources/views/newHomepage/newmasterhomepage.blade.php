@@ -15,6 +15,7 @@
         {{-- @include('newHomepage.mobile.franchise_insights_news') --}}
         @include('newHomepage.mobile.testimonials')
         @include('newHomepage.mobile.mobile_popup')
+
     </main>
     @include('newHomepage.mobile.sidemenu-mobile')
     <div class="overlay"></div>
@@ -36,9 +37,10 @@
         {{-- @include('newHomepage.hgps') --}}
         @include('newHomepage.tfo')
         @include('newHomepage.ffc')
-        @include('newHomepage.f_insights_news')
+        {{-- @include('newHomepage.f_insights_news') --}}
         @include('newHomepage.testimonials')
         @include('newHomepage.desktop_popup')
+
         @include('newHomepage.loginmodal')
         {{--  @include('newHomepage.popupfranchiseindiamumbai')  --}}
     </main>
@@ -70,14 +72,14 @@
                 if (!empty($query)) {
                     $query = strtolower($query);
                 }
-                $southCodes = ['andhra pradesh', 'tamil nadu', 'tamilnadu'];
-                $eastCodes = ['odisha', 'nepal', 'arunachal pradesh', 'assam', 'meghalaya', 'orissa', 'tripura'];
-                $westCodes = ['goa', 'gujarat', 'rajasthan'];
-                $northCodes = ['punjab', 'jammu and kashmir', 'jammu', 'kashmir', 'himachal pradesh', 'uttarakhand', 'uttar pradesh', 'delhi', 'haryana'];
-                $centerCodes = ['madhya pradesh', 'chhattisgarh', 'maharashtra'];
-                $indiaCodes = ['andhra pradesh', 'kerala', 'lakshadweep', 'pondicherry', 'telangana', 'tamil nadu', 'tamilnadu', 'haryana'];
-                $ClientCodes = ['bihar', 'jharkhand'];
 
+				$southCodes = ['andhra pradesh', 'tamil nadu', 'tamilnadu', 'telangana', 'karnataka', 'kerala', 'lakshadweep', 'pondicherry'];
+				$eastCodes = ['odisha', 'nepal', 'arunachal pradesh', 'assam', 'meghalaya', 'orissa', 'tripura', 'bihar', 'jharkhand', 'manipur', 'mizoram', 'nagaland', 'sikkim', 'west Bengal'];
+				$westCodes = ['goa', 'gujarat', 'rajasthan', 'maharashtra', 'dadra and nagar haveli and daman and diu'];
+				$northCodes = ['punjab', 'chandigarh', 'jammu and kashmir', 'jammu', 'kashmir', 'himachal pradesh', 'uttarakhand', 'uttar pradesh', 'haryana', 'delhi', 'ladakh'];
+				$centerCodes = ['madhya pradesh', 'chhattisgarh', 'maharashtra'];
+				$indiaCodes = ['andhra pradesh', 'arunachal pradesh', 'assam', 'bihar', 'chhattisgarh', 'goa', 'gujarat', 'haryana', 'jharkhand', 'himachal pradesh', 'karnataka', 'kerala', 'madhya pradesh', 'maharashtra', 'manipur', 'meghalaya', 'mizoram', 'nagaland', 'odisha', 'punjab', 'rajasthan', 'sikkim', 'tripura', 'uttarakhand', 'uttar pradesh', 'west Bengal', 'delhi', 'jammu and kashmir', 'telangana', 'tamil nadu', 'tamilnadu', 'lakshadweep', 'pondicherry', 'andaman and nicobar islands', 'chandigarh', 'dadra and nagar haveli and daman and diu', 'ladakh'];
+			
                 App\Http\Controllers\CommonController::checkCampaignUrl();
             @endphp
 
@@ -85,28 +87,12 @@
                 @if (in_array($query, $southCodes))
                     @if (request()->segment(1) == 'brands')
                         @if ($franDetails->membership_type != 1)
-                            @include('includes.banners.popupfranchiseexpocoimbatore')
+                            @include('includes.banners.popuphyderabadExpo')
                         @endif
                     @else
-                        @include('includes.banners.popupfranchiseexpocoimbatore')
+                        @include('includes.banners.popuphyderabadExpo')
                     @endif
                 @elseif (in_array($query, $eastCodes))
-                    @if (request()->segment(1) == 'brands')
-                        @if ($franDetails->membership_type != 1)
-                            @include('includes.banners.popupfranchiseexpobhubaneswar')
-                        @endif
-                    @else
-                        @include('includes.banners.popupfranchiseexpobhubaneswar')
-                    @endif
-                @elseif (in_array($query, $ClientCodes))
-                    @if (request()->segment(1) == 'brands')
-                        @if ($franDetails->membership_type != 1)
-                            @include('includes.banners.popupfranchiseexpopatna')
-                        @endif
-                    @else
-                        @include('includes.banners.popupfranchiseexpopatna')
-                    @endif
-                @elseif (in_array($query, $westCodes))
                     @if (request()->segment(1) == 'brands')
                         @if ($franDetails->membership_type != 1)
                             @include('includes.banners.popupmag')
@@ -114,29 +100,37 @@
                     @else
                         @include('includes.banners.popupmag')
                     @endif
+                @elseif (in_array($query, $westCodes))
+                    @if (request()->segment(1) == 'brands')
+                        @if ($franDetails->membership_type != 1)
+                            @include('includes.banners.popuphyderabadExpo')
+                        @endif
+                    @else
+                        @include('includes.banners.popuphyderabadExpo')
+                    @endif
                 @elseif (in_array($query, $northCodes))
                     @if (request()->segment(1) == 'brands')
                         @if ($franDetails->membership_type != 1)
-                            @include('includes.banners.popupfranchiseexpochandigarh')
+                            @include('includes.banners.popuphyderabadExpo')
                         @endif
                     @else
-                        @include('includes.banners.popupfranchiseexpochandigarh')
+                        @include('includes.banners.popuphyderabadExpo')
                     @endif
                 @elseif (in_array($query, $centerCodes))
                     @if (request()->segment(1) == 'brands')
                         @if ($franDetails->membership_type != 1)
-                            @include('includes.banners.popupfranchiseexpoindore')
+                            @include('includes.banners.popuphyderabadExpo')
                         @endif
                     @else
-                        @include('includes.banners.popupfranchiseexpoindore')
+                        @include('includes.banners.popuphyderabadExpo')
                     @endif
                 @else
                     @if (request()->segment(1) == 'brands')
                         @if ($franDetails->membership_type != 1)
-                            @include('includes.banners.popupfranchiseexpoindore')
+                            @include('includes.banners.popuphyderabadExpo')
                         @endif
                     @else
-                        @include('includes.banners.popupfranchiseexpoindore')
+                        @include('includes.banners.popuphyderabadExpo')
                     @endif
                 @endif
             @endif

@@ -32,7 +32,7 @@ class FreeInvestor extends Mailable
      */
     public function build()
     {
-        $returnMail = $this->from('no-reply@franchiseindia.com')->subject('Application successful at FranchiseIndia.com');
+        $returnMail = $this->from('no-reply@franchiseindia.com')->subject('Application Successful | Register yourself at FranchiseIndia.com');
 
         if(request()->user()->membership_type == 1)
             $returnMail = $returnMail->view('mail.PaidInvestorFreeLead');

@@ -294,7 +294,8 @@
                             <li> <a href="https://www.franchiseindia.com/business-opportunities/telangana.LOC34">Telangana</a></li>
                             <li> <a href="https://www.franchiseindia.com/business-opportunities/andaman-and-nicobar.LOC35">Andaman and Nicobar</a></li>
                             <li> <a href="https://www.franchiseindia.com/business-opportunities/ladakh.LOC36">Ladakh</a></li>
-                                                        
+                            
+                            
                         </ul>
                     </ul>
                 </div>

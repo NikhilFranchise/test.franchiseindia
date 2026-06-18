@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\NewsLetterSubscribe;
 use App\Models\ContentTagsAssignedHindi;
 use Illuminate\Support\Facades\Log;
-use App\Models\FranchisorBusinessDetail;
 use App\Models\InsightListHindi;
 use App\Models\SeoTagHindi;
 use App\Models\FihlPodcastVideo;
@@ -26,7 +25,8 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 use App\Helpers\FranchiseHelper;
-
+use App\Models\Insights\FeaturedInsightsContent;
+use Illuminate\Support\Facades\DB;
 
 class InsightsController extends Controller
 {
@@ -38,59 +38,112 @@ class InsightsController extends Controller
         session()->put('locale', $locale);
 
         $model = $locale === 'hi' ? InsightListHindi::class : InsightList::class;
+        $excludeIds = [];
 
-        $homeArticle = $model::with('category')
-            ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
-            ->withEffectiveDate()
+        /* ================= FEATURED SLOT ================= */
+
+        $slot1 = FeaturedInsightsContent::where('slot', 1)
+            ->where('locale', $locale)
             ->where('status', 1)
-            ->where('insight_type', 'News')
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->whereNotNull(['image', 'cat_id'])
-            ->orderByEffectiveDate('desc')
-            ->take(1)
-            ->get();
+            ->where('start_at', '<=', now())
+            ->where('end_at', '>=', now())
+            ->first();
 
-        if ($homeArticle->isEmpty()) {
-            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
+        if ($slot1) {
+            $homeArticle = $model::with('category')
+                ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
+                ->where('news_id', $slot1->news_id)
+                ->where('status', 1)
+                ->whereNotNull(['image', 'cat_id'])
+                ->get();
+
+            if ($homeArticle->isNotEmpty()) {
+                $excludeIds[] = $homeArticle->first()->news_id;
+            }
+        } else {
+            // fallback → latest news
+            $homeArticle = $model::with('category')
+                ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
+                ->withEffectiveDate()
+                ->where('status', 1)
+                ->where('insight_type', 'News')
+                ->whereNotIn('news_type', ['ir', 'ri'])
+                ->whereNotNull(['image', 'cat_id'])
+                ->orderByEffectiveDate('desc')
+                ->take(1)
+                ->get();
+
+            if ($homeArticle->isNotEmpty()) {
+                $excludeIds[] = $homeArticle->first()->news_id;
+            }
         }
+
+        /* ================= TOP STORIES (NEWS) ================= */
         $topstories = $model::with('category')
             ->select('news_id', 'insight_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
             ->withEffectiveDate()
             ->where('status', 1)
             ->where('insight_type', 'News')
             ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotIn('news_id', $excludeIds)
             ->whereNotNull(['image', 'cat_id'])
-            // ->orderByDesc('created_at')
             ->orderByEffectiveDate('desc')
-            ->skip(1)
             ->take(5)
             ->get();
 
 
-        $industry_focus = $model::with('category')
-            ->select('news_id', 'insight_type', 'news_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')->where('insight_type', 'Article')
-            ->withEffectiveDate()
+
+        $slot2 = FeaturedInsightsContent::where('slot', 2)
+            ->where('locale', $locale)
             ->where('status', 1)
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->whereNotNull(['image', 'cat_id'])
-            // ->orderByDesc('created_at')
-            ->orderByEffectiveDate('desc')
-            ->take(1)
-            ->get();
+            ->where('start_at', '<=', now())
+            ->where('end_at', '>=', now())
+            ->first();
+        // dd($slot2);
+        if ($slot2) {
+            // Admin-selected Article
+            $industry_focus = $model::with('category')
+                ->select('news_id', 'insight_type', 'news_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
+                ->where('news_id', $slot2->news_id)
+                ->where('insight_type', 'Article')
+                ->where('status', 1)
+                ->whereNotNull(['image', 'cat_id'])
+                ->get();
+
+            if ($industry_focus->isNotEmpty()) {
+                $excludeIds[] = $industry_focus->first()->news_id;
+            }
+        } else {
+            // fallback → latest article
+            $industry_focus = $model::with('category')
+                ->select('news_id', 'insight_type', 'news_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
+                ->withEffectiveDate()
+                ->where('insight_type', 'Article')
+                ->where('status', 1)
+                ->whereNotIn('news_type', ['ir', 'ri'])
+                ->whereNotIn('news_id', $excludeIds)
+                ->whereNotNull(['image', 'cat_id'])
+                ->orderByEffectiveDate('desc')
+                ->take(1)
+                ->get();
+
+            if ($industry_focus->isNotEmpty()) {
+                $excludeIds[] = $industry_focus->first()->news_id;
+            }
+        }
 
         $industry_data = $model::with('category')
             ->select('news_id', 'insight_type', 'news_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
             ->withEffectiveDate()
             ->where('insight_type', 'Article')
             ->where('status', 1)
-            ->whereNot('news_id', $industry_focus[0]->news_id)
             ->whereNotIn('news_type', ['ir', 'ri'])
+            ->whereNotIn('news_id', $excludeIds)
             ->whereNotNull(['image', 'cat_id'])
-            // ->orderByDesc('created_at')
             ->orderByEffectiveDate('desc')
-            // ->skip(1)
             ->take(6)
             ->get();
+        /* ================= REPORTS ================= */
 
         $reports = $model::with('category')
             ->select('news_id', 'insight_type', 'news_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
@@ -99,11 +152,12 @@ class InsightsController extends Controller
             ->where('status', 1)
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
-            ->whereNot('image', '=', '')
-            // ->orderByDesc('created_at')
+            ->whereNotIn('news_id', $excludeIds)
             ->orderByEffectiveDate('desc')
             ->take(8)
             ->get();
+
+        /* ================= INTERVIEWS ================= */
 
         $interview = $model::with('category')
             ->select('news_id', 'insight_type', 'news_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image')
@@ -112,7 +166,8 @@ class InsightsController extends Controller
             ->where('status', 1)
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
-            // ->orderByDesc('created_at')
+            ->whereNotIn('news_id', $excludeIds)
+
             ->orderByEffectiveDate('desc')
             ->take(8)
             ->get();
@@ -120,34 +175,57 @@ class InsightsController extends Controller
         $topcategories = SeoTag::query()->select('tag_id', 'name')->orderByDesc('frequency')->take(10)->get();
 
 
-        // Fetch author details & count articles (Avoid `whereIn`)
-        $authors = AuthorList::query()
-            ->select('author_id', 'title', 'slug', 'image', 'designation')
-            ->where('status', 'A')
-            ->get();
-        $authorDetails = $authors->map(function ($author) use ($model) {
-            // Count articles for each author (Direct Query, No whereIn)
-            $Encount = InsightList::where('author_id', $author->author_id)
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->where('status', 1)
-                ->count();
+        // // Fetch author details & count articles (Avoid `whereIn`)
+        // $authors = AuthorList::query()
+        //     ->select('author_id', 'title', 'slug', 'image', 'designation')
+        //     ->where('status', 'A')
+        //     ->get();
+        // $authorDetails = $authors->map(function ($author) use ($model) {
+        //     // Count articles for each author (Direct Query, No whereIn)
+        //     $Encount = InsightList::where('author_id', $author->author_id)
+        //         ->whereNotIn('news_type', ['ir', 'ri'])
+        //         ->where('status', 1)
+        //         ->count();
 
-            $Hicount = InsightListHindi::where('author_id', $author->author_id)
-                ->whereNotIn('news_type', ['ir', 'ri'])
-                ->where('status', 1)
-                ->count();
-            $author->count = $Encount + $Hicount;
-            return $author;
-        });
+        //     $Hicount = InsightListHindi::where('author_id', $author->author_id)
+        //         ->whereNotIn('news_type', ['ir', 'ri'])
+        //         ->where('status', 1)
+        //         ->count();
+        //     $author->count = $Encount + $Hicount;
+        //     return $author;
+        // });
 
-        $trendArticles = $model::with('category')
-            ->select('news_id', 'insight_type', 'news_type', 'cat_id', 'title', 'shortDesc', 'slug', 'image', 'views')
+        /* ================= TRENDING ================= */
+        // $baseQuery = $model::popularArticles()->whereNotIn('news_id', $excludeIds)->limit(8);
+        $baseQuery = $model::with('category')
+            ->select(
+                'news_id',
+                'insight_type',
+                'news_type',
+                'cat_id',
+                'title',
+                'shortDesc',
+                'slug',
+                'image',
+                'views',
+                'created_at',
+                'published_date'
+            )
+            ->withEffectiveDate()
             ->where('status', 1)
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
+            ->whereNotIn('news_id', $excludeIds)
             ->orderByDesc('views')
-            ->take(8)
+            ->limit(8);
+        $trendArticles = (clone $baseQuery)
+            ->whereEffectiveDate('>=', now()->subDays(22))
             ->get();
+
+        if ($trendArticles->isEmpty()) {
+            $trendArticles = $baseQuery->get();
+        }
+
 
         return view('insights.insight_home', compact(
             'homeArticle',
@@ -158,7 +236,7 @@ class InsightsController extends Controller
             'industry_data',
             'reports',
             'interview',
-            'authorDetails'
+            // 'authorDetails'
         ));
     }
 
@@ -176,23 +254,16 @@ class InsightsController extends Controller
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->where('status', 1)
             ->whereNotNull(['image', 'cat_id'])
-            // ->orderByDesc('created_at')
             ->orderByEffectiveDate('desc')
             ->paginate(15);
 
-        $popArticles = $model::with('category')
-            ->select('news_id', 'insight_type', 'cat_id', 'title', 'slug')
-            // ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
-            ->withEffectiveDate()
-            ->where('insight_type', 'Article')
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->where('status', 1)
-            ->whereNotNull(['image', 'cat_id'])
-            // ->orderByDesc('created_at')
-            ->orderByEffectiveDate('desc')
-            ->limit(6)
-            ->get();
+        $popArticlesQuery = $model::popularArticles()->limit(6);
 
+        $popArticles = (clone $popArticlesQuery)->whereEffectiveDate('>=', now()->subDays(15))->get();
+
+        if ($popArticles->isEmpty()) {
+            $popArticles = $popArticlesQuery->get();
+        }
         return view('insights.topstories', compact('insightstories', 'popArticles'));
     }
 
@@ -214,29 +285,20 @@ class InsightsController extends Controller
             ->whereNotIn('news_type', ['ir', 'ri'])
             ->whereNotNull(['image', 'cat_id'])
             ->where('status', 1)
-            // ->orderByDesc('created_at')
             ->orderByEffectiveDate('desc')
             ->paginate(15);
 
-        // Handle empty results
-        if ($insArticles->isEmpty()) {
-            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
-        }
-        // Get the IDs of articles already shown
         $insArticleIds = $insArticles->pluck('news_id');
-        $popArticles = $model::with('category')
-            ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
-            ->withEffectiveDate()
-            ->where('insight_type', 'Article')
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->whereNotNull(['image', 'cat_id'])
-            ->where('status', 1)
-            ->whereNotIn('news_id', $insArticleIds) // Exclude already shown articles
-            // ->skip(15)
-            // ->orderByDesc('created_at')
-            ->orderByEffectiveDate('desc')
-            ->take(6)
-            ->get();
+
+        $popArticlesQuery = $model::popularArticles()
+            ->whereNotIn('news_id', $insArticleIds)
+            ->limit(6);
+
+        $popArticles = (clone $popArticlesQuery)->whereEffectiveDate('>=', now()->subDays(15))->get();
+
+        if ($popArticles->isEmpty()) {
+            $popArticles = $popArticlesQuery->get();
+        }
 
         // Return the view with the articles
         return view('insights.articles', compact('insArticles', 'popArticles'));
@@ -257,24 +319,16 @@ class InsightsController extends Controller
             ->where('insight_type', 'Interview')
             ->whereNotNull(['image', 'cat_id'])
             ->where('status', 1)
-            // ->orderByDesc('created_at')
             ->orderByEffectiveDate('desc')
             ->paginate(15);
 
-        if ($interviews->isEmpty()) {
-            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
+        $popArticlesQuery = $model::popularArticles()->limit(6);
+
+        $popArticles = (clone $popArticlesQuery)->whereEffectiveDate('>=', now()->subDays(15))->get();
+
+        if ($popArticles->isEmpty()) {
+            $popArticles = $popArticlesQuery->get();
         }
-        $popArticles = $model::with('category')
-            ->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
-            ->withEffectiveDate()
-            ->where('insight_type', 'Article')
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->whereNotNull(['image', 'cat_id'])
-            ->where('status', 1)
-            // ->orderByDesc('created_at')
-            ->orderByEffectiveDate('desc')
-            ->take(6)
-            ->get();
 
         return view('insights.interviewslist', compact('interviews', 'popArticles'));
     }
@@ -295,28 +349,18 @@ class InsightsController extends Controller
             ->where('insight_type', 'Event')
             ->orWhere('insight_type', 'Report')
             ->whereNotNull(['image', 'cat_id'])
-            // ->orderByDesc('created_at')
             ->orderByEffectiveDate('desc')
             ->paginate(15);
 
-        if ($events_reports->isEmpty()) {
-            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
+        $popArticlesQuery = $model::popularArticles()->limit(6);
+        $popArticles = (clone $popArticlesQuery)->whereEffectiveDate('>=', now()->subDays(15))->get();
+
+        if ($popArticles->isEmpty()) {
+            $popArticles = $popArticlesQuery->get();
         }
-        $popArticles = $model::with('category')->select('title', 'slug', 'news_id', 'insight_type', 'cat_id')
-            ->withEffectiveDate()
-            ->where('insight_type', 'Article')
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->whereNotNull(['image', 'cat_id'])
-            ->where('status', 1)
-            // ->orderByDesc('created_at')
-            ->orderByEffectiveDate('desc')
-            ->take(6)
-            ->get();
 
         return view('insights.events_reports', compact('events_reports', 'popArticles'));
     }
-
-
     public function authordata(Request $request)
     {
         $author_id = explode('-', $request->slug);
@@ -345,36 +389,29 @@ class InsightsController extends Controller
 
         $articleCount = InsightList::query()
             ->select('author_id')
-            ->where('author_id', $id)
-            ->where('status', 1)
-            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->where($articleQuery)
             ->count()
             + InsightListHindi::query()
             ->select('author_id')
-            ->where('author_id', $id)
-            ->where('status', 1)
-            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->where($articleQuery)
             ->count();
         // dd($articleCount);
         $latestArticles = collect([
             InsightList::query()
-                ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type', 'shortDesc', 'image')
+                ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type', 'shortDesc', 'image', 'content', 'created_at', 'published_date')
                 ->withEffectiveDate()
                 ->where($articleQuery)
-                // ->orderByDesc('created_at')
                 ->orderByEffectiveDate('desc')
                 ->get()
                 ->map(fn($item) => $item->setAttribute('lang', 'en')),
             InsightListHindi::query()
-                ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type', 'shortDesc', 'image')
+                ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type', 'shortDesc', 'image', 'content', 'created_at', 'published_date')
                 ->withEffectiveDate()
                 ->where($articleQuery)
-                // ->orderByDesc('created_at')
                 ->orderByEffectiveDate('desc')
                 ->get()
                 ->map(fn($item) => $item->setAttribute('lang', 'hi'))
         ])->flatten()->sortByDesc('created_at');
-        // dd($latestArticles);
 
         $perPage = 15;
         $currentPage = Paginator::resolveCurrentPage();
@@ -388,13 +425,13 @@ class InsightsController extends Controller
 
         $mostViewedArticles = collect([
             InsightList::query()
-                ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type', 'shortDesc', 'image')
+                ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type', 'shortDesc', 'image', 'content', 'created_at', 'published_date')
                 ->where($articleQuery)
                 ->orderByDesc('views')
                 ->get()
                 ->map(fn($item) => $item->setAttribute('lang', 'en')),
             InsightListHindi::query()
-                ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type', 'shortDesc', 'image')
+                ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type', 'shortDesc', 'image', 'content', 'created_at', 'published_date')
                 ->where($articleQuery)
                 ->orderByDesc('views')
                 ->get()
@@ -409,49 +446,39 @@ class InsightsController extends Controller
             ['path' => Paginator::resolveCurrentPath()]
         );
 
-        $popularArticles = collect([
-            InsightList::with('category')
-                ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type')
-                ->withEffectiveDate()
-                ->where($articleQuery)
-                ->where('insight_type', 'Article')
-                // ->orderByDesc('created_at')
-                ->orderByEffectiveDate('desc')
-                ->limit(5)
-                ->get()
-                ->map(fn($item) => $item->setAttribute('lang', 'en')),
-            InsightListHindi::with('category')
-                ->select('news_id', 'title', 'slug', 'cat_id', 'insight_type')
-                ->withEffectiveDate()
-                ->where($articleQuery)
-                ->where('insight_type', 'Article')
-                // ->orderByDesc('created_at')
-                ->orderByEffectiveDate('desc')
-                ->limit(5)
-                ->get()
-                ->map(fn($item) => $item->setAttribute('lang', 'hi'))
-        ])->flatten();
+        $popArticlesQuery = collect([
+            InsightList::popularArticles()->limit(5)->get()->map(fn($item) => $item->setAttribute('lang', 'en')),
+            InsightListHindi::popularArticles()->limit(5)->get()->map(fn($item) => $item->setAttribute('lang', 'hi')),
+        ])->flatten()->sortByDesc('views');
 
-        return view('insights.author', compact('author', 'latestArticles', 'articleCount', 'mostViewedArticles', 'popularArticles'));
+
+        $popArticles = $popArticlesQuery->filter(function ($item) {
+            return $item->effective_date >= now()->subDays(15);
+        });
+
+        if ($popArticles->isEmpty()) {
+            $popArticles = $popArticlesQuery;
+        }
+
+        return view('insights.author', compact('author', 'latestArticles', 'articleCount', 'mostViewedArticles', 'popArticles'));
     }
-
-
     public function authorarchive(Request $request)
     {
+        $articleQuery = function ($query) {
+            $query->where('status', 1)
+                ->whereNotIn('news_type', ['ri', 'ir'])
+                ->whereNotNull(['image', 'cat_id', 'author_id']);
+        };
         // Fetch author IDs and count articles per author from both tables in a single query
         $authorCountsEn = InsightList::query()
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->whereNotNull('author_id')
-            ->where('status', 1)
+            ->where($articleQuery)
             ->groupBy('author_id')
             ->selectRaw('author_id, COUNT(*) as article_count')
             ->get()
             ->keyBy('author_id');
 
         $authorCountsHi = InsightListHindi::query()
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->whereNotNull('author_id')
-            ->where('status', 1)
+            ->where($articleQuery)
             ->groupBy('author_id')
             ->selectRaw('author_id, COUNT(*) as article_count')
             ->get()
@@ -507,25 +534,15 @@ class InsightsController extends Controller
 
         return view('insights.author_archive', compact('authorDetails', 'authorCounts', 'ContributoryAuthor', 'guestAuthor'));
     }
-
-
-
-
     public function insightscategorydata(Request $request)
     {
-        // dd('yes');
         $slug = strtolower(str_replace(' ', '-', $request->slug));
         $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
-
-        // Choose the appropriate model based on the locale
-
-        // Determine the appropriate models based on the language
         $categoryModel = $locale == 'hi' ? InsightsHindiCategory::class : InsightCategory::class;
         $subcategoryModel = $locale == 'hi' ? InsightsHindiSubCategory::class : InsightSubcategory::class;
         $insightListModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
-
         // Fetch the category
         $category = $categoryModel::query()
             ->where('slug', $slug)
@@ -533,16 +550,17 @@ class InsightsController extends Controller
             ->first();
         // IDs that should redirect to external blog
         // $redirectIds = [9, 32, 33];
-        // if (in_array($category->id, $redirectIds)) {
-        //     $externalSlug = $category->slug;
-        //     $externalUrl = "https://www.entrepreneur.com/blog/{$locale}/{$externalSlug}";
-        //     dd($externalUrl);
-        //     return redirect()->away($externalUrl);
-        // }
+        $redirectIds = $locale == 'hi'
+            ? [9, 33, 34]    // For Hindi
+            : [9, 32, 33];   // For English
+        if (in_array($category->id, $redirectIds)) {
+            $externalSlug = $category->slug;
+            $externalUrl = "https://www.entrepreneur.com/blog/{$locale}/{$externalSlug}";
+            return redirect()->away($externalUrl, 301);
+        }
         if (!$category) {
             return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
         }
-
 
         // Fetch the insights for the category
         $insightcategories = $insightListModel::with(['author'])
@@ -551,66 +569,94 @@ class InsightsController extends Controller
             ->where('cat_id', $category->id)
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
-            // ->orderByDesc('news_id')
             ->orderByEffectiveDate('desc')
             ->paginate(15);
-        // dd($insightcategories);
-        // Apply content URL slug transformation
 
-        $popularArticles = $insightListModel::with('category')->select('news_id', 'title', 'cat_id', 'insight_type', 'slug')
-            ->where('insight_type', 'Article')
-            ->where('status', 1)
-            ->whereNotIn('news_type', ['ri', 'ir'])
-            ->orderByDesc('views')
-            ->take(6)->get();
+        $popArticlesQuery = $insightListModel::popularArticles()->limit(6);
+        $popArticles = (clone $popArticlesQuery)->whereEffectiveDate('>=', now()->subDays(15))->get();
 
-        // Subcategories under the main category
-        $subcat = $subcategoryModel::query()
-            ->select('id', 'subcat_name', 'slug')
-            ->where('mcat_id', $category->id)
-            ->get();
-
-        $subcatids = $subcat->pluck('id');
-
-        // Get insight articles under those subcategories
-        $subcatData = $insightListModel::query()
-            ->select('subcat_id') // Just need subcat_id for counting
-            ->whereIn('subcat_id', $subcatids)
-            ->where('status', 1)
-            ->whereNotIn('news_type', ['ri', 'ir'])
-            ->get();
-
-        // Count the articles per subcategory ID
-        $subcatCounts = $subcatData->groupBy('subcat_id')->map(function ($items) {
-            return $items->count();
-        });
-
-        // Now you can access the count like this:
-        foreach ($subcat as $sc) {
-            $count = $subcatCounts[$sc->id] ?? 0;
-        }
-
-        // Check if insights are available
-        if ($insightcategories->isEmpty()) {
-            return redirect($locale === 'hi' ? '/insights/hindi' : '/insights');
+        if ($popArticles->isEmpty()) {
+            $popArticles = $popArticlesQuery->get();
         }
 
         // Return the view with compacted data
-        return view('insights.categorylist', compact('insightcategories', 'category', 'popularArticles', 'subcat'));
+        return view('insights.categorylist', compact('insightcategories', 'category', 'popArticles'));
+    }
+
+    public function insightsubcategory(Request $request)
+    {
+        // Redirect if category or subcategory is 'kicker'
+        if (in_array($request->category, ['kicker']) || in_array($request->subcategory, ['kicker'])) {
+            return redirect('/insights');
+        }
+
+        $categorySlug = $request->category;
+        $subcategorySlug = $request->subcategory;
+        // $isEnglish = App::getLocale() == 'en';  // Check if the language is English
+        $isEnglish = request()->segment(2) == 'en' ? 'en' : 'hi';
+        $redirectPath = $isEnglish == 'en' ? '/insights' : '/insights/hindi';
+        app()->setLocale($isEnglish);
+        session()->put('locale', $isEnglish);
+        // Determine models based on the language (English or Hindi)
+        $insightListModel = $isEnglish ? InsightList::class : InsightListHindi::class;
+        $insightSubCatModel = $isEnglish ? InsightSubcategory::class : InsightsHindiSubCategory::class;
+        $insightCatModel = $isEnglish ? InsightCategory::class : InsightsHindiCategory::class;
+
+        // Fetch subcategory and category data
+        $subcatData = $insightSubCatModel::query()->where('slug', $subcategorySlug)->first();
+        if (!$subcatData) {
+            return redirect('/insights');  // Redirect if subcategory not found
+        }
+        // dd($subcatData);
+        $catData = $insightCatModel::query()
+            ->where('slug', $categorySlug)
+            ->where('id', $subcatData->mcat_id) // Ensure correct category based on subcategory
+            ->first();
+        if (!$catData) {
+            return redirect('/insights');
+        }
+        $redirectCategories = $isEnglish == 'hi'
+            ? [9, 33, 34]
+            : [9, 32, 33];
+
+        if (in_array($catData->id, $redirectCategories)) {
+            return redirect()->away(
+                "https://www.entrepreneurindia.com/blog/{$categorySlug}/{$subcategorySlug}",
+                301
+            );
+        }
+
+        // Fetch content data for the selected subcategory
+        $contentData = $insightListModel::with(['author', 'category', 'subcategory'])
+            ->select('news_id', 'title', 'cat_id', 'subcat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at', 'published_date')
+            ->withEffectiveDate()
+            ->where('subcat_id', $subcatData->id)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->where('status', 1)
+            ->whereNotNull(['image', 'cat_id', 'subcat_id'])
+            ->orderByEffectiveDate('desc')
+            ->paginate(15);
+
+        $popArticlesQuery = $insightListModel::popularArticles()->limit(6);
+
+        $popArticles = (clone $popArticlesQuery)->whereEffectiveDate('>=', now()->subDays(15))->get();
+
+        if ($popArticles->isEmpty()) {
+            $popArticles = $popArticlesQuery->get();
+        }
+
+        return view('insights.subcatdata', compact('contentData', 'subcatData', 'catData', 'popArticles'));
     }
 
     public function getInsightsDetails(Request $request)
     {
         $id = $request->id;
-        // dd($id);
         $locale = request()->segment(2) == 'hi' ? 'hi' : 'en';
         app()->setLocale($locale);
         session()->put('locale', $locale);
         $newsModel = $locale == 'hi' ? InsightListHindi::class : InsightList::class;
-        $tagTable = $locale == 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
-        $seoTagModel = $locale == 'hi' ? SeoTagHindi::class : SeoTag::class;
         // Fetch news details
-        $newsDetails = $newsModel::with(['author', 'category', 'Subcategory'])
+        $newsDetails = $newsModel::with(['author', 'category', 'Subcategory', 'ContentTagsAssigned.contentTag'])
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->where('news_id', $id)
             ->first();
@@ -618,28 +664,25 @@ class InsightsController extends Controller
         if (!$newsDetails) {
             return redirect('insights/pagenotfound');
         }
-        // // ✅ Check for specific category IDs
-        if (in_array($newsDetails->cat_id, [9, 32, 33])) {
-            // Get the current slug (assuming it's in `slug` column)
-            $slug = $newsDetails->slug ?? $newsDetails->news_id;
-            $type = strtolower($newsDetails->insight_type);
-            // Build target domain (change this domain)
-            $targetDomain = "https://www.entrepreneurindia.com/blog/{$locale}/{$type}/{$newsDetails->slug}.{$id}";
-            // dd($targetDomain);
-            return redirect()->away($targetDomain, 301);
-        }
-
         $correctSlug = $newsDetails->slug;
         $type = strtolower($newsDetails->insight_type);
-        if ($request->slug !== $correctSlug) {
+        if ($request->slug != $correctSlug || $request->insight_type != $type) {
             return redirect()->to(url("/insights/{$locale}/{$type}/{$correctSlug}.{$id}"), 301);
         }
         $newsModel::where('news_id', $id)->increment('views');
-
+        $redirectCategories = $locale == 'hi'
+            ? [9, 33, 34]    // For Hindi
+            : [9, 32, 33];   // For English
         // Handle access permissions based on status
         switch ($newsDetails->status) {
             case 1:
                 // Status 1: Proceed as normal
+                if (in_array($newsDetails->cat_id, $redirectCategories)) {
+                    $slug = $newsDetails->slug ?? $newsDetails->news_id;
+                    $type = strtolower($newsDetails->insight_type);
+                    $targetDomain = "https://www.entrepreneurindia.com/blog/{$locale}/{$type}/{$newsDetails->slug}.{$id}";
+                    return redirect()->away($targetDomain, 301);
+                }
                 break;
             case 2:
                 // Status 2: Require admin authentication
@@ -652,50 +695,334 @@ class InsightsController extends Controller
                 return redirect('insights/pagenotfound');
         }
         // Fetch author details
-        $authorId = empty($newsDetails->author[0]) ? 466 : $newsDetails->author_id;
+        $authorId = empty($newsDetails->author) ? 466 : $newsDetails->author_id;
         $author_details = AuthorList::query()->find($authorId);
         // Fetch associated tags
-        $associatedTags = $tagTable::query()
-            ->where('content_id', $id)
-            ->where('content_type', 2)
-            ->pluck('tag_id');
-        // dd($tagTable);
-        $assocTags = $seoTagModel::query()
-            ->whereIn('tag_id', $associatedTags)
-            ->select('tag_id', 'name')
-            ->distinct()
-            ->get();
-
+        $assocTags = $newsDetails->ContentTagsAssigned;
         // Match franchises by article title using helper
         $franchiseData = FranchiseHelper::matchFranchisesByTitle($newsDetails->title);
-        $category = $newsDetails->category->first();
-        if ($category) {
-            $trendingArticles = $newsModel::with(['category', 'Subcategory'])
-                ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type', 'created_at', 'published_date')
-                ->withEffectiveDate()
-                ->where('status', 1)
-                ->where('cat_id', $newsDetails->category[0]->id)
-                ->whereNot('news_id', $id)
-                ->whereNotIn('news_type', ['ri', 'ir'])
-                ->orderByEffectiveDate('desc')
-                ->take(5)->get();
-        } else {
-            $trendingArticles = collect();
-        }
-        // dd($trendingArticles);
-        $latestArticles = $newsModel::with(['category', 'Subcategory'])
-            ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type', 'created_at', 'published_date')
+        $trendArticlesQuery = $newsModel::with(['category'])
+            ->select('news_id', 'cat_id', 'title', 'slug', 'insight_type', 'views', 'created_at', 'published_date')
             ->withEffectiveDate()
+            // ->whereEffectiveDate('>=', now()->subDays(22))
             ->where('status', 1)
+            ->where('cat_id', $newsDetails->cat_id)
             ->whereNot('news_id', $id)
             ->whereNotIn('news_type', ['ri', 'ir'])
-            ->where('insight_type', 'Article')
-            // ->orderByDesc('created_at')
             ->orderByEffectiveDate('desc')
             ->take(5)->get();
 
+        $trendArticles = $trendArticlesQuery->filter(function ($item) {
+            return $item->effective_date >= now()->subDays(15);
+        });
+
+        if ($trendArticles->isEmpty()) {
+            $trendArticles = $trendArticlesQuery;
+        }
+
+        $popArticlesQuery = $newsModel::popularArticles()->whereNot('news_id', $id)->limit(6);
+        $popArticles = (clone $popArticlesQuery)->whereEffectiveDate('>=', now()->subDays(15))->get();
+
+        if ($popArticles->isEmpty()) {
+            $popArticles = $popArticlesQuery->get();
+        }
+
+
         // Return view with compacted variables
-        return view('insights.detail', compact('newsDetails', 'author_details', 'franchiseData', 'assocTags', 'trendingArticles', 'latestArticles'));
+        return view('insights.detail', compact('newsDetails', 'author_details', 'franchiseData', 'assocTags', 'trendArticles', 'popArticles'));
+    }
+
+    // public function nextArticle(Request $request, $lang)
+    // {
+    //     $currentId = $request->get('currentId');
+    //     $categoryId = $request->get('categoryId');
+    //     $loadedIds = $request->get('loadedIds', []);
+    //     $direction = $request->get('direction', 'down'); // 'down' or 'up'
+    //     $locale = $lang;
+    //     app()->setLocale($locale);
+    //     session()->put('locale', $locale);
+
+    //     if (!$currentId || !$categoryId) {
+    //         return response()->json(['error' => 'Invalid parameters'], 400);
+    //     }
+
+    //     // Determine models based on locale
+    //     $newsModel = $locale === 'hi' ? InsightListHindi::class : InsightList::class;
+    //     // Get current article
+    //     $currentArticle = $newsModel::where('news_id', $currentId)->first();
+    //     if (!$currentArticle) {
+    //         return response()->json(['error' => 'Current article not found'], 404);
+    //     }
+
+    //     // Calculate effective date for current article (in PHP)
+    //     if (is_null($currentArticle->published_date)) {
+    //         $currentEffectiveDate = $currentArticle->created_at;
+    //     } elseif ($currentArticle->published_date < $currentArticle->created_at) {
+    //         $currentEffectiveDate = $currentArticle->created_at;
+    //     } elseif ($currentArticle->published_date == $currentArticle->created_at) {
+    //         $currentEffectiveDate = $currentArticle->created_at;
+    //     } elseif ($currentArticle->published_date > $currentArticle->created_at) {
+    //         $currentEffectiveDate = $currentArticle->published_date;
+    //     } else {
+    //         $currentEffectiveDate = $currentArticle->created_at;
+    //     }
+
+    //     // CASE expression for effective date (same as trait)
+    //     $caseExpr = "CASE 
+    //     WHEN published_date IS NULL THEN created_at
+    //     WHEN published_date < created_at THEN created_at
+    //     WHEN published_date = created_at THEN created_at
+    //     WHEN published_date > created_at THEN published_date
+    //     ELSE created_at  END";
+
+    //     // Build base query
+    //     $baseQuery = $newsModel::with(['category', 'Subcategory', 'author', 'ContentTagsAssigned.contentTag'])
+    //         ->where('cat_id', $categoryId)
+    //         ->where('status', 1)
+    //         ->whereNotIn('news_id', $loadedIds)
+    //         ->whereNotIn('news_type', ['ri', 'ir']);
+
+    //     $article = (clone $baseQuery)
+    //         ->whereRaw("$caseExpr > ?", [$currentEffectiveDate])
+    //         ->orderByRaw("$caseExpr desc")
+    //         ->first();
+
+    //     // Fallback: older articles (asc)
+    //     if (!$article) {
+    //         $article = (clone $baseQuery)
+    //             ->whereRaw("$caseExpr < ?", [$currentEffectiveDate])
+    //             ->orderByRaw("$caseExpr asc")
+    //             ->first();
+    //     }
+    //     // Increment views for the selected article
+    //     if ($article) {
+    //         $newsModel::where('news_id', $article->news_id)->increment('views');
+    //     }
+
+
+    //     // dd($article);
+    //     if (!$article) {
+    //         return response()->json(['success' => false, 'message' => 'No article available']);
+    //     }
+
+    //     $assocTags = $article->ContentTagsAssigned;
+
+    //     // Match franchises by article title using helper
+    //     $franchiseData = FranchiseHelper::matchFranchisesByTitle($article->title);
+
+    //     // Trending & Latest articles
+    //     $trendArticlesQuery = $newsModel::with(['category'])
+    //         ->select('news_id', 'cat_id', 'title', 'slug', 'insight_type', 'views', 'created_at', 'published_date')
+    //         ->withEffectiveDate()
+    //         ->where('status', 1)
+    //         ->where('cat_id', $categoryId)
+    //         ->whereNot('news_id', $currentId)
+    //         ->whereNotIn('news_type', ['ri', 'ir'])
+    //         ->orderByEffectiveDate('desc')
+    //         ->take(5)
+    //         ->get();
+    //     $trendArticles = $trendArticlesQuery->filter(function ($item) {
+    //         return $item->effective_date >= now()->subDays(15);
+    //     });
+
+    //     if ($trendArticles->isEmpty()) {
+    //         $trendArticles = $trendArticlesQuery;
+    //     }
+    //     // Popular Articles
+    //     $popArticlesQuery = $newsModel::popularArticles()
+    //         ->whereNot('news_id', $currentId)
+    //         ->limit(5);
+
+    //     $popArticles = (clone $popArticlesQuery)->whereEffectiveDate('>=', now()->subDays(15))->get();
+
+    //     if ($popArticles->isEmpty()) {
+    //         $popArticles = $popArticlesQuery->get();
+    //     }
+    //     // Prepare response data
+    //     $html = view('insights.partials.nextArticle', [
+    //         'nextArticle' => $article,
+    //         'franchiseData' => $franchiseData,
+    //         'assocTags' => $assocTags,
+    //         'trendArticles' => $trendArticles,
+    //         'popArticles' => $popArticles,
+    //         'lang' => $locale,
+    //         // add any other data your view needs
+    //     ])->render();
+
+    //     return response()->json([
+    //         'success' => true,
+    //         'html' => $html,
+    //         'newUrl' => route('insights.details', [
+    //             'locale' => $locale,
+    //             'insight_type' => strtolower($article->insight_type),
+    //             'slug' => $article->slug,
+    //             'id' => $article->news_id,
+    //         ]),
+    //         'nextUrl' => route('insights.nextArticle', [
+    //             'lang' => $locale,
+    //             'currentId' => $article->news_id,
+    //             'categoryId' => $categoryId,
+    //             'direction' => $direction,
+    //         ]),
+    //         'articleId' => $article->news_id,
+    //         'meta' => [
+    //             'title' => $article->title,
+    //             'description' => $article->shortDesc,
+    //             'keywords' => $article->shortDesc,
+    //         ],
+    //     ]);
+    // }
+    public function nextArticle(Request $request, $lang)
+    {
+        $currentId = $request->get('currentId');
+        $categoryId = $request->get('categoryId');
+        $loadedIds = (array) $request->get('loadedIds', []);
+
+        $newsModel = $lang === 'hi' ? InsightListHindi::class : InsightList::class;
+
+        // 1. Get the current article to find its "Effective Date" reference point
+        $currentArticle = $newsModel::where('news_id', $currentId)->first();
+        if (!$currentArticle) {
+            return response()->json(['error' => 'Current article not found'], 404);
+        }
+
+        // Use your existing logic to get the reference date
+        $currentRefDate = $currentArticle->published_date > $currentArticle->created_at
+            ? $currentArticle->published_date
+            : $currentArticle->created_at;
+
+        // The CASE expression for SQL
+        $caseExpr = "CASE 
+        WHEN published_date IS NULL THEN created_at
+        WHEN published_date > created_at THEN published_date
+        ELSE created_at END";
+        // Base columns for the query
+        $baseColumns = [
+            'news_id',
+            'insight_type',
+            'cat_id',
+            'subcat_id',
+            'title',
+            'shortDesc',
+            'content',
+            'image',
+            'img_alt',
+            'slug',
+            'views',
+            'status',
+            'author_id',
+            'published_date',
+            'created_at',
+        ];
+
+
+        // Base query for all potential "unseen" articles
+        $baseQuery = $newsModel::with(['category', 'Subcategory', 'author', 'ContentTagsAssigned.contentTag'])
+            ->select($baseColumns)
+            ->withEffectiveDate()
+            ->where('cat_id', $categoryId)
+            ->where('status', 1)
+            ->whereNotIn('news_id', $loadedIds)
+            ->whereNotIn('news_type', ['ri', 'ir']);
+
+        /**
+         * PRIORITY 1: Search UPWARD (Newer Articles)
+         * If user is on the 3rd latest, this finds the 2nd, then the 1st.
+         */
+        $article = (clone $baseQuery)
+            ->whereRaw("($caseExpr > ? OR ($caseExpr = ? AND news_id > ?))", [$currentRefDate, $currentRefDate, $currentId])
+            ->orderByRaw("$caseExpr ASC, news_id ASC") // Get the "oldest of the newer" ones
+            ->first();
+
+        /**
+         * PRIORITY 2: Search DOWNWARD (Older Articles)
+         * If no newer articles exist, start going down the timeline.
+         */
+        if (!$article) {
+            $article = (clone $baseQuery)
+                ->whereRaw("($caseExpr < ? OR ($caseExpr = ? AND news_id < ?))", [$currentRefDate, $currentRefDate, $currentId])
+                ->orderByRaw("$caseExpr DESC, news_id DESC") // Get the "newest of the older" ones
+                ->first();
+        }
+
+        if (!$article) {
+            return response()->json(['success' => false, 'message' => 'No more articles']);
+        }
+
+        if ($article) {
+            $newsModel::where('news_id', $article->news_id)->increment('views');
+        }
+        // dd($article);
+
+        $assocTags = $article->ContentTagsAssigned;
+
+        //  Trending & Latest articles
+        $trendArticlesQuery = $newsModel::with(['category'])
+            ->select('news_id', 'cat_id', 'title', 'slug', 'insight_type', 'views', 'created_at', 'published_date')
+            ->withEffectiveDate()
+            ->where('status', 1)
+            ->where('cat_id', $categoryId)
+            ->whereNot('news_id', $currentId)
+            ->whereNotIn('news_type', ['ri', 'ir'])
+            ->orderByEffectiveDate('desc')
+            ->take(5)
+            ->get();
+        $trendArticles = $trendArticlesQuery->filter(function ($item) {
+            return $item->effective_date >= now()->subDays(15);
+        });
+
+        if ($trendArticles->isEmpty()) {
+            $trendArticles = $trendArticlesQuery;
+        }
+        // Popular Articles
+        $popArticlesQuery = $newsModel::popularArticles()
+            ->whereNot('news_id', $currentId)
+            ->limit(5);
+
+        $popArticles = (clone $popArticlesQuery)->whereEffectiveDate('>=', now()->subDays(15))->get();
+
+        if ($popArticles->isEmpty()) {
+            $popArticles = $popArticlesQuery->get();
+        }
+
+        // dd($article->category->slug);
+        $categorySlug = strtolower($article->category->slug); // education | msme | ev 
+        $adCategoryMap = ['education' => 'Education', 'msme' => 'MSME', 'electric-vehicles' => 'EV',];
+        $adCategory = $adCategoryMap[$categorySlug] ?? 'Education';
+        $pageType = 'AS';
+        // Prepare response data
+        $html = view('insights.partials.nextArticle', [
+            'nextArticle' => $article,
+            'assocTags' => $assocTags,
+            'trendArticles' => $trendArticles,
+            'popArticles' => $popArticles,
+            'lang' => $lang,
+            'adCategory' => $adCategory,
+            'pageType' => $pageType
+        ])->render();
+
+        return response()->json([
+            'success' => true,
+            'html' => $html,
+            'newUrl' => route('insights.view', [
+                'locale' => $lang,
+                'insight_type' => strtolower($article->insight_type),
+                'slug' => $article->slug,
+                'id' => $article->news_id,
+            ]),
+            'nextUrl' => route('insights.nextArticle', [
+                'lang' => $lang,
+                'currentId' => $article->news_id,
+                'categoryId' => $categoryId,
+                // 'direction' => $direction,
+            ]),
+            'articleId' => $article->news_id,
+            'meta' => [
+                'title' => $article->title,
+                'description' => $article->shortDesc,
+                'keywords' => $article->shortDesc,
+            ],
+        ]);
     }
 
     public function insightSearch(Request $request)
@@ -714,20 +1041,18 @@ class InsightsController extends Controller
                 $query->where('title', 'LIKE', '%' . $search . '%');
             })
             ->whereNotIn('news_type', ['ir', 'ri'])
-            ->whereNotNull('image')
-            ->whereNotNull('cat_id');
-        $articlesList = $query->orderByEffectiveDate('desc')->paginate(10)->appends(['search' => $search]);
+            ->whereNotNull(['image', 'cat_id']);
+        $articlesList = $query->orderByEffectiveDate('desc')->paginate(15)->appends(['search' => $search]);
         $ids = $query->pluck('news_id');
 
-        $popArticles = $insightModel::with('category')
-            ->select('news_id', 'cat_id', 'title', 'slug', 'insight_type')
-            ->withEffectiveDate()
-            ->where('status', 1)
-            ->whereNotIn('news_type', ['ir', 'ri'])
-            ->whereNotNull('cat_id')
+        $popArticlesQuery = $insightModel::popularArticles()
             ->whereNotIn('news_id', $ids)
-            ->orderByEffectiveDate('desc')
-            ->limit(6)->get();
+            ->limit(6);
+        $popArticles = (clone $popArticlesQuery)->whereEffectiveDate('>=', now()->subDays(15))->get();
+
+        if ($popArticles->isEmpty()) {
+            $popArticles = $popArticlesQuery->get();
+        }
         // Return the view
         return view('insights.search', compact('articlesList', 'search', 'popArticles'));
     }
@@ -763,41 +1088,22 @@ class InsightsController extends Controller
             ->where('status', 1)
             ->whereNotIn('news_type', ['ri', 'ir'])
             ->whereNotNull(['image', 'cat_id'])
-            // ->orderByDesc('created_at')
             ->orderByEffectiveDate('desc')
             ->paginate(15);
 
-        $popArticles = $insightModel::with('category')
-            ->select('news_id', 'cat_id', 'title', 'slug', 'insight_type')
-            ->withEffectiveDate()
-            ->where('insight_type', 'Article')
-            ->where('status', 1)
-            ->whereNotIn('news_type', ['ri', 'ir'])
+        $popArticlesQuery = $insightModel::popularArticles()
             ->whereNotIn('news_id', $articleIds)
-            // ->orderByDesc('created_at')
-            ->orderByEffectiveDate('desc')
-            ->limit(6)
-            ->get();
+            ->limit(6);
+
+        $popArticles = (clone $popArticlesQuery)->whereEffectiveDate('>=', now()->subDays(15))->get();
+
+        if ($popArticles->isEmpty()) {
+            $popArticles = $popArticlesQuery->get();
+        }
 
         return $articlesList->isNotEmpty()
             ? view('insights.insightstags', compact('articlesList', 'seoTag', 'popArticles'))
             : redirect($redirectPath);
-    }
-
-
-
-    public static function calculateReadTime($obj)
-    {
-        // dd($obj);
-        /*Calculating length of total words*/
-        $totaltext = $obj->title . ' ' . $obj->content;
-
-        if (App::getLocale() == 'en') {
-            $articlelen = str_word_count($totaltext);
-        } else {
-            $articlelen = count(explode(' ', $totaltext));
-        }
-        return round($articlelen / 200);
     }
 
     public static function insightcategory($locale)
@@ -832,8 +1138,6 @@ class InsightsController extends Controller
 
         return $categories;
     }
-
-
     public function newslettersignup(Request $request)
     {
         // dd($request->all());
@@ -899,8 +1203,6 @@ class InsightsController extends Controller
             'status' => 'error',
         ]);
     }
-
-
     public function instasubsribe(Request $request)
     {
         // Validate input before checking database
@@ -965,67 +1267,6 @@ class InsightsController extends Controller
         }
     }
 
-
-    public function insightsubcategory(Request $request)
-    {
-        // Redirect if category or subcategory is 'kicker'
-        if (in_array($request->category, ['kicker']) || in_array($request->subcategory, ['kicker'])) {
-            return redirect('/insights');
-        }
-
-        $categorySlug = $request->category;
-        $subcategorySlug = $request->subcategory;
-        // $isEnglish = App::getLocale() == 'en';  // Check if the language is English
-        $isEnglish = request()->segment(2) == 'en' ? 'en' : 'hi';
-        $redirectPath = $isEnglish == 'en' ? '/insights' : '/insights/hindi';
-        app()->setLocale($isEnglish);
-        session()->put('locale', $isEnglish);
-        // Determine models based on the language (English or Hindi)
-        $insightListModel = $isEnglish ? InsightList::class : InsightListHindi::class;
-        $insightSubCatModel = $isEnglish ? InsightSubcategory::class : InsightsHindiSubCategory::class;
-        $insightCatModel = $isEnglish ? InsightCategory::class : InsightsHindiCategory::class;
-
-        // Fetch subcategory and category data
-        $subcatData = $insightSubCatModel::query()->where('slug', $subcategorySlug)->first();
-        if (!$subcatData) {
-            return redirect('/insights');  // Redirect if subcategory not found
-        }
-        // dd($subcatData);
-        $catData = $insightCatModel::query()
-            ->where('slug', $categorySlug)
-            ->where('id', $subcatData->mcat_id) // Ensure correct category based on subcategory
-            ->first();
-        // dd($catData);
-        if (!$catData) {
-            return redirect('/insights');
-        }
-
-        // Fetch content data for the selected subcategory
-        $contentData = $insightListModel::with(['author', 'category', 'subcategory'])
-            ->select('news_id', 'title', 'cat_id', 'subcat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at', 'published_date')
-            ->withEffectiveDate()
-            ->where('subcat_id', $subcatData->id)
-            ->whereNotIn('news_type', ['ri', 'ir'])
-            ->where('status', 1)
-            ->whereNotNull('image')
-            ->whereNotNull('cat_id')
-            ->whereNotNull('subcat_id')
-            ->orderByEffectiveDate('desc')
-            ->paginate(15);
-
-        $popArticles = $insightListModel::query()->select('news_id', 'title', 'cat_id', 'subcat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at', 'published_date')
-            ->with('category')
-            ->withEffectiveDate()
-            ->where('insight_type', 'Article')
-            ->where('status', 1)
-            ->whereNotIn('news_type', ['ri', 'ir'])
-            ->orderByEffectiveDate('desc')
-            ->take(6)->get();
-        // dd()
-
-        return view('insights.subcatdata', compact('contentData', 'subcatData', 'catData', 'popArticles'));
-    }
-
     public function getVideoPodcast(Request $request)
     {
         // Determine the language based on the URL segment
@@ -1036,8 +1277,6 @@ class InsightsController extends Controller
         // Determine models based on the language (English or Hindi)
         $insightListModel = $isEnglish ? InsightList::class : InsightListHindi::class;
         // Set application locale and session locale
-        app()->setLocale($isEnglish);
-        session()->put('locale', $isEnglish);
 
         $YOUTUBE_IMAGE_PATH = "https://img.youtube.com/vi/%s/mqdefault.jpg";
         $YOUTUBE_URL = "https://www.youtube.com/watch?v=%s";
@@ -1077,19 +1316,16 @@ class InsightsController extends Controller
             ->limit(4)
             ->get();
 
-        $popArticles = $insightListModel::query()->select('news_id', 'title', 'cat_id', 'subcat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at', 'published_date')
-            ->with('category')
-            ->withEffectiveDate()
-            ->where('insight_type', 'Article')
-            ->where('status', 1)
-            ->whereNotIn('news_type', ['ri', 'ir'])
-            ->orderByEffectiveDate('desc')
-            ->take(6)->get();
+        $popArticlesQuery = $insightListModel::popularArticles()->limit(6);
+
+        $popArticles = (clone $popArticlesQuery)->whereEffectiveDate('>=', now()->subDays(15))->get();
+
+        if ($popArticles->isEmpty()) {
+            $popArticles = $popArticlesQuery->get();
+        }
         // Return the view with the mapped videos and podcasts
         return view('insights.video', compact('listVideo', 'videos', 'podcast', 'popArticles'));
     }
-
-
 
     public function getpodcast(Request $request)
     {
@@ -1107,108 +1343,14 @@ class InsightsController extends Controller
             $podcastcount = FihlPodcastVideo::query()->where('podcast_type', 'A')->where('pod_lang', 'hi')->where('status', 'A')->where('podcast_id', '!=', '')->count();
         }
 
-        $popArticles = $insightListModel::query()->select('news_id', 'title', 'cat_id', 'subcat_id', 'slug', 'content', 'shortDesc', 'insight_type', 'views', 'author_id', 'image', 'created_at', 'published_date')
-            ->with('category')
-            ->withEffectiveDate()
-            ->where('insight_type', 'Article')
-            ->where('status', 1)
-            ->whereNotIn('news_type', ['ri', 'ir'])
-            ->orderByEffectiveDate('desc')
-            ->take(6)->get();
+        $popArticlesQuery = $insightListModel::popularArticles()
+            ->limit(6);
+        $popArticles = (clone $popArticlesQuery)->whereEffectiveDate('>=', now()->subDays(15))->get();
 
+        if ($popArticles->isEmpty()) {
+            $popArticles = $popArticlesQuery->get();
+        }
         return view('insights.podcast', compact('podcasts', 'podcastcount', 'popArticles'));
-    }
-
-    public static function createTagSlugUrl($slug)
-    {
-        // dd($slug);
-        $url = '';
-        if (App::getLocale() == 'hi') $url .= "/insights/hi";
-        if (App::getLocale() == 'en') $url .= "/insights/en";
-        $url .= "/" . $slug;
-        return $url;
-    }
-
-    public static function createimgurl($image)
-    {
-        // dd($image);
-        // Default image URL
-        $defaultUrl = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/content/fi/int/5ff40e6aaa3da.jpeg';
-
-        if (!$image) {
-            return $defaultUrl;
-        }
-
-        // If the image is an absolute URL (contains 'https')
-        if (strstr($image, 'https')) {
-            return trim($image, '/');
-        }
-
-        $baseUrl = Config('constants.franAwsS3Url');
-        $imagePath = ltrim($image, '/'); // Clean the image path
-
-        // Check if the image contains a "/"
-        if (strstr($image, '/')) {
-            return $baseUrl . $imagePath;
-        }
-
-        // Set path based on locale
-        $uploadPath = App::getLocale() !== 'en'
-            ? Config('constants.ARTICLE_HINDI_UPLOAD_PATH')
-            : Config('constants.ARTICLE_UPLOAD_PATH');
-
-        return $baseUrl . $uploadPath . $imagePath;
-    }
-
-    public static function createimgurl1($image, $lang)
-    {
-        // dd($image,$lang);
-        // Default image URL
-        $defaultUrl = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/content/fi/int/5ff40e6aaa3da.jpeg';
-
-        if (!$image) {
-            return $defaultUrl;
-        }
-
-        // If the image is an absolute URL (contains 'https')
-        if (strstr($image, 'https')) {
-            return trim($image, '/');
-        }
-
-        $baseUrl = Config('constants.franAwsS3Url');
-        $imagePath = ltrim($image, '/'); // Clean the image path
-
-        // Check if the image contains a "/"
-        if (strstr($image, '/')) {
-            return $baseUrl . $imagePath;
-        }
-
-        // Set path based on locale
-        $uploadPath = $lang !== 'en'
-            ? Config('constants.ARTICLE_HINDI_UPLOAD_PATH')
-            : Config('constants.ARTICLE_UPLOAD_PATH');
-
-        return $baseUrl . $uploadPath . $imagePath;
-    }
-
-    public static function authorImageurl($image)
-    {
-        $defaultUrl = url('images/defaultuser.png');
-
-        if (!$image) {
-            return $defaultUrl;
-        }
-
-        // Check if the image contains a "/"
-        if (strstr($image, "/")) {
-            return Config('constants.franAwsS3Url') . ltrim($image, '/');
-        }
-
-        // Check if the image exists on S3
-        $imagePath = 'opp/authors/images/' . trim($image);
-        $s3Url = Config('constants.franAwsS3Url') . $imagePath;
-
-        return @getimagesize($s3Url) !== false ? $s3Url : $defaultUrl;
     }
 
     public function exportInsights()
@@ -1290,151 +1432,6 @@ class InsightsController extends Controller
         return response()->stream($callback, 200, [
             "Content-Type" => "text/csv",
             "Content-Disposition" => "attachment; filename=\"$filename\"",
-        ]);
-    }
-
-    public function nextArticle(Request $request, $lang)
-    {
-        $currentId = $request->get('currentId');
-        $categoryId = $request->get('categoryId');
-        $loadedIds = $request->get('loadedIds', []);
-        $direction = $request->get('direction', 'down'); // 'down' or 'up'
-        $locale = $lang;
-        app()->setLocale($locale);
-        session()->put('locale', $locale);
-
-        if (!$currentId || !$categoryId) {
-            return response()->json(['error' => 'Invalid parameters'], 400);
-        }
-
-        // Determine models based on locale
-        $newsModel = $locale === 'hi' ? InsightListHindi::class : InsightList::class;
-        $tagTable = $locale === 'hi' ? ContentTagsAssignedHindi::class : ContentTagsAssigned::class;
-        $seoTagModel = $locale === 'hi' ? SeoTagHindi::class : SeoTag::class;
-        // Get current article
-        $currentArticle = $newsModel::where('news_id', $currentId)->first();
-        if (!$currentArticle) {
-            return response()->json(['error' => 'Current article not found'], 404);
-        }
-
-        // Calculate effective date for current article (in PHP)
-        if (is_null($currentArticle->published_date)) {
-            $currentEffectiveDate = $currentArticle->created_at;
-        } elseif ($currentArticle->published_date < $currentArticle->created_at) {
-            $currentEffectiveDate = $currentArticle->created_at;
-        } elseif ($currentArticle->published_date == $currentArticle->created_at) {
-            $currentEffectiveDate = $currentArticle->created_at;
-        } elseif ($currentArticle->published_date > $currentArticle->created_at) {
-            $currentEffectiveDate = $currentArticle->published_date;
-        } else {
-            $currentEffectiveDate = $currentArticle->created_at;
-        }
-
-        // CASE expression for effective date (same as trait)
-        $caseExpr = "CASE 
-        WHEN published_date IS NULL THEN created_at
-        WHEN published_date < created_at THEN created_at
-        WHEN published_date = created_at THEN created_at
-        WHEN published_date > created_at THEN published_date
-        ELSE created_at  END";
-
-        // Build base query
-        $baseQuery = $newsModel::with(['category', 'Subcategory', 'author'])
-            ->where('cat_id', $categoryId)
-            ->where('status', 1)
-            ->whereNotIn('news_id', $loadedIds)
-            ->whereNotIn('news_type', ['ri', 'ir']);
-
-        $article = (clone $baseQuery)
-            ->whereRaw("$caseExpr > ?", [$currentEffectiveDate])
-            ->orderByRaw("$caseExpr desc")
-            ->first();
-
-        // Fallback: older articles (asc)
-        if (!$article) {
-            $article = (clone $baseQuery)
-                ->whereRaw("$caseExpr < ?", [$currentEffectiveDate])
-                ->orderByRaw("$caseExpr asc")
-                ->first();
-        }
-        // Increment views for the selected article
-        if ($article) {
-            $newsModel::where('news_id', $article->news_id)->increment('views');
-        }
-
-
-        // dd($article);
-        if (!$article) {
-            return response()->json(['success' => false, 'message' => 'No article available']);
-        }
-
-        // Optional: SEO Tags (for future use or analytics)
-        $associatedTags = $tagTable::where('content_id', $currentId)
-            ->where('content_type', 2)
-            ->pluck('tag_id');
-
-        $assocTags = $seoTagModel::whereIn('tag_id', $associatedTags)
-            ->select('tag_id', 'name')
-            ->distinct()
-            ->get();
-
-        // ✅ Match franchises by article title using helper
-        $franchiseData = FranchiseHelper::matchFranchisesByTitle($article->title);
-
-        // ✅ Trending & Latest articles
-        $trendingArticles = $newsModel::with(['category', 'Subcategory'])
-            ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
-            ->withEffectiveDate()
-            ->where('status', 1)
-            ->where('cat_id', $categoryId)
-            ->whereNot('news_id', $currentId)
-            ->whereNotIn('news_type', ['ri', 'ir'])
-            ->orderByEffectiveDate('desc')
-            ->take(5)
-            ->get();
-
-        $latestArticles = $newsModel::with(['category', 'Subcategory'])
-            ->select('news_id', 'cat_id', 'subcat_id', 'title', 'slug', 'insight_type')
-            ->withEffectiveDate()
-            ->where('status', 1)
-            ->whereNot('news_id', $currentId)
-            ->where('insight_type', 'Article')
-            ->whereNotIn('news_type', ['ri', 'ir'])
-            ->orderByEffectiveDate('desc')
-            ->take(5)
-            ->get();
-
-        // Prepare response data
-        $html = view('insights.partials.nextArticle', [
-            'nextArticle' => $article,
-            'franchiseData' => $franchiseData,
-            'assocTags' => $assocTags,
-            'trendingArticles' => $trendingArticles,
-            'latestArticles' => $latestArticles,
-            'lang' => $lang,
-            // add any other data your view needs
-        ])->render();
-
-        return response()->json([
-            'success' => true,
-            'html' => $html,
-            'newUrl' => route('insights.view', [
-                'insight_type' => strtolower($article->insight_type),
-                'slug' => $article->slug,
-                'id' => $article->news_id,
-            ]),
-            'nextUrl' => route('insights.nextArticle', [
-                'lang' => $lang,
-                'currentId' => $article->news_id,
-                'categoryId' => $categoryId,
-                'direction' => $direction,
-            ]),
-            'articleId' => $article->news_id,
-            'meta' => [
-                'title' => $article->title,
-                'description' => $article->shortDesc,
-                'keywords' => $article->shortDesc,
-            ],
         ]);
     }
 }

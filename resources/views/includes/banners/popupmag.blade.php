@@ -93,7 +93,6 @@ float: left;
 <div class="dot-bod"></div>
 <div class="sp10"></div>
 <form id="update" method="post" action="{{Config::get('constants.MainDomain')}}/newslettersignup">
-    {{-- @csrf --}}
 <input type="hidden" name="site_type" value="fi">
 <input  required  name="email"   value="" placeholder="Enter your Email Id" type="email" >
 <input type="submit" value="Subscribe Now" class="newsletter-btn fl"  id="btnupdate"/>
@@ -108,9 +107,9 @@ You can unsubscribe anytime</p>
 </div>
 <div class="fi-wel-pop-ri8">
 <!--<img src="http://www.franchiseindia.com/images/50-off.png" style="position:absolute; left:0; top:0; z-index:99999" />-->
-<a href="https://master.franchiseindia.com/emagazine/" target="_blank">
+<a href="https://master.franchiseindia.com/magazine-subscribe/" target="_blank">
     <img src="https://www.franchiseindia.com/images/magazine/tfw-165x225.jpg" alt="magazine sme"/></a>
-<a href="https://master.franchiseindia.com/emagazine/" class="fi-subsc" target="_blank">Subscribe Magazine</a>
+<a href="https://master.franchiseindia.com/magazine-subscribe/" class="fi-subsc" target="_blank">Subscribe Magazine</a>
 </div>
 </div>
 </div>

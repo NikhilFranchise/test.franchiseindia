@@ -10,4 +10,9 @@ class ContentTagsAssignedHindi extends Model
     use HasFactory;
     public $table      = 'content_tags_assigned_hindi';
     public $primarykey = 'assigned_tag_id';
+
+    public function contentTag()
+    {
+        return $this->belongsTo(SeoTagHindi::class, 'tag_id', 'tag_id');
+    }
 }

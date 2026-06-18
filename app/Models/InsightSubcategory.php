@@ -19,6 +19,6 @@ class InsightSubcategory extends Model
 
     public function category()
     {
-        return $this->hasMany(InsightCategory::class, 'id','mcat_id');
+        return $this->belongsTo(InsightCategory::class, 'mcat_id', 'id');
     }
 }

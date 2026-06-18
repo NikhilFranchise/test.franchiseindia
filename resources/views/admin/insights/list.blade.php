@@ -160,6 +160,9 @@
 @section('content')
     @php
         $language = $lang == 'en' ? 'English' : 'Hindi';
+        $user = Auth::guard('admin')->user();
+        $author = $user->author;
+        $canManage = in_array($user->admin_role, ['admin', 'manager']);
     @endphp
     <!--breadcrumbs-->
     <div id="content-header">
@@ -180,35 +183,59 @@
             <a href="{{ route('insights.create', ['lang' => $lang]) }}" class="greens float-right btn btn-md btn-success">
                 <i class="fa fa-plus-circle"></i>{{ ' Add ' . $language . ' Insights' }}
             </a>
-            <form method="get">
-                <input type="text" name="search"class="span7" placeholder="Enter Title or Insights Id to search"
+            <form method="get" action="{{ route('insights.list', ['lang' => $lang]) }}">
+                <input type="text" name="search" class="span7" placeholder="Enter Title or Insights Id to search"
                     @if (!empty(request()->search)) value="{{ request()->search }}" @endif />
-                @if (!empty(request()->search))
-                    <select name="type" class="span" onchange="this.form.submit()">
-                        <option value="">Insight Types</option>
-                        @foreach ($insightTypes as $insightType)
-                            <option value="{{ $insightType }}"
-                                {{ request()->query('type') == $insightType ? 'selected' : '' }}>
-                                {{ $insightType }}
+
+                <select name="type" class="span7" onchange="this.form.submit()" style="width:160px;">
+                    <option value="">Select Insight Type</option>
+                    @foreach ($insightTypes as $insightType)
+                        <option value="{{ $insightType }}"
+                            {{ request()->query('type') == $insightType ? 'selected' : '' }}>{{ $insightType }}</option>
+                    @endforeach
+                </select>
+
+                <select name="category" class="span7" onchange="this.form.submit()" style="width:150px;">
+                    <option value="">Select Category</option>
+                    @foreach ($InsightsCategory as $cat)
+                        <option value="{{ $cat->id }}"
+                            {{ request()->query('category') == $cat->id ? 'selected' : '' }}>
+                            {{ $cat->catname }}
+                        </option>
+                    @endforeach
+                </select>
+
+                <select id="authorFilter" name="author" onchange="this.form.submit()" class="span7"
+                    style="width:130px; font-size:13px;">
+                    <option value="">All Authors</option>
+
+                    @if ($canManage)
+                        {{-- Show all authors for admin/manager --}}
+                        @foreach ($Authors as $item)
+                            <option value="{{ $item->author_id }}"
+                                {{ request('author') == $item->author_id ? 'selected' : '' }}>
+                                {{ $item->title }}
                             </option>
                         @endforeach
-                    </select>
-                    <select name="category" onchange="this.form.submit()">
-                        <option value="">Insights Category</option>
-                        @foreach ($InsightsCategory as $cat)
-                            <option value="{{ $cat->id }}"
-                                {{ request()->query('category') == $cat->id ? 'selected' : '' }}>
-                                {{ $cat->catname }}
-                            </option>
-                        @endforeach
-                    </select>
-                @endif
-                <input type="submit" class="btn btn-secondary"
-                    value="Search"style="margin-top: -12px; margin-left: 10px; width: 110px;" />
-                <a href="{{ route('insights.list', ['lang' => $lang]) }}"
-                    class="btn btn-secondary"style="margin-top: -12px;">Reset
-                    Search</a>
+                    @else
+                        {{-- Show only current author --}}
+                        <option value="{{ $author->author_id }}"
+                            {{ request('author') == $author->author_id ? 'selected' : '' }}>
+                            {{ $author->title }}
+                        </option>
+                    @endif
+                </select>
+                {{-- <input type="date" name="fromDate" id="fromDate" placeholder="From Date">
+                <input type="date" name="toDate" id="toDate" placeholder="To Date"> --}}
+                <input type="submit" class="btn btn-secondary" value="Search"
+                    style="margin-top: -12px; margin-left: 10px; width: 110px;" />
+
+                <a href="{{ route('insights.list', ['lang' => $lang]) }}" class="btn btn-secondary"
+                    style="margin-top: -12px;">
+                    Reset
+                </a>
             </form>
+
         </div>
     </div>
     <div class="container-fluid">
@@ -222,18 +249,20 @@
                 </ul>
 
                 <div class="widget-box">
-                    <div class="widget-title"> <span class="icon"><i class="fa fa-newspaper"></i></span>
-                        @if (request()->query('search'))
+                    <div class="widget-title d-flex justify-content-between align-items-center">
+                        <span class="icon"><i class="fa fa-newspaper"></i></span>
+                        @if (request()->search || request()->type || $categoryName || $authorName)
                             <h5>Displaying {{ $totalRecords }} records for the search term
-                                '<strong>{{ request()->query('search') }}</strong>'.</h5>
+                                '<strong>
+                                    {{ request()->search ? 'Search: ' . request()->search : '' }}
+                                    {{ request()->type ? ' | Type: ' . request()->type : '' }}
+                                    {{ $categoryName ? ' | Category: ' . $categoryName : '' }}
+                                    {{ $authorName ? ' | Author: ' . $authorName : '' }}
+                                </strong>'.</h5>
                         @else
                             <h5>Showing a total of {{ $totalRecords }} records.</h5>
                         @endif
-                        @php
-                            $user = Auth::guard('admin')->user();
-                            $author = $user->author;
-                            $canManage = in_array($user->admin_role, ['admin', 'manager']);
-                        @endphp
+
                         @if ($canManage)
                             <div style="padding-top: 3px; float: right; margin-right: 3px;">
                                 <a href="{{ request()->fullUrlWithQuery(['export' => 1]) }}" class="btn btn-secondary"><i
@@ -256,8 +285,9 @@
                                 <tr>
                                     <th rowspan="2">Id</th>
                                     <th rowspan="2">Title</th>
-                                    <th rowspan="2">Insights Type</th>
-                                    <th rowspan="2">Views</th>
+                                    <th rowspan="2">Insights Type/ (Views)</th>
+                                    {{-- <th rowspan="2">Views</th> --}}
+                                    <th rowspan="2">Author</th>
                                     <th colspan="2">Date</th>
                                     <th colspan="4">Action</th>
                                 </tr>
@@ -271,7 +301,9 @@
                                 </tr>
                             </thead>
                             <tbody id="tablecontent">
-                                @foreach ($data as $insights)
+                                @forelse ($data as $insights)
+                                    {{-- @foreach ($data as $insights) --}}
+                                    {{-- @dd($insights->author->first()); --}}
                                     @php
                                         $slug = !empty($insights->slug) ? $insights->slug : Str::slug($insights->title);
                                         $url =
@@ -297,8 +329,10 @@
                                         <td>{{ $insights->news_id }}</td>
                                         <td>{{ $insights->title }}</td>
                                         <td>{{ empty($insights->insight_type) ? 'No Insights Type' : $insights->insight_type }}
+                                            / {{ '(' . $insights->views . ')' }}
                                         </td>
-                                        <td>{{ $insights->views }}</td>
+                                        {{-- <td>{{ $insights->views }}</td> --}}
+                                        <td>{{ $insights->author->title ?? '' }}</td>
                                         <td>{{ date('d-m-Y', strtotime($insights->created_at)) }}</td>
                                         <td>{{ date('d-m-Y', strtotime($date)) }}</td>
                                         <td><a href="{{ $url }}" target="_blank" class="btn btn-secondary">
@@ -362,8 +396,8 @@
                                         <td>
                                             <center>
                                                 @if ($canEditDelete)
-                                                    <button class="btn btn-danger deleteInsight" style="border-radius: 4px"
-                                                        data-value="{{ $insights->news_id }}"
+                                                    <button class="btn btn-danger deleteInsight"
+                                                        style="border-radius: 4px" data-value="{{ $insights->news_id }}"
                                                         data-type="{{ $insights->insight_type }}" title="Delete Article">
                                                         <i class="fa fa-trash-alt"></i>
                                                     </button>
@@ -378,12 +412,18 @@
                                             </center>
                                         </td>
                                     </tr>
-                                @endforeach
+                                    {{-- @endforeach --}}
+                                @empty
+                                    <tr>
+                                        <td colspan="11" style="text-align: center;">Records not found.</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
                     <div class="custpagin">
-                        {{ $data->appends(request()->query())->links('pagination::bootstrap-4') }}</div>
+                        {{ $data->appends(request()->query())->links('pagination::bootstrap-4') }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -533,7 +573,7 @@
             </script>
         @endif
 
-        {{--  Error Messages (validation or manual) --}}
+        {{-- Error Messages (validation or manual) --}}
         @if (session('error'))
             <script>
                 Swal.fire({

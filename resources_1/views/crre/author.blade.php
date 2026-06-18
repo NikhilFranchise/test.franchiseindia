@@ -1,0 +1,290 @@
+@extends('layout.crre.master')
+@section('author-schema')
+    @include('crre.author_schema', ['author' => $author])
+@endsection
+@section('content')
+    <div class="maininnver homeh">
+        <div class="inner-top-head">
+            <div class="container">
+                <h1>{{ 'Author' }}</h1>
+            </div>
+        </div>
+        <div class="container">
+            {{-- <div class="authblk">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url('/crre') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url('/crre/author') }}">Author</a></li>
+                    <li class="breadcrumb-item">{{ $author->title }}</li>
+                </ul>
+            </div> --}}
+            <x-breadcrumb :items="[
+                ['label' => 'Home', 'url' => url('/crre')],
+                ['label' => 'Author', 'url' => url('/crre/author')],
+                ['label' => $author->title],
+            ]" />
+        </div>
+        {{-- author section start here --}}
+        <div class="author-top-new">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="author-new-wrap">
+                            <div class="author-new-wrap-left">
+                                <div class="author-left-thumb">
+                                    <img src="{{ authorImageUrl($author->image) }}" alt="{{ $author->title }}"
+                                        class="img-fluid" />
+                                </div>
+                                <div class="author-left-nam">{{ $author->title }}</div>
+                                <div class="author-left-des">{{ $author->designation }}</div>
+                                <div class="author-left-count">
+                                    <span id="acount">{{ $articleCount }}</span> Stories
+                                </div>
+                                <div class="follows">Follow:</div>
+                                <div class="author-left-soc">
+                                    {{-- @dd($author); --}}
+                                    <ul>
+                                        @if (!empty($author->facebook_profile))
+                                            <li>
+                                                <a href="{{ $author->facebook_profile }}" target="_blank"><img
+                                                        src="{{ url('/insight-new/images/social/facebook.jpg') }}" /></a>
+                                            </li>
+                                        @endif
+                                        @if (!empty($author->linkedin_profile))
+                                            <li>
+                                                <a href="{{ $author->linkedin_profile }}" target="_blank"><img
+                                                        src="{{ url('/insight-new/images/social/linkedin.jpg') }}" /></a>
+                                            </li>
+                                        @endif
+                                        @if (!empty($author->twitter_profile))
+                                            <li>
+                                                <a href="{{ $author->twitter_profile }}" target="_blank"><img
+                                                        src="{{ url('/insight-new/images/social/twitter.jpg') }}" /></a>
+                                            </li>
+                                        @endif
+                                        @if (!empty($author->emailid))
+                                            <li>
+                                                <a href="mailto:{{ $author->emailid }}" target="_blank">
+                                                    <img src="{{ url('/insight-new/images/social/mail.jpg') }}" />
+                                                </a>
+                                            </li>
+                                        @endif
+                                        @if (!empty($author->insta_profile))
+                                            <li>
+                                                <a href="{{ $author->insta_profile }}" target="_blank"><img
+                                                        src="{{ url('/insight-new/images/social/instagram.jpg') }}" /></a>
+                                            </li>
+                                        @endif
+                                        <li>
+                                            <a href="" target="_blank"><img
+                                                    src="{{ url('/insight-new/images/social/rss.jpg') }}" /></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="author-new-wrap-right">
+                                <div class="author-left-nam-desc">{{ $author->title }}</div>
+                                <div class="articlecontent">
+                                    @php
+                                        $custom_data = explode("\r\n", $author->text);
+                                        if (count($custom_data) == 1) {
+                                            $articleData[0] = $custom_data[0] . '<div id="v-franchiseindia"></div>';
+                                        } else {
+                                            $counter = 0;
+                                            foreach ($custom_data as $cdata) {
+                                                if ($counter == 2) {
+                                                    $articleData[] = $cdata . '<div id="v-franchiseindia"></div>';
+                                                } else {
+                                                    $articleData[] = $cdata;
+                                                }
+                                                $counter++;
+                                            }
+                                        }
+                                        $resultArticle = implode("\r\n", $articleData);
+                                    @endphp
+                                    {!! $resultArticle !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- author section end here --}}
+        {{-- stories section start here --}}
+        <div class="stories">
+            <div class="container">
+                <h3>Stories From The Author</h3>
+                <div class="row">
+                    <div class="col-md-8">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#latest" data-toggle="tab" class="active">LATEST</a>
+                            </li>
+                            <li><a href="#viewed" data-toggle="tab">MOST VIEWED</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            {{-- latest stories section start here --}}
+                            <div class="tab-pane active stab" id="latest">
+                                {{-- <ul>
+                                    @forelse ($latestArticles as $latest)
+                                        @php
+                                            $image = \App\Http\Controllers\InsightsController::createimgurl1(
+                                                $latest->image,
+                                                $latest->lang,
+                                            );
+                                            $latestArticleURL =
+                                                Config('constants.MainDomain') .
+                                                "/insights/{$latest->lang}/" .
+                                                strtolower($latest->insight_type) .
+                                                "/{$latest->slug}.{$latest->news_id}";
+                                        @endphp
+                                        <li>
+                                            <div class="author-fresh">
+                                                <div class="author-latest-pic">
+                                                    <a href="{{ $latestArticleURL }}"><img src="{{ $image }}"
+                                                            alt="{{ $latest->title }}" class="img-fluid" /></a>
+                                                </div>
+                                                <div class="author-fresh-cont">
+                                                    <div class="author-latest-title">
+                                                        <a href="{{ $latestArticleURL }}">{{ $latest->title }}</a>
+                                                    </div>
+                                                    <p>{!! html_entity_decode(\Illuminate\Support\Str::words($latest->shortDesc, 22, ' ...')) !!}</p>
+                                                    <ul class="art-detail-read">
+                                                        <li>
+                                                            By - <a href=""
+                                                                hreflang="{{ $latest->lang }}">{{ $author->title }}</a>
+                                                        </li>
+                                                        <li><time datetime="33Z" class="datetime">
+                                                                @if ($latest->created_at >= $latest->published_date)
+                                                                    {{ date('M d, Y', strtotime($latest->created_at)) }}
+                                                                @else
+                                                                    {{ 'Last Updated ' . date('M d, Y', strtotime($latest->published_date)) }}
+                                                                @endif
+                                                            </time>/
+                                                            {{ app\Http\Controllers\InsightsController::calculateReadTime($latest) }}
+                                                            MIN READ
+                                                        </li>
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @empty
+                                        <p>No Records</p>
+                                    @endforelse
+                                </ul> --}}
+                                <x-article-list>
+                                    @foreach ($latestArticles as $article)
+                                        <x-article-list-item :article="$article" :locale="$article->locale" />
+                                    @endforeach
+                                </x-article-list>
+                                <div class="video-pagination">
+                                    {{ $latestArticles->links('pagination::bootstrap-5') }}
+                                </div>
+                            </div>
+                            {{-- latest stories section end here --}}
+                            {{-- most viewd stories section start here --}}
+                            <div class="tab-pane stab" id="viewed">
+                                <x-article-list>
+                                    @foreach ($mostViewedArticles as $article)
+                                        <x-article-list-item :article="$article" :locale="$article->locale" />
+                                    @endforeach
+                                </x-article-list>
+                                <div class="video-pagination">
+                                    {{ $mostViewedArticles->links('pagination::bootstrap-5') }}
+                                </div>
+                            </div>
+                            {{-- most viewed section end here --}}
+                        </div>
+                        @include('layout.crre.subscribenewsletter')
+                    </div>
+                    {{-- stories section end here --}}
+                    <div class="col-md-4">
+                        {{-- ads section start here --}}
+                        <div class="ad-right-author">
+                            <div id='adslot300x250_ATF'>
+                                <script>
+                                    googletag.cmd.push(function() {
+                                        googletag.display('adslot300x250_ATF');
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        {{-- ads section end here --}}
+                        {{-- popular articles section start here --}}
+                        <div class="popular-articles">
+                            <div class="popular-title">Trending Articles</div>
+                            <div class="region region-home-top-right">
+                                <div class="views-element-container block block-views block-views-blockhome-popular-article-block-1"
+                                    id="block-views-block-home-popular-article-block-1">
+                                    <div>
+                                        <div
+                                            class="view view-home-popular-article view-id-home_popular_article view-display-id-block_1 js-view-dom-id-6a2452a8ce2f8feb7da0fe5ec0f3923833a854ba903445838953e863b8550fbd">
+                                            <div class="view-content">
+                                                <div>
+                                                    <ul class="popular-list">
+                                                        {{-- @forelse($popularArticles as $popular)
+                                                            @php
+                                                                $popArticleURL =
+                                                                    Config('constants.MainDomain') .
+                                                                    "/crre/{$popular->lang}/" .
+                                                                    strtolower($popular->insight_type) .
+                                                                    "/{$popular->slug}.{$popular->news_id}";
+                                                            @endphp
+                                                            <li>
+                                                                @foreach ($popular->category as $cat)
+                                                                    @php
+                                                                        $catURL =
+                                                                            Config('constants.MainDomain') .
+                                                                            "/crre/{$popular->lang}/{$cat->slug}";
+                                                                    @endphp
+                                                                    <div class="popular-sub">
+                                                                        <a href="{{ $catURL }}"
+                                                                            hreflang="{{ $popular->lang }}">{{ $cat->catname }}</a>
+                                                                    </div>
+                                                                @endforeach
+                                                                <div class="popular-head">
+                                                                    <a
+                                                                        href="{{ $popArticleURL }}">{{ $popular->title }}</a>
+                                                                </div>
+                                                            </li>
+                                                        @empty
+                                                            <p>No Recods</p>
+                                                        @endforelse --}}
+                                                        @foreach ($popularArticles as $popular)
+                                                            <x-popular-item :popular="$popular" :locale="App::getLocale()" />
+                                                        @endforeach
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- popular articles section end here --}}
+                        {{-- ads section start here --}}
+                        <div class="ad-right-sticky">
+                            <div id="adslot300x250_1">
+                                <script>
+                                    googletag.cmd.push(function() {
+                                        googletag.display('adslot300x250_1');
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                        {{-- ads section end here --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        @include('layout.crre.magblock')
+        <div class="listblk">
+            <div class="container">
+                <ul class="artilsit"></ul>
+            </div>
+        </div>
+    </div>
+@endsection

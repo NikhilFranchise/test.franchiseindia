@@ -10,9 +10,4 @@ class RegionalFranchisorSliderTenure extends Model
 {
     use HasFactory;
     protected $table = "regional_fran_slider_tenure";
-
-    public function franchisor()
-    {
-        return $this->belongsTo(FranchisorBusinessDetail::class, 'franchisor_id', 'franchisor_id');
-    }
 }

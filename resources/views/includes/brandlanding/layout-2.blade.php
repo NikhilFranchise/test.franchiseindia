@@ -233,57 +233,6 @@
     </tbody>
 </table>
 </div>
-            {{-- <ul>
-                @php
-                    $area = $franDetails->prop_area_min . ' - ' . $franDetails->prop_area_max . ' Sq.ft';
-
-                    if (empty($franDetails->prop_area_max)) {
-                        $area = $franDetails->prop_area_min;
-                    }
-                    if (is_numeric($franDetails->prop_area_min) && empty($franDetails->prop_area_max)) {
-                        $area = $franDetails->prop_area_min . ' Sq.ft';
-                    }
-                    if (empty($franDetails->prop_area_min)) {
-                        $area = '-N/A-';
-                    }
-
-                    $minValue = $franDetails->unit_inv_min;
-                    if ($minValue < 100000 && $minValue > 10000) {
-                        $minValue = substr($minValue / 1000, 0, 5) . ' K';
-                    }
-
-                    if ($minValue <= 9999999 && $minValue > 100000) {
-                        $minValue = substr($minValue / 100000, 0, 5) . ' Lakh';
-                    }
-
-                    if ($minValue > 9999999) {
-                        $minValue = substr($minValue / 10000000, 0, 5) . ' Cr';
-                    }
-
-                    $maxValue = $franDetails->unit_inv_max;
-                    if ($maxValue < 100000 && $maxValue > 10000) {
-                        $maxValue = substr($maxValue / 1000, 0, 5) . ' K';
-                    }
-
-                    if ($maxValue <= 9999999 && $maxValue > 100000) {
-                        $maxValue = substr($maxValue / 100000, 0, 5) . ' Lakh';
-                    }
-
-                    if ($maxValue > 9999999) {
-                        $maxValue = substr($maxValue / 10000000, 0, 5) . ' Cr';
-                    }
-                @endphp
-                <li>Area Req <div>{{ $area }}</div>
-                </li>
-                <li>Investment Size
-                    <div>
-                        INR {{ $minValue }} - {{ $maxValue }}
-                    </div>
-                </li>
-                <li>{{ $franDetails->looking_tradepartner == 1 || $franDetails->ind_main_cat == 5 ? 'No. Of Dealer/Distributor' : 'No. Of Franchise Outlets' }}
-                    <div>{{ $franDetails->no_fran_outlets ?: '- NA -' }}</div>
-                </li>
-            </ul> --}}
         </div>
     </div>
     <div class="rht-pnl">
@@ -419,7 +368,7 @@
 
                         @if (!Auth::check() || Auth::user()->profile_type == Config('constants.ProfileType.Franchisor'))
                             <div class="insta-apply" id="show-m">
-                                <div class="ttl" id="instahead">Insta Apply 2</div>
+                                <div class="ttl" id="instahead">Insta Apply</div>
                                 <div id="instaMsg" style="display:none;" class="green">
                                     <div class="bigth">Thank You!</div>
                                     <p>Thanks for showing your interest in {{ $franDetails->company_name }}.</p>

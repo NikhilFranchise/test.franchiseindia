@@ -12,6 +12,7 @@ class InvestorDetails extends Model
     protected $table = "investor_details";
     protected $primaryKey = 'inv_det_id';
 
+
     public function userDetail()
     {
         return $this->belongsTo(UserAccount::class, 'investor_id', 'profile_str');

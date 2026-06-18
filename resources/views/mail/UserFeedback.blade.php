@@ -52,10 +52,11 @@
   <tr>
     <td valign="top"><table width="92%" class="menu-list" align="center" cellpadding="0" cellspacing="0" style="padding-left:20px; border-top:1px solid #eaeaea; border-bottom:1px solid #eaeaea; padding-top:12px; padding-bottom:12px; font-family:Arial, Helvetica, sans-serif; font-size:14px; color:#333;">
         <tr>
-          <td valign="top" class="menu-item" width="100%" style="line-height: 24px;"><a href="{{Config::get('constants.MainDomain')}}" style="text-decoration: none; color: black;">11,000+ Business Opportunities</a> &nbsp; | &nbsp;
-          <a href="{{Config::get('constants.MainDomain')}}/content" style="text-decoration: none; color: black;">What's New</a> &nbsp; | &nbsp;
-          <a href="http://news.franchiseIndia.com/" style="text-decoration: none; color: black;">News</a> &nbsp; | &nbsp;
-          <a href="http://video.franchiseIndia.com/" style="text-decoration: none; color: black;">Videos</a> &nbsp; | &nbsp;
+          <td valign="top" class="menu-item" width="100%" style="line-height: 24px;"><a href="{{Config::get('constants.MainDomain')}}" style="text-decoration: none; color: black;">15,000+ Business Opportunities</a> &nbsp; | &nbsp;
+          {{-- <a href="{{Config::get('constants.MainDomain')}}/content" style="text-decoration: none; color: black;">What's New</a> &nbsp; | &nbsp; --}} 
+          <a href="https://www.franchiseindia.com/insights" style="text-decoration: none; color: black;">News</a> &nbsp; | &nbsp;
+		    <a href="https://master.franchiseindia.com/magazine-subscribe/" style="text-decoration: none; color: black;">Magazines</a> &nbsp; | &nbsp;
+          {{-- <a href="http://video.franchiseIndia.com/" style="text-decoration: none; color: black;">Videos</a> &nbsp; | &nbsp; --}}
           <a href="{{Config::get('constants.MainDomain')}}/advertise" style="text-decoration: none; color: black;">Advertise</a> &nbsp; | &nbsp;
           <a href="https://master.franchiseindia.com/emagazine/shop/" style="text-decoration: none; color: black;">Subscribe</a></td>
         </tr>
@@ -69,13 +70,13 @@
         </tr>
       </tbody></table></td>
   </tr>
-<tr>
+{{-- <tr>
     <td valign="top"><table width="100%" cellspacing="0" cellpadding="0">
         <tbody><tr>
           <td valign="top" class="td-business" style="padding:0px 90px 26px 90px; line-height:22px; text-align:center; font-size:16px; color:#666666;"><font face="Arial, Helvetica, sans-serif">Greetings from Franchise India!</font></td>
         </tr>
       </tbody></table></td>
-  </tr>
+  </tr> --}}
 <tr>
     <td valign="top"><table width="100%" cellspacing="0" cellpadding="0">
         <tbody><tr>

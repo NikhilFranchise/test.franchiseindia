@@ -16,7 +16,6 @@ return [
     |
     */
 
-    // 'driver' => \Intervention\Image\Drivers\Gd\Driver::class,
     'driver' => 'gd',
 
     'options' => [

@@ -64,7 +64,7 @@
         height:260px;
         width: 600px;
         margin: 0 auto;
-        background: url("https://www.franchiseindia.com/images/popup/fro-ahmedabad-popup-footer.jpg") no-repeat center top;
+        background: url("https://www.franchiseindia.com/images/popup/fro-ahmedabad-popup-footer.webp") no-repeat center top;
     }
 
 
@@ -127,7 +127,7 @@
 
 
 .headtag { height: 289px; overflow: hidden; width: 600px;
-background: url("https://www.franchiseindia.com/images/popup/fro-ahmedabad-popup-header.jpg") no-repeat center top;
+background: url("https://www.franchiseindia.com/images/popup/fro-ahmedabad-popup-header.webp") no-repeat center top;
 overflow: hidden;
 
 }

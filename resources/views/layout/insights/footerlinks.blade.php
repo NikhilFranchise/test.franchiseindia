@@ -2,13 +2,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="{{ url('insight-new/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- Template Main JS File -->
-<script src="{{ url('insight-new/assets/js/main.js') }}"></script>
+<script src="{{url('insight-new/assets/js/main.js')}}"></script>
 <script src="{{ url('insight-new/assets/js/swiper.min.js') }}"></script>
 <script src="https://dimsemenov.com/plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
 <!-- for  start article detail page   -->
-{{-- @stack('scripts') --}}
 <script src="{{ asset('insight-new/js/insight-newsletter.js') }}" defer></script>
-
 <script>
     var swiper = new Swiper('.maycontentblk .swiper-container', {
         slidesPerView: 1,
@@ -50,7 +48,6 @@
             },
         }
     });
-
     var swiper = new Swiper('.maincateblk .swiper-container', {
         slidesPerView: 1,
         spaceBetween: 10,
@@ -91,7 +88,6 @@
             },
         }
     });
-
     var swiper = new Swiper('.slidercomman .swiper-container', {
         slidesPerView: 1,
         spaceBetween: 10,
@@ -132,7 +128,6 @@
             },
         }
     });
-
     var swiper = new Swiper('.sliderauthor .swiper-container', {
         slidesPerView: 1,
         spaceBetween: 10,
@@ -175,7 +170,6 @@
             },
         }
     });
-
     var swiper = new Swiper('.slidereport .swiper-container', {
         slidesPerView: 1,
         spaceBetween: 10,

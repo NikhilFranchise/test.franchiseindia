@@ -9,7 +9,9 @@ class MobileVerification extends Model
 {
     use HasFactory;
     public $table = 'mobile_verification';
+
     public $primaryKey = 'mob_verify_id';
+    
     protected $fillable = [
         'user_id',
         'mobile_no',

@@ -64,8 +64,7 @@
             </div>
 
         @endif
-        {{-- @dd($franTradePartnerData); --}}
-        @if ($franTradePartnerData->count() > 0)
+        @if (count($franTradePartnerData))
             <div class="section">
                 <div class="ttl">Trade partners</div>
                 <table>
@@ -78,29 +77,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($franTradePartnerData as $tradeData) 
+                        @foreach ($franTradePartnerData as $tradeData)
                             <tr>
-                                <td data-label="Types of Channels">
-                                    @if($tradeData->channel_type == 2)
-                                        DSA
-                                    @elseif($tradeData->channel_type == 3)
-                                    Reseller
-                                    @elseif($tradeData->channel_type == 4)
-                                    MLM
-                                    @elseif($tradeData->channel_type == 6)
-                                    C & F
-                                    @elseif($tradeData->channel_type == 8)
-                                    Agent
-                                    @elseif($tradeData->channel_type == 9)
-                                    Channel Partner
-                                    @elseif($tradeData->channel_type == 10)
-                                    Agency Partner
-                                    @elseif($tradeData->channel_type == 11)
-                                    Affiliate Partner
-                                    @else
-                                        {{ $tradeData->channel_type == 5 ? 'Distributor' : 'Dealer' }}
-                                    @endif
-                                </td>
+                                {{-- <td data-label="Types of Channels">
+                                    {{ $tradeData->channel_type == 5 ? 'Distributor' : 'Dealer' }}</td> --}}
+
+                                    <td data-label="Types of Channels">
+                                        @if($tradeData->channel_type == 2)
+                                            DSA
+                                        @elseif($tradeData->channel_type == 3)
+                                        Reseller
+                                        @elseif($tradeData->channel_type == 4)
+                                        MLM
+                                        @elseif($tradeData->channel_type == 6)
+                                        C & F
+                                        @elseif($tradeData->channel_type == 8)
+                                        Agent
+                                        @elseif($tradeData->channel_type == 9)
+                                        Channel Partner
+                                        @elseif($tradeData->channel_type == 10)
+                                        Agency Partner
+                                        @elseif($tradeData->channel_type == 11)
+                                        Affiliate Partner
+                                        @else
+                                            {{ $tradeData->channel_type == 5 ? 'Distributor' : 'Dealer' }}
+                                        @endif
+                                    </td>
                                 <td data-label="Investment (If any)">
                                     {{ Config('constants.investRangeInWords.' . $tradeData->trade_investment) }}</td>
                                 <td data-label="Margin / Commissions">{{ $tradeData->trade_margin }}%</td>
@@ -288,7 +290,6 @@
                 </div>
             @endif
         @endif
-        <!--<div class="tab-sec-topics-ttl mrgn-tp"> {{ $franDetails->looking_franchise == 1 ? 'Franchise' : 'Dealership' }} Details </div>-->
         <div class="tab-sec-topics-ttl mrgn-tp">Details </div>
         <div class="keypoints">
 
@@ -337,7 +338,6 @@
             @endif
 
         </div>
-
 
 
 
@@ -698,46 +698,48 @@
     }
 
     @media screen and (max-width:768px) {
-        .recent-lines{height: 100px;}
+        .recent-lines {
+            height: 100px;
+        }
+
         .recent-activities .box .container .cards .card a {
             font-size: 15px;
             line-height: 20px;
             white-space: normal;
             height: 44px;
         }
-        .recent-activities .box .container .cards .card{padding-top: 20px;}
+
+        .recent-activities .box .container .cards .card {
+            padding-top: 20px;
+        }
     }
 
-        .dots {
-            height: 2px;
-            width: 2px;
-            display: inline-block;
-            background-color: #555555;
-            border-radius: 50%;
-            margin-bottom: 0px;
-            vertical-align: middle;
-            border-radius: 200%;
-        }
-        .tab-sec-ttl-recent{
-            border-bottom: 1px solid #dbdbdb;
-            font-family: 'Open Sans Light', serif;
-            font-size: 18px;
-            line-height: 18px;
-            padding-bottom: 7px;
-            text-transform: uppercase;
-            margin-bottom: 0;
-            margin-top: 0;
-        }
+    .dots {
+        height: 2px;
+        width: 2px;
+        display: inline-block;
+        background-color: #555555;
+        border-radius: 50%;
+        margin-bottom: 0px;
+        vertical-align: middle;
+        border-radius: 200%;
+    }
 
+    .tab-sec-ttl-recent {
+        border-bottom: 1px solid #dbdbdb;
+        font-family: 'Open Sans Light', serif;
+        font-size: 18px;
+        line-height: 18px;
+        padding-bottom: 7px;
+        text-transform: uppercase;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
 </style>
 <div id="investmentnew_tab" class="tab-section">
 
-    @php
-    use Illuminate\Support\Collection;
-    $combinedDataCollection = collect($combinedDataCollection);
-    @endphp
     @if ($combinedDataCollection->isNotEmpty())
-        <h2 class="tab-sec-ttl-recent">{{$franDetails->company_name}} Latest Updates</h2>
+        <h2 class="tab-sec-ttl-recent">Recent Updates</h2>
         <div class="recent-activities">
             <div class="box">
                 <div class="container">
@@ -751,16 +753,16 @@
                     </div>
                     <div class="cards">
                         @foreach ($combinedDataCollection as $index => $data)
-                            <div class="card">
-                                @if (is_array($data))
-                                    <div class="recent-date" style="font-size: 12px !important;">{{ date('d-M-Y', strtotime($data['created_at'])) }}</div>
-                                    <p ><a href="{{ $data['url'] }}" target="_blank" style="font-size: 12px !important; color:#3e34ff">{{ ucwords($data['title']) }}</a></p>
-                                @elseif(is_object($data))
-                                    <div class="recent-date" style="font-size: 12px !important;">{{ date('d-M-Y', strtotime($data->created_at)) }}</div>
-                                    <p><a href="{{ $data->url }}" target="_blank" style="font-size: 12px !important; color:#3e34ff">{{ ucwords($data->title) }}</a></p>
-                                @endif
-                            </div>
-                        @endforeach
+                        <div class="card">
+                            @if (is_array($data))
+                                <div class="recent-date" style="font-size: 12px !important;">{{ date('d-M-Y', strtotime($data['created_at'])) }}</div>
+                                <p ><a href="{{ $data['url'] }}" target="_blank" style="font-size: 12px !important; color:#3e34ff">{{ ucwords($data['title']) }}</a></p>
+                            @elseif(is_object($data))
+                                <div class="recent-date" style="font-size: 12px !important;">{{ date('d-M-Y', strtotime($data->created_at)) }}</div>
+                                <p><a href="{{ $data->url }}" target="_blank" style="font-size: 12px !important; color:#3e34ff">{{ ucwords($data->title) }}</a></p>
+                            @endif
+                        </div>
+                    @endforeach
                     </div>
                 </div>
 
@@ -779,101 +781,100 @@
         <span><strong>Tags:</strong></span>
         @php
             $maincat = Config('constants.CategoryArr.' . $franDetails->ind_main_cat);
-            $renderedStates = [];
+            $renderedStates = []; 
         @endphp
         {{-- @foreach ($stateList as $state)
             @php
-
+                
                 $stateKey = array_search($state['state'], Config::get('location.stateArr'));
             @endphp
 
             @if ($stateKey !== false && !in_array($state['state'], $renderedStates))
-
+                
                 @php
                     $renderedStates[] = $state['state'];
                 @endphp
+                <a
+                    href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc-' . $stateKey) }}">
+                    {{ $maincat . ' Business Franchise in ' . $state['state'] }}
+                </a>&nbsp;<span class="dots"></span>&nbsp;
+            @endif
+        @endforeach --}}
 
-
+        @php
+        // Define how many states to show initially
+        $hiddenStates = [];
+        $maxStatesToShow = 5;   
+        $renderedStates = [];
+    @endphp
+    
+    @foreach ($stateList as $index => $state)
+        @php
+            $stateKey = array_search($state['state'], Config::get('location.stateArr'));
+        @endphp
+    
+        @if ($stateKey !== false && !in_array($state['state'], $renderedStates))
+            @php
+                $renderedStates[] = $state['state'];
+            @endphp
+    
+            @if ($index < $maxStatesToShow)
+                <!-- Show the business opportunity link -->
+                <a
+                    href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc-' . $stateKey) }}">
+                    {{ $maincat . ' Business Franchise in ' . $state['state'] }}
+                </a>&nbsp; | &nbsp;
+            @else
+                <!-- Hide extra states -->
+                @php
+                    $hiddenStates[] = $state;
+                @endphp
+            @endif
+        @endif
+    @endforeach
+    
+    <!-- Show "Show more" link if there are more states hidden -->
+    @if (isset($hiddenStates) && count($hiddenStates) > 0)
+        <a href="javascript:void(0);" id="showMore" onclick="toggleStates(true)"><strong>Show more...</strong></a>
+    @endif
+    
+    <!-- Include the hidden states (hidden by default) -->
+    <div id="moreStates" style="display:none;">
+        @foreach ($hiddenStates as $state)
+            @php
+                $stateKey = array_search($state['state'], Config::get('location.stateArr'));
+            @endphp
+    
+            @if ($stateKey !== false)
                 <a
                     href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc-' . $stateKey) }}">
                     {{ $maincat . ' Business Franchise in ' . $state['state'] }}
                 </a>&nbsp; | &nbsp;
             @endif
-        @endforeach --}}
-        @php
-    // Define how many states to show initially
-    $hiddenStates = [];
-    $maxStatesToShow = 5;
-    $renderedStates = [];
-@endphp
-
-@foreach ($stateList as $index => $state)
-    @php
-        $stateKey = array_search($state['state'], Config::get('location.stateArr'));
-    @endphp
-
-    @if ($stateKey !== false && !in_array($state['state'], $renderedStates))
-        @php
-            $renderedStates[] = $state['state'];
-        @endphp
-
-        @if ($index < $maxStatesToShow)
-            <!-- Show the business opportunity link -->
-            <a
-                href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc-' . $stateKey) }}">
-                {{ $maincat . ' Business Franchise in ' . $state['state'] }}
-            </a>&nbsp; | &nbsp;
-        @else
-            <!-- Hide extra states -->
-            @php
-                $hiddenStates[] = $state;
-            @endphp
-        @endif
-    @endif
-@endforeach
-
-<!-- Show "Show more" link if there are more states hidden -->
-@if (isset($hiddenStates) && count($hiddenStates) > 0)
-    <a href="javascript:void(0);" id="showMore" onclick="toggleStates(true)"><strong>Show more...</strong></a>
-@endif
-
-<!-- Include the hidden states (hidden by default) -->
-<div id="moreStates" style="display:none;">
-    @foreach ($hiddenStates as $state)
-        @php
-            $stateKey = array_search($state['state'], Config::get('location.stateArr'));
-        @endphp
-
-        @if ($stateKey !== false)
-            <a
-                href="{{ url('business-opportunities/' . strtolower(str_replace(' ', '-', $maincat)) . '-in-' . strtolower(str_replace(' ', '-', Config::get('location.stateArr')[$stateKey])) . '/mc-' . $franDetails->ind_main_cat . '/loc-' . $stateKey) }}">
-                {{ $maincat . ' Business Franchise in ' . $state['state'] }}
-            </a>&nbsp; | &nbsp;
-        @endif
-    @endforeach
-
-    <!-- Show "Show less" link -->
-    <br>
-    <a href="javascript:void(0);" id="showLess" onclick="toggleStates(false)" style="display:none;"><strong>show less...</strong></a>
-</div>
-
-<script>
-    // Function to toggle between "Show more" and "Show less"
-    function toggleStates(showMore) {
-        if (showMore) {
-            // Show the additional states
-            document.getElementById('moreStates').style.display = 'block';
-            document.getElementById('showMore').style.display = 'none'; // Hide the "Show more" link
-            document.getElementById('showLess').style.display = 'inline'; // Show the "Show less" link
-        } else {
-            // Hide the additional states
-            document.getElementById('moreStates').style.display = 'none';
-            document.getElementById('showMore').style.display = 'inline'; // Show the "Show more" link
-            document.getElementById('showLess').style.display = 'none'; // Hide the "Show less" link
+        @endforeach
+    
+        <!-- Show "Show less" link -->
+        <br>
+        <a href="javascript:void(0);" id="showLess" onclick="toggleStates(false)" style="display:none;"><strong>show less...</strong></a>
+    </div>
+    
+    <script>
+        // Function to toggle between "Show more" and "Show less"
+        function toggleStates(showMore) {
+            if (showMore) {
+                // Show the additional states
+                document.getElementById('moreStates').style.display = 'block';
+                document.getElementById('showMore').style.display = 'none'; // Hide the "Show more" link
+                document.getElementById('showLess').style.display = 'inline'; // Show the "Show less" link
+            } else {
+                // Hide the additional states
+                document.getElementById('moreStates').style.display = 'none';
+                document.getElementById('showMore').style.display = 'inline'; // Show the "Show more" link
+                document.getElementById('showLess').style.display = 'none'; // Hide the "Show less" link
+            }
         }
-    }
-</script>
-
+    </script>
+    
     </div>
 </div>
 <!-- recent activities -->

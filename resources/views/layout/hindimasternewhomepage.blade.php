@@ -101,29 +101,30 @@
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane" id="login">
-                                <form method="post" action="{{ Config('constants.MainDomain') }}/loginform">
-                                    @csrf
-
+                                <form method="post" action="https://www.franchiseindia.com/loginform">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="frm-pnl">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="usersprite"></div>
                                             </span>
-                                            <input type="email" class="form-control
-                                         blur"
-                                                required="" name="email" placeholder="ईमेल-आईडी दर्ज करें">
+                                            <input type="email"
+                                                class="form-control
+                                       blur"
+                                                required="" name="email"
+                                                placeholder="अपनी उपयोगकर्ता आईडी दर्ज करें">
                                         </div>
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <div class="pwdsprite"></div>
                                             </span>
-                                            <input type="password" required="" name="password" class="form-control blur"
-                                                placeholder="पासवर्ड दर्ज करें">
+                                            <input type="password" required="" name="password"
+                                                class="form-control blur" placeholder="अपना पासवर्ड डालें">
                                         </div>
                                         <button type="submit"
                                             class="btn btn-default
-                                      btn-gry btn-prop">साइन
-                                            इन </button>
+                                    btn-gry btn-prop">साइन
+                                            इन</button>
                                         <span class="pipe">|</span> <a class="frg-link" href="#"
                                             onClick="frg_panel()">पासवर्ड भूल गए</a>
                                     </div>
@@ -162,11 +163,9 @@
                                                     पार्टनर नियुक्त करें <br /><span> (फ्रेंचाइज़र पंजीकरण) </span></a>
                                             </div>
                                             <br>
-                                            <div><a href="https://www.franchiseindia.com/franchisor/international-registration"
-                                                    class="btn btn-large btn-default
+                                            <div><a href="https://www.franchiseindia.com/franchisor/international-registration" class="btn btn-large btn-default
                                        btn-gry btn-prop">चैनल
-                                                    पार्टनर नियुक्त करें <br /><span> (अंतरराष्ट्रीय फ्रेंचाइज़र
-                                                        पंजीकरण) </span></a>
+                                                    पार्टनर नियुक्त करें <br /><span> (अंतरराष्ट्रीय फ्रेंचाइज़र पंजीकरण) </span></a>
                                             </div>
                                             <br>
                                             <div><a target="_blank"
@@ -1307,7 +1306,7 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="modified-col col-md-12">
-                            <p class="section-th">फ्रैंचाइज़ इंडिया के बारे में</p>    
+                            <p class="section-th">फ्रैंचाइज़ इंडिया के बारे में</p>
                             <div class="about-text-section">
                                 Franchiseindia.com दुनिया की # 1 फ्रेंचाइजी वेबसाइट और एक उद्यमी की दैनिक खुराक है।
                                 फ्रैंचाइज़ इंडिया होल्डिंग्स लिमिटेड - एशिया की सबसे बड़ी एकीकृत फ़्रैंचाइज़ समाधान
@@ -3062,7 +3061,6 @@
         }
 
         function submitInvestment1() {
-            // alert('a');
             var mainCat = $('#getMainCategoryDataHeaderInv1').val();
             var minAmount = $('#minAmount1').val();
             var maxAmount = $('#maxAmount1').val();
@@ -3089,7 +3087,7 @@
     </script>
     <!-- End of franchiseindia Zendesk Widget script -->
 
-    {{--  <script>
+    {{-- <script>
         (function() {
             const second = 1000,
                 minute = second * 60,
@@ -3133,7 +3131,7 @@
                     //seconds
                 }, 0)
         }());
-    </script>  --}}
+    </script> --}}
     <script>
         $(document).ready(function() {
             $("#myclose").click(function() {

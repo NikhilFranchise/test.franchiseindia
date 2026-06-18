@@ -45,6 +45,22 @@
             m.parentNode.insertBefore(a, m)
         })();
     </script>
+    <!-- Google Tag Manager -->
+    <script async>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l !== 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
+    </script>
 @endif
 <!-- new code start -->
 <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
@@ -109,7 +125,7 @@
                     .addService(googletag.pubads());
                 googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_ATF', [300, 250],
                     'adslot300x250_ATF').addService(googletag.pubads());
-                googletag.defineSlot('/1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [
+                googletag.defineSlot('/1057625/FIHL//1057625/FIHL/FI_Desktop_ROS_RHS_300x250_1', [
                         [300, 250],
                         [300, 600]
                     ],
@@ -498,7 +514,7 @@
     @endtablet
 </script>
 <!-- Global site tag (gtag.js) - Google Ads: 767541249 -->
- {{-- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-767541249"></script>
+{{-- <script async src="https://www.googletagmanager.com/gtag/js?id=AW-767541249"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() {

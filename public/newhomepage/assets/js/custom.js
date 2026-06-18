@@ -212,7 +212,7 @@ function submitCategory() {
         url = url + "all/all";
     }
     //        window.location = url;
-    window.open(url, "_blank");
+    window.location.href = url;
     return false;
 }
 
@@ -263,10 +263,10 @@ function submitLocation() {
     } else {
         //alert(url);
         url = url + "all/all";
-        window.open(url, "_blank");
+        window.location.href = url;
     }
     //        window.location = url + "?locTab=1";r
-    window.open(url + "?locTab=1", "_blank");
+    window.location.href = url + "?locTab=1";
     return false;
 }
 
@@ -302,10 +302,10 @@ function submitInvestment() {
     } else if (minAmount != "" && maxAmount != "") {
         url = url + "business/range-" + minAmountText + "-" + maxAmountText;
     } else {
-        window.open(url + "all/all?invTab=1", "_blank");
+        window.location.href = url + "all/all?invTab=1";
     }
     //        window.location = url + "?invTab=1";
-    window.open(url + "?invTab=1", "_blank");
+    window.location.href = url + "?invTab=1";
     return false;
 }
 
@@ -349,7 +349,7 @@ function submitCategory1() {
         url = url + "all/all";
     }
     //        window.location = url;
-    window.open(url, "_blank");
+    window.location.href = url;
     return false;
 }
 
@@ -400,10 +400,10 @@ function submitLocation1() {
     } else {
         //alert(url);
         url = url + "all/all";
-        window.open(url, "_blank");
+        window.location.href = url;
     }
     //        window.location = url + "?locTab=1";r
-    window.open(url + "?locTab=1", "_blank");
+    window.location.href = url + "?locTab=1";
     return false;
 }
 
@@ -439,9 +439,9 @@ function submitInvestment1() {
     } else if (minAmount != "" && maxAmount != "") {
         url = url + "business/range-" + minAmountText + "-" + maxAmountText;
     } else {
-        window.open(url + "all/all?invTab=1", "_blank");
+        window.location.href = url + "all/all?invTab=1";
     }
     //        window.location = url + "?invTab=1";
-    window.open(url + "?invTab=1", "_blank");
+    window.location.href = url + "?invTab=1";
     return false;
 }

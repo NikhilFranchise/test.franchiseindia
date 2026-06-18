@@ -29,7 +29,7 @@ class PasswordResetSuccessful extends Mailable
     public function build()
     {
         return $this->from('no-reply@franchiseindia.com')
-                    ->subject('Your password changed - Franchiseindia')
+                    ->subject('Your password has changed - Franchiseindia')
                     ->view('mail.password-reset-successful');
     }
 }

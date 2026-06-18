@@ -1,6 +1,22 @@
 <meta charset="UTF-8">
 <meta content="{{ request()->segment(1) == 'hi' ? 'hi-in' : 'en-in' }}" name="language" />
-<title> @yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities')</title>
+<title>
+    @if (strpos(collect(request()->segments())->last(), 'range-') !== false)
+        @php
+            $mainTitle = $seoTitle ? $seoTitle : '';
+            $lastSegment = str_replace('range-', 'Under Range ', collect(request()->segments())->last());
+            $title1 = $lastSegment . ' - Franchise India';
+            $title = str_replace('- Franchise India', $title1, $seoTitle);
+            if (preg_match('/ - Franchise India/', $title)) {
+                $mainTitle = $title;
+            } elseif (preg_match('/at Franchise India/', $title)) {
+                $mainTitle = str_replace('at Franchise India', $title1, $seoTitle);
+            }
+        @endphp {{ $mainTitle }}
+    @else
+        @yield('seoTitle', 'Franchise India - Business Opportunities, Franchise Opportunities')
+    @endif
+</title>
 <meta name="description" content="@yield('seoDesc', 'Franchise India provides franchise opportunities, business opportunities, business ideas,best business in India and buy Franchise in India with affordable range.')" />
 @if (request()->segment(1) == 'top-franchise-leaders')
 @else
@@ -38,7 +54,8 @@
         }
     }
 @endphp
-<link href="{{ $canonicalUrl . $queryString }}" rel="canonical">
+{{-- <link href="{{ $canonicalUrl . $queryString }}" rel="canonical"> --}}
+<link href="@yield('canonicalUrl', $canonicalUrl . $queryString)" rel="canonical">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <link rel="shortcut icon" href="https://www.franchiseindia.com/favicon.ico" type="image/x-icon" />
 <meta property="fb:pages" content="118224094883095" />
@@ -46,7 +63,7 @@
 <meta name="google-site-verification" content="8W9CXigRDmfNyf8vOfkZBefougI9sPXO4xvDBFLIjaw" />
 <meta name="y_key" content="0f4f718975ac23ed" />
 <meta name="msvalidate.01" content="12C27FDAA076F43E6F3763B81B44D01A" />
-<meta content="@yield('robot', 'noindex,nofollow')" name="robots" />
+<meta content="@yield('robot', 'index,follow')" name="robots" />
 @if ($__env->yieldContent('prev'))
     <link href="@yield('prev')" rel="prev">
     <link href="@yield('next')" rel="next">
@@ -146,7 +163,7 @@
 <link rel="preload" href="{{ url('js/js.cookie.min.js') }}" as="script">
 {{--  <link rel="preload" href="{{ url('js/validationInsta.js?ver='.date('d'))}}" as="script">  --}}
 <link rel="preload" href="{{ url('js/bootstrap.min.js') }}" as="script">
-{{--  <link rel="preload" href="{{ url('js/custom.js?ver='.date('d'))}}" as="script">  --}}
+<link rel="preload" href="{{ url('js/custom.js?ver=' . date('d')) }}" as="script">
 <link rel="preload" href="{{ url('js/lozad.min.js') }}" as="script">
 <link rel="preload" href="{{ url('js/bootstrap-typeahead.js') }}" as="script">
 @desktop
@@ -219,9 +236,26 @@
         f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-NW38FD');
 </script>
-<!-- End Google Tag Manager -->
-        {{-- @dd($isAuthenticated, $mainMembershipType, $regionalMembershipType, request()->ip(), $passIp); --}}
 
+<script async>
+    (function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start': new Date().getTime(),
+            event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-KW4K6WV6');
+</script>
+
+<!-- End Google Tag Manager -->
+{{-- created by Pankaj Kumar --}}
 <script>
     $(document).ready(function() {
         @php
@@ -248,6 +282,7 @@
         @endif
     });
 </script>
+{{-- created by Pankaj Kumar --}}
 <script async='async' src='https://lwgadm.com/lw/pbjs?pid=cd827928-eb06-4537-bace-58b63e0f7d46'></script>
 
 <script type='text/javascript'>
@@ -255,6 +290,8 @@
         cmd: []
     };
 </script>
+
+<!-- Global site tag (gtag.js) - Google Ads: 767541249 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16776470774"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
@@ -279,7 +316,7 @@
 
     gtag('config', 'G-8MKFEZLR18');
 </script>
-{{--
+{{-- 
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -287,49 +324,3 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "gnbfg0nm67");
 </script> --}}
-
-<script type="application/ld+json">
-    {
-      "@context": "https://schema.org/",
-      "@type": "WebSite",
-      "name": "FranchiseIndia",
-      "url": "https://www.franchiseindia.com/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.franchiseindia.com/category/search?text={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-<script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Franchise India",
-      "url": "https://www.franchiseindia.com/",
-      "logo": "https://www.franchiseindia.com/newhomepage/assets/img/Logo.svg",
-      "alternateName": "FranchiseIndia",
-      "sameAs": [
-        "https://www.facebook.com/FranchiseIndiaMedia",
-        "https://twitter.com/FranchiseIndia",
-        "https://www.instagram.com/franchiseindia_/",
-        "https://www.youtube.com/user/FranchiseIndia",
-                    "https://muckrack.com/media-outlet/franchiseindia",
-        "https://www.linkedin.com/company/franchiseindia/"
-      ],
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "telephone": "1800 102 2007",
-          "contactType": "customer service",
-          "email": "advertise@franchiseindia.com",
-          "contactOption": "TollFree",
-          "areaServed": "IN",
-          "availableLanguage": [
-            "en",
-            "hi"
-          ]
-        }
-      ]
-    }
-    </script>

@@ -15,7 +15,7 @@
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tr>
                     <td valign="top" class="td-business" style="padding:0 20px 26px 33px; line-height:22px; text-align:center; font-size:18px; color:#333333; font-weight:bold;">
-                        <span style="font-family: Arial, Helvetica, sans-serif; ">You recently made a Profile on <a href="{{Config('constants.MainDomain')}}" style="color:#006699; text-decoration:none;">FranchiseIndia.com</a> To proceed,verify the Email Id, click the link below.</span>
+                        <span style="font-family: Arial, Helvetica, sans-serif; ">You recently made a Profile on <a href="{{Config('constants.MainDomain')}}" style="color:#006699; text-decoration:none;">FranchiseIndia.com</a> To proceed, verify the email address by clicking the link below.</span>
                     </td>
                 </tr>
             </table>
@@ -39,7 +39,7 @@
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tr>
                     <td valign="top" class="td-business" style="padding:30px 90px 57px 90px; text-align:center; font-size:16px; color:#666666;">
-                        <span style="font-family: Arial, Helvetica, sans-serif; ">If you facing any problem then you can Mail On:<a href="mailto:support@franchiseIndia.com" style="color:#333; text-decoration:none; font-weight:bold;">support@franchiseIndia.com</a></span>
+                        <span style="font-family: Arial, Helvetica, sans-serif; ">If you facing any problem then you can mail us on:<a href="mailto:support@franchiseIndia.com" style="color:#333; text-decoration:none; font-weight:bold;">support@franchiseIndia.com</a></span>
                     </td>
                 </tr>
             </table>

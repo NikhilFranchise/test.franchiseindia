@@ -9,4 +9,9 @@ class ContentTagsAssigned extends Model
 {
     use HasFactory;
     public $table = 'content_tags_assigned';
+
+    public function contentTag()
+    {
+        return $this->belongsTo(SeoTag::class, 'tag_id', 'tag_id');
+    }
 }

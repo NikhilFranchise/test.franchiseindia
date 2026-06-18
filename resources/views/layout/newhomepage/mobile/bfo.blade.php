@@ -17,7 +17,6 @@
 
                 {{-- @foreach($brandLogo3 as $logoDetail) --}}
                 @foreach ($brandstbo->shuffle() as $logoDetail)
-
                     @php
                         $brandUrl = Config('constants.MainDomain').$logoDetail['brand_link'];
                     $cat_url = "/business-opportunities/".strtolower(str_replace(' ', '-', $logoDetail['brand_category'])).".m". $logoDetail['brand_category_id'];

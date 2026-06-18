@@ -103,7 +103,6 @@ class InvestorController extends Controller
             return $this->paymentRequest($amount, $detail, $membership, $planId, $investorId, $gst, '');
         }
 
-
         $plan = $request->input('invPlan');
 
         return view('inv-campaign.investlogin_new', compact('plan', 'gst'));
@@ -483,7 +482,7 @@ class InvestorController extends Controller
         ];
         // dd($email);
         //Mail sending to investor for confirmation
-        // Mail::to($email)->send(new confirmed($data));
+        Mail::to($email)->send(new confirmed($data));
 
         if (!empty($request->input('flag'))) {
 
@@ -504,7 +503,7 @@ class InvestorController extends Controller
             if ($request->input('inv_plan') == 401)
                 return view('includes/investor-thanks');
 
-            // NewsLetterController::createNewsLetter($email, "fi");
+            NewsLetterController::createNewsLetter($email, "fi");
 
             $membership = [$membership, 1];
             $gst = request()->gst_no;
@@ -524,7 +523,7 @@ class InvestorController extends Controller
     public function upgradeInvestor(Request $request)
     {
 
-        // dd($request->amt);
+        // dd($request->all());
         if ($request->input('invPlan') == 401) {
             return view('includes/investor-thanks');
         } else {
@@ -533,7 +532,11 @@ class InvestorController extends Controller
             if (!array_key_exists($pmode, config('constants.Charges'))) {
                 $pmode = "OPTNBK";
             }
-          if ($request->has('amt') && $request->amt > 0) {
+            $amount = Config('constants.invPlanAmount.' . $request->input('invPlan'));
+            // $amount = $amount + (($amount * 18) / 100);
+            // $mop = config('constants.Charges.' . $pmode);
+            // $amount = round($amount + $amount * ($mop) / 100);
+             if ($request->has('amt') && $request->amt > 0) {
                 // If amt is set and has a value
                 $amount_str = $request->amt;
                 $cleaned = preg_replace('/[^\d.]/', '', $amount_str); // Remove non-numeric characters (except decimal)
@@ -558,9 +561,6 @@ class InvestorController extends Controller
             }
 
            
-            // $amount = round($amount + $amount * ($mop) / 100);
-           
-
             // dd($amount);
 
 
@@ -572,7 +572,7 @@ class InvestorController extends Controller
             $promocode = $request->coupon;
 
             return $this->paymentRequest_promo($amount, $detail, $membership, $planId, $investorId, $gst, $pmode, $promocode);
-        }
+         }
     }
 
     /**
@@ -1048,6 +1048,7 @@ class InvestorController extends Controller
                 ->where('order_status', 1)
                 ->where('payment_status', 1)
                 ->first();
+
             if ($paymentDetail && $paymentDetail->count() > 0) {
                 // Via the global helper...
                 session(['membership_expiry' => $paymentDetail->expiry_date]);
@@ -1390,7 +1391,7 @@ class InvestorController extends Controller
         $data = "<table> <tr> <td>Name : </td><td>" . $name . "</td></tr><tr> <td>Email : </td><td>" . $email . "</td></tr><tr> <td>Mobile No. : </td><td>" . $phone . "</td></tr><tr> <td>Investor Id : </td><td>" . $investorId . "</td></tr><tr> <td>Address : </td><td>" . $address . ", City: " . $city . ", State: " . $invData->inv_state . ", Country: " . $country . "</td></tr><tr> <td>Time Of Payment : </td><td>" . date('Y-m-d H:i:s') . "</td></tr></table>";
 
         // *******commented for testing**********
-        // Mail::to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
+        Mail::to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
 
         // End of Email to Investor Acquisition team
 
@@ -1460,7 +1461,7 @@ class InvestorController extends Controller
         return view('payment.payment-request')->with(compact('encrypted_data', 'access_code_new'));
     }
 
-    private function paymentRequest_promo($amount, $detail, $membership, $planId, $investorId, $gst, $pmode, $promocode)
+      private function paymentRequest_promo($amount, $detail, $membership, $planId, $investorId, $gst, $pmode, $promocode)
     {
         $checkCampaign = 0;
 
@@ -1495,7 +1496,7 @@ class InvestorController extends Controller
         $data = "<table> <tr> <td>Name : </td><td>" . $name . "</td></tr><tr> <td>Email : </td><td>" . $email . "</td></tr><tr> <td>Mobile No. : </td><td>" . $phone . "</td></tr><tr> <td>Investor Id : </td><td>" . $investorId . "</td></tr><tr> <td>Address : </td><td>" . $address . ", City: " . $city . ", State: " . $invData->inv_state . ", Country: " . $country . "</td></tr><tr> <td>Time Of Payment : </td><td>" . date('Y-m-d H:i:s') . "</td></tr></table>";
 
         // *******commented for testing**********
-        // Mail::to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
+         Mail::to('techsupport@franchiseindia.net')->send(new RawMail($data, array('subject' => 'Investor Payment Initiated', 'from' => 'no-reply@franchiseindia.com', 'attachment' => '')));
 
         // End of Email to Investor Acquisition team
 
@@ -1565,7 +1566,6 @@ class InvestorController extends Controller
         // dd($access_code_new);
         return view('payment.payment-request')->with(compact('encrypted_data', 'access_code_new'));
     }
-
     /**
      * @param $errorMsg
      */
@@ -1627,6 +1627,7 @@ class InvestorController extends Controller
         //     $franchisors = array_merge($franchisors, $franchisor3);
         // }
 
+
         if (count($franchisors) < 15) {
             $franchisor3 = FranchisorBusinessDetail::query()
                 ->whereNotIn('franchisor_id', array_column($franchisors, 'franchisor_id'))
@@ -1637,7 +1638,6 @@ class InvestorController extends Controller
 
             $franchisors = array_merge($franchisors, $franchisor3->toArray());
         }
-
 
         //fetching states for the franchisors
         if (is_array($franchisors)) {

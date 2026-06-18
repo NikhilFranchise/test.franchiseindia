@@ -7,11 +7,13 @@
 @endphp
 <section class="hero-moblie" id="hero-mobile">
 
-    <div class="lnkblk">
-        <a href="https://www.franchiseindia.com/brands/easygym.95394" target="_blank" class="setpat"><img
-                src="https://www.franchiseindia.com/newhomepage/assets/img/easygym.webp" alt="easy gym" width="237"
-                height="60"></a>
+    <div class="lnkblk" style="width: 100%;float: none;margin-right: 0px;text-align: center;">
+        <a href="https://www.franchiseindia.com/expo/?id=Dotcom" target="_blank" class="setpat">
+            <img src="{{url('/newhomepage/assets/img/delhi_2026-w.webp')}}" alt="Franchise India Delhi"
+                width="162" style="float:none;margin-right: 0px;width: 162px;">
+        </a>
     </div>
+
     @if (request()->segment(1) == 'hi')
         <h1><span>15 हजार से अधिक </span> कारोबारी विक्लपों में अपने लिए तलाश करें</h1>
         <h2>दुनियाभर में सबसे अधिक तलाश किया जाने वाला फ्रैंचाइज वेबसाइट नेटवर्क।</h2>

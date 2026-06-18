@@ -14,7 +14,7 @@
         <td valign="top">
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tr>
-                    <td valign="top" class="td-business" style="padding:0 120px 26px 120px; line-height:22px; text-align:center; font-size:18px; color:#333333; font-weight:bold;"><span style="font-family: Arial, Helvetica, sans-serif; ">Thank you for subscribing for <a href="{{Config('constants.MainDomain')}}" style="color:#006699; text-decoration:none;">FranchiseIndia.com</a> "Daily / Weekly Newsletter"</span></td>
+                    <td valign="top" class="td-business" style="padding:0 120px 26px 120px; line-height:22px; text-align:center; font-size:18px; color:#333333; font-weight:bold;"><span style="font-family: Arial, Helvetica, sans-serif; ">Thank you for subscribing to <a href="{{Config('constants.MainDomain')}}" style="color:#006699; text-decoration:none;">FranchiseIndia.com</a> "Daily / Weekly Newsletter"</span></td>
                 </tr>
             </table>
         </td>

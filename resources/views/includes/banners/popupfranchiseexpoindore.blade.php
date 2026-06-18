@@ -68,11 +68,11 @@
     }
 
     .fi-bg-expo {
-        height:460px;
+        height:344px;
         width: 600px;
-        padding-top:110px;
+        padding-top:0px;
         margin: 0 auto;
-        background: url("https://www.franchiseindia.com/images/popup/franchise-expo-indore-bottom.jpg") no-repeat center top;
+        background: url("https://www.franchiseindia.com/images/popup/franchise-expo-indore-footer.jpg") no-repeat center top;
     }
 
 
@@ -110,12 +110,20 @@
     .fi-expotest span { color: #fff;}
 
     .expo-submitnew {
-        cursor: pointer;
-        border:none;margin-top: 1px;
+   cursor: pointer;
+  border: none;
+  margin-top: 1px;
+  background:#ffd12c;
+  display: block;
+  padding: 8px 82px;
+  color: #000;
+  font-weight: bold;
+  border-radius: 0px;
+  font-size: 13px;
     }
 
     .boxblk {
-        padding: 20px 30px
+        padding:0px 30px 15px 30px;
     }
 
     .fblk {
@@ -138,8 +146,8 @@
     }
 
 
-.headtag { height:256px; overflow: hidden; width: 600px;
-background: url("https://www.franchiseindia.com/images/popup/franchise-expo-indore-top.jpg") no-repeat center top;
+.headtag { height:373px; overflow: hidden; width: 600px;
+background: url("https://www.franchiseindia.com/images/popup/franchise-expo-indore-header.jpg") no-repeat center top;
 overflow: hidden;
 
 }
@@ -169,39 +177,39 @@ overflow: hidden;
        <input id="source" name="source" type="hidden" value="Popup">   
       <input type="hidden" value="FROBOS 2024" name="event_title" id="event_title">
       <input type="hidden" value="Visit the Expo - Paid" name="tfw_interest" id="tfw_interest"> 
-<input type="hidden" value="Indore16thDecember2023" name="eventdays" id="eventdays">
+<input type="hidden" value="Indore28thDec2024" name="eventdays" id="eventdays">
 <div class="sec">
                                       <div class="f1">
                                     </div>
                                     <div class="f1">
-                                      <input type="text" class="form-control" name="txtName" id="txtName" title="Enter Name" required="">
+                                      <input type="text" class="form-control" name="txtName" id="txtName" placeholder="Enter Name" required="">
                                     </div>
                                     <div class="f3">
-                                  <input type="text" class="form-control" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" maxlength="150" value="" id="txtEmail" name="txtEmail" title="Enter Email" required="">
+                                  <input type="text" class="form-control" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$" maxlength="150" value="" id="txtEmail" name="txtEmail" placeholder="Enter Email" required="">
                                     </div>
                                 </div>
 
                                 <div class="sec">
                                     <div class="f1">
-                                       <input type="text" class="form-control" value="" id="txtPhone" name="txtPhone" title="Enter Mobile" pattern="[5-9]{1}[0-9]{9}" maxlength="10" onkeypress="return isNumber(event)">
+                                       <input type="text" class="form-control" value="" id="txtPhone" name="txtPhone" placeholder="Enter Mobile" pattern="[5-9]{1}[0-9]{9}" maxlength="10" onkeypress="return isNumber(event)">
                                     </div>
                                     <div class="f3">
                                    
-                                        <select name="txtState" onchange="getcitypopup(this)" class="form-control" id="txtState" required="">
+                                       <select name="txtState" onchange="getcitypopup(this)" class="form-control" id="txtState" required="">
                                             <!-- <option value="new delhi">new delhi</option>-->
                                           <option value="" data-id="">Select State</option>
                                             @foreach($states as $index => $value)
                                                 <option value="{{ $value }}" data-id="{{ $index }}">{!! $value !!}</option>
                                             @endforeach 
                                         </select>
+
                                     </div>
                                 </div>
 
                                 <div class="sec">
                                     <div class="f1">
-                                         <select name="txtCity" class="form-control" id="popupcity" required="">
+                                        <select name="txtCity" class="form-control" id="popupcity" required="">
                                             <option value="">Select City</option>
-                                           <!-- <option value="delhi">delhi</option> -->
                                         </select>
                                     </div>
                                  
@@ -234,7 +242,9 @@ overflow: hidden;
                         </div>
 
 <div class="submit-sec">
-                        <button type="submit" id="submtval" value="Book Your Seat" name="btnSubmitReg" class="expo-submitnew"><img src="https://www.franchiseindia.com/images/popup/submits.jpg"></button>
+                        <button type="submit" id="submtval" value="Book Your Seat" name="btnSubmitReg" class="expo-submitnew">
+                          BOOK YOUR SEAT
+                        </button>
 </div>
 
                     </div>
@@ -246,7 +256,8 @@ overflow: hidden;
 </div>
 
 
- 
+
+
 <script language="javascript">
     function checkNumbers(){var amt=500;var eventdays=$("#eventdays :selected").val();var visitVal=$("#txtDelegates :selected").val();if(eventdays=="Friday22may")
     {amt=500;$('#txtAmount').val(amt);}

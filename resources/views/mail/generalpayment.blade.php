@@ -55,8 +55,9 @@
                     <td valign="top" class="menu-item" width="100%" style="line-height: 24px;">
                         <a href="{{Config::get('constants.MainDomain')}}" style="text-decoration: none; color: black;">15,000+ Business Opportunities</a> &nbsp; | &nbsp;
                         <a href="{{Config::get('constants.MainDomain')}}/insights" style="text-decoration: none; color: black;">What's New</a> &nbsp; | &nbsp;
-                        <a href="{{Config::get('constants.MainDomain')}}/insights" style="text-decoration: none; color: black;">News</a> &nbsp; | &nbsp;
-                        <a href="http://video.franchiseIndia.com/" style="text-decoration: none; color: black;">Videos</a> &nbsp; | &nbsp;
+                        <a href="https://www.franchiseindia.com/insights" style="text-decoration: none; color: black;">News</a> &nbsp; | &nbsp;
+                        <a href="https://master.franchiseindia.com/magazine-subscribe/" style="text-decoration: none; color: black;">Magazines</a> &nbsp; | &nbsp;         
+                        {{-- <a href="http://video.franchiseIndia.com/" style="text-decoration: none; color: black;">Videos</a> &nbsp; | &nbsp; --}}
                         <a href="{{Config::get('constants.MainDomain')}}/advertise" style="text-decoration: none; color: black;">Advertise</a> &nbsp; | &nbsp;
                         <a href="https://master.franchiseindia.com/emagazine/" style="text-decoration: none; color: black;">Subscribe</a></td>
                 </tr>

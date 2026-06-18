@@ -42,23 +42,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
-use Intervention\Image\Facades\Image;
-
 class CommonController extends Controller
 {
 
     /**
      * @return ResponseFactory|Response
      */
-
-    
-    public function plans(){
-
-        // dd('yes');
-        $investorId ='FIHL111001';
-         return view('investor.register.investor-plan', compact('investorId'));
-    }
-
     public function postExitPopup()
     {
         $emailCount = PopupLead::query()->where('email', request()->email)->orWhere('secondary_email', request()->email)->count();
@@ -167,20 +156,42 @@ class CommonController extends Controller
     /**
      * @return string
      */
-    public static function profileUniqStr()
-    {
-        // Generate a random str with prefix FIHL
-        $uniqueStr = 'FIHL' . mt_rand(100000, 999999);
-        // Check the str whether already exists in the user account table
-        $chkExists = UserAccount::query()->where('profile_str', $uniqueStr)->count();
+    // public static function profileUniqStr()
+    // {
+    //     // dd('yes');
+    //     // Generate a random str with prefix FIHL
+    //     $uniqueStr = 'FIHL' . random_int(100000, 999999);
+    //     // dd($uniqueStr);
 
-        // If the random str already present, call the same function recursively
-        if ($chkExists > 0) {
-            $uniqueStr = CommonController::profileUniqStr();
-        }
-        // return the unique random string
-        return $uniqueStr;
+    //     // Check the str whether already exists in the user account table
+    //     $chkExists = UserAccount::query()->where('profile_str', $uniqueStr)->count();
+    //     dd($chkExists);
+    //     // If the random str already present, call the same function recursively
+    //     if ($chkExists > 0) {
+    //         $uniqueStr = CommonController::profileUniqStr();
+    //     }
+    //     // return the unique random string
+    //     dd($uniqueStr);
+    //     return $uniqueStr;
+    // }
+
+    public static function profileUniqStr()
+{
+    // Generate a random string with the prefix 'FIHL'
+    $uniqueStr = 'FIHL' . random_int(1000000, 9999999);
+    // Check if the string already exists in the user account table
+    $chkExists = UserAccount::query()->where('profile_str', $uniqueStr)->count();
+    // $chkExists = UserAccount::where('profile_str', $uniqueStr)->exists();
+
+    // dd($chkExists);
+    // If the string already exists, call the function recursively until a unique string is found
+    if ($chkExists > 0) {
+        return self::profileUniqStr(); // Recursively call to generate a unique string
     }
+
+    // Return the unique random string
+    return $uniqueStr;
+}
 
     /**
      * @return JsonResponse
@@ -430,10 +441,7 @@ class CommonController extends Controller
         // If sms sending successful, return true
         return response()->json(['message' => 'SMS Sending successfull', 'status' => 'success']);
     }
-
-
-
-    public static function f2smsotp($mobileNo, $message){
+     public static function f2smsotp($mobileNo, $message){
         $mobileNo = (string) ((int) $mobileNo);
 
         if (strlen($mobileNo) == 12 && substr($mobileNo, 0, 2) == "91")
@@ -497,6 +505,7 @@ class CommonController extends Controller
             }
 
     }
+
     /**
      * @return ResponseFactory|string|Response
      */
@@ -832,6 +841,7 @@ class CommonController extends Controller
         $result = Ip2Location::query()->select('region_name')->where('ip_from', '<=', $ip)->where('ip_to', '>=', $ip)->first();
         if (empty($result))
             return "noresult";
+
         return $result->region_name;
     }
 
@@ -1057,29 +1067,28 @@ class CommonController extends Controller
         return strtolower($content_title1);
         //return str_replace('\'', '', $title);
     }
-
-
+ 
     public function brand_total_count()
     {
         $date = Carbon::now();
         $formattedDate = $date->format('Y-m-d'); // Use 'Y-m-d' format for consistency
-
+    
         // Get the count of visits by franchisor for the current date
         $brand_count = UniqueVisit::select('franchisor_id', DB::raw('COUNT(*) AS visit_count'))
             ->groupBy('franchisor_id')
             ->whereDate('date', $formattedDate)
             ->get();
-
+    
         // Aggregate visit counts
         foreach ($brand_count as $item) {
             $franchisorId = $item->franchisor_id;
             $visitCount = $item->visit_count;
-
+    
             // Check if there is already a record for this franchisor_id and record_date
             $existingRecord = FranchisorVisitCount::where('franchisor_id', $franchisorId)
                 ->where('record_date', $formattedDate)
                 ->first();
-
+    
             if ($existingRecord) {
                 // Update the existing record with the new count
                 $existingRecord->total += $visitCount; // Add new count to the existing total
@@ -1093,315 +1102,48 @@ class CommonController extends Controller
                 ]);
             }
         }
-
+    
         // Optional: log success message or handle additional actions
         Log::info('Brand visit counts updated successfully for date: ' . $formattedDate);
     }
 
 
-    public function url(){
-        $m_cat = Config('constants.CategoryArr');
-        $loc = Config('location.stateArr');
-
-        $baseUrl = Config('constants.MainDomain') . '/business-opportunities/';
-
-        $urls = []; // Array to hold the generated URLs
-
-        foreach ($m_cat as $key => $category) {
-            foreach ($loc as $index => $location) {
-                // Replace spaces and commas with hyphens and remove multiple hyphens
-                $locationSlug = preg_replace('/[ ,]+/', '-', $location);
-                $categorySlug = preg_replace('/[ ,]+/', '-', $category);
-
-                // Trim hyphens from the start and end
-                $locationSlug = trim($locationSlug, '-');
-                $categorySlug = trim($categorySlug, '-');
-
-                // Use the index directly as the location ID
-                $locationId = $index;
-
-                // Create the URL by appending the modified category, location, key, and location ID
-                $url = $baseUrl . urlencode($categorySlug) . '-in-' . urlencode($locationSlug) . '/mc-' . $key . '/loc-' .$locationId;
-                $urls[] = $url; // Add the URL to the array
-            }
-        }
-
-
-        dd($urls);
-        // $this->saveUrlData($urls);
-
-
-
-    }
-
-    public function subcaturl(){
-        $subCategoryArr = Config('constants.subCategoryArr');
-        $loc = Config('location.stateArr');
-
-            $baseUrl = Config('constants.MainDomain') . '/business-opportunities/';
-            $urls = []; // Array to hold the generated URLs
-
-                foreach ($subCategoryArr as $mainCategoryKey => $subCategories) {
-                    foreach ($subCategories as $subCategoryKey => $subCategory) {
-                    // Replace spaces and commas with hyphens and remove multiple hyphens
-                    $subCategorySlug = preg_replace('/[ ,]+/', '-', $subCategory);
-                    $mainCategorySlug = preg_replace('/[ ,]+/', '-', $mainCategoryKey); // Use main category key
-
-                    // Trim hyphens from the start and end
-                    $subCategorySlug = trim($subCategorySlug, '-');
-                    $mainCategorySlug = trim($mainCategorySlug, '-');
-
-                        foreach ($loc as $index => $location) {
-                        // Replace spaces and commas with hyphens for location
-                        $locationSlug = preg_replace('/[ ,]+/', '-', $location);
-                        $locationSlug = trim($locationSlug, '-');
-
-                        // Create the URL by appending the modified subcategory, location, and keys
-                        $url = $baseUrl  . urlencode($subCategorySlug) . '-in-' . urlencode($locationSlug) . '/sc-' . $subCategoryKey . '/loc-' . $index;
-                        $urls[] = $url; // Add the URL to the array
-                        }
-                    }
-                }
-
-            // To check the generated URLs
-            dd($urls);
-
-
-
-    }
-
-    public function subsubcaturl(){
-        $subCategoryArr = Config('constants.subSubCategoryArr');
-        $loc = Config('location.stateArr');
-
-            $baseUrl = Config('constants.MainDomain') . '/business-opportunities/';
-            $urls = []; // Array to hold the generated URLs
-
-                foreach ($subCategoryArr as $mainCategoryKey => $subCategories) {
-                    foreach ($subCategories as $subCategoryKey => $subCategory) {
-                    // Replace spaces and commas with hyphens and remove multiple hyphens
-                    $subCategorySlug = preg_replace('/[ ,]+/', '-', $subCategory);
-                    $mainCategorySlug = preg_replace('/[ ,]+/', '-', $mainCategoryKey); // Use main category key
-
-                    // Trim hyphens from the start and end
-                    $subCategorySlug = trim($subCategorySlug, '-');
-                    $mainCategorySlug = trim($mainCategorySlug, '-');
-
-                        foreach ($loc as $index => $location) {
-                        // Replace spaces and commas with hyphens for location
-                        $locationSlug = preg_replace('/[ ,]+/', '-', $location);
-                        $locationSlug = trim($locationSlug, '-');
-
-                        // Create the URL by appending the modified subcategory, location, and keys
-                        $url = $baseUrl  . urlencode($subCategorySlug) . '-in-' . urlencode($locationSlug) . '/ssc-' . $subCategoryKey . '/loc-' . $index;
-                        $urls[] = $url; // Add the URL to the array
-                        }
-                    }
-                }
-
-            // To check the generated URLs
-            dd($urls);
-
-
-
-    }
-
-    function saveUrlData($urls) {
-        // Example: Iterate over each URL and perform your saving logic
-        foreach ($urls as $url) {
-            // Here you can use file_get_contents or cURL to fetch data from the URL
-            $response = file_get_contents($url); // Fetch data from the URL
-
-            // Process the response as needed
-            // For example, decode JSON data if that's what you expect
-            // $data = json_decode($response, true);
-
-            // Here you can save the data to your database or perform other actions
-            // Example: saveToDatabase($data);
-
-            // Log or echo the response for debugging
-            // echo "Data saved for URL: $url\n";
-        }
-    }
-
-
-    // public function convertToWebP(Request $request)
-    // {
-    //     // Validate the incoming request
-    //     $request->validate([
-    //         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //     ]);
-
-    //     // Get the uploaded file
-    //     $file = $request->file('image');
-    //     // $file = 'https://franchiseindia.s3.ap-south-1.amazonaws.com/franchisor/template/slider/1125/2035866063.jpg';
-    //     dd($file);
-    //     // Create a new image instance
-    //     $image = Image::make($file);
-
-    //     // Define the path where you want to save the WebP image
-    //     $path = public_path('images/converted/');
-
-    //     // Ensure the directory exists
-    //     if (!file_exists($path)) {
-    //         mkdir($path, 0755, true);
-    //     }
-
-    //     // Generate a unique filename
-    //     $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-    //     $webpFilename = $filename . '.webp';
-
-    //     // Save the image in WebP format
-    //     $image->encode('webp', 100)->save($path . $webpFilename);
-
-    //     return response()->json([
-    //         'message' => 'Image converted to WebP successfully!',
-    //         'webp_image' => asset('images/converted/' . $webpFilename),
-    //     ]);
-    // }
-
-
-    public function convertToWebP(Request $request)
-{
-    // Validate the incoming request
-    $request->validate([
-        'images' => 'required|array',
-        'images.*' => 'required|url',
-    ]);
-
-    // Get the list of image URLs
-    $imageUrls = $request->input('images');
-
-    // Define the path where you want to save the WebP images
-    $path = public_path('images/converted/');
-
-    // Ensure the directory exists
-    if (!file_exists($path)) {
-        mkdir($path, 0755, true);
-    }
-
-    $convertedImages = [];
-
-    foreach ($imageUrls as $imageUrl) {
-        // Get image content from the URL
-        $imageContent = file_get_contents($imageUrl);
-        if ($imageContent === false) {
-            return response()->json(['message' => 'Failed to retrieve image from URL: ' . $imageUrl], 400);
-        }
-
-        // Create a new image instance from the content
-        $image = Image::make($imageContent);
-
-        // Generate a unique filename
-        $filename = pathinfo(parse_url($imageUrl, PHP_URL_PATH), PATHINFO_FILENAME);
-        $webpFilename = $filename . '.webp';
-
-        // Save the image in WebP format
-        $image->encode('webp', 100)->save($path . $webpFilename);
-
-        // Collect the path of the converted image
-        $convertedImages[] = asset('images/converted/' . $webpFilename);
-    }
-
-    return response()->json([
-        'message' => 'Images converted to WebP successfully!',
-        'webp_images' => $convertedImages,
-    ]);
-}
-
-
-
-
-    public function webp_conversion(){
-        return view('/img_convert');
-    }
-
-    public function listing_layout(){
-        return view('listing_layout.master');
-    }
-
-    // public function fetchDataajax(Request $request)
-    // {
-    //     // Example: Fetch all users from the 'users' table
-    //     $users = FranchisorBusinessDetail::take(5)->get();
-
-    //     // Return the data as JSON
-    //     return response()->json($users);  // or return response()->json($posts);
-    // }
-
     public function fetchDataajax(Request $request)
-{
-    // dd('yes');
-    $sortby = $request->input('sortby');
-    $shuffledResults = collect($request->input('shuffledResults'));
-
-    if ($sortby == 1) {
-        $shuffledResults = $shuffledResults->sortByDesc('activated_at')->values();
-
-    } elseif ($sortby == 2) {
-        // Alphabetical order
-        $shuffledResults = $shuffledResults->sortBy('company_name')->values();
-
-    } elseif ($sortby == 3) {
-        $shuffledResults = $shuffledResults->sortByDesc('views')->values();
+    {
+        $sortby = $request->input('sortby');
+        $shuffledResults = collect($request->input('shuffledResults')); 
+     
+        if ($sortby == 1) {
+            $shuffledResults = $shuffledResults->sortByDesc('activated_at')->values();
+    
+        } elseif ($sortby == 2) {
+            // Alphabetical order
+            $shuffledResults = $shuffledResults->sortBy('company_name')->values();
+    
+        } elseif ($sortby == 3) {
+            $shuffledResults = $shuffledResults->sortByDesc('views')->values();
+        }
+    
+        // return response()->json($shuffledResults);
+        
+        $html = view('category.listingloop', ['shuffledResults' => $shuffledResults])->render();
+        // dd($html);
+        return response()->json(['html' => $html]); 
+    }
+    public function send_email()
+    {
+        //sending the email on testing
+        $code = Str::random(16);
+        $data = [
+            'companyName' => 'Nikhil',
+            'code' => $code,
+        ];
+        $email='pkumar@franchiseindia.net';
+        Mail::getFacadeRoot()->to($email)->send(new confirmed($data));
     }
 
-    // return response()->json($shuffledResults);
-
-    $html = view('category.listingloop', ['shuffledResults' => $shuffledResults])->render();
-    // dd($html);
-    return response()->json(['html' => $html]);
-}
-
-
-public function fetchDataajax2(Request $request)
-{
-    // dd('yes');
-    $sortby = $request->input('sortby');
-    $shuffledResults = collect($request->input('shuffledResults'));
-
-    if ($sortby == 1) {
-        $shuffledResults = $shuffledResults->sortByDesc('activated_at')->values();
-
-    } elseif ($sortby == 2) {
-        // Alphabetical order
-        $shuffledResults = $shuffledResults->sortBy('company_name')->values();
-
-    } elseif ($sortby == 3) {
-        $shuffledResults = $shuffledResults->sortByDesc('views')->values();
-    }
-
-    // return response()->json($shuffledResults);
-
-    $html = view('category.listingloop_range_sortby', ['shuffledResults' => $shuffledResults])->render();
-    // dd($html);
-    return response()->json(['html' => $html]);
-}
-
-
-public function send_email()
-{
-    //sending the email on testing
-    $code = Str::random(16);
-    $data = [
-        'companyName' => 'Nikhil',
-        'code' => $code,
-    ];
-    $email='cnikhil@franchiseindia.net';
-    Mail::getFacadeRoot()->to($email)->send(new confirmed($data));
-}
-
-public function reset(Request $request){
-    dd($request->email);
-}
-
-public function thankYou(Request $request){
-    $message = session('message');
-    // dd($message);
-    return view('thanks.thanks' , compact('message'));
-}
-
-public static function send_sms_freeinfo($mobileNo, $message)
+    
+ public static function send_sms_freeinfo($mobileNo, $message)
     {
         // dd('yes');
         $mobileNo = (string) ((int) $mobileNo);
@@ -1465,6 +1207,5 @@ public static function send_sms_freeinfo($mobileNo, $message)
         // If sms sending successful, return true
         return response()->json(['message' => 'SMS Sending successfull', 'status' => 'success']);
     }
-}
 
- 
+}

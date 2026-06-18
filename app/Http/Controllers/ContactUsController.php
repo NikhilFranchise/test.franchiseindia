@@ -14,14 +14,13 @@ use Illuminate\Support\Facades\Cookie;
 class ContactUsController extends Controller
 {
     public function contactUsForm()
-    { 
+    {
         return view('site/contact');
     }
 
     public function contact(Request $request)
     {
-    dd($request);
-        $validator =  $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|max:30',
             'email' => 'required|email|max:255',
             'mobile' => 'required|min:10|max:10',
@@ -30,8 +29,6 @@ class ContactUsController extends Controller
             'contreason' => 'required',
             'country' => 'required',
             'city' => 'required|min:3',
-            'captcha' => 'required|captcha',
-            
         ]);
 
         if ($validator->fails()) {
@@ -71,6 +68,9 @@ class ContactUsController extends Controller
             $mailBcc = ['techsupport@franchiseindia.com'];
             switch ($request->contreason) {
                 case "Advertise with www.franchiseindia.com":
+					$mailTo = 'advertise@franchiseindia.com';
+					$mailcc = 'expo@franchiseindia.com';
+                    break;
                 case "Advertise in Magazine":
                 case "Exhibit in Shows":
                     $mailTo = 'advertise@franchiseindia.com';
@@ -91,18 +91,12 @@ class ContactUsController extends Controller
                     break;
             }
 
-            // if ($mailTo) {
-            //     Mail::to($mailTo)->bcc($mailBcc)->send(new ContactUsMail($details));
-            // }
+            if ($mailTo) {
+                Mail::to($mailTo)->cc($mailcc)->bcc($mailBcc)->send(new ContactUsMail($details));
+            }
         }
         $message = $contactData ? "Contact form submitted successfully..." : "Contact form submission failed...";
 
         return view('thanks.thanks', compact('message'));
-    }
-
-    public function reloadCaptcha()
-    {
-        // dd('yes');
-        return response()->json(['captcha'=> captcha_img()]);
     }
 }

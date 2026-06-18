@@ -46,8 +46,7 @@ class NewsLetterController extends Controller
             ]);
             if (!empty($email))
                 Mail::to($email)->send(new NewsLetterSubscribe($randValue));
-        }
-        else if ($checkEmail->status == "P") {
+        } else if ($checkEmail->status == "P") {
             $news = 'pending';
 
             $verifyCode = FiNewsLetter::query()
@@ -58,7 +57,6 @@ class NewsLetterController extends Controller
 
             // dd($verifyCode);
             Mail::to($email)->send(new NewsLetterSubscribe($verifyCode));
-
             return view('newsletter/subscribe')->with(compact('news'));
 
         } else if ($checkEmail->status == "U") {
@@ -80,7 +78,7 @@ class NewsLetterController extends Controller
     {
         $data = FiNewsLetter::query()->where('verify_code', request()->code)->orderby('nid', 'DESC')->first();
         // dd($data);
-        if (  $data == null ) {
+        if ( $data === null ) {
             $news = "wrong";
             return view('newsletter/subscribe')->with(compact('news'));
         }
@@ -105,7 +103,7 @@ class NewsLetterController extends Controller
                 <mailinglist>' . $site . '</mailinglist>
                 <format>html</format>
                 <confirmed>yes</confirmed>
-                <customfields>
+                <customfields>                                
                 </customfields>
                 </details>
                 </xmlrequest>

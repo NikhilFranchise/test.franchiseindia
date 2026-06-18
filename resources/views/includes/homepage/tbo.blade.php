@@ -17,21 +17,21 @@
                     <ol class="carousel-indicators">
                     <li data-target="#topslidernew" data-slide-to="0" class="active"></li>
                     <li data-target="#topslidernew" data-slide-to="1"></li> 
-                    <li data-target="#topslidernew" data-slide-to="2"></li>	 
-                 									
+    <!--                 <li data-target="#topslidernew" data-slide-to="2"></li>	 
+                    <li data-target="#topslidernew" data-slide-to="3"></li> 
+                 									 -->
                     </ol>
                     
                         <div class="carousel-inner" role="listbox">
 
                           
-                           <!--  <div class="item active"><a href="https://www.franchiseindia.in/bharat-franchise-show"
-                             target="_blank"><img class="lozad" data-src="https://www.franchiseindia.com/images/tbo/bfs-banner.jpg" 
-                             alt="#" /></a></div> -->
+                         <!--   <div class="item active"><a href="https://www.globalfranchiseforum.com/franchise-investment-conclave/"
+                             target="_blank"><img class="lozad" data-src="https://www.franchiseindia.com/images/tbo/fic.jpg" alt="#" /></a></div>
 
-                             <div class="item active"><a href="https://www.franglobal.com/franglobal-scale-up-dubai/"
-                             target="_blank"><img class="lozad" data-src="https://www.franchiseindia.com/images/tbo/scale-up-dubai.jpg" alt="#" /></a></div>
+                             <div class="item"><a href="https://www.franglobal.com/scale-up/"
+                             target="_blank"><img class="lozad" data-src="https://www.franchiseindia.com/images/tbo/scale-up.jpeg" alt="#" /></a></div> -->
 
-                             <div class="item"><a href="https://www.franchiseindia.in/franchise-business-opportunity/"
+                             <div class="item active"><a href="https://www.franchiseindia.in/franchise-business-opportunity/"
                              target="_blank"><img class="lozad" data-src="https://www.franchiseindia.com/images/tbo/start-business.jpg" alt="#" /></a></div>
 
                              
@@ -40,12 +40,6 @@
                              alt="#" /></a></div>
                							 
  						 
-
-       <!--          <div class="item">
-                    <a href="http://www.franchiseindiaevents.com/webinars/?bid=QmFubmVy"
-                             target="_blank"><img class="lozad" data-src="https://www.franchiseindia.com/images/tbo/webinars.jpeg" 
-                             alt="Top Business Opportunities" /></a></div> -->
-
 
                             @foreach($brands->where('brand_section', 1)->where('page_type', $pageType)->sortByDesc("weightage")->take(10) as $logoDetail)
                                 @php
@@ -182,11 +176,11 @@
                     <div class="logo-list">
                         <div class="logrel">
                             <div class="img-ver">
-                                <a href="https://www.franchiseindia.com/brands/red-schoolhouse.78785" target="_blank"><img class="lozad" data-src="{{ url('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/red-schoolhouse_2.gif') }}" alt="RED SchoolHouse"></a>
-                                <a href="https://www.franchiseindia.com/brands/red-schoolhouse.78785" target="_blank">
+                                <a href="https://www.franchiseindia.com/brands/direct-english.78387" target="_blank"><img class="lozad" data-src="{{ url('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/direct-english_1.png') }}" alt="Direct English"></a>
+                                <a href="https://www.franchiseindia.com/brands/direct-english.78387" target="_blank">
                                     <div class="tbo-info">
-                                        <span>RED SchoolHouse</span>
-                                        Red SchoolHouse is a multi-award-winning pre-school
+                                        <span>Direct English</span>
+                                        Direct English is a world's leading UK-based English training provider
                                     </div>
                                 </a>
                             </div>
@@ -197,11 +191,11 @@
                     <div class="logo-list">
                         <div class="logrel">
                             <div class="img-ver">
-                                <a href="https://www.franchiseindia.com/brands/quality-mind.75410" target="_blank"><img class="lozad" data-src="{{ url('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/quality-mind_3.jpg') }}" alt="Quality Mind Global"></a>
-                                <a href="https://www.franchiseindia.com/brands/quality-mind.75410" target="_blank">
+                                <a href="https://www.franchiseindia.com/brands/cravy-for-crispy-chicken.101557" target="_blank"><img class="lozad" data-src="{{ url('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/cravy-for-crispy-chicken_1.png') }}" alt="Cravy for Crispy Chicken"></a>
+                                <a href="https://www.franchiseindia.com/brands/cravy-for-crispy-chicken.101557" target="_blank">
                                     <div class="tbo-info">
-                                        <span>Quality Mind Global</span>
-                                        Quality Mind is a global leader in the mental wellness industry
+                                        <span>Cravy for Crispy Chicken</span>
+                                        Cravy for Crispy Chicken a Korean-inspired crispy chicken brand.
                                     </div>
                                 </a>
                             </div>
@@ -212,11 +206,11 @@
                     <div class="logo-list">
                         <div class="logrel">
                             <div class="img-ver">
-                                <a href="https://www.franchiseindia.com/brands/bricks-4-kidz.79119" target="_blank"><img class="lozad" data-src="{{ url('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/bricks-4-kidz_1.png') }}" alt="Bricks 4 Kidz"></a>
-                                <a href="https://www.franchiseindia.com/brands/bricks-4-kidz.79119" target="_blank">
+                                <a href="https://www.franchiseindia.com/brands/bagelstein.99562" target="_blank"><img class="lozad" data-src="{{ url('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/bagelstein_1.gif') }}" alt="BAGELSTEIN"></a>
+                                <a href="https://www.franchiseindia.com/brands/bagelstein.99562" target="_blank">
                                     <div class="tbo-info">
-                                        <span>Bricks 4 Kidz</span>
-                                        Bricks 4 Kidz is the largest provider of STEM-based child
+                                        <span>BAGELSTEIN</span>
+                                        Bagelstein, a French bagel chain, has carved a niche in the European market
                                     </div>
                                 </a>
                             </div>
@@ -227,11 +221,11 @@
                     <div class="logo-list">
                         <div class="logrel">
                             <div class="img-ver">
-                                <a href="https://www.franglobal.com/engage-and-grow/" target="_blank"><img class="lozad" data-src="{{ url('/franchiseinternational/images/banners/homepage/engage_199x81.png') }}" alt="spice box"></a>
-                                <a href="https://www.franglobal.com/engage-and-grow/" target="_blank">
+                                <a href="https://www.franchiseindia.com/brands/smoothie-factory.40897" target="_blank"><img class="lozad" data-src="{{ url('https://franchiseindia.s3.ap-south-1.amazonaws.com/uploads/franchisor/smoothie-factory_1.jpg') }}" alt="Smoothie Factory"></a>
+                                <a href="https://www.franchiseindia.com/brands/smoothie-factory.40897" target="_blank">
                                     <div class="tbo-info">
-                                        <span> Enage & Grow</span>
-                                        Become A Certified Engage & Grow Franchise in your Region & Grow Your Business
+                                        <span>Smoothie Factory</span>
+                                        Smoothie Factory is an established, popular, and fast growing retailer of real fruit smoothies
                                     </div>
                                 </a>
                             </div>

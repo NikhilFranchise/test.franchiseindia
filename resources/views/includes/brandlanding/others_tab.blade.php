@@ -46,7 +46,8 @@
 
     <div class="tab-sec-topics">
         <div class="keypoints">
-        Franchise India stands as a premier platform offering a wide spectrum of franchise opportunities across diverse industries. Embarking on your entrepreneurial journey through a franchise presents a promising venture. To get a {{$franDetails->company_name}} franchise, you can fill up the application form provided on the website and our expert team will guide you with all the details viz. {{$franDetails->company_name}} franchise fee, {{$franDetails->company_name}} franchise cost, {{$franDetails->company_name}} apply process and more. Our team will guide you during the process to avail {{$franDetails->company_name}}  franchise.
+        {{-- Franchise India stands as a premier platform offering a wide spectrum of franchise opportunities across diverse industries. Embarking on your entrepreneurial journey through a franchise presents a promising venture. To get a {{$franDetails->company_name}} franchise, you can fill up the application form provided on the website and our expert team will guide you with all the details viz. {{$franDetails->company_name}} franchise fee, {{$franDetails->company_name}} franchise cost, {{$franDetails->company_name}} apply process and more. Our team will guide you during the process to avail {{$franDetails->company_name}}  franchise. --}}
+        Franchise India stands as a premier platform offering a wide spectrum of franchise opportunities across diverse industries. Embarking on your entrepreneurial journey through a franchise presents a promising venture. To get information about {{$franDetails->company_name}} franchise, you can fill up the application form provided on the website and get all the details viz. {{$franDetails->company_name}} franchise fee, {{$franDetails->company_name}} franchise cost, {{$franDetails->company_name}} apply process and more.
 
         </div>
     </div>
